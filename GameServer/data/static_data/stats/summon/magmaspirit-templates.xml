@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited by youli -->
+<summon_stats_templates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../stats.xsd">
+	<!-- (Retail Like Confirmed from EU server) Magma spirit DP 2000 -->
+	<summon_stats npc_id_dark="201041" level="50">
+		<stats_template maxHp="9511" pdefense="1611" mresist="1052" main_hand_attack="358" run_speed="10.0"/>
+	</summon_stats>
+	<!--From here stats calculated by XobotyI-->
+	<summon_stats npc_id_light="201040" level="51">
+		<stats_template maxHp="9690" pdefense="1640" mresist="1069" main_hand_attack="362" run_speed="10.0"/>
+	</summon_stats>
+	<summon_stats npc_id_light="201040" level="52">
+		<stats_template maxHp="9869" pdefense="1669" mresist="1086" main_hand_attack="366" run_speed="10.0"/>
+	</summon_stats>
+	<summon_stats npc_id_light="201040" level="53">
+		<stats_template maxHp="10048" pdefense="1698" mresist="1103" main_hand_attack="370" run_speed="10.0"/>
+	</summon_stats>
+	<summon_stats npc_id_light="201040" level="54">
+		<stats_template maxHp="10227" pdefense="1727" mresist="1120" main_hand_attack="374" run_speed="10.0"/>
+	</summon_stats>
+	<summon_stats npc_id_light="201040" level="55">
+		<stats_template maxHp="10406" pdefense="1756" mresist="1137" main_hand_attack="378" run_speed="10.0"/>
+	</summon_stats>
+</summon_stats_templates>
