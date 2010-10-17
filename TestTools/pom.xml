@@ -5,8 +5,8 @@
 	<artifactId>TestTools</artifactId>
 	<version>0.1</version>
 	<scm>
-		<connection>scm:svn:http://aionjhungary.googlecode.com/svn/trunk/</connection>
-		<developerConnection>scm:svn:http://aionjhungary.googlecode.com/svn/trunk/</developerConnection>
+		<connection>scm:svn:http://aionj-hungary.googlecode.com/svn/trunk/</connection>
+		<developerConnection>scm:svn:http://aionj-hungary.googlecode.com/svn/trunk/</developerConnection>
 	</scm>
 	<build>
 		<defaultGoal>install</defaultGoal>
@@ -130,7 +130,7 @@
 		<repository>
 			<id>central aionjhungary</id>
 			<name>aionjhungary repo</name>
-			<url>http://aionjhungary.googlecode.com/svn/repo/</url>
+			<url>http://aionj-hungary.googlecode.com/svn/repo/</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>

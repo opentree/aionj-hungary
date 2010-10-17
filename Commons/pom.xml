@@ -1,32 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>AionLightning</groupId>
-	<artifactId>al-commons</artifactId>
-	<name>AionLightning</name>
-	<version>1.0.1</version>
-	<description>
-		This file is part of aion-lightning &lt;aion-lightning.com&gt;.
-		aion-lightning is free software: you can redistribute it and/or modify
-		it under the terms of the GNU General Public License as published by
-		the Free Software Foundation, either version 3 of the License, or
-		(at your option) any later version.
-		aion-lightning is distributed in the hope that it will be useful,
-		but WITHOUT ANY WARRANTY; without even the implied warranty of
-		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-		GNU General Public License for more details.
-
-		You should have received a copy of the GNU General Public License
-		along with aion-lightning.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
-	</description>
-	<url>http://www.aion-lightning.com/</url>
-	<issueManagement>
-		<system>Google Issue Manager</system>
-		<url>http://code.google.com/p/aionlightning/issues/list/</url>
-	</issueManagement>
+	<groupId>aionj-hungary</groupId>
+	<artifactId>commons</artifactId>
+	<version>0.1</version>
 	<scm>
-		<connection>scm:svn:http://aionlightning.googlecode.com/svn/trunk/</connection>
-		<developerConnection>scm:svn:http://aionlightning.googlecode.com/svn/trunk/</developerConnection>
+		<connection>scm:svn:http://aionj-hungary.googlecode.com/svn/trunk/</connection>
+		<developerConnection>scm:svn:http://aionj-hungary.googlecode.com/svn/trunk/</developerConnection>
 	</scm>
 	<build>
 		<defaultGoal>install</defaultGoal>
@@ -162,9 +142,9 @@
 			</releases>
      </repository>
 		<repository>
-			<id>central aionlightning</id>
-			<name>aionlightning repo</name>
-			<url>http://aionlightning.googlecode.com/svn/repo/</url>
+			<id>central aionj-hungary</id>
+			<name>aionj-hungary repo</name>
+			<url>http://aionj-hungary.googlecode.com/svn/repo/</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
