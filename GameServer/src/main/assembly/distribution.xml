@@ -12,13 +12,13 @@
 		<dependencySet>
 			<outputDirectory>gameserver/</outputDirectory>
 			<includes>
-				<include>AionLightning:al-game</include>
+				<include>aionj-hungary:game</include>
 			</includes>
 		</dependencySet>
 		<dependencySet>
 			<outputDirectory>gameserver/libs/</outputDirectory>
 			<excludes>
-				<exclude>AionLightning:al-game</exclude>
+				<exclude>aionj-hungary:game</exclude>
 			</excludes>
 		</dependencySet>
 	</dependencySets>
@@ -33,14 +33,6 @@
 		<fileSet>
 			<directory>config/</directory>
 			<outputDirectory>gameserver/config/</outputDirectory>
-		</fileSet>
-		<fileSet>
-			<directory>data/</directory>
-			<outputDirectory>gameserver/data/</outputDirectory>
-		</fileSet>
-		<fileSet>
-			<directory>sql/</directory>
-			<outputDirectory>gameserver/sql/</outputDirectory>
 		</fileSet>
 	</fileSets>
 </assembly>
