@@ -43,7 +43,7 @@ public class ClientStringLoader
 			collection = (Strings) unmarshaller.unmarshal(new File("xml/client_strings.xml"));
 			System.out.println("Size of strings: " + collection.getString().size());
 			Map<String, ClientString> stringNameMap = new HashMap<String, ClientString>();
-			for(ClientString item : collection.getString())
+			for (ClientString item : collection.getString())
 			{
 				stringNameMap.put(item.getName().trim().toLowerCase(), item);
 			}

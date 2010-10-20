@@ -5,7 +5,6 @@
 // Generated on: 2010.10.20 at 10:33:17 DE CEST 
 //
 
-
 package parser.clientData.clientStrings;
 
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for anonymous complex type.
@@ -37,42 +35,44 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "string"
-})
+@XmlType(name = "", propOrder =
+{ "string" })
 @XmlRootElement(name = "strings")
-public class Strings {
+public class Strings
+{
 
-    @XmlElement(required = true)
-    protected List<ClientString> string;
+	@XmlElement(required = true)
+	protected List<ClientString>	string;
 
-    /**
-     * Gets the value of the string property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the string property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getString().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link ClientString }
-     * 
-     * 
-     */
-    public List<ClientString> getString() {
-        if (string == null) {
-            string = new ArrayList<ClientString>();
-        }
-        return this.string;
-    }
+	/**
+	 * Gets the value of the string property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list,
+	 * not a snapshot. Therefore any modification you make to the
+	 * returned list will be present inside the JAXB object.
+	 * This is why there is not a <CODE>set</CODE> method for the string property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getString().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link ClientString }
+	 * 
+	 * 
+	 */
+	public List<ClientString> getString()
+	{
+		if (string == null)
+		{
+			string = new ArrayList<ClientString>();
+		}
+		return this.string;
+	}
 
 }

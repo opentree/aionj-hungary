@@ -31,13 +31,13 @@ import parser.clientData.clientStrings.ClientStringLoader;
 public class DataManager
 {
 
-	private Map<String, ClientString> stringNameMap = new HashMap<String, ClientString>();
-	
+	private Map<String, ClientString>	stringNameMap	= new HashMap<String, ClientString>();
+
 	public static final DataManager getInstance()
 	{
 		return SingletonHolder.instance;
 	}
-	
+
 	private DataManager()
 	{
 		stringNameMap = ClientStringLoader.load();
@@ -54,6 +54,6 @@ public class DataManager
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
-		protected static final DataManager instance = new DataManager();
+		protected static final DataManager	instance	= new DataManager();
 	}
 }

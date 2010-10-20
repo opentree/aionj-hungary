@@ -70,7 +70,7 @@ public class FileDecoder
 			ZipEntry e;
 			while ((e = zin.getNextEntry()) != null)
 			{
-				if (e.getName().equalsIgnoreCase(xmlDir+xmlFileName))
+				if (e.getName().equalsIgnoreCase(xmlDir + xmlFileName))
 				{
 					unzip(zin, xmlFileName);
 					break;
@@ -84,7 +84,7 @@ public class FileDecoder
 		}
 		try
 		{
-			Process process = Runtime.getRuntime().exec("AIONdisasm.exe tmp/xml/"+xmlFileName+" xml/" + xmlFileName);
+			Process process = Runtime.getRuntime().exec("AIONdisasm.exe tmp/xml/" + xmlFileName + " xml/" + xmlFileName);
 			BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 
@@ -105,11 +105,14 @@ public class FileDecoder
 			e.printStackTrace();
 		}
 	}
-	private static void unzip(ZipInputStream zin, String s) throws IOException {
-		FileOutputStream out = new FileOutputStream("tmp\\xml\\"+s);
+
+	private static void unzip(ZipInputStream zin, String s) throws IOException
+	{
+		FileOutputStream out = new FileOutputStream("tmp\\xml\\" + s);
 		byte[] b = new byte[1024];
 		int len = 0;
-		while ((len = zin.read(b)) != -1) {
+		while ((len = zin.read(b)) != -1)
+		{
 			out.write(b, 0, len);
 		}
 		out.close();

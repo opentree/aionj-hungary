@@ -28,7 +28,8 @@ import parser.util.FileDecoder;
 public class Parser
 {
 
-	private static boolean decodeFile = true;
+	private static boolean	decodeFile	= true;
+
 	/**
 	 * @param args
 	 */

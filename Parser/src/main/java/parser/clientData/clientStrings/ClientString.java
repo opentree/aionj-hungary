@@ -5,14 +5,12 @@
 // Generated on: 2010.10.20 at 10:33:17 DE CEST 
 //
 
-
 package parser.clientData.clientStrings;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for ClientString complex type.
@@ -36,81 +34,85 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ClientString", propOrder = {
-    "id",
-    "name",
-    "body"
-})
-public class ClientString {
+@XmlType(name = "ClientString", propOrder =
+{ "id", "name", "body" })
+public class ClientString
+{
 
-    protected int id;
-    @XmlElement(required = true)
-    protected String name;
-    @XmlElement(required = true)
-    protected String body;
+	protected int		id;
+	@XmlElement(required = true)
+	protected String	name;
+	@XmlElement(required = true)
+	protected String	body;
 
-    /**
-     * Gets the value of the id property.
-     * 
-     */
-    public int getId() {
-        return id;
-    }
+	/**
+	 * Gets the value of the id property.
+	 * 
+	 */
+	public int getId()
+	{
+		return id;
+	}
 
-    /**
-     * Sets the value of the id property.
-     * 
-     */
-    public void setId(int value) {
-        this.id = value;
-    }
+	/**
+	 * Sets the value of the id property.
+	 * 
+	 */
+	public void setId(int value)
+	{
+		this.id = value;
+	}
 
-    /**
-     * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getName() {
-        return name;
-    }
+	/**
+	 * Gets the value of the name property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getName()
+	{
+		return name;
+	}
 
-    /**
-     * Sets the value of the name property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setName(String value) {
-        this.name = value;
-    }
+	/**
+	 * Sets the value of the name property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setName(String value)
+	{
+		this.name = value;
+	}
 
-    /**
-     * Gets the value of the body property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getBody() {
-        return body;
-    }
+	/**
+	 * Gets the value of the body property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getBody()
+	{
+		return body;
+	}
 
-    /**
-     * Sets the value of the body property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setBody(String value) {
-        this.body = value;
-    }
+	/**
+	 * Sets the value of the body property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setBody(String value)
+	{
+		this.body = value;
+	}
 
 }
