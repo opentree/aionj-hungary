@@ -57,7 +57,8 @@ public class PropertyTransformerFactory
 	 *             if can't instantiate {@link com.aionemu.commons.configuration.PropertyTransformer}
 	 */
 
-	@SuppressWarnings("unchecked")
+
+	@SuppressWarnings("rawtypes")
 	public static PropertyTransformer newTransformer(Class clazzToTransform, Class<? extends PropertyTransformer> tc)
 		throws TransformationException
 	{

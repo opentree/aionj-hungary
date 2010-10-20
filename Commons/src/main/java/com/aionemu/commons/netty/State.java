@@ -25,4 +25,5 @@ public enum State
 	CONNECTED,
 	AUTHED,
 	AUTHED_GG,
+	IN_GAME,
 }

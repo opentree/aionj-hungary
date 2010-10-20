@@ -31,7 +31,7 @@ public class CompilationResult
 	 * List of classes that were compiled by compiler
 	 */
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	private final Class[]			compiledClasses;
 
 	/**
@@ -48,7 +48,7 @@ public class CompilationResult
 	 * @param classLoader
 	 *            classloader that was used by compiler
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public CompilationResult(Class[] compiledClasses, ScriptClassLoader classLoader)
 	{
 		this.compiledClasses = compiledClasses;
@@ -70,7 +70,7 @@ public class CompilationResult
 	 * 
 	 * @return list of classes that were compiled
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public Class[] getCompiledClasses()
 	{
 		return compiledClasses;
