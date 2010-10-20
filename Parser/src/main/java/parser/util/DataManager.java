@@ -19,10 +19,13 @@
 package parser.util;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import parser.clientData.clientStrings.ClientString;
 import parser.clientData.clientStrings.ClientStringLoader;
+import parser.clientData.tribeRelation.Tribe;
+import parser.clientData.tribeRelation.TribeRelationLoader;
 
 /**
  * @author Mr. Poke
@@ -31,7 +34,8 @@ import parser.clientData.clientStrings.ClientStringLoader;
 public class DataManager
 {
 
-	private Map<String, ClientString>	stringNameMap	= new HashMap<String, ClientString>();
+	private Map<String, ClientString>	stringNameMap;
+	private List<Tribe> tribeRelations;
 
 	public static final DataManager getInstance()
 	{
@@ -41,6 +45,7 @@ public class DataManager
 	private DataManager()
 	{
 		stringNameMap = ClientStringLoader.load();
+		tribeRelations = TribeRelationLoader.load();
 	}
 
 	/**
@@ -49,6 +54,14 @@ public class DataManager
 	public Map<String, ClientString> getStringNameMap()
 	{
 		return stringNameMap;
+	}
+
+	/**
+	 * @return Returns the tribeRelations.
+	 */
+	public List<Tribe> getTribeRelations()
+	{
+		return tribeRelations;
 	}
 
 	@SuppressWarnings("synthetic-access")

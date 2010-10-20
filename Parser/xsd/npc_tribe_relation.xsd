@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+            jxb:version="2.1">
+
+	<xs:element name="npc_tribe_relations">
+	   <xs:complexType>
+		  <xs:sequence>
+			<xs:element name="tribe" type="Tribe" minOccurs="1" maxOccurs="unbounded"/>
+		  </xs:sequence>
+	   </xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="Tribe">
+	  <xs:sequence>
+	  	<xs:element name="base_tribe" type="xs:string"/>
+		<xs:element name="friendly" type="xs:string"/>
+		<xs:element name="none" type="xs:string"/>
+		<xs:element name="aggressive" type="xs:string"/>
+		<xs:element name="support" type="xs:string"/>
+		<xs:element name="hostile" type="xs:string"/>
+		<xs:element name="neutral" type="xs:string"/>
+	  </xs:sequence>
+	  <xs:attribute name="Tribe" type="xs:string"/>
+	</xs:complexType>
+</xs:schema>

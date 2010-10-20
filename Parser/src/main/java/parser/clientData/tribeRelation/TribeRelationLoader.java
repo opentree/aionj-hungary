@@ -16,33 +16,37 @@
  *
  * http://www.gnu.org/copyleft/gpl.html
  */
-package parser;
+package parser.clientData.tribeRelation;
 
-import parser.serverData.tribeRelation.TribeRelationSave;
-import parser.util.DataManager;
-import parser.util.FileDecoder;
+import java.io.File;
+import java.util.List;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
 /**
  * @author Mr. Poke
  *
  */
-public class Parser
+public class TribeRelationLoader
 {
-
-	private static boolean	decodeFile	= true;
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args)
+	public static List<Tribe> load()
 	{
-		if (decodeFile)
+		try
 		{
-			FileDecoder.decode("data", "L10N\\1_enu\\data\\", "strings/", "client_strings.xml");
-			FileDecoder.decode("npcs", "data\\npcs\\", "", "npc_tribe_relation.xml");
+			JAXBContext jc = JAXBContext.newInstance("parser.clientData.tribeRelation");
+			Unmarshaller unmarshaller = jc.createUnmarshaller();
+
+			NpcTribeRelations collection;
+			collection = (NpcTribeRelations) unmarshaller.unmarshal(new File("xml/npc_tribe_relation.xml"));
+			System.out.println("Size of npc tribe relations: " + collection.getTribe().size());
+			return collection.getTribe();
 		}
-		DataManager.getInstance();
-		
-		TribeRelationSave.save();
+		catch (JAXBException e)
+		{
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

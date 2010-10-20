@@ -42,7 +42,7 @@ public class FileDecoder
 		String s = null;
 		try
 		{
-			Process process = Runtime.getRuntime().exec("AIONencdec.exe " + clientDir + pakFileDir + pakFileName + ".pak tmp/zip/" + pakFileName + ".zip");
+			Process process = Runtime.getRuntime().exec("c:\\Python25\\python pak2zip.py " + clientDir + pakFileDir + pakFileName + ".pak tmp/zip/" + pakFileName + ".zip");
 			BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 
