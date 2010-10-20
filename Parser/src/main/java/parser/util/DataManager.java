@@ -16,28 +16,44 @@
  *
  * http://www.gnu.org/copyleft/gpl.html
  */
-package parser;
+package parser.util;
 
-import parser.util.DataManager;
-import parser.util.FileDecoder;
+import java.util.HashMap;
+import java.util.Map;
+
+import parser.clientData.clientStrings.ClientString;
+import parser.clientData.clientStrings.ClientStringLoader;
 
 /**
  * @author Mr. Poke
  *
  */
-public class Parser
+public class DataManager
 {
 
-	private static boolean decodeFile = true;
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args)
+	private Map<String, ClientString> stringNameMap = new HashMap<String, ClientString>();
+	
+	public static final DataManager getInstance()
 	{
-		if (decodeFile)
-		{
-			FileDecoder.decode("data", "L10N\\1_enu\\data\\", "strings/", "client_strings.xml");
-		}
-		DataManager.getInstance();
+		return SingletonHolder.instance;
+	}
+	
+	private DataManager()
+	{
+		stringNameMap = ClientStringLoader.load();
+	}
+
+	/**
+	 * @return Returns the stringNameMap.
+	 */
+	public Map<String, ClientString> getStringNameMap()
+	{
+		return stringNameMap;
+	}
+
+	@SuppressWarnings("synthetic-access")
+	private static class SingletonHolder
+	{
+		protected static final DataManager instance = new DataManager();
 	}
 }
