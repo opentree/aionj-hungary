@@ -21,7 +21,7 @@ import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.oneone.OneToOneDecoder;
 
-import com.aionemu.commons.netty.handler.CrypedChannelHandler;
+import com.aionemu.commons.netty.handler.PacketCrypter;
 
 /**
  * @author Mr. Poke
@@ -40,9 +40,9 @@ public class PacketDecrypter extends OneToOneDecoder
 	{
 		Object object = ctx.getPipeline().get("handler");
 		ChannelBuffer buf = (ChannelBuffer) msg;
-		if(object instanceof CrypedChannelHandler)
+		if(object instanceof PacketCrypter)
 		{
-			CrypedChannelHandler handler = (CrypedChannelHandler) object;
+			PacketCrypter handler = (PacketCrypter) object;
 			handler.decrypt(buf);
 		}
 		return buf;

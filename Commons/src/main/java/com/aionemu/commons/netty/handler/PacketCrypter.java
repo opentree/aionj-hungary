@@ -20,13 +20,11 @@ import org.jboss.netty.buffer.ChannelBuffer;
 
 /**
  * @author Mr. Poke
- * 
+ *
  */
-public abstract class CrypedChannelHandler extends AbstractChannelHandler
+public interface PacketCrypter
 {
+	public void encrypt(ChannelBuffer buf);
 
-	public abstract void encrypt(ChannelBuffer buf);
-
-	public abstract void decrypt(ChannelBuffer buf);
-
+	public void decrypt(ChannelBuffer buf);
 }
