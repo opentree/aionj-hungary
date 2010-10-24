@@ -26,7 +26,8 @@ import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.MessageEvent;
 
-import com.aionemu.commons.netty.handler.CrypedChannelHandler;
+import com.aionemu.commons.netty.handler.AbstractChannelHandler;
+import com.aionemu.commons.netty.handler.PacketCrypter;
 import com.aionemu.loginserver.controller.AccountController;
 import com.aionemu.loginserver.controller.AccountTimeController;
 import com.aionemu.loginserver.model.Account;
@@ -42,7 +43,7 @@ import com.aionemu.loginserver.utils.ThreadPoolManager;
  * 
  * @author -Nemesiss-
  */
-public class AionConnection extends CrypedChannelHandler
+public class AionConnection extends AbstractChannelHandler implements PacketCrypter
 {
 
 	/**
