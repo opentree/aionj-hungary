@@ -108,7 +108,8 @@ public abstract class AbstractChannelHandler extends SimpleChannelUpstreamHandle
 	 */
 	public void close(BaseServerPacket packet)
 	{
-		channel.write(packet).addListener(ChannelFutureListener.CLOSE);
+		packet.write(this);
+		channel.write(packet.getBuf()).addListener(ChannelFutureListener.CLOSE);
 	}
 
 	/**
