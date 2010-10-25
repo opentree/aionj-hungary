@@ -16,86 +16,20 @@
  */
 package com.aionemu.loginserver.network.aion;
 
-import javolution.util.FastMap;
-
-import org.apache.log4j.Logger;
 import org.jboss.netty.buffer.ChannelBuffer;
 
-import com.aionemu.commons.netty.State;
+import com.aionemu.commons.netty.handler.PacketHandler;
 
 /**
  * @author -Nemesiss-
  */
-public class AionPacketHandler
-{
-
-	/**
-	 * logger for this class
+public class AionPacketHandler extends PacketHandler<AionConnection>
+{	/* (non-Javadoc)
+	 * @see com.aionemu.commons.netty.handler.PacketHandler#handle(org.jboss.netty.buffer.ChannelBuffer, com.aionemu.commons.netty.handler.AbstractChannelHandler)
 	 */
-	private static final Logger							log					= Logger.getLogger(AionPacketHandler.class);
-
-	private FastMap<State, FastMap<Integer, AionClientPacket>>	packetsPrototypes	= new FastMap<State, FastMap<Integer, AionClientPacket>>();
-
-	/**
-	 * Reads one packet from given ByteBuffer
-	 * 
-	 * @param data
-	 * @param client
-	 * @return AionClientPacket object from binary data
-	 */
+	@Override
 	public AionClientPacket handle(ChannelBuffer data, AionConnection client)
 	{
-		State state = client.getState();
-		int id = data.readByte() & 0xff;
-		return getPacket(state, id, data, client);
-	}
-
-	public void addPacketPrototype(AionClientPacket packetPrototype, State... states)
-	{
-		for(State state : states)
-		{
-			FastMap<Integer, AionClientPacket> pm = packetsPrototypes.get(state);
-			if(pm == null)
-			{
-				pm = new FastMap<Integer, AionClientPacket>();
-				packetsPrototypes.put(state, pm);
-			}
-			pm.put(packetPrototype.getOpCode(), packetPrototype);
-		}
-	}
-
-	private AionClientPacket getPacket(State state, int id, ChannelBuffer buf, AionConnection con)
-	{
-		AionClientPacket prototype = null;
-
-		FastMap<Integer, AionClientPacket> pm = packetsPrototypes.get(state);
-		if(pm != null)
-		{
-			prototype = pm.get(id);
-		}
-
-		if(prototype == null)
-		{
-			unknownPacket(state, id);
-			return null;
-		}
-
-		AionClientPacket res = prototype.clonePacket();
-		res.setBuf(buf);
-		res.setConnection(con);
-
-		return res;
-	}
-
-	/**
-	 * Logs unknown packet.
-	 * 
-	 * @param state
-	 * @param id
-	 * @param data
-	 */
-	private void unknownPacket(State state, int id)
-	{
-		log.debug(String.format("[UNKNOWN PACKET] : 0x%02X, state=%s %n", id, state.toString()));
+		return (AionClientPacket)super.handle(data, client);
 	}
 }
