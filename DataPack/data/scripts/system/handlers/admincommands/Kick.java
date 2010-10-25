@@ -60,7 +60,7 @@ public class Kick extends AdminCommand
 			PacketSendUtility.sendMessage(admin, "The specified player is not online.");
 			return;
 		}
-		player.getClientConnection().close(new SM_QUIT_RESPONSE(), true);
+		player.getClientConnection().close(new SM_QUIT_RESPONSE());
 		PacketSendUtility.sendMessage(admin, "Kicked player : " + player.getName());
 	}
 }
