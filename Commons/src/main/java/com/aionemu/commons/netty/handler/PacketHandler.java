@@ -31,7 +31,6 @@ import com.aionemu.commons.netty.packet.BaseClientPacket;
 public class PacketHandler <T  extends AbstractChannelHandler>
 {
 
-
 	/**
 	 * logger for this class
 	 */
@@ -68,7 +67,7 @@ public class PacketHandler <T  extends AbstractChannelHandler>
 	}
 
 	@SuppressWarnings("unchecked")
-	private BaseClientPacket<T> getPacket(State state, int id, ChannelBuffer buf, AbstractChannelHandler con)
+	protected BaseClientPacket<T> getPacket(State state, int id, ChannelBuffer buf, AbstractChannelHandler con)
 	{
 		BaseClientPacket<T> prototype = null;
 
