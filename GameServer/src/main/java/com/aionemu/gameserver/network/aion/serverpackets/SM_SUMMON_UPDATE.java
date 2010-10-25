@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.gameobjects.Summon;
 import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
 import com.aionemu.gameserver.network.aion.AionConnection;
@@ -37,35 +35,35 @@ public class SM_SUMMON_UPDATE extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeC(buf, summon.getLevel());
-		writeH(buf, summon.getMode().getId());
-		writeD(buf, 0);// unk
-		writeD(buf, 0);// unk
-		writeD(buf, summon.getLifeStats().getCurrentHp());
-		writeD(buf, summon.getGameStats().getCurrentStat(StatEnum.MAXHP));
-		writeD(buf, summon.getGameStats().getCurrentStat(StatEnum.MAIN_HAND_POWER));
-		writeH(buf, summon.getGameStats().getCurrentStat(StatEnum.PHYSICAL_DEFENSE));
-		writeH(buf, summon.getGameStats().getCurrentStat(StatEnum.MAGICAL_RESIST));
-		writeH(buf, summon.getGameStats().getCurrentStat(StatEnum.ACCURACY));
-		writeH(buf, summon.getGameStats().getCurrentStat(StatEnum.CRITICAL_RESIST));
-		writeH(buf, summon.getGameStats().getCurrentStat(StatEnum.BOOST_MAGICAL_SKILL));
-		writeH(buf, summon.getGameStats().getCurrentStat(StatEnum.MAGICAL_ACCURACY));		
-		writeH(buf, summon.getGameStats().getCurrentStat(StatEnum.MAGICAL_CRITICAL));
-		writeH(buf, summon.getGameStats().getCurrentStat(StatEnum.PARRY));
-		writeH(buf, summon.getGameStats().getCurrentStat(StatEnum.EVASION));
-		writeD(buf, summon.getGameStats().getBaseStat(StatEnum.MAXHP));
-		writeD(buf, summon.getGameStats().getBaseStat(StatEnum.MAIN_HAND_POWER));
-		writeH(buf, summon.getGameStats().getBaseStat(StatEnum.PHYSICAL_DEFENSE));		
-		writeH(buf, summon.getGameStats().getBaseStat(StatEnum.MAGICAL_RESIST));		
-		writeH(buf, summon.getGameStats().getBaseStat(StatEnum.ACCURACY));
-		writeH(buf, summon.getGameStats().getBaseStat(StatEnum.CRITICAL_RESIST));
-		writeH(buf, summon.getGameStats().getBaseStat(StatEnum.BOOST_MAGICAL_SKILL));
-		writeH(buf, summon.getGameStats().getBaseStat(StatEnum.MAGICAL_ACCURACY));		
-		writeH(buf, summon.getGameStats().getBaseStat(StatEnum.MAGICAL_CRITICAL));
-		writeH(buf, summon.getGameStats().getBaseStat(StatEnum.PARRY));
-		writeH(buf, summon.getGameStats().getBaseStat(StatEnum.EVASION));		
+		writeC( summon.getLevel());
+		writeH(summon.getMode().getId());
+		writeD(0);// unk
+		writeD(0);// unk
+		writeD(summon.getLifeStats().getCurrentHp());
+		writeD(summon.getGameStats().getCurrentStat(StatEnum.MAXHP));
+		writeD(summon.getGameStats().getCurrentStat(StatEnum.MAIN_HAND_POWER));
+		writeH(summon.getGameStats().getCurrentStat(StatEnum.PHYSICAL_DEFENSE));
+		writeH(summon.getGameStats().getCurrentStat(StatEnum.MAGICAL_RESIST));
+		writeH(summon.getGameStats().getCurrentStat(StatEnum.ACCURACY));
+		writeH(summon.getGameStats().getCurrentStat(StatEnum.CRITICAL_RESIST));
+		writeH(summon.getGameStats().getCurrentStat(StatEnum.BOOST_MAGICAL_SKILL));
+		writeH(summon.getGameStats().getCurrentStat(StatEnum.MAGICAL_ACCURACY));		
+		writeH(summon.getGameStats().getCurrentStat(StatEnum.MAGICAL_CRITICAL));
+		writeH(summon.getGameStats().getCurrentStat(StatEnum.PARRY));
+		writeH(summon.getGameStats().getCurrentStat(StatEnum.EVASION));
+		writeD(summon.getGameStats().getBaseStat(StatEnum.MAXHP));
+		writeD(summon.getGameStats().getBaseStat(StatEnum.MAIN_HAND_POWER));
+		writeH(summon.getGameStats().getBaseStat(StatEnum.PHYSICAL_DEFENSE));		
+		writeH(summon.getGameStats().getBaseStat(StatEnum.MAGICAL_RESIST));		
+		writeH(summon.getGameStats().getBaseStat(StatEnum.ACCURACY));
+		writeH(summon.getGameStats().getBaseStat(StatEnum.CRITICAL_RESIST));
+		writeH(summon.getGameStats().getBaseStat(StatEnum.BOOST_MAGICAL_SKILL));
+		writeH(summon.getGameStats().getBaseStat(StatEnum.MAGICAL_ACCURACY));		
+		writeH(summon.getGameStats().getBaseStat(StatEnum.MAGICAL_CRITICAL));
+		writeH(summon.getGameStats().getBaseStat(StatEnum.PARRY));
+		writeH(summon.getGameStats().getBaseStat(StatEnum.EVASION));		
 	}
 
 }

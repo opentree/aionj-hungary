@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.List;
 
 import com.aionemu.gameserver.model.gameobjects.player.ToyPet;
@@ -57,118 +56,118 @@ public class SM_PET extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeH(buf, actionId);
+		writeH(actionId);
 		switch(actionId)
 		{
 			case 0:
 				// load list on login
 				int counter = 0;
-				writeC(buf, 0); // unk
-				writeH(buf, pets.size());
+				writeC( 0); // unk
+				writeH(pets.size());
 				for(ToyPet p : pets)
 				{
 					counter++;
-					writeS(buf, p.getName());
-					writeD(buf, p.getPetId());
-					writeD(buf, p.getDatabaseIndex()); //unk
-					writeD(buf, 0); //unk
-					writeD(buf, 0); //unk
-					writeD(buf, 0); //unk
-					writeD(buf, 1284402195); //creation timestamp - birthday
-					writeC(buf, 2); //unk +
-					writeD(buf, 0); //unk
-					writeD(buf, 0); //unk
-					writeC(buf, 2); //unk +
-					writeD(buf, 0); //unk
-					writeD(buf, 0); //unk
-					writeC(buf, 1); //unk +
-					writeD(buf, 0); //unk
-					writeD(buf, 0); //function id(s) ?
-					writeD(buf, 0); //unk
-					writeD(buf, 0); //unk
+					writeS(p.getName());
+					writeD(p.getPetId());
+					writeD(p.getDatabaseIndex()); //unk
+					writeD(0); //unk
+					writeD(0); //unk
+					writeD(0); //unk
+					writeD(1284402195); //creation timestamp - birthday
+					writeC( 2); //unk +
+					writeD(0); //unk
+					writeD(0); //unk
+					writeC( 2); //unk +
+					writeD(0); //unk
+					writeD(0); //unk
+					writeC( 1); //unk +
+					writeD(0); //unk
+					writeD(0); //function id(s) ?
+					writeD(0); //unk
+					writeD(0); //unk
 				}
 				break;
 			case 1:
 				// adopt
-				writeS(buf, pet.getName());
-				writeD(buf, pet.getPetId());
-				writeD(buf, pet.getDatabaseIndex()); //unk
-				writeD(buf, 0); //unk
-				writeD(buf, 0); //unk
-				writeD(buf, 0); //unk
-				writeD(buf, 0); //unk
-				writeC(buf, 0); //unk +
-				writeD(buf, 0); //unk
-				writeD(buf, 0); //unk
-				writeC(buf, 0); //unk +
-				writeD(buf, 0); //unk
-				writeD(buf, 0); //unk
-				writeC(buf, 0); //unk +
-				writeD(buf, 0); //unk
-				writeD(buf, 0); //unk
-				writeD(buf, 0); //unk
-				writeD(buf, 0); //unk
+				writeS(pet.getName());
+				writeD(pet.getPetId());
+				writeD(pet.getDatabaseIndex()); //unk
+				writeD(0); //unk
+				writeD(0); //unk
+				writeD(0); //unk
+				writeD(0); //unk
+				writeC( 0); //unk +
+				writeD(0); //unk
+				writeD(0); //unk
+				writeC( 0); //unk +
+				writeD(0); //unk
+				writeD(0); //unk
+				writeC( 0); //unk +
+				writeD(0); //unk
+				writeD(0); //unk
+				writeD(0); //unk
+				writeD(0); //unk
 				break;
 			case 2:
 				// surrender
-				writeD(buf, pet.getPetId());
-				writeD(buf, pet.getDatabaseIndex()); //unk
-				writeD(buf, 0); //unk
-				writeD(buf, 0); //unk
+				writeD(pet.getPetId());
+				writeD(pet.getDatabaseIndex()); //unk
+				writeD(0); //unk
+				writeD(0); //unk
 				break;
 			case 3:
 				// spawn
-				writeS(buf, pet.getName());
-				writeD(buf, pet.getPetId());
-				writeD(buf, pet.getDatabaseIndex());
+				writeS(pet.getName());
+				writeD(pet.getPetId());
+				writeD(pet.getDatabaseIndex());
 				
 				if(pet.getX1() == 0 && pet.getY1() == 0 && pet.getZ1() == 0)
 				{
-					writeF(buf, pet.getMaster().getX());
-					writeF(buf, pet.getMaster().getY());
-					writeF(buf, pet.getMaster().getZ());
+					writeF(pet.getMaster().getX());
+					writeF(pet.getMaster().getY());
+					writeF(pet.getMaster().getZ());
 					
-					writeF(buf, pet.getMaster().getX());
-					writeF(buf, pet.getMaster().getY());
-					writeF(buf, pet.getMaster().getZ());
+					writeF(pet.getMaster().getX());
+					writeF(pet.getMaster().getY());
+					writeF(pet.getMaster().getZ());
 					
-					writeC(buf, pet.getMaster().getHeading());
+					writeC( pet.getMaster().getHeading());
 				}
 				else
 				{
-					writeF(buf, pet.getX1());
-					writeF(buf, pet.getY1());
-					writeF(buf, pet.getZ1());
+					writeF(pet.getX1());
+					writeF(pet.getY1());
+					writeF(pet.getZ1());
 					
-					writeF(buf, pet.getX2());
-					writeF(buf, pet.getY2());
-					writeF(buf, pet.getZ2());
+					writeF(pet.getX2());
+					writeF(pet.getY2());
+					writeF(pet.getZ2());
 					
-					writeC(buf, pet.getH());
+					writeC( pet.getH());
 				}
 				
-				writeD(buf, pet.getMaster().getObjectId()); //unk
+				writeD(pet.getMaster().getObjectId()); //unk
 				
-				writeC(buf, 1); //unk
+				writeC( 1); //unk
 				
-				writeD(buf, 0); //unk
+				writeD(0); //unk
 				
-				writeD(buf, 0); //unk
-				writeD(buf, 0); //unk
-				writeD(buf, 0); //unk
-				writeD(buf, 0); //unk
+				writeD(0); //unk
+				writeD(0); //unk
+				writeD(0); //unk
+				writeD(0); //unk
 				break;
 			case 4:
 				// dismiss
-				writeD(buf, petUniqueId);
-				writeC(buf, 0x01);
+				writeD(petUniqueId);
+				writeC( 0x01);
 				break;
 			case 10:
 				// rename
-				writeD(buf, 0); //unk
-				writeS(buf, pet.getName());
+				writeD(0); //unk
+				writeS(pet.getName());
 				break;
 			default:
 				break;					

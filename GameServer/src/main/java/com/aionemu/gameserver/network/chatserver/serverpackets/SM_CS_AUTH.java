@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.chatserver.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.configs.network.IPConfig;
 import com.aionemu.gameserver.configs.network.NetworkConfig;
 import com.aionemu.gameserver.network.chatserver.ChatServerConnection;
@@ -35,12 +33,12 @@ public class SM_CS_AUTH extends CsServerPacket
 	}
 
 	@Override
-	protected void writeImpl(ChatServerConnection con, ByteBuffer buf)
+	protected void writeImpl(ChatServerConnection con)
 	{
-		writeC(buf, getOpcode());
-		writeC(buf, NetworkConfig.GAMESERVER_ID);
-		writeC(buf, IPConfig.getDefaultAddress().length);
-		writeB(buf, IPConfig.getDefaultAddress());
-		writeS(buf, NetworkConfig.CHAT_PASSWORD);
+		writeC(getOpCode());
+		writeC(NetworkConfig.GAMESERVER_ID);
+		writeC(IPConfig.getDefaultAddress().length);
+		writeB(IPConfig.getDefaultAddress());
+		writeS(NetworkConfig.CHAT_PASSWORD);
 	}
 }

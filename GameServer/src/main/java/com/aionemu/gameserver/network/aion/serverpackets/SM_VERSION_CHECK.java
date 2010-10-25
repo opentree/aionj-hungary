@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.configs.main.GSConfig;
 import com.aionemu.gameserver.configs.network.NetworkConfig;
 import com.aionemu.gameserver.network.aion.AionConnection;
@@ -43,29 +41,29 @@ public class SM_VERSION_CHECK extends AionServerPacket
 	 */
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeC(buf, 0x00);
-		writeC(buf, NetworkConfig.GAMESERVER_ID);
-		writeD(buf, 0x000188AD);// unk
-		writeD(buf, 0x000188A6);// unk
-		writeD(buf, 0x00000000);// unk
-		writeD(buf, 0x00018898);// unk
-		writeD(buf, 0x4C346D9D);// unk
-		writeC(buf, 0x00);// unk
-		writeC(buf, GSConfig.SERVER_COUNTRY_CODE);// country code;
-		writeC(buf, 0x00);// unk
-		writeC(buf, GSConfig.SERVER_MODE);//  Server mode : 0x80 = one race / 0x01 = free race / 0x22 = Character
-		writeD(buf, (int) (System.currentTimeMillis() / 1000));
-		writeH(buf, 0x015E);
-		writeH(buf, 0x0A01);
-		writeH(buf, 0x0A01);
-		writeH(buf, 0x020A);
-        writeC(buf, 0x00);
-        writeC(buf, 0x01);
-        writeC(buf, 0x00);
-        writeC(buf, 0x00);
-		writeB(buf, ChatService.getIp());
-		writeH(buf, ChatService.getPort());
+		writeC( 0x00);
+		writeC( NetworkConfig.GAMESERVER_ID);
+		writeD(0x000188AD);// unk
+		writeD(0x000188A6);// unk
+		writeD(0x00000000);// unk
+		writeD(0x00018898);// unk
+		writeD(0x4C346D9D);// unk
+		writeC( 0x00);// unk
+		writeC( GSConfig.SERVER_COUNTRY_CODE);// country code;
+		writeC( 0x00);// unk
+		writeC( GSConfig.SERVER_MODE);//  Server mode : 0x80 = one race / 0x01 = free race / 0x22 = Character
+		writeD((int) (System.currentTimeMillis() / 1000));
+		writeH(0x015E);
+		writeH(0x0A01);
+		writeH(0x0A01);
+		writeH(0x020A);
+        writeC( 0x00);
+        writeC( 0x01);
+        writeC( 0x00);
+        writeC( 0x00);
+		writeB(ChatService.getIp());
+		writeH(ChatService.getPort());
 	}
 }

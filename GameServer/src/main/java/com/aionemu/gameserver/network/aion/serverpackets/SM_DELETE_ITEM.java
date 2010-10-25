@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -34,9 +32,9 @@ public class SM_DELETE_ITEM extends AionServerPacket
 
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, itemUniqueId);
-		writeC(buf, 0); //unk. can be any 1,2,3 etc.
+		writeD(itemUniqueId);
+		writeC( 0); //unk. can be any 1,2,3 etc.
 	}
 }

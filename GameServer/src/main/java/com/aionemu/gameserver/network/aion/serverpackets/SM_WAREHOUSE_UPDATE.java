@@ -5,8 +5,6 @@
 
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.items.ItemId;
 import com.aionemu.gameserver.model.templates.item.ItemTemplate;
@@ -29,44 +27,44 @@ public class SM_WAREHOUSE_UPDATE extends InventoryPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeC(buf, warehouseType);
-		writeH(buf, 13);
-		writeH(buf, 1);
+		writeC( warehouseType);
+		writeH(13);
+		writeH(1);
 
-		writeGeneralInfo(buf, item);
+		writeGeneralInfo(item);
 
 		ItemTemplate itemTemplate = item.getItemTemplate();
 
 		if(itemTemplate.getTemplateId() == ItemId.KINAH.value())
 		{
-			writeKinah(buf, item, false);
+			writeKinah(item, false);
 		}
 		else if (itemTemplate.isWeapon())
 		{
-			writeWeaponInfo(buf, item, false);
+			writeWeaponInfo(item, false);
 		}
 		else if (itemTemplate.isArmor())
 		{
-			writeArmorInfo(buf,item, false, false, false);
+			writeArmorInfo(item, false, false, false);
 		}
 		else
 		{
-			writeGeneralItemInfo(buf, item, false, false);
+			writeGeneralItemInfo(item, false, false);
 		}
 
 	}
 
 	@Override
-	protected void writeGeneralInfo(ByteBuffer buf, Item item)
+	protected void writeGeneralInfo(Item item)
 	{
-		writeD(buf, item.getObjectId());
+		writeD(item.getObjectId());
 		ItemTemplate itemTemplate = item.getItemTemplate();
-		writeD(buf, itemTemplate.getTemplateId());
-		writeC(buf, 0); //some item info (4 - weapon, 7 - armor, 8 - rings, 17 - bottles)
-		writeH(buf, 0x24);
-		writeD(buf, itemTemplate.getNameId());
-		writeH(buf, 0);
+		writeD(itemTemplate.getTemplateId());
+		writeC( 0); //some item info (4 - weapon, 7 - armor, 8 - rings, 17 - bottles)
+		writeH(0x24);
+		writeD(itemTemplate.getNameId());
+		writeH(0);
 	}
 }

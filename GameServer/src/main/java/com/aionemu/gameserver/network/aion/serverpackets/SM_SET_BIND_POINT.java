@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.gameobjects.Kisk;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.network.aion.AionConnection;
@@ -51,16 +49,16 @@ public class SM_SET_BIND_POINT extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
 		// Appears 0x04 if bound to a kisk. 0x00 if not.
-		writeC(buf, (kisk == null ? 0x00 : 0x04)); 
+		writeC( (kisk == null ? 0x00 : 0x04)); 
 		
-		writeC(buf, 0x01);// unk
-		writeD(buf, mapId);// map id
-		writeF(buf, x); // coordinate x
-		writeF(buf, y); // coordinate y
-		writeF(buf, z); // coordinate z
-		writeD(buf, (kisk == null ? 0x00 : kisk.getObjectId())); // kisk object id
+		writeC( 0x01);// unk
+		writeD(mapId);// map id
+		writeF(x); // coordinate x
+		writeF(y); // coordinate y
+		writeF(z); // coordinate z
+		writeD((kisk == null ? 0x00 : kisk.getObjectId())); // kisk object id
 	}
 }

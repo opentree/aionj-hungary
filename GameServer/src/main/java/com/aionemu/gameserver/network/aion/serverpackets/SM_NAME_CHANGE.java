@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -43,12 +41,12 @@ public class SM_NAME_CHANGE extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, 0); //unk
-		writeD(buf, 0); //unk - 0 or 3
-		writeD(buf, playerObjectId);
-		writeS(buf, oldName);
-		writeS(buf, newName);
+		writeD(0); //unk
+		writeD(0); //unk - 0 or 3
+		writeD(playerObjectId);
+		writeS(oldName);
+		writeS(newName);
 	}
 }

@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -50,15 +48,15 @@ public class SM_PLAYER_SPAWN extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, player.getWorldId());
-		writeD(buf, player.getWorldId());//world + chnl
-		writeD(buf, 0x00);// unk
-		writeC(buf, 0x00);// unk
-		writeF(buf, player.getX());// x
-		writeF(buf, player.getY());// y
-		writeF(buf, player.getZ());// z
-		writeC(buf, player.getHeading());// heading
+		writeD(player.getWorldId());
+		writeD(player.getWorldId());//world + chnl
+		writeD(0x00);// unk
+		writeC( 0x00);// unk
+		writeF(player.getX());// x
+		writeF(player.getY());// y
+		writeF(player.getZ());// z
+		writeC( player.getHeading());// heading
 	}
 }

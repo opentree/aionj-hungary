@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.sql.Timestamp;
 
 import com.aionemu.gameserver.network.aion.AionConnection;
@@ -50,10 +49,10 @@ public class SM_TIME_CHECK extends AionServerPacket
 	 */
 	
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{		
-		writeD(buf, time);
-		writeD(buf, nanoTime);
+		writeD(time);
+		writeD(nanoTime);
 		
 	}	
 }

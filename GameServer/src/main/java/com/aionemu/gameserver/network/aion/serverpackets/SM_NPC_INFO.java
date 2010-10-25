@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.Map.Entry;
 
 import com.aionemu.gameserver.model.NpcType;
@@ -139,18 +138,18 @@ public class SM_NPC_INFO extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeF(buf, npc.getX());// x
-		writeF(buf, npc.getY());// y
-		writeF(buf, npc.getZ());// z
-		writeD(buf, npc.getObjectId());
-		writeD(buf, npcId);
-		writeD(buf, npcId);
+		writeF(npc.getX());// x
+		writeF(npc.getY());// y
+		writeF(npc.getZ());// z
+		writeD(npc.getObjectId());
+		writeD(npcId);
+		writeD(npcId);
 
-		writeC(buf, npcTypeId);
+		writeC( npcTypeId);
 
-		writeH(buf, npc.getState());// unk 65=normal,0x47 (71)= [dead npc ?]no drop,0x21(33)=fight state,0x07=[dead monster?]
+		writeH(npc.getState());// unk 65=normal,0x47 (71)= [dead npc ?]no drop,0x21(33)=fight state,0x07=[dead monster?]
 								// no drop
 								// 3,19 - wings spread (NPCs)
 								// 5,6,11,21 - sitting (NPC)
@@ -158,71 +157,71 @@ public class SM_NPC_INFO extends AionServerPacket
 								// 8,24 - [dead][NPC only] - looks like some orb of light (no normal mesh)
 								// 32,33 - fight mode
 
-		writeC(buf, npc.getHeading());
-		writeD(buf, npcTemplate.getNameId());
-		writeD(buf, npcTemplate.getTitleId());// titleID
+		writeC( npc.getHeading());
+		writeD(npcTemplate.getNameId());
+		writeD(npcTemplate.getTitleId());// titleID
 
-		writeH(buf, 0x00);// unk
-		writeC(buf, 0x00);// unk
-		writeD(buf, 0x00);// unk
+		writeH(0x00);// unk
+		writeC( 0x00);// unk
+		writeD(0x00);// unk
 
 		/*
 		 * Master Info (Summon, Kisk, Etc)
 		 */
-		writeD(buf, masterObjId);// masterObjectId
-		writeS(buf, masterName);// masterName
+		writeD(masterObjId);// masterObjectId
+		writeS(masterName);// masterName
 
 		int maxHp = npc.getLifeStats().getMaxHp();
 		int currHp = npc.getLifeStats().getCurrentHp();
-		writeC(buf, 100 * currHp / maxHp);// %hp
-		writeD(buf, npc.getGameStats().getCurrentStat(StatEnum.MAXHP));
-		writeC(buf, npc.getLevel());// lvl
+		writeC( 100 * currHp / maxHp);// %hp
+		writeD(npc.getGameStats().getCurrentStat(StatEnum.MAXHP));
+		writeC( npc.getLevel());// lvl
 
 		NpcEquippedGear gear = npcTemplate.getEquipment();
 		if(gear == null)
-			writeH(buf, 0x00);
+			writeH(0x00);
 		else
 		{
-			writeH(buf, gear.getItemsMask());
+			writeH(gear.getItemsMask());
 			for(Entry<ItemSlot,ItemTemplate> item: gear.getItems()) // getting it from template ( later if we make sure that npcs actually use items, we'll make Item from it )
 			{
-				writeD(buf, item.getValue().getTemplateId());
-				writeD(buf, 0x00);
-				writeD(buf, 0x00);
-				writeH(buf, 0x00);
+				writeD(item.getValue().getTemplateId());
+				writeD(0x00);
+				writeD(0x00);
+				writeH(0x00);
 			}
 		}
 
-		writeF(buf, 1.5f);// unk
-		writeF(buf, npcTemplate.getHeight());
-		writeF(buf, npc.getMoveController().getSpeed());// speed
+		writeF(1.5f);// unk
+		writeF(npcTemplate.getHeight());
+		writeF(npc.getMoveController().getSpeed());// speed
 
-		writeH(buf, 2000);// 0x834 (depends on speed ? )
-		writeH(buf, 2000);// 0x834
+		writeH(2000);// 0x834 (depends on speed ? )
+		writeH(2000);// 0x834
 
-		writeC(buf, 0x00);// unk
+		writeC( 0x00);// unk
 
 		/**
 		 * Movement
 		 */
-		writeF(buf, npc.getX());// x
-		writeF(buf, npc.getY());// y
-		writeF(buf, npc.getZ());// z
-		writeC(buf, 0x00); // move type
+		writeF(npc.getX());// x
+		writeF(npc.getY());// y
+		writeF(npc.getZ());// z
+		writeC( 0x00); // move type
 		SpawnTemplate spawn = npc.getSpawn();
 		if (spawn == null)
-			writeH(buf, 0);
+			writeH(0);
 		else
-			writeH(buf, spawn.getStaticid());
-		writeC(buf, 0);
-		writeC(buf, 0); // all unknown
-		writeC(buf, 0);
-		writeC(buf, 0);
-		writeC(buf, 0);
-		writeC(buf, 0);
-		writeC(buf, 0);
-		writeC(buf, 0);
-		writeC(buf, npc.getVisualState()); // visualState
+			writeH(spawn.getStaticid());
+		writeC( 0);
+		writeC( 0); // all unknown
+		writeC( 0);
+		writeC( 0);
+		writeC( 0);
+		writeC( 0);
+		writeC( 0);
+		writeC( 0);
+		writeC( npc.getVisualState()); // visualState
 
 		/**
 		 * 1 : normal (kisk too)
@@ -230,8 +229,8 @@ public class SM_NPC_INFO extends AionServerPacket
 		 * 32 : trap
 		 * 1024 : holy servant, noble energy
 		 */
-		writeH(buf, npc.getNpcObjectType().getId());
-		writeC(buf, 0x00);// unk
-		writeD(buf, npc.getTarget() == null ? 0 : npc.getTarget().getObjectId());
+		writeH(npc.getNpcObjectType().getId());
+		writeC( 0x00);// unk
+		writeD(npc.getTarget() == null ? 0 : npc.getTarget().getObjectId());
 	}
 }

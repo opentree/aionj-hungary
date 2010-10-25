@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.List;
 
 import com.aionemu.gameserver.controllers.attack.AttackResult;
@@ -52,67 +51,67 @@ public class SM_ATTACK extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, attacker.getObjectId());
-		writeC(buf, attackno); // unknown
-		writeH(buf, time); // unknown
-		writeC(buf, type); // 0, 1, 2
-		writeD(buf, target.getObjectId());
+		writeD(attacker.getObjectId());
+		writeC( attackno); // unknown
+		writeH(time); // unknown
+		writeC( type); // 0, 1, 2
+		writeD(target.getObjectId());
 
 		int attackerMaxHp = attacker.getLifeStats().getMaxHp();
 		int attackerCurrHp = attacker.getLifeStats().getCurrentHp();
 		int targetMaxHp = target.getLifeStats().getMaxHp();
 		int targetCurrHp = target.getLifeStats().getCurrentHp();
 
-		writeC(buf, 100 * targetCurrHp / targetMaxHp); // target %hp
-		writeC(buf, 100 * attackerCurrHp / attackerMaxHp); // attacker %hp
+		writeC( 100 * targetCurrHp / targetMaxHp); // target %hp
+		writeC( 100 * attackerCurrHp / attackerMaxHp); // attacker %hp
 
 		// TODO refactor attack controller
 		switch(attackList.get(0).getAttackStatus().getId())    // Counter skills
 		{
 			case -60:  // case CRITICAL_BLOCK
 			case 4:  // case BLOCK
-				writeH(buf, 32);
+				writeH(32);
 				break;
 			case -62:  // case CRITICAL_PARRY
 			case 2:  // case PARRY
-				writeH(buf, 64);
+				writeH(64);
 				break;
 			case -64:  // case CRITICAL_DODGE
 			case 0:  // case DODGE
-				writeH(buf, 128);
+				writeH(128);
 				break;
 			case -58:  // case CRITICAL_RESIST
 			case 6:  // case RESIST
-				writeH(buf, 256); // need more info becuz sometimes 0
+				writeH(256); // need more info becuz sometimes 0
 				break;
 			default:
-				writeH(buf, 0);
+				writeH(0);
 				break;
 		}
 
-		writeC(buf, attackList.size());
+		writeC( attackList.size());
 		for (AttackResult attack : attackList)
 		{
-			writeD(buf, attack.getDamage());
-			writeC(buf, attack.getAttackStatus().getId());
-			writeC(buf, attack.getShieldType());
+			writeD(attack.getDamage());
+			writeC( attack.getAttackStatus().getId());
+			writeC( attack.getShieldType());
 
 			switch(attack.getShieldType())
 			{
 				case 1: // reflect shield
-					writeD(buf, 0x00);
-					writeD(buf, 0x00);
-					writeD(buf, 0x00);
-					writeD(buf, 0); // reflect damage
-					writeD(buf, 0); // skill id
+					writeD(0x00);
+					writeD(0x00);
+					writeD(0x00);
+					writeD(0); // reflect damage
+					writeD(0); // skill id
 					break;
 				case 2: // normal shield
 				default:
 					break;
 			}
 		}
-		writeC(buf, 0);
+		writeC( 0);
 	}
 }

@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.Map;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
@@ -45,21 +44,21 @@ public class SM_MACRO_LIST extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, player.getObjectId());// player oid
-		writeC(buf, 0x01);// unk
+		writeD(player.getObjectId());// player oid
+		writeC( 0x01);// unk
 
 		final int size = player.getMacroList().getSize();
 
-		writeH(buf, -size);// (-)count
+		writeH(-size);// (-)count
 
 		if(size > 0)
 		{
 			for(Map.Entry<Integer, String> entry : player.getMacroList().entrySet())
 			{
-				writeC(buf, entry.getKey());// order
-				writeS(buf, entry.getValue());// xml
+				writeC( entry.getKey());// order
+				writeS(entry.getValue());// xml
 			}
 		}
 	}

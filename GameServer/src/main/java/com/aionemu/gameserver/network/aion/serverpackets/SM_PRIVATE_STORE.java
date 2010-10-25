@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.LinkedHashMap;
 
 import com.aionemu.gameserver.model.gameobjects.Item;
@@ -41,38 +40,38 @@ public class SM_PRIVATE_STORE extends InventoryPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
 		if(store != null)
 		{
 			Player storePlayer = store.getOwner();
 			LinkedHashMap<Integer, TradePSItem> soldItems = store.getSoldItems();
 			
-			writeD(buf, storePlayer.getObjectId());
-			writeH(buf, soldItems.size());
+			writeD(storePlayer.getObjectId());
+			writeH(soldItems.size());
 			for(Integer itemObjId : soldItems.keySet())
 			{
 				Item item = storePlayer.getInventory().getItemByObjId(itemObjId);
 				TradePSItem tradeItem = store.getTradeItemById(itemObjId);
 				long price = tradeItem.getPrice();
-				writeD(buf, itemObjId);
-				writeD(buf, item.getItemTemplate().getTemplateId());
-				writeH(buf, (int) tradeItem.getCount());
-				writeD(buf, (int) price);
+				writeD(itemObjId);
+				writeD(item.getItemTemplate().getTemplateId());
+				writeH((int) tradeItem.getCount());
+				writeD((int) price);
 
 				ItemTemplate itemTemplate = item.getItemTemplate();
 
 				if (itemTemplate.isWeapon())
 				{
-					writeWeaponInfo(buf, item, false, false, true, false);
+					writeWeaponInfo(item, false, false, true, false);
 				}
 				else if (itemTemplate.isArmor())
 				{
-					writeArmorInfo(buf, item, false, true, false);
+					writeArmorInfo(item, false, true, false);
 				}
 				else
 				{
-					writeGeneralItemInfo(buf, item, true, false);
+					writeGeneralItemInfo(item, true, false);
 				}
 			}
 		}

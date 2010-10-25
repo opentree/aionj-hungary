@@ -17,7 +17,6 @@
 
 package com.aionemu.gameserver.network.loginserver.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.Map;
 
 import com.aionemu.gameserver.network.aion.AionConnection;
@@ -47,13 +46,12 @@ public class SM_ACCOUNT_LIST extends LsServerPacket
 	}
 
 	@Override
-	protected void writeImpl(LoginServerConnection con, ByteBuffer buf)
+	protected void writeImpl(LoginServerConnection con)
 	{
-		writeC(buf, getOpcode());
-		writeD(buf, accounts.size());
+		writeD(accounts.size());
 		for(AionConnection ac : accounts.values())
 		{
-			writeS(buf, ac.getAccount().getName());
+			writeS(ac.getAccount().getName());
 		}
 	}
 }

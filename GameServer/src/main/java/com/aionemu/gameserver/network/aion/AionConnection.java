@@ -16,66 +16,37 @@
  */
 package com.aionemu.gameserver.network.aion;
 
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.channels.SocketChannel;
-
-import javolution.util.FastList;
+import java.nio.channels.ClosedChannelException;
 
 import org.apache.log4j.Logger;
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.channel.ChannelHandlerContext;
+import org.jboss.netty.channel.ChannelStateEvent;
+import org.jboss.netty.channel.ExceptionEvent;
+import org.jboss.netty.channel.MessageEvent;
 
-import com.aionemu.commons.network.AConnection;
-import com.aionemu.commons.network.Dispatcher;
-import com.aionemu.commons.utils.concurrent.RunnableStatsManager;
+import com.aionemu.commons.netty.State;
+import com.aionemu.commons.netty.handler.AbstractChannelHandler;
+import com.aionemu.commons.netty.handler.PacketCrypter;
 import com.aionemu.gameserver.model.account.Account;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.network.Crypt;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_KEY;
-import com.aionemu.gameserver.network.factories.AionPacketHandlerFactory;
 import com.aionemu.gameserver.network.loginserver.LoginServer;
 import com.aionemu.gameserver.services.PlayerService;
-import com.aionemu.gameserver.taskmanager.FIFORunnableQueue;
+import com.aionemu.gameserver.utils.ThreadPoolManager;
 
 /**
  * Object representing connection between GameServer and Aion Client.
  * 
  * @author -Nemesiss-
  */
-public class AionConnection extends AConnection
+public class AionConnection extends AbstractChannelHandler implements PacketCrypter
 {
 	/**
 	 * Logger for this class.
 	 */
 	private static final Logger								log			= Logger.getLogger(AionConnection.class);
-
-	/**
-	 * Possible states of AionConnection
-	 */
-	public static enum State
-	{
-		/**
-		 * client just connect
-		 */
-		CONNECTED,
-		/**
-		 * client is authenticated
-		 */
-		AUTHED,
-		/**
-		 * client entered world.
-		 */
-		IN_GAME
-	}
-
-	/**
-	 * Server Packet "to send" Queue
-	 */
-	private final FastList<AionServerPacket>	sendMsgQueue	= new FastList<AionServerPacket>();
-
-	/**
-	 * Current state of this connection
-	 */
-	private State							state;
 
 	/**
 	 * AionClient is authenticating by passing to GameServer id of account.
@@ -91,33 +62,29 @@ public class AionConnection extends AConnection
 	 * active Player that owner of this connection is playing [entered game]
 	 */
 	private Player							activePlayer;
-	private String							lastPlayerName = "";
 
-	private AionPacketHandler				aionPacketHandler;
+
 	private long                     		lastPingTimeMS;
 
-	/**
-	 * Constructor
-	 * 
-	 * @param sc
-	 * @param d
-	 * @throws IOException
-	 */
-
-	public AionConnection(SocketChannel sc, Dispatcher d) throws IOException
+	@Override
+	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception
 	{
-		super(sc, d);
-
-		AionPacketHandlerFactory aionPacketHandlerFactory = AionPacketHandlerFactory.getInstance();
-		this.aionPacketHandler = aionPacketHandlerFactory.getPacketHandler();
-
-		state = State.CONNECTED;
-
-		String ip = getIP();
-		log.info("connection from: " + ip);
+		super.channelConnected(ctx, e);
 
 		/** Send SM_KEY packet */
 		sendPacket(new SM_KEY());
+	}
+
+	@Override
+	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception
+	{
+		super.messageReceived(ctx, e);
+		ChannelBuffer buf = (ChannelBuffer) e.getMessage();
+		AionClientPacket clientPacket = AionPacketHandlerFactory.getInstance().getPacketHandler().handle(buf, this);
+		if(clientPacket != null && clientPacket.read())
+		{
+			ThreadPoolManager.getInstance().execute(clientPacket);
+		}
 	}
 
 	/**
@@ -133,99 +100,10 @@ public class AionConnection extends AConnection
 	}
 
 	/**
-	 * Called by Dispatcher. ByteBuffer data contains one packet that should be processed.
-	 * 
-	 * @param data
-	 * @return True if data was processed correctly, False if some error occurred and connection should be closed NOW.
+	 * Invoked when a Channel was disconnected from its remote peer
 	 */
 	@Override
-	protected final boolean processData(ByteBuffer data)
-	{
-		try
-		{
-			if(!crypt.decrypt(data))
-			{
-				log.warn("Decrypt fail!");
-				return false;
-			}
-		}
-		catch(Exception ex)
-		{
-			log.error("Exception caught during decrypt!" + ex.getMessage());
-			return false;
-		}
-		
-		AionClientPacket pck = aionPacketHandler.handle(data, this);
-
-		if(state == State.IN_GAME && activePlayer == null)
-		{
-			log.warn("CHECKPOINT: Skipping packet processing of " + pck.getPacketName() + " for player " + lastPlayerName);
-			return false;
-		}
-		
-		/**
-		 * Execute packet only if packet exist (!= null) and read was ok.
-		 */
-		if(pck != null && pck.read())
-			getPacketQueue().execute(pck);
-
-		return true;
-	}
-
-	private FIFORunnableQueue<Runnable> packetQueue;
-	
-	public FIFORunnableQueue<Runnable> getPacketQueue()
-	{
-		if (packetQueue == null)
-			packetQueue = new FIFORunnableQueue<Runnable>() {};
-		
-		return packetQueue;
-	}
-
-	/**
-	 * This method will be called by Dispatcher, and will be repeated till return false.
-	 * 
-	 * @param data
-	 * @return True if data was written to buffer, False indicating that there are not any more data to write.
-	 */
-	@Override
-	protected final boolean writeData(ByteBuffer data)
-	{
-		synchronized(guard)
-		{
-			final long begin = System.nanoTime();
-			if (sendMsgQueue.isEmpty())
-				return false;
-			AionServerPacket packet = sendMsgQueue.removeFirst();
-			try
-			{
-				packet.write(this, data);
-				return true;
-			}
-			finally
-			{
-				RunnableStatsManager.handleStats(packet.getClass(), "runImpl()", System.nanoTime() - begin);
-			}
-
-		}
-	}
-
-	/**
-	 * This method is called by Dispatcher when connection is ready to be closed.
-	 * 
-	 * @return time in ms after witch onDisconnect() method will be called. Always return 0.
-	 */
-	@Override
-	protected final long getDisconnectionDelay()
-	{
-		return 0;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected final void onDisconnect()
+	public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception
 	{
 		/**
 		 * Client starts authentication procedure
@@ -249,92 +127,25 @@ public class AionConnection extends AConnection
 	}
 
 	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected final void onServerClose()
-	{
-		// TODO mb some packet should be send to client before closing?
-		close(/* packet, */true);
-	}
-
-	/**
 	 * Encrypt packet.
 	 * 
 	 * @param buf
 	 */
-	public final void encrypt(ByteBuffer buf)
+	@Override
+	public void encrypt(ChannelBuffer buf)
 	{
 		crypt.encrypt(buf);
 	}
 
-	/**
-	 * Sends AionServerPacket to this client.
-	 * 
-	 * @param bp
-	 *            AionServerPacket to be sent.
-	 */
-	public final void sendPacket(AionServerPacket bp)
+
+	@Override
+	public void decrypt(ChannelBuffer buf)
 	{
-		synchronized(guard)
+		if (!crypt.decrypt(buf))
 		{
-			/**
-			 * Connection is already closed or waiting for last (close packet) to be sent
-			 */
-			if(isWriteDisabled())
-				return;
-
-			sendMsgQueue.addLast(bp);
-			enableWriteInterest();
+			log.info("Decrypt failed!!"+toString());
+			close();
 		}
-	}
-
-	/**
-	 * Its guaranted that closePacket will be sent before closing connection, but all past and future packets wont.
-	 * Connection will be closed [by Dispatcher Thread], and onDisconnect() method will be called to clear all other
-	 * things. forced means that server shouldn't wait with removing this connection.
-	 * 
-	 * @param closePacket
-	 *            Packet that will be send before closing.
-	 * @param forced
-	 *            have no effect in this implementation.
-	 */
-	public final void close(AionServerPacket closePacket, boolean forced)
-	{
-		synchronized(guard)
-		{
-			if(isWriteDisabled())
-				return;
-
-			log.debug("sending packet: " + closePacket + " and closing connection after that.");
-
-			pendingClose = true;
-			isForcedClosing = forced;
-			sendMsgQueue.clear();
-			sendMsgQueue.addLast(closePacket);
-			enableWriteInterest();
-		}
-	}
-
-	/**
-	 * Current state of this connection
-	 * 
-	 * @return state
-	 */
-	public final State getState()
-	{
-		return state;
-	}
-
-	/**
-	 * Sets the state of this connection
-	 * 
-	 * @param state
-	 *            state of this connection
-	 */
-	public void setState(State state)
-	{
-		this.state = state;
 	}
 
 	/**
@@ -374,10 +185,6 @@ public class AionConnection extends AConnection
 			state = State.AUTHED;
 		else
 			state = State.IN_GAME;
-		
-		if(activePlayer != null)
-			lastPlayerName = player.getName();
-		
 		return true;
 	}
 
@@ -406,4 +213,22 @@ public class AionConnection extends AConnection
 	{
 		this.lastPingTimeMS = lastPingTimeMS;
 	}
+	
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception
+	{
+		if (e.getCause() instanceof ClosedChannelException)
+			return;
+		log.error("Game to login connection error:", e.getCause());
+		e.getChannel().close();
+	}
+
+	@Override
+	public String toString()
+	{
+		return "AionConnection " +
+			(account != null?"[account=" + account.getId(): "") +
+			(activePlayer != null? ", activePlayer=" + activePlayer.getName() + "]" : "");
+	}
+	
 }

@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.List;
 
 import com.aionemu.gameserver.model.gameobjects.Item;
@@ -41,45 +40,45 @@ public class SM_VIEW_PLAYER_DETAILS extends AionServerPacket
 
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
 
-		writeD(buf, targetObjId); // unk
-		writeC(buf, 11); //unk
-		writeC(buf, size); // itemCount
-		writeC(buf, 0);
-		writeD(buf, 0);
+		writeD(targetObjId); // unk
+		writeC( 11); //unk
+		writeC( size); // itemCount
+		writeC( 0);
+		writeD(0);
 		for(Item item : items)
 		{	
 			//////general info/////////////
-			writeD(buf, item.getItemTemplate().getTemplateId());//itemId
-			writeH(buf, 36); // 
-			writeD(buf, item.getItemTemplate().getNameId());// itemNameId
-			writeH(buf, 0);
+			writeD(item.getItemTemplate().getTemplateId());//itemId
+			writeH(36); // 
+			writeD(item.getItemTemplate().getNameId());// itemNameId
+			writeH(0);
 			/////who knows/////////////
-			writeH(buf, 36);
-			writeC(buf, 4);
-			writeC(buf, 1);
-			writeH(buf, 0);
-			writeH(buf, 0);
-			writeC(buf, 0);
+			writeH(36);
+			writeC( 4);
+			writeC( 1);
+			writeH(0);
+			writeH(0);
+			writeC( 0);
 			////////////////////////
-			writeH(buf, 0);
-			writeC(buf, 6);
-			writeH(buf, item.getEquipmentSlot()); // slot
-			writeH(buf, 0);
-			writeC(buf, 0);
-			writeH(buf, 62);
-			writeH(buf, (int) item.getItemCount()); // count
+			writeH(0);
+			writeC( 6);
+			writeH(item.getEquipmentSlot()); // slot
+			writeH(0);
+			writeC( 0);
+			writeH(62);
+			writeH((int) item.getItemCount()); // count
 			////////////////////////
 			//Here comes the lol part.
 			////////////////////////
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeC(buf, 0);
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeC( 0);
 		}
 		
 	}

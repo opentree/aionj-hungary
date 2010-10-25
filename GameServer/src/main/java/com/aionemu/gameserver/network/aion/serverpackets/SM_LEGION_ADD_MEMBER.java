@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -43,16 +41,16 @@ public class SM_LEGION_ADD_MEMBER extends AionServerPacket
 	}
 
 	@Override
-	public void writeImpl(AionConnection con, ByteBuffer buf)
+	public void writeImpl(AionConnection con)
 	{
-		writeD(buf, player.getObjectId());
-		writeS(buf, player.getName());
-		writeC(buf, player.getLegionMember().getRank().getRankId());
-		writeC(buf, isMember ? 0x01 : 0x00);// is New Member?
-		writeC(buf, player.getCommonData().getPlayerClass().getClassId());
-		writeC(buf, player.getLevel());
-		writeD(buf, player.getPosition().getMapId());
-		writeD(buf, msgId);
-		writeS(buf, text);
+		writeD(player.getObjectId());
+		writeS(player.getName());
+		writeC( player.getLegionMember().getRank().getRankId());
+		writeC( isMember ? 0x01 : 0x00);// is New Member?
+		writeC( player.getCommonData().getPlayerClass().getClassId());
+		writeC( player.getLevel());
+		writeD(player.getPosition().getMapId());
+		writeD(msgId);
+		writeS(text);
 	}
 }

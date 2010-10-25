@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.controllers.movement.MovementType;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -102,25 +100,25 @@ public class SM_MOVE extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, movingCreatureId);
-		writeF(buf, x);
-		writeF(buf, y);
-		writeF(buf, z);
-		writeC(buf, heading);
-		writeC(buf, moveType.getMovementTypeId());
+		writeD(movingCreatureId);
+		writeF(x);
+		writeF(y);
+		writeF(z);
+		writeC( heading);
+		writeC( moveType.getMovementTypeId());
 
 		if(this.hasDirection)
 		{
-			writeF(buf, x2);
-			writeF(buf, y2);
-			writeF(buf, z2);
+			writeF(x2);
+			writeF(y2);
+			writeF(z2);
 		}
 
 		if(this.hasGlideFlag)
 		{
-			writeC(buf, glideFlag);
+			writeC( glideFlag);
 		}
 	}
 }

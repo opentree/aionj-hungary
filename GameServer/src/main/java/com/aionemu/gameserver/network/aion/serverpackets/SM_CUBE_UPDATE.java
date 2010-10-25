@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -56,17 +54,17 @@ public class SM_CUBE_UPDATE extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeC(buf, cubeType);
-		writeC(buf, advancedSlots);
+		writeC( cubeType);
+		writeC( advancedSlots);
 		switch(cubeType)
 		{
 			case 0:
-				writeD(buf, player.getInventory().size());
-				writeC(buf, player.getCubeSize()); // cube size from npc (so max 5 for now)
-				writeC(buf, 0); // cube size from quest (so max 2 for now)
-				writeC(buf, 0); // unk
+				writeD(player.getInventory().size());
+				writeC( player.getCubeSize()); // cube size from npc (so max 5 for now)
+				writeC( 0); // cube size from quest (so max 2 for now)
+				writeC( 0); // unk
 				break;
 			case 6:
 				break;

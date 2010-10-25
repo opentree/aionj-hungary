@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -37,20 +35,20 @@ public class SM_GATHERABLE_INFO  extends AionServerPacket
 	}
 	
 	@Override
-	public void writeImpl(AionConnection con, ByteBuffer buf)
+	public void writeImpl(AionConnection con)
 	{
-		writeF(buf, visibleObject.getX());
-		writeF(buf, visibleObject.getY());
-		writeF(buf, visibleObject.getZ());
-		writeD(buf, visibleObject.getObjectId());
-		writeD(buf, visibleObject.getSpawn().getStaticid()); //unk
-		writeD(buf, visibleObject.getObjectTemplate().getTemplateId());
-		writeH(buf, 1); //unk
-		writeC(buf, 0);
-		writeD(buf, visibleObject.getObjectTemplate().getNameId());
-		writeH(buf, 0);
-		writeH(buf, 0);
-		writeH(buf, 0);
-		writeC(buf, 100); //unk
+		writeF(visibleObject.getX());
+		writeF(visibleObject.getY());
+		writeF(visibleObject.getZ());
+		writeD(visibleObject.getObjectId());
+		writeD(visibleObject.getSpawn().getStaticid()); //unk
+		writeD(visibleObject.getObjectTemplate().getTemplateId());
+		writeH(1); //unk
+		writeC( 0);
+		writeD(visibleObject.getObjectTemplate().getNameId());
+		writeH(0);
+		writeH(0);
+		writeH(0);
+		writeC( 100); //unk
 	}
 }

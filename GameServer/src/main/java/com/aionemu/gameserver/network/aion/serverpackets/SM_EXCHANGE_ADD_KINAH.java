@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -36,10 +34,10 @@ public class SM_EXCHANGE_ADD_KINAH extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeC(buf, action); // 0 -self 1-other
-		writeD(buf, (int) itemCount); // itemId
-		writeD(buf, 0); // unk
+		writeC( action); // 0 -self 1-other
+		writeD((int) itemCount); // itemId
+		writeD(0); // unk
 	}
 }

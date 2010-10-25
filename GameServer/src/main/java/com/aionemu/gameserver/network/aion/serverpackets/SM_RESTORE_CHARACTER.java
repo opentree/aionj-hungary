@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -51,9 +49,9 @@ public class SM_RESTORE_CHARACTER extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, success ? 0x00 : 0x10);// unk
-		writeD(buf, chaOid);
+		writeD(success ? 0x00 : 0x10);// unk
+		writeD(chaOid);
 	}
 }

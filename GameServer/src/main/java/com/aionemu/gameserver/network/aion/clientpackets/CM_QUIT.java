@@ -17,10 +17,10 @@
 
 package com.aionemu.gameserver.network.aion.clientpackets;
 
+import com.aionemu.commons.netty.State;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.network.aion.AionClientPacket;
 import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionConnection.State;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_QUIT_RESPONSE;
 import com.aionemu.gameserver.network.loginserver.LoginServer;
 import com.aionemu.gameserver.services.PlayerService;
@@ -92,7 +92,7 @@ public class CM_QUIT extends AionClientPacket
 		}
 		else
 		{
-			client.close(new SM_QUIT_RESPONSE(), true);
+			client.close(new SM_QUIT_RESPONSE());
 		}
 	}
 }

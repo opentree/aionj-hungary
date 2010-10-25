@@ -1,7 +1,5 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -24,10 +22,10 @@ public class SM_PLASTIC_SURGERY extends AionServerPacket
 
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-            writeD(buf, playerObjId);
-            writeC(buf, check_ticket ? 1 : 2);
-            writeC(buf, change_sex ? 1 : 0);
+            writeD(playerObjId);
+            writeC( check_ticket ? 1 : 2);
+            writeC( change_sex ? 1 : 0);
 	}
 }

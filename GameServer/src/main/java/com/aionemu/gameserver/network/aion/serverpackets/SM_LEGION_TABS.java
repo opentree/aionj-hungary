@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.Collection;
 
 import com.aionemu.gameserver.model.legion.LegionHistory;
@@ -44,7 +43,7 @@ public class SM_LEGION_TABS extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
 		/**
 		 * If history size is less than page*8 return
@@ -62,31 +61,31 @@ public class SM_LEGION_TABS extends AionServerPacket
 		if(page == 2 && legionHistory.size() > 24)
 			hisSize = 8;
 
-		writeD(buf, 0x12); // Unk
-		writeD(buf, page); // current page
-		writeD(buf, hisSize);
+		writeD(0x12); // Unk
+		writeD(page); // current page
+		writeD(hisSize);
 
 		int i = 0;
 		for(LegionHistory history : legionHistory)
 		{
 			if(i >= (page * 8) && i <= (8 + (page * 8)))
 			{
-				writeD(buf, (int) (history.getTime().getTime() / 1000));
-				writeC(buf, history.getLegionHistoryType().getHistoryId());
-				writeC(buf, 0);
+				writeD((int) (history.getTime().getTime() / 1000));
+				writeC( history.getLegionHistoryType().getHistoryId());
+				writeC( 0);
 				if(history.getName().length() > 0)
 				{
-					writeS(buf, history.getName());
+					writeS(history.getName());
 					int size = 134 - (history.getName().length() * 2 + 2);
-					writeB(buf, new byte[size]);
+					writeB(new byte[size]);
 				}
 				else
-					writeB(buf, new byte[134]);
+					writeB(new byte[134]);
 			}
 			i++;
 			if(i >= (8 + (page * 8)))
 				break;
 		}
-		writeH(buf, 0);
+		writeH(0);
 	}
 }

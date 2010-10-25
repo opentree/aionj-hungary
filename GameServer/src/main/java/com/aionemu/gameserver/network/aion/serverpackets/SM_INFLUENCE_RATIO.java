@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.siege.Influence;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -34,22 +32,22 @@ public class SM_INFLUENCE_RATIO extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
 		Influence inf = Influence.getInstance();
 		
-		writeD(buf, SiegeService.getInstance().getSiegeTime());
-        writeF(buf, inf.getElyos());
-        writeF(buf, inf.getAsmos());
-        writeF(buf, inf.getBalaur());
+		writeD(SiegeService.getInstance().getSiegeTime());
+        writeF(inf.getElyos());
+        writeF(inf.getAsmos());
+        writeF(inf.getBalaur());
         
-        //TODO: 1.9 has writeH(buf, 3) with balauria values
-        writeH(buf, 1);
+        //TODO: 1.9 has writeH(3) with balauria values
+        writeH(1);
         
-        writeD(buf, 400010000);
-        writeF(buf, inf.getElyos());
-        writeF(buf, inf.getAsmos());
-        writeF(buf, inf.getBalaur());
+        writeD(400010000);
+        writeF(inf.getElyos());
+        writeF(inf.getAsmos());
+        writeF(inf.getBalaur());
         
 	}
 }

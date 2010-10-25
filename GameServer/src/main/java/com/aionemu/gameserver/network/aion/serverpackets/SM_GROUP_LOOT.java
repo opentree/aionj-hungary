@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -56,16 +54,16 @@ public class SM_GROUP_LOOT extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, groupId);
-		writeD(buf, unk1);
-		writeD(buf, unk2);
-		writeD(buf, itemId);
-		writeC(buf, unk3);
-		writeD(buf, lootCorpseId);
-		writeC(buf, distributionId);
-		writeD(buf, playerId);
-		writeD(buf, luck);
+		writeD(groupId);
+		writeD(unk1);
+		writeD(unk2);
+		writeD(itemId);
+		writeC( unk3);
+		writeD(lootCorpseId);
+		writeC( distributionId);
+		writeD(playerId);
+		writeD(luck);
 	}
 }

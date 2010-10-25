@@ -17,8 +17,6 @@
 
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -54,14 +52,14 @@ public class SM_PLAYER_STATE extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, playerObjId);
-		writeC(buf, visualState);
-		writeC(buf, seeState);
+		writeD(playerObjId);
+		writeC( visualState);
+		writeC( seeState);
 		if(visualState == 64)
-			writeC(buf, 0x01);
+			writeC( 0x01);
 		else
-			writeC(buf, 0x00);
+			writeC( 0x00);
 	}
 }

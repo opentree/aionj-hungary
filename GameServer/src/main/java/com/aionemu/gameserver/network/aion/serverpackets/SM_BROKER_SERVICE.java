@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Set;
@@ -106,178 +105,178 @@ public class SM_BROKER_SERVICE extends AionServerPacket
 	}
 	
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{	
 		switch (type)
 		{
 			case SEARCHED_ITEMS:
-				writeSearchedItems(buf);
+				writeSearchedItems();
 				break;
 			case REGISTERED_ITEMS:
-				writeRegisteredItems(buf);
+				writeRegisteredItems();
 				break;
 			case REGISTER_ITEM:
-				writeRegisterItem(buf);
+				writeRegisterItem();
 				break;
 			case SHOW_SETTLED_ICON:
-				writeShowSettledIcon(buf);
+				writeShowSettledIcon();
 				break;
 			case REMOVE_SETTLED_ICON:
-				writeRemoveSettledIcon(buf);
+				writeRemoveSettledIcon();
 				break;
 			case SETTLED_ITEMS:
-				writeShowSettledItems(buf);
+				writeShowSettledItems();
 				break;
 		}
 			
 	}
 	
-	private void writeSearchedItems(ByteBuffer buf)
+	private void writeSearchedItems()
 	{
-		writeC(buf, type.getId());
-		writeD(buf, itemsCount);
-		writeC(buf, 0);
-		writeH(buf, startPage);
-		writeH(buf, brokerItems.length);
+		writeC( type.getId());
+		writeD(itemsCount);
+		writeC( 0);
+		writeH(startPage);
+		writeH(brokerItems.length);
 		for(BrokerItem item : brokerItems)
 		{
 			if(item.getItem().getItemTemplate().isArmor() || item.getItem().getItemTemplate().isWeapon())
-				writeArmorWeaponInfo(buf, item);
+				writeArmorWeaponInfo(item);
 			else
-				writeCommonInfo(buf, item);
+				writeCommonInfo(item);
 		}
 	}
 	
-	private void writeRegisteredItems(ByteBuffer buf)
+	private void writeRegisteredItems()
 	{
-		writeC(buf, type.getId());
-		writeD(buf, 0x00);
-		writeH(buf, brokerItems.length); //you can register a max of 15 items, so 0x0F
+		writeC( type.getId());
+		writeD(0x00);
+		writeH(brokerItems.length); //you can register a max of 15 items, so 0x0F
 		for(BrokerItem item : brokerItems)
 		{
-			writeD(buf, item.getItemUniqueId());
-			writeD(buf, item.getItemId());
-			writeQ(buf, item.getPrice());
-			writeQ(buf, item.getItem().getItemCount());
-			writeQ(buf, item.getItem().getItemCount());
+			writeD(item.getItemUniqueId());
+			writeD(item.getItemId());
+			writeQ(item.getPrice());
+			writeQ(item.getItem().getItemCount());
+			writeQ(item.getItem().getItemCount());
 			Timestamp currentTime = new Timestamp(Calendar.getInstance().getTimeInMillis());
 			int daysLeft = Math.round((item.getExpireTime().getTime() - currentTime.getTime()) / 86400000);
-			writeH(buf, daysLeft);
-			writeC(buf, 0);
-			writeD(buf, item.getItemId());
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeH(buf, 0);
+			writeH(daysLeft);
+			writeC( 0);
+			writeD(item.getItemId());
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeH(0);
 		}
 	}
 	
-	private void writeRegisterItem(ByteBuffer buf)
+	private void writeRegisterItem()
 	{
-		writeC(buf, type.getId());
-		writeH(buf, message);
+		writeC( type.getId());
+		writeH(message);
 		if(message == 0)
 		{
 			BrokerItem itemForRegistration = brokerItems[0];
-			writeD(buf, itemForRegistration.getItemUniqueId());
-			writeD(buf, itemForRegistration.getItemId());
-			writeQ(buf, itemForRegistration.getPrice());
-			writeQ(buf, itemForRegistration.getItem().getItemCount());
-			writeQ(buf, itemForRegistration.getItem().getItemCount());
-			writeH(buf, 8); //days left
-			writeC(buf, 0);
-			writeD(buf, itemForRegistration.getItemId());
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeH(buf, 0);
+			writeD(itemForRegistration.getItemUniqueId());
+			writeD(itemForRegistration.getItemId());
+			writeQ(itemForRegistration.getPrice());
+			writeQ(itemForRegistration.getItem().getItemCount());
+			writeQ(itemForRegistration.getItem().getItemCount());
+			writeH(8); //days left
+			writeC( 0);
+			writeD(itemForRegistration.getItemId());
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeH(0);
 		}
 	}
 	
-	private void writeShowSettledIcon(ByteBuffer buf)
+	private void writeShowSettledIcon()
 	{
-		writeC(buf, type.getId());
-		writeQ(buf, settled_kinah);
-		writeD(buf, 0x00);
-		writeH(buf, 0x00);
-		writeH(buf, 0x01);
-		writeC(buf, 0x00);
+		writeC( type.getId());
+		writeQ(settled_kinah);
+		writeD(0x00);
+		writeH(0x00);
+		writeH(0x01);
+		writeC( 0x00);
 	}
 	
-	private void writeRemoveSettledIcon(ByteBuffer buf)
+	private void writeRemoveSettledIcon()
 	{
-		writeH(buf, type.getId());
+		writeH(type.getId());
 	}
 	
-	private void writeShowSettledItems(ByteBuffer buf)
+	private void writeShowSettledItems()
 	{
-		writeC(buf, type.getId());
-		writeQ(buf, settled_kinah);
+		writeC( type.getId());
+		writeQ(settled_kinah);
         
-		writeH(buf, brokerItems.length);
-        writeD(buf, 0x00); 
-        writeC(buf, 0x00);
+		writeH(brokerItems.length);
+        writeD(0x00); 
+        writeC(0x00);
         
-		writeH(buf, brokerItems.length);
+		writeH(brokerItems.length);
 		for(BrokerItem settledItem : brokerItems)
 		{
-			writeD(buf, settledItem.getItemId());
+			writeD(settledItem.getItemId());
 			if(settledItem.isSold())
-				writeQ(buf, settledItem.getPrice());
+				writeQ(settledItem.getPrice());
 			else
-				writeQ(buf, 0);
-			writeQ(buf, settledItem.getItemCount());
-			writeQ(buf, settledItem.getItemCount());
-			writeD(buf, (int)settledItem.getSettleTime().getTime() / 60000);
-			writeH(buf, 0);
-			writeD(buf, settledItem.getItemId());
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeH(buf, 0);
+				writeQ(0);
+			writeQ(settledItem.getItemCount());
+			writeQ(settledItem.getItemCount());
+			writeD((int)settledItem.getSettleTime().getTime() / 60000);
+			writeH(0);
+			writeD(settledItem.getItemId());
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeH(0);
 		}
 	}
 	
-	private void writeArmorWeaponInfo(ByteBuffer buf, BrokerItem item)
+	private void writeArmorWeaponInfo(BrokerItem item)
 	{
-		writeD(buf, item.getItem().getObjectId());
-		writeD(buf, item.getItem().getItemTemplate().getTemplateId());
-		writeQ(buf, item.getPrice());
-		writeQ(buf, item.getItem().getItemCount());
-		writeC(buf, 0);
-		writeC(buf, item.getItem().getEnchantLevel());
-		writeD(buf, item.getItem().getItemSkinTemplate().getTemplateId());
-		writeC(buf, 0);
+		writeD(item.getItem().getObjectId());
+		writeD(item.getItem().getItemTemplate().getTemplateId());
+		writeQ(item.getPrice());
+		writeQ(item.getItem().getItemCount());
+		writeC( 0);
+		writeC( item.getItem().getEnchantLevel());
+		writeD(item.getItem().getItemSkinTemplate().getTemplateId());
+		writeC( 0);
 		
-		writeItemStones(buf, item.getItem());
+		writeItemStones(item.getItem());
 		
 		ItemStone god = item.getItem().getGodStone();
-		writeD(buf, god == null ? 0 : god.getItemId());
+		writeD(god == null ? 0 : god.getItemId());
 		
-		writeC(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeS(buf, item.getSeller());
-		writeS(buf, ""); //creator
+		writeC( 0);
+		writeD(0);
+		writeD(0);
+		writeS(item.getSeller());
+		writeS(""); //creator
 		
 	}
 	
-	private void writeItemStones(ByteBuffer buf, Item item)
+	private void writeItemStones(Item item)
 	{
 		int count = 0;
 		
@@ -294,10 +293,10 @@ public class SM_BROKER_SERVICE extends AionServerPacket
 				if(modifier != null)
 				{
 					count++;
-					writeC(buf, modifier.getStat().getItemStoneMask());
+					writeC( modifier.getStat().getItemStoneMask());
 				}
 			}
-			writeB(buf, new byte[(6-count)]);
+			writeB(new byte[(6-count)]);
 			count = 0;
 			for(ManaStone itemStone : itemStones)
 			{
@@ -308,36 +307,36 @@ public class SM_BROKER_SERVICE extends AionServerPacket
 				if(modifier != null)
 				{
 					count++;
-					writeH(buf, ((SimpleModifier)modifier).getValue());
+					writeH(((SimpleModifier)modifier).getValue());
 				}
 			}
-			writeB(buf, new byte[(6-count)*2]);
+			writeB(new byte[(6-count)*2]);
 		}
 		else
 		{
-			writeB(buf, new byte[18]);
+			writeB(new byte[18]);
 		}
 
 		//for now max 6 stones - write some junk
 	}
 	
-	private void writeCommonInfo(ByteBuffer buf, BrokerItem item)
+	private void writeCommonInfo(BrokerItem item)
 	{
-		writeD(buf, item.getItem().getObjectId());
-		writeD(buf, item.getItem().getItemTemplate().getTemplateId());
-		writeQ(buf, item.getPrice());
-		writeQ(buf, item.getItem().getItemCount());
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeH(buf, 0);
-		writeS(buf, item.getSeller());
-		writeS(buf, ""); //creator
+		writeD(item.getItem().getObjectId());
+		writeD(item.getItem().getItemTemplate().getTemplateId());
+		writeQ(item.getPrice());
+		writeQ(item.getItem().getItemCount());
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeH(0);
+		writeS(item.getSeller());
+		writeS(""); //creator
 	}
 }

@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.Collection;
 
 import com.aionemu.gameserver.network.aion.AionConnection;
@@ -40,21 +39,21 @@ public class SM_ABNORMAL_EFFECT extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, effectedId); 
-		writeC(buf, 1); //unk isdebuff
-		writeD(buf, 0); //unk
-		writeD(buf, abnormals); //unk
+		writeD(effectedId); 
+		writeC(1); //unk isdebuff
+		writeD(0); //unk
+		writeD(abnormals); //unk
 
-		writeH(buf, effects.size()); //effects size
+		writeH(effects.size()); //effects size
 		
 		for(Effect effect : effects)
 		{
-			writeH(buf, effect.getSkillId()); 
-			writeC(buf, effect.getSkillLevel());
-			writeC(buf, effect.getTargetSlot()); 
-			writeD(buf, effect.getElapsedTime());
+			writeH(effect.getSkillId()); 
+			writeC(effect.getSkillLevel());
+			writeC(effect.getTargetSlot()); 
+			writeD(effect.getElapsedTime());
 		}
 	}
 }

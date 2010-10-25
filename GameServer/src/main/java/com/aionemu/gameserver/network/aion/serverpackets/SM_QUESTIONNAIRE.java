@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -44,12 +42,12 @@ public class SM_QUESTIONNAIRE extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, messageId);
-		writeC(buf, chunk);
-		writeC(buf, count);
-		writeH(buf, html.length() * 2);
-		writeS(buf, html);
+		writeD(messageId);
+		writeC( chunk);
+		writeC( count);
+		writeH(html.length() * 2);
+		writeS(html);
 	}
 }

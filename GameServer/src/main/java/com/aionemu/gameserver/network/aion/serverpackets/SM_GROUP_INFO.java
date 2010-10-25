@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.group.LootDistribution;
 import com.aionemu.gameserver.model.group.LootGroupRules;
 import com.aionemu.gameserver.model.group.LootRuleType;
@@ -63,21 +61,21 @@ public class SM_GROUP_INFO extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, this.groupid);
-		writeD(buf, this.leaderid);
-		writeD(buf, this.lootruletype.getId());
-		writeD(buf, this.autodistribution.getId());
-		writeD(buf, this.common_item_above);
-		writeD(buf, this.superior_item_above);
-		writeD(buf, this.heroic_item_above);
-		writeD(buf, this.fabled_item_above);
-		writeD(buf, this.ethernal_item_above);
-		writeD(buf, this.over_ethernal);
-		writeD(buf, this.over_over_ethernal);
-		writeD(buf, 0x00);
-		writeH(buf, 0x00);
-		writeC(buf, 0x00);
+		writeD(this.groupid);
+		writeD(this.leaderid);
+		writeD(this.lootruletype.getId());
+		writeD(this.autodistribution.getId());
+		writeD(this.common_item_above);
+		writeD(this.superior_item_above);
+		writeD(this.heroic_item_above);
+		writeD(this.fabled_item_above);
+		writeD(this.ethernal_item_above);
+		writeD(this.over_ethernal);
+		writeD(this.over_over_ethernal);
+		writeD(0x00);
+		writeH(0x00);
+		writeC( 0x00);
 	}
 }

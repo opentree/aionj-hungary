@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -40,10 +38,10 @@ public class SM_PLAYER_MOVE extends AionServerPacket
 	}
 	
 	@Override
-	public void writeImpl (AionConnection con, ByteBuffer buf) {
-		writeF(buf, x);
-		writeF(buf, y);
-		writeF(buf, z);
-		writeC(buf, heading);
+	public void writeImpl (AionConnection con) {
+		writeF(x);
+		writeF(y);
+		writeF(z);
+		writeC( heading);
 	}
 }

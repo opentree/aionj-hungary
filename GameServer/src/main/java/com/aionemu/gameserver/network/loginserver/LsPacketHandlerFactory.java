@@ -14,12 +14,12 @@
  *  You should have received a copy of the GNU General Public License
  *  along with aion-emu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aionemu.gameserver.network.factories;
+package com.aionemu.gameserver.network.loginserver;
 
 
+import com.aionemu.commons.netty.State;
 import com.aionemu.gameserver.network.loginserver.LsClientPacket;
 import com.aionemu.gameserver.network.loginserver.LsPacketHandler;
-import com.aionemu.gameserver.network.loginserver.LoginServerConnection.State;
 import com.aionemu.gameserver.network.loginserver.clientpackets.CM_ACCOUNT_RECONNECT_KEY;
 import com.aionemu.gameserver.network.loginserver.clientpackets.CM_ACOUNT_AUTH_RESPONSE;
 import com.aionemu.gameserver.network.loginserver.clientpackets.CM_BAN_RESPONSE;
@@ -33,7 +33,7 @@ import com.aionemu.gameserver.network.loginserver.clientpackets.CM_REQUEST_KICK_
  */
 public class LsPacketHandlerFactory
 {
-	private LsPacketHandler	handler	= new LsPacketHandler();
+	private LsPacketHandler	handler;
 
 	public static final LsPacketHandlerFactory getInstance()
 	{
@@ -45,7 +45,7 @@ public class LsPacketHandlerFactory
 	 */
 	private LsPacketHandlerFactory()
 	{
-
+		handler	= new LsPacketHandler();
 		addPacket(new CM_ACCOUNT_RECONNECT_KEY(0x03), State.AUTHED);
 		addPacket(new CM_ACOUNT_AUTH_RESPONSE(0x01), State.AUTHED);
 		addPacket(new CM_GS_AUTH_RESPONSE(0x00), State.CONNECTED);

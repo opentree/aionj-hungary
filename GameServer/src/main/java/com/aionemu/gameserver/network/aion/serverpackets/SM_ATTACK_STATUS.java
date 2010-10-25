@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -81,20 +79,20 @@ public class SM_ATTACK_STATUS extends AionServerPacket
 	 */
 	
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{		
-		writeD(buf, creature.getObjectId());
+		writeD(creature.getObjectId());
 		switch(type)
 		{
 			case DAMAGE:
-				writeD(buf, -value);
+				writeD(-value);
 				break;
 			default:
-				writeD(buf, value);
+				writeD(value);
 		}		
-		writeC(buf, type.getValue());
-		writeC(buf, creature.getLifeStats().getHpPercentage());
-		writeH(buf, skillId);
-		writeH(buf, 0xA6);
+		writeC( type.getValue());
+		writeC( creature.getLifeStats().getHpPercentage());
+		writeH(skillId);
+		writeH(0xA6);
 	}	
 }

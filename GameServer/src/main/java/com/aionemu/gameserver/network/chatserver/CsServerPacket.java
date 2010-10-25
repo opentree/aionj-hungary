@@ -16,9 +16,8 @@
  */
 package com.aionemu.gameserver.network.chatserver;
 
-import java.nio.ByteBuffer;
-
-import com.aionemu.commons.network.packet.BaseServerPacket;
+import com.aionemu.commons.netty.handler.AbstractChannelHandler;
+import com.aionemu.commons.netty.packet.BaseServerPacket;
 
 /**
  * @author ATracer
@@ -33,7 +32,8 @@ public abstract class CsServerPacket extends BaseServerPacket
 	 */
 	protected CsServerPacket(int opcode)
 	{
-		super(opcode);
+		super();
+		this.opCode = opcode;
 	}
 
 	/**
@@ -42,13 +42,11 @@ public abstract class CsServerPacket extends BaseServerPacket
 	 * @param con
 	 * @param buf
 	 */
-	public final void write(ChatServerConnection con, ByteBuffer buf)
+	public final void write(AbstractChannelHandler con)
 	{
-		buf.putShort((short) 0);
-		writeImpl(con, buf);
-		buf.flip();
-		buf.putShort((short) buf.limit());
-		buf.position(0);
+		writeH((short) 0);
+		writeC(getOpCode());
+		writeImpl((ChatServerConnection)con);
 	}
 
 	/**
@@ -57,5 +55,5 @@ public abstract class CsServerPacket extends BaseServerPacket
 	 * @param con
 	 * @param buf
 	 */
-	protected abstract void writeImpl(ChatServerConnection con, ByteBuffer buf);
+	protected abstract void writeImpl(ChatServerConnection con);
 }

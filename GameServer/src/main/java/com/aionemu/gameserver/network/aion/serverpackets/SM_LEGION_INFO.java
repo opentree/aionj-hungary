@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.sql.Timestamp;
 import java.util.Map;
 
@@ -45,19 +44,19 @@ public class SM_LEGION_INFO extends AionServerPacket
 	}
 
 	@Override
-	public void writeImpl(AionConnection con, ByteBuffer buf)
+	public void writeImpl(AionConnection con)
 	{
-		writeS(buf, legion.getLegionName());
-		writeC(buf, legion.getLegionLevel());
-		writeD(buf, legion.getLegionRank());
-		writeC(buf, legion.getCenturionPermission1());
-		writeC(buf, legion.getCenturionPermission2());
-		writeC(buf, legion.getLegionarPermission1());
-		writeC(buf, legion.getLegionarPermission2());
-		writeD(buf, legion.getContributionPoints());
-		writeD(buf, 0x00); // unk
-		writeD(buf, 0x00); // unk
-		writeD(buf, 0x00); // unk
+		writeS(legion.getLegionName());
+		writeC( legion.getLegionLevel());
+		writeD(legion.getLegionRank());
+		writeC( legion.getCenturionPermission1());
+		writeC( legion.getCenturionPermission2());
+		writeC( legion.getLegionarPermission1());
+		writeC( legion.getLegionarPermission2());
+		writeD(legion.getContributionPoints());
+		writeD(0x00); // unk
+		writeD(0x00); // unk
+		writeD(0x00); // unk
 
 		/** Get Announcements List From DB By Legion **/
 		Map<Timestamp, String> announcementList = legion.getAnnouncementList().descendingMap();
@@ -66,13 +65,13 @@ public class SM_LEGION_INFO extends AionServerPacket
 		int i = 0;
 		for(Timestamp unixTime : announcementList.keySet())
 		{
-			writeS(buf, announcementList.get(unixTime));
-			writeD(buf, (int) (unixTime.getTime() / 1000));
+			writeS(announcementList.get(unixTime));
+			writeD((int) (unixTime.getTime() / 1000));
 			i++;
 			if(i >= 7)
 				break;
 		}
 
-		writeH(buf, 0x00);
+		writeH(0x00);
 	}
 }

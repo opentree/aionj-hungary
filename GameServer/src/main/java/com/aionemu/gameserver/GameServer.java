@@ -23,23 +23,17 @@ import org.apache.log4j.Logger;
 import com.aionemu.commons.database.DatabaseFactory;
 import com.aionemu.commons.database.dao.DAOManager;
 import com.aionemu.commons.log4j.exceptions.Log4jInitializationError;
-import com.aionemu.commons.network.NioServer;
-import com.aionemu.commons.network.ServerCfg;
 import com.aionemu.commons.services.LoggingService;
 import com.aionemu.commons.utils.AEFastSet;
 import com.aionemu.commons.utils.AEInfos;
 import com.aionemu.gameserver.cache.HTMLCache;
 import com.aionemu.gameserver.configs.Config;
-import com.aionemu.gameserver.configs.main.GSConfig;
 import com.aionemu.gameserver.configs.main.OptionsConfig;
 import com.aionemu.gameserver.configs.main.ThreadConfig;
-import com.aionemu.gameserver.configs.network.NetworkConfig;
 import com.aionemu.gameserver.dao.PlayerDAO;
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.siege.Influence;
-import com.aionemu.gameserver.network.aion.GameConnectionFactoryImpl;
-import com.aionemu.gameserver.network.chatserver.ChatServer;
-import com.aionemu.gameserver.network.loginserver.LoginServer;
+import com.aionemu.gameserver.network.NettyServer;
 import com.aionemu.gameserver.questEngine.QuestEngine;
 import com.aionemu.gameserver.services.AllianceService;
 import com.aionemu.gameserver.services.AnnouncementService;
@@ -200,21 +194,8 @@ public class GameServer
 		System.runFinalization();
 		AEInfos.printAllInfos();
 
-		AEInfos.printSection("IOServer");
-		ServerCfg aion = new ServerCfg(NetworkConfig.GAME_BIND_ADDRESS, NetworkConfig.GAME_PORT, "Game Connections", new GameConnectionFactoryImpl());
-		NioServer nioServer = new NioServer(1, ThreadPoolManager.getInstance(), aion);
-
-		LoginServer loginServer = LoginServer.getInstance();
-		ChatServer chatServer = ChatServer.getInstance();
-		loginServer.setNioServer(nioServer);
-		chatServer.setNioServer(nioServer);
-		
-		// Nio must go first
-		nioServer.connect();
-		loginServer.connect();
-		if(!GSConfig.DISABLE_CHAT_SERVER)
-			chatServer.connect();
-		
+		AEInfos.printSection("NettyServer");
+		NettyServer.getInstance();
 		GameTimeManager.startClock();
 
 		if(OptionsConfig.DEADLOCK_DETECTOR_ENABLED)

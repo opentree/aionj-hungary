@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.Map;
 
 import com.aionemu.gameserver.network.aion.AionConnection;
@@ -39,15 +38,15 @@ public class SM_SKILL_COOLDOWN extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeH(buf, cooldowns.size());
+		writeH(cooldowns.size());
 		long currentTime = System.currentTimeMillis();
 		for(Map.Entry<Integer, Long> entry : cooldowns.entrySet())
 		{
-			writeH(buf, entry.getKey());
+			writeH(entry.getKey());
 			int left = Math.round((entry.getValue() - currentTime) / 1000);
-			writeD(buf, left > 0 ? left : 0);
+			writeD(left > 0 ? left : 0);
 		}
 	}
 }

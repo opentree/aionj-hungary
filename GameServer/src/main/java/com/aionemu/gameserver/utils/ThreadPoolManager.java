@@ -19,6 +19,7 @@ package com.aionemu.gameserver.utils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -28,8 +29,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 
-import com.aionemu.commons.network.DisconnectionTask;
-import com.aionemu.commons.network.DisconnectionThreadPool;
 import com.aionemu.commons.utils.concurrent.AionRejectedExecutionHandler;
 import com.aionemu.commons.utils.concurrent.ExecuteWrapper;
 import com.aionemu.commons.utils.concurrent.ScheduledFutureWrapper;
@@ -38,7 +37,7 @@ import com.aionemu.gameserver.configs.main.ThreadConfig;
 /**
  * @author -Nemesiss-, NB4L1, MrPoke, lord_rex
  */
-public final class ThreadPoolManager implements DisconnectionThreadPool
+public final class ThreadPoolManager implements Executor
 {
 	private static final Logger					log				= Logger.getLogger(ThreadPoolManager.class);
 
@@ -224,34 +223,6 @@ public final class ThreadPoolManager implements DisconnectionThreadPool
 	public void executeLsPacket(Runnable pkt)
 	{
 		execute(pkt);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @seecom.aionemu.commons.network.DisconnectionThreadPool#scheduleDisconnection(com.aionemu.commons.network.
-	 * DisconnectionTask, long)
-	 */
-	@Override
-	public final void scheduleDisconnection(DisconnectionTask dt, long delay)
-	{
-		schedule(dt, delay);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see com.aionemu.commons.network.DisconnectionThreadPool#waitForDisconnectionTasks()
-	 */
-	@Override
-	public void waitForDisconnectionTasks()
-	{
-		try
-		{
-			disconnectionScheduledThreadPool.shutdown();
-			disconnectionScheduledThreadPool.awaitTermination(6, TimeUnit.MINUTES);
-		}
-		catch(Exception e)
-		{
-		}
 	}
 
 	/**

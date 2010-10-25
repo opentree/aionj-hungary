@@ -16,7 +16,7 @@
  */
 package com.aionemu.gameserver.network;
 
-import java.nio.ByteBuffer;
+import org.jboss.netty.buffer.ChannelBuffer;
 
 import com.aionemu.commons.utils.Rnd;
 
@@ -85,16 +85,16 @@ public class Crypt
 	 * @param buf
 	 * @return true if decryption was successful.
 	 */
-	public final boolean decrypt(ByteBuffer buf)
+	public final boolean decrypt(ChannelBuffer buf)
 	{
 		if(!isEnabled)
 			return false;
 
 		final byte[] data = buf.array();
-		final int size = buf.remaining();
+		final int size = buf.readableBytes();
 
 		/** index to byte that should be decrypted now */
-		int arrayIndex = buf.arrayOffset() + buf.position();
+		int arrayIndex = buf.arrayOffset() + buf.readerIndex();
 
 		/** prev encrypted byte */
 		int prev = data[arrayIndex];
@@ -138,9 +138,9 @@ public class Crypt
 	 * @param buf
 	 * @return true if packet is correctly decoded
 	 */
-	private final boolean validateClientPacket(ByteBuffer buf)
+	private final boolean validateClientPacket(ChannelBuffer buf)
 	{
-		return buf.get(0) == ~buf.get(2) && buf.get(1) == staticClientPacketCode;
+		return buf.getByte(0) == ~buf.getByte(2) && buf.getByte(1) == staticClientPacketCode;
 	}
 
 	/**
@@ -148,7 +148,7 @@ public class Crypt
 	 * 
 	 * @param buf
 	 */
-	public final void encrypt(ByteBuffer buf)
+	public final void encrypt(ChannelBuffer buf)
 	{
 		if(!isEnabled)
 		{
@@ -158,10 +158,10 @@ public class Crypt
 		}
 
 		final byte[] data = buf.array();
-		final int size = buf.remaining();
+		final int size = buf.readableBytes()-2;
 
 		/** index to byte that should be encrypted now */
-		int arrayIndex = buf.arrayOffset() + buf.position();
+		int arrayIndex = buf.arrayOffset() + buf.readerIndex()+2;
 
 		/** encrypt first byte */
 		data[arrayIndex] ^= (serverPacketKey[0] & 0xff);

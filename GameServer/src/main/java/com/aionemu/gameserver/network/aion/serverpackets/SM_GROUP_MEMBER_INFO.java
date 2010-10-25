@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.List;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
@@ -47,48 +46,48 @@ public class SM_GROUP_MEMBER_INFO extends AionServerPacket
 	}
 	
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{		
 		PlayerLifeStats pls = player.getLifeStats();
 		PlayerCommonData pcd = player.getCommonData();
 		WorldPosition wp = pcd.getPosition();
 		
-		writeD(buf, group.getGroupId());
-		writeD(buf, player.getObjectId());
-		writeD(buf, pls.getMaxHp());
-		writeD(buf, pls.getCurrentHp());
-		writeD(buf, pls.getMaxMp());
-		writeD(buf, pls.getCurrentMp());
-		writeD(buf, pls.getMaxFp()); //maxflighttime
-		writeD(buf, pls.getCurrentFp()); //currentflighttime
-		writeD(buf, wp.getMapId());
-		writeD(buf, wp.getMapId());
-		writeF(buf, wp.getX());
-		writeF(buf, wp.getY());
-		writeF(buf, wp.getZ());
-		writeC(buf, pcd.getPlayerClass().getClassId()); //class id
-		writeC(buf, pcd.getGender().getGenderId()); //gender id
-		writeC(buf, pcd.getLevel()); //level
-		writeC(buf, this.event.getId()); //something events
-		writeH(buf, 0x01); //channel
+		writeD(group.getGroupId());
+		writeD(player.getObjectId());
+		writeD(pls.getMaxHp());
+		writeD(pls.getCurrentHp());
+		writeD(pls.getMaxMp());
+		writeD(pls.getCurrentMp());
+		writeD(pls.getMaxFp()); //maxflighttime
+		writeD(pls.getCurrentFp()); //currentflighttime
+		writeD(wp.getMapId());
+		writeD(wp.getMapId());
+		writeF(wp.getX());
+		writeF(wp.getY());
+		writeF(wp.getZ());
+		writeC( pcd.getPlayerClass().getClassId()); //class id
+		writeC( pcd.getGender().getGenderId()); //gender id
+		writeC( pcd.getLevel()); //level
+		writeC( this.event.getId()); //something events
+		writeH(0x01); //channel
 		if (this.event == GroupEvent.MOVEMENT)
 		{
 			return;
 		}
-		writeS(buf, pcd.getName()); //name
-		writeH(buf, 0x00); //unk
-		writeH(buf, 0x00); //unk
+		writeS(pcd.getName()); //name
+		writeH(0x00); //unk
+		writeH(0x00); //unk
 		
 		List<Effect> abnormalEffects = player.getEffectController().getAbnormalEffects();
-		writeH(buf, abnormalEffects.size()); //Abnormal effects
+		writeH(abnormalEffects.size()); //Abnormal effects
 		for(Effect effect : abnormalEffects)
 		{
-			writeD(buf, effect.getEffectorId()); //casterid
-			writeH(buf, effect.getSkillId()); //spellid
-			writeC(buf, effect.getSkillLevel()); //spell level
-			writeC(buf, effect.getTargetSlot()); //unk ?
-			writeD(buf, effect.getElapsedTime()); //estimatedtime
+			writeD(effect.getEffectorId()); //casterid
+			writeH(effect.getSkillId()); //spellid
+			writeC( effect.getSkillLevel()); //spell level
+			writeC( effect.getTargetSlot()); //unk ?
+			writeD(effect.getElapsedTime()); //estimatedtime
 		}
-		writeD(buf, 0x25F7); //unk 9719
+		writeD(0x25F7); //unk 9719
 	}
 }

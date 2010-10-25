@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -54,13 +52,13 @@ public class SM_STATUPDATE_EXP extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeQ(buf, currentExp);
-		writeQ(buf, recoverableExp);
-		writeQ(buf, maxExp);
-		writeQ(buf, curBoostExp);
-		writeQ(buf, maxBoostExp);
+		writeQ(currentExp);
+		writeQ(recoverableExp);
+		writeQ(maxExp);
+		writeQ(curBoostExp);
+		writeQ(maxBoostExp);
 	}
 
 }

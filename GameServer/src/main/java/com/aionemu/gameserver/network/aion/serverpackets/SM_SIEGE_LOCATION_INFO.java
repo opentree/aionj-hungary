@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import javolution.util.FastMap;
 
 import com.aionemu.gameserver.configs.main.SiegeConfig;
@@ -60,42 +58,42 @@ public class SM_SIEGE_LOCATION_INFO extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
 		if (SiegeConfig.SIEGE_ENABLED == false)
 		{
 			// Siege is Disabled
-			writeC(buf, 0);
-			writeH(buf, 0);
+			writeC( 0);
+			writeH(0);
 			return;
 		}
 		
-		writeC(buf, infoType);
-		writeH(buf, locations.size());
+		writeC( infoType);
+		writeH(locations.size());
 		for(FastMap.Entry<Integer, SiegeLocation> e = locations.head(), end = locations.tail();
 			(e = e.getNext()) != end;)
 		{
 			SiegeLocation sLoc = e.getValue();
 			
-			writeD(buf, sLoc.getLocationId()); // Artifact ID
-			writeD(buf, sLoc.getLegionId()); // Legion ID
+			writeD(sLoc.getLocationId()); // Artifact ID
+			writeD(sLoc.getLegionId()); // Legion ID
 			
-			writeD(buf, 0); // unk
-			writeD(buf, 0); // unk
+			writeD(0); // unk
+			writeD(0); // unk
 			
-			writeC(buf, sLoc.getRace().getRaceId());
+			writeC( sLoc.getRace().getRaceId());
 			
 			// is vulnerable (0 - no, 2 - yes)
-			writeC(buf, sLoc.isVulnerable() ? 2 : 0);
+			writeC( sLoc.isVulnerable() ? 2 : 0);
 			
 			 // faction can teleport (0 - no, 1 - yes)
-			writeC(buf, 1);
+			writeC( 1);
 			
 			// Next State (0 - invulnerable, 1 - vulnerable)
-			writeC(buf, sLoc.getNextState());
+			writeC( sLoc.getNextState());
 			
-			writeD(buf, 0); // unk
-			writeD(buf, 0); // unk 1.9 only
+			writeD(0); // unk
+			writeD(0); // unk 1.9 only
 		}
 	}
 }

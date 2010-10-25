@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -52,10 +50,10 @@ public class SM_LOOKATOBJECT extends AionServerPacket
 	* {@inheritDoc}
 	*/
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, visibleObject.getObjectId());
-		writeD(buf, targetObjectId);
-		writeC(buf, heading);
+		writeD(visibleObject.getObjectId());
+		writeD(targetObjectId);
+		writeC( heading);
 	}
 }

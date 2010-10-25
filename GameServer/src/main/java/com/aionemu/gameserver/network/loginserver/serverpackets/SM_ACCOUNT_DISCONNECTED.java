@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.loginserver.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.loginserver.LoginServerConnection;
 import com.aionemu.gameserver.network.loginserver.LsServerPacket;
 
@@ -51,9 +49,8 @@ public class SM_ACCOUNT_DISCONNECTED extends LsServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(LoginServerConnection con, ByteBuffer buf)
+	protected void writeImpl(LoginServerConnection con)
 	{
-		writeC(buf, getOpcode());
-		writeD(buf, accountId);
+		writeD(accountId);
 	}
 }

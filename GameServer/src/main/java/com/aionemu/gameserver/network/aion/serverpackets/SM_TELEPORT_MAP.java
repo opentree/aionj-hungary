@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import org.apache.log4j.Logger;
 
 import com.aionemu.gameserver.model.gameobjects.Npc;
@@ -51,12 +49,12 @@ public class SM_TELEPORT_MAP extends AionServerPacket
 	}
 	
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
 		if ((teleport != null) && (teleport.getNpcId() != 0) && (teleport.getTeleportId() != 0))
 		{
-			writeD(buf, targetObjectId);
-			writeH(buf, teleport.getTeleportId());
+			writeD(targetObjectId);
+			writeH(teleport.getTeleportId());
 		}
 		else
 		{

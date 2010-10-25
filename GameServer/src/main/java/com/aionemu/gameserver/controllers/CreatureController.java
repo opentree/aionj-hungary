@@ -21,7 +21,6 @@ import org.apache.log4j.Logger;
 import javolution.util.FastMap;
 
 import com.aionemu.commons.utils.Rnd;
-import com.aionemu.gameserver.utils.MathUtil;
 import com.aionemu.gameserver.configs.main.GeoDataConfig;
 import com.aionemu.gameserver.controllers.movement.MovementType;
 import com.aionemu.gameserver.model.TaskId;
@@ -36,17 +35,12 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_LOOKATOBJECT;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_MOVE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SKILL_CANCEL; 
-import com.aionemu.gameserver.questEngine.QuestEngine;
-import com.aionemu.gameserver.questEngine.model.QuestEnv;
-import com.aionemu.gameserver.services.ZoneService;
-import com.aionemu.gameserver.services.ZoneService.ZoneUpdateMode;
 import com.aionemu.gameserver.skillengine.SkillEngine;
 import com.aionemu.gameserver.skillengine.model.HealType;
 import com.aionemu.gameserver.skillengine.model.Skill;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.world.World;
 import com.aionemu.gameserver.world.GeoData;
-import com.aionemu.gameserver.world.zone.ZoneInstance;
 
 /**
  * This class is for controlling Creatures [npc's, players etc]
@@ -59,15 +53,6 @@ public abstract class CreatureController<T extends Creature> extends VisibleObje
 	private static final Logger log = Logger.getLogger(CreatureController.class);
 	private FastMap<Integer, Future<?>> tasks = new FastMap<Integer, Future<?>>().shared();
 	
-	private int protectionValue = 0;
-	private int protectionRange = 0;
-	private Creature protector = null;
-	
-
-	/**
-	 * Zone update mask
-	 */
-	private volatile byte	zoneUpdateMask;
 	/**
 	 * {@inheritDoc}
 	 */

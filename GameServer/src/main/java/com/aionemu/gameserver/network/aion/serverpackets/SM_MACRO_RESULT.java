@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -37,7 +35,7 @@ public class SM_MACRO_RESULT extends AionServerPacket
 	}
 	
 	@Override
-	public void writeImpl (AionConnection con, ByteBuffer buf) {
-		writeC(buf, code);
+	public void writeImpl (AionConnection con) {
+		writeC( code);
 	}
 }

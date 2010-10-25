@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.Title;
 import com.aionemu.gameserver.model.gameobjects.player.TitleList;
@@ -44,15 +42,15 @@ public class SM_TITLE_LIST extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-	  writeC(buf, 0x00); // new 2.0 Packet
-		writeC(buf, 0); // unk
-		writeH(buf, titleList.size());
+	  writeC( 0x00); // new 2.0 Packet
+		writeC( 0); // unk
+		writeH(titleList.size());
 		for(Title title : titleList.getTitles())
 		{
-			writeD(buf, title.getTemplate().getTitleId());
-			writeD(buf, 0);
+			writeD(title.getTemplate().getTitleId());
+			writeD(0);
 		}
 	}
 }

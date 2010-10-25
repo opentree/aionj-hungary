@@ -16,22 +16,22 @@
  */
 package com.aionemu.gameserver.network.loginserver;
 
-import java.nio.channels.SocketChannel;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import javolution.util.FastMap;
 
-import com.aionemu.commons.network.Dispatcher;
-import com.aionemu.commons.network.NioServer;
+import org.apache.log4j.Logger;
+import org.jboss.netty.channel.Channel;
+import org.jboss.netty.channel.ChannelFuture;
+
+import com.aionemu.commons.netty.State;
 import com.aionemu.gameserver.configs.network.NetworkConfig;
 import com.aionemu.gameserver.model.account.Account;
 import com.aionemu.gameserver.model.account.AccountTime;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_L2AUTH_LOGIN_CHECK;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_RECONNECT_KEY;
-import com.aionemu.gameserver.network.loginserver.LoginServerConnection.State;
 import com.aionemu.gameserver.network.loginserver.serverpackets.SM_ACCOUNT_AUTH;
 import com.aionemu.gameserver.network.loginserver.serverpackets.SM_ACCOUNT_DISCONNECTED;
 import com.aionemu.gameserver.network.loginserver.serverpackets.SM_ACCOUNT_RECONNECT_KEY;
@@ -57,21 +57,20 @@ public class LoginServer
 	 * Map<accountId,Connection> for waiting request. This request is send to LoginServer and GameServer is waiting for
 	 * response.
 	 */
-	private Map<Integer, AionConnection>	loginRequests		= new HashMap<Integer, AionConnection>();
+	private Map<Integer, AionConnection>	loginRequests		= new FastMap<Integer, AionConnection>().shared();
 
 	/**
 	 * Map<accountId,Connection> for all logged in accounts.
 	 */
-	private Map<Integer, AionConnection>	loggedInAccounts	= new HashMap<Integer, AionConnection>();
+	private Map<Integer, AionConnection>	loggedInAccounts	= new FastMap<Integer, AionConnection>().shared();
 
 	/**
 	 * Connection to LoginServer.
 	 */
 	private LoginServerConnection			loginServer;
-
-	private NioServer						nioServer;
-	private boolean							serverShutdown = false;
 	
+	private ChannelFuture gameToLoginFuture;
+
 	public static final LoginServer getInstance()
 	{
 		return SingletonHolder.instance;
@@ -82,84 +81,36 @@ public class LoginServer
 		
 	}
 
-	public void setNioServer(NioServer nioServer)
-	{
-		this.nioServer = nioServer;
-	}
-
 	/**
 	 * Connect to LoginServer and return object representing this connection. This method is blocking and may block till
 	 * connect successful.
 	 * 
 	 * @return LoginServerConnection
 	 */
-	public LoginServerConnection connect()
+	public void connect()
 	{
-		SocketChannel sc;
-		for(;;)
-		{
-			loginServer = null;
-			log.info("Connecting to LoginServer: " + NetworkConfig.LOGIN_ADDRESS);
-			try
+		ThreadPoolManager.getInstance().schedule(new Runnable(){
+			@Override
+			public void run()
 			{
-				sc = SocketChannel.open(NetworkConfig.LOGIN_ADDRESS);
-				sc.configureBlocking(false);
-				Dispatcher d = nioServer.getReadWriteDispatcher();
-				loginServer = new LoginServerConnection(sc, d);
-				return loginServer;
-			}
-			catch(Exception e)
-			{
-				log.info("Cant connect to LoginServer: " + e.getMessage());
-			}
-			try
-			{
-				/**
-				 * 10s sleep
-				 */
-				Thread.sleep(10 * 1000);
-			}
-			catch(Exception e)
-			{
-			}
-		}
-	}
-
-	/**
-	 * This method is called when we lost connection to LoginServer. We will disconnects all aionClients waiting for
-	 * LoginServer response and also try reconnect to LoginServer.
-	 */
-	public void loginServerDown()
-	{
-		log.warn("Connection with LoginServer lost...");
-
-		loginServer = null;
-		synchronized(this)
-		{
-			/**
-			 * We lost connection for LoginServer so client pending authentication should be disconnected [cuz
-			 * authentication will never ends]
-			 */
-			for(AionConnection client : loginRequests.values())
-			{
-				// TODO! somme error packet!
-				client.close(/* closePacket, */true);
-			}
-			loginRequests.clear();
-		}
-
-		/**
-		 * Reconnect after 5s if not server shutdown sequence
-		 */
-		if (!serverShutdown) {
-			ThreadPoolManager.getInstance().schedule(new Runnable(){
-				@Override
-				public void run()
+				loginServer = null;
+				log.info("Connecting to LoginServer: " + NetworkConfig.LOGIN_ADDRESS);
+				try
 				{
-					connect();
+					Channel channel = gameToLoginFuture.awaitUninterruptibly().getChannel();
+					if (gameToLoginFuture.isSuccess())
+					{
+						loginServer = (LoginServerConnection) channel.getPipeline().getLast();
+						return;
+					}
 				}
-			}, 5000);
-		}
+				catch(Exception e)
+				{
+					log.info("Cant connect to LoginServer: " + e.getMessage());
+				}
+				connect();
+			}
+		},5000);
 	}
 
 	/**
@@ -170,11 +121,8 @@ public class LoginServer
 	 */
 	public void aionClientDisconnected(int accountId)
 	{
-		synchronized(this)
-		{
-			loginRequests.remove(accountId);
-			loggedInAccounts.remove(accountId);
-		}
+		loginRequests.remove(accountId);
+		loggedInAccounts.remove(accountId);
 		sendAccountDisconnected(accountId);
 	}
 	
@@ -184,7 +132,7 @@ public class LoginServer
 	 */
 	private void sendAccountDisconnected(int accountId)
 	{
-		log.info("Sending account disconnected " + accountId);
+		log.debug("Sending account disconnected " + accountId);
 		if(loginServer != null && loginServer.getState() == State.AUTHED)
 			loginServer.sendPacket(new SM_ACCOUNT_DISCONNECTED(accountId));
 	}
@@ -209,16 +157,14 @@ public class LoginServer
 		{
 			log.warn("LS !!! " + (loginServer == null ? "NULL" : loginServer.getState()));
 			// TODO! somme error packet!
-			client.close(/* closePacket, */true);
+			client.close();
 			return;
 		}
 
-		synchronized(this)
-		{
-			if(loginRequests.containsKey(accountId))
-				return;
-			loginRequests.put(accountId, client);
-		}
+		if(loginRequests.containsKey(accountId))
+			return;
+		loginRequests.put(accountId, client);
+
 		loginServer.sendPacket(new SM_ACCOUNT_AUTH(accountId, loginOk, playOk1, playOk2));
 	}
 
@@ -240,16 +186,16 @@ public class LoginServer
 
 		if(result)
 		{
-			client.setState(AionConnection.State.AUTHED);
+			client.setState(State.AUTHED);
 			loggedInAccounts.put(accountId, client);
-			log.info("Account authed: " + accountId + " = " + accountName);
+			log.debug("Account authed: " + accountId + " = " + accountName);
 			client.setAccount(AccountService.getAccount(accountId, accountName, accountTime, accessLevel, membership));
 			client.sendPacket(new SM_L2AUTH_LOGIN_CHECK(true));
 		}
 		else
 		{
-			log.info("Account not authed: " + accountId);
-			client.close(new SM_L2AUTH_LOGIN_CHECK(false), true);
+			log.debug("Account not authed: " + accountId);
+			client.close(new SM_L2AUTH_LOGIN_CHECK(false));
 		}
 	}
 
@@ -267,17 +213,13 @@ public class LoginServer
 		if(loginServer == null || loginServer.getState() != State.AUTHED)
 		{
 			// TODO! somme error packet!
-			client.close(/* closePacket, */false);
+			client.close();
 			return;
 		}
+		if(loginRequests.containsKey(client.getAccount().getId()))
+			return;
+		loginRequests.put(client.getAccount().getId(), client);
 
-		synchronized(this)
-		{
-			if(loginRequests.containsKey(client.getAccount().getId()))
-				return;
-			loginRequests.put(client.getAccount().getId(), client);
-
-		}
 		loginServer.sendPacket(new SM_ACCOUNT_RECONNECT_KEY(client.getAccount().getId()));
 	}
 
@@ -295,8 +237,8 @@ public class LoginServer
 		if(client == null)
 			return;
 
-		log.info("Account reconnectimg: " + accountId + " = " + client.getAccount().getName());
-		client.close(new SM_RECONNECT_KEY(reconnectKey), false);
+		log.debug("Account reconnectimg: " + accountId + " = " + client.getAccount().getName());
+		client.close(new SM_RECONNECT_KEY(reconnectKey));
 	}
 
 	/**
@@ -324,8 +266,8 @@ public class LoginServer
 	
 	private void closeClientWithCheck(AionConnection client, final int accountId)
 	{
-		log.info("Closing client connection " + accountId);
-		client.close(/* closePacket, */false);
+		log.debug("Closing client connection " + accountId);
+		client.close();
 		ThreadPoolManager.getInstance().schedule(new Runnable(){
 			
 			@Override
@@ -335,7 +277,7 @@ public class LoginServer
 				if(client != null)
 				{
 					log.warn("Removing client from server because of stalled connection");
-					client.close(false);
+					client.close();
 					loggedInAccounts.remove(accountId);
 					sendAccountDisconnected(accountId);
 				}
@@ -354,6 +296,11 @@ public class LoginServer
 		return Collections.unmodifiableMap(loggedInAccounts);
 	}
 
+	public void setLoginServer(LoginServerConnection loginServer)
+	{
+		this.loginServer = loginServer;
+	}
+
 	/**
 	 * When Game Server shutdown, have to close all pending client connection
 	 */
@@ -361,20 +308,18 @@ public class LoginServer
 	{
 		synchronized(this)
 		{
-			serverShutdown = true;
 			/**
 			 * GameServer shutting down, must close all pending login requests
 			 */
 			for(AionConnection client : loginRequests.values())
 			{
 				// TODO! somme error packet!
-				client.close(/* closePacket, */true);
+				client.close();
 			}
 			loginRequests.clear();
 			
-			loginServer.close(false);
+			loginServer.close();
 		}
-
 		log.info("GameServer disconnected from the Login Server...");
 	}
 
@@ -392,7 +337,7 @@ public class LoginServer
 			AionConnection client = loggedInAccounts.get(accountId);
 			if (client != null)
 			{
-				Account account =client.getAccount();
+				Account account = client.getAccount();
 				if (type == 1)
 					account.setAccessLevel(param);
 				if (type == 2)
@@ -407,9 +352,36 @@ public class LoginServer
 			loginServer.sendPacket(new SM_BAN(type, accountId, ip, time, adminObjId));
 	}
 	
+	
+	public void setGameToLoginFuture(ChannelFuture gameToLoginFuture)
+	{
+		this.gameToLoginFuture = gameToLoginFuture;
+	}
+
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
 		protected static final LoginServer instance = new LoginServer();
+	}
+
+	public void loginServerDown()
+	{
+		log.warn("Connection with LoginServer lost...");
+
+		loginServer = null;
+		synchronized(this)
+		{
+			/**
+			 * We lost connection for LoginServer so client pending authentication should be disconnected [cuz
+			 * authentication will never ends]
+			 */
+			for(AionConnection client : loginRequests.values())
+			{
+				// TODO! somme error packet!
+				client.close();
+			}
+			loginRequests.clear();
+		}
+		connect();
 	}
 }

@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -40,13 +38,13 @@ public class SM_FORCED_MOVE extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, creature.getObjectId());
-		writeD(buf, target.getObjectId());
-		writeC(buf, 16); // unk
-		writeF(buf, target.getX());
-		writeF(buf, target.getY());
-		writeF(buf, target.getZ() + 0.25f);
+		writeD(creature.getObjectId());
+		writeD(target.getObjectId());
+		writeC( 16); // unk
+		writeF(target.getX());
+		writeF(target.getY());
+		writeF(target.getZ() + 0.25f);
 	}
 }

@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion;
 
-import java.nio.ByteBuffer;
 import java.util.Collection;
 
 import com.aionemu.gameserver.model.gameobjects.Item;
@@ -30,117 +29,117 @@ import com.aionemu.gameserver.model.templates.item.ItemTemplate;
  */
 public abstract class MailServicePacket extends InventoryPacket
 {
-	protected void writeLettersList(ByteBuffer buf, Collection<Letter> letters, Player player)
+	protected void writeLettersList(Collection<Letter> letters, Player player)
 	{
-		writeC(buf, 2); // 2 - Mailbox letters update
-		writeD(buf, player.getObjectId());
-		writeC(buf, 0);
-		writeH(buf, player.getMailbox().getFreeSlots()); // mailbox free slots
+		writeC( 2); // 2 - Mailbox letters update
+		writeD(player.getObjectId());
+		writeC( 0);
+		writeH(player.getMailbox().getFreeSlots()); // mailbox free slots
 		
 		for(Letter letter : letters)
 		{
-			writeD(buf, letter.getObjectId());
-			writeS(buf, letter.getSenderName());
-			writeS(buf, letter.getTitle());
+			writeD(letter.getObjectId());
+			writeS(letter.getSenderName());
+			writeS(letter.getTitle());
 			if(letter.isUnread())
-				writeC(buf, 0);
+				writeC( 0);
 			else
-				writeC(buf, 1);
+				writeC( 1);
 			if(letter.getAttachedItem() != null)
 			{
-				writeD(buf, letter.getAttachedItem().getObjectId());
-				writeD(buf, letter.getAttachedItem().getItemTemplate().getTemplateId());
+				writeD(letter.getAttachedItem().getObjectId());
+				writeD(letter.getAttachedItem().getItemTemplate().getTemplateId());
 			}
 			else
 			{
-				writeD(buf, 0);
-				writeD(buf, 0);
+				writeD(0);
+				writeD(0);
 			}
-			writeD(buf, (int) letter.getAttachedKinah());
-			writeD(buf, 0);
-			writeC(buf, 0);
+			writeD((int) letter.getAttachedKinah());
+			writeD(0);
+			writeC( 0);
 		}
 	}
 
-	protected void writeEmptyLettersList(ByteBuffer buf, Player player)
+	protected void writeEmptyLettersList(Player player)
 	{
-		writeC(buf, 2);
-		writeD(buf, player.getObjectId());
-		writeH(buf, 0);
-		writeC(buf, 0);
+		writeC( 2);
+		writeD(player.getObjectId());
+		writeH(0);
+		writeC( 0);
 	}
 
-	protected void writeMailMessage(ByteBuffer buf, int messageId)
+	protected void writeMailMessage(int messageId)
 	{
-		writeC(buf, 1);
-		writeC(buf, messageId);
+		writeC( 1);
+		writeC( messageId);
 	}
 
-	protected void writeMailboxState(ByteBuffer buf, int haveNewMail, int haveUnread)
+	protected void writeMailboxState(int haveNewMail, int haveUnread)
 	{
-		writeC(buf, 0);
-		writeC(buf, haveNewMail);
-		writeC(buf, 0);
-		writeC(buf, haveUnread);
-		writeD(buf, 0);
-		writeC(buf, 0);
+		writeC( 0);
+		writeC( haveNewMail);
+		writeC( 0);
+		writeC( haveUnread);
+		writeD(0);
+		writeC( 0);
 	}
 
-	protected void writeLetterRead(ByteBuffer buf, Letter letter, long time)
+	protected void writeLetterRead(Letter letter, long time)
 	{
-		writeC(buf, 3);
-		writeD(buf, letter.getRecipientId());
-		writeD(buf, 1);
-		writeD(buf, 0);
-		writeD(buf, letter.getObjectId());
-		writeD(buf, letter.getRecipientId());
-		writeS(buf, letter.getSenderName());
-		writeS(buf, letter.getTitle());
-		writeS(buf, letter.getMessage());
+		writeC( 3);
+		writeD(letter.getRecipientId());
+		writeD(1);
+		writeD(0);
+		writeD(letter.getObjectId());
+		writeD(letter.getRecipientId());
+		writeS(letter.getSenderName());
+		writeS(letter.getTitle());
+		writeS(letter.getMessage());
 
 		Item item = letter.getAttachedItem();
 		if(item != null)
 		{
 			ItemTemplate itemTemplate = item.getItemTemplate();
 
-			writeMailGeneralInfo(buf, item);
+			writeMailGeneralInfo(item);
 
 			if(itemTemplate.isArmor())
-				writeArmorInfo(buf, item, false, false, true);
+				writeArmorInfo(item, false, false, true);
 			else if(itemTemplate.isWeapon())
-				writeWeaponInfo(buf, item, false, false, false, true);
+				writeWeaponInfo(item, false, false, false, true);
 			else
-				writeGeneralItemInfo(buf, item, false, true);
+				writeGeneralItemInfo(item, false, true);
 		}
 		else
 		{
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeD(0);
 		}
 
-		writeD(buf, (int) letter.getAttachedKinah());
-		writeD(buf, 0); // AP reward for castle assault/defense (in future)
-		writeC(buf, 0);
-		writeQ(buf, time / 1000);
-		writeC(buf, 0);
+		writeD((int) letter.getAttachedKinah());
+		writeD(0); // AP reward for castle assault/defense (in future)
+		writeC( 0);
+		writeQ(time / 1000);
+		writeC( 0);
 	}
 
-	protected void writeLetterState(ByteBuffer buf, int letterId, int attachmentType)
+	protected void writeLetterState(int letterId, int attachmentType)
 	{
-		writeC(buf, 5);
-		writeD(buf, letterId);
-		writeC(buf, attachmentType);
-		writeC(buf, 1);
+		writeC( 5);
+		writeD(letterId);
+		writeC( attachmentType);
+		writeC( 1);
 	}
 
-	protected void writeLetterDelete(ByteBuffer buf, int letterId)
+	protected void writeLetterDelete(int letterId)
 	{
-		writeC(buf, 6);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, letterId);
+		writeC( 6);
+		writeD(0);
+		writeD(0);
+		writeD(letterId);
 	}
 }

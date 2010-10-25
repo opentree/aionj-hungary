@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.loginserver.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.loginserver.LoginServerConnection;
 import com.aionemu.gameserver.network.loginserver.LsServerPacket;
 
@@ -72,14 +70,12 @@ public class SM_BAN extends LsServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(LoginServerConnection con, ByteBuffer buf)
+	protected void writeImpl(LoginServerConnection con)
 	{
-		writeC(buf, getOpcode());
-		
-		writeC(buf, type);
-		writeD(buf, accountId);
-		writeS(buf, ip);
-		writeD(buf, time);
-		writeD(buf, adminObjId);
+		writeC(type);
+		writeD(accountId);
+		writeS(ip);
+		writeD(time);
+		writeD(adminObjId);
 	}
 }

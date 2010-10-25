@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedMap;
@@ -53,26 +52,26 @@ public class SM_QUEST_LIST extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeH(buf, completeQuestList.size());
+		writeH(completeQuestList.size());
 		for(QuestState qs : completeQuestList.values())
 		{
-			writeH(buf, qs.getQuestId());
-			writeH(buf, 0x00);
-			writeC(buf, qs.getCompliteCount());
+			writeH(qs.getQuestId());
+			writeH(0x00);
+			writeC( qs.getCompliteCount());
 		}
-		writeC(buf, startedQuestList.size());
+		writeC( startedQuestList.size());
 		for(QuestState qs : startedQuestList) // quest list size ( max is 25 )
 		{
-			writeH(buf, qs.getQuestId());
-			writeH(buf, 0);
+			writeH(qs.getQuestId());
+			writeH(0);
 		}
 		for(QuestState qs : startedQuestList)
 		{
-			writeC(buf, qs.getStatus().value());
-			writeD(buf, qs.getQuestVars().getQuestVars());
-			writeC(buf, 0);
+			writeC( qs.getStatus().value());
+			writeD(qs.getQuestVars().getQuestVars());
+			writeC( 0);
 		}
 	}
 

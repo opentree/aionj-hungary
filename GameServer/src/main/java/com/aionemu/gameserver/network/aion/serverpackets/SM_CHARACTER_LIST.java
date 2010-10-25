@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.account.Account;
 import com.aionemu.gameserver.model.account.PlayerAccountData;
 import com.aionemu.gameserver.network.aion.AionConnection;
@@ -48,17 +46,17 @@ public class SM_CHARACTER_LIST extends PlayerInfo
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, playOk2);
+		writeD(playOk2);
 
 		Account account = con.getAccount();
-		writeC(buf, account.size());// characters count
+		writeC( account.size());// characters count
 		
 		for(PlayerAccountData playerData : account.getSortedAccountsList())
 		{	
-			writePlayerInfo(buf, playerData);
-			writeB(buf, new byte[14]);
+			writePlayerInfo(playerData);
+			writeB(new byte[14]);
 		}
 	}
 }

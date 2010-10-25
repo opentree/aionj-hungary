@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import org.apache.log4j.Logger;
 
 import com.aionemu.gameserver.model.gameobjects.player.Friend;
@@ -43,21 +41,21 @@ public class SM_FRIEND_UPDATE extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void writeImpl(AionConnection con, ByteBuffer buf)
+	public void writeImpl(AionConnection con)
 	{
 		Friend f = con.getActivePlayer().getFriendList().getFriend(friendObjId);
 		if (f == null)
 			log.debug("Attempted to update friend list status of " + friendObjId + " for " + con.getActivePlayer().getName() + " - object ID not found on friend list");
 		else
 		{
-			writeS(buf, f.getName());
-			writeD(buf, f.getLevel());
-			writeD(buf, f.getPlayerClass().getClassId());
-			writeC(buf, f.isOnline() ? 1 : 0); // Online status - No idea why this and f.getStatus are used
-			writeD(buf, f.getMapId());
-			writeD(buf, f.getLastOnlineTime()); // Date friend was last online as a Unix timestamp.
-			writeS(buf, f.getNote());
-			writeC(buf, f.getStatus().getIntValue());
+			writeS(f.getName());
+			writeD(f.getLevel());
+			writeD(f.getPlayerClass().getClassId());
+			writeC(f.isOnline() ? 1 : 0); // Online status - No idea why this and f.getStatus are used
+			writeD(f.getMapId());
+			writeD(f.getLastOnlineTime()); // Date friend was last online as a Unix timestamp.
+			writeS(f.getNote());
+			writeC(f.getStatus().getIntValue());
 		}
 	}
 }

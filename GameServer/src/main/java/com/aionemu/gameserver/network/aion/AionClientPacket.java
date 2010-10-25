@@ -16,11 +16,10 @@
  */
 package com.aionemu.gameserver.network.aion;
 
-import java.nio.ByteBuffer;
-
 import org.apache.log4j.Logger;
 
-import com.aionemu.commons.network.packet.BaseClientPacket;
+import com.aionemu.commons.netty.packet.BaseClientPacket;
+import com.aionemu.commons.netty.packet.BaseServerPacket;
 
 /**
  * Base class for every Aion -> LS Client Packet
@@ -33,23 +32,6 @@ public abstract class AionClientPacket extends BaseClientPacket<AionConnection> 
 	 * Logger for this class.
 	 */
 	private static final Logger	log	= Logger.getLogger(AionClientPacket.class);
-
-	/**
-	 * Constructs new client packet instance.
-	 * 
-	 * @param buf
-	 *            packet data
-	 * @param client
-	 *            packet owner
-	 * @param opcode
-	 *            packet id
-	 */
-	@Deprecated
-	protected AionClientPacket(ByteBuffer buf, AionConnection client, int opcode)
-	{
-		super(buf, opcode);
-		setConnection(client);
-	}
 
 	/**
 	 * Constructs new client packet instance. ByBuffer and ClientConnection should be later set manually, after using
@@ -89,7 +71,7 @@ public abstract class AionClientPacket extends BaseClientPacket<AionConnection> 
 	 * 
 	 * @param msg
 	 */
-	protected void sendPacket(AionServerPacket msg)
+	public void sendPacket(BaseServerPacket msg)
 	{
 		getConnection().sendPacket(msg);
 	}

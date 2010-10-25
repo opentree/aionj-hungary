@@ -16,22 +16,20 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
 public class SM_EMOTION_LIST extends AionServerPacket
 {
 	@Override	
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeC(buf, 0x00);
-		writeH(buf, 57);
+		writeC( 0x00);
+		writeH(57);
 		for (int i = 0; i < 57; i++) // 120 max, for the last emote
 		{
-			writeD(buf, 64 + i); // 120 = /NobodyDance
-			writeH(buf, 0x00);
+			writeD(64 + i); // 120 = /NobodyDance
+			writeH(0x00);
 		}
 	}
 } 

@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -63,18 +61,18 @@ public class SM_ITEM_USAGE_ANIMATION extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, playerObjId); // player obj id
-		writeD(buf, playerObjId); // player obj id 2x - other player? maybe item can be used on other player.
+		writeD(playerObjId); // player obj id
+		writeD(playerObjId); // player obj id 2x - other player? maybe item can be used on other player.
 		
-		writeD(buf, itemObjId); // itemObjId
-		writeD(buf, itemId); // item id
+		writeD(itemObjId); // itemObjId
+		writeD(itemId); // item id
 		
-		writeD(buf, time); // unk
-		writeC(buf, end); // unk
-		writeC(buf, 1); // unk
-		writeC(buf, 0);
-		writeD(buf, unk);
+		writeD(time); // unk
+		writeC( end); // unk
+		writeC( 1); // unk
+		writeC( 0);
+		writeD(unk);
 	}
 }

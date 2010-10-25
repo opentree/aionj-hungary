@@ -16,17 +16,14 @@
  */
 package com.aionemu.gameserver.network.loginserver;
 
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.channels.SocketChannel;
-import java.util.ArrayDeque;
-import java.util.Deque;
-
 import org.apache.log4j.Logger;
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.channel.ChannelHandlerContext;
+import org.jboss.netty.channel.ChannelStateEvent;
+import org.jboss.netty.channel.ExceptionEvent;
+import org.jboss.netty.channel.MessageEvent;
 
-import com.aionemu.commons.network.AConnection;
-import com.aionemu.commons.network.Dispatcher;
-import com.aionemu.gameserver.network.factories.LsPacketHandlerFactory;
+import com.aionemu.commons.netty.handler.AbstractChannelHandler;
 import com.aionemu.gameserver.network.loginserver.serverpackets.SM_GS_AUTH;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 
@@ -36,198 +33,49 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
  * @author -Nemesiss-
  * 
  */
-public class LoginServerConnection extends AConnection
+public class LoginServerConnection extends AbstractChannelHandler
 {
+
 	/**
 	 * Logger for this class.
 	 */
-	private static final Logger	log	= Logger.getLogger(LoginServerConnection.class);
+	private static final Logger				log					= Logger.getLogger(LoginServer.class);
 
-	/**
-	 * Possible states of GsConnection
-	 */
-	public static enum State
+	@Override
+	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception
 	{
-		/**
-		 * game server just connect
-		 */
-		CONNECTED,
-		/**
-		 * game server is authenticated
-		 */
-		AUTHED
-	}
-
-	/**
-	 * Server Packet "to send" Queue
-	 */
-	private final Deque<LsServerPacket>	sendMsgQueue	= new ArrayDeque<LsServerPacket>();
-
-	/**
-	 * Current state of this connection
-	 */
-	private State						state;
-	private LsPacketHandler				lsPacketHandler;
-
-	/**
-	 * Constructor.
-	 * 
-	 * @param sc
-	 * @param d
-	 * @throws IOException
-	 */
-
-	public LoginServerConnection(SocketChannel sc,Dispatcher d) throws IOException
-	{
-		super(sc, d);
-		LsPacketHandlerFactory lsPacketHandlerFactory = LsPacketHandlerFactory.getInstance();
-		this.lsPacketHandler = lsPacketHandlerFactory.getPacketHandler();
-		
-		state = State.CONNECTED;
-		log.info("Connected to LoginServer!");
-
+		super.channelConnected(ctx, e);
 		/**
 		 * send first packet - authentication.
 		 */
 		this.sendPacket(new SM_GS_AUTH());
 	}
 
-	/**
-	 * Called by Dispatcher. ByteBuffer data contains one packet that should be processed.
-	 * 
-	 * @param data
-	 * @return True if data was processed correctly, False if some error occurred and connection should be closed NOW.
-	 */
 	@Override
-	public boolean processData(ByteBuffer data)
+	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception
 	{
-		LsClientPacket pck = lsPacketHandler.handle(data, this);
-		log.info("recived packet: " + pck);
-
-		/**
-		 * Execute packet only if packet exist (!= null) and read was ok.
-		 */
-		if(pck != null && pck.read())
-			ThreadPoolManager.getInstance().executeLsPacket(pck);
-
-		return true;
-	}
-
-	/**
-	 * This method will be called by Dispatcher, and will be repeated till return false.
-	 * 
-	 * @param data
-	 * @return True if data was written to buffer, False indicating that there are not any more data to write.
-	 */
-	@Override
-	protected final boolean writeData(ByteBuffer data)
-	{
-		synchronized(guard)
+		ChannelBuffer buf = (ChannelBuffer) e.getMessage();
+		LsClientPacket clientPacket =  LsPacketHandlerFactory.getInstance().getPacketHandler().handle(buf, this);
+		if(clientPacket != null && clientPacket.read())
 		{
-			LsServerPacket packet = sendMsgQueue.pollFirst();
-			if(packet == null)
-				return false;
-
-			packet.write(this, data);
-			return true;
+			ThreadPoolManager.getInstance().execute(clientPacket);
 		}
 	}
 
 	/**
-	 * This method is called by Dispatcher when connection is ready to be closed.
-	 * 
-	 * @return time in ms after witch onDisconnect() method will be called. Always return 0.
+	 * Invoked when a Channel was disconnected from its remote peer
 	 */
 	@Override
-	protected final long getDisconnectionDelay()
-	{
-		return 0;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected final void onDisconnect()
+	public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception
 	{
 		LoginServer.getInstance().loginServerDown();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	protected final void onServerClose()
+	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception
 	{
-		// TODO mb some packet should be send to loginserver before closing?
-		close(/* packet, */true);
-	}
-
-	/**
-	 * Sends GsServerPacket to this client.
-	 * 
-	 * @param bp
-	 *            GsServerPacket to be sent.
-	 */
-	public final void sendPacket(LsServerPacket bp)
-	{
-		synchronized(guard)
-		{
-			/**
-			 * Connection is already closed or waiting for last (close packet) to be sent
-			 */
-			if(isWriteDisabled())
-				return;
-
-			log.info("sending packet: " + bp);
-
-			sendMsgQueue.addLast(bp);
-			enableWriteInterest();
-		}
-	}
-
-	/**
-	 * Its guaranted that closePacket will be sent before closing connection, but all past and future packets wont.
-	 * Connection will be closed [by Dispatcher Thread], and onDisconnect() method will be called to clear all other
-	 * things. forced means that server shouldn't wait with removing this connection.
-	 * 
-	 * @param closePacket
-	 *            Packet that will be send before closing.
-	 * @param forced
-	 *            have no effect in this implementation.
-	 */
-	public final void close(LsServerPacket closePacket, boolean forced)
-	{
-		synchronized(guard)
-		{
-			if(isWriteDisabled())
-				return;
-
-			log.info("sending packet: " + closePacket + " and closing connection after that.");
-
-			pendingClose = true;
-			isForcedClosing = forced;
-			sendMsgQueue.clear();
-			sendMsgQueue.addLast(closePacket);
-			enableWriteInterest();
-		}
-	}
-
-	/**
-	 * @return Current state of this connection.
-	 */
-	public State getState()
-	{
-		return state;
-	}
-
-	/**
-	 * @param state
-	 *            Set current state of this connection.
-	 */
-	public void setState(State state)
-	{
-		this.state = state;
+		log.error("Game to login connection error:", e.getCause());
+		e.getChannel().close();
 	}
 
 	/**

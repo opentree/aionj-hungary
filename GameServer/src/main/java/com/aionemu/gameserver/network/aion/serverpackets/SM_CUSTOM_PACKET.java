@@ -17,7 +17,6 @@
 
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,57 +38,57 @@ public class SM_CUSTOM_PACKET extends AionServerPacket
 		D('d')
 		{
 			@Override
-			public void write(SM_CUSTOM_PACKET packet, ByteBuffer buf, String value)
+			public void write(SM_CUSTOM_PACKET packet, String value)
 			{
-				packet.writeD(buf, Integer.decode(value));
+				packet.writeD(Integer.decode(value));
 			}
 		},
 		H('h')
 		{
 			@Override
-			public void write(SM_CUSTOM_PACKET packet, ByteBuffer buf, String value)
+			public void write(SM_CUSTOM_PACKET packet, String value)
 			{
-				packet.writeH(buf, Integer.decode(value));
+				packet.writeH(Integer.decode(value));
 			}
 		},
 		C('c')
 		{
 			@Override
-			public void write(SM_CUSTOM_PACKET packet, ByteBuffer buf, String value)
+			public void write(SM_CUSTOM_PACKET packet, String value)
 			{
-				packet.writeC(buf, Integer.decode(value));
+				packet.writeC(Integer.decode(value));
 			}
 		},
 		F('f')
 		{
 			@Override
-			public void write(SM_CUSTOM_PACKET packet, ByteBuffer buf, String value)
+			public void write(SM_CUSTOM_PACKET packet, String value)
 			{
-				packet.writeF(buf, Float.valueOf(value));
+				packet.writeF(Float.valueOf(value));
 			}
 		},
 		DF('e')
 		{
 			@Override
-			public void write(SM_CUSTOM_PACKET packet, ByteBuffer buf, String value)
+			public void write(SM_CUSTOM_PACKET packet, String value)
 			{
-				packet.writeDF(buf, Double.valueOf(value));
+				packet.writeDF(Double.valueOf(value));
 			}
 		},
 		Q('q')
 		{
 			@Override
-			public void write(SM_CUSTOM_PACKET packet, ByteBuffer buf, String value)
+			public void write(SM_CUSTOM_PACKET packet, String value)
 			{
-				packet.writeQ(buf, Long.decode(value));
+				packet.writeQ(Long.decode(value));
 			}
 		},
 		S('s')
 		{
 			@Override
-			public void write(SM_CUSTOM_PACKET packet, ByteBuffer buf, String value)
+			public void write(SM_CUSTOM_PACKET packet, String value)
 			{
-				packet.writeS(buf, value);
+				packet.writeS(value);
 			}
 		};
 
@@ -118,7 +117,7 @@ public class SM_CUSTOM_PACKET extends AionServerPacket
 		 * @param value
 		 *            element value
 		 */
-		public abstract void write(SM_CUSTOM_PACKET packet, ByteBuffer buf, String value);
+		public abstract void write(SM_CUSTOM_PACKET packet, String value);
 	}
 
 	public static class PacketElement
@@ -140,9 +139,9 @@ public class SM_CUSTOM_PACKET extends AionServerPacket
 		 * @param buf
 		 *            packet write buffer.
 		 */
-		public void writeValue(SM_CUSTOM_PACKET packet, ByteBuffer buf)
+		public void writeValue(SM_CUSTOM_PACKET packet)
 		{
-			type.write(packet, buf, value);
+			type.write(packet, value);
 		}
 	}
 
@@ -151,7 +150,7 @@ public class SM_CUSTOM_PACKET extends AionServerPacket
 	public SM_CUSTOM_PACKET(int opcode)
 	{
 		super();
-		setOpcode(opcode);
+		this.opCode = opcode;
 	}
 
 	/**
@@ -177,11 +176,11 @@ public class SM_CUSTOM_PACKET extends AionServerPacket
 
 	/** {@inheritDoc} */
 	@Override
-	public void writeImpl(AionConnection con, ByteBuffer buf)
+	public void writeImpl(AionConnection con)
 	{
 		for(PacketElement el : elements)
 		{
-			el.writeValue(this, buf);
+			el.writeValue(this);
 		}
 	}
 

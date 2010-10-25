@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -38,11 +36,11 @@ public class SM_CUSTOM_SETTINGS extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, player.getObjectId());
-		writeC(buf, 0x01); // unk
-		writeH(buf, player.getPlayerSettings().getDisplay());
-		writeH(buf, player.getPlayerSettings().getDeny());
+		writeD(player.getObjectId());
+		writeC( 0x01); // unk
+		writeH(player.getPlayerSettings().getDisplay());
+		writeH(player.getPlayerSettings().getDeny());
 	}
 }

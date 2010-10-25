@@ -18,7 +18,6 @@ package com.aionemu.gameserver.controllers.siege;
 
 import javolution.util.FastMap;
 import com.aionemu.gameserver.configs.main.SiegeConfig;
-import com.aionemu.gameserver.ai.events.Event;
 import com.aionemu.gameserver.controllers.attack.AggroInfo;
 import com.aionemu.gameserver.model.EmotionType;
 import com.aionemu.gameserver.model.Race;
@@ -37,7 +36,6 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
 import com.aionemu.gameserver.services.RespawnService;
 import com.aionemu.gameserver.services.SiegeService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
-import com.aionemu.gameserver.services.ItemService;
 import com.aionemu.gameserver.services.SystemMailService;
 
 import java.util.ArrayList;
@@ -157,12 +155,12 @@ public class SiegeGeneralController extends SiegeNpcController
 		if (maxDmg <= asmoDmg && asmoDmg > elyosDmg)
 		{
 			winnerLegion = null;
-			SiegeService.getInstance().capture(getOwner().getSiegeId(), SiegeRace.ASMODIANS , winnerLegion.getLegionId());
+			SiegeService.getInstance().capture(getOwner().getSiegeId(), SiegeRace.ASMODIANS , 0);
 		}
 		else if (maxDmg <= elyosDmg && asmoDmg < elyosDmg)
 		{
 			winnerLegion = null;
-			SiegeService.getInstance().capture(getOwner().getSiegeId(), SiegeRace.ELYOS , winnerLegion.getLegionId());
+			SiegeService.getInstance().capture(getOwner().getSiegeId(), SiegeRace.ELYOS , 0);
 		}
 
 		if (winnerLegion != null)

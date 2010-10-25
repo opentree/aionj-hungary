@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,9 +55,9 @@ public class SM_PLAYER_SEARCH extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void writeImpl(AionConnection con, ByteBuffer buf)
+	public void writeImpl(AionConnection con)
 	{
-		writeH(buf, players.size());
+		writeH(players.size());
 		for (Player player : players)
 		{
 			if(player.getActiveRegion() == null)
@@ -66,18 +65,18 @@ public class SM_PLAYER_SEARCH extends AionServerPacket
 				log.warn("CHECKPOINT: null active region for " + player.getObjectId() 
 					+ "-" + player.getX() + "-" + player.getY() + "-" + player.getZ());
 			}
-			writeD(buf, player.getActiveRegion() == null ? region : player.getActiveRegion().getMapId());
-			writeF(buf, player.getPosition().getX());
-			writeF(buf, player.getPosition().getY());
-			writeF(buf, player.getPosition().getZ());
-			writeC(buf, player.getPlayerClass().getClassId());
-			writeC(buf, player.getGender().getGenderId());
-			writeC(buf, player.getLevel());
+			writeD(player.getActiveRegion() == null ? region : player.getActiveRegion().getMapId());
+			writeF(player.getPosition().getX());
+			writeF(player.getPosition().getY());
+			writeF(player.getPosition().getZ());
+			writeC(player.getPlayerClass().getClassId());
+			writeC(player.getGender().getGenderId());
+			writeC(player.getLevel());
 			//TODO: When groups finish, send 3 here if in group
-			writeC(buf, player.isLookingForGroup() ? 0x02 : 0x00); // Status. 2 = LFG, 3 = In group, others = solo
-			writeS(buf, player.getName());
+			writeC( player.isLookingForGroup() ? 0x02 : 0x00); // Status. 2 = LFG, 3 = In group, others = solo
+			writeS(player.getName());
 			byte[] unknown = new byte[44 - (player.getName().length()*2 +2)]; // What on earth is this nonsense?
-			writeB(buf, unknown);
+			writeB(unknown);
 			
 		}
 	}

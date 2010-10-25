@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.Race;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -45,19 +43,19 @@ public class SM_RIFT_ANNOUNCE extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, 0); // unk 1.9
+		writeD(0); // unk 1.9
 		switch(race) //destination
 		{
 			//master rift announcements
 			case ASMODIANS:
-				writeD(buf, 1);
-				writeD(buf, 0);
+				writeD(1);
+				writeD(0);
 				break;
 			case ELYOS:
-				writeD(buf, 1);
-				writeD(buf, 0);
+				writeD(1);
+				writeD(0);
 				break;
 		}
 		

@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -49,13 +47,13 @@ public class SM_LEGION_LEAVE_MEMBER extends AionServerPacket
 	}
 
 	@Override
-	public void writeImpl(AionConnection con, ByteBuffer buf)
+	public void writeImpl(AionConnection con)
 	{
-		writeD(buf, playerObjId);
-		writeC(buf, 0x00); // isMember ? 1 : 0
-		writeD(buf, 0x00); // unix time for log off
-		writeD(buf, msgId);
-		writeS(buf, name);
-		writeS(buf, name1);
+		writeD(playerObjId);
+		writeC( 0x00); // isMember ? 1 : 0
+		writeD(0x00); // unix time for log off
+		writeD(msgId);
+		writeS(name);
+		writeS(name1);
 	}
 }

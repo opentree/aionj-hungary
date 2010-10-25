@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.templates.item.ItemTemplate;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -53,76 +51,76 @@ public class SM_CRAFT_UPDATE extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeH(buf, skillId);
-		writeC(buf, action);
-		writeD(buf, itemId);
+		writeH(skillId);
+		writeC( action);
+		writeD(itemId);
 
 		switch(action)
 		{
 			case 0: //init
 			{
-				writeD(buf, success);
-				writeD(buf, failure);
-				writeD(buf, 0);
-				writeD(buf, 1200);        //timer??
-				writeD(buf, 1330048);
-				writeH(buf, 0x24); //0x24
-				writeD(buf, nameId); 
-				writeH(buf, 0);
+				writeD(success);
+				writeD(failure);
+				writeD(0);
+				writeD(1200);        //timer??
+				writeD(1330048);
+				writeH(0x24); //0x24
+				writeD(nameId); 
+				writeH(0);
 				break;
 			}
 			case  1: //update
 			{
-				writeD(buf, success);
-				writeD(buf, failure);
-				writeD(buf, 700);        //unk timer??
-				writeD(buf, 1200);      //unk timer??
-				writeD(buf, 0); //unk timer??writeD(buf, 700);
-				writeH(buf, 0);
+				writeD(success);
+				writeD(failure);
+				writeD(700);        //unk timer??
+				writeD(1200);      //unk timer??
+				writeD(0); //unk timer??writeD(700);
+				writeH(0);
 				break;
 			}
 			case 2: //crit
 			{
-				writeD(buf, success);
-				writeD(buf, failure);
-				writeD(buf, 700);//unk timer??
-				writeD(buf, 1200); //unk timer??
-				writeD(buf, 0); //unk timer??writeD(buf, 700);
-				writeH(buf, 0);
+				writeD(success);
+				writeD(failure);
+				writeD(700);//unk timer??
+				writeD(1200); //unk timer??
+				writeD(0); //unk timer??writeD(700);
+				writeH(0);
 				break;
 			}
 			case 5: //sucess
 			{
-				writeD(buf, success);
-				writeD(buf, failure);
-				writeD(buf, 700);//unk timer??
-				writeD(buf, 1200); //unk timer??
-				writeD(buf, 0); //unk timer??writeD(buf, 700);
-				writeH(buf, 0);
+				writeD(success);
+				writeD(failure);
+				writeD(700);//unk timer??
+				writeD(1200); //unk timer??
+				writeD(0); //unk timer??writeD(700);
+				writeH(0);
 				break;
 			}
 			case 6: //failed
 			{
-				writeD(buf, success);
-				writeD(buf, failure);
-				writeD(buf, 700); //unk timer??
-				writeD(buf, 1200); //unk timer??
-				writeD(buf, 0); //unk timer??writeD(buf, 700);
-				writeH(buf, 0);
+				writeD(success);
+				writeD(failure);
+				writeD(700); //unk timer??
+				writeD(1200); //unk timer??
+				writeD(0); //unk timer??writeD(700);
+				writeH(0);
 				break;
 			}
 			case 7:
 			{
-				writeD(buf, success);
-				writeD(buf, failure);
-				writeD(buf, 0);
-				writeD(buf, 1200); //timer??
-				writeD(buf, 1330050); //??text??skill??
-				writeH(buf, 0x24); //0x24
-				writeD(buf, nameId);
-				writeH(buf, 0); //0x24
+				writeD(success);
+				writeD(failure);
+				writeD(0);
+				writeD(1200); //timer??
+				writeD(1330050); //??text??skill??
+				writeH(0x24); //0x24
+				writeD(nameId);
+				writeH(0); //0x24
 				break;
 			}
 		}

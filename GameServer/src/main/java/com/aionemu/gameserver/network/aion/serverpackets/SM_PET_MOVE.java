@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.gameobjects.player.ToyPet;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -38,21 +36,21 @@ public class SM_PET_MOVE extends AionServerPacket
 	
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, pet.getDatabaseIndex());
-		writeC(buf, actionId);
+		writeD(pet.getDatabaseIndex());
+		writeC( actionId);
 		switch(actionId)
 		{
 			case 12:
 				// move
-				writeF(buf, pet.getX1());
-				writeF(buf, pet.getY1());
-				writeF(buf, pet.getZ1());
-				writeC(buf, pet.getH());
-				writeF(buf, pet.getX2());
-				writeF(buf, pet.getY2());
-				writeF(buf, pet.getZ2());
+				writeF(pet.getX1());
+				writeF(pet.getY1());
+				writeF(pet.getZ1());
+				writeC( pet.getH());
+				writeF(pet.getX2());
+				writeF(pet.getY2());
+				writeF(pet.getZ2());
 				break;
 			default:
 				break;					

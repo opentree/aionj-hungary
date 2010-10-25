@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.List;
 
 import com.aionemu.gameserver.model.gameobjects.Item;
@@ -59,7 +58,7 @@ public class SM_PLAYER_INFO extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
 		PlayerCommonData pcd = player.getCommonData();
 
@@ -67,57 +66,57 @@ public class SM_PLAYER_INFO extends AionServerPacket
 		final int genderId = pcd.getGender().getGenderId();
 		final PlayerAppearance playerAppearance = player.getPlayerAppearance();
 
-		writeF(buf, player.getX());// x
-		writeF(buf, player.getY());// y
-		writeF(buf, player.getZ());// z
-		writeD(buf, player.getObjectId());
+		writeF(player.getX());// x
+		writeF(player.getY());// y
+		writeF(player.getZ());// z
+		writeD(player.getObjectId());
 		/**
 		 * A3 female asmodian A2 male asmodian A1 female elyos A0 male elyos
 		 */
-		writeD(buf, pcd.getTemplateId());
+		writeD(pcd.getTemplateId());
 		/**
 		 * Transformed state - send transformed model id Regular state - send player model id (from common data)
 		 */
-		writeD(buf, player.getTransformedModelId() == 0 ? pcd.getTemplateId() : player.getTransformedModelId());
-    writeC(buf, 0x00); //2.0 new
-		writeC(buf, enemy ? 0x00 : 0x26);
+		writeD(player.getTransformedModelId() == 0 ? pcd.getTemplateId() : player.getTransformedModelId());
+    writeC( 0x00); //2.0 new
+		writeC( enemy ? 0x00 : 0x26);
 
-		writeC(buf, raceId); // race
-		writeC(buf, pcd.getPlayerClass().getClassId());
-		writeC(buf, genderId); // sex
-		writeH(buf, player.getState());
+		writeC( raceId); // race
+		writeC( pcd.getPlayerClass().getClassId());
+		writeC( genderId); // sex
+		writeH(player.getState());
 
 		byte[] unk = new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
 			(byte) 0x00, (byte) 0x00 };
-		writeB(buf, unk);
+		writeB(unk);
 
-		writeC(buf, player.getHeading());
+		writeC( player.getHeading());
 
-		writeS(buf, player.getName());
+		writeS(player.getName());
 
-		writeD(buf, pcd.getTitleId());
-		writeC(buf, 0x0);// if set 0x1 can't jump and fly..
-		writeH(buf, player.getCastingSkillId());
-		writeH(buf, player.isLegionMember() ? player
+		writeD(pcd.getTitleId());
+		writeC( 0x0);// if set 0x1 can't jump and fly..
+		writeH(player.getCastingSkillId());
+		writeH(player.isLegionMember() ? player
 			.getLegion().getLegionId() : 0);
-		writeH(buf, 0); // User Emblem related?
-		writeH(buf, player.isLegionMember() ? player
+		writeH(0); // User Emblem related?
+		writeH(player.isLegionMember() ? player
 			.getLegion().getLegionEmblem().getEmblemId() : 0);
-		writeC(buf, 0xFF);
-		writeC(buf, player.isLegionMember() ? player
+		writeC( 0xFF);
+		writeC( player.isLegionMember() ? player
 			.getLegion().getLegionEmblem().getColor_r() : 0);
-		writeC(buf, player.isLegionMember() ? player
+		writeC( player.isLegionMember() ? player
 			.getLegion().getLegionEmblem().getColor_g() : 0);
-		writeC(buf, player.isLegionMember() ? player
+		writeC( player.isLegionMember() ? player
 			.getLegion().getLegionEmblem().getColor_b() : 0);
-		writeS(buf, player.isLegionMember() ? player
+		writeS(player.isLegionMember() ? player
 			.getLegion().getLegionName() : "");
 
 		int maxHp = player.getLifeStats().getMaxHp();
 		int currHp = player.getLifeStats().getCurrentHp();
-		writeC(buf, 100 * currHp / maxHp);// %hp
-		writeH(buf, pcd.getDp());// current dp
-		writeC(buf, 0x00);// unk (0x00)
+		writeC( 100 * currHp / maxHp);// %hp
+		writeH(pcd.getDp());// current dp
+		writeC( 0x00);// unk (0x00)
 
 		List<Item> items = player.getEquipment().getEquippedItemsWithoutStigma();
 		short mask = 0;
@@ -126,125 +125,125 @@ public class SM_PLAYER_INFO extends AionServerPacket
 			mask |= item.getEquipmentSlot();
 		}
 
-		writeH(buf, mask);
+		writeH(mask);
 
 		for(Item item : items)
 		{
 			if(item.getEquipmentSlot() < Short.MAX_VALUE * 2)
 			{
-				writeD(buf, item.getItemSkinTemplate().getTemplateId());
+				writeD(item.getItemSkinTemplate().getTemplateId());
 				GodStone godStone = item.getGodStone();
-				writeD(buf, godStone != null ? godStone.getItemId() : 0); 
-				writeD(buf, item.getItemColor());
-				writeH(buf, 0x00);// unk (0x00)
+				writeD(godStone != null ? godStone.getItemId() : 0); 
+				writeD(item.getItemColor());
+				writeH(0x00);// unk (0x00)
 			}
 		}
 
-		writeD(buf, playerAppearance.getSkinRGB());
-		writeD(buf, playerAppearance.getHairRGB());
-		writeD(buf, playerAppearance.getEyeRGB());
-		writeD(buf, playerAppearance.getLipRGB());
-		writeC(buf, playerAppearance.getFace());
-		writeC(buf, playerAppearance.getHair());
-		writeC(buf, playerAppearance.getDeco());
-		writeC(buf, playerAppearance.getTattoo());
+		writeD(playerAppearance.getSkinRGB());
+		writeD(playerAppearance.getHairRGB());
+		writeD(playerAppearance.getEyeRGB());
+		writeD(playerAppearance.getLipRGB());
+		writeC( playerAppearance.getFace());
+		writeC( playerAppearance.getHair());
+		writeC( playerAppearance.getDeco());
+		writeC( playerAppearance.getTattoo());
 
-		writeC(buf, 5);// always 5 o0
+		writeC( 5);// always 5 o0
 
-		writeC(buf, playerAppearance.getFaceShape());
-		writeC(buf, playerAppearance.getForehead());
+		writeC( playerAppearance.getFaceShape());
+		writeC( playerAppearance.getForehead());
 
-		writeC(buf, playerAppearance.getEyeHeight());
-		writeC(buf, playerAppearance.getEyeSpace());
-		writeC(buf, playerAppearance.getEyeWidth());
-		writeC(buf, playerAppearance.getEyeSize());
-		writeC(buf, playerAppearance.getEyeShape());
-		writeC(buf, playerAppearance.getEyeAngle());
+		writeC( playerAppearance.getEyeHeight());
+		writeC( playerAppearance.getEyeSpace());
+		writeC( playerAppearance.getEyeWidth());
+		writeC( playerAppearance.getEyeSize());
+		writeC( playerAppearance.getEyeShape());
+		writeC( playerAppearance.getEyeAngle());
 
-		writeC(buf, playerAppearance.getBrowHeight());
-		writeC(buf, playerAppearance.getBrowAngle());
-		writeC(buf, playerAppearance.getBrowShape());
+		writeC( playerAppearance.getBrowHeight());
+		writeC( playerAppearance.getBrowAngle());
+		writeC( playerAppearance.getBrowShape());
 
-		writeC(buf, playerAppearance.getNose());
-		writeC(buf, playerAppearance.getNoseBridge());
-		writeC(buf, playerAppearance.getNoseWidth());
-		writeC(buf, playerAppearance.getNoseTip());
+		writeC( playerAppearance.getNose());
+		writeC( playerAppearance.getNoseBridge());
+		writeC( playerAppearance.getNoseWidth());
+		writeC( playerAppearance.getNoseTip());
 
-		writeC(buf, playerAppearance.getCheek());
-		writeC(buf, playerAppearance.getLipHeight());
-		writeC(buf, playerAppearance.getMouthSize());
-		writeC(buf, playerAppearance.getLipSize());
-		writeC(buf, playerAppearance.getSmile());
-		writeC(buf, playerAppearance.getLipShape());
-		writeC(buf, playerAppearance.getJawHeigh());
-		writeC(buf, playerAppearance.getChinJut());
-		writeC(buf, playerAppearance.getEarShape());
-		writeC(buf, playerAppearance.getHeadSize());
+		writeC( playerAppearance.getCheek());
+		writeC( playerAppearance.getLipHeight());
+		writeC( playerAppearance.getMouthSize());
+		writeC( playerAppearance.getLipSize());
+		writeC( playerAppearance.getSmile());
+		writeC( playerAppearance.getLipShape());
+		writeC( playerAppearance.getJawHeigh());
+		writeC( playerAppearance.getChinJut());
+		writeC( playerAppearance.getEarShape());
+		writeC( playerAppearance.getHeadSize());
 		// 1.5.x 0x00, shoulderSize, armLength, legLength (BYTE) after HeadSize
 
-		writeC(buf, playerAppearance.getNeck());
-		writeC(buf, playerAppearance.getNeckLength());
-		writeC(buf, playerAppearance.getShoulderSize());
+		writeC( playerAppearance.getNeck());
+		writeC( playerAppearance.getNeckLength());
+		writeC( playerAppearance.getShoulderSize());
 
-		writeC(buf, playerAppearance.getTorso());
-		writeC(buf, playerAppearance.getChest()); // only woman
-		writeC(buf, playerAppearance.getWaist());
+		writeC( playerAppearance.getTorso());
+		writeC( playerAppearance.getChest()); // only woman
+		writeC( playerAppearance.getWaist());
 
-		writeC(buf, playerAppearance.getHips());
-		writeC(buf, playerAppearance.getArmThickness());
-		writeC(buf, playerAppearance.getHandSize());
-		writeC(buf, playerAppearance.getLegThicnkess());
+		writeC( playerAppearance.getHips());
+		writeC( playerAppearance.getArmThickness());
+		writeC( playerAppearance.getHandSize());
+		writeC( playerAppearance.getLegThicnkess());
 
-		writeC(buf, playerAppearance.getFootSize());
-		writeC(buf, playerAppearance.getFacialRate());
+		writeC( playerAppearance.getFootSize());
+		writeC( playerAppearance.getFacialRate());
 
-		writeC(buf, 0x00); // always 0
-		writeC(buf, playerAppearance.getArmLength());
-		writeC(buf, playerAppearance.getLegLength());
-		writeC(buf, playerAppearance.getShoulders());
-		writeC(buf, 0x00); // always 0
-		writeC(buf, 0x00); // 0x00
+		writeC( 0x00); // always 0
+		writeC( playerAppearance.getArmLength());
+		writeC( playerAppearance.getLegLength());
+		writeC( playerAppearance.getShoulders());
+		writeC( 0x00); // always 0
+		writeC( 0x00); // 0x00
 
-		writeC(buf, playerAppearance.getVoice());
+		writeC( playerAppearance.getVoice());
 
-		writeF(buf, playerAppearance.getHeight());
-		writeF(buf, 0.25f); // scale
-		writeF(buf, 2.0f); // gravity or slide surface o_O
-		writeF(buf, player.getGameStats().getCurrentStat(StatEnum.SPEED) / 1000f); // move speed
+		writeF(playerAppearance.getHeight());
+		writeF(0.25f); // scale
+		writeF(2.0f); // gravity or slide surface o_O
+		writeF(player.getGameStats().getCurrentStat(StatEnum.SPEED) / 1000f); // move speed
 
-		writeH(buf, player.getGameStats().getBaseStat(StatEnum.ATTACK_SPEED));
-		writeH(buf, player.getGameStats().getCurrentStat(StatEnum.ATTACK_SPEED));
-		writeC(buf, 2);
+		writeH(player.getGameStats().getBaseStat(StatEnum.ATTACK_SPEED));
+		writeH(player.getGameStats().getCurrentStat(StatEnum.ATTACK_SPEED));
+		writeC( 2);
 
-		writeS(buf, player.hasStore() ? player.getStore().getStoreMessage() : "");// private store message
+		writeS(player.hasStore() ? player.getStore().getStoreMessage() : "");// private store message
 
 		/**
 		 * Movement
 		 */
-		writeF(buf, 0);
-		writeF(buf, 0);
-		writeF(buf, 0);
+		writeF(0);
+		writeF(0);
+		writeF(0);
 
-		writeF(buf, player.getX());// x
-		writeF(buf, player.getY());// y
-		writeF(buf, player.getZ());// z
-		writeC(buf, 0x00); // move type
+		writeF(player.getX());// x
+		writeF(player.getY());// y
+		writeF(player.getZ());// z
+		writeC( 0x00); // move type
 
 		if(player.isUsingFlyTeleport())
 		{
-			writeD(buf, player.getFlightTeleportId());
-			writeD(buf, player.getFlightDistance());
+			writeD(player.getFlightTeleportId());
+			writeD(player.getFlightDistance());
 		}
 
-		writeC(buf, player.getVisualState()); // visualState
-		writeS(buf, player.getCommonData().getNote()); // note show in right down windows if your target on player
+		writeC(player.getVisualState()); // visualState
+		writeS(player.getCommonData().getNote()); // note show in right down windows if your target on player
 
-		writeH(buf, player.getLevel()); // [level]
-		writeH(buf, player.getPlayerSettings().getDisplay()); // unk - 0x04
-		writeH(buf, player.getPlayerSettings().getDeny()); // unk - 0x00
-		writeH(buf, player.getAbyssRank().getRank().getId()); // abyss rank
-		writeH(buf, 0x00); // unk - 0x01
-		writeD(buf, player.getTarget() == null ? 0 : player.getTarget().getObjectId());
-		writeC(buf, 0); // suspect id
+		writeH(player.getLevel()); // [level]
+		writeH(player.getPlayerSettings().getDisplay()); // unk - 0x04
+		writeH(player.getPlayerSettings().getDeny()); // unk - 0x00
+		writeH(player.getAbyssRank().getRank().getId()); // abyss rank
+		writeH(0x00); // unk - 0x01
+		writeD(player.getTarget() == null ? 0 : player.getTarget().getObjectId());
+		writeC( 0); // suspect id
 	}
 }

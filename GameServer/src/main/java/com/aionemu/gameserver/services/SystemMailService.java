@@ -18,7 +18,6 @@ package com.aionemu.gameserver.services;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Collections;
 
 import org.apache.log4j.Logger;
 import com.aionemu.commons.database.dao.DAOManager;
@@ -30,7 +29,6 @@ import com.aionemu.gameserver.model.gameobjects.player.Mailbox;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.PlayerCommonData;
 import com.aionemu.gameserver.model.gameobjects.player.StorageType;
-import com.aionemu.gameserver.model.templates.mail.MailMessage;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_MAIL_SERVICE;
 import com.aionemu.gameserver.services.ItemService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
@@ -81,8 +79,7 @@ public class SystemMailService
 
 		if(title.length() > 20)
 			title = title.substring(0, 20);
-       
-		String Player = recipientName;
+
 		if(message.length() > 1000)
 			message = message.substring(0, 1000);
         PlayerCommonData recipientCommonData = DAOManager.getDAO(PlayerDAO.class).loadPlayerCommonDataByName(recipientName);

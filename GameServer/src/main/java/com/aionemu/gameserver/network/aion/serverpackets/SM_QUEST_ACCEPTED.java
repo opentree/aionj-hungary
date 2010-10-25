@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 import com.aionemu.gameserver.questEngine.model.QuestStatus;
@@ -83,27 +81,27 @@ public class SM_QUEST_ACCEPTED extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
 		switch(action)
 		{
 			case 1:
 			case 2:
 			case 3:
-				writeC(buf, action);
-				writeD(buf, questId);
-				writeC(buf, status);// quest status goes by ENUM value
-				writeC(buf, 0x0);
-				writeD(buf, step);// current quest step
-				writeH(buf, 0);
+				writeC( action);
+				writeD(questId);
+				writeC( status);// quest status goes by ENUM value
+				writeC( 0x0);
+				writeD(step);// current quest step
+				writeH(0);
 				break;
 			case 4:
-				writeC(buf, action);
-				writeD(buf, questId);
-				writeD(buf, timer);// sets client timer ie 84030000 is 900 seconds/15 mins
-				writeC(buf, 0x01);
-				writeH(buf, 0x0);
-				writeC(buf, 0x01);
+				writeC( action);
+				writeD(questId);
+				writeD(timer);// sets client timer ie 84030000 is 900 seconds/15 mins
+				writeC( 0x01);
+				writeH(0x0);
+				writeC( 0x01);
 		}
 	}
 }

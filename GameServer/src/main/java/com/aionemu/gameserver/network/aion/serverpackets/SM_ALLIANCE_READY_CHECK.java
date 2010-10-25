@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -37,10 +35,10 @@ public class SM_ALLIANCE_READY_CHECK extends AionServerPacket
 	}
 	
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{		
-		writeD(buf, playerObjectId);
-		writeC(buf, statusCode);
+		writeD(playerObjectId);
+		writeC( statusCode);
 	}
 
 }

@@ -5,8 +5,6 @@
 
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.items.ItemId;
 import com.aionemu.gameserver.model.templates.item.ItemTemplate;
@@ -28,53 +26,53 @@ public class SM_UPDATE_WAREHOUSE_ITEM extends InventoryPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeGeneralInfo(buf, item);
+		writeGeneralInfo(item);
 
 		ItemTemplate itemTemplate = item.getItemTemplate();
 
 		if(itemTemplate.getTemplateId() == ItemId.KINAH.value())
 		{
-			writeKinah(buf, item, false);
+			writeKinah(item, false);
 		}
 		else if (itemTemplate.isWeapon())
 		{
-			writeWeaponInfo(buf, item, false);
+			writeWeaponInfo(item, false);
 		}
 		else if (itemTemplate.isArmor())
 		{
-			writeArmorInfo(buf,item, false, false, false);
+			writeArmorInfo(item, false, false, false);
 		}
 		else
 		{
-			writeGeneralItemInfo(buf, item, false, false);
+			writeGeneralItemInfo(item, false, false);
 		}
 	}
 
 	@Override
-	protected void writeGeneralInfo(ByteBuffer buf, Item item)
+	protected void writeGeneralInfo(Item item)
 	{
-		writeD(buf, item.getObjectId());
-		writeC(buf, warehouseType);
+		writeD(item.getObjectId());
+		writeC( warehouseType);
 		ItemTemplate itemTemplate = item.getItemTemplate();
-		writeH(buf, 0x24);
-		writeD(buf, itemTemplate.getNameId());
-		writeH(buf, 0);
+		writeH(0x24);
+		writeD(itemTemplate.getNameId());
+		writeH(0);
 	}
 
 	@Override
-	protected void writeKinah(ByteBuffer buf, Item item, boolean isInventory)
+	protected void writeKinah(Item item, boolean isInventory)
 	{
-		writeH(buf, 0x16); //length of details
-		writeC(buf, 0);
-		writeH(buf, item.getItemMask());
-		writeQ(buf, item.getItemCount());
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeH(buf, 0);
-		writeC(buf, 0);
-		writeC(buf, 0xFF); // FF FF equipment
-		writeC(buf, 0xFF);
+		writeH(0x16); //length of details
+		writeC( 0);
+		writeH(item.getItemMask());
+		writeQ(item.getItemCount());
+		writeD(0);
+		writeD(0);
+		writeH(0);
+		writeC( 0);
+		writeC( 0xFF); // FF FF equipment
+		writeC( 0xFF);
 	}
 }

@@ -80,4 +80,10 @@ public class CM_L2AUTH_LOGIN_CHECK extends AionClientPacket
 	{
 		LoginServer.getInstance().requestAuthenticationOfClient(accountId, getConnection(), loginOk, playOk1, playOk2);
 	}
+	
+	@Override
+	public String toString()
+	{
+		return "CM_L2AUTH_LOGIN_CHECK [playOk2=" + playOk2 + ", playOk1=" + playOk1 + ", accountId=" + accountId + ", loginOk=" + loginOk + "]";
+	}
 }

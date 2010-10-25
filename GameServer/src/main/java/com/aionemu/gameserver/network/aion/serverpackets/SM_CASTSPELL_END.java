@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.List;
 
 import com.aionemu.gameserver.model.gameobjects.Creature;
@@ -74,26 +73,26 @@ public class SM_CASTSPELL_END extends AionServerPacket
 	 */
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, attacker.getObjectId());
-		writeC(buf, targetType);
+		writeD(attacker.getObjectId());
+		writeC( targetType);
 		switch(targetType)
 		{
 			case 0:
-				writeD(buf, target.getObjectId());
+				writeD(target.getObjectId());
 				break;
 			case 1:
-				writeF(buf, x);
-				writeF(buf, y);
-				writeF(buf, z + 0.4f);
+				writeF(x);
+				writeF(y);
+				writeF(z + 0.4f);
 				break;
 		}
-		writeH(buf, spellid);
-		writeC(buf, level);
-		writeD(buf, cooldown);
-		writeH(buf, 560); // time?
-		writeC(buf, 0); // unk
+		writeH(spellid);
+		writeC( level);
+		writeD(cooldown);
+		writeH(560); // time?
+		writeC( 0); // unk
 
 		/**
 		 * 0 : chain skill (counter too)
@@ -101,9 +100,9 @@ public class SM_CASTSPELL_END extends AionServerPacket
 		 * 32 : regular
 		 */
 		if (chainSuccess)
-			writeH(buf, 32);
+			writeH(32);
 		else
-			writeH(buf, 0);
+			writeH(0);
 			
 		/**
 		 * Dash Type
@@ -112,7 +111,7 @@ public class SM_CASTSPELL_END extends AionServerPacket
 		 * 2 : dash (816)
 		 * 4 : assault (803)
 		 */
-		writeC(buf, 0);
+		writeC( 0);
 
 	// TODO refactor skill engine
 	/*	switch(attacker.getDashType().getId())
@@ -120,28 +119,28 @@ public class SM_CASTSPELL_END extends AionServerPacket
 			case 1:
 			case 2:
 			case 4:
-				writeC(buf, heading);
-				writeF(buf, x);
-				writeF(buf, y);
-				writeF(buf, z);
+				writeC( heading);
+				writeF(x);
+				writeF(y);
+				writeF(z);
 				break;
 			default:
 				break;
 		}*/
 
-		writeH(buf, effects.size());
+		writeH(effects.size());
 		for(Effect effect : effects)
 		{
-			writeD(buf, effect.getEffected().getObjectId());
-			writeC(buf, 0); // unk
+			writeD(effect.getEffected().getObjectId());
+			writeC( 0); // unk
 
 			int attackerMaxHp = attacker.getLifeStats().getMaxHp();
 			int attackerCurrHp = attacker.getLifeStats().getCurrentHp();
 			int targetMaxHp = target.getLifeStats().getMaxHp();
 			int targetCurrHp = target.getLifeStats().getCurrentHp();
 
-			writeC(buf, 100 * targetCurrHp / targetMaxHp); // target %hp
-			writeC(buf, 100 * attackerCurrHp / attackerMaxHp); // attacker %hp
+			writeC( 100 * targetCurrHp / targetMaxHp); // target %hp
+			writeC( 100 * attackerCurrHp / attackerMaxHp); // attacker %hp
 			
 			
 			/**
@@ -157,7 +156,7 @@ public class SM_CASTSPELL_END extends AionServerPacket
 			 * 128 : dodge
 			 * 256 : resist
 			 */
-			writeC(buf, this.spellStatus);
+			writeC( this.spellStatus);
 
 			switch(this.spellStatus)
 			{
@@ -165,34 +164,34 @@ public class SM_CASTSPELL_END extends AionServerPacket
 				case 2:
 				case 4:
 				case 8:
-					writeF(buf, target.getX());
-					writeF(buf, target.getY());
-					writeF(buf, target.getZ() + 0.4f);
+					writeF(target.getX());
+					writeF(target.getY());
+					writeF(target.getZ() + 0.4f);
 					break;
 				case 16:
-					writeC(buf, target.getHeading());
+					writeC( target.getHeading());
 					break;
 				default:
 					break;
 			}
 
-			writeC(buf, 16); // unk
-			writeC(buf, 0); // current carve signet count
+			writeC( 16); // unk
+			writeC( 0); // current carve signet count
 
-			writeC(buf, 1); // unk always 1
-			writeC(buf, 0); // be 1 - when use Mana Treatment
-			writeD(buf, effect.getReserved1()); // damage
-			writeC(buf, effect.getAttackStatus().getId());
-			writeC(buf, effect.getShieldDefense());
+			writeC( 1); // unk always 1
+			writeC( 0); // be 1 - when use Mana Treatment
+			writeD(effect.getReserved1()); // damage
+			writeC( effect.getAttackStatus().getId());
+			writeC( effect.getShieldDefense());
 
 			switch(effect.getShieldDefense())
 			{
 				case 1: // reflect shield
-					writeD(buf, 0x00);
-					writeD(buf, 0x00);
-					writeD(buf, 0x00);
-					writeD(buf, 0x00); // reflect damage
-					writeD(buf, 0x00); // skill id
+					writeD(0x00);
+					writeD(0x00);
+					writeD(0x00);
+					writeD(0x00); // reflect damage
+					writeD(0x00); // skill id
 					break;
 				case 2: // normal shield
 				default:

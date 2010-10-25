@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.SkillListEntry;
@@ -65,31 +63,31 @@ public class SM_SKILL_LIST extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
 
 		final int size = skillList.length;
-		writeH(buf, size); //skills list size
+		writeH(size); //skills list size
 		
 		if (size > 0)
 		{
 			for (SkillListEntry entry : skillList)
 			{
-				writeH(buf, entry.getSkillId());//id
-				writeH(buf, entry.getSkillLevel());//lvl
-				writeC(buf, 0x00);
-				writeC(buf, entry.getExtraLvl());
-				writeD(buf, 0); //use time? [s]
-				writeC(buf, entry.isStigma() ? 1 : 0); // stigma flag
+				writeH(entry.getSkillId());//id
+				writeH(entry.getSkillLevel());//lvl
+				writeC( 0x00);
+				writeC( entry.getExtraLvl());
+				writeD(0); //use time? [s]
+				writeC( entry.isStigma() ? 1 : 0); // stigma flag
 			}
 		}
-		writeD(buf, messageId);
+		writeD(messageId);
 		if (messageId != 0);
 		{
-			writeH(buf, 0x24); //unk
-			writeD(buf, skillNameId);
-			writeH(buf, 0x00);
-			writeS(buf, skillLvl);
+			writeH(0x24); //unk
+			writeD(skillNameId);
+			writeH(0x00);
+			writeS(skillLvl);
 		}
 	}
 }

@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.gameobjects.Kisk;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -56,15 +54,15 @@ public class SM_KISK_UPDATE extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, objId);
-		writeD(buf, useMask);
-		writeD(buf, currentMembers);
-		writeD(buf, maxMembers);
-		writeD(buf, remainingRessurects);
-		writeD(buf, maxRessurects);
-		writeD(buf, remainingLifetime);
+		writeD(objId);
+		writeD(useMask);
+		writeD(currentMembers);
+		writeD(maxMembers);
+		writeD(remainingRessurects);
+		writeD(maxRessurects);
+		writeD(remainingLifetime);
 	}
 	
 }

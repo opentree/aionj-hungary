@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.items.ItemId;
 import com.aionemu.gameserver.model.templates.item.ItemTemplate;
@@ -46,82 +44,82 @@ public class SM_UPDATE_ITEM extends InventoryPacket
 	}
 
 	@Override
-	protected void writeGeneralInfo(ByteBuffer buf, Item item)
+	protected void writeGeneralInfo(Item item)
 	{
-		writeD(buf, item.getObjectId());
+		writeD(item.getObjectId());
 		ItemTemplate itemTemplate = item.getItemTemplate();
-		writeH(buf, 0x24);
-		writeD(buf, itemTemplate.getNameId());
-		writeH(buf, 0);
+		writeH(0x24);
+		writeD(itemTemplate.getNameId());
+		writeH(0);
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
 
-		writeGeneralInfo(buf, item);
+		writeGeneralInfo(item);
 
 		ItemTemplate itemTemplate = item.getItemTemplate();
 
 		if(itemTemplate.getTemplateId() == ItemId.KINAH.value())
 		{
-			writeKinah(buf, item, true);
+			writeKinah(item, true);
 		}
 		else if (itemTemplate.isWeapon())
 		{
-			writeWeaponInfo(buf, item, true, isWeaponSwitch, false, false);
+			writeWeaponInfo(item, true, isWeaponSwitch, false, false);
 		}
 		else if (itemTemplate.isArmor())
 		{
-			writeArmorInfo(buf,item, true, false, false);
+			writeArmorInfo(item, true, false, false);
 		}
 		else if (itemTemplate.isStigma())
 		{
-			writeStigmaInfo(buf,item);
+			writeStigmaInfo(item);
 		}
 		else
 		{
-			writeGeneralItemInfo(buf, item);
+			writeGeneralItemInfo(item);
 		}
 	}
 	
-	protected void writeGeneralItemInfo(ByteBuffer buf, Item item)
+	protected void writeGeneralItemInfo(Item item)
 	{
-		writeH(buf, 0x16); //length of details
-		writeC(buf, 0);
-		writeH(buf, item.getItemMask());
-		writeD(buf, (int) item.getItemCount());
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeH(buf, 0);
-		writeC(buf, 0);
-		writeH(buf, 0);
-		writeH(buf, item.getEquipmentSlot()); // not equipable items		
+		writeH(0x16); //length of details
+		writeC( 0);
+		writeH(item.getItemMask());
+		writeD((int) item.getItemCount());
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeH(0);
+		writeC( 0);
+		writeH(0);
+		writeH(item.getEquipmentSlot()); // not equipable items		
 	}
 	
 	@Override
-	protected void writeStigmaInfo(ByteBuffer buf, Item item)
+	protected void writeStigmaInfo(Item item)
 	{
 		int itemSlotId = item.getEquipmentSlot();
-		writeH(buf, 0x05); //length of details
-		writeC(buf, 0x06); //unk
-		writeD(buf, item.isEquipped() ? itemSlotId : 0);
+		writeH(0x05); //length of details
+		writeC( 0x06); //unk
+		writeD(item.isEquipped() ? itemSlotId : 0);
 	}
 
 	@Override
-	protected void writeKinah(ByteBuffer buf, Item item, boolean isInventory)
+	protected void writeKinah(Item item, boolean isInventory)
 	{
-		writeH(buf, 0x16); //length of details
-		writeC(buf, 0);
-		writeH(buf, item.getItemMask());
-		writeQ(buf, item.getItemCount());
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeH(buf, 0);
-		writeC(buf, 0);
-		writeC(buf, 0x1A); // FF FF equipment
-		writeC(buf, 0);
+		writeH(0x16); //length of details
+		writeC( 0);
+		writeH(item.getItemMask());
+		writeQ(item.getItemCount());
+		writeD(0);
+		writeD(0);
+		writeH(0);
+		writeC( 0);
+		writeC( 0x1A); // FF FF equipment
+		writeC( 0);
 	}
 
 }

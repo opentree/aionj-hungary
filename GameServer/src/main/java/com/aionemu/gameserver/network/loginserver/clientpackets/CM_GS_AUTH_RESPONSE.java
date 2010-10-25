@@ -18,10 +18,10 @@ package com.aionemu.gameserver.network.loginserver.clientpackets;
 
 import org.apache.log4j.Logger;
 
+import com.aionemu.commons.netty.State;
 import com.aionemu.commons.utils.ExitCode;
 import com.aionemu.gameserver.network.loginserver.LoginServer;
 import com.aionemu.gameserver.network.loginserver.LsClientPacket;
-import com.aionemu.gameserver.network.loginserver.LoginServerConnection.State;
 import com.aionemu.gameserver.network.loginserver.serverpackets.SM_ACCOUNT_LIST;
 import com.aionemu.gameserver.network.loginserver.serverpackets.SM_GS_AUTH;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
@@ -37,7 +37,7 @@ public class CM_GS_AUTH_RESPONSE extends LsClientPacket
 	/**
 	 * Logger for this class.
 	 */
-	protected static final Logger	log	= Logger.getLogger(CM_GS_AUTH_RESPONSE.class);
+	private static final Logger	log	= Logger.getLogger(CM_GS_AUTH_RESPONSE.class);
 
 	/**
 	 * Response: 0=Authed,1=NotAuthed,2=AlreadyRegistered
@@ -75,6 +75,7 @@ public class CM_GS_AUTH_RESPONSE extends LsClientPacket
 		{
 			getConnection().setState(State.AUTHED);
 			sendPacket(new SM_ACCOUNT_LIST(LoginServer.getInstance().getLoggedInAccounts()));
+			LoginServer.getInstance().setLoginServer(this.getConnection());
 		}
 
 		/**

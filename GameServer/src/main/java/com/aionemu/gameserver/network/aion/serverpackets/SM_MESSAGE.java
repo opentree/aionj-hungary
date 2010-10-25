@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.configs.main.CustomConfig;
 import com.aionemu.gameserver.model.ChatType;
 import com.aionemu.gameserver.model.Race;
@@ -116,7 +114,7 @@ public class SM_MESSAGE extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
 		boolean canRead = true;
 
@@ -126,13 +124,13 @@ public class SM_MESSAGE extends AionServerPacket
 				|| (con.getActivePlayer() != null && con.getActivePlayer().getAccessLevel() > 0);
 		}
 
-		writeC(buf, chatType.toInteger()); // type
+		writeC( chatType.toInteger()); // type
 
 		/*
 		 * 0 : all 1 : elyos 2 : asmodians
 		 */
-		writeC(buf, canRead ? 0 : race.getRaceId() + 1);
-		writeD(buf, senderObjectId); // sender object id
+		writeC( canRead ? 0 : race.getRaceId() + 1);
+		writeD(senderObjectId); // sender object id
 
 		switch(chatType)
 		{
@@ -142,23 +140,23 @@ public class SM_MESSAGE extends AionServerPacket
 			case PERIOD_NOTICE:
 			case PERIOD_ANNOUNCEMENTS:
 			case SYSTEM_NOTICE:
-				writeH(buf, 0x00); // unknown
-				writeS(buf, message);
+				writeH(0x00); // unknown
+				writeS(message);
 				break;
 			case SHOUT:
-				writeS(buf, senderName);
-				writeS(buf, message);
-				writeF(buf, x);
-				writeF(buf, y);
-				writeF(buf, z);
+				writeS(senderName);
+				writeS(message);
+				writeF(x);
+				writeF(y);
+				writeF(z);
 				break;
 			case ALLIANCE:
 			case GROUP:
 			case GROUP_LEADER:
 			case LEGION:
 			case WHISPER:
-				writeS(buf, senderName);
-				writeS(buf, message);
+				writeS(senderName);
+				writeS(message);
 				break;
 		}
 	}

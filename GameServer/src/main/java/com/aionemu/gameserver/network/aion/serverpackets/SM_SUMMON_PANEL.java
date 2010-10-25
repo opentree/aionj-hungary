@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.gameobjects.Summon;
 import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
 import com.aionemu.gameserver.network.aion.AionConnection;
@@ -36,20 +34,20 @@ public class SM_SUMMON_PANEL extends AionServerPacket
 		this.summon = summon;
 	}
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
 
-		writeD(buf, summon.getObjectId());
-		writeH(buf, summon.getLevel());
-		writeD(buf, 0);//unk
-		writeD(buf, 0);//unk
-		writeD(buf, summon.getLifeStats().getCurrentHp());
-		writeD(buf, summon.getGameStats().getCurrentStat(StatEnum.MAXHP));
-		writeD(buf, summon.getGameStats().getCurrentStat(StatEnum.MAIN_HAND_POWER));
-		writeH(buf, summon.getGameStats().getCurrentStat(StatEnum.PHYSICAL_DEFENSE));
-		writeH(buf, summon.getGameStats().getCurrentStat(StatEnum.MAGICAL_RESIST));
-		writeD(buf, 0);//unk
-		writeH(buf, 0);//unk
+		writeD(summon.getObjectId());
+		writeH(summon.getLevel());
+		writeD(0);//unk
+		writeD(0);//unk
+		writeD(summon.getLifeStats().getCurrentHp());
+		writeD(summon.getGameStats().getCurrentStat(StatEnum.MAXHP));
+		writeD(summon.getGameStats().getCurrentStat(StatEnum.MAIN_HAND_POWER));
+		writeH(summon.getGameStats().getCurrentStat(StatEnum.PHYSICAL_DEFENSE));
+		writeH(summon.getGameStats().getCurrentStat(StatEnum.MAGICAL_RESIST));
+		writeD(0);//unk
+		writeH(0);//unk
 	}
 
 }

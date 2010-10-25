@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -44,13 +42,13 @@ public class SM_GATHER_STATUS extends AionServerPacket
 	 */
 
 	 @Override
-	 protected void writeImpl(AionConnection con, ByteBuffer buf)
+	 protected void writeImpl(AionConnection con)
 	 {              
 
-		 writeD(buf, playerobjid);
-		 writeD(buf, gatherableobjid);
-		 writeH(buf, 0); //unk
-		 writeC(buf, status);
+		 writeD(playerobjid);
+		 writeD(gatherableobjid);
+		 writeH(0); //unk
+		 writeC( status);
 
 	 }       
 }

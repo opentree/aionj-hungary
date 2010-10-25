@@ -16,87 +16,21 @@
  */
 package com.aionemu.gameserver.network.loginserver;
 
-import java.nio.ByteBuffer;
-import java.util.HashMap;
-import java.util.Map;
+import org.jboss.netty.buffer.ChannelBuffer;
 
-import org.apache.log4j.Logger;
-
-import com.aionemu.gameserver.network.loginserver.LoginServerConnection.State;
+import com.aionemu.commons.netty.handler.PacketHandler;
 
 /**
- * @author -Nemesiss-
- * @author Luno
+ * @author MrPoke
  */
-public class LsPacketHandler
+public class LsPacketHandler extends PacketHandler<LoginServerConnection>
 {
-	/**
-	 * logger for this class
+	/* (non-Javadoc)
+	 * @see com.aionemu.commons.netty.handler.PacketHandler#handle(org.jboss.netty.buffer.ChannelBuffer, com.aionemu.commons.netty.handler.AbstractChannelHandler)
 	 */
-	private static final Logger							log					= Logger.getLogger(LsPacketHandler.class);
-
-	private static Map<State, Map<Integer, LsClientPacket>>	packetPrototypes	= new HashMap<State, Map<Integer, LsClientPacket>>();
-
-	/**
-	 * Reads one packet from given ByteBuffer
-	 * 
-	 * @param data
-	 * @param client
-	 * @return GsClientPacket object from binary data
-	 */
-	public LsClientPacket handle(ByteBuffer data, LoginServerConnection client)
+	@Override
+	public LsClientPacket handle(ChannelBuffer data, LoginServerConnection client)
 	{
-		State state = client.getState();
-		int id = data.get() & 0xff;
-
-		return getPacket(state, id, data, client);
-	}
-
-	public void addPacketPrototype(LsClientPacket packetPrototype, State... states)
-	{
-		for(State state : states)
-		{
-			Map<Integer, LsClientPacket> pm = packetPrototypes.get(state);
-			if(pm == null)
-			{
-				pm = new HashMap<Integer, LsClientPacket>();
-				packetPrototypes.put(state, pm);
-			}
-			pm.put(packetPrototype.getOpcode(), packetPrototype);
-		}
-	}
-
-	private LsClientPacket getPacket(State state, int id, ByteBuffer buf, LoginServerConnection con)
-	{
-		LsClientPacket prototype = null;
-
-		Map<Integer, LsClientPacket> pm = packetPrototypes.get(state);
-		if(pm != null)
-		{
-			prototype = pm.get(id);
-		}
-
-		if(prototype == null)
-		{
-			unknownPacket(state, id);
-			return null;
-		}
-
-		LsClientPacket res = prototype.clonePacket();
-		res.setBuffer(buf);
-		res.setConnection(con);
-
-		return res;
-	}
-
-	/**
-	 * Logs unknown packet.
-	 * 
-	 * @param state
-	 * @param id
-	 */
-	private void unknownPacket(State state, int id)
-	{
-		log.warn(String.format("Unknown packet recived from Login Server: 0x%02X state=%s", id, state.toString()));
+		return (LsClientPacket)super.handle(data, client);
 	}
 }

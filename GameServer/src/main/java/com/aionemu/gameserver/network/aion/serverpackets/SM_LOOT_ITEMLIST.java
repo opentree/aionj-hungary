@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -55,17 +54,17 @@ public class SM_LOOT_ITEMLIST extends AionServerPacket
 	 * {@inheritDoc} dc
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf) 
+	protected void writeImpl(AionConnection con) 
 	{
-		writeD(buf, targetObjectId);
-		writeC(buf, size);
+		writeD(targetObjectId);
+		writeC( size);
 
 		for(DropItem dropItem : dropItems)
 		{
-			writeC(buf, dropItem.getIndex()); // index in droplist
-			writeD(buf, dropItem.getDropTemplate().getItemId());
-			writeH(buf, (int) dropItem.getCount());
-			writeD(buf, 0);
+			writeC( dropItem.getIndex()); // index in droplist
+			writeD(dropItem.getDropTemplate().getItemId());
+			writeH((int) dropItem.getCount());
+			writeD(0);
 		}
 	}
 }

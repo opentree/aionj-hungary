@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -44,11 +42,11 @@ public class SM_LEVEL_UPDATE extends AionServerPacket
 	 */
 	
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{	
-		writeD(buf, targetObjectId);
-		writeH(buf, effect); //unk
-		writeH(buf, level); 
-		writeH(buf, 0x00); //unk
+		writeD(targetObjectId);
+		writeH(effect); //unk
+		writeH(level); 
+		writeH(0x00); //unk
 	}	
 }

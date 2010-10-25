@@ -16,9 +16,8 @@
  */
 package com.aionemu.gameserver.network.aion;
 
-import java.nio.ByteBuffer;
-
-import com.aionemu.commons.network.packet.BaseServerPacket;
+import com.aionemu.commons.netty.handler.AbstractChannelHandler;
+import com.aionemu.commons.netty.packet.BaseServerPacket;
 import com.aionemu.gameserver.network.Crypt;
 
 /**
@@ -28,10 +27,6 @@ import com.aionemu.gameserver.network.Crypt;
  */
 public abstract class AionServerPacket extends BaseServerPacket
 {
-	/**
-	 * ByteBuffer that contains this packet data
-	 */
-	private ByteBuffer			buf;
 
 	/**
 	 * Constructs new server packet
@@ -39,7 +34,7 @@ public abstract class AionServerPacket extends BaseServerPacket
 	protected AionServerPacket()
 	{
 		super();
-		setOpcode(ServerPacketsOpcodes.getOpcode(getClass()));
+		this.opCode = ServerPacketsOpcodes.getOpcode(getClass());
 	}
 
 	/**
@@ -48,39 +43,30 @@ public abstract class AionServerPacket extends BaseServerPacket
 	 * @param buf
 	 * @param value
 	 */
-	private final void writeOP(ByteBuffer buf, int value)
+	private final void writeOP()
 	{
 		/** obfuscate packet id */
-		byte op = Crypt.encodeOpcodec(value);
-		buf.put(op);
+		byte op = Crypt.encodeOpcodec(this.opCode);
+		writeC(op);
 
 		/** put static server packet code */
-		buf.put(Crypt.staticServerPacketCode);
+		writeC(Crypt.staticServerPacketCode);
 
 		/** for checksum? */
-		buf.put((byte) ~op);
+		writeC((byte) ~op);
 	}
 
-	public final void write(AionConnection con)
-	{
-		write(con, buf);
-	}
 	/**
 	 * Write and encrypt this packet data for given connection, to given buffer.
 	 * 
 	 * @param con
 	 * @param buf
 	 */
-	public final void write(AionConnection con, ByteBuffer buf)
+	public final void write(AbstractChannelHandler con)
 	{
-		buf.putShort((short) 0);
-		writeOP(buf, getOpcode());
-		writeImpl(con, buf);
-		buf.flip();
-		buf.putShort((short) buf.limit());
-		ByteBuffer b = buf.slice();
-		buf.position(0);
-		con.encrypt(b);
+		writeH((short) 0);
+		writeOP();
+		writeImpl((AionConnection)con);
 	}
 
 	/**
@@ -89,24 +75,8 @@ public abstract class AionServerPacket extends BaseServerPacket
 	 * @param con
 	 * @param buf
 	 */
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
 		
-	}
-
-	/**
-	 * @return the buf
-	 */
-	public ByteBuffer getBuf()
-	{
-		return buf;
-	}
-
-	/**
-	 * @param buf the buf to set
-	 */
-	public void setBuf(ByteBuffer buf)
-	{
-		this.buf = buf;
 	}
 }

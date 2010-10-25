@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -45,16 +43,16 @@ public class SM_TELEPORT_LOC extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeC(buf, 3); //unk
-		writeC(buf, 0x90);  //unk
-		writeC(buf, 0x9E);  //unk
-		writeD(buf, mapId); //mapid
-		writeF(buf, x); //x
-		writeF(buf, y); //y
-		writeF(buf, z); //z
-		writeC(buf, 0);  //headling
+		writeC( 3); //unk
+		writeC( 0x90);  //unk
+		writeC( 0x9E);  //unk
+		writeD(mapId); //mapid
+		writeF(x); //x
+		writeF(y); //y
+		writeF(z); //z
+		writeC( 0);  //headling
 	}
 
 }

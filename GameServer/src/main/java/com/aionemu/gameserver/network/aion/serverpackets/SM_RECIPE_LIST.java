@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.Set;
 
 import com.aionemu.gameserver.network.aion.AionConnection;
@@ -38,13 +37,13 @@ public class SM_RECIPE_LIST extends AionServerPacket
 	}
 	
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeH(buf, count);
+		writeH(count);
 		for(int id : recipeIds)
 		{
-			writeD(buf, id);
-			writeC(buf, 0);
+			writeD(id);
+			writeC( 0);
 		}
 	}
 }

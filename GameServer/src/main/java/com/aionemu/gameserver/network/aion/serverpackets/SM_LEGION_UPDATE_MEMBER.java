@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -43,17 +41,17 @@ public class SM_LEGION_UPDATE_MEMBER extends AionServerPacket
 	}
 
 	@Override
-	public void writeImpl(AionConnection con, ByteBuffer buf)
+	public void writeImpl(AionConnection con)
 	{
-		writeD(buf, player.getObjectId());
-		writeC(buf, player.getLegionMember().getRank().getRankId());
-		writeC(buf, player.getCommonData().getPlayerClass().getClassId());
-		writeC(buf, player.getLevel());
-		writeD(buf, player.getPosition().getMapId());
-		writeC(buf, player.isOnline() ? ONLINE : OFFLINE);
-		writeD(buf, player.getLastOnline());
-		writeD(buf, msgId);
-		writeS(buf, text);
+		writeD(player.getObjectId());
+		writeC( player.getLegionMember().getRank().getRankId());
+		writeC( player.getCommonData().getPlayerClass().getClassId());
+		writeC( player.getLevel());
+		writeD(player.getPosition().getMapId());
+		writeC( player.isOnline() ? ONLINE : OFFLINE);
+		writeD(player.getLastOnline());
+		writeD(msgId);
+		writeS(text);
 	}
 }
 

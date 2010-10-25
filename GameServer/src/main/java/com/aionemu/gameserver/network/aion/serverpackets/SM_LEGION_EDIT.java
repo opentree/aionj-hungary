@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.legion.Legion;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -59,38 +57,38 @@ public class SM_LEGION_EDIT extends AionServerPacket
 	}
 
 	@Override
-	public void writeImpl(AionConnection con, ByteBuffer buf)
+	public void writeImpl(AionConnection con)
 	{
-        writeC(buf, type);
+        writeC( type);
 		switch(type)
 		{
 			/** Change Legion Level **/
 			case 0x00:
-				writeC(buf, legion.getLegionLevel());
+				writeC( legion.getLegionLevel());
 				break;
 			/** Change Legion Rank **/
 			case 0x01:
-				writeD(buf, legion.getLegionRank());
+				writeD(legion.getLegionRank());
 				break;
 			/** Change Legion Permissions **/
 			case 0x02:
-				writeC(buf, legion.getCenturionPermission1());
-				writeC(buf, legion.getCenturionPermission2());
-				writeC(buf, legion.getLegionarPermission1());
-				writeC(buf, legion.getLegionarPermission2());
+				writeC( legion.getCenturionPermission1());
+				writeC( legion.getCenturionPermission2());
+				writeC( legion.getLegionarPermission1());
+				writeC( legion.getLegionarPermission2());
 				break;
 			/** Change Legion Contributions **/
 			case 0x03:
-				writeD(buf, legion.getContributionPoints()); // get Contributions
+				writeD(legion.getContributionPoints()); // get Contributions
 				break;
 			/** Change Legion Announcement **/
 			case 0x05:
-				writeS(buf, announcement);
-				writeD(buf, unixTime);
+				writeS(announcement);
+				writeD(unixTime);
 				break;
 			/** Disband Legion **/
 			case 0x06:
-				writeD(buf, unixTime);
+				writeD(unixTime);
 				break;
 			/** Recover Legion **/
 			case 0x07:

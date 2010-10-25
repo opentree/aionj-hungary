@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.List;
 
 import com.aionemu.gameserver.model.alliance.PlayerAllianceEvent;
@@ -44,7 +43,7 @@ public class SM_ALLIANCE_MEMBER_INFO extends AionServerPacket
 	}
 	
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
 		PlayerCommonData pcd = member.getCommonData();
 		WorldPosition wp = pcd.getPosition();
@@ -57,37 +56,37 @@ public class SM_ALLIANCE_MEMBER_INFO extends AionServerPacket
 		if (!member.isOnline())
 			event = PlayerAllianceEvent.DISCONNECTED;
 		
-		writeD(buf, member.getAllianceId());
-		writeD(buf, member.getObjectId());
+		writeD(member.getAllianceId());
+		writeD(member.getObjectId());
 		if (member.isOnline())
 		{
 			PlayerLifeStats pls = member.getPlayer().getLifeStats();
-			writeD(buf, pls.getMaxHp());
-			writeD(buf, pls.getCurrentHp());
-			writeD(buf, pls.getMaxMp());
-			writeD(buf, pls.getCurrentMp());
-			writeD(buf, pls.getMaxFp());
-			writeD(buf, pls.getCurrentFp());
+			writeD(pls.getMaxHp());
+			writeD(pls.getCurrentHp());
+			writeD(pls.getMaxMp());
+			writeD(pls.getCurrentMp());
+			writeD(pls.getMaxFp());
+			writeD(pls.getCurrentFp());
 		}
 		else
 		{
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
-			writeD(buf, 0);
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeD(0);
+			writeD(0);
 		}
-		writeD(buf, wp.getMapId());
-		writeD(buf, wp.getMapId());
-		writeF(buf, wp.getX());
-		writeF(buf, wp.getY());
-		writeF(buf, wp.getZ());
-		writeC(buf, pcd.getPlayerClass().getClassId());
-		writeC(buf, pcd.getGender().getGenderId());
-		writeC(buf, pcd.getLevel());
-		writeC(buf, this.event.getId());
-		writeH(buf, 0x00); //channel 0x01?
+		writeD(wp.getMapId());
+		writeD(wp.getMapId());
+		writeF(wp.getX());
+		writeF(wp.getY());
+		writeF(wp.getZ());
+		writeC( pcd.getPlayerClass().getClassId());
+		writeC( pcd.getGender().getGenderId());
+		writeC( pcd.getLevel());
+		writeC( this.event.getId());
+		writeH(0x00); //channel 0x01?
 		switch(this.event)
 		{
 			case LEAVE:
@@ -105,25 +104,25 @@ public class SM_ALLIANCE_MEMBER_INFO extends AionServerPacket
 			case APPOINT_VICE_CAPTAIN: // Unused maybe...
 			case DEMOTE_VICE_CAPTAIN:
 			case APPOINT_CAPTAIN:
-				writeS(buf, pcd.getName());
-				writeD(buf, 0x00); //unk
+				writeS(pcd.getName());
+				writeD(0x00); //unk
 				
 				if (member.isOnline())
 				{
 					List<Effect> abnormalEffects = member.getPlayer().getEffectController().getAbnormalEffects();
-					writeH(buf, abnormalEffects.size());
+					writeH(abnormalEffects.size());
 					for(Effect effect : abnormalEffects)
 					{
-						writeD(buf, effect.getEffectorId());
-						writeH(buf, effect.getSkillId());
-						writeC(buf, effect.getSkillLevel());
-						writeC(buf, effect.getTargetSlot());
-						writeD(buf, effect.getElapsedTime());
+						writeD(effect.getEffectorId());
+						writeH(effect.getSkillId());
+						writeC( effect.getSkillLevel());
+						writeC( effect.getTargetSlot());
+						writeD(effect.getElapsedTime());
 					}
 				}
 				else
 				{
-					writeH(buf, 0);
+					writeH(0);
 				}
 				break;
 			default:

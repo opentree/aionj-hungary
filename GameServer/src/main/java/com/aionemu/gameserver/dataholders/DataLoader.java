@@ -77,6 +77,7 @@ abstract class DataLoader
 	 * each of these files.
 	 * </ul>
 	 */
+	@SuppressWarnings("unchecked")
 	protected void loadData()
 	{
 		if(dataFile.isDirectory())

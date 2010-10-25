@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -43,9 +41,9 @@ public class SM_LOOT_STATUS extends AionServerPacket
 	 */
 	
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{		
-		writeD(buf, targetObjectId);
-		writeC(buf, state);
+		writeD(targetObjectId);
+		writeC( state);
 	}	
 }

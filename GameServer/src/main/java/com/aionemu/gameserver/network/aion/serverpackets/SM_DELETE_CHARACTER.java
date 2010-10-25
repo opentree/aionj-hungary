@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -45,19 +43,19 @@ public class SM_DELETE_CHARACTER extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
 		if(playerObjId != 0)
 		{
-			writeD(buf, 0x00);// unk
-			writeD(buf, playerObjId);
-			writeD(buf, deletionTime);
+			writeD(0x00);// unk
+			writeD(playerObjId);
+			writeD(deletionTime);
 		}
 		else
 		{
-			writeD(buf, 0x10);// unk
-			writeD(buf, 0x00);
-			writeD(buf, 0x00);
+			writeD(0x10);// unk
+			writeD(0x00);
+			writeD(0x00);
 		}
 	}
 }

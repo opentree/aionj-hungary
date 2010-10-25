@@ -17,8 +17,6 @@
 
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -42,8 +40,8 @@ public class SM_TITLE_UPDATE extends AionServerPacket {
     }
 
     @Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf) {
-        writeD(buf, this.objectId);
-        writeD(buf, this.titleId);
+	protected void writeImpl(AionConnection con) {
+        writeD(this.objectId);
+        writeD(this.titleId);
     }
 }

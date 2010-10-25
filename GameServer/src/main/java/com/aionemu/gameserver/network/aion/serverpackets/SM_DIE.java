@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -40,10 +38,10 @@ public class SM_DIE extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeC(buf, (hasRebirth ? 1 : 0)); // skillRevive
-		writeC(buf, (hasItem ? 1 : 0)); // itemRevive
-		writeD(buf, remainingKiskTime);
+		writeC( (hasRebirth ? 1 : 0)); // skillRevive
+		writeC( (hasItem ? 1 : 0)); // itemRevive
+		writeD(remainingKiskTime);
 	}
 }

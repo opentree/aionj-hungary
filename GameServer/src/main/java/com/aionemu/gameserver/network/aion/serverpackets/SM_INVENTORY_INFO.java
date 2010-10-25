@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.Collections;
 import java.util.List;
 
@@ -70,48 +69,48 @@ public class SM_INVENTORY_INFO extends InventoryPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
 		if(this.packetType == EMPTY)
 		{
-			writeD(buf, 0);
-			writeH(buf, 0);
+			writeD(0);
+			writeH(0);
 			return;
 		}
 
 		// something wrong with cube part.
-		writeC(buf, 1); // TRUE/FALSE (1/0) update cube size
-		writeC(buf, CUBE); // cube size from npc (so max 5 for now)
-		writeC(buf, 0); // cube size from quest (so max 2 for now)
-		writeC(buf, 0); // unk?
-		writeH(buf, size); // number of entries
+		writeC( 1); // TRUE/FALSE (1/0) update cube size
+		writeC( CUBE); // cube size from npc (so max 5 for now)
+		writeC( 0); // cube size from quest (so max 2 for now)
+		writeC( 0); // unk?
+		writeH(size); // number of entries
 
 		for(Item item : items)
 		{
-			writeGeneralInfo(buf, item);
+			writeGeneralInfo(item);
 
 			ItemTemplate itemTemplate = item.getItemTemplate();
 
 			if(itemTemplate.getTemplateId() == ItemId.KINAH.value())
 			{
-				writeKinah(buf, item, true);
+				writeKinah(item, true);
 			}
 			else if (itemTemplate.isWeapon())
 			{
-				writeWeaponInfo(buf, item, true);
+				writeWeaponInfo(item, true);
 			}
 			else if (itemTemplate.isArmor())
 			{
-				writeArmorInfo(buf,item, true, false, false);
+				writeArmorInfo(item, true, false, false);
 			}
 			else if(itemTemplate.isStigma())
 			{
-				writeStigmaInfo(buf, item);
+				writeStigmaInfo(item);
 			}
 			else
 			{
-				writeGeneralItemInfo(buf, item, false, false);
-				writeC(buf, 0);
+				writeGeneralItemInfo(item, false, false);
+				writeC( 0);
 			}
 		}
 	}

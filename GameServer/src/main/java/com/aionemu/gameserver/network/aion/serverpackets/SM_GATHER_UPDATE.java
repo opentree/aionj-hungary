@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.templates.GatherableTemplate;
 import com.aionemu.gameserver.model.templates.gather.Material;
 import com.aionemu.gameserver.network.aion.AionConnection;
@@ -47,76 +45,76 @@ public class SM_GATHER_UPDATE extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeH(buf, template.getSkillLevel());
-		writeC(buf, action);
-		writeD(buf, itemId);
+		writeH(template.getSkillLevel());
+		writeC( action);
+		writeD(itemId);
 
 		switch(action)
 		{
 			case 0:
 			{
-				writeD(buf, template.getSuccessAdj());
-				writeD(buf, template.getFailureAdj());
-				writeD(buf, 0);
-				writeD(buf, 1200);        //timer??
-				writeD(buf, 1330011); //??text??skill??
-				writeH(buf, 0x24); //0x24
-				writeD(buf, nameId); 
-				writeH(buf, 0); //0x24
+				writeD(template.getSuccessAdj());
+				writeD(template.getFailureAdj());
+				writeD(0);
+				writeD(1200);        //timer??
+				writeD(1330011); //??text??skill??
+				writeH(0x24); //0x24
+				writeD(nameId); 
+				writeH(0); //0x24
 				break;
 			}
 			case  1:
 			{
-				writeD(buf, success);
-				writeD(buf, failure);
-				writeD(buf, 700);        //unk timer??
-				writeD(buf, 1200);      //unk timer??
-				writeD(buf, 0); //unk timer??writeD(buf, 700);
-				writeH(buf, 0);
+				writeD(success);
+				writeD(failure);
+				writeD(700);        //unk timer??
+				writeD(1200);      //unk timer??
+				writeD(0); //unk timer??writeD(700);
+				writeH(0);
 				break;
 			}
 			case 2:
 			{
-				writeD(buf, template.getSuccessAdj());
-				writeD(buf, failure);
-				writeD(buf, 700);//unk timer??
-				writeD(buf, 1200); //unk timer??
-				writeD(buf, 0); //unk timer??writeD(buf, 700);
-				writeH(buf, 0);
+				writeD(template.getSuccessAdj());
+				writeD(failure);
+				writeD(700);//unk timer??
+				writeD(1200); //unk timer??
+				writeD(0); //unk timer??writeD(700);
+				writeH(0);
 				break;
 			}
 			case 5: // you have stopped gathering
 			{
-				writeD(buf, 0);
-				writeD(buf, 0);
-				writeD(buf, 700);//unk timer??
-				writeD(buf, 1200); //unk timer??
-				writeD(buf, 1330080); //unk timer??writeD(buf, 700);
-				writeH(buf, 0);
+				writeD(0);
+				writeD(0);
+				writeD(700);//unk timer??
+				writeD(1200); //unk timer??
+				writeD(1330080); //unk timer??writeD(700);
+				writeH(0);
 				break;
 			}
 			case 6:
 			{
-				writeD(buf, template.getSuccessAdj());
-				writeD(buf, failure);
-				writeD(buf, 700); //unk timer??
-				writeD(buf, 1200); //unk timer??
-				writeD(buf, 0); //unk timer??writeD(buf, 700);
-				writeH(buf, 0);
+				writeD(template.getSuccessAdj());
+				writeD(failure);
+				writeD(700); //unk timer??
+				writeD(1200); //unk timer??
+				writeD(0); //unk timer??writeD(700);
+				writeH(0);
 				break;
 			}
 			case 7:
 			{
-				writeD(buf, success);
-				writeD(buf, template.getFailureAdj());
-				writeD(buf, 0);
-				writeD(buf, 1200); //timer??
-				writeD(buf, 1330079); //??text??skill??
-				writeH(buf, 0x24); //0x24
-				writeD(buf, nameId);
-				writeH(buf, 0); //0x24
+				writeD(success);
+				writeD(template.getFailureAdj());
+				writeD(0);
+				writeD(1200); //timer??
+				writeD(1330079); //??text??skill??
+				writeH(0x24); //0x24
+				writeD(nameId);
+				writeH(0); //0x24
 				break;
 			}
 		}

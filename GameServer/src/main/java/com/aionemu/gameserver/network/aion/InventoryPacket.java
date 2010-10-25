@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion;
 
-import java.nio.ByteBuffer;
 import java.util.Set;
 
 import com.aionemu.gameserver.model.gameobjects.Item;
@@ -38,26 +37,26 @@ public abstract class InventoryPacket extends AionServerPacket
 	 * @param buf
 	 * @param item
 	 */
-	protected void writeGeneralInfo(ByteBuffer buf, Item item)
+	protected void writeGeneralInfo(Item item)
 	{
-		writeD(buf, item.getObjectId());
+		writeD(item.getObjectId());
 		ItemTemplate itemTemplate = item.getItemTemplate();
-		writeD(buf, itemTemplate.getTemplateId());
-		writeH(buf, 0x24);
-		writeD(buf, itemTemplate.getNameId());
-		writeH(buf, 0);
+		writeD(itemTemplate.getTemplateId());
+		writeH(0x24);
+		writeD(itemTemplate.getNameId());
+		writeH(0);
 	}
 	
-	protected void writeMailGeneralInfo(ByteBuffer buf, Item item)
+	protected void writeMailGeneralInfo(Item item)
 	{
-		writeD(buf, item.getObjectId());
+		writeD(item.getObjectId());
 		ItemTemplate itemTemplate = item.getItemTemplate();
-		writeD(buf, itemTemplate.getTemplateId());
-		writeD(buf, 1);
-		writeD(buf, 0);
-		writeH(buf, 0x24);
-		writeD(buf, itemTemplate.getNameId());
-		writeH(buf, 0);
+		writeD(itemTemplate.getTemplateId());
+		writeD(1);
+		writeD(0);
+		writeH(0x24);
+		writeD(itemTemplate.getNameId());
+		writeH(0);
 	}
 
 	/**
@@ -65,127 +64,127 @@ public abstract class InventoryPacket extends AionServerPacket
 	 * @param buf
 	 * @param item
 	 */
-	protected void writeGeneralItemInfo(ByteBuffer buf, Item item, boolean privateStore, boolean mail)
+	protected void writeGeneralItemInfo(Item item, boolean privateStore, boolean mail)
 	{
-		writeH(buf, 0x16); //length of details
-		writeC(buf, 0);
-		writeH(buf, item.getItemMask());
-		writeQ(buf, item.getItemCount());
-		writeD(buf, 0);
-		writeD(buf, 0);
+		writeH(0x16); //length of details
+		writeC( 0);
+		writeH(item.getItemMask());
+		writeQ(item.getItemCount());
+		writeD(0);
+		writeD(0);
 		if(!privateStore)
-			writeH(buf, 0);
-		writeC(buf, 0);
+			writeH(0);
+		writeC( 0);
 		if(!mail)
-			writeH(buf, item.getEquipmentSlot()); // not equipable items		
+			writeH(item.getEquipmentSlot()); // not equipable items		
 	}
 	
-	protected void writeStigmaInfo(ByteBuffer buf, Item item)
+	protected void writeStigmaInfo(Item item)
 	{
-		writeH(buf, 325); //length of details 45 01
-		writeC(buf, 0x6);
+		writeH(325); //length of details 45 01
+		writeC( 0x6);
 		if(item.isEquipped())
-			writeD(buf, item.getEquipmentSlot());
+			writeD(item.getEquipmentSlot());
 		else
-			writeD(buf, 0);
-		writeC(buf, 0x7);
-		writeH(buf, 702); //skill id
-		writeD(buf, 0);
-		writeH(buf, 0);
-		writeD(buf, 0x3c);  //0x3c
+			writeD(0);
+		writeC( 0x7);
+		writeH(702); //skill id
+		writeD(0);
+		writeH(0);
+		writeD(0x3c);  //0x3c
 		
-		writeD(buf, 0);
-		writeD(buf, 0);
+		writeD(0);
+		writeD(0);
 		
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
 		
-		writeD(buf, 0);
-		writeD(buf, 0);	
-		writeD(buf, 1);//1
-		writeD(buf, 0);
+		writeD(0);
+		writeD(0);	
+		writeD(1);//1
+		writeD(0);
 		
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);	
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);	
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);	
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);	
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
 		
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeH(buf, 0);
-		writeH(buf, 0x0b); //0b
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeH(0);
+		writeH(0x0b); //0b
 		
 		
-		writeC(buf, 0);
-		writeD(buf, item.getItemTemplate().getTemplateId());		
+		writeC( 0);
+		writeD(item.getItemTemplate().getTemplateId());		
 		
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeC(buf, 0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeC( 0);
 		
-		writeD(buf, 82750); //3E 43 01 00
+		writeD(82750); //3E 43 01 00
 		
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeC(buf, 0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeC( 0);
 		
-		writeC(buf, 0x22); // 22
-		writeH(buf, 0);
+		writeC( 0x22); // 22
+		writeH(0);
 	}
 
 	/**
@@ -193,19 +192,19 @@ public abstract class InventoryPacket extends AionServerPacket
 	 * @param buf
 	 * @param item
 	 */
-	protected void writeKinah(ByteBuffer buf, Item item, boolean isInventory)
+	protected void writeKinah(Item item, boolean isInventory)
 	{
-		writeH(buf, 0x16); //length of details
-		writeC(buf, 0);
-		writeH(buf, item.getItemMask());
-		writeQ(buf, item.getItemCount());
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeH(buf, 0);
-		writeC(buf, 0);
-		writeH(buf, 255); // FF FF equipment
+		writeH(0x16); //length of details
+		writeC( 0);
+		writeH(item.getItemMask());
+		writeQ(item.getItemCount());
+		writeD(0);
+		writeD(0);
+		writeH(0);
+		writeC( 0);
+		writeH(255); // FF FF equipment
 		if(isInventory)
-			writeC(buf, 0);
+			writeC( 0);
 	}
 
 	/**
@@ -215,9 +214,9 @@ public abstract class InventoryPacket extends AionServerPacket
 	 * @param item
 	 * @param isInventory
 	 */
-	protected void writeWeaponInfo(ByteBuffer buf, Item item, boolean isInventory)
+	protected void writeWeaponInfo(Item item, boolean isInventory)
 	{
-		this.writeWeaponInfo(buf, item, isInventory, false, false, false);
+		this.writeWeaponInfo(item, isInventory, false, false, false);
 	}
 	
 	/**
@@ -226,51 +225,51 @@ public abstract class InventoryPacket extends AionServerPacket
 	 * @param buf
 	 * @param item
 	 */
-	protected void writeWeaponInfo(ByteBuffer buf, Item item, boolean isInventory, boolean isWeaponSwitch, boolean privateStore, boolean mail)
+	protected void writeWeaponInfo(Item item, boolean isInventory, boolean isWeaponSwitch, boolean privateStore, boolean mail)
 	{
 		int itemSlotId = item.getEquipmentSlot();
 		
 		if(isWeaponSwitch)
-			writeH(buf, 0x05); // next bytes count ??
+			writeH(0x05); // next bytes count ??
 		else
-			writeH(buf, 0x4B); // next bytes count ??
+			writeH(0x4B); // next bytes count ??
 		
-		writeC(buf, 0x06);	
-		writeD(buf, item.isEquipped() ? itemSlotId : 0);
+		writeC( 0x06);	
+		writeD(item.isEquipped() ? itemSlotId : 0);
 		
 		if(!isWeaponSwitch)
 		{
-			writeC(buf, 0x01);
-			writeD(buf,	ItemSlot.getSlotsFor(item.getItemTemplate().getItemSlot()).get(0).getSlotIdMask());
-			writeD(buf, 0x02);
-			writeC(buf, 0x0B); //? some details separator
-			writeC(buf, item.isSoulBound() ? 1 : 0);
-			writeC(buf, item.getEnchantLevel()); //enchant (1-15)
-			writeD(buf, item.getItemSkinTemplate().getTemplateId());
-			writeC(buf, 0);
+			writeC( 0x01);
+			writeD(ItemSlot.getSlotsFor(item.getItemTemplate().getItemSlot()).get(0).getSlotIdMask());
+			writeD(0x02);
+			writeC( 0x0B); //? some details separator
+			writeC( item.isSoulBound() ? 1 : 0);
+			writeC( item.getEnchantLevel()); //enchant (1-15)
+			writeD(item.getItemSkinTemplate().getTemplateId());
+			writeC( 0);
 
-			writeItemStones(buf, item);
+			writeItemStones(item);
 			
 			ItemStone god = item.getGodStone();
-			writeD(buf, god == null ? 0 : god.getItemId());
-			writeC(buf, 0);
+			writeD(god == null ? 0 : god.getItemId());
+			writeC( 0);
 			
-			writeD(buf, 0);
+			writeD(0);
 
-			writeD(buf, 0);//unk 1.5.1.9
-			writeC(buf, 0);//unk 1.5.1.9
+			writeD(0);//unk 1.5.1.9
+			writeC( 0);//unk 1.5.1.9
 
-			writeH(buf, item.getItemMask());
-			writeQ(buf, item.getItemCount());
-			writeD(buf, 0);
-			writeD(buf, 0);
+			writeH(item.getItemMask());
+			writeQ(item.getItemCount());
+			writeD(0);
+			writeD(0);
 			if(!privateStore)
-				writeH(buf, 0);
-			writeC(buf, 0);
+				writeH(0);
+			writeC( 0);
 			if(!mail)
-				writeH(buf, item.isEquipped() ? 255 : item.getEquipmentSlot()); // FF FF equipment
+				writeH(item.isEquipped() ? 255 : item.getEquipmentSlot()); // FF FF equipment
 			if(isInventory)
-				writeC(buf,  0);//item.isEquipped() ? 1 : 0
+				writeC(  0);//item.isEquipped() ? 1 : 0
 		}
 	}
 
@@ -279,7 +278,7 @@ public abstract class InventoryPacket extends AionServerPacket
 	 * @param buf
 	 * @param item
 	 */
-	private void writeItemStones(ByteBuffer buf, Item item)
+	private void writeItemStones(Item item)
 	{
 		int count = 0;
 		
@@ -296,10 +295,10 @@ public abstract class InventoryPacket extends AionServerPacket
 				if(modifier != null)
 				{
 					count++;
-					writeC(buf, modifier.getStat().getItemStoneMask());
+					writeC( modifier.getStat().getItemStoneMask());
 				}
 			}
-			writeB(buf, new byte[(6-count)]);
+			writeB(new byte[(6-count)]);
 			count = 0;
 			for(ManaStone itemStone : itemStones)
 			{
@@ -310,14 +309,14 @@ public abstract class InventoryPacket extends AionServerPacket
 				if(modifier != null)
 				{
 					count++;
-					writeH(buf, ((SimpleModifier)modifier).getValue());
+					writeH(((SimpleModifier)modifier).getValue());
 				}
 			}
-			writeB(buf, new byte[(6-count)*2]);
+			writeB(new byte[(6-count)*2]);
 		}
 		else
 		{
-			writeB(buf, new byte[18]);
+			writeB(new byte[18]);
 		}
 
 		//for now max 6 stones - write some junk
@@ -328,42 +327,42 @@ public abstract class InventoryPacket extends AionServerPacket
 	 * @param buf
 	 * @param item
 	 */
-	protected void writeArmorInfo(ByteBuffer buf, Item item, boolean isInventory, boolean privateStore, boolean mail)
+	protected void writeArmorInfo(Item item, boolean isInventory, boolean privateStore, boolean mail)
 	{
 		int itemSlotId = item.getEquipmentSlot();
-		writeH(buf, 0x4F);
-		writeC(buf, 0x06);
-		writeD(buf, item.isEquipped() ? itemSlotId : 0);
-		writeC(buf, 0x02);
-		writeD(buf,	ItemSlot.getSlotsFor(item.getItemTemplate().getItemSlot()).get(0).getSlotIdMask());
-		writeD(buf, 0);
-		writeD(buf, 0);
-		writeC(buf, 0x0B); //? some details separator
-		writeC(buf, item.isSoulBound() ? 1 : 0);
-		writeC(buf, item.getEnchantLevel()); //enchant (1-15)
-		writeD(buf, item.getItemSkinTemplate().getTemplateId());
+		writeH(0x4F);
+		writeC( 0x06);
+		writeD(item.isEquipped() ? itemSlotId : 0);
+		writeC( 0x02);
+		writeD(ItemSlot.getSlotsFor(item.getItemTemplate().getItemSlot()).get(0).getSlotIdMask());
+		writeD(0);
+		writeD(0);
+		writeC( 0x0B); //? some details separator
+		writeC( item.isSoulBound() ? 1 : 0);
+		writeC( item.getEnchantLevel()); //enchant (1-15)
+		writeD(item.getItemSkinTemplate().getTemplateId());
 
-		writeC(buf, 0);
+		writeC( 0);
 
-		writeItemStones(buf, item);
+		writeItemStones(item);
 
-		writeC(buf, 0);
-		writeD(buf, item.getItemColor());
-		writeD(buf, 0);
+		writeC( 0);
+		writeD(item.getItemColor());
+		writeD(0);
 
-		writeD(buf, 0);//unk 1.5.1.9
-		writeC(buf, 0);//unk 1.5.1.9
+		writeD(0);//unk 1.5.1.9
+		writeC( 0);//unk 1.5.1.9
 
-		writeH(buf, item.getItemMask());
-		writeQ(buf, item.getItemCount());
-		writeD(buf, 0);
-		writeD(buf, 0);
+		writeH(item.getItemMask());
+		writeQ(item.getItemCount());
+		writeD(0);
+		writeD(0);
 		if(!privateStore)
-			writeH(buf, 0);
-		writeC(buf, 0);
+			writeH(0);
+		writeC( 0);
 		if(!mail)
-			writeH(buf, item.isEquipped() ? 255 : item.getEquipmentSlot()); // FF FF equipment
+			writeH(item.isEquipped() ? 255 : item.getEquipmentSlot()); // FF FF equipment
 		if(isInventory)
-			writeC(buf,  1);//item.isEquipped() ? 1 : 0
+			writeC(  1);//item.isEquipped() ? 1 : 0
 	}
 }

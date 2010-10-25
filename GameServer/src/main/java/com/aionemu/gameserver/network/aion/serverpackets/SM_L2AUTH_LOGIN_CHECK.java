@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.account.Account;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -47,11 +45,18 @@ public class SM_L2AUTH_LOGIN_CHECK extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
 		Account account = con.getAccount();
-
-		writeD(buf, ok ? 0x00 : 0x01);
-		writeS(buf, account.getName());
+		if (account != null)
+		{
+			writeD(ok ? 0x00 : 0x01);
+			writeS(account.getName());
+		}
+		else
+		{
+			writeD(ok ? 0x00 : 0x01);
+			writeS("null");
+		}
 	}
 }

@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.chatserver.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.chatserver.ChatServerConnection;
 import com.aionemu.gameserver.network.chatserver.CsServerPacket;
 
@@ -37,10 +35,10 @@ public class SM_CS_PLAYER_AUTH extends CsServerPacket
 	}
 
 	@Override
-	protected void writeImpl(ChatServerConnection con, ByteBuffer buf)
+	protected void writeImpl(ChatServerConnection con)
 	{
-		writeC(buf, getOpcode());
-		writeD(buf, playerId);
-		writeS(buf, playerLogin);
+		writeC(getOpCode());
+		writeD(playerId);
+		writeS(playerLogin);
 	}
 }

@@ -61,7 +61,7 @@ public class CM_DISCONNECT extends AionClientPacket
             /**
              * We should close connection but not forced
              */
-            client.close(false);
+            client.close();
         }
 	}
 }

@@ -18,8 +18,6 @@
 
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -41,11 +39,11 @@ public class SM_DELETE_WAREHOUSE_ITEM extends AionServerPacket
 
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeC(buf, warehouseType);
-		writeD(buf, itemObjId);
-		writeC(buf, 14);
+		writeC( warehouseType);
+		writeD(itemObjId);
+		writeC( 14);
 	}
 
 }

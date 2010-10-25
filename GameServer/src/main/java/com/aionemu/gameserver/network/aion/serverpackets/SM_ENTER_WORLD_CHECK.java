@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -33,10 +31,10 @@ public class SM_ENTER_WORLD_CHECK extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeC(buf, 0x00);
-		writeC(buf, 0x00);
-		writeC(buf, 0x00);
+		writeC( 0x00);
+		writeC( 0x00);
+		writeC( 0x00);
 	}
 }

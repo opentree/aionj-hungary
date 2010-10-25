@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -51,17 +49,17 @@ public class SM_LEGION_SEND_EMBLEM extends AionServerPacket
 	}
 
 	@Override
-	public void writeImpl(AionConnection con, ByteBuffer buf)
+	public void writeImpl(AionConnection con)
 	{
-		writeD(buf, legionId);
-		writeH(buf, emblemId);
-		writeD(buf, 0x00);
-		writeC(buf, 0xFF); // unk
-		writeC(buf, color_r);
-		writeC(buf, color_g);
-		writeC(buf, color_b);
-		writeS(buf, legionName);
-		writeC(buf, 0x01);
+		writeD(legionId);
+		writeH(emblemId);
+		writeD(0x00);
+		writeC( 0xFF); // unk
+		writeC( color_r);
+		writeC( color_g);
+		writeC( color_b);
+		writeS(legionName);
+		writeC( 0x01);
 
 		// ED 55 8A 6C 04 00 00 01 80 00 00 00 00 FF FF FF .U.l............
 		// FF 44 00 72 00 61 00 6B 00 65 00 73 00 00 00 01 .D.r.a.k.e.s....

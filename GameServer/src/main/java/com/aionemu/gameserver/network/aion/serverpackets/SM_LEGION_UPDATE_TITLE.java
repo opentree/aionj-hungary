@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -41,11 +39,11 @@ public class SM_LEGION_UPDATE_TITLE extends AionServerPacket
 	}
 
 	@Override
-	public void writeImpl(AionConnection con, ByteBuffer buf)
+	public void writeImpl(AionConnection con)
 	{
-		writeD(buf, objectId);
-		writeD(buf, legionId);
-		writeS(buf, legionName);
-		writeC(buf, rank); // 0: commander(?), 1: centurion, 2: soldier
+		writeD(objectId);
+		writeD(legionId);
+		writeS(legionName);
+		writeC( rank); // 0: commander(?), 1: centurion, 2: soldier
 	}
 }

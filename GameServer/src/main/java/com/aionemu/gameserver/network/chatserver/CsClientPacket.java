@@ -18,7 +18,7 @@ package com.aionemu.gameserver.network.chatserver;
 
 import org.apache.log4j.Logger;
 
-import com.aionemu.commons.network.packet.BaseClientPacket;
+import com.aionemu.commons.netty.packet.BaseClientPacket;
 
 /**
  * @author ATracer

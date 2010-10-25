@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.loginserver.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.loginserver.LoginServerConnection;
 import com.aionemu.gameserver.network.loginserver.LsServerPacket;
 
@@ -69,12 +67,17 @@ public class SM_ACCOUNT_AUTH extends LsServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(LoginServerConnection con, ByteBuffer buf)
+	protected void writeImpl(LoginServerConnection con)
 	{
-		writeC(buf, getOpcode());
-		writeD(buf, accountId);
-		writeD(buf, loginOk);
-		writeD(buf, playOk1);
-		writeD(buf, playOk2);
+		writeD(accountId);
+		writeD(loginOk);
+		writeD(playOk1);
+		writeD(playOk2);
+	}
+
+	@Override
+	public String toString()
+	{
+		return "SM_ACCOUNT_AUTH [accountId=" + accountId + ", loginOk=" + loginOk + ", playOk1=" + playOk1 + ", playOk2=" + playOk2 + "]";
 	}
 }

@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.DescriptionId;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -76,27 +74,27 @@ public class SM_QUESTION_WINDOW extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, code);
+		writeD(code);
 
 		for(Object param : params)
 		{
 			if (param instanceof DescriptionId)
 			{
-				writeH(buf, 0x24);
-				writeD(buf, ((DescriptionId) param).getValue());
-				writeH(buf, 0x00); //unk
+				writeH(0x24);
+				writeD(((DescriptionId) param).getValue());
+				writeH(0x00); //unk
 			}
 			else
-				writeS(buf, String.valueOf(param));
+				writeS(String.valueOf(param));
 		}
 
-		writeD(buf, 0x00);// unk
-		writeH(buf, 0x00);// unk
-		writeC(buf, 0x01);// unk
-		writeD(buf, senderId);
-		writeD(buf, 0x06); // group 6, unk
+		writeD(0x00);// unk
+		writeH(0x00);// unk
+		writeC( 0x01);// unk
+		writeD(senderId);
+		writeD(0x06); // group 6, unk
 	}
 
 }

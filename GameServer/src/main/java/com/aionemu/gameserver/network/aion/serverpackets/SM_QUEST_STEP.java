@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 import com.aionemu.gameserver.questEngine.model.QuestStatus;
@@ -43,12 +41,12 @@ public class SM_QUEST_STEP extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeH(buf, questId);
-		writeC(buf, status);
-		writeD(buf, vars);
-		writeC(buf, 0);
+		writeH(questId);
+		writeC( status);
+		writeD(vars);
+		writeC( 0);
 	}
 
 }

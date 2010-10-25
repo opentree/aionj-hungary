@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.Map;
 
 import com.aionemu.gameserver.model.items.ItemCooldown;
@@ -40,16 +39,16 @@ public class SM_ITEM_COOLDOWN extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeH(buf, cooldowns.size());
+		writeH(cooldowns.size());
 		long currentTime = System.currentTimeMillis();
 		for(Map.Entry<Integer, ItemCooldown> entry : cooldowns.entrySet())
 		{
-			writeH(buf, entry.getKey());
+			writeH(entry.getKey());
 			int left = Math.round((entry.getValue().getReuseTime() - currentTime) / 1000);
-			writeD(buf, left > 0 ? left : 0);
-			writeD(buf, entry.getValue().getUseDelay());
+			writeD(left > 0 ? left : 0);
+			writeD(entry.getValue().getUseDelay());
 		}
 	}
 }

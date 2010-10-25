@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.gameobjects.player.Prices;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -42,10 +40,10 @@ public class SM_PRICES extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeC(buf, prices.getGlobalPrices());		// Display Buying Price %
-        writeC(buf, prices.getGlobalPricesModifier());	// Buying Modified Price %
-        writeC(buf, prices.getTaxes());				// Tax = -100 + C %
+		writeC( prices.getGlobalPrices());		// Display Buying Price %
+        writeC( prices.getGlobalPricesModifier());	// Buying Modified Price %
+        writeC( prices.getTaxes());				// Tax = -100 + C %
 	}
 }

@@ -14,11 +14,11 @@
  *  You should have received a copy of the GNU General Public License
  *  along with aion-lightning.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aionemu.gameserver.network.factories;
+package com.aionemu.gameserver.network.aion;
 
+import com.aionemu.commons.netty.State;
 import com.aionemu.gameserver.network.aion.AionClientPacket;
 import com.aionemu.gameserver.network.aion.AionPacketHandler;
-import com.aionemu.gameserver.network.aion.AionConnection.State;
 import com.aionemu.gameserver.network.aion.clientpackets.*;
 
 /**

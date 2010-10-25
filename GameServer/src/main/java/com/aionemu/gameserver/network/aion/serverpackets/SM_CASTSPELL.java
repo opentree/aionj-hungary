@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -61,26 +59,26 @@ public class SM_CASTSPELL extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, attackerObjectId);
-		writeH(buf, spellId); 
-		writeC(buf, level);
+		writeD(attackerObjectId);
+		writeH(spellId); 
+		writeC( level);
 		
-		writeC(buf, targetType);
+		writeC( targetType);
 		switch(targetType)
 		{
 			case 0:
-				writeD(buf, targetObjectId); 
+				writeD(targetObjectId); 
 				break;
 			case 1:
-				writeF(buf, x);
-				writeF(buf, y);
-				writeF(buf, z);
+				writeF(x);
+				writeF(y);
+				writeF(z);
 				break;
 		}
 		
-		writeH(buf, duration);
-		writeD(buf, 0);
+		writeH(duration);
+		writeD(0);
 	}
 }

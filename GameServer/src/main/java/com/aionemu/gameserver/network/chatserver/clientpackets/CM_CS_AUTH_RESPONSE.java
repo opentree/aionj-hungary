@@ -18,9 +18,9 @@ package com.aionemu.gameserver.network.chatserver.clientpackets;
 
 import org.apache.log4j.Logger;
 
+import com.aionemu.commons.netty.State;
 import com.aionemu.commons.utils.ExitCode;
 import com.aionemu.gameserver.network.chatserver.CsClientPacket;
-import com.aionemu.gameserver.network.chatserver.ChatServerConnection.State;
 import com.aionemu.gameserver.network.chatserver.serverpackets.SM_CS_AUTH;
 import com.aionemu.gameserver.services.ChatService;
 import com.aionemu.gameserver.utils.ThreadPoolManager;

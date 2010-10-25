@@ -17,8 +17,6 @@
 
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.DescriptionId;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -1512,37 +1510,37 @@ public class SM_SYSTEM_MESSAGE extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
 		if(!npcShout)
 		{
-			writeH(buf, 0x13); // unk
-			writeD(buf, 0x00);
+			writeH(0x13); // unk
+			writeD(0x00);
 		}
 		else
 		{
-			writeC(buf, 0x01);
-			writeC(buf, 0x00);
-			writeD(buf, npcObjId); // unk
+			writeC( 0x01);
+			writeC( 0x00);
+			writeD(npcObjId); // unk
 		}
 		
-		writeD(buf, code); // msg id
-		writeC(buf, params.length); // count
+		writeD(code); // msg id
+		writeC( params.length); // count
 
 		for(Object param : params)
 		{
 			if(param instanceof DescriptionId)
 			{
-				writeH(buf, 0x24);
-				writeD(buf, ((DescriptionId) param).getValue());
-				writeH(buf, 0x00); // unk
+				writeH(0x24);
+				writeD(((DescriptionId) param).getValue());
+				writeH(0x00); // unk
 			}
 			else
-				writeS(buf, String.valueOf(param));
+				writeS(String.valueOf(param));
 		}
 		if(npcShout)
-			writeC(buf, 0x01);
+			writeC( 0x01);
 		else
-			writeC(buf, 0x00);
+			writeC( 0x00);
 	}
 }

@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.gameobjects.player.AbyssRank;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -39,27 +37,27 @@ public class SM_ABYSS_RANK extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeQ(buf, rank.getAp()); //curAP
-		writeD(buf, currentRankId); //curRank
-		writeD(buf, rank.getTopRanking()); //curRating
+		writeQ(rank.getAp()); //curAP
+		writeD(currentRankId); //curRank
+		writeD(rank.getTopRanking()); //curRating
 
 		int nextRankId = currentRankId < AbyssRankEnum.values().length ? currentRankId + 1 : currentRankId;
-		writeD(buf, 100 * rank.getAp()/AbyssRankEnum.getRankById(nextRankId).getRequired()); //exp %
+		writeD(100 * rank.getAp()/AbyssRankEnum.getRankById(nextRankId).getRequired()); //exp %
 
-		writeD(buf, rank.getAllKill()); //allKill
-		writeD(buf, rank.getMaxRank()); //maxRank
+		writeD(rank.getAllKill()); //allKill
+		writeD(rank.getMaxRank()); //maxRank
 
-		writeD(buf, rank.getDailyKill()); //dayKill
-		writeQ(buf, rank.getDailyAP()); //dayAP
+		writeD(rank.getDailyKill()); //dayKill
+		writeQ(rank.getDailyAP()); //dayAP
 
-		writeD(buf, rank.getWeeklyKill()); //weekKill
-		writeQ(buf, rank.getWeeklyAP()); //weekAP
+		writeD(rank.getWeeklyKill()); //weekKill
+		writeQ(rank.getWeeklyAP()); //weekAP
 
-		writeD(buf, rank.getLastKill()); //laterKill
-		writeQ(buf, rank.getLastAP()); //laterAP
+		writeD(rank.getLastKill()); //laterKill
+		writeQ(rank.getLastAP()); //laterAP
 
-		writeC(buf, 0x00); //unk
+		writeC( 0x00); //unk
 	}
 }

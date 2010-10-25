@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.List;
 
 import com.aionemu.gameserver.model.gameobjects.Item;
@@ -43,9 +42,9 @@ public class SM_UPDATE_PLAYER_APPEARANCE extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, playerId);
+		writeD(playerId);
 		
 		short mask = 0;
 		for(Item item : items)
@@ -53,15 +52,15 @@ public class SM_UPDATE_PLAYER_APPEARANCE extends AionServerPacket
 			mask |= item.getEquipmentSlot();
 		}
 		
-		writeH(buf, mask);
+		writeH(mask);
 
 		for(Item item : items)
 		{		
-			writeD(buf, item.getItemSkinTemplate().getTemplateId());
+			writeD(item.getItemSkinTemplate().getTemplateId());
 			GodStone godStone = item.getGodStone();
-			writeD(buf, godStone != null ? godStone.getItemId() : 0); 
-			writeD(buf, item.getItemColor());
-			writeH(buf, 0x00);// unk (0x00)
+			writeD(godStone != null ? godStone.getItemId() : 0); 
+			writeD(item.getItemColor());
+			writeH(0x00);// unk (0x00)
 		}
 	}
 }

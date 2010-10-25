@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.EmotionType;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
@@ -150,189 +148,189 @@ public class SM_EMOTION extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, senderObjectId);
-		writeC(buf, emotionType.getTypeId());
+		writeD(senderObjectId);
+		writeC( emotionType.getTypeId());
 		switch(emotionType)
 		{
 			case SELECT_TARGET:
 				// select target
-				writeH(buf, state);
-				writeF(buf, speed);
+				writeH(state);
+				writeF(speed);
 				break;
 			case JUMP:
 				// jump
-				writeH(buf, state);
-				writeF(buf, speed);
+				writeH(state);
+				writeF(speed);
 				break;
 			case SIT:
 				// sit
-				writeH(buf, state);
-				writeF(buf, speed);
+				writeH(state);
+				writeF(speed);
 				break;
 			case STAND:
 				// stand
-				writeH(buf, state);
-				writeF(buf, speed);
+				writeH(state);
+				writeF(speed);
 				break;
 			case CHAIR_SIT:
 				// sit (chair)
-				writeH(buf, state);
-				writeF(buf, speed);
-				writeF(buf, x);
-				writeF(buf, y);
-				writeF(buf, z);
-				writeC(buf, heading);
+				writeH(state);
+				writeF(speed);
+				writeF(x);
+				writeF(y);
+				writeF(z);
+				writeC( heading);
 				break;
 			case CHAIR_UP:
 				// stand (chair)
-				writeH(buf, state);
-				writeF(buf, speed);
-				writeF(buf, x);
-				writeF(buf, y);
-				writeF(buf, z);
-				writeC(buf, heading);
+				writeH(state);
+				writeF(speed);
+				writeF(x);
+				writeF(y);
+				writeF(z);
+				writeC( heading);
 				break;				
 			case START_FLYTELEPORT:
 				// fly teleport (start)
-				writeH(buf, state);
-				writeF(buf, speed);
-				writeD(buf, emotion); // teleport Id
+				writeH(state);
+				writeF(speed);
+				writeD(emotion); // teleport Id
 				break;
 			case LAND_FLYTELEPORT:
 				// fly teleport (land)
-				writeH(buf, state);
-				writeF(buf, speed);
+				writeH(state);
+				writeF(speed);
 				break;
 			case FLY:
 				// toggle flight mode
-				writeH(buf, state);
-				writeF(buf, speed);
+				writeH(state);
+				writeF(speed);
 				break;
 			case LAND:
 				// toggle land mode
-				writeH(buf, state);
-				writeF(buf, speed);
+				writeH(state);
+				writeF(speed);
 				break;
 			case DIE:
 				// die
-				writeH(buf, state);
-				writeF(buf, speed);
-				writeD(buf, targetObjectId);
+				writeH(state);
+				writeF(speed);
+				writeD(targetObjectId);
 				break;
 			case RESURRECT:
 				// resurrect
-				writeH(buf, state);
-				writeF(buf, speed);
+				writeH(state);
+				writeF(speed);
 				break;						
 			case EMOTE:
 				// emote
-				writeH(buf, state);
-				writeF(buf, speed);
-				writeD(buf, targetObjectId);
-				writeH(buf, emotion);
-				writeC(buf, 1);
+				writeH(state);
+				writeF(speed);
+				writeD(targetObjectId);
+				writeH(emotion);
+				writeC( 1);
 				break;				
 			case ATTACKMODE:
 				// toggle attack mode
-				writeH(buf, state);
-				writeF(buf, speed);
+				writeH(state);
+				writeF(speed);
 				break;
 			case NEUTRALMODE:
 				// toggle normal mode
-				writeH(buf, state);
-				writeF(buf, speed);
+				writeH(state);
+				writeF(speed);
 				break;		
 			case WALK:
 				// toggle walk
-				writeH(buf, state);
-				writeF(buf, (speed - (speed * 75f) / 100f));
+				writeH(state);
+				writeF((speed - (speed * 75f) / 100f));
 				break;
 			case RUN:
 				// toggle run
-				writeH(buf, state);
-				writeF(buf, speed);
+				writeH(state);
+				writeF(speed);
 				break;
 			case SWITCH_DOOR:
 				// toggle doors
-				writeH(buf, 9);
-				writeD(buf, 0);
+				writeH(9);
+				writeD(0);
 				break;				
 			case START_EMOTE:
 				// emote startloop
-				writeH(buf, state);
-				writeF(buf, speed);
-				writeH(buf, baseAttackSpeed);
-				writeH(buf, currentAttackSpeed);
+				writeH(state);
+				writeF(speed);
+				writeH(baseAttackSpeed);
+				writeH(currentAttackSpeed);
 				break;								
 			case OPEN_PRIVATESHOP:
 				// private shop open
-				writeH(buf, state);
-				writeF(buf, speed);
+				writeH(state);
+				writeF(speed);
 				break;
 			case CLOSE_PRIVATESHOP:
 				// private shop close
-				writeH(buf, state);
-				writeF(buf, speed);
+				writeH(state);
+				writeF(speed);
 				break;
 			case START_EMOTE2:
 				// emote startloop
-				writeH(buf, state);
-				writeF(buf, speed);
-				writeH(buf, baseAttackSpeed);
-				writeH(buf, currentAttackSpeed);
+				writeH(state);
+				writeF(speed);
+				writeH(baseAttackSpeed);
+				writeH(currentAttackSpeed);
 				break;				
 			case POWERSHARD_ON:
 				// powershard on
-				writeH(buf, state);
-				writeF(buf, speed);
+				writeH(state);
+				writeF(speed);
 				break;
 			case POWERSHARD_OFF:
 				// powershard off
-				writeH(buf, state);
-				writeF(buf, speed);
+				writeH(state);
+				writeF(speed);
 				break;
 			case ATTACKMODE2:
 				// toggle attack mode
-				writeH(buf, state);
-				writeF(buf, speed);
+				writeH(state);
+				writeF(speed);
 				break;
 			case NEUTRALMODE2:
 				// toggle normal mode
-				writeH(buf, state);
-				writeF(buf, speed);
+				writeH(state);
+				writeF(speed);
 				break;
 			case START_LOOT:
 				// looting start
-				writeH(buf, state);
-				writeF(buf, speed);
-				writeD(buf, targetObjectId);
+				writeH(state);
+				writeF(speed);
+				writeD(targetObjectId);
                 break;
 			case END_LOOT:
 				// looting end
-				writeH(buf, state);
-				writeF(buf, speed);
-				writeD(buf, targetObjectId);
+				writeH(state);
+				writeF(speed);
+				writeD(targetObjectId);
                 break;
 			case START_QUESTLOOT:
 				// looting start (quest)
-				writeH(buf, state);
-				writeF(buf, speed);
-				writeD(buf, targetObjectId);
+				writeH(state);
+				writeF(speed);
+				writeD(targetObjectId);
 				break;
 			case END_QUESTLOOT:
 				// looting end (quest)
-				writeH(buf, state);
-				writeF(buf, speed);
-				writeD(buf, targetObjectId);
+				writeH(state);
+				writeF(speed);
+				writeD(targetObjectId);
 				break;
 			default:
-				writeH(buf, state);
-				writeF(buf, speed);
+				writeH(state);
+				writeF(speed);
 				if(targetObjectId != 0)
 				{
-					writeD(buf, targetObjectId);
+					writeD(targetObjectId);
 				}
 		}
 	}

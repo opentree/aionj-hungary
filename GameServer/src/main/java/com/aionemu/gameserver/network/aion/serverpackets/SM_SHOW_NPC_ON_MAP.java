@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 /**
@@ -39,13 +37,13 @@ public class SM_SHOW_NPC_ON_MAP extends AionServerPacket
 	}
 	
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{		
-		writeD(buf, this.npcid);
-		writeD(buf, this.worldid);
-		writeD(buf, this.worldid);
-		writeF(buf, this.x);
-		writeF(buf, this.y);
-		writeF(buf, this.z);
+		writeD(this.npcid);
+		writeD(this.worldid);
+		writeD(this.worldid);
+		writeF(this.x);
+		writeF(this.y);
+		writeF(this.z);
 	}
 }

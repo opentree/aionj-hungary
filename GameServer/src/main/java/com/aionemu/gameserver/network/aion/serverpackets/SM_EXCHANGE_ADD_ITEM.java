@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.items.ItemId;
 import com.aionemu.gameserver.model.templates.item.ItemTemplate;
@@ -41,42 +39,42 @@ public class SM_EXCHANGE_ADD_ITEM extends InventoryPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
 
-		writeC(buf, action); // 0 -self 1-other
+		writeC( action); // 0 -self 1-other
 
-		writeGeneralInfo(buf, item);
+		writeGeneralInfo(item);
 
 		ItemTemplate itemTemplate = item.getItemTemplate();
 
 		if(itemTemplate.getTemplateId() == ItemId.KINAH.value())
 		{
-			writeKinah(buf, item, true);
+			writeKinah(item, true);
 		}
 		else if (itemTemplate.isWeapon())
 		{
-			writeWeaponInfo(buf, item, true);
+			writeWeaponInfo(item, true);
 		}
 		else if (itemTemplate.isArmor())
 		{
-			writeArmorInfo(buf,item, true, false, false);
+			writeArmorInfo(item, true, false, false);
 		}
 		else
 		{				
-			writeGeneralItemInfo(buf, item, false, false);
-			writeC(buf, 0);
+			writeGeneralItemInfo(item, false, false);
+			writeC( 0);
 		}
 	}
 
 	@Override
-	protected void writeGeneralInfo(ByteBuffer buf, Item item)
+	protected void writeGeneralInfo(Item item)
 	{	
 		ItemTemplate itemTemplate = item.getItemTemplate();
-		writeD(buf, itemTemplate.getTemplateId());
-		writeD(buf, item.getObjectId());
-		writeH(buf, 0x24);
-		writeD(buf, itemTemplate.getNameId());
-		writeH(buf, 0);
+		writeD(itemTemplate.getTemplateId());
+		writeD(item.getObjectId());
+		writeH(0x24);
+		writeD(itemTemplate.getNameId());
+		writeH(0);
 	}
 }

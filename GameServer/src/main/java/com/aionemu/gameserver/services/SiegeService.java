@@ -43,8 +43,6 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.world.World;
 
-import java.util.Collection;
-
 /**
  * @author Sarynth @Modified by Mcrizza
  * @Modified by Source , xTz
@@ -299,7 +297,6 @@ public class SiegeService
 
 	public void mapUpdate()
 	{
-		Collection<Player> players = World.getInstance().getAllPlayers();
 		for(Player player : World.getInstance().getAllPlayers())
 		{
 			PacketSendUtility.sendPacket(player, new SM_INFLUENCE_RATIO());

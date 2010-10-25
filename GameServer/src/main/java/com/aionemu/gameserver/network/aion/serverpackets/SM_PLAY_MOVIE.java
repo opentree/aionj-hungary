@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -38,12 +36,12 @@ public class SM_PLAY_MOVIE extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeC(buf, type);
-		writeD(buf, 0x00);
-		writeD(buf, 0x00);
-		writeH(buf, movieId);
-		writeD(buf, 0x00);
+		writeC( type);
+		writeD(0x00);
+		writeD(0x00);
+		writeH(movieId);
+		writeD(0x00);
 	}
 }

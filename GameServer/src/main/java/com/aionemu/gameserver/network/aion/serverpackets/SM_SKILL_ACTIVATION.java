@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -59,10 +57,10 @@ public class SM_SKILL_ACTIVATION extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeH(buf, skillId);
-		writeD(buf, unk);
-		writeC(buf, isActive ? 1 : 0);
+		writeH(skillId);
+		writeD(unk);
+		writeC( isActive ? 1 : 0);
 	}
 }

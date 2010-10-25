@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.List;
 
 import com.aionemu.gameserver.network.aion.AionConnection;
@@ -40,17 +39,17 @@ public class SM_NEARBY_QUESTS extends AionServerPacket
 
 
 	@Override
- 	protected void writeImpl(AionConnection con, ByteBuffer buf)
+ 	protected void writeImpl(AionConnection con)
  	{
  		int playerLevel = con.getActivePlayer().getLevel();
- 		writeD(buf, size);
+ 		writeD(size);
   		for(int id : questIds)
   		{
-			writeH(buf, id);
+			writeH(id);
 			if (QuestService.checkLevelRequirement(id, playerLevel))
-			writeH(buf, 0);
+			writeH(0);
 			else
-    		writeH(buf, 2);
+    		writeH(2);
   		}
  	}
 }

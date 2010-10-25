@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 import com.aionemu.gameserver.model.legion.LegionMemberEx;
@@ -46,22 +45,22 @@ public class SM_LEGION_MEMBERLIST extends AionServerPacket
 	}
 
 	@Override
-	public void writeImpl(AionConnection con, ByteBuffer buf)
+	public void writeImpl(AionConnection con)
 	{
-		writeC(buf, 0x01);
-		writeH(buf, (65536 - legionMembers.size()));
+		writeC( 0x01);
+		writeH((65536 - legionMembers.size()));
 		for(LegionMemberEx legionMember : legionMembers)
 		{
-			writeD(buf, legionMember.getObjectId());
-			writeS(buf, legionMember.getName());
-			writeC(buf, legionMember.getPlayerClass().getClassId());
-			writeD(buf, legionMember.getLevel());
-			writeC(buf, legionMember.getRank().getRankId());
-			writeD(buf, legionMember.getWorldId());
-			writeC(buf, legionMember.isOnline() ? ONLINE : OFFLINE);
-			writeS(buf, legionMember.getSelfIntro());
-			writeS(buf, legionMember.getNickname());
-			writeD(buf, legionMember.getLastOnline());
+			writeD(legionMember.getObjectId());
+			writeS(legionMember.getName());
+			writeC( legionMember.getPlayerClass().getClassId());
+			writeD(legionMember.getLevel());
+			writeC( legionMember.getRank().getRankId());
+			writeD(legionMember.getWorldId());
+			writeC( legionMember.isOnline() ? ONLINE : OFFLINE);
+			writeS(legionMember.getSelfIntro());
+			writeS(legionMember.getNickname());
+			writeD(legionMember.getLastOnline());
 		}
 	}
 }

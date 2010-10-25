@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -42,13 +40,13 @@ public class SM_RIFT_STATUS extends AionServerPacket
 
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, targetObjectId);
-		writeD(buf, usedEntries);
-		writeD(buf, maxEntries);
-		writeD(buf, 6793); //unk
-		writeD(buf, 25); // min level
-		writeD(buf, maxLevel);	
+		writeD(targetObjectId);
+		writeD(usedEntries);
+		writeD(maxEntries);
+		writeD(6793); //unk
+		writeD(25); // min level
+		writeD(maxLevel);	
 	}
 }

@@ -17,8 +17,6 @@
 
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -51,11 +49,11 @@ public class SM_NICKNAME_CHECK_RESPONSE extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
 		/**
 		 * Here is some msg: 0x00 = ok 0x0A = not ok and much more
 		 */
-		writeC(buf, value);
+		writeC( value);
 	}
 }

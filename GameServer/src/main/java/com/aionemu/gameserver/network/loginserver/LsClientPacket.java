@@ -18,7 +18,8 @@ package com.aionemu.gameserver.network.loginserver;
 
 import org.apache.log4j.Logger;
 
-import com.aionemu.commons.network.packet.BaseClientPacket;
+import com.aionemu.commons.netty.packet.BaseClientPacket;
+import com.aionemu.commons.netty.packet.BaseServerPacket;
 
 /**
  * @author -Nemesiss-
@@ -64,7 +65,7 @@ public abstract class LsClientPacket extends BaseClientPacket<LoginServerConnect
 	 * 
 	 * @param msg
 	 */
-	protected void sendPacket(LsServerPacket msg)
+	public void sendPacket(BaseServerPacket msg)
 	{
 		getConnection().sendPacket(msg);
 	}

@@ -23,8 +23,6 @@ import java.io.RandomAccessFile;
 
 import org.apache.log4j.Logger;
 
-import com.aionemu.gameserver.model.gameobjects.Creature;
-
 /**
  * @author leolegolas
  *

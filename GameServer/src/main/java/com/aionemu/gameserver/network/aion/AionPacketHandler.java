@@ -16,94 +16,25 @@
  */
 package com.aionemu.gameserver.network.aion;
 
-import java.nio.ByteBuffer;
-import java.util.HashMap;
-import java.util.Map;
+import org.jboss.netty.buffer.ChannelBuffer;
 
-import org.apache.log4j.Logger;
-
-import com.aionemu.gameserver.configs.main.OptionsConfig;
-import com.aionemu.gameserver.network.aion.AionConnection.State;
-import com.aionemu.gameserver.utils.Util;
+import com.aionemu.commons.netty.State;
+import com.aionemu.commons.netty.handler.PacketHandler;
 
 /**
- * @author -Nemesiss-
- * @author Luno
+ * @author MrPoke
  */
-public class AionPacketHandler
+public class AionPacketHandler extends PacketHandler<AionConnection>
 {
-	/**
-	 * logger for this class
+	/* (non-Javadoc)
+	 * @see com.aionemu.commons.netty.handler.PacketHandler#handle(org.jboss.netty.buffer.ChannelBuffer, com.aionemu.commons.netty.handler.AbstractChannelHandler)
 	 */
-	private static final Logger							log					= Logger.getLogger(AionPacketHandler.class);
-
-	private Map<State, Map<Integer, AionClientPacket>>	packetsPrototypes	= new HashMap<State, Map<Integer, AionClientPacket>>();
-
-	/**
-	 * Reads one packet from given ByteBuffer
-	 * 
-	 * @param data
-	 * @param client
-	 * @return AionClientPacket object from binary data
-	 */
-	public AionClientPacket handle(ByteBuffer data, AionConnection client)
+	@Override
+	public AionClientPacket handle(ChannelBuffer data, AionConnection client)
 	{
 		State state = client.getState();
-		int id = data.get() & 0xff;
-
-		/* Second opcodec. */
-		data.position(data.position() + 2);
-
-		return getPacket(state, id, data, client);
-	}
-
-	public void addPacketPrototype(AionClientPacket packetPrototype, State... states)
-	{
-		for(State state : states)
-		{
-			Map<Integer, AionClientPacket> pm = packetsPrototypes.get(state);
-			if(pm == null)
-			{
-				pm = new HashMap<Integer, AionClientPacket>();
-				packetsPrototypes.put(state, pm);
-			}
-			pm.put(packetPrototype.getOpcode(), packetPrototype);
-		}
-	}
-
-	private AionClientPacket getPacket(State state, int id, ByteBuffer buf, AionConnection con)
-	{
-		AionClientPacket prototype = null;
-
-		Map<Integer, AionClientPacket> pm = packetsPrototypes.get(state);
-		if(pm != null)
-		{
-			prototype = pm.get(id);
-		}
-
-		if(prototype == null)
-		{
-			unknownPacket(state, id, buf);
-			return null;
-		}
-
-		AionClientPacket res = prototype.clonePacket();
-		res.setBuffer(buf);
-		res.setConnection(con);
-
-		return res;
-	}
-
-	/**
-	 * Logs unknown packet.
-	 * 
-	 * @param state
-	 * @param id
-	 * @param data
-	 */
-	private void unknownPacket(State state, int id, ByteBuffer data)
-	{
-		if(OptionsConfig.LOG_PACKETS)
-			log.warn(String.format("[UNKNOWN PACKET] : 0x%02X, state=%s %n%s", id, state.toString(), Util.toHex(data)));
+		int id = data.readByte() & 0xff;
+		data.readShort();
+		return (AionClientPacket) getPacket(state, id, data, client);
 	}
 }

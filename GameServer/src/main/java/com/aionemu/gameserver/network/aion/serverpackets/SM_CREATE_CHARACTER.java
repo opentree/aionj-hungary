@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.account.PlayerAccountData;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.PlayerInfo;
@@ -80,17 +78,17 @@ public class SM_CREATE_CHARACTER extends PlayerInfo
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeD(buf, responseCode);
+		writeD(responseCode);
 
 		if(responseCode == RESPONSE_OK)
 		{
-			writePlayerInfo(buf, player); // if everything is fine, all the character's data should be sent
+			writePlayerInfo(player); // if everything is fine, all the character's data should be sent
 		}
 		else
 		{
-			writeB(buf, new byte[448]); // if something is wrong, only return code should be sent in the packet
+			writeB(new byte[448]); // if something is wrong, only return code should be sent in the packet
 		}
 	}
 }

@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.controllers.siege;
 
-import com.aionemu.gameserver.ai.events.Event;
 import com.aionemu.gameserver.model.EmotionType;
 import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;

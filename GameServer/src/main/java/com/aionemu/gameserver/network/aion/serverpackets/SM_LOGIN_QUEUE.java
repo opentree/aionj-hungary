@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
@@ -38,10 +36,10 @@ public class SM_LOGIN_QUEUE extends AionServerPacket
 	}
 
 	@Override
-	public void writeImpl(AionConnection con, ByteBuffer buf)
+	public void writeImpl(AionConnection con)
 	{
-		writeD(buf, waitingPosition);
-		writeD(buf, waitingTime);
-		writeD(buf, waitingCount);
+		writeD(waitingPosition);
+		writeD(waitingTime);
+		writeD(waitingCount);
 	}
 }

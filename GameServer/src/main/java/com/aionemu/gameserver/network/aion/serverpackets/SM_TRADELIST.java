@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.templates.TradeListTemplate;
 import com.aionemu.gameserver.model.templates.TradeListTemplate.TradeTab;
@@ -44,17 +42,17 @@ public class SM_TRADELIST extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{		
 		if ((tlist != null)&&(tlist.getNpcId()!=0)&&(tlist.getCount()!=0))
 		{
-			writeD(buf, targetObjectId);
-			writeC(buf, tlist.isAbyss() ? 2 : 1); //abyss or normal
-            writeD(buf, buyPriceModifier); // Vendor Buy Price Modifier
-			writeH(buf, tlist.getCount());
+			writeD(targetObjectId);
+			writeC( tlist.isAbyss() ? 2 : 1); //abyss or normal
+            writeD(buyPriceModifier); // Vendor Buy Price Modifier
+			writeH(tlist.getCount());
 			for(TradeTab tradeTabl : tlist.getTradeTablist())
 			{
-				writeD(buf, tradeTabl.getId());
+				writeD(tradeTabl.getId());
 			}
 		}
 	}	

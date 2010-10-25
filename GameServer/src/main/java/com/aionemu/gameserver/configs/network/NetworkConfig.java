@@ -23,16 +23,10 @@ import com.aionemu.commons.configuration.Property;
 public class NetworkConfig
 {
 	/**
-	 * Game Server port
+	 * Game Server address
 	 */
-	@Property(key = "network.client.port", defaultValue = "7777")
-	public static int				GAME_PORT;
-
-	/**
-	 * Game Server bind ip
-	 */
-	@Property(key = "network.client.host", defaultValue = "*")
-	public static String			GAME_BIND_ADDRESS;
+	@Property(key = "network.client.address", defaultValue = "localhost:7777")
+	public static InetSocketAddress			GAME_ADDRESS;
 
 	/**
 	 * Max allowed online players

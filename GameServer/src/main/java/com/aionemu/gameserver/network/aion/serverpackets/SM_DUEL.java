@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
-
 import com.aionemu.gameserver.model.DuelResult;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -67,19 +65,19 @@ public class SM_DUEL extends AionServerPacket
 	}
 	
 	@Override
-	public void writeImpl(AionConnection con, ByteBuffer buf)
+	public void writeImpl(AionConnection con)
 	{
-		writeC(buf, type);
+		writeC( type);
 
 		switch(type)
 		{
 			case 0x00:
-				writeD(buf, requesterObjId);
+				writeD(requesterObjId);
 				break;
 			case 0x01:
-				writeC(buf, result.getResultId()); // unknown
-				writeD(buf, result.getMsgId());
-				writeS(buf, playerName);
+				writeC( result.getResultId()); // unknown
+				writeD(result.getMsgId());
+				writeS(playerName);
 				break;
 			case 0xE0:
 				break;

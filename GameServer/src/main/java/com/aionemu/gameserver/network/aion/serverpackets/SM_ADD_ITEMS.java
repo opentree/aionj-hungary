@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.List;
 
 import com.aionemu.gameserver.model.gameobjects.Item;
@@ -46,36 +45,36 @@ public class SM_ADD_ITEMS extends InventoryPacket
 	 */
 
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{	
-		writeH(buf, 25); // padding?
-		writeH(buf, size); // number of entries
+		writeH(25); // padding?
+		writeH(size); // number of entries
 		for(Item item : items)
 		{
-			writeGeneralInfo(buf, item);
+			writeGeneralInfo(item);
 
 			ItemTemplate itemTemplate = item.getItemTemplate();
 
 			if(itemTemplate.getTemplateId() == ItemId.KINAH.value())
 			{
-				writeKinah(buf, item, true);
+				writeKinah(item, true);
 			}
 			else if (itemTemplate.isWeapon())
 			{
-				writeWeaponInfo(buf, item, true);
+				writeWeaponInfo(item, true);
 			}
 			else if (itemTemplate.isArmor())
 			{
-				writeArmorInfo(buf,item, true, false, false);
+				writeArmorInfo(item, true, false, false);
 			}
 			else if (itemTemplate.isStigma())
 			{
-				writeStigmaInfo(buf,item);
+				writeStigmaInfo(item);
 			}
 			else
 			{
-				writeGeneralItemInfo(buf, item, false, false);
-				writeC(buf, 0);
+				writeGeneralItemInfo(item, false, false);
+				writeC( 0);
 			}
 		}
 	}	

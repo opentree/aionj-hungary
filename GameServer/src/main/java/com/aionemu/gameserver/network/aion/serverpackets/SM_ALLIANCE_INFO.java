@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.List;
 
 import com.aionemu.gameserver.model.alliance.PlayerAlliance;
@@ -36,39 +35,39 @@ public class SM_ALLIANCE_INFO extends AionServerPacket
 		this.alliance = alliance;
 	}
 	@Override
-	protected void writeImpl(AionConnection con, ByteBuffer buf)
+	protected void writeImpl(AionConnection con)
 	{
-		writeH(buf, 4);
-		writeD(buf, alliance.getObjectId());
-		writeD(buf, alliance.getCaptainObjectId());
+		writeH(4);
+		writeD(alliance.getObjectId());
+		writeD(alliance.getCaptainObjectId());
 		
 		List<Integer> ids = alliance.getViceCaptainObjectIds();
-		writeD(buf, ids.size() > 0 ? ids.get(0) : 0); // viceLeader1
-		writeD(buf, ids.size() > 1 ? ids.get(1) : 0); // viceLeader2
-		writeD(buf, ids.size() > 2 ? ids.get(2) : 0); // viceLeader3
-		writeD(buf, ids.size() > 3 ? ids.get(3) : 0); // viceLeader4
+		writeD(ids.size() > 0 ? ids.get(0) : 0); // viceLeader1
+		writeD(ids.size() > 1 ? ids.get(1) : 0); // viceLeader2
+		writeD(ids.size() > 2 ? ids.get(2) : 0); // viceLeader3
+		writeD(ids.size() > 3 ? ids.get(3) : 0); // viceLeader4
 		
-		writeD(buf, 0); //loot rule type - 0 freeforall, 1 roundrobin, 2 leader
-		writeD(buf, 0); //autoDistribution - 0 or 1
-		writeD(buf, 0); //this.common_item_above); - 0 normal 2 roll 3 bid
-		writeD(buf, 0); //this.superior_item_above); - 0 normal 2 roll 3 bid
-		writeD(buf, 0); //this.heroic_item_above); - 0 normal 2 roll 3 bid
-		writeD(buf, 0); //this.fabled_item_above); - 0 normal 2 roll 3 bid
-		writeD(buf, 0); //this.ethernal_item_above); - 0 normal 2 roll 3 bid
-		writeD(buf, 0); //this.over_ethernal); - 0 normal 2 roll 3 bid
-		writeD(buf, 0); //this.over_over_ethernal); - 0 normal 2 roll 3 bid
-		writeC(buf, 0); //unk
+		writeD(0); //loot rule type - 0 freeforall, 1 roundrobin, 2 leader
+		writeD(0); //autoDistribution - 0 or 1
+		writeD(0); //this.common_item_above); - 0 normal 2 roll 3 bid
+		writeD(0); //this.superior_item_above); - 0 normal 2 roll 3 bid
+		writeD(0); //this.heroic_item_above); - 0 normal 2 roll 3 bid
+		writeD(0); //this.fabled_item_above); - 0 normal 2 roll 3 bid
+		writeD(0); //this.ethernal_item_above); - 0 normal 2 roll 3 bid
+		writeD(0); //this.over_ethernal); - 0 normal 2 roll 3 bid
+		writeD(0); //this.over_over_ethernal); - 0 normal 2 roll 3 bid
+		writeC( 0); //unk
 		
-		writeD(buf, 0); // allianceGroupNumber 1
-		writeD(buf, 1000); // allianceId 1
-		writeD(buf, 1); // allianceGroupNumber 2
-		writeD(buf, 1001); // allianceId 1
-		writeD(buf, 2); // allianceGroupNumber 3
-		writeD(buf, 1002); // allianceId 1
-		writeD(buf, 3); // allianceGroupNumber 4
-		writeD(buf, 1003); // allianceId 1
+		writeD(0); // allianceGroupNumber 1
+		writeD(1000); // allianceId 1
+		writeD(1); // allianceGroupNumber 2
+		writeD(1001); // allianceId 1
+		writeD(2); // allianceGroupNumber 3
+		writeD(1002); // allianceId 1
+		writeD(3); // allianceGroupNumber 4
+		writeD(1003); // allianceId 1
 		
-		writeD(buf, 0); //unk
-		writeH(buf, 0); //unk
+		writeD(0); //unk
+		writeH(0); //unk
 	}
 }

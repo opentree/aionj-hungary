@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import java.nio.ByteBuffer;
 import java.util.Collection;
 
 import com.aionemu.gameserver.model.gameobjects.Letter;
@@ -120,35 +119,35 @@ public class SM_MAIL_SERVICE extends MailServicePacket
 	}
 	
 	@Override
-	public void writeImpl (AionConnection con, ByteBuffer buf)
+	public void writeImpl (AionConnection con)
 	{
 		switch(serviceId)
 		{
 			case 0:
-				writeMailboxState(buf, haveNewMail, haveUnread);
+				writeMailboxState(haveNewMail, haveUnread);
 				break;
 				
 			case 1:
-				writeMailMessage(buf, mailMessage);
+				writeMailMessage(mailMessage);
 				break;
 				
 			case 2:
 				if(letters.size() > 0)
-					writeLettersList(buf, letters, player);
+					writeLettersList(letters, player);
 				else
-					writeEmptyLettersList(buf, player);
+					writeEmptyLettersList(player);
 				break;	
 				
 			case 3:
-				writeLetterRead(buf, letter, time);
+				writeLetterRead(letter, time);
 				break;
 				
 			case 5:
-				writeLetterState(buf, letterId, attachmentType);
+				writeLetterState(letterId, attachmentType);
 				break;
 				
 			case 6:
-				writeLetterDelete(buf, letterId);
+				writeLetterDelete(letterId);
 				break;
 		}
 	}
