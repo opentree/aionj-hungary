@@ -57,7 +57,7 @@ public class LoginToClientPipeLineFactory implements ChannelPipelineFactory
 	{
 		ChannelPipeline pipeline = Channels.pipeline();
 
-		pipeline.addLast("logger", new LoggingHandler(Logger.class, InternalLogLevel.INFO, true));
+		pipeline.addLast("logger", new LoggingHandler(Logger.class, InternalLogLevel.DEBUG, true));
 
 		pipeline.addLast("framedecoder", new LengthFieldBasedFrameDecoder(MAX_PACKET_LENGTH, LENGTH_FIELD_OFFSET,
 			LENGTH_FIELD_LENGTH, LENGTH_FIELD_ADJUSTMENT, INITIAL_BYTES_TO_STRIP));
