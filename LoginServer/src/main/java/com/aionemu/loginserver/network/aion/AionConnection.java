@@ -21,6 +21,7 @@ import java.security.interfaces.RSAPrivateKey;
 
 import javax.crypto.SecretKey;
 
+import org.apache.log4j.Logger;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
@@ -45,6 +46,11 @@ import com.aionemu.loginserver.utils.ThreadPoolManager;
  */
 public class AionConnection extends AbstractChannelHandler implements PacketCrypter
 {
+
+	/**
+	 * Logger for this class.
+	 */
+	private static final Logger	log	= Logger.getLogger(AionConnection.class);
 
 	/**
 	 * Unique Session Id of this connection
@@ -136,13 +142,29 @@ public class AionConnection extends AbstractChannelHandler implements PacketCryp
 	 * Encrypt packet.
 	 * 
 	 * @param buf
-	 * @return encrypted packet size.
 	 */
 	public final void encrypt(ChannelBuffer buf)
 	{
-		ChannelBuffer b = buf.slice();
-		int size = b.readableBytes()-2 ;
-		cryptEngine.encrypt(b.array(), size-2, size);
+		int size = buf.readableBytes()-2 ;
+		int offset = buf.arrayOffset() + buf.readerIndex()+2;
+		int lenght = cryptEngine.encrypt(buf.array(), offset, size);
+		buf.writerIndex(offset+lenght);
+	}
+
+	/**
+	 * Decrypt packet.
+	 * 
+	 * @param buf
+	 */
+	@Override
+	public void decrypt(ChannelBuffer buf)
+	{
+		int size = buf.readableBytes();
+		if (!cryptEngine.decrypt(buf.array(), 0, size))
+		{
+			log.warn("Wrong checksum: " + toString());
+			this.close();
+		}
 	}
 
 	/**
@@ -241,16 +263,5 @@ public class AionConnection extends AbstractChannelHandler implements PacketCryp
 	public int hashCode()
 	{
 		return super.hashCode();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see com.aionemu.commons.netty.handler.AbstractChannelHandler#decrypt(org.jboss.netty.buffer.ChannelBuffer)
-	 */
-	@Override
-	public void decrypt(ChannelBuffer buf)
-	{
-		int size = buf.readableBytes();
-		cryptEngine.decrypt(buf.array(), 0, size);
 	}
 }
