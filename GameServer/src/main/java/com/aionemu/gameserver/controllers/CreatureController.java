@@ -17,16 +17,12 @@
 package com.aionemu.gameserver.controllers;
 
 import java.util.concurrent.Future;
-import org.apache.log4j.Logger;
 import javolution.util.FastMap;
 
 import com.aionemu.commons.utils.Rnd;
-import com.aionemu.gameserver.configs.main.GeoDataConfig;
 import com.aionemu.gameserver.controllers.movement.MovementType;
 import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.gameobjects.Creature;
-import com.aionemu.gameserver.model.gameobjects.Npc;
-import com.aionemu.gameserver.model.gameobjects.Summon;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
@@ -40,7 +36,6 @@ import com.aionemu.gameserver.skillengine.model.HealType;
 import com.aionemu.gameserver.skillengine.model.Skill;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.world.World;
-import com.aionemu.gameserver.world.GeoData;
 
 /**
  * This class is for controlling Creatures [npc's, players etc]
@@ -50,7 +45,7 @@ import com.aionemu.gameserver.world.GeoData;
  */
 public abstract class CreatureController<T extends Creature> extends VisibleObjectController<Creature>
 {
-	private static final Logger log = Logger.getLogger(CreatureController.class);
+
 	private FastMap<Integer, Future<?>> tasks = new FastMap<Integer, Future<?>>().shared();
 	
 	/**
@@ -199,107 +194,6 @@ public abstract class CreatureController<T extends Creature> extends VisibleObje
 	      // float ownerX = owner.getX();
 	      // float ownerY = owner.getY();
 	      float fixZ = owner.getZ();
-	        if (GeoDataConfig.GEO_ENABLE)
-	        {
-
-	      switch (owner.getWorldId()) {
-	         // Terrestrial maps
-	      	 case 110010000:
-	      	 case 120010000:
-	         case 210010000:
-	         case 210030000:
-	         case 210020000:
-	         case 210060000:
-	         case 210040000:
-			 case 210050000:
-	         case 220010000:
-	         case 220030000:
-	         case 220020000:
-	         case 220050000:
-	         case 220040000:
-			 case 220070000:
-	         case 300010000:
-	         case 300020000:
-	         case 300030000:
-	         case 300040000:
-	         case 300050000:
-	         case 300060000:
-	         case 300070000:
-	         case 300080000:
-	         case 300090000:
-	         case 300100000:
-	         case 300110000:
-	         case 300120000:
-	         case 300130000:
-	         case 300140000:
-	         case 310010000:
-	         case 310020000:
-	         case 310030000:
-	         case 310040000:
-	         case 310050000:
-	         case 310060000:
-	         case 310070000:
-	         case 310080000:
-	         case 310090000:
-	         case 310100000:
-	         case 310110000:
-	         case 310120000:
-	         case 320010000:
-	         case 320020000:
-	         case 320030000:
-	         case 320040000:
-	         case 320050000:
-	         case 320060000:
-	         case 320070000:
-	         case 320080000:
-	         case 320090000:
-	         case 320100000:
-	         case 320110000:
-	         case 320120000:
-	         case 320130000:
-	         case 320140000:
-	         case 400010000:
-	         case 510010000:
-	         case 520010000:
-	         case 900020000:
-	         case 900030000:
-	         case 900100000:
-	            fixZ = GeoData.getZ(owner.getWorldId(), owner.getX(), owner.getY(), owner.getZ());
-	            if (owner instanceof Npc) {
-	               Creature target = (Creature)owner.getTarget(); 
-	               if (target != null && (target instanceof Player || target instanceof Summon)) {
-	                  // NPC/Monster is attacking when Target is player or summon
-	                  if (owner.getEffectController().getAbnormals() == 0) {
-	                     // NPC/Monster is at player position or in range of player
-	                     fixZ = owner.getZ();
-	                     log.info("stopMoving: " + owner.getName() + " ??=" + owner.getTarget().getName()
-                                 + " : GeoData OFF");
-	                  } else {
-	                     // NPC/Monster is under effect, apply GeoData
-	                    // log.info("stopMoving : "owner.getName()" target="owner.getTarget().getName()" : GeoData on (effect="String.valueOf(owner.getEffectController().getAbnormals())" ownerZ="String.valueOf(owner.getZ())" geoDataZ="String.valueOf(fixZ));
-	                 // }
-	                  //NPC/Monster is under effect, apply GeoData
-                      log.debug("stopMoving: " + owner.getName() + " target=" + owner.getTarget().getName()
-                          + " : GeoData ON (effect="
-                          + String.valueOf(owner.getEffectController().getAbnormals()) + " ownerZ="
-                          + String.valueOf(owner.getZ()) + " geoDataZ=" + String.valueOf(fixZ));
-                  }
-	               //} else {
-	               //   log.info("stopMoving : "owner.getName()" has no target or target isn't a player : GeoData on (ownerZ="String.valueOf(owner.getZ())" geoDataZ="String.valueOf(fixZ));
-	               }
-	            }
-	            break;
-	         default:
-	            // Other maps
-	            break;
-	      }
-	        }
-
-	      //World.getInstance().updatePosition(owner, owner.getX(), owner.getY(), fixZ, owner.getHeading());
-	     // //sp.getWorld().updatePosition(owner, owner.getX(), owner.getY(), owner.getZ(), owner.getHeading());
-	     // PacketSendUtility.broadcastPacket(owner, new SM_MOVE(owner, owner.getX(), owner.getY(), owner.getZ(),
-	        // owner.getHeading(), MovementType.MOVEMENT_STOP));
-	  // }
 	      World.getInstance().updatePosition(owner, owner.getX(), owner.getY(), fixZ, owner.getHeading());
 	        PacketSendUtility.broadcastPacket(owner, new SM_MOVE(owner.getObjectId(), owner.getX(), owner.getY(), owner
 	            .getZ(), owner.getHeading(), MovementType.MOVEMENT_STOP));
