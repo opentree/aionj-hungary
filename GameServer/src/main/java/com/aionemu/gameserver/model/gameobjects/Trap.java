@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.model.gameobjects;
 
-import com.aionemu.gameserver.ai.npcai.TrapAi;
 import com.aionemu.gameserver.controllers.NpcController;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
@@ -91,8 +90,6 @@ public class Trap extends Npc
 	@Override
 	public void initializeAi()
 	{
-		this.ai = new TrapAi();
-		ai.setOwner(this);
 	}
 	
 	@Override

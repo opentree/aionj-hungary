@@ -19,11 +19,6 @@ package com.aionemu.gameserver.controllers;
 import java.util.List;
 import java.util.concurrent.Future;
 
-import org.apache.log4j.Logger;
-
-import com.aionemu.gameserver.ai.AI;
-import com.aionemu.gameserver.ai.events.Event;
-import com.aionemu.gameserver.ai.npcai.DummyAi;
 import com.aionemu.gameserver.controllers.attack.AttackResult;
 import com.aionemu.gameserver.controllers.attack.AttackUtil;
 import com.aionemu.gameserver.dataholders.DataManager;
@@ -34,7 +29,6 @@ import com.aionemu.gameserver.model.group.PlayerGroup;
 import com.aionemu.gameserver.model.alliance.PlayerAlliance;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.Npc;
-import com.aionemu.gameserver.model.gameobjects.Summon;
 import com.aionemu.gameserver.model.gameobjects.AionObject;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
@@ -82,34 +76,19 @@ import com.aionemu.gameserver.world.WorldType;
  */
 public class NpcController extends CreatureController<Npc>
 {
-	private static final Logger	log	= Logger.getLogger(NpcController.class);
-
-	@Override
-	public void notSee(VisibleObject object, boolean isOutOfRange)
-	{
-		super.notSee(object, isOutOfRange);
-		if(object instanceof Player || object instanceof Summon)
-			getOwner().getAi().handleEvent(Event.NOT_SEE_PLAYER);			
-	}
 
 	@Override
 	public void see(VisibleObject object)
 	{
 		super.see(object);
 		Npc owner = getOwner();
-		owner.getAi().handleEvent(Event.SEE_CREATURE);
 		if(object instanceof Player)
 		{
-			owner.getAi().handleEvent(Event.SEE_PLAYER);
 			//TODO check on retail how walking npc is presented, probably need replace emotion
 			// with some state etc.
 			if(owner.getMoveController().isWalking())
 				PacketSendUtility.sendPacket((Player) object, new SM_EMOTION(owner, EmotionType.WALK));
 		}	
-		else if(object instanceof Summon)
-		{
-			owner.getAi().handleEvent(Event.SEE_PLAYER);
-		}
 	}
 
 	@Override
@@ -159,7 +138,6 @@ public class NpcController extends CreatureController<Npc>
 		
 		
 		this.doReward();
-		owner.getAi().stop();
 
 		// deselect target at the end
 		owner.setTarget(null);
@@ -215,7 +193,6 @@ public class NpcController extends CreatureController<Npc>
 	@Override
 	public void onDialogRequest(Player player)
 	{
-		getOwner().getAi().handleEvent(Event.TALK);
 		
 		if(QuestEngine.getInstance().onDialog(new QuestEnv(getOwner(), player, 0, -1)))
 			return;
@@ -230,7 +207,6 @@ public class NpcController extends CreatureController<Npc>
 	{
 		if(getOwner().isInWorld())
 		{
-			this.getOwner().getAi().clearDesires();
 			this.onDespawn(true);
 			this.delete();
 		}
@@ -499,12 +475,6 @@ public class NpcController extends CreatureController<Npc>
 			if(QuestEngine.getInstance().onAttack(new QuestEnv(npc, (Player) actingCreature, 0, 0)))
 				return;
 
-		AI<?> ai = npc.getAi();
-		if(ai instanceof DummyAi)
-		{
-			log.warn("CHECKPOINT: npc attacked without ai " + npc.getObjectTemplate().getTemplateId());
-			return;
-		}
 		for (VisibleObject obj : this.getOwner().getKnownList().getKnownObjects().values())
 		{
 			if (obj instanceof Npc)
@@ -536,14 +506,7 @@ public class NpcController extends CreatureController<Npc>
 		if(!npc.canAttack())
 			return;
 
-		AI<?> ai = npc.getAi();
 		NpcGameStats gameStats = npc.getGameStats();
-
-		if(target == null || target.getLifeStats().isAlreadyDead())
-		{
-			ai.handleEvent(Event.MOST_HATED_CHANGED);
-			return;
-		}
 		
 		/**
 		 * notify attack observers

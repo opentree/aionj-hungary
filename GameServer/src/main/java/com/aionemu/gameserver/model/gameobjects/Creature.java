@@ -23,7 +23,6 @@ import javolution.util.FastMap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-import com.aionemu.gameserver.ai.AI;
 import com.aionemu.gameserver.controllers.CreatureController;
 import com.aionemu.gameserver.controllers.MoveController;
 import com.aionemu.gameserver.controllers.ObserveController;
@@ -52,11 +51,6 @@ import com.aionemu.gameserver.world.WorldPosition;
 public abstract class Creature extends VisibleObject
 {
 	private static final Logger log = Logger.getLogger(Creature.class);
-	
-	/**
-	 * Reference to AI
-	 */
-	protected AI<? extends Creature> ai;
 
 	private CreatureLifeStats<? extends Creature> lifeStats;
 	private CreatureGameStats<? extends Creature> gameStats;
@@ -156,22 +150,6 @@ public abstract class Creature extends VisibleObject
 	public void setEffectController(EffectController effectController)
 	{
 		this.effectController = effectController;
-	}
-
-	/**
-	 * @return the npcAi
-	 */
-	public AI<? extends Creature> getAi()
-	{
-		return ai != null ? ai : AI.dummyAi();
-	}
-
-	/**
-	 * @param ai the ai to set
-	 */
-	public void setAi(AI<? extends Creature> ai)
-	{
-		this.ai = ai;
 	}
 	
 	/**

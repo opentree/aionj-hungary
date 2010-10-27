@@ -3,9 +3,6 @@
  */
 package com.aionemu.gameserver.model.gameobjects.siege;
 
-import com.aionemu.gameserver.ai.npcai.AggressiveAi;
-import com.aionemu.gameserver.ai.npcai.MonsterAi;
-import com.aionemu.gameserver.configs.main.CustomConfig;
 import com.aionemu.gameserver.controllers.siege.SiegeNpcController;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.siege.SiegeRace;
@@ -50,12 +47,6 @@ public class SiegeNpc extends Npc {
 	@Override
 	public void initializeAi()
 	{
-		if(isAggressive() && !CustomConfig.DISABLE_MOB_AGGRO)
-			this.ai = new AggressiveAi();
-		else
-			this.ai = new MonsterAi();
-		
-		ai.setOwner(this);	
 	}
 	
 	@Override

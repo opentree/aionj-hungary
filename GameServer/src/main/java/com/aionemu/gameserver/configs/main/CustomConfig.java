@@ -42,12 +42,6 @@ public class CustomConfig
 	public static boolean	STIGMA_AUTOLEARN;
 
 	/**
-	 * Disable monsters aggressive behave
-	 */
-	@Property(key = "disable.mob.aggro", defaultValue = "false")
-	public static boolean	DISABLE_MOB_AGGRO;
-
-	/**
 	 * Enable 2nd class change simple mode
 	 */
 	@Property(key = "enable.simple.2ndclass", defaultValue = "false")

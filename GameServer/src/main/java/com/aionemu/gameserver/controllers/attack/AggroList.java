@@ -20,7 +20,6 @@ import java.util.Collection;
 import java.util.Map;
 
 import com.aionemu.commons.utils.SingletonMap;
-import com.aionemu.gameserver.ai.events.Event;
 import com.aionemu.gameserver.model.gameobjects.AionObject;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
@@ -59,8 +58,6 @@ public class AggroList
 		 * Additionally there will be broadcast of extra hate
 		 */
 		ai.addHate(damage);
-		
-		owner.getAi().handleEvent(Event.ATTACKED);
 	}
 
 	/**
@@ -78,8 +75,6 @@ public class AggroList
 
 		AggroInfo ai = getAggroInfo(creature);
 		ai.addHate(hate);
-		
-		owner.getAi().handleEvent(Event.ATTACKED);
 	}
 
 	/**

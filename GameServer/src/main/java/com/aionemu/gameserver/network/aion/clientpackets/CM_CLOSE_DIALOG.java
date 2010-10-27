@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-import com.aionemu.gameserver.ai.state.AIState;
 import com.aionemu.gameserver.model.gameobjects.AionObject;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
@@ -69,8 +68,6 @@ public class CM_CLOSE_DIALOG extends AionClientPacket
 			
 			if(npc.hasWalkRoutes() && !npc.getMoveController().canWalk())//resumes npc behavior
 				npc.getMoveController().setCanWalk(true);
-			else
-				npc.getAi().setAiState(AIState.THINKING);
 				
 			if(npc.getTarget() == player)
 				npc.setTarget(null);

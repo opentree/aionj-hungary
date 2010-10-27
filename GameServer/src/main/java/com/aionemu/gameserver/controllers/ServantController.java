@@ -31,7 +31,6 @@ public class ServantController extends NpcController
 	public void onDie(Creature lastAttacker)
 	{
 		super.onDelete();
-		getOwner().getAi().stop();
 	}
 
 	@Override

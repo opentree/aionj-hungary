@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.model.gameobjects;
 
-import com.aionemu.gameserver.ai.npcai.ServantAi;
 import com.aionemu.gameserver.controllers.NpcController;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
@@ -125,8 +124,6 @@ public class Servant extends Npc
 	@Override
 	public void initializeAi()
 	{
-		this.ai = new ServantAi();
-		ai.setOwner(this);
 	}
 	
 	@Override

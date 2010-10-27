@@ -231,8 +231,6 @@ public class SpawnEngine
 			npc.setEffectController(new EffectController(npc));
 			npc.getController().onRespawn();
 			bringIntoWorld(npc, spawn, instanceIndex);
-			if (npc.hasWalkRoutes())
-				npc.getAi().schedule();
 			return npc;
 		}
 		else if(template instanceof GatherableTemplate)
