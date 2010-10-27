@@ -15,6 +15,7 @@
 						<xs:attribute name="water_level" type="xs:int" use="required" />
 						<xs:attribute name="death_level" type="xs:int" use="required" />
 						<xs:attribute name="world_type" type="worldType" />
+						<xs:attribute name="world_size" type="xs:int" use="required" />
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
