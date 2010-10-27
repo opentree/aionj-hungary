@@ -16,6 +16,8 @@
  */
 package com.aionemu.gameserver.world;
 
+import org.apache.log4j.Logger;
+
 /**
  * @author Mr. Poke
  * 
@@ -23,6 +25,12 @@ package com.aionemu.gameserver.world;
 public class WorldMapInstance3D extends WorldMapInstance
 {
 
+	/**
+	 * Logger for this class.
+	 */
+	private static final Logger				log			= Logger.getLogger(WorldMapInstance3D.class);
+
+	private MapRegion[][][]		regions;
 	/**
 	 * @param parent
 	 * @param instanceId
@@ -32,18 +40,22 @@ public class WorldMapInstance3D extends WorldMapInstance
 		super(parent, instanceId);
 	}
 
-	/**
-	 * Calculate region id from cords.
-	 * 
-	 * @param x
-	 * @param y
-	 * @return region id.
-	 */
-	@Override
-	protected Integer getRegionId(float x, float y, float z)
+	protected void initMapRegions()
 	{
-		return ((int) x+offset) / regionSize * maxWorldSize * maxWorldSize + ((int) y+offset) / regionSize * maxWorldSize + ((int) z+offset)
-			/ regionSize;
+		regions = new MapRegion[getParent().getWorldSize()/regionSize+1][getParent().getWorldSize()/regionSize+1][5000/regionSize+1];
+		int size = this.getParent().getWorldSize()/regionSize;
+		int zSize = 5000/regionSize; 
+		
+		for (int x=0; x < size ; x++)
+		{
+			for (int y=0; y < size ; y++)
+			{
+				for (int z=0; z < zSize ; z++)
+				{
+					createMapRegion(x,y,z);
+				}
+			}
+		}
 	}
 
 	/**
@@ -53,26 +65,21 @@ public class WorldMapInstance3D extends WorldMapInstance
 	 * @return newly created map region
 	 */
 	@Override
-	protected MapRegion createMapRegion(Integer regionId)
+	protected MapRegion createMapRegion(int x, int y, int z)
 	{
-		MapRegion r = new MapRegion(regionId, this, true);
-		regions.put(regionId, r);
+		MapRegion r = new MapRegion(this, true);
+		regions[x][y][z] = r;
 
-		int rx = regionId / (maxWorldSize * maxWorldSize);
-		int ry = regionId / maxWorldSize % maxWorldSize;
-		int rz = (regionId % maxWorldSize * maxWorldSize) / maxWorldSize;
-
-		for(int x = rx - 1; x <= rx + 1; x++)
+		for(int x2 = x - 1; x2 <= x + 1; x2++)
 		{
-			for(int y = ry - 1; y <= ry + 1; y++)
+			for(int y2 = y - 1; y2 <= y + 1; y2++)
 			{
-				for(int z = rz - 1; z <= rz + 1; z++)
+				for(int z2 = z - 1; z2 <= z + 1; z2++)
 				{
-					if(x == rx && y == ry && z == rz)
+					if((x2 == x && y2 == y && z2 == z) || x2 == -1 || y2 == -1 || z2 == -1)
 						continue;
-					int neighbourId = x * maxWorldSize * maxWorldSize + y * maxWorldSize + z;
 
-					MapRegion neighbour = regions.get(neighbourId);
+					MapRegion neighbour = regions[x2][y2][z2];
 					if(neighbour != null)
 					{
 						r.addNeighbourRegion(neighbour);
@@ -82,6 +89,32 @@ public class WorldMapInstance3D extends WorldMapInstance
 			}
 		}
 		return r;
+	}
+
+	/**
+	 * Returns MapRegion that contains given x,y coordinates. If the region doesn't exist, it's created.
+	 *
+	 * @param x
+	 * @param y
+	 * @return a MapRegion
+	 */
+	MapRegion getRegion(float x, float y, float z)
+	{
+		MapRegion region = null;
+		try
+		{
+			region = regions[(int)x/regionSize][(int)y/regionSize][((int)z+offset)/regionSize];
+		}
+		catch (ArrayIndexOutOfBoundsException e)
+		{
+			log.warn("MAP REGION: Cord out of world!!! x: "+x+" y: "+y+" z: "+z);
+			return null;
+		}
+		if(region == null)
+		{
+			log.warn("MAP REGION: Not found!!! x: "+x+" y: "+y+" z: "+z);
+		}
+		return region;
 	}
 
 }

@@ -112,6 +112,16 @@ public class WorldMap
 	}
 	
 	/**
+	 * Returns world size
+	 * 
+	 * @return world size
+	 */
+	public Integer getWorldSize()
+	{
+		return worldMapTemplate.getWorldSize();
+	}
+
+	/**
 	 * 
 	 * @return int
 	 */

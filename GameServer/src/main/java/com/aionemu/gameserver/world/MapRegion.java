@@ -30,10 +30,6 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
  */
 public class MapRegion
 {
-	/**
-	 * Region id of this map region [NOT WORLD ID!]
-	 */
-	private final Integer							regionId;
 
 	/**
 	 * WorldMapInstance witch is parent of this map region.
@@ -58,13 +54,12 @@ public class MapRegion
 	 * @param id
 	 * @param parent
 	 */
-	MapRegion(Integer id, WorldMapInstance parent, boolean is3D)
+	MapRegion(WorldMapInstance parent, boolean is3D)
 	{
 		if (is3D)
 			neighbours		= new FastList<MapRegion>(27);
 		else
 			neighbours		= new FastList<MapRegion>(9);
-		this.regionId = id;
 		this.parent = parent;
 		this.neighbours.add(this);
 	}
@@ -83,16 +78,6 @@ public class MapRegion
 	public World getWorld()
 	{
 		return getParent().getWorld();
-	}
-
-	/**
-	 * Returns region id of this map region. [NOT WORLD ID!]
-	 * 
-	 * @return region id.
-	 */
-	public Integer getRegionId()
-	{
-		return regionId;
 	}
 
 	public boolean isActive()
@@ -168,28 +153,5 @@ public class MapRegion
 				playerCount--;
 			}
 		}
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj)
-	{
-		if(this == obj)
-			return true;
-		if(obj == null)
-			return false;
-		if(getClass() != obj.getClass())
-			return false;
-		MapRegion other = (MapRegion) obj;
-		if(regionId == null)
-		{
-			if(other.regionId != null)
-				return false;
-		}
-		else if(!regionId.equals(other.regionId))
-			return false;
-		return true;
 	}
 }

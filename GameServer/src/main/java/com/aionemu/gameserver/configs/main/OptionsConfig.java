@@ -38,11 +38,8 @@ public class OptionsConfig
 	@Property(key = "tasks.items", defaultValue = "60")
 	public static int		ITEMS;
 
-	@Property(key = "world.region.size", defaultValue = "500")
+	@Property(key = "world.region.size", defaultValue = "512")
 	public static int		REGION_SIZE;
-
-	@Property(key = "world.region.maxsize", defaultValue = "10000")
-	public static int		MAX_WORLD_SIZE;
 	
 	@Property(key = "log.audit", defaultValue = "true")
 	public static boolean	LOG_AUDIT;

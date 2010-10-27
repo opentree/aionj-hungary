@@ -79,6 +79,12 @@ public class WorldMapTemplate
 	private int	waterlevel	= 16;
 	
 	/**
+	 * water level on map
+	 */
+	@XmlAttribute(name = "world_size", required = true)
+	private int	worldSize	= 0;
+
+	/**
 	 * world type of map
 	 */
 	@XmlAttribute(name = "world_type")
@@ -137,5 +143,12 @@ public class WorldMapTemplate
 	public WorldType getWorldType()
 	{
 		return worldType;
+	}
+	/**
+	 * @return the WorldType
+	 */
+	public int getWorldSize()
+	{
+		return worldSize;
 	}
 }

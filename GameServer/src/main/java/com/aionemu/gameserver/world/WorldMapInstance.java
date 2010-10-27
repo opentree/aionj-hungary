@@ -22,6 +22,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Future;
 
+import org.apache.log4j.Logger;
+
 import javolution.util.FastMap;
 
 import com.aionemu.gameserver.configs.main.OptionsConfig;
@@ -40,13 +42,14 @@ import com.aionemu.gameserver.world.exceptions.DuplicateAionObjectException;
 public class WorldMapInstance
 {
 	/**
+	 * Logger for this class.
+	 */
+	private static final Logger				log			= Logger.getLogger(WorldMapInstance.class);
+
+	/**
 	 * Size of region
 	 */
 	public static final int						regionSize			= OptionsConfig.REGION_SIZE;
-	/**
-	 * Max world size - actually it must be some value bigger than world size. Used only for id generation.
-	 */
-	protected static final int					maxWorldSize		= OptionsConfig.MAX_WORLD_SIZE;
 	
 	protected static final int					offset		= 1000;
 	/**
@@ -56,7 +59,7 @@ public class WorldMapInstance
 	/**
 	 * Map of active regions.
 	 */
-	protected final Map<Integer, MapRegion>		regions				= new FastMap<Integer, MapRegion>().shared();
+	protected MapRegion[][]		regions;
 
 	/**
 	 * All objects spawned in this world map instance
@@ -90,6 +93,7 @@ public class WorldMapInstance
 	{
 		this.parent = parent;
 		this.instanceId = instanceId;
+		initMapRegions();
 	}
 
 	/**
@@ -100,6 +104,20 @@ public class WorldMapInstance
 	public Integer getMapId()
 	{
 		return getParent().getMapId();
+	}
+
+	protected void initMapRegions()
+	{
+		this.regions = new MapRegion[parent.getWorldSize()/regionSize+1][parent.getWorldSize()/regionSize+1];
+		int size = parent.getWorldSize()/regionSize;
+		for (int x=0; x < size ; x++)
+		{
+			for (int y=0; y < size ; y++)
+			{
+				createMapRegion(x, y, 0);
+			}
+		}
+		log.debug(this.getMapId()+" Created map regions: "+ regions.length);
 	}
 
 	/**
@@ -133,32 +151,20 @@ public class WorldMapInstance
 	 */
 	MapRegion getRegion(float x, float y, float z)
 	{
-		Integer regionId = getRegionId(x, y, z);
-		MapRegion region = regions.get(regionId);
+		MapRegion region = null;
+		try
+		{
+			region = regions[(int) x / regionSize][(int) y / regionSize];
+		}
+		catch (ArrayIndexOutOfBoundsException e)
+		{
+			log.warn("MAP REGION: Cord out of world!!! x: "+x+" y: "+y+" z: "+z);
+		}
 		if(region == null)
 		{
-			synchronized(this)
-			{
-				region = regions.get(regionId);
-				if(region == null)
-				{
-					region = createMapRegion(regionId);
-				}
-			}
+			log.warn("MAP REGION: Not found!!! x: "+x+" y: "+y+" z: "+z);
 		}
 		return region;
-	}
-
-	/**
-	 * Calculate region id from cords.
-	 *
-	 * @param x
-	 * @param y
-	 * @return region id.
-	 */
-	protected Integer getRegionId(float x, float y, float z)
-	{
-		return ((int) x+offset) / regionSize * maxWorldSize + ((int) y+offset) / regionSize;
 	}
 
 	/**
@@ -167,23 +173,19 @@ public class WorldMapInstance
 	 * @param regionId
 	 * @return newly created map region
 	 */
-	protected MapRegion createMapRegion(Integer regionId)
+	protected MapRegion createMapRegion(int x, int y, int z)
 	{
-		MapRegion r = new MapRegion(regionId, this, false);
-		regions.put(regionId, r);
+		MapRegion r = new MapRegion(this, false);
 
-		int rx = regionId / maxWorldSize;
-		int ry = regionId % maxWorldSize;
-
-		for(int x = rx - 1; x <= rx + 1; x++)
+		regions[x][y] = r;
+		for(int x2 = x - 1; x2 <= x + 1; x2++)
 		{
-			for(int y = ry - 1; y <= ry + 1; y++)
+			for(int y2 = y - 1; y2 <= y + 1; y2++)
 			{
-				if(x == rx && y == ry)
+				if((x2 == x && y2 == y) || x2 == -1 || y2 == -1)
 					continue;
-				int neighbourId = x * maxWorldSize + y;
 
-				MapRegion neighbour = regions.get(neighbourId);
+				MapRegion neighbour = regions[x2][y2];
 				if(neighbour != null)
 				{
 					r.addNeighbourRegion(neighbour);
