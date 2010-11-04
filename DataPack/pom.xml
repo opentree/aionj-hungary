@@ -5,6 +5,11 @@
 	<artifactId>datapack</artifactId>
 	<name>aionj-hungary</name>
 	<version>0.1</version>
+	<properties>
+		<gmaven.version>1.3</gmaven.version>
+		<groovy.major.version>1.7</groovy.major.version>
+		<groovy.minor.version>4</groovy.minor.version>
+	</properties>
 	<scm>
 		<connection>scm:svn:http://aionj-hungary.googlecode.com/svn/trunk/</connection>
 		<developerConnection>scm:svn:http://aionj-hungary.googlecode.com/svn/trunk/</developerConnection>
@@ -13,6 +18,81 @@
 		<defaultGoal>assembly:assembly</defaultGoal>
 		<finalName>${project.artifactId}-${project.version}</finalName>
 		<testResources />
+		<!-- Plugin configuration -->
+		<pluginManagement>
+			<plugins>
+				<!-- Tweak the generated Eclipse project to please the Groovy-Eclipse 
+					plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-eclipse-plugin</artifactId>
+					<configuration>
+						<projectnatures>
+							<!-- Ensure that the Groovy nature is the first one so that the project 
+								is recognized as a Groovy project -->
+							<projectnature>org.eclipse.jdt.groovy.core.groovyNature</projectnature>
+							<projectnature>org.eclipse.jdt.core.javanature</projectnature>
+						</projectnatures>
+
+						<classpathContainers>
+							<!-- Add Groovy libs (from plugin) to Eclipse classpath -->
+							<classpathContainer>GROOVY_SUPPORT</classpathContainer>
+						</classpathContainers>
+
+						<sourceIncludes>
+							<!-- Force the inclusion of Groovy sources in the generated src classpathentries 
+								in .classpath -->
+							<sourceInclude>**/*.groovy</sourceInclude>
+						</sourceIncludes>
+					</configuration>
+				</plugin>
+				<!-- Configure the gmaven plugin -->
+				<plugin>
+					<groupId>org.codehaus.gmaven</groupId>
+					<artifactId>gmaven-plugin</artifactId>
+					<version>${gmaven.version}</version>
+					<executions>
+						<execution>
+							<goals>
+								<!-- Add this if Java sources are needed for joint compilation. <goal>generateStubs</goal> -->
+								<!-- Don't necessarily need this since Groovy is compiled to Java 
+									classes on the fly at run time, but it helps to catch syntax errors in the 
+									scripts at build time -->
+								<goal>compile</goal>
+								<!-- Add this if Java sources are needed for joint compilation. <goal>generateTestStubs</goal> -->
+								<!-- Don't necessarily need this since Groovy is compiled to Java 
+									classes on the fly at run time, but it helps to catch syntax errors in the 
+									scripts at build time -->
+								<goal>testCompile</goal>
+							</goals>
+						</execution>
+					</executions>
+					<dependencies>
+						<dependency>
+							<groupId>org.codehaus.gmaven.runtime</groupId>
+							<artifactId>gmaven-runtime-${groovy.major.version}</artifactId>
+							<version>${gmaven.version}</version>
+							<exclusions>
+								<!-- Ensure we always use the latest groovy version, rather than 
+									the one that happens to come with gmaven -->
+								<exclusion>
+									<groupId>org.codehaus.groovy</groupId>
+									<artifactId>groovy-all</artifactId>
+								</exclusion>
+							</exclusions>
+						</dependency>
+						<dependency>
+							<groupId>org.codehaus.groovy</groupId>
+							<artifactId>groovy-all</artifactId>
+							<version>${groovy.major.version}.${groovy.minor.version}</version>
+						</dependency>
+					</dependencies>
+					<configuration>
+						<providerSelection>${groovy.major.version}</providerSelection>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -146,6 +226,11 @@
 			<groupId>aionj-hungary</groupId>
 			<artifactId>game</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.gmaven.runtime</groupId>
+			<artifactId>gmaven-runtime-${groovy.major.version}</artifactId>
+			<version>${gmaven.version}</version>
 		</dependency>
 	</dependencies>
 </project>
