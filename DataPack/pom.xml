@@ -227,10 +227,5 @@
 			<artifactId>game</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.codehaus.gmaven.runtime</groupId>
-			<artifactId>gmaven-runtime-${groovy.major.version}</artifactId>
-			<version>${gmaven.version}</version>
-		</dependency>
 	</dependencies>
 </project>
