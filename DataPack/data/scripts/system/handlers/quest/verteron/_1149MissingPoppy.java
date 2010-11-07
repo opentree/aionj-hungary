@@ -98,12 +98,7 @@ public class _1149MissingPoppy extends QuestHandler
 							{
 								Npc npc = (Npc) env.getVisibleObject();
 								if(MathUtil.getDistance(1255, 2223, 144, npc.getX(), npc.getY(), npc.getZ()) > 5)
-								{
-									if(!npc.getMoveController().isScheduled())
-										npc.getMoveController().schedule();
-									npc.getMoveController().setFollowTarget(true);
-									return true;
-								}
+								{}
 								else
 									qs.setStatus(QuestStatus.REWARD);
 								updateQuestStatus(player, qs);
@@ -118,10 +113,6 @@ public class _1149MissingPoppy extends QuestHandler
 						case 10000:
 							qs.setQuestVarById(0, var + 1);
 							updateQuestStatus(player, qs);
-							Npc npc = (Npc) env.getVisibleObject();
-							npc.getMoveController().setDistance(4);
-							npc.getMoveController().setFollowTarget(true);
-							npc.getMoveController().schedule();
 							PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject()
 								.getObjectId(), 0));
 							return true;

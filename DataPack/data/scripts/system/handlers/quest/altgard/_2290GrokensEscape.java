@@ -73,9 +73,6 @@ public class _2290GrokensEscape extends QuestHandler
 				{
 					if (QuestService.startQuest(env, QuestStatus.START))
 					{
-						Npc npc = (Npc)env.getVisibleObject();
-						npc.getMoveController().setNewDirection(1219.15f, 1212f, 247.37f);
-						npc.getMoveController().schedule();
 						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1003);
 					}
 				}
