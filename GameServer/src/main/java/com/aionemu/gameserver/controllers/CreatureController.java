@@ -93,7 +93,6 @@ public abstract class CreatureController<T extends Creature> extends VisibleObje
 	{
 		this.getOwner().setCasting(null);
 		this.getOwner().getEffectController().removeAllEffects();
-		this.getOwner().getMoveController().stop();
 		this.getOwner().setState(CreatureState.DEAD);
 	}
 

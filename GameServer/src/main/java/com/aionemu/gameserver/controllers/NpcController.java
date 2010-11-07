@@ -76,21 +76,6 @@ import com.aionemu.gameserver.world.WorldType;
  */
 public class NpcController extends CreatureController<Npc>
 {
-
-	@Override
-	public void see(VisibleObject object)
-	{
-		super.see(object);
-		Npc owner = getOwner();
-		if(object instanceof Player)
-		{
-			//TODO check on retail how walking npc is presented, probably need replace emotion
-			// with some state etc.
-			if(owner.getMoveController().isWalking())
-				PacketSendUtility.sendPacket((Player) object, new SM_EMOTION(owner, EmotionType.WALK));
-		}	
-	}
-
 	@Override
 	public void onRespawn()
 	{

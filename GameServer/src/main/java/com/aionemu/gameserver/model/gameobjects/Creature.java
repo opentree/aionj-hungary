@@ -24,7 +24,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.aionemu.gameserver.controllers.CreatureController;
-import com.aionemu.gameserver.controllers.MoveController;
 import com.aionemu.gameserver.controllers.ObserveController;
 import com.aionemu.gameserver.controllers.attack.AggroList;
 import com.aionemu.gameserver.controllers.effect.EffectController;
@@ -56,7 +55,6 @@ public abstract class Creature extends VisibleObject
 	private CreatureGameStats<? extends Creature> gameStats;
 
 	private EffectController effectController;
-	private MoveController moveController;
 	
 	private int state = CreatureState.ACTIVE.getId();
 	private int visualState = CreatureVisualState.VISIBLE.getId();
@@ -82,7 +80,6 @@ public abstract class Creature extends VisibleObject
 	{
 		super(objId, controller, spawnTemplate, objectTemplate, position);
 		initializeAi();
-		this.moveController = new MoveController(this);
 		this.observeController = new ObserveController();
 		
 		this.aggroList = new AggroList(this);
@@ -326,14 +323,6 @@ public abstract class Creature extends VisibleObject
 	public void setTransformedModelId(int transformedModelId)
 	{
 		this.transformedModelId = transformedModelId;
-	}
-
-	/**
-	 * @return the moveController
-	 */
-	public MoveController getMoveController()
-	{
-		return moveController;
 	}
 	
 	/**

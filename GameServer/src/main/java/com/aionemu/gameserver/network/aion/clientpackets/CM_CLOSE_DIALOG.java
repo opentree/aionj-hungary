@@ -64,10 +64,6 @@ public class CM_CLOSE_DIALOG extends AionClientPacket
 		if(targetObject instanceof Npc)
 		{
 			Npc npc = (Npc) targetObject;
-			//TODO: need check it on retail
-			
-			if(npc.hasWalkRoutes() && !npc.getMoveController().canWalk())//resumes npc behavior
-				npc.getMoveController().setCanWalk(true);
 				
 			if(npc.getTarget() == player)
 				npc.setTarget(null);

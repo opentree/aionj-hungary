@@ -68,7 +68,6 @@ public class PulledEffect extends EffectTemplate
 					effector.getY(),
 					effector.getZ() + 0.25F,
 					effected.getHeading());
-				effector.getMoveController().setDirectionChanged(true);
 				PacketSendUtility.broadcastPacketAndReceive(effected, new SM_FORCED_MOVE(effector, effected));
 			}
 		}, 1000);

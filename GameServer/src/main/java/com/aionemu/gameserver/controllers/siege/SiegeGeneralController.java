@@ -57,7 +57,6 @@ public class SiegeGeneralController extends SiegeNpcController
 	{
 		this.getOwner().setCasting(null);
 		this.getOwner().getEffectController().removeAllEffects();
-		this.getOwner().getMoveController().stop();
 		this.getOwner().setState(CreatureState.DEAD);
 		addTask(TaskId.DECAY, RespawnService.scheduleDecayTask(this.getOwner()));
 		scheduleRespawn();

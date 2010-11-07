@@ -194,7 +194,8 @@ public class SM_NPC_INFO extends AionServerPacket
 
 		writeF(1.5f);// unk
 		writeF(npcTemplate.getHeight());
-		writeF(npc.getMoveController().getSpeed());// speed
+		//TODO: Walking, Runing, Flying speed....
+		writeF(npc.getGameStats().getCurrentStat(StatEnum.SPEED));// speed
 
 		writeH(2000);// 0x834 (depends on speed ? )
 		writeH(2000);// 0x834

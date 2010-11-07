@@ -106,7 +106,6 @@ public class NpcGameStats extends CreatureGameStats<Npc>
 
 		if(newRunSpeed != currentRunSpeed)
 		{
-			owner.getMoveController().setSpeed(newRunSpeed / 1000f);
 			PacketSendUtility.broadcastPacket(owner, new SM_EMOTION(owner, EmotionType.START_EMOTE2, 0, 0));
 		}
 		currentRunSpeed = newRunSpeed;

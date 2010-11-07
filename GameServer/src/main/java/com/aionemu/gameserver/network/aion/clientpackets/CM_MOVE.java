@@ -19,7 +19,6 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 import org.apache.log4j.Logger;
 
 import com.aionemu.gameserver.configs.main.FallDamageConfig;
-import com.aionemu.gameserver.controllers.MoveController;
 import com.aionemu.gameserver.controllers.movement.MovementType;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
@@ -128,14 +127,12 @@ public class CM_MOVE extends AionClientPacket
 			case MOVEMENT_ON_ELEVATOR:
 			case MOVEMENT_STAYIN_ELEVATOR:
 				world.updatePosition(player, x, y, z, heading);
-				player.getMoveController().setNewDirection(x2, y2, z2);
 				player.getController().onStartMove();
 				player.getFlyController().onStopGliding();
 				PacketSendUtility.broadcastPacket(player, new SM_MOVE(player.getObjectId(), x, y, z, x2, y2, z2, heading, type),
 					false);
 				break;
 			case MOVEMENT_GLIDE_START_MOUSE:
-				player.getMoveController().setNewDirection(x2, y2, z2);
 				// no break
 			case MOVEMENT_GLIDE_DOWN:
 				world.updatePosition(player, x, y, z, heading);
@@ -175,6 +172,8 @@ public class CM_MOVE extends AionClientPacket
 				player.getFlyController().onStopGliding();
 				world.updatePosition(player, x, y, z, heading);
 
+				//TODO: Movement????
+				/*
 				MoveController mc = player.getMoveController();
 
 				PacketSendUtility.broadcastPacket(player, new SM_MOVE(player.getObjectId(), x, y, z,
@@ -182,6 +181,7 @@ public class CM_MOVE extends AionClientPacket
 						(type == MovementType.VALIDATE_MOUSE) ? MovementType.MOVEMENT_START_MOUSE : MovementType.MOVEMENT_START_KEYBOARD),
 						false);
 				break;
+				*/
 			case MOVEMENT_STOP:
 				PacketSendUtility.broadcastPacket(player, new SM_MOVE(player.getObjectId(), x, y, z, heading, type),
 					false);

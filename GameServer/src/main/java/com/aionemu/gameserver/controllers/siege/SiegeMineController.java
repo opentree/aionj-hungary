@@ -45,7 +45,6 @@ public class SiegeMineController extends SiegeNpcController
 				useSkill(18406);
 				owner.setCasting(null);
 				owner.getEffectController().removeAllEffects();
-				owner.getMoveController().stop();
 				owner.setState(CreatureState.DEAD);
 				addTask(TaskId.DECAY, RespawnService.scheduleDecayTask(this.getOwner()));
 				scheduleRespawn();
