@@ -38,7 +38,9 @@ import com.aionemu.gameserver.dao.PlayerSkillListDAO;
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.Gender;
 import com.aionemu.gameserver.model.PlayerClass;
+import com.aionemu.gameserver.model.Race;
 import com.aionemu.gameserver.model.TaskId;
+import com.aionemu.gameserver.model.TribeClass;
 import com.aionemu.gameserver.model.alliance.PlayerAlliance;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.Item;
@@ -1139,14 +1141,14 @@ public class Player extends Creature
 	}
 
 	@Override
-	public String getTribe()
+	public TribeClass getTribe()
 	{
 		switch(getCommonData().getRace())
 		{
 			case ELYOS:
-				return "PC";
+				return TribeClass.PC;
 			default:
-				return "PC_DARK";
+				return TribeClass.PC_DARK;
 		}
 	}
 	
@@ -1159,15 +1161,14 @@ public class Player extends Creature
 	@Override
 	public boolean isAggroFrom(Npc npc)
 	{
-		String currentTribe = npc.getTribe();
 		//siege npc are always aggro on players, without level limitation
 		if (npc instanceof SiegeNpc)
-			return isAggroIconTo(currentTribe);
+			return isAggroIconTo(npc);
 		// npc's that are 10 or more levels lower don't get aggro on players
 		if(npc.getLevel() + 10 <= getLevel())
 			return false;
 		
-		return isAggroIconTo(currentTribe);
+		return isAggroIconTo(npc);
 	}
 
 	/**
@@ -1176,18 +1177,18 @@ public class Player extends Creature
 	 * @param npcTribe
 	 * @return
 	 */
-	public boolean isAggroIconTo(String npcTribe)
+	public boolean isAggroIconTo(Npc npc)
 	{
 		switch(getCommonData().getRace())
 		{
 			case ELYOS:
-				if (DataManager.TRIBE_RELATIONS_DATA.isGuardDark(npcTribe))
+				if (npc.getTribe().isGuard() && npc.getObjectTemplate().getRace() == Race.ASMODIANS)
 					return true;
-				return DataManager.TRIBE_RELATIONS_DATA.isAggressiveRelation(npcTribe, "PC");
+				return DataManager.TRIBE_RELATIONS_DATA.isAggressiveRelation(npc.getTribe(), TribeClass.PC);
 			case ASMODIANS:
-				if (DataManager.TRIBE_RELATIONS_DATA.isGuardLight(npcTribe))
+				if (npc.getTribe().isGuard() && npc.getObjectTemplate().getRace() == Race.ELYOS)
 					return true;
-				return DataManager.TRIBE_RELATIONS_DATA.isAggressiveRelation(npcTribe, "PC_DARK");
+				return DataManager.TRIBE_RELATIONS_DATA.isAggressiveRelation(npc.getTribe(), TribeClass.PC_DARK);
 		}
 		return false;
 	}

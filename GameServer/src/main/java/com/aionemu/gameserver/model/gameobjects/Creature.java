@@ -20,13 +20,13 @@ import java.util.Map;
 
 import javolution.util.FastMap;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.aionemu.gameserver.controllers.CreatureController;
 import com.aionemu.gameserver.controllers.ObserveController;
 import com.aionemu.gameserver.controllers.attack.AggroList;
 import com.aionemu.gameserver.controllers.effect.EffectController;
+import com.aionemu.gameserver.model.TribeClass;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureSeeState;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
@@ -424,9 +424,9 @@ public abstract class Creature extends VisibleObject
 		return false;
 	}
 	
-	public String getTribe()
+	public TribeClass getTribe()
 	{
-		return StringUtils.EMPTY;
+		return TribeClass.GENERAL;
 	}
 	
 	/**

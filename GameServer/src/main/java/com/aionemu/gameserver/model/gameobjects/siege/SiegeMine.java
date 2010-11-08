@@ -18,6 +18,7 @@ package com.aionemu.gameserver.model.gameobjects.siege;
 
 import com.aionemu.gameserver.controllers.siege.SiegeMineController;
 import com.aionemu.gameserver.model.Race;
+import com.aionemu.gameserver.model.TribeClass;
 import com.aionemu.gameserver.model.siege.SiegeRace;
 import com.aionemu.gameserver.model.templates.NpcTemplate;
 import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
@@ -45,17 +46,17 @@ public class SiegeMine extends SiegeNpc
 		if (getSiegeRace()==SiegeRace.ELYOS)
 		{
 			npcTemplate.setRace(Race.ELYOS);
-			npcTemplate.setTribe("GUARD");
+			npcTemplate.setTribe(TribeClass.GUARD);
 		}
 		else if (getSiegeRace()==SiegeRace.ASMODIANS)
 		{
 			npcTemplate.setRace(Race.ASMODIANS);
-			npcTemplate.setTribe("GUARD_DARK");
+			npcTemplate.setTribe(TribeClass.GUARD_DARK);
 		}
 		else // BALAUR
 		{
 			npcTemplate.setRace(Race.DRAKAN);
-			npcTemplate.setTribe("AGGRESSIVESINGLEMONSTER");
+			npcTemplate.setTribe(TribeClass.AGGRESSIVESINGLEMONSTER);
 		}
 	}
 	

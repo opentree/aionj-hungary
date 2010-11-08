@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.aionemu.gameserver.model.NpcType;
 import com.aionemu.gameserver.model.Race;
+import com.aionemu.gameserver.model.TribeClass;
 import com.aionemu.gameserver.model.items.NpcEquippedGear;
 import com.aionemu.gameserver.model.templates.stats.KiskStatsTemplate;
 import com.aionemu.gameserver.model.templates.stats.NpcRank;
@@ -75,7 +76,7 @@ public class NpcTemplate extends VisibleObjectTemplate
 	@XmlAttribute(name = "hpgauge")
 	private int					hpGauge;
 	@XmlAttribute(name = "tribe")
-	private String				tribe;
+	private TribeClass			tribe;
 	@XmlAttribute
 	private Race				race;
 	@XmlAttribute
@@ -151,7 +152,7 @@ public class NpcTemplate extends VisibleObjectTemplate
 	/**
 	 * @return the tribe
 	 */
-	public String getTribe()
+	public TribeClass getTribe()
 	{
 		return tribe;
 	}
@@ -160,7 +161,7 @@ public class NpcTemplate extends VisibleObjectTemplate
 	 * 
 	 * @param tribe
 	 */
-	public void setTribe(String tribe)
+	public void setTribe(TribeClass tribe)
 	{
 		this.tribe=tribe;
 	}

@@ -18,6 +18,7 @@ package com.aionemu.gameserver.model.gameobjects;
 
 import com.aionemu.gameserver.controllers.CreatureController;
 import com.aionemu.gameserver.controllers.SummonController;
+import com.aionemu.gameserver.model.TribeClass;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.stats.SummonGameStats;
 import com.aionemu.gameserver.model.gameobjects.stats.SummonLifeStats;
@@ -187,7 +188,7 @@ public class Summon extends Creature
 	}
 
 	@Override
-	public String getTribe()
+	public TribeClass getTribe()
 	{
 		return master.getTribe();
 	}
