@@ -26,17 +26,6 @@ public class CubeExpandTemplate
 	@XmlAttribute(name = "id", required = true)
 	private int				Id;
 
-	/**
-	 * NPC name
-	 */
-	@XmlAttribute(name = "name", required = true)
-	private String			name		= "";
-
-	public String getName()
-	{
-		return name;
-	}
-
 	public int getNpcId()
 	{
 		return Id;
