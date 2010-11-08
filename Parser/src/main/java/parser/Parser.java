@@ -20,6 +20,7 @@ package parser;
 
 import parser.serverData.cubeExpander.CubeExpanderSave;
 import parser.serverData.tribeRelation.TribeRelationSave;
+import parser.serverData.warehouseExpander.WarehouseExpanderSave;
 import parser.util.DataManager;
 import parser.util.FileDecoder;
 
@@ -47,5 +48,6 @@ public class Parser
 		
 		TribeRelationSave.save();
 		CubeExpanderSave.save();
+		WarehouseExpanderSave.save();
 	}
 }
