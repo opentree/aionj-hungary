@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import parser.clientData.clientNpc.ClientNpcLoader;
+import parser.clientData.clientNpc.NpcClient;
 import parser.clientData.clientStrings.ClientString;
 import parser.clientData.clientStrings.ClientStringLoader;
 import parser.clientData.tribeRelation.Tribe;
@@ -36,6 +38,7 @@ public class DataManager
 
 	private Map<String, ClientString>	stringNameMap;
 	private List<Tribe> tribeRelations;
+	private Map<Integer, NpcClient>	idNpcMap;
 
 	public static final DataManager getInstance()
 	{
@@ -46,6 +49,7 @@ public class DataManager
 	{
 		stringNameMap = ClientStringLoader.load();
 		tribeRelations = TribeRelationLoader.load();
+		idNpcMap = ClientNpcLoader.load();
 	}
 
 	/**
@@ -62,6 +66,11 @@ public class DataManager
 	public List<Tribe> getTribeRelations()
 	{
 		return tribeRelations;
+	}
+
+	public Map<Integer, NpcClient> getIdNpcMap()
+	{
+		return idNpcMap;
 	}
 
 	@SuppressWarnings("synthetic-access")

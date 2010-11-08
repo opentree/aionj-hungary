@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+            jxb:version="2.1">
+	<xs:element name="npc_clients">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" ref="npc_client" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="npc_client">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id" type="xs:int" />
+				<xs:element name="name" type="xs:string" />
+				<xs:element name="abyss_npc_type" type="xs:string" />
+				<xs:element name="ai_name" type="xs:string" />
+				<xs:element name="airlines_name" type="xs:string" />
+				<xs:element name="altitude" type="xs:float" />
+				<xs:element name="ammo_bone" type="xs:string" />
+				<xs:element name="ammo_fx" type="xs:string" />
+				<xs:element name="ammo_hit_fx" type="xs:string" />
+				<xs:element name="ammo_speed" type="xs:int" />
+				<xs:element name="animation_marker" type="xs:string" />
+
+				<xs:element name="appearance" type="Appearance"
+					minOccurs="0" maxOccurs="1" />
+
+				<xs:element name="appearance_custom" type="xs:string" />
+				<xs:element name="arrange_midair" type="xs:boolean" />
+				<xs:element name="arrange_place" type="xs:string" />
+				<xs:element name="arrange_rotation_side" type="xs:boolean" />
+				<xs:element name="arrange_rotation_updown" type="xs:boolean" />
+				<xs:element name="art_org_move_speed_normal_walk" type="xs:float" />
+				<xs:element name="art_org_speed_combat_run" type="xs:float" />
+				<xs:element name="artifact_id" type="xs:int" />
+				<xs:element name="attack_delay" type="xs:int" />
+				<xs:element name="attack_range" type="xs:float" />
+				<xs:element name="attack_rate" type="xs:int" />
+
+				<xs:element name="bound_radius" type="BoundRadius"
+					minOccurs="0" maxOccurs="1" />
+
+				<xs:element name="cursor_type" type="xs:string" />
+				<xs:element name="deadbody_name_id" type="xs:string" />
+				<xs:element name="desc" type="xs:string" />
+				<xs:element name="dir" type="xs:string" />
+				<xs:element name="disk_type" type="xs:string" />
+				<xs:element name="dmg_decal_texture" type="xs:string" />
+				<xs:element name="dmg_texture" type="xs:int" />
+				<xs:element name="erect" type="xs:int" />
+				<xs:element name="float_corpse" type="xs:int" />
+				<xs:element name="foot_mat" type="xs:string" />
+				<xs:element name="furniture_category" type="xs:string" />
+				<xs:element name="fxc_type" type="xs:string" />
+				<xs:element name="game_lang" type="xs:string" />
+				<xs:element name="guide_func" type="xs:string" />
+				<xs:element name="hide_path" type="xs:int" />
+				<xs:element name="hide_pc_fx_shader" type="xs:int" />
+				<xs:element name="hide_shadow" type="xs:int" />
+				<xs:element name="hpgauge_level" type="xs:int" />
+				<xs:element name="huge_mob" type="xs:float" />
+				<xs:element name="idle_animation" type="xs:string" />
+				<xs:element name="in_time" type="xs:float" />
+				<xs:element name="jobfaction_name" type="xs:int" />
+				<xs:element name="magical_skill_boost" type="xs:int" />
+				<xs:element name="material" type="xs:string" />
+				<xs:element name="mesh" type="xs:string" />
+				<xs:element name="move_speed_combat_run" type="xs:float" />
+				<xs:element name="move_speed_normal_run" type="xs:float" />
+				<xs:element name="move_speed_normal_walk" type="xs:float" />
+				<xs:element name="neck_angle" type="xs:float" />
+				<xs:element name="npc_type" type="xs:string" />
+				<xs:element name="object_type" type="xs:int" />
+				<xs:element name="out_time" type="xs:float" />
+				<xs:element name="pet_ai_name" type="xs:string" />
+				<xs:element name="pushed_range" type="xs:float" />
+				<xs:element name="quest_ai_name" type="xs:string" />
+				<xs:element name="race_type" type="xs:string" />
+				<xs:element name="recovery" type="xs:int" />
+				<xs:element name="recovery_opt1" type="xs:int" />
+				<xs:element name="recovery_opt2" type="xs:int" />
+				<xs:element name="rotation_period" type="xs:float" />
+				<xs:element name="sanctuary_animation" type="xs:string" />
+				<xs:element name="scale" type="xs:int" />
+				<xs:element name="sensory_range" type="xs:float" />
+				<xs:element name="show_dmg_decal" type="xs:int" />
+				<xs:element name="spawn_animation" type="xs:string" />
+				<xs:element name="spine_angle" type="xs:float" />
+				<xs:element name="stare_angle" type="xs:float" />
+				<xs:element name="stare_distance" type="xs:float" />
+				<xs:element name="static" type="xs:int" />
+				<xs:element name="str_type" type="xs:string" />
+				<xs:element name="talk_animation" type="xs:string" />
+				<xs:element name="talk_delay_time" type="xs:int" />
+				<xs:element name="talking_distance" type="xs:float" />
+				<xs:element name="title_offset" type="xs:float" />
+				<xs:element name="tribe" type="xs:string" />
+				<xs:element name="ui_race_type" type="xs:string" />
+				<xs:element name="ui_type" type="xs:string" />
+
+				<xs:element name="visible_equipments" type="VisibleEquipments"
+					minOccurs="0" maxOccurs="1" />
+
+				<xs:element name="visible_range" type="xs:int" />
+				<xs:element name="walk_animation" type="xs:string" />
+				<xs:element name="weapon_hit_fx" type="xs:string" />
+				<xs:element name="weapon_scale" type="xs:int" />
+				<xs:element name="remove_item_option" type="xs:int" />
+				<xs:element name="match_maker" type="xs:int" />
+				<xs:element name="check_can_see" type="xs:int" />
+				<xs:element name="compound_weapon" type="xs:int" />
+				<xs:element name="extendinventory_start" type="xs:int" />
+				<xs:element name="extendinventory_end" type="xs:int" />
+				<xs:element name="edit_character_gender" type="xs:int" />
+
+				<xs:element name="trade_info" type="TradeInfo" minOccurs="0"
+					maxOccurs="1" />
+
+				<xs:element name="instance_entry" type="xs:int" />
+				<xs:element name="func_pet_manage" type="xs:int" />
+				<xs:element name="gather_skill_levelup" type="xs:string" />
+				<xs:element name="undetectable" type="xs:int" />
+				<xs:element name="package_permitted" type="xs:int" />
+				<xs:element name="extendaccountwarehouse_start" type="xs:int" />
+				<xs:element name="extendaccountwarehouse_end" type="xs:int" />
+				<xs:element name="npcfaction_name" type="xs:string" />
+				<xs:element name="bindstone_type" type="xs:string" />
+				<xs:element name="bindstone_capacity" type="xs:int" />
+				<xs:element name="bindstone_usecount" type="xs:int" />
+				<xs:element name="change_item_skin" type="xs:int" />
+				<xs:element name="data" type="Data" />
+				<xs:element name="edit_character_all" type="xs:int" />
+				<xs:element name="give_item_proc" type="xs:int" />
+				<xs:element name="pvpzone" type="xs:int" />
+				<xs:element name="pvpzone_world_name" type="xs:string" />
+				<xs:element name="pvpzone_location_alias" type="xs:string" />
+				<xs:element name="extendcharwarehouse_start" type="xs:int" />
+				<xs:element name="extendcharwarehouse_end" type="xs:int" />
+				<xs:element name="ment" type="xs:string" />
+				<xs:element name="user_animation" type="xs:string" />
+				<xs:element name="abyss_trade_info" type="TradeInfo" />
+				<xs:element name="coupon_trade_info" type="TradeInfo" />
+				<xs:element name="extra_currency_trade_info" type="TradeInfo" />
+				<xs:element name="html_bg" type="xs:string" />
+				<xs:element name="use_script" type="xs:int" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="Appearance">
+		<xs:sequence>
+			<xs:element name="pc_type" type="xs:string" />
+			<xs:element name="face_type" type="xs:int" />
+			<xs:element name="face_color" type="xs:string" />
+			<xs:element name="hair_type" type="xs:string" />
+			<xs:element name="hair_color" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="BoundRadius">
+		<xs:sequence>
+			<xs:element name="front" type="xs:float" />
+			<xs:element name="side" type="xs:float" />
+			<xs:element name="upper" type="xs:float" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="VisibleEquipments">
+		<xs:sequence>
+			<xs:element name="head" type="xs:string" />
+			<xs:element name="torso" type="xs:string" />
+			<xs:element name="leg" type="xs:string" />
+			<xs:element name="foot" type="xs:string" />
+			<xs:element name="shoulder" type="xs:string" />
+			<xs:element name="glove" type="xs:string" />
+			<xs:element name="main" type="xs:string" />
+			<xs:element name="sub" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="TradeInfo">
+		<xs:sequence>
+			<xs:element name="tab_list" type="TabList" minOccurs="0"
+				maxOccurs="1" />
+			<xs:element name="sell_price_rate" type="xs:integer"
+				minOccurs="0" maxOccurs="1" />
+			<xs:element name="buy_price_rate" type="xs:integer"
+				minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="TabList">
+		<xs:sequence>
+			<xs:element name="data" type="Data" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Data">
+		<xs:sequence>
+			<xs:element name="buy_price_rate" type="xs:integer" />
+			<xs:element name="atab" type="xs:string" />
+			<xs:element name="ctab" type="xs:string" />
+			<xs:element name="etab" type="xs:string" />
+			<xs:element name="tab" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

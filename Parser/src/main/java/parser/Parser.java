@@ -18,6 +18,7 @@
  */
 package parser;
 
+import parser.serverData.cubeExpander.CubeExpanderSave;
 import parser.serverData.tribeRelation.TribeRelationSave;
 import parser.util.DataManager;
 import parser.util.FileDecoder;
@@ -40,9 +41,11 @@ public class Parser
 		{
 			FileDecoder.decode("data", "L10N\\1_enu\\data\\", "strings/", "client_strings.xml");
 			FileDecoder.decode("npcs", "data\\npcs\\", "", "npc_tribe_relation.xml");
+			FileDecoder.decode("npcs", "data\\npcs\\", "", "client_npcs.xml");
 		}
 		DataManager.getInstance();
 		
 		TribeRelationSave.save();
+		CubeExpanderSave.save();
 	}
 }
