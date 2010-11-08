@@ -20,6 +20,7 @@ package parser.serverData.tribeRelation;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -38,6 +39,7 @@ public class TribeRelationSave
 {
 	public static void save ()
 	{
+		List<String> enumList = new ArrayList<String>();
 		ObjectFactory objFactory = new ObjectFactory();
 
 		TribeRelations collection = (TribeRelations) objFactory.createTribeRelations();
@@ -47,72 +49,89 @@ public class TribeRelationSave
 		{
 			Tribe tribe = new Tribe();
 			
-			tribe.setName(clientTribe.getTribe().toUpperCase());
+			tribe.setName(TribeClass.valueOf(clientTribe.getTribe().toUpperCase()));
+			
+			if (!enumList.contains(clientTribe.getTribe().toUpperCase()))
+				enumList.add(clientTribe.getTribe().toUpperCase());
 			
 			if (clientTribe.getBaseTribe() != null)
-				tribe.setBase(clientTribe.getBaseTribe().toUpperCase());
+			{
+				if (!enumList.contains(clientTribe.getBaseTribe().toUpperCase()))
+					enumList.add(clientTribe.getBaseTribe().toUpperCase());
+				tribe.setBase(TribeClass.valueOf(clientTribe.getBaseTribe().toUpperCase()));
+			}
 			
 			if (clientTribe.getAggressive() != null)
 			{
-				Aggro aggro = new Aggro();
-
 				StringTokenizer st = new StringTokenizer(clientTribe.getAggressive(), ",");
 				if (st != null)
 				{
 					while (st.hasMoreTokens())
-						aggro.getTo().add(st.nextToken().trim().toUpperCase());
+					{
+						String string = st.nextToken().trim().toUpperCase();
+						if (!enumList.contains(string))
+							enumList.add(string);
+						tribe.getAggro().add(TribeClass.valueOf(string));
+					}
 				}
-				tribe.setAggro(aggro);
 			}
 			
 			if (clientTribe.getFriendly() != null)
 			{
-				Friend friend = new Friend();
-
 				StringTokenizer st = new StringTokenizer(clientTribe.getFriendly(), ",");
 				if (st != null)
 				{
 					while (st.hasMoreTokens())
-						friend.getTo().add(st.nextToken().trim().toUpperCase());
+					{
+						String string = st.nextToken().trim().toUpperCase();
+						tribe.getFriend().add(TribeClass.valueOf(string));
+						if (!enumList.contains(string))
+							enumList.add(string);
+					}
 				}
-				tribe.setFriend(friend);
 			}
 
 			if (clientTribe.getHostile() != null)
 			{
-				Hostile hostile = new Hostile();
-
 				StringTokenizer st = new StringTokenizer(clientTribe.getHostile(), ",");
 				if (st != null)
 				{
 					while (st.hasMoreTokens())
-						hostile.getTo().add(st.nextToken().trim().toUpperCase());
+					{
+						String string = st.nextToken().trim().toUpperCase();
+						if (!enumList.contains(string))
+							enumList.add(string);
+						tribe.getHostile().add(TribeClass.valueOf(string));
+					}
 				}
-				tribe.setHostile(hostile);
 			}
 			if (clientTribe.getSupport() != null)
 			{
-				Support support = new Support();
-
 				StringTokenizer st = new StringTokenizer(clientTribe.getSupport(), ",");
 				if (st != null)
 				{
 					while (st.hasMoreTokens())
-						support.getTo().add(st.nextToken().trim().toUpperCase());
+					{
+						String string = st.nextToken().trim().toUpperCase();
+						if (!enumList.contains(string))
+							enumList.add(string);
+						tribe.getSupport().add(TribeClass.valueOf(string));
+					}
 				}
-				tribe.setSupport(support);
 			}
 			if (clientTribe.getNeutral() != null)
 			{
-				Neutral neutral = new Neutral();
-
 				StringTokenizer st = new StringTokenizer(clientTribe.getNeutral(), ",");
 				if (st != null)
 				{
 					while (st.hasMoreTokens())
-						neutral.getTo().add(st.nextToken().trim().toUpperCase());
+					{
+						String string = st.nextToken().trim().toUpperCase();
+						if (!enumList.contains(string))
+							enumList.add(string);
+						tribe.getNeutral().add(TribeClass.valueOf(string));
+					}
 				}
-				tribe.setNeutral(neutral);
 			}
 			templateList.add(tribe);
 		}
@@ -137,6 +156,16 @@ public class TribeRelationSave
 		{
 			e.printStackTrace();
 		}
-
+		/*
+		for (String string : enumList)
+		{
+			System.out.println("<xs:enumeration value=\""+string+"\"/>");
+		}
+		int i=0;
+		for (String string : enumList)
+		{
+			System.out.println(string+"("+(i++)+"),");
+		}
+				*/
 	}
 }
