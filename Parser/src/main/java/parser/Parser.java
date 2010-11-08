@@ -31,7 +31,7 @@ import parser.util.FileDecoder;
 public class Parser
 {
 
-	private static boolean	decodeFile	= false;
+	private static boolean	decodeFile	= true;
 
 	/**
 	 * @param args
@@ -43,6 +43,7 @@ public class Parser
 			FileDecoder.decode("data", "L10N\\1_enu\\data\\", "strings/", "client_strings.xml");
 			FileDecoder.decode("npcs", "data\\npcs\\", "", "npc_tribe_relation.xml");
 			FileDecoder.decode("npcs", "data\\npcs\\", "", "client_npcs.xml");
+			FileDecoder.decode("Items", "data\\Items\\", "", "client_items.xml");
 		}
 		DataManager.getInstance();
 		

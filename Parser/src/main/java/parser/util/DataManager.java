@@ -18,10 +18,11 @@
  */
 package parser.util;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import parser.clientData.clientItems.ClientItem;
+import parser.clientData.clientItems.ClientItemsLoader;
 import parser.clientData.clientNpc.ClientNpcLoader;
 import parser.clientData.clientNpc.NpcClient;
 import parser.clientData.clientStrings.ClientString;
@@ -39,7 +40,11 @@ public class DataManager
 	private Map<String, ClientString>	stringNameMap;
 	private List<Tribe> tribeRelations;
 	private Map<Integer, NpcClient>	idNpcMap;
+	private Map<Integer, ClientItem>	idItemMap;
 
+	private Map<String, Integer>	itemNameIdMap;
+	private Map<String, Integer>	npcNameIdMap;
+	
 	public static final DataManager getInstance()
 	{
 		return SingletonHolder.instance;
@@ -50,6 +55,11 @@ public class DataManager
 		stringNameMap = ClientStringLoader.load();
 		tribeRelations = TribeRelationLoader.load();
 		idNpcMap = ClientNpcLoader.load();
+		idItemMap =ClientItemsLoader.load();
+		
+		
+		createNpcNameIdMap();
+		createItemNameIdMap();
 	}
 
 	/**
@@ -73,6 +83,46 @@ public class DataManager
 		return idNpcMap;
 	}
 
+	/**
+	 * @return Returns the idItemMap.
+	 */
+	public Map<Integer, ClientItem> getIdItemMap()
+	{
+		return idItemMap;
+	}
+
+	/**
+	 * @return Returns the itemNameIdMap.
+	 */
+	public Map<String, Integer> getItemNameIdMap()
+	{
+		return itemNameIdMap;
+	}
+
+	/**
+	 * @return Returns the npcNameIdMap.
+	 */
+	public Map<String, Integer> getNpcNameIdMap()
+	{
+		return npcNameIdMap;
+	}
+
+	private void createNpcNameIdMap()
+	{
+		for (NpcClient npc : idNpcMap.values())
+		{
+			npcNameIdMap.put(npc.getName(), npc.getId());
+		}
+	}
+	
+	private void createItemNameIdMap()
+	{
+		for (ClientItem item: idItemMap.values())
+		{
+			itemNameIdMap.put(item.getName(), item.getId());
+		}
+			
+	}
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
