@@ -25,7 +25,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.aionemu.gameserver.model.templates.expand.Expand;
-import com.aionemu.gameserver.utils.Util;
 
 /**
  * @author Simple
@@ -43,12 +42,6 @@ public class WarehouseExpandTemplate
 	@XmlAttribute(name = "id", required = true)
 	protected int				id;
 
-	/**
-	 * NPC name
-	 */
-	@XmlAttribute(name = "name", required = true)
-	protected String			name	= "";
-
 	public int getNpcId()
 	{
 		return id;
@@ -60,17 +53,6 @@ public class WarehouseExpandTemplate
 	public List<Expand> getWarehouseExpand()
 	{
 		return this.warehouseExpands;
-	}
-
-	/**
-	 * Gets the value of the name property.
-	 * 
-	 * @return possible object is {@link String }
-	 * 
-	 */
-	public String getName()
-	{
-		return Util.convertName(name);
 	}
 	
 	/**
