@@ -1,3238 +1,1046 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <tribe_relations>
-	<tribe name="PC">
-		<friend>
-			<to>LIGHT_SUR_MOB</to>
-			<to>LIGHT_LICH</to>
-		</friend>
-	</tribe>
-	<tribe name="GENERAL"/>
-	<tribe name="GUARD">
-		<friend>
-			<to>DUMMY</to>
-			<to>DUMMY2</to>
-		</friend>
-	</tribe>
-	<tribe name="PC_DARK">
-		<friend>
-			<to>DARK_SUR_MOB</to>
-			<to>DARK_LICH</to>
-		</friend>
-		<neutral>
-			<to>FIELD_OBJECT_ALL</to>
-		</neutral>
-	</tribe>
-	<tribe name="GENERAL_DARK"/>
-	<tribe name="GUARD_DARK">
-		<friend>
-			<to>DUMMY</to>
-			<to>DUMMY2</to>
-		</friend>
-	</tribe>
-	<tribe name="PC_DRAGON"/>
-	<tribe name="GENERAL_DRAGON"/>
-	<tribe name="GUARD_DRAGON"/>
-	<tribe name="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="PET" base="PC">
-		<friend>
-			<to>LIGHT_SUR_MOB</to>
-			<to>LIGHT_LICH</to>
-		</friend>
-	</tribe>
-	<tribe name="PET_DARK" base="PC_DARK">
-		<friend>
-			<to>DARK_SUR_MOB</to>
-			<to>DARK_LICH</to>
-		</friend>
-	</tribe>
-	<tribe name="AGGRESSIVESINGLEMONSTER" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="AGGRESSIVESUPPORTMONSTER" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>AGGRESSIVESUPPORTMONSTER</to>
-		</support>
-	</tribe>
-	<tribe name="FRILLFAIMAMCOUPLE" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>FRILLFAIMAMCOUPLE</to>
-		</support>
-	</tribe>
-	<tribe name="SPAKY" base="MONSTER">
-		<aggro>
-			<to>FUNGUS</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>SPAKY</to>
-		</support>
-	</tribe>
-	<tribe name="MUTA" base="MONSTER">
-		<aggro>
-			<to>FUNGUS</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="FUNGUS" base="MONSTER">
-		<friend>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</friend>
-	</tribe>
-	<tribe name="ORC" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>ORC</to>
-			<to>GOBLIN</to>
-		</support>
-	</tribe>
-	<tribe name="GOBLIN" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>ORC</to>
-			<to>GOBLIN</to>
-		</support>
-	</tribe>
-	<tribe name="POLYMORPHFUNGY" base="PC">
-		<friend>
-			<to>MONSTER</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-			<to>QUESTGUARD_DARK</to>
-		</friend>
-	</tribe>
-	<tribe name="FUNGY" base="MONSTER">
-		<aggro>
-			<to>POLYMORPHFUNGY</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="BRAX" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>BRAX</to>
-		</support>
-	</tribe>
-	<tribe name="HIPPOLIZARD" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>HIPPOLIZARD</to>
-		</support>
-	</tribe>
-	<tribe name="FRILLFAIMAMBABY" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>FRILLFAIMAMMOM</to>
-		</support>
-	</tribe>
-	<tribe name="FRILLFAIMAMMOM" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>FRILLFAIMAMBABY</to>
-		</support>
-	</tribe>
-	<tribe name="FETHLOT" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>FETHLOT</to>
-		</support>
-	</tribe>
-	<tribe name="GARGOYLE" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>GARGOYLE</to>
-		</support>
-	</tribe>
-	<tribe name="MINX" base="MONSTER">
-		<hostile>
-			<to>ZAIF</to>
-		</hostile>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="ZAIF" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-			<to>MINX</to>
-			<to>TOG</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="TOG" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-			<to>MINX</to>
-			<to>ZAIF</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="GUARD_D1NOATTACK" base="GENERAL">
-		<friend>
-			<to>ZAIF</to>
-		</friend>
-	</tribe>
-	<tribe name="ZAIF_ATOG" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-			<to>TOG_AZAIF</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="TOG_AZAIF" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-			<to>ZAIF_ATOG</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="ZAIF_AMINX" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-			<to>MINX_HZAIF</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="MINX_HZAIF" base="MONSTER">
-		<hostile>
-			<to>ZAIF_AMINX</to>
-		</hostile>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="MERDION" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>MERDION</to>
-		</support>
-	</tribe>
-	<tribe name="GUARDIAN" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="DARU" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>DARU</to>
-		</support>
-	</tribe>
-	<tribe name="LUPYLLINI" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>LUPYLLINI</to>
-		</support>
-	</tribe>
-	<tribe name="MOSBEARBABY" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>MOSBEARFATHER</to>
-		</support>
-	</tribe>
-	<tribe name="MOSBEARFATHER" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>MOSBEARBABY</to>
-		</support>
-	</tribe>
-	<tribe name="SOULEDSTONE" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>SOULEDSTONE_MINI</to>
-		</support>
-	</tribe>
-	<tribe name="SOULEDSTONE_MINI" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="MINX_HKALNIF" base="MONSTER">
-		<hostile>
-			<to>KALNIF_AMINX</to>
-		</hostile>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="KALNIF_AMINX" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-			<to>MINX_HKALNIF</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="KALNIF_ATOG" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-			<to>TOG_AKALNIF</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="TOG_AKALNIF" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-			<to>KALNIF_ATOG</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="FARMER_HKERUBIM_LF1" base="GENERAL">
-		<hostile>
-			<to>KERUBIM_AFARMER_LF1</to>
-		</hostile>
-	</tribe>
-	<tribe name="KERUBIM_AFARMER_LF1" base="MONSTER">
-		<aggro>
-			<to>FARMER_HKERUBIM_LF1</to>
-		</aggro>
-		<hostile>
-			<to>GUARD_LIGHT_AKERUBIM_LF1</to>
-		</hostile>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="GUARD_LIGHT_AKERUBIM_LF1" base="GUARD">
-		<aggro>
-			<to>KERUBIM_AFARMER_LF1</to>
-		</aggro>
-		<friend>
-			<to>DUMMY</to>
-			<to>DUMMY2</to>
-		</friend>
-	</tribe>
-	<tribe name="D1_HKERUBIM_LF1" base="MONSTER">
-		<hostile>
-			<to>KERUBIM_AD1_LF1</to>
-		</hostile>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="KERUBIM_AD1_LF1" base="MONSTER">
-		<aggro>
-			<to>D1_HKERUBIM_LF1</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="BROWNIE" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>KRALL</to>
-			<to>BROWNIE</to>
-		</support>
-	</tribe>
-	<tribe name="BROWNIECOWARD" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>BROWNIECOWARD</to>
-		</support>
-	</tribe>
-	<tribe name="BROWNIEGUARD" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>KRALL</to>
-			<to>BROWNIE</to>
-			<to>BROWNIECOWARD</to>
-		</support>
-	</tribe>
-	<tribe name="BROWNIEFELLER_HZAIF_LF1" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<hostile>
-			<to>ZAIF_ABROWNIEFELLER_LF1</to>
-		</hostile>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="ZAIF_ABROWNIEFELLER_LF1" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-			<to>BROWNIEFELLER_HZAIF_LF1</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="KRALL" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>KRALL</to>
-			<to>KRALLMASTER</to>
-			<to>KRALL_TRAINING</to>
-		</support>
-	</tribe>
-	<tribe name="KRALLMASTER" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="KRALLWIZARDCY" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-			<to>CYCLOPSBOSS</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>KRALL</to>
-		</support>
-	</tribe>
-	<tribe name="KRALL_TRAINING" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-			<to>TARGETBASFELT_DF1</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>KRALL</to>
-			<to>KRALLMASTER</to>
-			<to>KRALL_TRAINING</to>
-		</support>
-	</tribe>
-	<tribe name="SPRIGG_HROBBERALDER_DF1" base="MONSTER">
-		<hostile>
-			<to>ROBBERALDER_ASPRIGG_DF1</to>
-		</hostile>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="ROBBERALDER_ASPRIGG_DF1" base="GENERAL_DARK">
-		<aggro>
-			<to>SPRIGG_HROBBERALDER_DF1</to>
-		</aggro>
-	</tribe>
-	<tribe name="SPRIGGREFUSE_DF1" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>SPRIGGREFUSE_DF1</to>
-		</support>
-	</tribe>
-	<tribe name="ARCHERYBASFELT_ATARGETBASFELT_DF1" base="GENERAL_DARK">
-		<aggro>
-			<to>TARGETBASFELT_DF1</to>
-		</aggro>
-	</tribe>
-	<tribe name="ARCHERYBASFELT_ATARGETBASFELT_LF1" base="GENERAL">
-		<aggro>
-			<to>TARGETBASFELT_DF1</to>
-		</aggro>
-	</tribe>
-	<tribe name="TARGETBASFELT_DF1" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="ARCHERYBASFELT2_ATARGETBASFELT2_DF1" base="GENERAL_DARK">
-		<aggro>
-			<to>TARGETBASFELT2_DF1</to>
-		</aggro>
-	</tribe>
-	<tribe name="ARCHERYBASFELT2_ATARGETBASFELT2_LF1" base="GENERAL">
-		<aggro>
-			<to>TARGETBASFELT2_DF1</to>
-		</aggro>
-	</tribe>
-	<tribe name="TARGETBASFELT2_DF1" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="GUARD_FTARGETBASFELT_DF1" base="GUARD_DARK">
-		<friend>
-			<to>TARGETBASFELT_DF1</to>
-			<to>TARGETBASFELT2_DF1</to>
-		</friend>
-	</tribe>
-	<tribe name="GUARD_FTARGETBASFELT_LF1" base="GUARD">
-		<friend>
-			<to>TARGETBASFELT_DF1</to>
-			<to>TARGETBASFELT2_DF1</to>
-		</friend>
-	</tribe>
-	<tribe name="LYCAN" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>LYCAN</to>
-			<to>LYCAN_MAGE</to>
-			<to>LYCAN_PET</to>
-			<to>LYCAN_HUNTER</to>
-			<to>RATMANWORKER</to>
-			<to>LYCANMASTER</to>
-			<to>TOWERMAN</to>
-			<to>LYCAN_AGUARD_DARK_DF1</to>
-			<to>LYCAN_TRAINING</to>
-		</support>
-	</tribe>
-	<tribe name="LYCAN_HUNTER" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>LYCAN</to>
-			<to>LYCAN_MAGE</to>
-			<to>LYCAN_PET</to>
-			<to>LYCAN_HUNTER</to>
-			<to>RATMANWORKER</to>
-			<to>LYCANMASTER</to>
-			<to>TOWERMAN</to>
-			<to>LYCAN_AGUARD_DARK_DF1</to>
-			<to>LYCAN_TRAINING</to>
-		</support>
-	</tribe>
-	<tribe name="LYCAN_MAGE" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>LYCAN</to>
-			<to>LYCAN_MAGE</to>
-			<to>LYCAN_PET</to>
-			<to>LYCAN_HUNTER</to>
-			<to>RATMANWORKER</to>
-			<to>LYCANMASTER</to>
-			<to>TOWERMAN</to>
-			<to>LYCAN_AGUARD_DARK_DF1</to>
-			<to>LYCAN_TRAINING</to>
-		</support>
-	</tribe>
-	<tribe name="LYCAN_AGUARD_DARK_DF1" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-			<to>GUARD_DARK_ALYCANARATMAN_DF1</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>LYCAN</to>
-			<to>LYCAN_MAGE</to>
-			<to>LYCAN_PET</to>
-			<to>LYCAN_HUNTER</to>
-			<to>RATMANWORKER</to>
-			<to>LYCANMASTER</to>
-			<to>TOWERMAN</to>
-			<to>LYCAN_AGUARD_DARK_DF1</to>
-			<to>LYCAN_TRAINING</to>
-		</support>
-	</tribe>
-	<tribe name="LYCAN_TRAINING" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-			<to>TARGETBASFELT_DF1</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>LYCAN</to>
-			<to>LYCAN_MAGE</to>
-			<to>LYCAN_PET</to>
-			<to>LYCAN_HUNTER</to>
-			<to>RATMANWORKER</to>
-			<to>LYCANMASTER</to>
-			<to>TOWERMAN</to>
-			<to>LYCAN_AGUARD_DARK_DF1</to>
-			<to>LYCAN_TRAINING</to>
-		</support>
-	</tribe>
-	<tribe name="LYCANMASTER" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>LYCAN</to>
-		</support>
-	</tribe>
-	<tribe name="LYCAN_PET" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>LYCAN_HUNTER</to>
-		</support>
-	</tribe>
-	<tribe name="LYCAN_PET_TRAINING" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-			<to>TARGETBASFELT_DF1</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>LYCAN_HUNTER</to>
-		</support>
-	</tribe>
-	<tribe name="LYCAN_SUM" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>LYCAN_MAGE</to>
-		</support>
-	</tribe>
-	<tribe name="LYCANDF2MASTER" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>LYCANDF2SLAVE1</to>
-		</support>
-	</tribe>
-	<tribe name="LYCANDF2SLAVE1" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>LYCANDF2MASTER</to>
-		</support>
-	</tribe>
-	<tribe name="LYCANDF2SLAVE2" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>LYCANDF2MASTER</to>
-		</support>
-	</tribe>
-	<tribe name="TOWERMAN" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="RATMAN" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>TOWERMAN</to>
-		</support>
-	</tribe>
-	<tribe name="RATMANWORKER" base="MONSTER">
-		<aggro>
-			<to>SAMM</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>RATMAN</to>
-			<to>RATMANWORKER</to>
-			<to>LYCANMASTER</to>
-			<to>LYCAN</to>
-			<to>LYCAN_AGUARD_DARK_DF1</to>
-			<to>RATMAN_AGUARD_DARK_DF1</to>
-		</support>
-	</tribe>
-	<tribe name="RATMANDFWORKER" base="MONSTER">
-		<aggro>
-			<to>SAMM</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>RATMAN</to>
-			<to>RATMANWORKER</to>
-			<to>RATMANDFWORKER</to>
-		</support>
-	</tribe>
-	<tribe name="SAMM" base="MONSTER">
-		<hostile>
-			<to>RATMANWORKER</to>
-		</hostile>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="RATMAN_AGUARD_DARK_DF1" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK_ALYCANARATMAN_DF1</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>TOWERMAN</to>
-		</support>
-	</tribe>
-	<tribe name="GUARD_DARK_ALYCANARATMAN_DF1" base="GUARD_DARK">
-		<aggro>
-			<to>LYCAN_AGUARD_DARK_DF1</to>
-			<to>RATMAN_AGUARD_DARK_DF1</to>
-		</aggro>
-		<friend>
-			<to>DUMMY</to>
-			<to>DUMMY2</to>
-		</friend>
-	</tribe>
-	<tribe name="UNDEADGRADIATOR_DF1" base="MONSTER">
-		<aggro>
-			<to>UNDEADGRADIATOR_DF1</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="GUARD_LIGHTMA" base="GUARD">
-		<friend>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-		</friend>
-	</tribe>
-	<tribe name="GUARD_DARKMA" base="GUARD_DARK">
-		<friend>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</friend>
-	</tribe>
-	<tribe name="GUARD_DRAGONMA" base="GUARD_DRAGON">
-		<friend>
-			<to>PC_DRAGON</to>
-			<to>GENERAL_DRAGON</to>
-			<to>GUARD_DRAGON</to>
-		</friend>
-	</tribe>
-	<tribe name="NEUT" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>NEUT</to>
-			<to>NEUTQUEEN</to>
-		</support>
-	</tribe>
-	<tribe name="NEUTQUEEN" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>NEUT</to>
-			<to>NEUTQUEEN</to>
-		</support>
-	</tribe>
-	<tribe name="NEUTBUG" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>NEUTQUEEN</to>
-		</support>
-	</tribe>
-	<tribe name="AGGRESSIVE_LIGHT" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="AGGRESSIVE_DARK" base="MONSTER">
-		<aggro>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="AGGRESSIVE_DRAGON" base="MONSTER">
-		<aggro>
-			<to>PC_DRAGON</to>
-			<to>GENERAL_DRAGON</to>
-			<to>GUARD_DRAGON</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="POLYMORPHPARROT" base="PC">
-		<friend>
-			<to>MONSTER</to>
-		</friend>
-	</tribe>
-	<tribe name="ABDRAGON_AABDARK" base="MONSTER">
-		<aggro>
-			<to>ABDARK_AABDRAGON</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="ABDARK_AABDRAGON" base="MONSTER">
-		<aggro>
-			<to>ABDRAGON_AABDARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="OCTASIDEBABY" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>OCTASIDEBABY</to>
-		</support>
-	</tribe>
-	<tribe name="GUARD_DARKAENEMY" base="GUARD_DARK">
-		<aggro>
-			<to>ENEMY_AGUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>DUMMY</to>
-			<to>DUMMY2</to>
-		</friend>
-	</tribe>
-	<tribe name="ENEMY_AGUARD_DARK" base="MONSTER">
-		<aggro>
-			<to>GUARD_DARKAENEMY</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="GRIFFO" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>GRIFFON</to>
-			<to>GRIFFO</to>
-		</support>
-	</tribe>
-	<tribe name="GRIFFON" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>GRIFFO</to>
-		</support>
-	</tribe>
-	<tribe name="SHELLIZARDMOM" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>SHELLIZARDBABY</to>
-		</support>
-	</tribe>
-	<tribe name="SHELLIZARDBABY" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>SHELLIZARDMOM</to>
-		</support>
-	</tribe>
-	<tribe name="MANDURITWEAK" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>MANDURITWEAK</to>
-		</support>
-	</tribe>
-	<tribe name="CHERUBIM2ND" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>CHERUBIM2ND</to>
-		</support>
-	</tribe>
-	<tribe name="LEHPAR" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>LEHPAR</to>
-			<to>LEHPAR_AGUARDDARK</to>
-			<to>LEHPAR_APRETOR</to>
-		</support>
-	</tribe>
-	<tribe name="GUARDDARK_ALEHPAR" base="GUARD_DARK">
-		<aggro>
-			<to>LEHPAR_AGUARDDARK</to>
-		</aggro>
-		<friend>
-			<to>DUMMY</to>
-			<to>DUMMY2</to>
-		</friend>
-	</tribe>
-	<tribe name="LEHPAR_AGUARDDARK" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-			<to>GUARDDARK_ALEHPAR</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>LEHPAR</to>
-			<to>LEHPAR_AGUARDDARK</to>
-			<to>LEHPAR_APRETOR</to>
-		</support>
-	</tribe>
-	<tribe name="AGGRESSIVE1_AAGGRESSIVE2" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-			<to>AGGRESSIVE2_AAGGRESSIVE1</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="AGGRESSIVE2_AAGGRESSIVE1" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-			<to>AGGRESSIVE1_AAGGRESSIVE2</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="LEHPAR_APRETOR" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-			<to>PRETOR_ALEHPAR</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>LEHPAR</to>
-			<to>LEHPAR_AGUARDDARK</to>
-			<to>LEHPAR_APRETOR</to>
-		</support>
-	</tribe>
-	<tribe name="PRETOR_ALEHPAR" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-			<to>LEHPAR_APRETOR</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="CYCLOPSBOSS" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-			<to>KRALLWIZARDCY</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="FIREELBOSS" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="FIREEL1" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>FIREEL1</to>
-			<to>FIREELBOSS</to>
-		</support>
-	</tribe>
-	<tribe name="FIREEL2" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>FIREEL2</to>
-			<to>FIREELBOSS</to>
-		</support>
-	</tribe>
-	<tribe name="FIREEL3" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>FIREEL3</to>
-			<to>FIREELBOSS</to>
-		</support>
-	</tribe>
-	<tribe name="AIRELBOSS" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="AIREL1" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>AIREL1</to>
-			<to>AIRELBOSS</to>
-		</support>
-	</tribe>
-	<tribe name="AIREL2" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>AIREL2</to>
-			<to>AIRELBOSS</to>
-		</support>
-	</tribe>
-	<tribe name="AIREL3" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>AIREL3</to>
-			<to>AIRELBOSS</to>
-		</support>
-	</tribe>
-	<tribe name="ETTIN" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>ETTIN</to>
-		</support>
-	</tribe>
-	<tribe name="L_DRGUARD_ADRAGGMOB1" base="GUARD">
-		<aggro>
-			<to>DRAGGMOB_ADRGUARD1</to>
-		</aggro>
-		<friend>
-			<to>DUMMY</to>
-			<to>DUMMY2</to>
-		</friend>
-	</tribe>
-	<tribe name="DRAGGMOB_ADRGUARD1" base="MONSTER">
-		<aggro>
-			<to>L_DRGUARD_ADRAGGMOB1</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="DARU_HZAIF" base="MONSTER">
-		<hostile>
-			<to>ZAIF_ADARU</to>
-		</hostile>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="ZAIF_ADARU" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-			<to>DARU_HZAIF</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="MUTA_HOCTASIDE" base="MONSTER">
-		<hostile>
-			<to>OCTASIDE_AMUTA</to>
-		</hostile>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="OCTASIDE_AMUTA" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-			<to>MUTA_HOCTASIDE</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="LIZARDMAN" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>LIZARDMAN</to>
-		</support>
-	</tribe>
-	<tribe name="ATAURIC" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>AHELLHOUND</to>
-		</support>
-	</tribe>
-	<tribe name="AHELLHOUND" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>ATAURIC</to>
-		</support>
-	</tribe>
-	<tribe name="APRETOR" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>ATAURIC</to>
-		</support>
-	</tribe>
-	<tribe name="GHOSTLIGHT" base="GENERAL">
-		<aggro>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>PC</to>
-		</friend>
-		<support>
-			<to>GHOSTLIGHT</to>
-		</support>
-	</tribe>
-	<tribe name="GHOSTDARK" base="GENERAL_DARK">
-		<aggro>
-			<to>PC</to>
-		</aggro>
-		<friend>
-			<to>PC_DARK</to>
-		</friend>
-		<support>
-			<to>GHOSTDARK</to>
-		</support>
-	</tribe>
-	<tribe name="BMLGUARDIAN" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>BMLGUARDIAN</to>
-		</support>
-	</tribe>
-	<tribe name="BMDGUARDIAN" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>BMDGUARDIAN</to>
-		</support>
-	</tribe>
-	<tribe name="GMASTER" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>GSLAVE</to>
-		</support>
-	</tribe>
-	<tribe name="GSLAVE" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>GMASTER</to>
-		</support>
-	</tribe>
-	<tribe name="ELEMENTAL_FIRE" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>ELEMENTAL_FIRE</to>
-		</support>
-	</tribe>
-	<tribe name="ELEMENTAL_EARTH" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>ELEMENTAL_EARTH</to>
-		</support>
-	</tribe>
-	<tribe name="ELEMENTAL_AIR" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>ELEMENTAL_AIR</to>
-		</support>
-	</tribe>
-	<tribe name="ELEMENTAL_WATER" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>ELEMENTAL_WATER</to>
-		</support>
-	</tribe>
-	<tribe name="BAT_FAMILY_ELITE" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>BAT_FAMILY_ELITE</to>
-		</support>
-	</tribe>
-	<tribe name="SUCCUBUS_ELITE" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>SUCCUBUS_ELITE</to>
-		</support>
-	</tribe>
-	<tribe name="SAM_ELITE" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>GARGOYLE_ELITE</to>
-			<to>SAM_ELITE</to>
-			<to>MAIDENGOLEM_ELITE</to>
-		</support>
-	</tribe>
-	<tribe name="MAIDENGOLEM_ELITE" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>GARGOYLE_ELITE</to>
-			<to>SAM_ELITE</to>
-			<to>MAIDENGOLEM_ELITE</to>
-		</support>
-	</tribe>
-	<tribe name="GARGOYLE_ELITE" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>GARGOYLE_ELITE</to>
-			<to>SAM_ELITE</to>
-			<to>MAIDENGOLEM_ELITE</to>
-		</support>
-	</tribe>
-	<tribe name="AGGRESSIVE_LIGHT_HSPECTRE" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-		</aggro>
-		<hostile>
-			<to>SPECTRE_AALIGHTDARK</to>
-		</hostile>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="AGGRESSIVE_DARK_HSPECTRE" base="MONSTER">
-		<aggro>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<hostile>
-			<to>SPECTRE_AALIGHTDARK</to>
-		</hostile>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="SPECTRE_AALIGHTDARK" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-			<to>AGGRESSIVE_LIGHT_HSPECTRE</to>
-			<to>AGGRESSIVE_DARK_HSPECTRE</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="DRAMA_EVE_NONPC_A" base="GENERAL">
-		<aggro>
-			<to>DRAMA_EVE_NONPC_B</to>
-		</aggro>
-	</tribe>
-	<tribe name="DRAMA_EVE_NONPC_B" base="GENERAL">
-		<aggro>
-			<to>DRAMA_EVE_NONPC_A</to>
-		</aggro>
-	</tribe>
-	<tribe name="DRAMA_KIMEIA_NPC" base="GENERAL">
-		<friend>
-			<to>DRAMA_KIMEIA_MOB</to>
-		</friend>
-	</tribe>
-	<tribe name="DRAMA_EVE_NONPC_DARKA" base="GENERAL_DARK">
-		<aggro>
-			<to>DRAMA_EVE_NONPC_B</to>
-		</aggro>
-	</tribe>
-	<tribe name="DRAMA_EVE_NONPC_DARKB" base="GENERAL_DARK">
-		<aggro>
-			<to>DRAMA_EVE_NONPC_A</to>
-		</aggro>
-	</tribe>
-	<tribe name="DRAMA_KIMEIA_DARKNPC" base="GENERAL_DARK">
-		<friend>
-			<to>DRAMA_KIMEIA_MOB</to>
-		</friend>
-	</tribe>
-	<tribe name="DRAMA_KIMEIA_MOB" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-			<to>DRAMA_KIMEIA_NPC</to>
-			<to>DRAMA_KIMEIA_DARKNPC</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="XIPETO" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="XIPETOBABY" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>XIPETO</to>
-		</support>
-	</tribe>
-	<tribe name="TAURIC" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>TAURIC</to>
-		</support>
-	</tribe>
-	<tribe name="CRESTLICH" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>CRESTLICH</to>
-		</support>
-	</tribe>
-	<tribe name="NNAGA" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>NLIZARDMAN</to>
-			<to>NLIZARDRAISER</to>
-			<to>NLIZARDPET</to>
-			<to>NLIZARDPRIEST</to>
-			<to>NNAGA_PRIEST</to>
-			<to>NNAGA</to>
-			<to>NNAGA_ELEMENTALIST</to>
-			<to>NNAGA_PRIESTBOSS</to>
-			<to>XDRAKAN</to>
-			<to>XDRAKAN_ELEMENTALIST</to>
-			<to>XDRAKAN_PRIEST</to>
-			<to>DRAGON</to>
-		</support>
-	</tribe>
-	<tribe name="NNAGA_PRIEST" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>NLIZARDMAN</to>
-			<to>NLIZARDRAISER</to>
-			<to>NLIZARDPET</to>
-			<to>NLIZARDPRIEST</to>
-			<to>NNAGA_PRIEST</to>
-			<to>NNAGA</to>
-			<to>NNAGA_ELEMENTALIST</to>
-			<to>NNAGA_PRIESTBOSS</to>
-			<to>NNAGA_SERVANT</to>
-			<to>XDRAKAN</to>
-			<to>XDRAKAN_ELEMENTALIST</to>
-			<to>XDRAKAN_PRIEST</to>
-			<to>DRAGON</to>
-		</support>
-	</tribe>
-	<tribe name="NNAGA_SERVANT" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>NNAGA_PRIEST</to>
-		</support>
-	</tribe>
-	<tribe name="NNAGA_ELEMENTALIST" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>NLIZARDMAN</to>
-			<to>NLIZARDRAISER</to>
-			<to>NLIZARDPET</to>
-			<to>NLIZARDPRIEST</to>
-			<to>NNAGA_PRIEST</to>
-			<to>NNAGA</to>
-			<to>NNAGA_ELEMENTALIST</to>
-			<to>NNAGA_PRIESTBOSS</to>
-			<to>NNAGA_ELEMENTAL</to>
-			<to>XDRAKAN</to>
-			<to>XDRAKAN_ELEMENTALIST</to>
-			<to>XDRAKAN_PRIEST</to>
-			<to>DRAGON</to>
-		</support>
-	</tribe>
-	<tribe name="NNAGA_ELEMENTAL" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>NNAGA_ELEMENTALIST</to>
-		</support>
-	</tribe>
-	<tribe name="NLIZARDMAN" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>NLIZARDMAN</to>
-			<to>NLIZARDRAISER</to>
-			<to>NLIZARDPET</to>
-			<to>NLIZARDPRIEST</to>
-			<to>NNAGA_PRIEST</to>
-			<to>NNAGA</to>
-			<to>NNAGA_ELEMENTALIST</to>
-			<to>NNAGA_PRIESTBOSS</to>
-			<to>XDRAKAN</to>
-			<to>XDRAKAN_ELEMENTALIST</to>
-			<to>XDRAKAN_PRIEST</to>
-			<to>DRAGON</to>
-			<to>NLIZARDMAN2</to>
-		</support>
-	</tribe>
-	<tribe name="NLIZARDRAISER" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>NLIZARDMAN</to>
-			<to>NLIZARDRAISER</to>
-			<to>NLIZARDPET</to>
-			<to>NLIZARDPRIEST</to>
-			<to>NNAGA_PRIEST</to>
-			<to>NNAGA</to>
-			<to>NNAGA_ELEMENTALIST</to>
-			<to>NNAGA_PRIESTBOSS</to>
-			<to/>
-			<to>XDRAKAN</to>
-			<to>XDRAKAN_ELEMENTALIST</to>
-			<to>XDRAKAN_PRIEST</to>
-			<to>DRAGON</to>
-		</support>
-	</tribe>
-	<tribe name="NLIZARDPET" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>NLIZARDRAISER</to>
-		</support>
-	</tribe>
-	<tribe name="NLIZARDPRIEST" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>NLIZARDMAN</to>
-			<to>NLIZARDRAISER</to>
-			<to>NLIZARDPET</to>
-			<to>NLIZARDPRIEST</to>
-			<to>NNAGA_PRIEST</to>
-			<to>NNAGA</to>
-			<to>NNAGA_ELEMENTALIST</to>
-			<to>NNAGA_PRIESTBOSS</to>
-			<to>XDRAKAN</to>
-			<to>XDRAKAN_ELEMENTALIST</to>
-			<to>XDRAKAN_PRIEST</to>
-			<to>DRAGON</to>
-		</support>
-	</tribe>
-	<tribe name="NNAGA_PRIESTBOSS" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>NLIZARDMAN</to>
-			<to>NLIZARDRAISER</to>
-			<to>NLIZARDPET</to>
-			<to>NLIZARDPRIEST</to>
-			<to>NNAGA_PRIEST</to>
-			<to>NNAGA</to>
-			<to>NNAGA_ELEMENTALIST</to>
-			<to/>
-			<to>XDRAKAN</to>
-			<to>XDRAKAN_ELEMENTALIST</to>
-			<to>XDRAKAN_PRIEST</to>
-			<to>DRAGON</to>
-		</support>
-	</tribe>
-	<tribe name="NNAGA_BOSS_SERVANT" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>NNAGA_PRIESTBOSS</to>
-		</support>
-	</tribe>
-	<tribe name="SEIREN_MASTER" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>SEIREN_MASTER</to>
-			<to>SEIREN_SNAKE</to>
-			<to>SEIREN</to>
-		</support>
-	</tribe>
-	<tribe name="SEIREN_SNAKE" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>SEIREN_MASTER</to>
-		</support>
-	</tribe>
-	<tribe name="GENERAL_ADADR" base="GENERAL">
-		<aggro>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-			<to>PC_DRAGON</to>
-			<to>GENERAL_DRAGON</to>
-			<to>GUARD_DRAGON</to>
-		</aggro>
-	</tribe>
-	<tribe name="GENERALDA_ALIDR" base="GENERAL_DARK">
-		<aggro>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-			<to>PC_DRAGON</to>
-			<to>GENERAL_DRAGON</to>
-			<to>GUARD_DRAGON</to>
-		</aggro>
-	</tribe>
-	<tribe name="GENERALDR_ALIDA" base="GENERAL_DRAGON">
-		<aggro>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-	</tribe>
-	<tribe name="LIZARDMAN_BOMB" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>BOMB_LIZARDMAN</to>
-		</friend>
-		<support>
-			<to>LIZARDMAN_BOMB</to>
-		</support>
-	</tribe>
-	<tribe name="BOMB_LIZARDMAN" base="GENERAL_DARK">
-		<aggro>
-			<to>LIZARDMAN_BOMB</to>
-		</aggro>
-		<friend>
-			<to>NNAGA</to>
-		</friend>
-	</tribe>
-	<tribe name="LIZARDMAN_KB" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="DRAKEPURPLE_MASTER" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="DRAKEPURPLE_SLAVE" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>DRAKEPURPLE_MASTER</to>
-		</support>
-	</tribe>
-	<tribe name="DRAKY_BOMB_MASTER" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>NLIZARDMAN</to>
-			<to>NLIZARDRAISER</to>
-			<to>NLIZARDPET</to>
-			<to>NLIZARDPRIEST</to>
-			<to>NNAGA_PRIEST</to>
-			<to>NNAGA</to>
-			<to>NNAGA_ELEMENTALIST</to>
-		</support>
-	</tribe>
-	<tribe name="DRAKY_BOMB_EX" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>DRAKY_BOMB_MASTER</to>
-		</support>
-	</tribe>
-	<tribe name="FIREFUNGY" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>FIREFUNGY</to>
-		</support>
-	</tribe>
-	<tribe name="NOFIGHT" base="MONSTER">
-		<friend>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</friend>
-	</tribe>
-	<tribe name="FIELD_OBJECT_ALL" base="FIELD_OBJECT_LIGHT">
-		<neutral>
-			<to>PC_DARK</to>
-		</neutral>
-	</tribe>
-	<tribe name="DRAKANDF3BOSS" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>DRAKANDF3SLAVE</to>
-			<to>DRAKANDF3BOSS</to>
-		</support>
-	</tribe>
-	<tribe name="DRAKANDF3SLAVE" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>DRAKANDF3BOSS</to>
-		</support>
-	</tribe>
-	<tribe name="CONSIADE" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="CONSIADE_SUM" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>CONSIADE</to>
-		</support>
-	</tribe>
-	<tribe name="PARENTSMONSTER" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>CHILDMONSTER</to>
-		</friend>
-	</tribe>
-	<tribe name="CHILDMONSTER" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>PARENTSMONSTER</to>
-		</friend>
-	</tribe>
-	<tribe name="SEIREN" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>SEIREN_MASTER</to>
-			<to>SEIREN_SNAKE</to>
-			<to>SEIREN</to>
-		</support>
-	</tribe>
-	<tribe name="TEST_LIGHT_ADARK" base="GENERAL">
-		<aggro>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-	</tribe>
-	<tribe name="TEST_LIGHT_ADRAGON" base="GENERAL">
-		<aggro>
-			<to>PC_DRAGON</to>
-			<to>GENERAL_DRAGON</to>
-			<to>GUARD_DRAGON</to>
-		</aggro>
-	</tribe>
-	<tribe name="TEST_LIGHT_AETC" base="GENERAL">
-		<aggro>
-			<to>MONSTER</to>
-		</aggro>
-	</tribe>
-	<tribe name="TEST_DARK_ALIGHT" base="GENERAL_DARK">
-		<aggro>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-		</aggro>
-	</tribe>
-	<tribe name="TEST_DARK_ADRAGON" base="GENERAL_DARK">
-		<aggro>
-			<to>PC_DRAGON</to>
-			<to>GENERAL_DRAGON</to>
-			<to>GUARD_DRAGON</to>
-		</aggro>
-	</tribe>
-	<tribe name="TEST_DARK_AETC" base="GENERAL_DARK">
-		<aggro>
-			<to>MONSTER</to>
-		</aggro>
-	</tribe>
-	<tribe name="TEST_DRAGON_ALIGHT" base="GENERAL_DRAGON">
-		<aggro>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-		</aggro>
-	</tribe>
-	<tribe name="TEST_DRAGON_ADARK" base="GENERAL_DRAGON">
-		<aggro>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-	</tribe>
-	<tribe name="TEST_DRAGON_AETC" base="GENERAL_DRAGON">
-		<aggro>
-			<to>MONSTER</to>
-		</aggro>
-	</tribe>
-	<tribe name="TEST_ETC_ALIGHT" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="TEST_ETC_ADARK" base="MONSTER">
-		<aggro>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="TEST_ETC_ADRAGON" base="MONSTER">
-		<aggro>
-			<to>PC_DRAGON</to>
-			<to>GENERAL_DRAGON</to>
-			<to>GUARD_DRAGON</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="ABYSSDRAKANGATE" base="MONSTER">
-		<friend>
-			<to>GUARD</to>
-			<to>GUARD_DARK</to>
-			<to>GUARD_DRAGON</to>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</friend>
-	</tribe>
-	<tribe name="DARK_NPC" base="GENERAL_DARK">
-		<aggro>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-		</aggro>
-		<friend>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-			<to>DARK_SUR_MOB</to>
-			<to>DARK_LICH</to>
-			<to>LICH_SOULEDSTONE</to>
-			<to>DARK_MOB</to>
-		</friend>
-	</tribe>
-	<tribe name="LIGHT_NPC" base="GENERAL">
-		<aggro>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-			<to>LIGHT_SUR_MOB</to>
-			<to>LIGHT_LICH</to>
-			<to>LICH_SOULEDSTONE</to>
-			<to>LIGHT_MOB</to>
-		</friend>
-	</tribe>
-	<tribe name="DARK_MOB" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-		</aggro>
-		<friend>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</friend>
-		<support>
-			<to>DARK_NPC</to>
-		</support>
-	</tribe>
-	<tribe name="LIGHT_MOB" base="MONSTER">
-		<aggro>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-		</friend>
-		<support>
-			<to>LIGHT_NPC</to>
-		</support>
-	</tribe>
-	<tribe name="DARK_SUR_MOB" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-		</aggro>
-		<friend>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</friend>
-		<support>
-			<to>DARK_NPC</to>
-			<to>DARK_SUR_MOB</to>
-		</support>
-	</tribe>
-	<tribe name="LIGHT_SUR_MOB" base="MONSTER">
-		<aggro>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-		</friend>
-		<support>
-			<to>LIGHT_NPC</to>
-			<to>LIGHT_SUR_MOB</to>
-		</support>
-	</tribe>
-	<tribe name="DARK_LICH" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-		</aggro>
-		<friend>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</friend>
-		<support>
-			<to>DARK_NPC</to>
-			<to>DARK_SUR_MOB</to>
-		</support>
-	</tribe>
-	<tribe name="LIGHT_LICH" base="MONSTER">
-		<aggro>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-		</friend>
-		<support>
-			<to>LIGHT_NPC</to>
-			<to>LIGHT_SUR_MOB</to>
-		</support>
-	</tribe>
-	<tribe name="LICH_SOULEDSTONE" base="MONSTER">
-		<friend>
-			<to>DARK_LICH</to>
-			<to>LIGHT_LICH</to>
-		</friend>
-	</tribe>
-	<tribe name="LIGHT_DENLABIS" base="GENERAL">
-		<aggro>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-			<to>FIRETEMPLE_MOB</to>
-		</friend>
-	</tribe>
-	<tribe name="FIRETEMPLE_MOB" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>LIGHT_DENLABIS</to>
-		</friend>
-		<support>
-			<to>FIRETEMPLE_MOB</to>
-		</support>
-	</tribe>
-	<tribe name="QUESTGUARD_DARK" base="GENERAL_DARK">
-		<aggro>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-		</aggro>
-		<support>
-			<to>PC_DARK</to>
-		</support>
-	</tribe>
-	<tribe name="QUESTGUARD_LIGHT" base="GENERAL">
-		<aggro>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<support>
-			<to>PC</to>
-		</support>
-	</tribe>
-	<tribe name="BROHUM" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>BROHUM</to>
-		</support>
-	</tribe>
-	<tribe name="CALYDON" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>CALYDON</to>
-		</support>
-	</tribe>
-	<tribe name="CALYDON_POLYMORPH" base="MONSTER">
-		<friend>
-			<to>MONSTER</to>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-		</friend>
-	</tribe>
-	<tribe name="SWELLFISH" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>SWELLFISH</to>
-		</support>
-	</tribe>
-	<tribe name="TRICON" base="MONSTER">
-		<aggro>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>TRICON</to>
-			<to>TRICO</to>
-		</support>
-	</tribe>
-	<tribe name="TRICO" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="PROTECTGUARD_LIGHT" base="GUARD">
-		<friend>
-			<to>MONSTER</to>
-		</friend>
-	</tribe>
-	<tribe name="PROTECTGUARD_DARK" base="GUARD_DARK">
-		<friend>
-			<to>MONSTER</to>
-		</friend>
-	</tribe>
-	<tribe name="FIELD_OBJECT_ALL_MONSTER" base="GENERAL">
-		<friend>
-			<to>MONSTER</to>
-			<to>PC_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-		</friend>
-	</tribe>
-	<tribe name="HOLYSERVANT" base="MONSTER">
-		<aggro>
-			<to>HOLYSERVANT_DEBUFFER</to>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="HOLYSERVANT_DEBUFFER" base="USEALL">
-		<aggro>
-			<to>HOLYSERVANT</to>
-		</aggro>
-	</tribe>
-	<tribe name="HOLYSERVANT_DESPAWN" base="MONSTER">
-		<friend>
-			<to>MONSTER</to>
-		</friend>
-		<support>
-			<to>HOLYSERVANT</to>
-		</support>
-	</tribe>
-	<tribe name="RANMARK" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-			<to>GENERAL</to>
-			<to>GENERAL_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>RANMARK</to>
-		</support>
-	</tribe>
-	<tribe name="AGGRESSIVESUPPORTMONSTER2" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>AGGRESSIVESINGLEMONSTER</to>
-			<to>AGGRESSIVESUPPORTMONSTER</to>
-		</support>
-	</tribe>
-	<tribe name="LASBERG" base="GENERAL_DARK"/>
-	<tribe name="SHULACK" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-			<to>AGGRESSIVETOSHULACK2</to>
-		</aggro>
-		<friend>
-			<to>SHULACK_ATTACKED</to>
-		</friend>
-		<support>
-			<to>SHULACK</to>
-			<to>SHULACK_DECK</to>
-			<to>SHULACK_ATTACKING</to>
-			<to>SHULACK_SUPPORT</to>
-		</support>
-	</tribe>
-	<tribe name="ESCORT" base="USEALL">
-		<hostile>
-			<to>MONSTER</to>
-		</hostile>
-		<friend>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</friend>
-	</tribe>
-	<tribe name="AGGRESSIVEESCORT" base="MONSTER">
-		<aggro>
-			<to>ESCORT</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="XDRAKAN" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-			<to>ESCORT</to>
-		</aggro>
-		<hostile>
-			<to>IDCATACOMBS_TAROS</to>
-		</hostile>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>XDRAKAN</to>
-			<to>XDRAKAN_ELEMENTALIST</to>
-			<to>XDRAKAN_PRIEST</to>
-			<to>DRAGON</to>
-		</support>
-	</tribe>
-	<tribe name="XDRAKAN_ELEMENTALIST" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-			<to>ESCORT</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>XDRAKAN</to>
-			<to>XDRAKAN_ELEMENTALIST</to>
-			<to>XDRAKAN_PRIEST</to>
-			<to>DRAGON</to>
-		</support>
-	</tribe>
-	<tribe name="XDRAKAN_PET" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-			<to>ESCORT</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>XDRAKAN_ELEMENTALIST</to>
-		</support>
-	</tribe>
-	<tribe name="XDRAKAN_PRIEST" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-			<to>ESCORT</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>XDRAKAN</to>
-			<to>XDRAKAN_ELEMENTALIST</to>
-			<to>XDRAKAN_PRIEST</to>
-			<to>DRAGON</to>
-		</support>
-	</tribe>
-	<tribe name="XDRAKAN_SERVANT" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-			<to>ESCORT</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>XDRAKAN_PRIEST</to>
-		</support>
-	</tribe>
-	<tribe name="AGGRESSIVETOSHULACK" base="MONSTER">
-		<aggro>
-			<to>SHULACK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>AGGRESSIVETOSHULACK</to>
-		</support>
-	</tribe>
-	<tribe name="SHULACK_DECK" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>SHULACK</to>
-			<to>SHULACK_DECK</to>
-		</support>
-	</tribe>
-	<tribe name="SHULACK_DECK_KILLER" base="MONSTER">
-		<aggro>
-			<to>SHULACK_DECK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="DRAGON" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="DRAGON_SLAVE" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>DRAGON</to>
-		</support>
-	</tribe>
-	<tribe name="AGGRESSIVETOSHULACK2" base="MONSTER">
-		<aggro>
-			<to>SHULACK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="SPALLER" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="SPALLERCTRL" base="USEALL">
-		<hostile>
-			<to>SPALLER</to>
-		</hostile>
-	</tribe>
-	<tribe name="SHULACK_SLAVE" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>SHULACK</to>
-			<to>SHULACK_SLAVE</to>
-		</support>
-	</tribe>
-	<tribe name="IDLF1_MONSTER" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-			<to>ESCORT</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>IDLF1_MONSTER</to>
-		</support>
-	</tribe>
-	<tribe name="AGGRESSIVETOPCPET" base="MONSTER">
-		<hostile>
-			<to>PC</to>
-			<to>PC_DARK</to>
-			<to>GENERAL</to>
-			<to>GENERAL_DARK</to>
-		</hostile>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="GENERALDR_ALIDA_SUPPORT" base="GENERAL_DRAGON">
-		<support>
-			<to>GENERALDR_ALIDA</to>
-		</support>
-	</tribe>
-	<tribe name="GOLEM_SWITCH" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>AGGRESSIVESINGLEMONSTER</to>
-		</support>
-	</tribe>
-	<tribe name="USEALLNONETOMONSTER" base="USEALL"/>
-	<tribe name="FANATIC" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>FANATIC</to>
-			<to>XDRAKAN_ELEMENTALIST</to>
-			<to>XDRAKAN_PRIEST</to>
-			<to>DRAGON</to>
-			<to>XDRAKAN</to>
-		</support>
-	</tribe>
-	<tribe name="IDTEMPLE_BUGS" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>IDTEMPLE_BUGS</to>
-		</support>
-	</tribe>
-	<tribe name="IDTEMPLE_STONE" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>IDTEMPLE_STONE</to>
-		</support>
-	</tribe>
-	<tribe name="IDELIM" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>GENERAL</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>USEALL</to>
-			<to>IDELIM_MERCENARY</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>IDELIM</to>
-		</support>
-	</tribe>
-	<tribe name="IDCATACOMBS_TAROS" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>XDRAKAN</to>
-		</support>
-	</tribe>
-	<tribe name="IDCATACOMBS_DRAKE" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>IDCATACOMBS_DRAKE_SUM</to>
-		</friend>
-	</tribe>
-	<tribe name="IDCATACOMBS_DRAKE_SUM" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-			<to>IDCATACOMBS_DRAKE</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="DUMMY" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="HOSTILE_ALL" base="MONSTER">
-		<hostile>
-			<to>PC</to>
-			<to>PC_DARK</to>
-			<to>PC_DRAGON</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-			<to>GENERAL_DRAGON</to>
-			<to>GUARD_DRAGON</to>
-			<to>USEALL</to>
-			<to>MONSTER</to>
-		</hostile>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="AGGRESSIVE_ALL" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-			<to>PC_DRAGON</to>
-			<to>GENERAL</to>
-			<to>GUARD</to>
-			<to>GENERAL_DARK</to>
-			<to>GUARD_DARK</to>
-			<to>GENERAL_DRAGON</to>
-			<to>GUARD_DRAGON</to>
-			<to>USEALL</to>
-			<to>MONSTER</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="F4GUARD_LIGHT" base="GUARD">
-		<friend>
-			<to>F4RAID</to>
-		</friend>
-	</tribe>
-	<tribe name="F4GUARD_DARK" base="GUARD_DARK">
-		<friend>
-			<to>F4RAID</to>
-		</friend>
-	</tribe>
-	<tribe name="F4RAID" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>F4GUARD_LIGHT</to>
-			<to>F4GUARD_DARK</to>
-			<to>GENERAL_ADADR</to>
-			<to>GENERALDA_ALIDR</to>
-		</friend>
-	</tribe>
-	<tribe name="DRAMATA" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>GENERAL</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-			<to>GENERAL_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>DRAMATA</to>
-		</support>
-	</tribe>
-	<tribe name="DRAMATATIMER" base="MONSTER">
-		<aggro>
-			<to>DRAMATA</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="DRAKANPOLYMORPH" base="MONSTER">
-		<aggro>
-			<to>DRAKANDOOR</to>
-		</aggro>
-		<friend>
-			<to>PC</to>
-			<to>GENERAL</to>
-			<to>GUARD_DARK</to>
-		</friend>
-	</tribe>
-	<tribe name="DRAKANDOOR" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="GHTIMER" base="MONSTER">
-		<aggro>
-			<to>GUARD</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="SHULACK_ATTACKING" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>GENERAL</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-			<to>GENERAL_DARK</to>
-			<to>SHULACK_ATTACKED</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>SHULACK</to>
-			<to>SHULACK_SUPPORT</to>
-		</support>
-	</tribe>
-	<tribe name="SHULACK_ATTACKED" base="MONSTER">
-		<aggro>
-			<to>SHULACK_ATTACKING</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="SHULACK_SUPPORT" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-		<support>
-			<to>SHULACK</to>
-			<to>SHULACK_ATTACKING</to>
-		</support>
-	</tribe>
-	<tribe name="NLIZARDMAN2" base="MONSTER">
-		<aggro>
-			<to>PC</to>
-			<to>GUARD</to>
-			<to>PC_DARK</to>
-			<to>GUARD_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="DUMMY2" base="MONSTER">
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="DUMMY_DGUARD" base="GUARD_DARK">
-		<aggro>
-			<to>DUMMY</to>
-		</aggro>
-		<friend>
-			<to>DUMMY</to>
-			<to>DUMMY2</to>
-		</friend>
-	</tribe>
-	<tribe name="DUMMY2_DGUARD" base="GUARD_DARK">
-		<aggro>
-			<to>DUMMY2</to>
-		</aggro>
-		<friend>
-			<to>DUMMY</to>
-			<to>DUMMY2</to>
-		</friend>
-	</tribe>
-	<tribe name="CRYSTAL" base="MONSTER">
-		<aggro>
-			<to>XDRAKAN</to>
-			<to>XDRAKAN_ELEMENTALIST</to>
-			<to>XDRAKAN_PRIEST</to>
-			<to>DRAGON</to>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</aggro>
-		<friend>
-			<to>POLYMORPHPARROT</to>
-		</friend>
-	</tribe>
-	<tribe name="CRYSTAL_TOWER" base="MONSTER">
-		<aggro>
-			<to>CRYSTAL</to>
-			<to>XDRAKAN</to>
-		</aggro>
-		<friend>
-			<to>PC</to>
-			<to>PC_DARK</to>
-		</friend>
-	</tribe>
+    <tribe name="PC">
+        <friend>LIGHT_SUR_MOB LIGHT_LICH</friend>
+    </tribe>
+    <tribe name="GENERAL"/>
+    <tribe name="GUARD">
+        <friend>DUMMY DUMMY2</friend>
+    </tribe>
+    <tribe name="PC_DARK">
+        <friend>DARK_SUR_MOB DARK_LICH</friend>
+        <neutral>FIELD_OBJECT_ALL</neutral>
+    </tribe>
+    <tribe name="GENERAL_DARK"/>
+    <tribe name="GUARD_DARK">
+        <friend>DUMMY DUMMY2</friend>
+    </tribe>
+    <tribe name="PC_DRAGON"/>
+    <tribe name="GENERAL_DRAGON"/>
+    <tribe name="GUARD_DRAGON"/>
+    <tribe name="MONSTER">
+        <friend>POLYMORPHPARROT</friend>
+    </tribe>
+    <tribe name="PET" base="PC"/>
+    <tribe name="PET_DARK" base="PC_DARK"/>
+    <tribe name="AGGRESSIVESINGLEMONSTER" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+    </tribe>
+    <tribe name="AGGRESSIVESUPPORTMONSTER" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>AGGRESSIVESUPPORTMONSTER</support>
+    </tribe>
+    <tribe name="FRILLFAIMAMCOUPLE" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>FRILLFAIMAMCOUPLE</support>
+    </tribe>
+    <tribe name="SPAKY" base="MONSTER">
+        <aggro>FUNGUS</aggro>
+        <support>SPAKY</support>
+    </tribe>
+    <tribe name="MUTA" base="MONSTER">
+        <aggro>FUNGUS</aggro>
+    </tribe>
+    <tribe name="FUNGUS" base="MONSTER">
+        <friend>PC GUARD PC_DARK GUARD_DARK</friend>
+    </tribe>
+    <tribe name="ORC" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>ORC GOBLIN</support>
+    </tribe>
+    <tribe name="GOBLIN" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>ORC GOBLIN</support>
+    </tribe>
+    <tribe name="POLYMORPHFUNGY" base="PC">
+        <friend>MONSTER PC_DARK GUARD_DARK QUESTGUARD_DARK</friend>
+    </tribe>
+    <tribe name="FUNGY" base="MONSTER">
+        <aggro>POLYMORPHFUNGY</aggro>
+    </tribe>
+    <tribe name="BRAX" base="MONSTER">
+        <support>BRAX</support>
+    </tribe>
+    <tribe name="HIPPOLIZARD" base="MONSTER">
+        <support>HIPPOLIZARD</support>
+    </tribe>
+    <tribe name="FRILLFAIMAMBABY" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>FRILLFAIMAMMOM</support>
+    </tribe>
+    <tribe name="FRILLFAIMAMMOM" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>FRILLFAIMAMBABY</support>
+    </tribe>
+    <tribe name="FETHLOT" base="MONSTER">
+        <support>FETHLOT</support>
+    </tribe>
+    <tribe name="GARGOYLE" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>GARGOYLE</support>
+    </tribe>
+    <tribe name="MINX" base="MONSTER">
+        <hostile>ZAIF</hostile>
+    </tribe>
+    <tribe name="ZAIF" base="MONSTER">
+        <aggro>PC PC_DARK MINX TOG</aggro>
+    </tribe>
+    <tribe name="TOG" base="MONSTER">
+        <aggro>PC PC_DARK MINX ZAIF</aggro>
+    </tribe>
+    <tribe name="GUARD_D1NOATTACK" base="GENERAL">
+        <friend>ZAIF</friend>
+    </tribe>
+    <tribe name="ZAIF_ATOG" base="MONSTER">
+        <aggro>PC PC_DARK TOG_AZAIF</aggro>
+    </tribe>
+    <tribe name="TOG_AZAIF" base="MONSTER">
+        <aggro>PC PC_DARK ZAIF_ATOG</aggro>
+    </tribe>
+    <tribe name="ZAIF_AMINX" base="MONSTER">
+        <aggro>PC PC_DARK MINX_HZAIF</aggro>
+    </tribe>
+    <tribe name="MINX_HZAIF" base="MONSTER">
+        <hostile>ZAIF_AMINX</hostile>
+    </tribe>
+    <tribe name="MERDION" base="MONSTER">
+        <support>MERDION</support>
+    </tribe>
+    <tribe name="GUARDIAN" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+    </tribe>
+    <tribe name="DARU" base="MONSTER">
+        <support>DARU</support>
+    </tribe>
+    <tribe name="LUPYLLINI" base="MONSTER">
+        <support>LUPYLLINI</support>
+    </tribe>
+    <tribe name="MOSBEARBABY" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>MOSBEARFATHER</support>
+    </tribe>
+    <tribe name="MOSBEARFATHER" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>MOSBEARBABY</support>
+    </tribe>
+    <tribe name="SOULEDSTONE" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>SOULEDSTONE_MINI</support>
+    </tribe>
+    <tribe name="SOULEDSTONE_MINI" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+    </tribe>
+    <tribe name="MINX_HKALNIF" base="MONSTER">
+        <hostile>KALNIF_AMINX</hostile>
+    </tribe>
+    <tribe name="KALNIF_AMINX" base="MONSTER">
+        <aggro>PC PC_DARK MINX_HKALNIF</aggro>
+    </tribe>
+    <tribe name="KALNIF_ATOG" base="MONSTER">
+        <aggro>PC PC_DARK TOG_AKALNIF</aggro>
+    </tribe>
+    <tribe name="TOG_AKALNIF" base="MONSTER">
+        <aggro>PC PC_DARK KALNIF_ATOG</aggro>
+    </tribe>
+    <tribe name="FARMER_HKERUBIM_LF1" base="GENERAL">
+        <hostile>KERUBIM_AFARMER_LF1</hostile>
+    </tribe>
+    <tribe name="KERUBIM_AFARMER_LF1" base="MONSTER">
+        <aggro>FARMER_HKERUBIM_LF1</aggro>
+        <hostile>GUARD_LIGHT_AKERUBIM_LF1</hostile>
+    </tribe>
+    <tribe name="GUARD_LIGHT_AKERUBIM_LF1" base="GUARD">
+        <aggro>KERUBIM_AFARMER_LF1</aggro>
+    </tribe>
+    <tribe name="D1_HKERUBIM_LF1" base="MONSTER">
+        <hostile>KERUBIM_AD1_LF1</hostile>
+    </tribe>
+    <tribe name="KERUBIM_AD1_LF1" base="MONSTER">
+        <aggro>D1_HKERUBIM_LF1</aggro>
+    </tribe>
+    <tribe name="BROWNIE" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>KRALL BROWNIE</support>
+    </tribe>
+    <tribe name="BROWNIECOWARD" base="MONSTER">
+        <support>BROWNIECOWARD</support>
+    </tribe>
+    <tribe name="BROWNIEGUARD" base="MONSTER">
+        <support>KRALL BROWNIE BROWNIECOWARD</support>
+    </tribe>
+    <tribe name="BROWNIEFELLER_HZAIF_LF1" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <hostile>ZAIF_ABROWNIEFELLER_LF1</hostile>
+    </tribe>
+    <tribe name="ZAIF_ABROWNIEFELLER_LF1" base="MONSTER">
+        <aggro>PC PC_DARK BROWNIEFELLER_HZAIF_LF1</aggro>
+    </tribe>
+    <tribe name="KRALL" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>KRALL KRALLMASTER KRALL_TRAINING</support>
+    </tribe>
+    <tribe name="KRALLMASTER" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+    </tribe>
+    <tribe name="KRALLWIZARDCY" base="MONSTER">
+        <aggro>PC PC_DARK CYCLOPSBOSS</aggro>
+        <support>KRALL</support>
+    </tribe>
+    <tribe name="KRALL_TRAINING" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK TARGETBASFELT_DF1</aggro>
+        <support>KRALL KRALLMASTER KRALL_TRAINING</support>
+    </tribe>
+    <tribe name="SPRIGG_HROBBERALDER_DF1" base="MONSTER">
+        <hostile>ROBBERALDER_ASPRIGG_DF1</hostile>
+    </tribe>
+    <tribe name="ROBBERALDER_ASPRIGG_DF1" base="GENERAL_DARK">
+        <aggro>SPRIGG_HROBBERALDER_DF1</aggro>
+    </tribe>
+    <tribe name="SPRIGGREFUSE_DF1" base="MONSTER">
+        <support>SPRIGGREFUSE_DF1</support>
+    </tribe>
+    <tribe name="ARCHERYBASFELT_ATARGETBASFELT_DF1" base="GENERAL_DARK">
+        <aggro>TARGETBASFELT_DF1</aggro>
+    </tribe>
+    <tribe name="ARCHERYBASFELT_ATARGETBASFELT_LF1" base="GENERAL">
+        <aggro>TARGETBASFELT_DF1</aggro>
+    </tribe>
+    <tribe name="TARGETBASFELT_DF1" base="MONSTER"/>
+    <tribe name="ARCHERYBASFELT2_ATARGETBASFELT2_DF1" base="GENERAL_DARK">
+        <aggro>TARGETBASFELT2_DF1</aggro>
+    </tribe>
+    <tribe name="ARCHERYBASFELT2_ATARGETBASFELT2_LF1" base="GENERAL">
+        <aggro>TARGETBASFELT2_DF1</aggro>
+    </tribe>
+    <tribe name="TARGETBASFELT2_DF1" base="MONSTER"/>
+    <tribe name="GUARD_FTARGETBASFELT_DF1" base="GUARD_DARK">
+        <friend>TARGETBASFELT_DF1 TARGETBASFELT2_DF1</friend>
+    </tribe>
+    <tribe name="GUARD_FTARGETBASFELT_LF1" base="GUARD">
+        <friend>TARGETBASFELT_DF1 TARGETBASFELT2_DF1</friend>
+    </tribe>
+    <tribe name="LYCAN" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>LYCAN LYCAN_MAGE LYCAN_PET LYCAN_HUNTER RATMANWORKER LYCANMASTER TOWERMAN LYCAN_AGUARD_DARK_DF1 LYCAN_TRAINING</support>
+    </tribe>
+    <tribe name="LYCAN_HUNTER" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>LYCAN LYCAN_MAGE LYCAN_PET LYCAN_HUNTER RATMANWORKER LYCANMASTER TOWERMAN LYCAN_AGUARD_DARK_DF1 LYCAN_TRAINING</support>
+    </tribe>
+    <tribe name="LYCAN_MAGE" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>LYCAN LYCAN_MAGE LYCAN_PET LYCAN_HUNTER RATMANWORKER LYCANMASTER TOWERMAN LYCAN_AGUARD_DARK_DF1 LYCAN_TRAINING</support>
+    </tribe>
+    <tribe name="LYCAN_AGUARD_DARK_DF1" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK GUARD_DARK_ALYCANARATMAN_DF1</aggro>
+        <support>LYCAN LYCAN_MAGE LYCAN_PET LYCAN_HUNTER RATMANWORKER LYCANMASTER TOWERMAN LYCAN_AGUARD_DARK_DF1 LYCAN_TRAINING</support>
+    </tribe>
+    <tribe name="LYCAN_TRAINING" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK TARGETBASFELT_DF1</aggro>
+        <support>LYCAN LYCAN_MAGE LYCAN_PET LYCAN_HUNTER RATMANWORKER LYCANMASTER TOWERMAN LYCAN_AGUARD_DARK_DF1 LYCAN_TRAINING</support>
+    </tribe>
+    <tribe name="LYCANMASTER" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>LYCAN</support>
+    </tribe>
+    <tribe name="LYCAN_PET" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>LYCAN_HUNTER</support>
+    </tribe>
+    <tribe name="LYCAN_PET_TRAINING" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK TARGETBASFELT_DF1</aggro>
+        <support>LYCAN_HUNTER</support>
+    </tribe>
+    <tribe name="LYCAN_SUM" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>LYCAN_MAGE</support>
+    </tribe>
+    <tribe name="LYCANDF2MASTER" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>LYCANDF2SLAVE1</support>
+    </tribe>
+    <tribe name="LYCANDF2SLAVE1" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>LYCANDF2MASTER</support>
+    </tribe>
+    <tribe name="LYCANDF2SLAVE2" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>LYCANDF2MASTER</support>
+    </tribe>
+    <tribe name="TOWERMAN" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+    </tribe>
+    <tribe name="RATMAN" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>TOWERMAN</support>
+    </tribe>
+    <tribe name="RATMANWORKER" base="MONSTER">
+        <aggro>SAMM</aggro>
+        <support>RATMAN RATMANWORKER LYCANMASTER LYCAN LYCAN_AGUARD_DARK_DF1 RATMAN_AGUARD_DARK_DF1</support>
+    </tribe>
+    <tribe name="RATMANDFWORKER" base="MONSTER">
+        <aggro>SAMM</aggro>
+        <support>RATMAN RATMANWORKER RATMANDFWORKER</support>
+    </tribe>
+    <tribe name="SAMM" base="MONSTER">
+        <hostile>RATMANWORKER</hostile>
+    </tribe>
+    <tribe name="RATMAN_AGUARD_DARK_DF1" base="MONSTER">
+        <aggro>PC PC_DARK GUARD_DARK_ALYCANARATMAN_DF1</aggro>
+        <support>TOWERMAN</support>
+    </tribe>
+    <tribe name="GUARD_DARK_ALYCANARATMAN_DF1" base="GUARD_DARK">
+        <aggro>LYCAN_AGUARD_DARK_DF1 RATMAN_AGUARD_DARK_DF1</aggro>
+    </tribe>
+    <tribe name="UNDEADGRADIATOR_DF1" base="MONSTER">
+        <aggro>UNDEADGRADIATOR_DF1</aggro>
+    </tribe>
+    <tribe name="GUARD_LIGHTMA" base="GUARD">
+        <friend>PC GENERAL GUARD</friend>
+    </tribe>
+    <tribe name="GUARD_DARKMA" base="GUARD_DARK">
+        <friend>PC_DARK GENERAL_DARK GUARD_DARK</friend>
+    </tribe>
+    <tribe name="GUARD_DRAGONMA" base="GUARD_DRAGON">
+        <friend>PC_DRAGON GENERAL_DRAGON GUARD_DRAGON</friend>
+    </tribe>
+    <tribe name="NEUT" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>NEUT NEUTQUEEN</support>
+    </tribe>
+    <tribe name="NEUTQUEEN" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>NEUT NEUTQUEEN</support>
+    </tribe>
+    <tribe name="NEUTBUG" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>NEUTQUEEN</support>
+    </tribe>
+    <tribe name="AGGRESSIVE_LIGHT" base="MONSTER">
+        <aggro>PC GENERAL GUARD</aggro>
+    </tribe>
+    <tribe name="AGGRESSIVE_DARK" base="MONSTER">
+        <aggro>PC_DARK GENERAL_DARK GUARD_DARK</aggro>
+    </tribe>
+    <tribe name="AGGRESSIVE_DRAGON" base="MONSTER">
+        <aggro>PC_DRAGON GENERAL_DRAGON GUARD_DRAGON</aggro>
+    </tribe>
+    <tribe name="POLYMORPHPARROT" base="PC">
+        <friend>MONSTER</friend>
+    </tribe>
+    <tribe name="ABDRAGON_AABDARK" base="MONSTER">
+        <aggro>ABDARK_AABDRAGON</aggro>
+    </tribe>
+    <tribe name="ABDARK_AABDRAGON" base="MONSTER">
+        <aggro>ABDRAGON_AABDARK</aggro>
+    </tribe>
+    <tribe name="OCTASIDEBABY" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>OCTASIDEBABY</support>
+    </tribe>
+    <tribe name="GUARD_DARKAENEMY" base="GUARD_DARK">
+        <aggro>ENEMY_AGUARD_DARK</aggro>
+    </tribe>
+    <tribe name="ENEMY_AGUARD_DARK" base="MONSTER">
+        <aggro>GUARD_DARKAENEMY</aggro>
+    </tribe>
+    <tribe name="GRIFFO" base="MONSTER">
+        <support>GRIFFON GRIFFO</support>
+    </tribe>
+    <tribe name="GRIFFON" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>GRIFFO</support>
+    </tribe>
+    <tribe name="SHELLIZARDMOM" base="MONSTER">
+        <support>SHELLIZARDBABY</support>
+    </tribe>
+    <tribe name="SHELLIZARDBABY" base="MONSTER">
+        <support>SHELLIZARDMOM</support>
+    </tribe>
+    <tribe name="MANDURITWEAK" base="MONSTER">
+        <support>MANDURITWEAK</support>
+    </tribe>
+    <tribe name="CHERUBIM2ND" base="MONSTER">
+        <support>CHERUBIM2ND</support>
+    </tribe>
+    <tribe name="LEHPAR" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>LEHPAR LEHPAR_AGUARDDARK LEHPAR_APRETOR</support>
+    </tribe>
+    <tribe name="GUARDDARK_ALEHPAR" base="GUARD_DARK">
+        <aggro>LEHPAR_AGUARDDARK</aggro>
+    </tribe>
+    <tribe name="LEHPAR_AGUARDDARK" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK GUARDDARK_ALEHPAR</aggro>
+        <support>LEHPAR LEHPAR_AGUARDDARK LEHPAR_APRETOR</support>
+    </tribe>
+    <tribe name="AGGRESSIVE1_AAGGRESSIVE2" base="MONSTER">
+        <aggro>PC PC_DARK AGGRESSIVE2_AAGGRESSIVE1</aggro>
+    </tribe>
+    <tribe name="AGGRESSIVE2_AAGGRESSIVE1" base="MONSTER">
+        <aggro>PC PC_DARK AGGRESSIVE1_AAGGRESSIVE2</aggro>
+    </tribe>
+    <tribe name="LEHPAR_APRETOR" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK PRETOR_ALEHPAR</aggro>
+        <support>LEHPAR LEHPAR_AGUARDDARK LEHPAR_APRETOR</support>
+    </tribe>
+    <tribe name="PRETOR_ALEHPAR" base="MONSTER">
+        <aggro>PC PC_DARK LEHPAR_APRETOR</aggro>
+    </tribe>
+    <tribe name="CYCLOPSBOSS" base="MONSTER">
+        <aggro>PC PC_DARK KRALLWIZARDCY</aggro>
+    </tribe>
+    <tribe name="FIREELBOSS" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+    </tribe>
+    <tribe name="FIREEL1" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>FIREEL1 FIREELBOSS</support>
+    </tribe>
+    <tribe name="FIREEL2" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>FIREEL2 FIREELBOSS</support>
+    </tribe>
+    <tribe name="FIREEL3" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>FIREEL3 FIREELBOSS</support>
+    </tribe>
+    <tribe name="AIRELBOSS" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+    </tribe>
+    <tribe name="AIREL1" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>AIREL1 AIRELBOSS</support>
+    </tribe>
+    <tribe name="AIREL2" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>AIREL2 AIRELBOSS</support>
+    </tribe>
+    <tribe name="AIREL3" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>AIREL3 AIRELBOSS</support>
+    </tribe>
+    <tribe name="ETTIN" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>ETTIN</support>
+    </tribe>
+    <tribe name="L_DRGUARD_ADRAGGMOB1" base="GUARD">
+        <aggro>DRAGGMOB_ADRGUARD1</aggro>
+    </tribe>
+    <tribe name="DRAGGMOB_ADRGUARD1" base="MONSTER">
+        <aggro>L_DRGUARD_ADRAGGMOB1</aggro>
+    </tribe>
+    <tribe name="DARU_HZAIF" base="MONSTER">
+        <hostile>ZAIF_ADARU</hostile>
+    </tribe>
+    <tribe name="ZAIF_ADARU" base="MONSTER">
+        <aggro>PC PC_DARK DARU_HZAIF</aggro>
+    </tribe>
+    <tribe name="MUTA_HOCTASIDE" base="MONSTER">
+        <hostile>OCTASIDE_AMUTA</hostile>
+    </tribe>
+    <tribe name="OCTASIDE_AMUTA" base="MONSTER">
+        <aggro>PC PC_DARK MUTA_HOCTASIDE</aggro>
+    </tribe>
+    <tribe name="LIZARDMAN" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>LIZARDMAN</support>
+    </tribe>
+    <tribe name="ATAURIC" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>AHELLHOUND</support>
+    </tribe>
+    <tribe name="AHELLHOUND" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>ATAURIC</support>
+    </tribe>
+    <tribe name="APRETOR" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>ATAURIC</support>
+    </tribe>
+    <tribe name="GHOSTLIGHT" base="GENERAL">
+        <aggro>PC_DARK</aggro>
+        <friend>PC</friend>
+        <support>GHOSTLIGHT</support>
+    </tribe>
+    <tribe name="GHOSTDARK" base="GENERAL_DARK">
+        <aggro>PC</aggro>
+        <friend>PC_DARK</friend>
+        <support>GHOSTDARK</support>
+    </tribe>
+    <tribe name="BMLGUARDIAN" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>BMLGUARDIAN</support>
+    </tribe>
+    <tribe name="BMDGUARDIAN" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>BMDGUARDIAN</support>
+    </tribe>
+    <tribe name="GMASTER" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>GSLAVE</support>
+    </tribe>
+    <tribe name="GSLAVE" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>GMASTER</support>
+    </tribe>
+    <tribe name="ELEMENTAL_FIRE" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>ELEMENTAL_FIRE</support>
+    </tribe>
+    <tribe name="ELEMENTAL_EARTH" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>ELEMENTAL_EARTH</support>
+    </tribe>
+    <tribe name="ELEMENTAL_AIR" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>ELEMENTAL_AIR</support>
+    </tribe>
+    <tribe name="ELEMENTAL_WATER" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>ELEMENTAL_WATER</support>
+    </tribe>
+    <tribe name="BAT_FAMILY_ELITE" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>BAT_FAMILY_ELITE</support>
+    </tribe>
+    <tribe name="SUCCUBUS_ELITE" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>SUCCUBUS_ELITE</support>
+    </tribe>
+    <tribe name="SAM_ELITE" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>GARGOYLE_ELITE SAM_ELITE MAIDENGOLEM_ELITE</support>
+    </tribe>
+    <tribe name="MAIDENGOLEM_ELITE" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>GARGOYLE_ELITE SAM_ELITE MAIDENGOLEM_ELITE</support>
+    </tribe>
+    <tribe name="GARGOYLE_ELITE" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>GARGOYLE_ELITE SAM_ELITE MAIDENGOLEM_ELITE</support>
+    </tribe>
+    <tribe name="AGGRESSIVE_LIGHT_HSPECTRE" base="MONSTER">
+        <aggro>PC GENERAL GUARD</aggro>
+        <hostile>SPECTRE_AALIGHTDARK</hostile>
+    </tribe>
+    <tribe name="AGGRESSIVE_DARK_HSPECTRE" base="MONSTER">
+        <aggro>PC_DARK GENERAL_DARK GUARD_DARK</aggro>
+        <hostile>SPECTRE_AALIGHTDARK</hostile>
+    </tribe>
+    <tribe name="SPECTRE_AALIGHTDARK" base="MONSTER">
+        <aggro>PC PC_DARK AGGRESSIVE_LIGHT_HSPECTRE AGGRESSIVE_DARK_HSPECTRE</aggro>
+    </tribe>
+    <tribe name="DRAMA_EVE_NONPC_A" base="GENERAL">
+        <aggro>DRAMA_EVE_NONPC_B</aggro>
+    </tribe>
+    <tribe name="DRAMA_EVE_NONPC_B" base="GENERAL">
+        <aggro>DRAMA_EVE_NONPC_A</aggro>
+    </tribe>
+    <tribe name="DRAMA_KIMEIA_NPC" base="GENERAL">
+        <friend>DRAMA_KIMEIA_MOB</friend>
+    </tribe>
+    <tribe name="DRAMA_EVE_NONPC_DARKA" base="GENERAL_DARK">
+        <aggro>DRAMA_EVE_NONPC_B</aggro>
+    </tribe>
+    <tribe name="DRAMA_EVE_NONPC_DARKB" base="GENERAL_DARK">
+        <aggro>DRAMA_EVE_NONPC_A</aggro>
+    </tribe>
+    <tribe name="DRAMA_KIMEIA_DARKNPC" base="GENERAL_DARK">
+        <friend>DRAMA_KIMEIA_MOB</friend>
+    </tribe>
+    <tribe name="DRAMA_KIMEIA_MOB" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK DRAMA_KIMEIA_NPC DRAMA_KIMEIA_DARKNPC</aggro>
+    </tribe>
+    <tribe name="XIPETO" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+    </tribe>
+    <tribe name="XIPETOBABY" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>XIPETO</support>
+    </tribe>
+    <tribe name="TAURIC" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>TAURIC</support>
+    </tribe>
+    <tribe name="CRESTLICH" base="MONSTER">
+        <support>CRESTLICH</support>
+    </tribe>
+    <tribe name="NNAGA" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>NLIZARDMAN NLIZARDRAISER NLIZARDPET NLIZARDPRIEST NNAGA_PRIEST NNAGA NNAGA_ELEMENTALIST NNAGA_PRIESTBOSS XDRAKAN XDRAKAN_ELEMENTALIST XDRAKAN_PRIEST DRAGON</support>
+    </tribe>
+    <tribe name="NNAGA_PRIEST" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>NLIZARDMAN NLIZARDRAISER NLIZARDPET NLIZARDPRIEST NNAGA_PRIEST NNAGA NNAGA_ELEMENTALIST NNAGA_PRIESTBOSS NNAGA_SERVANT XDRAKAN XDRAKAN_ELEMENTALIST XDRAKAN_PRIEST DRAGON</support>
+    </tribe>
+    <tribe name="NNAGA_SERVANT" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>NNAGA_PRIEST</support>
+    </tribe>
+    <tribe name="NNAGA_ELEMENTALIST" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>NLIZARDMAN NLIZARDRAISER NLIZARDPET NLIZARDPRIEST NNAGA_PRIEST NNAGA NNAGA_ELEMENTALIST NNAGA_PRIESTBOSS NNAGA_ELEMENTAL XDRAKAN XDRAKAN_ELEMENTALIST XDRAKAN_PRIEST DRAGON</support>
+    </tribe>
+    <tribe name="NNAGA_ELEMENTAL" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>NNAGA_ELEMENTALIST</support>
+    </tribe>
+    <tribe name="NLIZARDMAN" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>NLIZARDMAN NLIZARDRAISER NLIZARDPET NLIZARDPRIEST NNAGA_PRIEST NNAGA NNAGA_ELEMENTALIST NNAGA_PRIESTBOSS XDRAKAN XDRAKAN_ELEMENTALIST XDRAKAN_PRIEST DRAGON NLIZARDMAN2</support>
+    </tribe>
+    <tribe name="NLIZARDRAISER" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>NLIZARDMAN NLIZARDRAISER NLIZARDPET NLIZARDPRIEST NNAGA_PRIEST NNAGA NNAGA_ELEMENTALIST NNAGA_PRIESTBOSS XDRAKAN XDRAKAN_ELEMENTALIST XDRAKAN_PRIEST DRAGON</support>
+    </tribe>
+    <tribe name="NLIZARDPET" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>NLIZARDRAISER</support>
+    </tribe>
+    <tribe name="NLIZARDPRIEST" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>NLIZARDMAN NLIZARDRAISER NLIZARDPET NLIZARDPRIEST NNAGA_PRIEST NNAGA NNAGA_ELEMENTALIST NNAGA_PRIESTBOSS XDRAKAN XDRAKAN_ELEMENTALIST XDRAKAN_PRIEST DRAGON</support>
+    </tribe>
+    <tribe name="NNAGA_PRIESTBOSS" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>NLIZARDMAN NLIZARDRAISER NLIZARDPET NLIZARDPRIEST NNAGA_PRIEST NNAGA NNAGA_ELEMENTALIST XDRAKAN XDRAKAN_ELEMENTALIST XDRAKAN_PRIEST DRAGON</support>
+    </tribe>
+    <tribe name="NNAGA_BOSS_SERVANT" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>NNAGA_PRIESTBOSS</support>
+    </tribe>
+    <tribe name="SEIREN_MASTER" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>SEIREN_MASTER SEIREN_SNAKE SEIREN</support>
+    </tribe>
+    <tribe name="SEIREN_SNAKE" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>SEIREN_MASTER</support>
+    </tribe>
+    <tribe name="GENERAL_ADADR" base="GENERAL">
+        <aggro>PC_DARK GENERAL_DARK GUARD_DARK PC_DRAGON GENERAL_DRAGON GUARD_DRAGON</aggro>
+        <friend>F4RAID</friend>
+        <support>PC</support>
+    </tribe>
+    <tribe name="GENERALDA_ALIDR" base="GENERAL_DARK">
+        <aggro>PC GENERAL GUARD PC_DRAGON GENERAL_DRAGON GUARD_DRAGON</aggro>
+        <friend>F4RAID</friend>
+        <support>PC_DARK</support>
+    </tribe>
+    <tribe name="GENERALDR_ALIDA" base="GENERAL_DRAGON">
+        <aggro>PC GENERAL GUARD PC_DARK GENERAL_DARK GUARD_DARK</aggro>
+        <friend>F4RAID</friend>
+    </tribe>
+    <tribe name="LIZARDMAN_BOMB" base="MONSTER">
+        <aggro>PC GENERAL GUARD PC_DARK GENERAL_DARK GUARD_DARK</aggro>
+        <friend>BOMB_LIZARDMAN</friend>
+        <support>LIZARDMAN_BOMB</support>
+    </tribe>
+    <tribe name="BOMB_LIZARDMAN" base="GENERAL_DARK">
+        <aggro>LIZARDMAN_BOMB</aggro>
+        <friend>NNAGA</friend>
+    </tribe>
+    <tribe name="LIZARDMAN_KB" base="MONSTER">
+        <aggro>PC GENERAL GUARD PC_DARK GENERAL_DARK GUARD_DARK</aggro>
+    </tribe>
+    <tribe name="DRAKEPURPLE_MASTER" base="MONSTER">
+        <aggro>PC GENERAL GUARD PC_DARK GENERAL_DARK GUARD_DARK</aggro>
+    </tribe>
+    <tribe name="DRAKEPURPLE_SLAVE" base="MONSTER">
+        <support>DRAKEPURPLE_MASTER</support>
+    </tribe>
+    <tribe name="DRAKY_BOMB_MASTER" base="MONSTER">
+        <aggro>PC GENERAL GUARD PC_DARK GENERAL_DARK GUARD_DARK</aggro>
+        <support>NLIZARDMAN NLIZARDRAISER NLIZARDPET NLIZARDPRIEST NNAGA_PRIEST NNAGA NNAGA_ELEMENTALIST</support>
+    </tribe>
+    <tribe name="DRAKY_BOMB_EX" base="MONSTER">
+        <aggro>PC GENERAL GUARD PC_DARK GENERAL_DARK GUARD_DARK</aggro>
+        <support>DRAKY_BOMB_MASTER</support>
+    </tribe>
+    <tribe name="FIREFUNGY" base="MONSTER">
+        <support>FIREFUNGY</support>
+    </tribe>
+    <tribe name="NOFIGHT" base="MONSTER">
+        <friend>PC GUARD PC_DARK GUARD_DARK</friend>
+    </tribe>
+    <tribe name="FIELD_OBJECT_ALL" base="FIELD_OBJECT_LIGHT">
+        <neutral>PC_DARK</neutral>
+    </tribe>
+    <tribe name="DRAKANDF3BOSS" base="MONSTER">
+        <aggro>PC GENERAL GUARD PC_DARK GENERAL_DARK GUARD_DARK</aggro>
+        <support>DRAKANDF3SLAVE DRAKANDF3BOSS</support>
+    </tribe>
+    <tribe name="DRAKANDF3SLAVE" base="MONSTER">
+        <aggro>PC GENERAL GUARD PC_DARK GENERAL_DARK GUARD_DARK</aggro>
+        <support>DRAKANDF3BOSS</support>
+    </tribe>
+    <tribe name="CONSIADE" base="MONSTER">
+        <aggro>PC GENERAL PC_DARK GENERAL_DARK</aggro>
+    </tribe>
+    <tribe name="CONSIADE_SUM" base="MONSTER">
+        <aggro>PC GENERAL PC_DARK GENERAL_DARK</aggro>
+        <support>CONSIADE</support>
+    </tribe>
+    <tribe name="PARENTSMONSTER" base="MONSTER">
+        <aggro>PC GENERAL GUARD PC_DARK GENERAL_DARK GUARD_DARK</aggro>
+        <friend>CHILDMONSTER</friend>
+    </tribe>
+    <tribe name="CHILDMONSTER" base="MONSTER">
+        <aggro>PC GENERAL GUARD PC_DARK GENERAL_DARK GUARD_DARK</aggro>
+        <friend>PARENTSMONSTER</friend>
+    </tribe>
+    <tribe name="SEIREN" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>SEIREN_MASTER SEIREN_SNAKE SEIREN</support>
+    </tribe>
+    <tribe name="TEST_LIGHT_ADARK" base="GENERAL">
+        <aggro>PC_DARK GENERAL_DARK GUARD_DARK</aggro>
+    </tribe>
+    <tribe name="TEST_LIGHT_ADRAGON" base="GENERAL">
+        <aggro>PC_DRAGON GENERAL_DRAGON GUARD_DRAGON</aggro>
+    </tribe>
+    <tribe name="TEST_LIGHT_AETC" base="GENERAL">
+        <aggro>MONSTER</aggro>
+    </tribe>
+    <tribe name="TEST_DARK_ALIGHT" base="GENERAL_DARK">
+        <aggro>PC GENERAL GUARD</aggro>
+    </tribe>
+    <tribe name="TEST_DARK_ADRAGON" base="GENERAL_DARK">
+        <aggro>PC_DRAGON GENERAL_DRAGON GUARD_DRAGON</aggro>
+    </tribe>
+    <tribe name="TEST_DARK_AETC" base="GENERAL_DARK">
+        <aggro>MONSTER</aggro>
+    </tribe>
+    <tribe name="TEST_DRAGON_ALIGHT" base="GENERAL_DRAGON">
+        <aggro>PC GENERAL GUARD</aggro>
+    </tribe>
+    <tribe name="TEST_DRAGON_ADARK" base="GENERAL_DRAGON">
+        <aggro>PC_DARK GENERAL_DARK GUARD_DARK</aggro>
+    </tribe>
+    <tribe name="TEST_DRAGON_AETC" base="GENERAL_DRAGON">
+        <aggro>MONSTER</aggro>
+    </tribe>
+    <tribe name="TEST_ETC_ALIGHT" base="MONSTER">
+        <aggro>PC GENERAL GUARD</aggro>
+    </tribe>
+    <tribe name="TEST_ETC_ADARK" base="MONSTER">
+        <aggro>PC_DARK GENERAL_DARK GUARD_DARK</aggro>
+    </tribe>
+    <tribe name="TEST_ETC_ADRAGON" base="MONSTER">
+        <aggro>PC_DRAGON GENERAL_DRAGON GUARD_DRAGON</aggro>
+    </tribe>
+    <tribe name="ABYSSDRAKANGATE" base="MONSTER">
+        <friend>GUARD GUARD_DARK GUARD_DRAGON PC PC_DARK</friend>
+    </tribe>
+    <tribe name="DARK_NPC" base="GENERAL_DARK">
+        <aggro>PC GENERAL GUARD</aggro>
+        <friend>PC_DARK GENERAL_DARK GUARD_DARK DARK_SUR_MOB DARK_LICH LICH_SOULEDSTONE DARK_MOB</friend>
+    </tribe>
+    <tribe name="LIGHT_NPC" base="GENERAL">
+        <aggro>PC_DARK GENERAL_DARK GUARD_DARK</aggro>
+        <friend>PC GENERAL GUARD LIGHT_SUR_MOB LIGHT_LICH LICH_SOULEDSTONE LIGHT_MOB</friend>
+    </tribe>
+    <tribe name="DARK_MOB" base="MONSTER">
+        <aggro>PC GENERAL GUARD</aggro>
+        <friend>PC_DARK GENERAL_DARK GUARD_DARK</friend>
+        <support>DARK_NPC</support>
+    </tribe>
+    <tribe name="LIGHT_MOB" base="MONSTER">
+        <aggro>PC_DARK GENERAL_DARK GUARD_DARK</aggro>
+        <friend>PC GENERAL GUARD</friend>
+        <support>LIGHT_NPC</support>
+    </tribe>
+    <tribe name="DARK_SUR_MOB" base="MONSTER">
+        <aggro>PC GENERAL GUARD</aggro>
+        <friend>PC_DARK GENERAL_DARK GUARD_DARK</friend>
+        <support>DARK_NPC DARK_SUR_MOB</support>
+    </tribe>
+    <tribe name="LIGHT_SUR_MOB" base="MONSTER">
+        <aggro>PC_DARK GENERAL_DARK GUARD_DARK</aggro>
+        <friend>PC GENERAL GUARD</friend>
+        <support>LIGHT_NPC LIGHT_SUR_MOB</support>
+    </tribe>
+    <tribe name="DARK_LICH" base="MONSTER">
+        <aggro>PC GENERAL GUARD</aggro>
+        <friend>PC_DARK GENERAL_DARK GUARD_DARK</friend>
+        <support>DARK_NPC DARK_SUR_MOB</support>
+    </tribe>
+    <tribe name="LIGHT_LICH" base="MONSTER">
+        <aggro>PC_DARK GENERAL_DARK GUARD_DARK</aggro>
+        <friend>PC GENERAL GUARD</friend>
+        <support>LIGHT_NPC LIGHT_SUR_MOB</support>
+    </tribe>
+    <tribe name="LICH_SOULEDSTONE" base="MONSTER">
+        <friend>DARK_LICH LIGHT_LICH</friend>
+    </tribe>
+    <tribe name="LIGHT_DENLABIS" base="GENERAL">
+        <aggro>PC_DARK GENERAL_DARK GUARD_DARK</aggro>
+        <friend>PC GENERAL GUARD FIRETEMPLE_MOB</friend>
+    </tribe>
+    <tribe name="FIRETEMPLE_MOB" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <friend>LIGHT_DENLABIS</friend>
+        <support>FIRETEMPLE_MOB</support>
+    </tribe>
+    <tribe name="QUESTGUARD_DARK" base="GENERAL_DARK">
+        <aggro>PC GENERAL GUARD</aggro>
+        <support>PC_DARK</support>
+    </tribe>
+    <tribe name="QUESTGUARD_LIGHT" base="GENERAL">
+        <aggro>PC_DARK GENERAL_DARK GUARD_DARK</aggro>
+        <support>PC</support>
+    </tribe>
+    <tribe name="BROHUM" base="MONSTER">
+        <aggro>PC GENERAL GUARD PC_DARK GENERAL_DARK GUARD_DARK</aggro>
+        <support>BROHUM</support>
+    </tribe>
+    <tribe name="CALYDON" base="MONSTER">
+        <aggro>PC GENERAL GUARD</aggro>
+        <support>CALYDON</support>
+    </tribe>
+    <tribe name="CALYDON_POLYMORPH" base="MONSTER">
+        <friend>MONSTER PC_DARK GENERAL_DARK GUARD_DARK PC GENERAL GUARD</friend>
+    </tribe>
+    <tribe name="SWELLFISH" base="MONSTER">
+        <support>SWELLFISH</support>
+    </tribe>
+    <tribe name="TRICON" base="MONSTER">
+        <aggro>PC_DARK GENERAL_DARK GUARD_DARK PC GENERAL GUARD</aggro>
+        <support>TRICON TRICO</support>
+    </tribe>
+    <tribe name="TRICO" base="MONSTER"/>
+    <tribe name="PROTECTGUARD_LIGHT" base="GUARD">
+        <friend>MONSTER</friend>
+    </tribe>
+    <tribe name="PROTECTGUARD_DARK" base="GUARD_DARK">
+        <friend>MONSTER</friend>
+    </tribe>
+    <tribe name="FIELD_OBJECT_ALL_MONSTER" base="GENERAL">
+        <friend>MONSTER PC_DARK GENERAL_DARK GUARD_DARK</friend>
+    </tribe>
+    <tribe name="HOLYSERVANT" base="MONSTER">
+        <aggro>HOLYSERVANT_DEBUFFER PC PC_DARK</aggro>
+    </tribe>
+    <tribe name="HOLYSERVANT_DEBUFFER" base="USEALL">
+        <aggro>HOLYSERVANT</aggro>
+    </tribe>
+    <tribe name="HOLYSERVANT_DESPAWN" base="MONSTER">
+        <friend>MONSTER</friend>
+        <support>HOLYSERVANT</support>
+    </tribe>
+    <tribe name="RANMARK" base="MONSTER">
+        <aggro>PC PC_DARK GENERAL GENERAL_DARK</aggro>
+        <support>RANMARK</support>
+    </tribe>
+    <tribe name="AGGRESSIVESUPPORTMONSTER2" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>AGGRESSIVESINGLEMONSTER AGGRESSIVESUPPORTMONSTER</support>
+    </tribe>
+    <tribe name="LASBERG" base="GENERAL_DARK"/>
+    <tribe name="SHULACK" base="MONSTER">
+        <aggro>PC PC_DARK AGGRESSIVETOSHULACK2</aggro>
+        <friend>SHULACK_ATTACKED</friend>
+        <support>SHULACK SHULACK_DECK SHULACK_ATTACKING SHULACK_SUPPORT</support>
+    </tribe>
+    <tribe name="ESCORT" base="USEALL">
+        <hostile>MONSTER</hostile>
+        <friend>PC PC_DARK</friend>
+    </tribe>
+    <tribe name="AGGRESSIVEESCORT" base="MONSTER">
+        <aggro>ESCORT</aggro>
+    </tribe>
+    <tribe name="XDRAKAN" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK ESCORT</aggro>
+        <hostile>IDCATACOMBS_TAROS</hostile>
+        <support>XDRAKAN XDRAKAN_ELEMENTALIST XDRAKAN_PRIEST DRAGON</support>
+    </tribe>
+    <tribe name="XDRAKAN_ELEMENTALIST" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK ESCORT</aggro>
+        <support>XDRAKAN XDRAKAN_ELEMENTALIST XDRAKAN_PRIEST DRAGON</support>
+    </tribe>
+    <tribe name="XDRAKAN_PET" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK ESCORT</aggro>
+        <support>XDRAKAN_ELEMENTALIST</support>
+    </tribe>
+    <tribe name="XDRAKAN_PRIEST" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK ESCORT</aggro>
+        <support>XDRAKAN XDRAKAN_ELEMENTALIST XDRAKAN_PRIEST DRAGON</support>
+    </tribe>
+    <tribe name="XDRAKAN_SERVANT" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK ESCORT</aggro>
+        <support>XDRAKAN_PRIEST</support>
+    </tribe>
+    <tribe name="AGGRESSIVETOSHULACK" base="MONSTER">
+        <aggro>SHULACK</aggro>
+        <support>AGGRESSIVETOSHULACK</support>
+    </tribe>
+    <tribe name="SHULACK_DECK" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>SHULACK SHULACK_DECK</support>
+    </tribe>
+    <tribe name="SHULACK_DECK_KILLER" base="MONSTER">
+        <aggro>SHULACK_DECK</aggro>
+    </tribe>
+    <tribe name="DRAGON" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+    </tribe>
+    <tribe name="DRAGON_SLAVE" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>DRAGON</support>
+    </tribe>
+    <tribe name="AGGRESSIVETOSHULACK2" base="MONSTER">
+        <aggro>SHULACK</aggro>
+    </tribe>
+    <tribe name="SPALLER" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+    </tribe>
+    <tribe name="SPALLERCTRL" base="USEALL">
+        <hostile>SPALLER</hostile>
+    </tribe>
+    <tribe name="SHULACK_SLAVE" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>SHULACK SHULACK_SLAVE</support>
+    </tribe>
+    <tribe name="IDLF1_MONSTER" base="MONSTER">
+        <aggro>PC PC_DARK ESCORT</aggro>
+        <support>IDLF1_MONSTER</support>
+    </tribe>
+    <tribe name="AGGRESSIVETOPCPET" base="MONSTER">
+        <hostile>PC PC_DARK GENERAL GENERAL_DARK</hostile>
+    </tribe>
+    <tribe name="GENERALDR_ALIDA_SUPPORT" base="GENERAL_DRAGON">
+        <support>GENERALDR_ALIDA</support>
+    </tribe>
+    <tribe name="GOLEM_SWITCH" base="MONSTER">
+        <support>AGGRESSIVESINGLEMONSTER</support>
+    </tribe>
+    <tribe name="USEALLNONETOMONSTER" base="USEALL"/>
+    <tribe name="FANATIC" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>FANATIC XDRAKAN_ELEMENTALIST XDRAKAN_PRIEST DRAGON XDRAKAN</support>
+    </tribe>
+    <tribe name="IDTEMPLE_BUGS" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <support>IDTEMPLE_BUGS</support>
+    </tribe>
+    <tribe name="IDTEMPLE_STONE" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>IDTEMPLE_STONE</support>
+    </tribe>
+    <tribe name="IDELIM" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK GENERAL_DARK AGGRESSIVETOIDELIM</aggro>
+        <neutral>IDELIM_FRIEND</neutral>
+        <support>IDELIM</support>
+    </tribe>
+    <tribe name="IDELIM_FRIEND" base="MONSTER">
+        <hostile>IDELIM</hostile>
+        <friend>PC GUARD GENERAL PC_DARK GUARD_DARK GENERAL_DARK USEALL</friend>
+    </tribe>
+    <tribe name="FRIENDLYTOIDELIM" base="MONSTER">
+        <aggro>GENERAL</aggro>
+        <friend>IDELIM</friend>
+    </tribe>
+    <tribe name="AGGRESSIVETOIDELIM" base="USEALL">
+        <aggro>IDELIM</aggro>
+        <neutral>IDELIM_FRIEND</neutral>
+        <support>PC GUARD GENERAL PC_DARK GUARD_DARK GENERAL_DARK</support>
+    </tribe>
+    <tribe name="IDCATACOMBS_TAROS" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+        <support>XDRAKAN</support>
+    </tribe>
+    <tribe name="IDCATACOMBS_DRAKE" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <friend>IDCATACOMBS_DRAKE_SUM</friend>
+    </tribe>
+    <tribe name="IDCATACOMBS_DRAKE_SUM" base="MONSTER">
+        <aggro>PC PC_DARK IDCATACOMBS_DRAKE</aggro>
+    </tribe>
+    <tribe name="DUMMY" base="MONSTER"/>
+    <tribe name="HOSTILE_ALL" base="MONSTER">
+        <hostile>PC PC_DARK PC_DRAGON GENERAL GUARD GENERAL_DARK GUARD_DARK GENERAL_DRAGON GUARD_DRAGON USEALL MONSTER</hostile>
+    </tribe>
+    <tribe name="AGGRESSIVE_ALL" base="MONSTER">
+        <aggro>PC PC_DARK PC_DRAGON GENERAL GUARD GENERAL_DARK GUARD_DARK GENERAL_DRAGON GUARD_DRAGON USEALL MONSTER</aggro>
+    </tribe>
+    <tribe name="F4GUARD_LIGHT" base="GUARD">
+        <friend>F4RAID</friend>
+    </tribe>
+    <tribe name="F4GUARD_DARK" base="GUARD_DARK">
+        <friend>F4RAID</friend>
+    </tribe>
+    <tribe name="F4GUARD_DRAGON" base="GUARD_DRAGON">
+        <friend>F4RAID</friend>
+    </tribe>
+    <tribe name="F4RAID" base="MONSTER">
+        <aggro>PC PC_DARK</aggro>
+        <friend>F4GUARD_LIGHT F4GUARD_DARK GENERAL_ADADR GENERALDA_ALIDR F4GUARD_DRAGON GENERALDR_ALIDA</friend>
+    </tribe>
+    <tribe name="DRAMATA" base="MONSTER">
+        <aggro>PC GUARD GENERAL PC_DARK GUARD_DARK GENERAL_DARK</aggro>
+        <neutral>AGGRESSIVESUPPORTMONSTER</neutral>
+        <support>DRAMATA</support>
+    </tribe>
+    <tribe name="DRAMATATIMERA" base="MONSTER"/>
+    <tribe name="DRAMATATIMERB" base="MONSTER">
+        <aggro>DRAMATATIMERA</aggro>
+    </tribe>
+    <tribe name="DRAKANPOLYMORPH" base="MONSTER">
+        <aggro>DRAKANDOOR</aggro>
+        <friend>PC GENERAL GUARD_DARK</friend>
+    </tribe>
+    <tribe name="DRAKANDOOR" base="MONSTER"/>
+    <tribe name="GHTIMER" base="MONSTER">
+        <aggro>GUARD GUARD_DARK</aggro>
+    </tribe>
+    <tribe name="SHULACK_ATTACKING" base="MONSTER">
+        <aggro>PC GUARD GENERAL PC_DARK GUARD_DARK GENERAL_DARK SHULACK_ATTACKED</aggro>
+        <support>SHULACK SHULACK_SUPPORT</support>
+    </tribe>
+    <tribe name="SHULACK_ATTACKED" base="MONSTER">
+        <aggro>SHULACK_ATTACKING</aggro>
+    </tribe>
+    <tribe name="SHULACK_SUPPORT" base="MONSTER">
+        <support>SHULACK SHULACK_ATTACKING</support>
+    </tribe>
+    <tribe name="NLIZARDMAN2" base="MONSTER">
+        <aggro>PC GUARD PC_DARK GUARD_DARK</aggro>
+    </tribe>
+    <tribe name="DUMMY2" base="MONSTER"/>
+    <tribe name="DUMMY_DGUARD" base="GUARD_DARK">
+        <aggro>DUMMY</aggro>
+    </tribe>
+    <tribe name="DUMMY2_DGUARD" base="GUARD_DARK">
+        <aggro>DUMMY2</aggro>
+    </tribe>
+    <tribe name="CRYSTAL" base="MONSTER">
+        <aggro>ANTI_CRYSTAL PC PC_DARK</aggro>
+        <friend>MONSTER CRYSTAL_NMDD</friend>
+        <support>CRYSTAL</support>
+    </tribe>
+    <tribe name="ANTI_CRYSTAL" base="MONSTER">
+        <aggro>CRYSTAL</aggro>
+        <hostile>PC PC_DARK</hostile>
+        <support>ANTI_CRYSTAL</support>
+    </tribe>
+    <tribe name="DUMMY_LGUARD" base="GUARD">
+        <aggro>DUMMY</aggro>
+    </tribe>
+    <tribe name="DUMMY2_LGUARD" base="GUARD">
+        <aggro>DUMMY2</aggro>
+    </tribe>
+    <tribe name="HOSTILEONLYMONSTER" base="USEALL">
+        <hostile>MONSTER</hostile>
+    </tribe>
+    <tribe name="ATKDRAKAN" base="USEALL">
+        <aggro>MONSTER PC_DRAGON GENERAL_DRAGON GUARD_DRAGON</aggro>
+    </tribe>
+    <tribe name="CRYSTAL_NMDD" base="MONSTER">
+        <hostile>PC PC_DARK GUARD GUARD_DARK</hostile>
+        <friend>CRYSTAL_SUM</friend>
+    </tribe>
+    <tribe name="CRYSTAL_SUM" base="MONSTER">
+        <aggro>CRYSTAL_NMDD</aggro>
+    </tribe>
 </tribe_relations>
