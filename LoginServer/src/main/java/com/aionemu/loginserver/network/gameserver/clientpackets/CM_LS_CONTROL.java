@@ -17,17 +17,18 @@
 package com.aionemu.loginserver.network.gameserver.clientpackets;
 
 import com.aionemu.commons.database.dao.DAOManager;
+import com.aionemu.commons.network.packet.AbstractClientPacket;
 import com.aionemu.loginserver.dao.AccountDAO;
 import com.aionemu.loginserver.model.Account;
-import com.aionemu.loginserver.network.gameserver.GsClientPacket;
+import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
 import com.aionemu.loginserver.network.gameserver.serverpackets.SM_LS_CONTROL_RESPONSE;
 
 /**
  * 
- * @author Aionchs-Wylovech
+ * @author Aionchs-Wylovech, Lyahim
  * 
  */
-public class CM_LS_CONTROL extends GsClientPacket
+public class CM_LS_CONTROL extends AbstractClientPacket<GameServerChannelHandler>
 {
 	private String	accountName;
 

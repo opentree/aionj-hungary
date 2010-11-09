@@ -16,18 +16,19 @@
  */
 package com.aionemu.loginserver.network.gameserver.clientpackets;
 
+import com.aionemu.commons.network.packet.AbstractClientPacket;
 import com.aionemu.loginserver.controller.AccountController;
 import com.aionemu.loginserver.network.aion.SessionKey;
-import com.aionemu.loginserver.network.gameserver.GsClientPacket;
+import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
 
 /**
  * In this packet Gameserver is asking if given account sessionKey is valid at Loginserver side. [if user that is
  * authenticating on Gameserver is already authenticated on Loginserver]
  * 
- * @author -Nemesiss-
+ * @author -Nemesiss-, Lyahim
  * 
  */
-public class CM_ACCOUNT_AUTH extends GsClientPacket
+public class CM_ACCOUNT_AUTH extends AbstractClientPacket<GameServerChannelHandler>
 {
 	/**
 	 * SessionKey that GameServer needs to check if is valid at Loginserver side.
@@ -66,6 +67,6 @@ public class CM_ACCOUNT_AUTH extends GsClientPacket
 	@Override
 	protected void runImpl()
 	{
-		AccountController.getInstance().checkAuth(sessionKey, getConnection());
+		AccountController.getInstance().checkAuth(sessionKey, getChannelHandler());
 	}
 }

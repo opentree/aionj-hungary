@@ -23,22 +23,22 @@ import javax.crypto.Cipher;
 
 import org.apache.log4j.Logger;
 
-import com.aionemu.commons.netty.State;
+import com.aionemu.commons.network.netty.handler.AbstractChannelHandler.State;
+import com.aionemu.commons.network.packet.AbstractClientPacket;
 import com.aionemu.loginserver.configs.Config;
 import com.aionemu.loginserver.controller.AccountController;
 import com.aionemu.loginserver.controller.BannedIpController;
 import com.aionemu.loginserver.network.aion.AionAuthResponse;
-import com.aionemu.loginserver.network.aion.AionClientPacket;
-import com.aionemu.loginserver.network.aion.AionConnection;
+import com.aionemu.loginserver.network.aion.AionChannelHandler;
 import com.aionemu.loginserver.network.aion.SessionKey;
 import com.aionemu.loginserver.network.aion.serverpackets.SM_LOGIN_FAIL;
 import com.aionemu.loginserver.network.aion.serverpackets.SM_LOGIN_OK;
 import com.aionemu.loginserver.utils.BruteForceProtector;
 
 /**
- * @author -Nemesiss-, KID
+ * @author -Nemesiss-, KID, Lyahim
  */
-public class CM_LOGIN extends AionClientPacket
+public class CM_LOGIN extends AbstractClientPacket<AionChannelHandler>
 {
 	/**
 	 * Logger for this class.
@@ -86,7 +86,7 @@ public class CM_LOGIN extends AionClientPacket
 		try
 		{
 			Cipher rsaCipher = Cipher.getInstance("RSA/ECB/nopadding");
-			rsaCipher.init(Cipher.DECRYPT_MODE, getConnection().getRSAPrivateKey());
+			rsaCipher.init(Cipher.DECRYPT_MODE, getChannelHandler().getRSAPrivateKey());
 			decrypted = rsaCipher.doFinal(data, 0, 128);
 		}
 		catch(GeneralSecurityException e)
@@ -105,7 +105,7 @@ public class CM_LOGIN extends AionClientPacket
 
 		log.debug("AuthLogin: " + user + " pass: " + password + " ncotp: " + ncotp);
 
-		AionConnection client = getConnection();
+		AionChannelHandler client = getChannelHandler();
 		AionAuthResponse response = AccountController.getInstance().login(user, password, client);
 		switch(response)
 		{

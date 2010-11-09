@@ -19,20 +19,20 @@ package com.aionemu.loginserver.network.gameserver.clientpackets;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.aionemu.commons.netty.State;
 import com.aionemu.commons.network.IPRange;
+import com.aionemu.commons.network.netty.handler.AbstractChannelHandler.State;
+import com.aionemu.commons.network.packet.AbstractClientPacket;
 import com.aionemu.loginserver.GameServerTable;
+import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
 import com.aionemu.loginserver.network.gameserver.GsAuthResponse;
-import com.aionemu.loginserver.network.gameserver.GsClientPacket;
-import com.aionemu.loginserver.network.gameserver.GsConnection;
 import com.aionemu.loginserver.network.gameserver.serverpackets.SM_GS_AUTH_RESPONSE;
 
 /**
  * This is authentication packet that gs will send to login server for registration.
  * 
- * @author -Nemesiss-
+ * @author -Nemesiss-, Lyahim
  */
-public class CM_GS_AUTH extends GsClientPacket
+public class CM_GS_AUTH extends AbstractClientPacket<GameServerChannelHandler>
 {
 	/**
 	 * Password for authentication
@@ -102,7 +102,7 @@ public class CM_GS_AUTH extends GsClientPacket
 	@Override
 	protected void runImpl()
 	{
-		GsConnection client = getConnection();
+		GameServerChannelHandler client = getChannelHandler();
 
 		GsAuthResponse resp = GameServerTable.registerGameServer(client, gameServerId, defaultAddress, ipRanges, port,
 			maxPlayers, password);
@@ -110,7 +110,7 @@ public class CM_GS_AUTH extends GsClientPacket
 		switch(resp)
 		{
 			case AUTHED:
-				getConnection().setState(State.AUTHED);
+				client.setState(State.AUTHED);
 				sendPacket(new SM_GS_AUTH_RESPONSE(resp));
 				break;
 

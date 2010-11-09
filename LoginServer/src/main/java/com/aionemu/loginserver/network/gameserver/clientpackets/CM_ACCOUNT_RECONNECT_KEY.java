@@ -18,21 +18,22 @@ package com.aionemu.loginserver.network.gameserver.clientpackets;
 
 import org.apache.log4j.Logger;
 
+import com.aionemu.commons.network.packet.AbstractClientPacket;
 import com.aionemu.commons.utils.Rnd;
 import com.aionemu.loginserver.controller.AccountController;
 import com.aionemu.loginserver.model.Account;
 import com.aionemu.loginserver.model.ReconnectingAccount;
-import com.aionemu.loginserver.network.gameserver.GsClientPacket;
+import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
 import com.aionemu.loginserver.network.gameserver.serverpackets.SM_ACCOUNT_RECONNECT_KEY;
 
 /**
  * This packet is sended by GameServer when player is requesting fast reconnect to login server. LoginServer in response
  * will send reconectKey.
  * 
- * @author -Nemesiss-
+ * @author -Nemesiss-, Lyahim
  * 
  */
-public class CM_ACCOUNT_RECONNECT_KEY extends GsClientPacket
+public class CM_ACCOUNT_RECONNECT_KEY extends AbstractClientPacket<GameServerChannelHandler>
 {
 	/**
 	 * Logger for this class.
@@ -70,7 +71,7 @@ public class CM_ACCOUNT_RECONNECT_KEY extends GsClientPacket
 	protected void runImpl()
 	{
 		int reconectKey = Rnd.nextInt();
-		Account acc = getConnection().getGameServerInfo().removeAccountFromGameServer(accountId);
+		Account acc = getChannelHandler().getGameServerInfo().removeAccountFromGameServer(accountId);
 		if(acc == null)
 			log.info("This shouldnt happend! [Error]");
 		else

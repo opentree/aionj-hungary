@@ -19,6 +19,7 @@ package com.aionemu.loginserver.network.gameserver.clientpackets;
 import java.sql.Timestamp;
 
 import com.aionemu.commons.database.dao.DAOManager;
+import com.aionemu.commons.network.packet.AbstractClientPacket;
 import com.aionemu.loginserver.GameServerInfo;
 import com.aionemu.loginserver.GameServerTable;
 import com.aionemu.loginserver.controller.AccountController;
@@ -27,16 +28,16 @@ import com.aionemu.loginserver.dao.AccountDAO;
 import com.aionemu.loginserver.dao.AccountTimeDAO;
 import com.aionemu.loginserver.model.Account;
 import com.aionemu.loginserver.model.AccountTime;
-import com.aionemu.loginserver.network.gameserver.GsClientPacket;
+import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
 import com.aionemu.loginserver.network.gameserver.serverpackets.SM_BAN_RESPONSE;
 
 /**
  * The universal packet for account/IP bans
  * 
- * @author Watson
+ * @author Watson, Lyahim
  * 
  */
-public class CM_BAN extends GsClientPacket
+public class CM_BAN extends AbstractClientPacket<GameServerChannelHandler>
 {
 	/**
 	 * Ban type 1 = account 2 = IP 3 = Full ban (account and IP)

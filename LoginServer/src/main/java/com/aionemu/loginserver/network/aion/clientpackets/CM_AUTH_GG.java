@@ -16,17 +16,17 @@
  */
 package com.aionemu.loginserver.network.aion.clientpackets;
 
-import com.aionemu.commons.netty.State;
+import com.aionemu.commons.network.netty.handler.AbstractChannelHandler.State;
+import com.aionemu.commons.network.packet.AbstractClientPacket;
 import com.aionemu.loginserver.network.aion.AionAuthResponse;
-import com.aionemu.loginserver.network.aion.AionClientPacket;
-import com.aionemu.loginserver.network.aion.AionConnection;
+import com.aionemu.loginserver.network.aion.AionChannelHandler;
 import com.aionemu.loginserver.network.aion.serverpackets.SM_AUTH_GG;
 import com.aionemu.loginserver.network.aion.serverpackets.SM_LOGIN_FAIL;
 
 /**
- * @author -Nemesiss-
+ * @author -Nemesiss-, Lyahim
  */
-public class CM_AUTH_GG extends AionClientPacket
+public class CM_AUTH_GG extends AbstractClientPacket<AionChannelHandler>
 {
 	/**
 	 * session id - its should match sessionId that was send in Init packet.
@@ -68,18 +68,18 @@ public class CM_AUTH_GG extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		AionConnection con = getConnection();
-		if(con.getSessionId() == sessionId)
+		AionChannelHandler cHandler = getChannelHandler();
+		if(cHandler.getSessionId() == sessionId)
 		{
-			con.setState(State.AUTHED_GG);
-			con.sendPacket(new SM_AUTH_GG(sessionId));
+			cHandler.setState(State.AUTHED_GG);
+			cHandler.sendPacket(new SM_AUTH_GG(sessionId));
 		}
 		else
 		{
 			/**
 			 * Session id is not ok - inform client that smth went wrong - dc client
 			 */
-			con.close(new SM_LOGIN_FAIL(AionAuthResponse.SYSTEM_ERROR));
+			cHandler.close(new SM_LOGIN_FAIL(AionAuthResponse.SYSTEM_ERROR));
 		}
 	}
 }

@@ -16,16 +16,16 @@
  */
 package com.aionemu.loginserver.network.gameserver.serverpackets;
 
-import com.aionemu.loginserver.network.gameserver.GsConnection;
-import com.aionemu.loginserver.network.gameserver.GsServerPacket;
+import com.aionemu.commons.network.packet.AbstractServerPacket;
+import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
 
 /**
  * In this packet LoginServer is sending response for CM_ACCOUNT_RECONNECT_KEY with account name and reconnectionKey.
  * 
- * @author -Nemesiss-
+ * @author -Nemesiss-, Lyahim
  * 
  */
-public class SM_ACCOUNT_RECONNECT_KEY extends GsServerPacket
+public class SM_ACCOUNT_RECONNECT_KEY extends AbstractServerPacket<GameServerChannelHandler>
 {
 	/**
 	 * accountId of account that will be reconnecting.
@@ -52,7 +52,7 @@ public class SM_ACCOUNT_RECONNECT_KEY extends GsServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(GsConnection con)
+	protected void writeImpl(GameServerChannelHandler cHandler)
 	{
 		writeD(accountId);
 		writeD(reconnectKey);

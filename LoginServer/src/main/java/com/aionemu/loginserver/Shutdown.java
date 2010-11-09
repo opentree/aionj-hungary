@@ -19,9 +19,7 @@ package com.aionemu.loginserver;
 import org.apache.log4j.Logger;
 
 import com.aionemu.commons.database.DatabaseFactory;
-import com.aionemu.loginserver.network.NettyServer;
-import com.aionemu.loginserver.utils.ThreadPoolManager;
-
+import com.aionemu.loginserver.network.NettyLoginServer;
 /**
  * @author -Nemesiss-
  */
@@ -60,7 +58,7 @@ public class Shutdown extends Thread
 		/* Disconnecting all the clients */
 		try
 		{
-			NettyServer.getInstance().shutdownAll();
+			NettyLoginServer.getInstance().shutDown();
 		}
 		catch(Throwable t)
 		{
@@ -75,16 +73,6 @@ public class Shutdown extends Thread
 		catch(Throwable t)
 		{
 			log.error("Can't shutdown DatabaseFactory", t);
-		}
-
-		/* Shuting down threadpools */
-		try
-		{
-			ThreadPoolManager.getInstance().shutdown();
-		}
-		catch(Throwable t)
-		{
-			log.error("Can't shutdown ThreadPoolManager", t);
 		}
 	}
 }

@@ -16,17 +16,17 @@
  */
 package com.aionemu.loginserver.network.aion.clientpackets;
 
+import com.aionemu.commons.network.packet.AbstractClientPacket;
 import com.aionemu.loginserver.GameServerTable;
 import com.aionemu.loginserver.network.aion.AionAuthResponse;
-import com.aionemu.loginserver.network.aion.AionClientPacket;
-import com.aionemu.loginserver.network.aion.AionConnection;
+import com.aionemu.loginserver.network.aion.AionChannelHandler;
 import com.aionemu.loginserver.network.aion.serverpackets.SM_LOGIN_FAIL;
 import com.aionemu.loginserver.network.aion.serverpackets.SM_SERVER_LIST;
 
 /**
- * @author -Nemesiss-
+ * @author -Nemesiss-, Lyahim
  */
-public class CM_SERVER_LIST extends AionClientPacket
+public class CM_SERVER_LIST extends AbstractClientPacket<AionChannelHandler>
 {
 	/**
 	 * accountId is part of session key - its used for security purposes
@@ -65,7 +65,7 @@ public class CM_SERVER_LIST extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		AionConnection con = getConnection();
+		AionChannelHandler con = getChannelHandler();
 		if(con.getSessionKey().checkLogin(accountId, loginOk))
 		{
 			if(GameServerTable.getGameServers().size() == 0)

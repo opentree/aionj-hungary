@@ -17,16 +17,16 @@
 
 package com.aionemu.loginserver.network.gameserver.serverpackets;
 
-import com.aionemu.loginserver.network.gameserver.GsConnection;
-import com.aionemu.loginserver.network.gameserver.GsServerPacket;
+import com.aionemu.commons.network.packet.AbstractServerPacket;
+import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
 
 /**
  * In this packet LoginServer is answering on GameServer ban request
  * 
- * @author Watson
+ * @author Watson, Lyahim
  * 
  */
-public class SM_BAN_RESPONSE extends GsServerPacket
+public class SM_BAN_RESPONSE extends AbstractServerPacket<GameServerChannelHandler>
 {
 	private final byte		type;
 	private final int		accountId;
@@ -49,7 +49,7 @@ public class SM_BAN_RESPONSE extends GsServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(GsConnection con)
+	protected void writeImpl(GameServerChannelHandler cHandler)
 	{
 		writeC(type);
 		writeD(accountId);

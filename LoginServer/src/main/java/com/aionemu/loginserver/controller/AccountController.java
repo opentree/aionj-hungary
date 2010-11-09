@@ -20,7 +20,7 @@ package com.aionemu.loginserver.controller;
 import javolution.util.FastMap;
 
 import com.aionemu.commons.database.dao.DAOManager;
-import com.aionemu.commons.netty.State;
+import com.aionemu.commons.network.netty.handler.AbstractChannelHandler.State;
 import com.aionemu.commons.utils.NetworkUtils;
 import com.aionemu.loginserver.GameServerInfo;
 import com.aionemu.loginserver.GameServerTable;
@@ -30,10 +30,10 @@ import com.aionemu.loginserver.dao.AccountTimeDAO;
 import com.aionemu.loginserver.model.Account;
 import com.aionemu.loginserver.model.ReconnectingAccount;
 import com.aionemu.loginserver.network.aion.AionAuthResponse;
-import com.aionemu.loginserver.network.aion.AionConnection;
+import com.aionemu.loginserver.network.aion.AionChannelHandler;
 import com.aionemu.loginserver.network.aion.SessionKey;
 import com.aionemu.loginserver.network.aion.serverpackets.SM_UPDATE_SESSION;
-import com.aionemu.loginserver.network.gameserver.GsConnection;
+import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
 import com.aionemu.loginserver.network.gameserver.serverpackets.SM_ACCOUNT_AUTH_RESPONSE;
 import com.aionemu.loginserver.network.gameserver.serverpackets.SM_REQUEST_KICK_ACCOUNT;
 import com.aionemu.loginserver.utils.AccountUtils;
@@ -49,7 +49,7 @@ public class AccountController
 	/**
 	 * Map with accounts that are active on LoginServer or joined GameServer and are not authenticated yet.
 	 */
-	private final FastMap<Integer, AionConnection>		accountsOnLS;
+	private final FastMap<Integer, AionChannelHandler>	accountsOnLS;
 
 	/**
 	 * Map with accounts that are reconnecting to LoginServer ie was joined GameServer.
@@ -63,7 +63,7 @@ public class AccountController
 
 	private AccountController()
 	{
-		accountsOnLS	= new FastMap<Integer, AionConnection>().shared();
+		accountsOnLS	= new FastMap<Integer, AionChannelHandler>().shared();
 		reconnectingAccounts	= new FastMap<Integer, ReconnectingAccount>().shared();
 	}
 	/**
@@ -81,11 +81,11 @@ public class AccountController
 	 * This method is for answering GameServer question about account authentication on GameServer side.
 	 * 
 	 * @param key
-	 * @param gsConnection
+	 * @param channelHandler
 	 */
-	public void checkAuth(SessionKey key, GsConnection gsConnection)
+	public void checkAuth(SessionKey key, GameServerChannelHandler channelHandler)
 	{
-		AionConnection con = accountsOnLS.get(key.accountId);
+		AionChannelHandler con = accountsOnLS.get(key.accountId);
 
 		if(con != null && con.getSessionKey().checkSessionKey(key))
 		{
@@ -94,7 +94,7 @@ public class AccountController
 			 */
 			accountsOnLS.remove(key.accountId);
 
-			GameServerInfo gsi = gsConnection.getGameServerInfo();
+			GameServerInfo gsi = channelHandler.getGameServerInfo();
 			Account acc = con.getAccount();
 
 			/**
@@ -108,12 +108,12 @@ public class AccountController
 			/**
 			 * Send response to GameServer
 			 */
-			gsConnection.sendPacket(new SM_ACCOUNT_AUTH_RESPONSE(key.accountId, true, acc.getName(), acc
+			channelHandler.sendPacket(new SM_ACCOUNT_AUTH_RESPONSE(key.accountId, true, acc.getName(), acc
 				.getAccessLevel(), acc.getMembership()));
 		}
 		else
 		{
-			gsConnection.sendPacket(new SM_ACCOUNT_AUTH_RESPONSE(key.accountId, false, null, (byte) 0, (byte) 0));
+			channelHandler.sendPacket(new SM_ACCOUNT_AUTH_RESPONSE(key.accountId, false, null, (byte) 0, (byte) 0));
 		}
 	}
 
@@ -140,7 +140,7 @@ public class AccountController
 	 *            aion client
 	 */
 	public void authReconnectingAccount(int accountId, int loginOk, int reconnectKey,
-		AionConnection client)
+		AionChannelHandler client)
 	{
 		ReconnectingAccount reconnectingAccount = reconnectingAccounts.remove(accountId);
 
@@ -170,11 +170,11 @@ public class AccountController
 	 *            name of account
 	 * @param password
 	 *            password of account
-	 * @param connection
+	 * @param channelHandler
 	 *            connection for account
 	 * @return Response with error code
 	 */
-	public AionAuthResponse login(String name, String password, AionConnection connection)
+	public AionAuthResponse login(String name, String password, AionChannelHandler channelHandler)
 	{
 		Account account = loadAccount(name);
 
@@ -217,14 +217,14 @@ public class AccountController
 		// if account is restricted to some ip or mask
 		if(account.getIpForce() != null)
 		{
-			if(!NetworkUtils.checkIPMatching(account.getIpForce(), connection.getIP()))
+			if(!NetworkUtils.checkIPMatching(account.getIpForce(), channelHandler.getIP()))
 			{
 				return AionAuthResponse.BAN_IP;
 			}
 		}
 
 		// if ip is banned
-		if(BannedIpController.isBanned(connection.getIP()))
+		if(BannedIpController.isBanned(channelHandler.getIP()))
 		{
 			return AionAuthResponse.BAN_IP;
 		}
@@ -241,23 +241,23 @@ public class AccountController
 			// If someone is at loginserver, he should be disconnected
 			if(accountsOnLS.containsKey(account.getId()))
 			{
-				AionConnection aionConnection = accountsOnLS.remove(account.getId());
+				AionChannelHandler aioncHandler = accountsOnLS.remove(account.getId());
 
-				aionConnection.close();
+				aioncHandler.close();
 
 				return AionAuthResponse.ALREADY_LOGGED_IN;
 			}
 			else
 			{
-				connection.setAccount(account);
-				accountsOnLS.put(account.getId(), connection);
+				channelHandler.setAccount(account);
+				accountsOnLS.put(account.getId(), channelHandler);
 			}
 		}
 
 		AccountTimeController.updateOnLogin(account);
 
 		// if everything was OK
-		getAccountDAO().updateLastIp(account.getId(), connection.getIP());
+		getAccountDAO().updateLastIp(account.getId(), channelHandler.getIP());
 
 		return AionAuthResponse.AUTHED;
 	}
@@ -276,14 +276,14 @@ public class AccountController
 			{
 				if(gsi.isAccountOnGameServer(accountId))
 				{
-					gsi.getGsConnection().sendPacket(new SM_REQUEST_KICK_ACCOUNT(accountId));
+					gsi.getGschannelHandler().sendPacket(new SM_REQUEST_KICK_ACCOUNT(accountId));
 					break;
 				}
 			}
 			if(accountsOnLS.containsKey(accountId))
 			{
-				AionConnection aionConnection = accountsOnLS.remove(accountId);
-				aionConnection.close();
+				AionChannelHandler aioncHandler = accountsOnLS.remove(accountId);
+				aioncHandler.close();
 			}
 		}
 	}

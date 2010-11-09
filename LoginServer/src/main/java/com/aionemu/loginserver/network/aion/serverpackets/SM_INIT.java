@@ -20,14 +20,16 @@ import java.util.Arrays;
 
 import javax.crypto.SecretKey;
 
-import com.aionemu.loginserver.network.aion.AionConnection;
-import com.aionemu.loginserver.network.aion.AionServerPacket;
+import com.aionemu.commons.network.packet.AbstractServerPacket;
+import com.aionemu.loginserver.network.aion.AionChannelHandler;
 
 /**
+ * @author lyahim
+ * 
  * Format: dd b dddd s d: session id d: protocol revision b: 0x90 bytes : 0x80 bytes for the scrambled RSA public key
  * 0x10 bytes at 0x00 d: unknow d: unknow d: unknow d: unknow s: blowfish key
  */
-public final class SM_INIT extends AionServerPacket
+public final class SM_INIT extends AbstractServerPacket<AionChannelHandler>
 {
 
 	/**
@@ -51,7 +53,7 @@ public final class SM_INIT extends AionServerPacket
 	 * @param client
 	 * @param blowfishKey
 	 */
-	public SM_INIT(AionConnection client, SecretKey blowfishKey)
+	public SM_INIT(AionChannelHandler client, SecretKey blowfishKey)
 	{
 		this(client.getEncryptedModulus(), blowfishKey.getEncoded(), client.getSessionId());
 	}
@@ -77,7 +79,7 @@ public final class SM_INIT extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(sessionId); // session id
 		writeD(0x0000c621); // protocol revision

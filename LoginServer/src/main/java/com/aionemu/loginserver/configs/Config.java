@@ -41,14 +41,14 @@ public class Config
 	/**
 	 * Login Server address to client
 	 */
-	@Property(key = "network.client.address", defaultValue = "localhost:2106")
-	public static InetSocketAddress	LOGIN_ADDRESS;
+	@Property(key = "network.client.address", defaultValue = "*:2106")
+	public static InetSocketAddress	CLIENT_ADDRESS;
 
 	/**
 	 * Game Server address
 	 */
 	@Property(key = "network.gameserver.address", defaultValue = "localhost:9014")
-	public static InetSocketAddress	GAME_ADDRESS;
+	public static InetSocketAddress	GAMESERVER_ADDRESS;
 
 	@Property(key = "network.console.enabled", defaultValue = "false")
 	public static boolean			CONSOLE_ENABLED;
@@ -56,8 +56,8 @@ public class Config
 	@Property(key = "network.console.address", defaultValue = "localhost:9999")
 	public static InetSocketAddress	CONSOLE_ADDRESS;
 	
-	@Property(key = "network.reconnection.time", defaultValue = "10")
-	public static int FAST_RECONNECTION_TIME;
+	@Property(key = "network.fastreconnection.time", defaultValue = "10")
+	public static int 				FAST_RECONNECTION_TIME;
 
 	/**
 	 * Number of trys of login before ban

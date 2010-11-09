@@ -24,16 +24,15 @@ import com.aionemu.commons.database.dao.DAOManager;
 import com.aionemu.commons.log4j.exceptions.Log4jInitializationError;
 import com.aionemu.commons.services.LoggingService;
 import com.aionemu.commons.utils.AEInfos;
+import com.aionemu.commons.utils.DeadLockDetector;
 import com.aionemu.commons.utils.ExitCode;
 import com.aionemu.loginserver.configs.Config;
 import com.aionemu.loginserver.controller.AccountController;
 import com.aionemu.loginserver.controller.BannedIpController;
-import com.aionemu.loginserver.network.NettyServer;
+import com.aionemu.loginserver.network.NettyLoginServer;
 import com.aionemu.loginserver.network.ncrypt.KeyGen;
 import com.aionemu.loginserver.utils.BruteForceProtector;
-import com.aionemu.loginserver.utils.DeadLockDetector;
 import com.aionemu.loginserver.utils.FloodProtector;
-import com.aionemu.loginserver.utils.ThreadPoolManager;
 
 /**
  * @author -Nemesiss-
@@ -63,10 +62,6 @@ public class LoginServer
 		DatabaseFactory.init();
 		DAOManager.init();
 
-		/** Start deadlock detector that will restart server if deadlock happened */
-		new DeadLockDetector(60, DeadLockDetector.RESTART).start();
-		ThreadPoolManager.getInstance();
-
 		/**
 		 * Initialize Key Generator
 		 */
@@ -88,18 +83,22 @@ public class LoginServer
 
 		FloodProtector.getInstance();
 		BruteForceProtector.getInstance();
-
-		Runtime.getRuntime().addShutdownHook(Shutdown.getInstance());
+		AccountController.getInstance();
 
 		AEInfos.printSection("Network");
-		NettyServer.getInstance();
-		AccountController.getInstance();
+		NettyLoginServer.getInstance();
+		
 		if(Config.CONSOLE_ENABLED)
 		{
-			AEInfos.printSection("ConsolComamnd");
+			AEInfos.printSection("ConsoleComamnd");
 			ConsoleCommandHandler.getInstance();
 			ConsoleCommandHandler.getInstance().load();
 		}
+		
+		System.gc();
+		
+		Runtime.getRuntime().addShutdownHook(Shutdown.getInstance());
+		
 		AEInfos.printSection("System");
 		AEInfos.printAllInfos();
 

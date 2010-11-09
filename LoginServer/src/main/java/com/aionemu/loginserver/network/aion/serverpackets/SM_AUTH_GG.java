@@ -16,13 +16,13 @@
  */
 package com.aionemu.loginserver.network.aion.serverpackets;
 
-import com.aionemu.loginserver.network.aion.AionConnection;
-import com.aionemu.loginserver.network.aion.AionServerPacket;
+import com.aionemu.commons.network.packet.AbstractServerPacket;
+import com.aionemu.loginserver.network.aion.AionChannelHandler;
 
 /**
- * @author -Nemesiss-
+ * @author -Nemesiss-, Lyahim
  */
-public class SM_AUTH_GG extends AionServerPacket
+public class SM_AUTH_GG extends AbstractServerPacket<AionChannelHandler>
 {
 	/**
 	 * Session Id of this connection
@@ -43,7 +43,7 @@ public class SM_AUTH_GG extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(sessionId);
 		writeD(0x00);

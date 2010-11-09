@@ -16,16 +16,16 @@
  */
 package com.aionemu.loginserver.network.gameserver.serverpackets;
 
+import com.aionemu.commons.network.packet.AbstractServerPacket;
+import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
 import com.aionemu.loginserver.network.gameserver.GsAuthResponse;
-import com.aionemu.loginserver.network.gameserver.GsConnection;
-import com.aionemu.loginserver.network.gameserver.GsServerPacket;
 
 /**
  * This packet is response for CM_GS_AUTH its notify Gameserver if registration was ok or what was wrong.
  * 
- * @author -Nemesiss-
+ * @author -Nemesiss-, Lyahim
  */
-public class SM_GS_AUTH_RESPONSE extends GsServerPacket
+public class SM_GS_AUTH_RESPONSE extends AbstractServerPacket<GameServerChannelHandler>
 {
 	/**
 	 * Response for Gameserver authentication
@@ -46,7 +46,7 @@ public class SM_GS_AUTH_RESPONSE extends GsServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(GsConnection con)
+	protected void writeImpl(GameServerChannelHandler cHandler)
 	{
 		writeC(response.getResponseId());
 	}

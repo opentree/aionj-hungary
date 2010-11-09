@@ -20,15 +20,15 @@ import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
+import com.aionemu.commons.network.packet.AbstractServerPacket;
 import com.aionemu.loginserver.GameServerInfo;
 import com.aionemu.loginserver.GameServerTable;
-import com.aionemu.loginserver.network.aion.AionConnection;
-import com.aionemu.loginserver.network.aion.AionServerPacket;
+import com.aionemu.loginserver.network.aion.AionChannelHandler;
 
 /**
  * @author -Nemesiss-
  */
-public class SM_SERVER_LIST extends AionServerPacket
+public class SM_SERVER_LIST extends AbstractServerPacket<AionChannelHandler>
 {
 	/**
 	 * Logger for this class.
@@ -39,16 +39,16 @@ public class SM_SERVER_LIST extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		Collection<GameServerInfo> servers = GameServerTable.getGameServers();
 
 		writeC(servers.size());// servers
-		writeC(con.getAccount().getLastServer());// last server
+		writeC(cHandler.getAccount().getLastServer());// last server
 		for(GameServerInfo gsi : servers)
 		{
 			writeC(gsi.getId());// server id
-			writeB(gsi.getIPAddressForPlayer(con.getIP())); // server IP
+			writeB(gsi.getIPAddressForPlayer(cHandler.getIP())); // server IP
 			writeD(gsi.getPort());// port
 			writeC(0x00); // age limit
 			writeC(0x01);// pvp=1

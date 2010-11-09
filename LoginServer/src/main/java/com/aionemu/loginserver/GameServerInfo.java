@@ -20,10 +20,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.aionemu.commons.netty.State;
 import com.aionemu.commons.network.IPRange;
+import com.aionemu.commons.network.netty.handler.AbstractChannelHandler.State;
 import com.aionemu.loginserver.model.Account;
-import com.aionemu.loginserver.network.gameserver.GsConnection;
+import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
 
 /**
  * This class represents GameServer at LoginServer side. It contain info about id, ip etc.
@@ -66,7 +66,7 @@ public class GameServerInfo
 	/**
 	 * gsConnection - if GameServer is connected to LoginServer.
 	 */
-	private GsConnection				gsConnection;
+	private GameServerChannelHandler	gscHandler;
 
 	/**
 	 * Max players count that may play on this GameServer.
@@ -189,9 +189,9 @@ public class GameServerInfo
 	 * 
 	 * @return GsConnection
 	 */
-	public final GsConnection getGsConnection()
+	public final GameServerChannelHandler getGschannelHandler()
 	{
-		return gsConnection;
+		return gscHandler;
 	}
 
 	/**
@@ -199,12 +199,9 @@ public class GameServerInfo
 	 * 
 	 * @param gsConnection
 	 */
-	public final void setGsConnection(GsConnection gsConnection)
+	public final void setGscHandler(GameServerChannelHandler gscHandler)
 	{
-		if(gsConnection == null)
-			setPort(0);
-
-		this.gsConnection = gsConnection;
+		this.gscHandler = gscHandler;
 	}
 
 	/**
@@ -234,7 +231,7 @@ public class GameServerInfo
 	 */
 	public final boolean isOnline()
 	{
-		return gsConnection != null && gsConnection.getState() == State.AUTHED;
+		return gscHandler != null && gscHandler.getState() == State.AUTHED;
 	}
 
 	/**

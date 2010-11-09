@@ -16,15 +16,15 @@
  */
 package com.aionemu.loginserver.network.aion.serverpackets;
 
+import com.aionemu.commons.network.packet.AbstractServerPacket;
 import com.aionemu.loginserver.network.aion.AionAuthResponse;
-import com.aionemu.loginserver.network.aion.AionConnection;
-import com.aionemu.loginserver.network.aion.AionServerPacket;
+import com.aionemu.loginserver.network.aion.AionChannelHandler;
 
 /**
- * @author -Nemesiss-
+ * @author -Nemesiss-, Lyahim
  * 
  */
-public class SM_PLAY_FAIL extends AionServerPacket
+public class SM_PLAY_FAIL extends AbstractServerPacket<AionChannelHandler>
 {
 	/**
 	 * response - why play fail
@@ -45,7 +45,7 @@ public class SM_PLAY_FAIL extends AionServerPacket
 	/**
 	 * {@inheritDoc}
 	 */
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(response.getMessageId());
 	}

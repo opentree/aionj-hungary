@@ -17,9 +17,10 @@
 
 package com.aionemu.loginserver.network.gameserver.clientpackets;
 
+import com.aionemu.commons.network.packet.AbstractClientPacket;
 import com.aionemu.loginserver.controller.AccountTimeController;
 import com.aionemu.loginserver.model.Account;
-import com.aionemu.loginserver.network.gameserver.GsClientPacket;
+import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
 
 /**
  * In this packet GameServer is informing LoginServer that some account is no longer on GameServer [ie was disconencted]
@@ -27,7 +28,7 @@ import com.aionemu.loginserver.network.gameserver.GsClientPacket;
  * @author -Nemesiss-
  * 
  */
-public class CM_ACCOUNT_DISCONNECTED extends GsClientPacket
+public class CM_ACCOUNT_DISCONNECTED extends AbstractClientPacket<GameServerChannelHandler>
 {
 	/**
 	 * AccountId of account that was disconnected form GameServer.
@@ -60,7 +61,7 @@ public class CM_ACCOUNT_DISCONNECTED extends GsClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Account account = getConnection().getGameServerInfo().removeAccountFromGameServer(accountId);
+		Account account = getChannelHandler().getGameServerInfo().removeAccountFromGameServer(accountId);
 
 		/**
 		 * account can be null if a player logged out from gs {@link CM_ACCOUNT_RECONNECT_KEY 

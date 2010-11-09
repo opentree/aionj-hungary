@@ -16,16 +16,16 @@
  */
 package com.aionemu.loginserver.network.gameserver.serverpackets;
 
-import com.aionemu.loginserver.network.gameserver.GsConnection;
-import com.aionemu.loginserver.network.gameserver.GsServerPacket;
+import com.aionemu.commons.network.packet.AbstractServerPacket;
+import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
 
 /**
  * In this packet LoginSerer is requesting kicking account from GameServer.
  * 
- * @author -Nemesiss-
+ * @author -Nemesiss-, Lyahim
  * 
  */
-public class SM_REQUEST_KICK_ACCOUNT extends GsServerPacket
+public class SM_REQUEST_KICK_ACCOUNT extends AbstractServerPacket<GameServerChannelHandler>
 {
 	/**
 	 * Account that must be kicked at GameServer side.
@@ -46,7 +46,7 @@ public class SM_REQUEST_KICK_ACCOUNT extends GsServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(GsConnection con)
+	protected void writeImpl(GameServerChannelHandler cHandler)
 	{
 		writeD(accountId);
 	}

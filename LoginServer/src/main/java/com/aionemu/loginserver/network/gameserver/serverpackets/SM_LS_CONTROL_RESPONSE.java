@@ -17,15 +17,15 @@
 
 package com.aionemu.loginserver.network.gameserver.serverpackets;
 
-import com.aionemu.loginserver.network.gameserver.GsConnection;
-import com.aionemu.loginserver.network.gameserver.GsServerPacket;
+import com.aionemu.commons.network.packet.AbstractServerPacket;
+import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
 
 /**
  * 
- * @author Aionchs-Wylovech
+ * @author Aionchs-Wylovech, Lyahim
  * 
  */
-public class SM_LS_CONTROL_RESPONSE extends GsServerPacket
+public class SM_LS_CONTROL_RESPONSE extends AbstractServerPacket<GameServerChannelHandler>
 {
 
 	private int		type;
@@ -55,7 +55,7 @@ public class SM_LS_CONTROL_RESPONSE extends GsServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(GsConnection con)
+	protected void writeImpl(GameServerChannelHandler cHandler)
 	{
 		writeC(type);
 		writeC(result ? 1 : 0);

@@ -16,14 +16,14 @@
  */
 package com.aionemu.loginserver.network.aion.serverpackets;
 
-import com.aionemu.loginserver.network.aion.AionConnection;
-import com.aionemu.loginserver.network.aion.AionServerPacket;
+import com.aionemu.commons.network.packet.AbstractServerPacket;
+import com.aionemu.loginserver.network.aion.AionChannelHandler;
 import com.aionemu.loginserver.network.aion.SessionKey;
 
 /**
  * @author -Nemesiss-
  */
-public class SM_PLAY_OK extends AionServerPacket
+public class SM_PLAY_OK extends AbstractServerPacket<AionChannelHandler>
 {
 	/**
 	 * playOk1 is part of session key - its used for security purposes [checked at game server side]
@@ -50,7 +50,7 @@ public class SM_PLAY_OK extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(playOk1);
 		writeD(playOk2);

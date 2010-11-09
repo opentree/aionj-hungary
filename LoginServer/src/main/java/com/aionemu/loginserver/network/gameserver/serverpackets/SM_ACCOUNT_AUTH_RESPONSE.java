@@ -17,18 +17,18 @@
 
 package com.aionemu.loginserver.network.gameserver.serverpackets;
 
+import com.aionemu.commons.network.packet.AbstractServerPacket;
 import com.aionemu.loginserver.model.AccountTime;
-import com.aionemu.loginserver.network.gameserver.GsConnection;
-import com.aionemu.loginserver.network.gameserver.GsServerPacket;
+import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
 
 /**
  * In this packet LoginServer is answering on GameServer request about valid authentication data and also sends account
  * name of user that is authenticating on GameServer.
  * 
- * @author -Nemesiss-
+ * @author -Nemesiss-, Lyahim
  * 
  */
-public class SM_ACCOUNT_AUTH_RESPONSE extends GsServerPacket
+public class SM_ACCOUNT_AUTH_RESPONSE extends AbstractServerPacket<GameServerChannelHandler>
 {
 	/**
 	 * Account id
@@ -77,7 +77,7 @@ public class SM_ACCOUNT_AUTH_RESPONSE extends GsServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(GsConnection con)
+	protected void writeImpl(GameServerChannelHandler cHandler)
 	{
 		writeD(accountId);
 		writeC(ok ? 1 : 0);
@@ -86,7 +86,7 @@ public class SM_ACCOUNT_AUTH_RESPONSE extends GsServerPacket
 		{
 			writeS(accountName);
 
-			AccountTime accountTime = con.getGameServerInfo().getAccountFromGameServer(accountId).getAccountTime();
+			AccountTime accountTime = cHandler.getGameServerInfo().getAccountFromGameServer(accountId).getAccountTime();
 
 			writeQ(accountTime.getAccumulatedOnlineTime());
 			writeQ(accountTime.getAccumulatedRestTime());

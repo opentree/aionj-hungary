@@ -28,8 +28,8 @@ import com.aionemu.commons.network.IPRange;
 import com.aionemu.commons.utils.NetworkUtils;
 import com.aionemu.loginserver.dao.GameServersDAO;
 import com.aionemu.loginserver.model.Account;
+import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
 import com.aionemu.loginserver.network.gameserver.GsAuthResponse;
-import com.aionemu.loginserver.network.gameserver.GsConnection;
 import com.aionemu.loginserver.network.gameserver.serverpackets.SM_REQUEST_KICK_ACCOUNT;
 
 /**
@@ -71,7 +71,7 @@ public class GameServerTable
 	/**
 	 * Register GameServer if its possible.
 	 * 
-	 * @param gsConnection
+	 * @param gscHandler
 	 *            Connection object
 	 * @param requestedId
 	 *            id of server that was requested
@@ -87,7 +87,7 @@ public class GameServerTable
 	 *            server password that is specified configs, used to check if gs can auth on ls
 	 * @return GsAuthResponse
 	 */
-	public static GsAuthResponse registerGameServer(GsConnection gsConnection, byte requestedId, byte[] defaultAddress,
+	public static GsAuthResponse registerGameServer(GameServerChannelHandler gscHandler, byte requestedId, byte[] defaultAddress,
 		List<IPRange> ipRanges, int port, int maxPlayers, String password)
 	{
 		GameServerInfo gsi = gameservers.get(requestedId);
@@ -97,22 +97,22 @@ public class GameServerTable
 		 */
 		if(gsi == null)
 		{
-			log.info(gsConnection + " requestedID=" + requestedId + " not aviable!");
+			log.info(gscHandler + " requestedID=" + requestedId + " not aviable!");
 			return GsAuthResponse.NOT_AUTHED;
 		}
 
 		/**
 		 * Check if this GameServer is not already registered.
 		 */
-		if(gsi.getGsConnection() != null)
+		if(gsi.getGschannelHandler() != null)
 			return GsAuthResponse.ALREADY_REGISTERED;
 
 		/**
 		 * Check if password and ip are ok.
 		 */
-		if(!gsi.getPassword().equals(password) || !NetworkUtils.checkIPMatching(gsi.getIp(), gsConnection.getIP()))
+		if(!gsi.getPassword().equals(password) || !NetworkUtils.checkIPMatching(gsi.getIp(), gscHandler.getIP()))
 		{
-			log.info(gsConnection + " wrong ip or password!");
+			log.info(gscHandler + " wrong ip or password!");
 			return GsAuthResponse.NOT_AUTHED;
 		}
 
@@ -120,9 +120,9 @@ public class GameServerTable
 		gsi.setIpRanges(ipRanges);
 		gsi.setPort(port);
 		gsi.setMaxPlayers(maxPlayers);
-		gsi.setGsConnection(gsConnection);
+		gsi.setGscHandler(gscHandler);
 
-		gsConnection.setGameServerInfo(gsi);
+		gscHandler.setGameServerInfo(gsi);
 		return GsAuthResponse.AUTHED;
 	}
 
@@ -168,7 +168,7 @@ public class GameServerTable
 		{
 			if(gsi.isAccountOnGameServer(account.getId()))
 			{
-				gsi.getGsConnection().sendPacket(new SM_REQUEST_KICK_ACCOUNT(account.getId()));
+				gsi.getGschannelHandler().sendPacket(new SM_REQUEST_KICK_ACCOUNT(account.getId()));
 				break;
 			}
 		}
