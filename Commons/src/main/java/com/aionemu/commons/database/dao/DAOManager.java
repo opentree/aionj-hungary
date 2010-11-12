@@ -23,10 +23,9 @@ import static com.aionemu.commons.database.DatabaseFactory.getDatabaseName;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import javolution.text.TextBuilder;
 
-import com.aionemu.commons.database.DatabaseConfig;
-import com.aionemu.commons.scripting.scriptmanager.ScriptManager;
+import org.apache.log4j.Logger;
 
 /**
  * This class manages {@link DAO} implementations, it resolves valid implementation for current database
@@ -45,29 +44,10 @@ public class DAOManager
 	 */
 	private static final Map<String, DAO>	daoMap	= new HashMap<String, DAO>();
 
-	/**
-	 * This script manager is responsible for loading {@link com.aionemu.commons.database.dao.DAO} implementations
-	 */
-	private static ScriptManager			scriptManager;
 
-	/**
-	 * Initializes DAOManager.
-	 */
-	public static void init()
+	public static final DAOManager getInstance()
 	{
-		try
-		{
-			scriptManager = new ScriptManager();
-			scriptManager.setGlobalClassListener(new DAOLoader());
-			scriptManager.load(DatabaseConfig.DATABASE_SCRIPTCONTEXT_DESCRIPTOR);
-		}
-		catch(Exception e)
-		{
-			throw new Error("Can't load database script context: " + DatabaseConfig.DATABASE_SCRIPTCONTEXT_DESCRIPTOR,
-				e);
-		}
-
-		log.info("Loaded " + daoMap.size() + " DAO implementations.");
+		return SingletonHolder.instance;
 	}
 
 	/**
@@ -75,9 +55,7 @@ public class DAOManager
 	 */
 	public static void shutdown()
 	{
-		scriptManager.shutdown();
 		daoMap.clear();
-		scriptManager = null;
 	}
 
 	/**
@@ -128,10 +106,8 @@ public class DAOManager
 	 * @throws InstantiationException
 	 *             if something went wrong during instantiation of DAO
 	 */
-	public static void registerDAO(Class<? extends DAO> daoClass) throws DAOAlreadyRegisteredException,
-		IllegalAccessException, InstantiationException
+	public void registerDAO(DAO dao)
 	{
-		DAO dao = daoClass.newInstance();
 
 		if(!dao.supports(getDatabaseName(), getDatabaseMajorVersion(), getDatabaseMinorVersion()))
 		{
@@ -143,13 +119,13 @@ public class DAOManager
 			DAO oldDao = daoMap.get(dao.getClassName());
 			if(oldDao != null)
 			{
-				StringBuilder sb = new StringBuilder();
+				TextBuilder sb = TextBuilder.newInstance();
 				sb.append("DAO with className ").append(dao.getClassName()).append(" is used by ");
 				sb.append(oldDao.getClass().getName()).append(". Can't override with ");
-				sb.append(daoClass.getName()).append(".");
+				sb.append(dao.getClass().getName()).append(".");
 				String s = sb.toString();
 				log.error(s);
-				throw new DAOAlreadyRegisteredException(s);
+				TextBuilder.recycle(sb);
 			}
 			else
 			{
@@ -167,13 +143,13 @@ public class DAOManager
 	 * @param daoClass
 	 *            DAO implementation to unregister
 	 */
-	public static void unregisterDAO(Class<? extends DAO> daoClass)
+	public static void unregisterDAO(DAO daoClass)
 	{
 		synchronized(DAOManager.class)
 		{
 			for(DAO dao : daoMap.values())
 			{
-				if(dao.getClass() == daoClass)
+				if(dao == daoClass)
 				{
 					daoMap.remove(dao.getClassName());
 
@@ -189,5 +165,11 @@ public class DAOManager
 	private DAOManager()
 	{
 		// empty
+	}
+	
+	@SuppressWarnings("synthetic-access")
+	private static class SingletonHolder
+	{
+		protected static final DAOManager	instance	= new DAOManager();
 	}
 }

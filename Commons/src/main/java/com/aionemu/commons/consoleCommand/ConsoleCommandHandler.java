@@ -16,15 +16,12 @@
  */
 package com.aionemu.commons.consoleCommand;
 
-import java.io.File;
 import java.util.Map;
 
 import javolution.util.FastMap;
 
 import org.apache.log4j.Logger;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
-
-import com.aionemu.commons.scripting.scriptmanager.ScriptManager;
 
 /**
  * @author Mr. Poke
@@ -37,10 +34,6 @@ public class ConsoleCommandHandler
 
 	private Map<String, AbstractConsoleCommand>	commands;
 
-	public static final File					DESCRIPTOR_FILE	= new File("./data/scripts/system/consoleCommand.xml");
-
-	private ScriptManager						sm;
-
 	public static final ConsoleCommandHandler getInstance()
 	{
 		return SingletonHolder.instance;
@@ -49,21 +42,6 @@ public class ConsoleCommandHandler
 	ConsoleCommandHandler()
 	{
 		commands = new FastMap<String, AbstractConsoleCommand>();
-		sm = new ScriptManager();
-		sm.setGlobalClassListener(new ConsoleCommandLoader());
-	}
-
-	public void load()
-	{
-		try
-		{
-			sm.load(DESCRIPTOR_FILE);
-		}
-		catch(Exception e)
-		{
-			log.warn("Can't initialize console handlers.", e);
-		}
-		log.info("Loaded " + commands.size() + " console commands.");
 	}
 
 	void registerCommand(AbstractConsoleCommand command)
