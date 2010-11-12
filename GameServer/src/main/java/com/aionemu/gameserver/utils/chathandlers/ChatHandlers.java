@@ -17,12 +17,7 @@
 
 package com.aionemu.gameserver.utils.chathandlers;
 
-import java.io.File;
-
 import javolution.util.FastList;
-
-import com.aionemu.commons.scripting.scriptmanager.ScriptManager;
-import com.aionemu.gameserver.GameServerError;
 
 /**
  * This class is managing a list of all chat handlers.
@@ -35,10 +30,6 @@ public class ChatHandlers
 {
 	private FastList<ChatHandler>	handlers;
 
-	public static final File CHAT_DESCRIPTOR_FILE = new File("./data/scripts/system/handlers.xml");
-	
-	private ScriptManager sm;
-
 	public static final ChatHandlers getInstance()
 	{
 		return SingletonHolder.instance;
@@ -47,7 +38,6 @@ public class ChatHandlers
 	private ChatHandlers()
 	{
 		handlers	= new FastList<ChatHandler>();
-		sm = new ScriptManager();
 		createChatHandlers();
 	}
 
@@ -72,18 +62,6 @@ public class ChatHandlers
 	{
 		final AdminCommandChatHandler adminCCH = new AdminCommandChatHandler();
 		addChatHandler(adminCCH);
-
-		// set global loader
-		sm.setGlobalClassListener(new ChatHandlersLoader(adminCCH));
-
-		try
-		{
-			sm.load(CHAT_DESCRIPTOR_FILE);
-		}
-		catch (Exception e)
-		{
-			throw new GameServerError("Can't initialize chat handlers.", e);
-		}
 	}
 
 	@SuppressWarnings("synthetic-access")

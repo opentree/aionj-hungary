@@ -16,6 +16,8 @@
  */
 package com.aionemu.gameserver;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -23,6 +25,7 @@ import org.apache.log4j.Logger;
 import com.aionemu.commons.database.DatabaseFactory;
 import com.aionemu.commons.database.dao.DAOManager;
 import com.aionemu.commons.log4j.exceptions.Log4jInitializationError;
+import com.aionemu.commons.scripting.AionScriptEngineManager;
 import com.aionemu.commons.services.LoggingService;
 import com.aionemu.commons.utils.AEFastSet;
 import com.aionemu.commons.utils.AEInfos;
@@ -100,12 +103,6 @@ public class GameServer
 		// init config
 		Config.load();
 		
-		// Second should be database factory
-		AEInfos.printSection("DataBase");
-		DatabaseFactory.init();
-		// Initialize DAOs
-		DAOManager.init();
-		
 		// Initialize thread pools
 		AEInfos.printSection("Threads");
 		ThreadConfig.load();
@@ -114,6 +111,20 @@ public class GameServer
 		AEInfos.printSection("StaticDatas");
 		DataManager.getInstance();
 		
+		// Second should be database factory
+		AEInfos.printSection("DataBase");
+		DatabaseFactory.init();
+
+		try
+		{
+			File scripts = new File("data/scripts/scripts.cfg");
+			AionScriptEngineManager.getInstance().executeScriptList(scripts);
+		}
+		catch (IOException ioe)
+		{
+			log.fatal("Failed loading scripts.cfg, no script going to be loaded");
+		}
+
 		AEInfos.printSection("IDFactory");
 		IDFactory.getInstance();
 		

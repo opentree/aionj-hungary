@@ -41,12 +41,17 @@ public class AdminCommandChatHandler implements ChatHandler
 
 	private Map<String, AdminCommand>	commands	= new FastMap<String, AdminCommand>();
 
+	public static final AdminCommandChatHandler getInstance()
+	{
+		return SingletonHolder.instance;
+	}
+
 	AdminCommandChatHandler()
 	{
 
 	}
 
-	void registerAdminCommand(AdminCommand command)
+	public void registerAdminCommand(AdminCommand command)
 	{
 		if(command == null)
 			throw new NullPointerException("Command instance cannot be null");
@@ -120,5 +125,11 @@ public class AdminCommandChatHandler implements ChatHandler
 	public int getSize()
 	{
 		return this.commands.size();
+	}
+	
+	@SuppressWarnings("synthetic-access")
+	private static class SingletonHolder
+	{
+		protected static final AdminCommandChatHandler instance = new AdminCommandChatHandler();
 	}
 }

@@ -27,10 +27,7 @@ import javolution.util.FastMap;
 
 import org.apache.log4j.Logger;
 
-import com.aionemu.commons.scripting.scriptmanager.ScriptManager;
-import com.aionemu.gameserver.GameServerError;
 import com.aionemu.gameserver.dataholders.DataManager;
-import com.aionemu.gameserver.dataholders.QuestScriptsData;
 import com.aionemu.gameserver.dataholders.QuestsData;
 import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.gameobjects.Npc;
@@ -41,8 +38,6 @@ import com.aionemu.gameserver.model.templates.quest.QuestDrop;
 import com.aionemu.gameserver.model.templates.quest.QuestItems;
 import com.aionemu.gameserver.model.templates.quest.QuestWorkItems;
 import com.aionemu.gameserver.questEngine.handlers.QuestHandler;
-import com.aionemu.gameserver.questEngine.handlers.QuestHandlerLoader;
-import com.aionemu.gameserver.questEngine.handlers.models.QuestScriptData;
 import com.aionemu.gameserver.questEngine.model.QuestEnv;
 import com.aionemu.gameserver.questEngine.model.QuestState;
 import com.aionemu.gameserver.questEngine.model.QuestStatus;
@@ -59,14 +54,10 @@ public class QuestEngine
 
 	private static final FastMap<Integer, QuestHandler>	questHandlers			= new FastMap<Integer, QuestHandler>();
 
-	private static ScriptManager						scriptManager			= new ScriptManager();
-
 	public static final File							QUEST_DESCRIPTOR_FILE	= new File(
 																					"./data/scripts/system/quest_handlers.xml");
 	
 	private QuestsData									questData = DataManager.QUEST_DATA;
-
-	private QuestScriptsData							questScriptsData = DataManager.QUEST_SCRIPTS_DATA;
 
 	private TIntObjectHashMap<NpcQuestData>				npcQuestData = new TIntObjectHashMap<NpcQuestData>();
 	private TIntObjectHashMap<TIntArrayList>			questItemIds= new TIntObjectHashMap<TIntArrayList>();
@@ -104,30 +95,12 @@ public class QuestEngine
 			}
 		}
 
-		scriptManager = new ScriptManager();
-		scriptManager.setGlobalClassListener(new QuestHandlerLoader());
-
-		try
-		{
-			scriptManager.load(QUEST_DESCRIPTOR_FILE);
-		}
-		catch (Exception e)
-		{
-			throw new GameServerError("Can't initialize quest handlers.", e);
-		}
-		for (QuestScriptData data : questScriptsData.getData())
-		{
-			data.register(this);
-		}
-
 		log.info("Loaded " + questHandlers.size() + " quest handler.");
 	}
 
 	public void shutdown()
 	{
-		scriptManager.shutdown();
 		clear();
-		scriptManager = null;
 		log.info("Quests are shutdown...");
 	}
 
@@ -456,7 +429,6 @@ public class QuestEngine
 	
 	public void addQuestHandler (QuestHandler questHandler)
 	{
-		questHandler.register();
 		if (questHandlers.containsKey(questHandler.getQuestId()))
 			log.warn("Duplicate quest: "+questHandler.getQuestId());
 		questHandlers.put(questHandler.getQuestId(), questHandler);
