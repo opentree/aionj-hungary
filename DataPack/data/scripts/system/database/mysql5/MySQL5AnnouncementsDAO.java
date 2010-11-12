@@ -34,7 +34,7 @@ import com.aionemu.gameserver.model.Announcement;
  * @author Divinity
  * 
  */
-public class MySQL5Announcements extends AnnouncementsDAO
+public class MySQL5AnnouncementsDAO extends AnnouncementsDAO
 {
 	/**
 	 * {@inheritDoc}
