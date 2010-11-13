@@ -55,8 +55,6 @@ public class QuestHandler
 		this.questId = questId;
 		this.qe = QuestEngine.getInstance();
 		this.qe.addQuestHandler(this);
-		this.register();
-		
 	}
 	
 	public void deleteQuestItems(QuestEnv env)

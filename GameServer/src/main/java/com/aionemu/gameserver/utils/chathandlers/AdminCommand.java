@@ -33,7 +33,6 @@ public abstract class AdminCommand
 	protected AdminCommand(String commandName)
 	{
 		this.commandName = commandName;
-		AdminCommandChatHandler.getInstance().registerAdminCommand(this);
 	}
 
 	/**
