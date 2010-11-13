@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with aion-unique.  If not, see <http://www.gnu.org/licenses/>.
  */
-package handlers.admincommands;
+package system.handlers.admincommands;
 
 import com.aionemu.gameserver.configs.administration.AdminConfig;
 import com.aionemu.gameserver.model.gameobjects.Item;
@@ -25,6 +25,7 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_UPDATE_ITEM;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_UPDATE_PLAYER_APPEARANCE;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.chathandlers.AdminCommand;
+import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
 
 
 /**
@@ -139,5 +140,10 @@ public class Dye extends AdminCommand
 		target.getEquipment().setPersistentState(PersistentState.UPDATE_REQUIRED);
 		if (target.getObjectId() != admin.getObjectId()) { PacketSendUtility.sendMessage(target, "You have been dyed by " + admin.getName() + "!"); }
 		PacketSendUtility.sendMessage(admin, "Dyed " + target.getName() + " successfully!");
+	}
+	
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new Dye());
 	}
 }

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with aion-unique.  If not, see <http://www.gnu.org/licenses/>.
  */
-package handlers.admincommands;
+package system.handlers.admincommands;
 
 import com.aionemu.gameserver.configs.administration.AdminConfig;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
@@ -26,6 +26,7 @@ import com.aionemu.gameserver.questEngine.model.QuestStatus;
 import com.aionemu.gameserver.services.QuestService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.chathandlers.AdminCommand;
+import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
 
 /**
  * @author MrPoke
@@ -122,6 +123,10 @@ public class QuestCommand extends AdminCommand
 		else 
 			PacketSendUtility.sendMessage(admin, "syntax //quest <start|set>");
 		return;
+	}
 
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new QuestCommand());
 	}
 }

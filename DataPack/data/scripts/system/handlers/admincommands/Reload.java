@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with aion-unique.  If not, see <http://www.gnu.org/licenses/>.
  */
-package handlers.admincommands;
+package system.handlers.admincommands;
 
 import static org.apache.commons.io.filefilter.FileFilterUtils.andFileFilter;
 import static org.apache.commons.io.filefilter.FileFilterUtils.makeSVNAware;
@@ -54,6 +54,7 @@ import com.aionemu.gameserver.questEngine.QuestEngine;
 import com.aionemu.gameserver.skillengine.model.SkillTemplate;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.chathandlers.AdminCommand;
+import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
 
 /**
  * @author MrPoke
@@ -226,5 +227,10 @@ public class Reload extends AdminCommand
 
 		return FileUtils.listFiles(root, andFileFilter(andFileFilter(notFileFilter(prefixFileFilter("new")),
 			suffixFileFilter(".xml")), HiddenFileFilter.VISIBLE), dirFilter);
+	}
+	
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new Reload());
 	}
 }

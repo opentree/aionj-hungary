@@ -14,7 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with aion-emu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package handlers.admincommands;
+package system.handlers.admincommands;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +29,7 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_CUSTOM_PACKET;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_CUSTOM_PACKET.PacketElementType;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.chathandlers.AdminCommand;
+import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
 
 /**
  * Send packet in raw format.
@@ -104,5 +105,10 @@ public class SendRawPacket extends AdminCommand
 			PacketSendUtility.sendMessage(admin, "An error has occurred.");
 			logger.warn("IO Error.", e);
 		}
+	}
+	
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new SendRawPacket());
 	}
 }

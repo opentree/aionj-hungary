@@ -1,4 +1,4 @@
-package handlers.quest.pandaemonium;
+package system.handlers.quest.pandaemonium;
 
 import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.gameobjects.Npc;

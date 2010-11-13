@@ -14,7 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with aion-emu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package database.mysql5;
+package system.database.mysql5;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

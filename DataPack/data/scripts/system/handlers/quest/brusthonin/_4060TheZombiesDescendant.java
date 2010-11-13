@@ -1,4 +1,4 @@
-package handlers.quest.brusthonin;
+package system.handlers.quest.brusthonin;
 
 import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.gameobjects.Npc;

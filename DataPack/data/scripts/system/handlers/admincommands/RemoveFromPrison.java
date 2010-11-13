@@ -14,7 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with aion-unique.  If not, see <http://www.gnu.org/licenses/>.
  */
-package handlers.admincommands;
+package system.handlers.admincommands;
 
 import java.util.NoSuchElementException;
 
@@ -24,6 +24,7 @@ import com.aionemu.gameserver.services.PunishmentService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.Util;
 import com.aionemu.gameserver.utils.chathandlers.AdminCommand;
+import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
 import com.aionemu.gameserver.world.World;
 
 /**
@@ -73,5 +74,10 @@ public class RemoveFromPrison extends AdminCommand
 		{
 			PacketSendUtility.sendMessage(admin, "Usage: //rprison <player>");
 		}
+	}
+	
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new RemoveFromPrison());
 	}
 }

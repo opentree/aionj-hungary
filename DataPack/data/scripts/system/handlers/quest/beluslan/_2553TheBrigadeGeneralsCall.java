@@ -1,4 +1,4 @@
-package handlers.quest.beluslan;
+package system.handlers.quest.beluslan;
 
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;

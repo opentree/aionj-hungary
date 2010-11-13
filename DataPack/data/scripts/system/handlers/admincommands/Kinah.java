@@ -14,7 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with aion-unique.  If not, see <http://www.gnu.org/licenses/>.
  */
-package handlers.admincommands;
+package system.handlers.admincommands;
 
 import com.aionemu.gameserver.configs.administration.AdminConfig;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
@@ -22,6 +22,7 @@ import com.aionemu.gameserver.services.ItemService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.Util;
 import com.aionemu.gameserver.utils.chathandlers.AdminCommand;
+import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
 import com.aionemu.gameserver.world.World;
 
 /**
@@ -95,5 +96,10 @@ public class Kinah extends AdminCommand
 		ItemService.increaseKinah(receiver, kinahCount);
 		PacketSendUtility.sendMessage(admin, "Kinah given successfully.");
 		PacketSendUtility.sendMessage(receiver, "An admin gives you some kinah.");
+	}
+	
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new Kinah());
 	}
 }

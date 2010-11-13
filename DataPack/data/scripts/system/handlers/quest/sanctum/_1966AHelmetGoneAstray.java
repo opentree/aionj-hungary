@@ -1,4 +1,4 @@
-package handlers.quest.sanctum;
+package system.handlers.quest.sanctum;
 
 import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.gameobjects.Npc;

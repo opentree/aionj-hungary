@@ -15,7 +15,7 @@
  * along with aion-unique.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package handlers.quest.ishalgen;
+package system.handlers.quest.ishalgen;
 
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;

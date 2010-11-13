@@ -1,4 +1,4 @@
-package handlers.admincommands;
+package system.handlers.admincommands;
 
 import java.util.Arrays;
 
@@ -10,6 +10,7 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_TITLE_SET;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_TITLE_UPDATE;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.chathandlers.AdminCommand;
+import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
 
 /**
  * @author Nemiroff, ATracer, IceReaper
@@ -245,5 +246,10 @@ public class Set extends AdminCommand {
 		player.getCommonData().setPlayerClass(playerClass);
 		player.getCommonData().upgradePlayer();
 		PacketSendUtility.sendMessage(player, "You have successfuly switched class");
+	}
+	
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new Set());
 	}
 }

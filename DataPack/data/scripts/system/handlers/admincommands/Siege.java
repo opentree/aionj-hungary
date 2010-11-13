@@ -15,7 +15,7 @@
  *  along with aion-emu.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package handlers.admincommands;
+package system.handlers.admincommands;
 
 import javolution.util.FastMap;
 
@@ -29,6 +29,7 @@ import com.aionemu.gameserver.model.siege.SiegeRace;
 import com.aionemu.gameserver.services.SiegeService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.chathandlers.AdminCommand;
+import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
 
 /**
  * @author Sarynth
@@ -439,4 +440,8 @@ public class Siege extends AdminCommand
 			"Race may be: Elyos, Asmos, Balaur. (Not case sensitive.)");
 	}
 
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new Siege());
+	}
 }

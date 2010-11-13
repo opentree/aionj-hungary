@@ -1,4 +1,4 @@
-package handlers.quest.reshanta;
+package system.handlers.quest.reshanta;
 
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;

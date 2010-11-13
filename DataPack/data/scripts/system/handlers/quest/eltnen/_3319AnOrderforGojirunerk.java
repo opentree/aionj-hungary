@@ -1,4 +1,4 @@
-package handlers.quest.eltnen;
+package system.handlers.quest.eltnen;
 
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;

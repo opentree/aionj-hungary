@@ -15,12 +15,13 @@
  *  along with aion-unique.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package handlers.admincommands;
+package system.handlers.admincommands;
 
 import com.aionemu.gameserver.configs.administration.AdminConfig;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.chathandlers.AdminCommand;
+import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
 
 /**
  * @author Andy
@@ -53,5 +54,10 @@ public class Invul extends AdminCommand
 			admin.setInvul(true);
 			PacketSendUtility.sendMessage(admin, "You are now immortal.");
 		}
+	}
+	
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new Invul());
 	}
 }
