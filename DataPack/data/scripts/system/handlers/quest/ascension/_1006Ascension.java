@@ -61,11 +61,6 @@ public class _1006Ascension extends QuestHandler
 	public _1006Ascension()
 	{
 		super(questId);
-	}
-
-	@Override
-	public void register()
-	{
 		if(CustomConfig.ENABLE_SIMPLE_2NDCLASS)
 			return;
 		qe.addQuestLvlUp(questId);
@@ -431,5 +426,10 @@ public class _1006Ascension extends QuestHandler
 			return true;
 		}
 		return false;
+	}
+	
+	public static void main(String[] args)
+	{
+		new _1006Ascension();
 	}
 }

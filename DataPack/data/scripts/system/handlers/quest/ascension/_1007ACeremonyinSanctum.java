@@ -42,11 +42,6 @@ public class _1007ACeremonyinSanctum extends QuestHandler
 	public _1007ACeremonyinSanctum()
 	{
 		super(questId);
-	}
-
-	@Override
-	public void register()
-	{
 		if(CustomConfig.ENABLE_SIMPLE_2NDCLASS)
 			return;
 		qe.addQuestLvlUp(questId);
@@ -271,5 +266,10 @@ public class _1007ACeremonyinSanctum extends QuestHandler
 		env.setQuestId(questId);
 		QuestService.startQuest(env, QuestStatus.START);
 		return true;
+	}
+	
+	public static void main(String[] args)
+	{
+		new _1007ACeremonyinSanctum();
 	}
 }
