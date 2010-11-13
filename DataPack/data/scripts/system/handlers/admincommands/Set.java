@@ -1,4 +1,4 @@
-package admincommands;
+package handlers.admincommands;
 
 import java.util.Arrays;
 

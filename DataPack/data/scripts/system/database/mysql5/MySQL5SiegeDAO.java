@@ -14,7 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with aion-unique.  If not, see <http://www.gnu.org/licenses/>.
  */
-package mysql5;
+package database.mysql5;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -41,7 +41,7 @@ public class MySQL5SiegeDAO extends SiegeDAO
 	public static final String UPDATE_QUERY = "UPDATE `siege_locations` SET  `race` = ?, `legion_id` = ? WHERE `id` = ?";
 
 	/** Logger */
-	private static final Logger					log					= Logger.getLogger(MySQL5PlayerDAO.class);
+	private static final Logger					log					= Logger.getLogger(MySQL5SiegeDAO.class);
 
 	@Override
 	public boolean loadSiegeLocations(final FastMap<Integer, SiegeLocation> locations)

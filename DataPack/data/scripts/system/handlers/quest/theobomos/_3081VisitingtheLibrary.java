@@ -1,4 +1,4 @@
-package quest.theobomos;
+package handlers.quest.theobomos;
 
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;

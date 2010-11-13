@@ -1,4 +1,4 @@
-package admincommands;
+package handlers.admincommands;
 
 import com.aionemu.gameserver.configs.administration.AdminConfig;
 import com.aionemu.gameserver.model.gameobjects.Gatherable;

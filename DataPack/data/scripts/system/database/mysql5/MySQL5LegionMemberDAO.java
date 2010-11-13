@@ -15,7 +15,7 @@
  *  along with aion-unique.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package mysql5;
+package database.mysql5;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

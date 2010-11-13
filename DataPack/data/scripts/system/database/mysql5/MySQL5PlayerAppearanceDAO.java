@@ -15,7 +15,7 @@
  * along with aion-emu.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package mysql5;
+package database.mysql5;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

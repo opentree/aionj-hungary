@@ -1,4 +1,4 @@
-package quest.heiron;
+package handlers.quest.heiron;
 
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;

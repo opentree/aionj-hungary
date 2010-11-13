@@ -1,4 +1,4 @@
-package quest.verteron;
+package handlers.quest.verteron;
 
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;

@@ -16,7 +16,7 @@
  *
  * http://www.gnu.org/copyleft/gpl.html
  */
-package mysql5;
+package database.mysql5;
 
 import com.aionemu.commons.database.dao.DAOManager;
 

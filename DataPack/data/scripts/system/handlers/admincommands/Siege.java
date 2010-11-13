@@ -15,7 +15,7 @@
  *  along with aion-emu.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package admincommands;
+package handlers.admincommands;
 
 import javolution.util.FastMap;
 

@@ -14,7 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with aion-unique.  If not, see <http://www.gnu.org/licenses/>.
  */
-package quest.pandaemonium;
+package handlers.quest.pandaemonium;
 
 import java.util.Collections;
 
