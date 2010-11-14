@@ -25,6 +25,7 @@ import org.apache.log4j.Logger;
 import com.aionemu.commons.database.DatabaseFactory;
 import com.aionemu.commons.database.dao.DAOManager;
 import com.aionemu.commons.log4j.exceptions.Log4jInitializationError;
+import com.aionemu.commons.scripting.AionScriptEngineManager;
 import com.aionemu.commons.services.LoggingService;
 import com.aionemu.commons.utils.AEFastSet;
 import com.aionemu.commons.utils.AEInfos;
