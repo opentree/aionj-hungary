@@ -16,7 +16,7 @@
  */
 package com.aionemu.loginserver.network.gameserver.clientpackets;
 
-import com.aionemu.commons.network.packet.AbstractClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 import com.aionemu.loginserver.controller.AccountController;
 import com.aionemu.loginserver.network.aion.SessionKey;
 import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;

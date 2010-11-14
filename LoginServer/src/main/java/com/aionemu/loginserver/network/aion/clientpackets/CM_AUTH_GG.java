@@ -16,8 +16,8 @@
  */
 package com.aionemu.loginserver.network.aion.clientpackets;
 
-import com.aionemu.commons.network.netty.handler.AbstractChannelHandler.State;
-import com.aionemu.commons.network.packet.AbstractClientPacket;
+import com.aionemu.commons.network.netty.State;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 import com.aionemu.loginserver.network.aion.AionAuthResponse;
 import com.aionemu.loginserver.network.aion.AionChannelHandler;
 import com.aionemu.loginserver.network.aion.serverpackets.SM_AUTH_GG;

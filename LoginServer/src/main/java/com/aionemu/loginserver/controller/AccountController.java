@@ -20,7 +20,7 @@ package com.aionemu.loginserver.controller;
 import javolution.util.FastMap;
 
 import com.aionemu.commons.database.dao.DAOManager;
-import com.aionemu.commons.network.netty.handler.AbstractChannelHandler.State;
+import com.aionemu.commons.network.netty.State;
 import com.aionemu.commons.utils.NetworkUtils;
 import com.aionemu.loginserver.GameServerInfo;
 import com.aionemu.loginserver.GameServerTable;

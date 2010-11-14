@@ -16,7 +16,7 @@
  */
 package com.aionemu.loginserver.network.aion.serverpackets;
 
-import com.aionemu.commons.network.packet.AbstractServerPacket;
+import com.aionemu.commons.network.netty.packet.AbstractServerPacket;
 import com.aionemu.loginserver.network.aion.AionChannelHandler;
 
 /**

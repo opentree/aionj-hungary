@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.aionemu.commons.network.IPRange;
-import com.aionemu.commons.network.netty.handler.AbstractChannelHandler.State;
+import com.aionemu.commons.network.netty.State;
 import com.aionemu.loginserver.model.Account;
 import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
 

@@ -19,7 +19,7 @@ package com.aionemu.loginserver.network.gameserver.clientpackets;
 import java.sql.Timestamp;
 
 import com.aionemu.commons.database.dao.DAOManager;
-import com.aionemu.commons.network.packet.AbstractClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 import com.aionemu.loginserver.GameServerInfo;
 import com.aionemu.loginserver.GameServerTable;
 import com.aionemu.loginserver.controller.AccountController;

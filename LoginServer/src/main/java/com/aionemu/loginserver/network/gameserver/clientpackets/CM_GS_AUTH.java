@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.aionemu.commons.network.IPRange;
-import com.aionemu.commons.network.netty.handler.AbstractChannelHandler.State;
-import com.aionemu.commons.network.packet.AbstractClientPacket;
+import com.aionemu.commons.network.netty.State;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 import com.aionemu.loginserver.GameServerTable;
 import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
 import com.aionemu.loginserver.network.gameserver.GsAuthResponse;

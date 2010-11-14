@@ -18,7 +18,7 @@ package com.aionemu.loginserver.network.gameserver.clientpackets;
 
 import org.apache.log4j.Logger;
 
-import com.aionemu.commons.network.packet.AbstractClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 import com.aionemu.commons.utils.Rnd;
 import com.aionemu.loginserver.controller.AccountController;
 import com.aionemu.loginserver.model.Account;

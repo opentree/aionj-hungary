@@ -20,7 +20,7 @@ import java.util.Arrays;
 
 import javax.crypto.SecretKey;
 
-import com.aionemu.commons.network.packet.AbstractServerPacket;
+import com.aionemu.commons.network.netty.packet.AbstractServerPacket;
 import com.aionemu.loginserver.network.aion.AionChannelHandler;
 
 /**

@@ -20,7 +20,7 @@ import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
-import com.aionemu.commons.network.packet.AbstractServerPacket;
+import com.aionemu.commons.network.netty.packet.AbstractServerPacket;
 import com.aionemu.loginserver.GameServerInfo;
 import com.aionemu.loginserver.GameServerTable;
 import com.aionemu.loginserver.network.aion.AionChannelHandler;

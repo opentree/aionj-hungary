@@ -17,7 +17,7 @@
 package com.aionemu.loginserver.network.gameserver.clientpackets;
 
 import com.aionemu.commons.database.dao.DAOManager;
-import com.aionemu.commons.network.packet.AbstractClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 import com.aionemu.loginserver.dao.AccountDAO;
 import com.aionemu.loginserver.model.Account;
 import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
