@@ -22,8 +22,9 @@ import java.sql.Timestamp;
  * @author kosyachok
  *
  */
-public class Letter extends AionObject
+public class Letter
 {
+	private int objectId;
 	private int recipientId;
 	private Item attachedItem;
 	private long attachedKinahCount;
@@ -49,8 +50,7 @@ public class Letter extends AionObject
 	public Letter(int objId, int recipientId, Item attachedItem, long attachedKinahCount, String title, String message,
 		String senderName, Timestamp timeStamp, boolean unread, boolean express)
 	{
-		super(objId);
-
+		this.objectId = objId;
 		this.recipientId = recipientId;
 		this.attachedItem = attachedItem;
 		this.attachedKinahCount = attachedKinahCount;
@@ -64,12 +64,14 @@ public class Letter extends AionObject
 
 	}
 	
-	@Override
-	public String getName()
+	/**
+	 * @return Returns the objectId.
+	 */
+	public int getObjectId()
 	{
-		return String.valueOf(attachedItem.getItemTemplate().getNameId());
+		return objectId;
 	}
-	
+
 	public int getRecipientId()
 	{
 		return recipientId;
