@@ -38,7 +38,7 @@ public class AbstractPacketHandlerFactory<T extends AbstractChannelHandler>
     	else
     		sHandler = sph;
     	
-    	if(sph == null)
+    	if(cph == null)
     		cHandler = new ClientPacketHandler<T>();
     	else
     		cHandler = cph;
