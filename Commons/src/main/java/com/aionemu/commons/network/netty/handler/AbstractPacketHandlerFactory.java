@@ -18,9 +18,9 @@ package com.aionemu.commons.network.netty.handler;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 
-import com.aionemu.commons.network.netty.handler.AbstractChannelHandler.State;
-import com.aionemu.commons.network.packet.AbstractClientPacket;
-import com.aionemu.commons.network.packet.AbstractServerPacket;
+import com.aionemu.commons.network.netty.State;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractServerPacket;
 
 /**
  * @author lyahim

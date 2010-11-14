@@ -21,8 +21,8 @@ import javolution.util.FastMap;
 import org.apache.log4j.Logger;
 import org.jboss.netty.buffer.ChannelBuffer;
 
-import com.aionemu.commons.network.netty.handler.AbstractChannelHandler.State;
-import com.aionemu.commons.network.packet.AbstractClientPacket;
+import com.aionemu.commons.network.netty.State;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 
 /**
  * @author lyahim

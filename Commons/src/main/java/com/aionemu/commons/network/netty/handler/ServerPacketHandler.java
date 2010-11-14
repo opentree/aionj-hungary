@@ -16,7 +16,7 @@
  */
 package com.aionemu.commons.network.netty.handler;
 
-import com.aionemu.commons.network.packet.AbstractServerPacket;
+import com.aionemu.commons.network.netty.packet.AbstractServerPacket;
 
 import javolution.util.FastMap;
 

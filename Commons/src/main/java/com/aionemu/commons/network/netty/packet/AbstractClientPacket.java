@@ -14,7 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with aion-unique.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aionemu.commons.network.packet;
+package com.aionemu.commons.network.netty.packet;
 
 import org.apache.log4j.Logger;
 

@@ -29,8 +29,9 @@ import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 
-import com.aionemu.commons.network.packet.AbstractClientPacket;
-import com.aionemu.commons.network.packet.AbstractServerPacket;
+import com.aionemu.commons.network.netty.State;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractServerPacket;
 
 /**
  * @author lyahim
@@ -100,14 +101,6 @@ public abstract class AbstractChannelHandler extends SimpleChannelUpstreamHandle
         return inetAddress.getAddress();
     }
     
-    public enum State
-    {
-    	CONNECTED,
-    	AUTHED_GG,
-    	AUTHED,
-    	ENTERED;
-    }
-
     public State getState()
     {
         return state;
