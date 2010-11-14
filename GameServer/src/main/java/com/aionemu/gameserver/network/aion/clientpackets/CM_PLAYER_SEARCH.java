@@ -22,7 +22,8 @@ import java.util.List;
 import com.aionemu.gameserver.configs.main.CustomConfig;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.FriendList.Status;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_PLAYER_SEARCH;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.utils.Util;
@@ -31,10 +32,10 @@ import com.aionemu.gameserver.world.World;
 /**
  * Received when a player searches using the social search panel
  * 
- * @author Ben
+ * @author Lyahim, Ben
  * 
  */
-public class CM_PLAYER_SEARCH extends AionClientPacket
+public class CM_PLAYER_SEARCH extends AbstractClientPacket<AionChannelHandler>
 {
 	/**
 	 * The max number of players to return as results
@@ -82,7 +83,7 @@ public class CM_PLAYER_SEARCH extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player activePlayer = getConnection().getActivePlayer();
+		Player activePlayer = getChannelHandler().getActivePlayer();
 
 		List<Player> matches = new ArrayList<Player>(MAX_RESULTS);
 

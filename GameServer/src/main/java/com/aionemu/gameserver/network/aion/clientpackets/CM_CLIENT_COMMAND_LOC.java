@@ -20,16 +20,17 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 import org.apache.log4j.Logger;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 
 /**
  * Handler for "/loc" command
  * 
- * @author SoulKeeper
- * @author EvilSpirit
+ * @author Lyahim, SoulKeeper
+ * @author Lyahim, EvilSpirit
  */
-public class CM_CLIENT_COMMAND_LOC extends AionClientPacket
+public class CM_CLIENT_COMMAND_LOC extends AbstractClientPacket<AionChannelHandler>
 {
 
 	/**
@@ -61,7 +62,7 @@ public class CM_CLIENT_COMMAND_LOC extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 		log.info("[AUDIT] Received \"/loc\" command");
 		
 		sendPacket(SM_SYSTEM_MESSAGE.CURRENT_LOCATION(player.getWorldId(), player.getX(), player.getY(), player.getZ()));

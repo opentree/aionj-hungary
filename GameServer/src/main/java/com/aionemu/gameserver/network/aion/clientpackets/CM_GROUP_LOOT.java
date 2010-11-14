@@ -17,13 +17,14 @@
 package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.DropService;
 
 /**
- * @author Rhys2002
+ * @author Lyahim, Rhys2002
  */
-public class CM_GROUP_LOOT extends AionClientPacket
+public class CM_GROUP_LOOT extends AbstractClientPacket<AionChannelHandler>
 {	
 	@SuppressWarnings("unused")
 	private int groupId;
@@ -64,7 +65,7 @@ public class CM_GROUP_LOOT extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 		if(player == null)
 			return;
 		

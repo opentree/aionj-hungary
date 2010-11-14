@@ -19,18 +19,18 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.SkillListEntry;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * In this packet Server is sending Skill Info?
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  * modified by ATracer,MrPoke
  * 
  */
-public class SM_SKILL_LIST extends AionServerPacket
+public class SM_SKILL_LIST extends AbstractAionServerPacket<AionChannelHandler>
 {
 
 	private SkillListEntry[] skillList;
@@ -63,7 +63,7 @@ public class SM_SKILL_LIST extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 
 		final int size = skillList.length;

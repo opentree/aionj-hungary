@@ -18,14 +18,15 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.FriendList.Status;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * Packet received when a user changes his buddylist status
- * @author Ben
+ * @author Lyahim, Ben
  *
  */
-public class CM_FRIEND_STATUS extends AionClientPacket
+public class CM_FRIEND_STATUS extends AbstractClientPacket<AionChannelHandler>
 {
 
 	//The users new status
@@ -52,7 +53,7 @@ public class CM_FRIEND_STATUS extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player activePlayer = getConnection().getActivePlayer();
+		Player activePlayer = getChannelHandler().getActivePlayer();
 		Status statusEnum = Status.getByValue(status);
 		if (statusEnum == null)
 			statusEnum = Status.ONLINE;

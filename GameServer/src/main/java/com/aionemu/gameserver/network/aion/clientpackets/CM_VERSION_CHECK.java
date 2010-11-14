@@ -16,14 +16,15 @@
  */
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_VERSION_CHECK;
 
 /**
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class CM_VERSION_CHECK extends AionClientPacket
+public class CM_VERSION_CHECK extends AbstractClientPacket<AionChannelHandler>
 {
 
 	@SuppressWarnings("unused")

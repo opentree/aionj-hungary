@@ -16,14 +16,14 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author xavier
+ * @author Lyahim, xavier
  *
  */
-public class SM_MACRO_RESULT extends AionServerPacket
+public class SM_MACRO_RESULT extends AbstractAionServerPacket<AionChannelHandler>
 {
 	public static SM_MACRO_RESULT SM_MACRO_CREATED = new SM_MACRO_RESULT (0x00);
 	public static SM_MACRO_RESULT SM_MACRO_DELETED = new SM_MACRO_RESULT (0x01);
@@ -35,7 +35,8 @@ public class SM_MACRO_RESULT extends AionServerPacket
 	}
 	
 	@Override
-	public void writeImpl (AionConnection con) {
-		writeC( code);
+	public void writeImpl (AionChannelHandler con) 
+	{
+		writeC(code);
 	}
 }

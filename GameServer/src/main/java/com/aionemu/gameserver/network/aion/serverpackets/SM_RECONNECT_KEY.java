@@ -16,16 +16,16 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * Response for CM_RECONNECT_AUTH with key that will be use for authentication at LoginServer.
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class SM_RECONNECT_KEY extends AionServerPacket
+public class SM_RECONNECT_KEY extends AbstractAionServerPacket<AionChannelHandler>
 {
 	/**
 	 * key for reconnection - will be used for authentication
@@ -47,7 +47,7 @@ public class SM_RECONNECT_KEY extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeC( 0x00);
 		writeD(key);

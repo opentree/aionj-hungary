@@ -22,15 +22,16 @@ import com.aionemu.gameserver.model.EmotionType;
 import com.aionemu.gameserver.model.gameobjects.Summon;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /**
- * @author ATracer
+ * @author Lyahim, ATracer
  *
  */
-public class CM_SUMMON_EMOTION extends AionClientPacket
+public class CM_SUMMON_EMOTION extends AbstractClientPacket<AionChannelHandler>
 {
 	private static final Logger	log	= Logger.getLogger(CM_SUMMON_EMOTION.class);
 	
@@ -60,7 +61,7 @@ public class CM_SUMMON_EMOTION extends AionClientPacket
 		if(emotionType == EmotionType.UNK)
 			log.error("Unknown emotion type? 0x" + Integer.toHexString(emotionTypeId).toUpperCase());
 		
-		Player activePlayer = getConnection().getActivePlayer();
+		Player activePlayer = getChannelHandler().getActivePlayer();
 		if(activePlayer == null) return;
 		
 		Summon summon = activePlayer.getSummon();

@@ -16,15 +16,16 @@
  */
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_PING_RESPONSE;
 
 /**
  * 
- * @author dragoon112
+ * @author Lyahim, dragoon112
  * 
  */
-public class CM_PING_REQUEST extends AionClientPacket
+public class CM_PING_REQUEST extends AbstractClientPacket<AionChannelHandler>
 {
 	/**
 	 * Constructs new instance of <tt>CM_PING_REQUEST </tt> packet

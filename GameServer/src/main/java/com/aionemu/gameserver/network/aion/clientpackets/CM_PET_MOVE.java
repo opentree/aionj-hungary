@@ -19,16 +19,17 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.ToyPet;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_PET_MOVE;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /**
  * 
- * @author M@xx
+ * @author Lyahim, M@xx
  * 
  */
-public class CM_PET_MOVE extends AionClientPacket
+public class CM_PET_MOVE extends AbstractClientPacket<AionChannelHandler>
 {
 	
 	private int actionId;
@@ -74,7 +75,7 @@ public class CM_PET_MOVE extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 		switch(actionId)
 		{
 			case 12:

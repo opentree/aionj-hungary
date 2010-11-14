@@ -16,15 +16,15 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * 
- * @author alexa026
+ * @author Lyahim, alexa026
  * 
  */
-public class SM_LOOT_STATUS extends AionServerPacket
+public class SM_LOOT_STATUS extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int	targetObjectId;
 	private int	state;
@@ -41,7 +41,7 @@ public class SM_LOOT_STATUS extends AionServerPacket
 	 */
 	
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{		
 		writeD(targetObjectId);
 		writeC( state);

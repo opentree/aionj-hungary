@@ -16,55 +16,30 @@
  */
 package com.aionemu.gameserver.network.chatserver;
 
-import com.aionemu.gameserver.model.gameobjects.player.Player;
+import com.aionemu.commons.network.netty.State;
+import com.aionemu.commons.network.netty.handler.AbstractPacketHandlerFactory;
+import com.aionemu.gameserver.network.chatserver.clientpackets.CM_CS_AUTH_RESPONSE;
+import com.aionemu.gameserver.network.chatserver.clientpackets.CM_CS_PLAYER_AUTH_RESPONSE;
+import com.aionemu.gameserver.network.chatserver.serverpackets.SM_CS_AUTH;
 import com.aionemu.gameserver.network.chatserver.serverpackets.SM_CS_PLAYER_AUTH;
 import com.aionemu.gameserver.network.chatserver.serverpackets.SM_CS_PLAYER_LOGOUT;
 
 /**
- * @author ATracer
+ * @author lyahim
+ *
  */
-public class ChatServer
+public class ChatServerPacketHandlerFactory extends AbstractPacketHandlerFactory<ChatServerChannelHandler>
 {
-
-	private ChatServerConnection		chatServer;
-	
-	public static final ChatServer getInstance()
+	public ChatServerPacketHandlerFactory()
 	{
-		return SingletonHolder.instance;
-	}
-
-	private ChatServer()
-	{
-	}
-
-	/**
-	 * @param player
-	 * @param token
-	 */
-	public void sendPlayerLoginRequst(Player player)
-	{
-		if(chatServer != null)
-			chatServer.sendPacket(new SM_CS_PLAYER_AUTH(player.getObjectId(), player.getAcountName()));
-	}
-	
-	/**
-	 * 
-	 * @param player
-	 */
-	public void sendPlayerLogout(Player player)
-	{
-		if(chatServer != null)
-			chatServer.sendPacket(new SM_CS_PLAYER_LOGOUT(player.getObjectId()));
-	}
-	
-	@SuppressWarnings("synthetic-access")
-	private static class SingletonHolder
-	{
-		protected static final ChatServer instance = new ChatServer();
-	}
-
-	public void chatServerDown() {
-		// TODO Auto-generated method stub
+		super(null, null);
+		//Client Packet's
+		addPacket(new CM_CS_AUTH_RESPONSE(0x00), State.CONNECTED);
+		addPacket(new CM_CS_PLAYER_AUTH_RESPONSE(0x01), State.AUTHED);
 		
+		//Server Packet's
+		addPacket(SM_CS_AUTH.class, 0x00);
+		addPacket(SM_CS_PLAYER_AUTH.class, 0x01);
+		addPacket(SM_CS_PLAYER_LOGOUT.class, 0x02);
 	}
 }

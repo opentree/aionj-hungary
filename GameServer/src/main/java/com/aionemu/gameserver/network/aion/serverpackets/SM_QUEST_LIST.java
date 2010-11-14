@@ -22,16 +22,16 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.questEngine.model.QuestState;
 import com.aionemu.gameserver.questEngine.model.QuestStatus;
 
 /**
- * @author MrPoke
+ * @author Lyahim, MrPoke
  * 
  */
-public class SM_QUEST_LIST extends AionServerPacket
+public class SM_QUEST_LIST extends AbstractAionServerPacket<AionChannelHandler>
 {
 
 	private SortedMap<Integer, QuestState>	completeQuestList	= new TreeMap<Integer, QuestState>();
@@ -52,7 +52,7 @@ public class SM_QUEST_LIST extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeH(completeQuestList.size());
 		for(QuestState qs : completeQuestList.values())

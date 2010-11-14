@@ -17,14 +17,15 @@
 package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.LegionService;
 
 /**
- * @author Simple
+ * @author Lyahim, Simple
  * 
  */
-public class CM_LEGION_MODIFY_EMBLEM extends AionClientPacket
+public class CM_LEGION_MODIFY_EMBLEM extends AbstractClientPacket<AionChannelHandler>
 {
 
 	/** Emblem related information **/
@@ -56,7 +57,7 @@ public class CM_LEGION_MODIFY_EMBLEM extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player activePlayer = getConnection().getActivePlayer();
+		Player activePlayer = getChannelHandler().getActivePlayer();
 
 		if(activePlayer.isLegionMember())
 			LegionService.getInstance().storeLegionEmblem(activePlayer, legionId, emblemId, red, green, blue);

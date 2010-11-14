@@ -18,13 +18,14 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.controllers.ReviveType;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author ATracer, orz, avol, Simple
+ * @author Lyahim, ATracer, orz, avol, Simple
  *
  */
-public class CM_REVIVE extends AionClientPacket
+public class CM_REVIVE extends AbstractClientPacket<AionChannelHandler>
 {
 	private int reviveId;
 	
@@ -52,7 +53,7 @@ public class CM_REVIVE extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player activePlayer = getConnection().getActivePlayer();
+		Player activePlayer = getChannelHandler().getActivePlayer();
 		
 		ReviveType reviveType = ReviveType.getReviveTypeById(reviveId);
 		

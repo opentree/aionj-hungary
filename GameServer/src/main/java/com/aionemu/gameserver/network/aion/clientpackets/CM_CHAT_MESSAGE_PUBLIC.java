@@ -27,7 +27,8 @@ import com.aionemu.gameserver.model.alliance.PlayerAlliance;
 import com.aionemu.gameserver.model.alliance.PlayerAllianceGroup;
 import com.aionemu.gameserver.model.alliance.PlayerAllianceMember;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_MESSAGE;
 import com.aionemu.gameserver.restrictions.RestrictionsManager;
 import com.aionemu.gameserver.utils.PacketSendUtility;
@@ -38,9 +39,9 @@ import com.aionemu.gameserver.utils.chathandlers.ChatHandlers;
 /**
  * Packet that reads normal chat messages.<br>
  * 
- * @author SoulKeeper
+ * @author Lyahim, SoulKeeper
  */
-public class CM_CHAT_MESSAGE_PUBLIC extends AionClientPacket
+public class CM_CHAT_MESSAGE_PUBLIC extends AbstractClientPacket<AionChannelHandler>
 {
 	private static final Logger	log	= Logger.getLogger(CM_CHAT_MESSAGE_PUBLIC.class);
 
@@ -81,7 +82,7 @@ public class CM_CHAT_MESSAGE_PUBLIC extends AionClientPacket
 	protected void runImpl()
 	{
 
-		final Player player = getConnection().getActivePlayer();
+		final Player player = getChannelHandler().getActivePlayer();
 
 		if (player == null)
 			return;

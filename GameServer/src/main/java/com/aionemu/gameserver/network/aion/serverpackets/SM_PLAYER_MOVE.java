@@ -16,13 +16,13 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author cura 
+ * @author Lyahim, cura 
  */
-public class SM_PLAYER_MOVE extends AionServerPacket
+public class SM_PLAYER_MOVE extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private float x;
 	private float y;
@@ -38,7 +38,7 @@ public class SM_PLAYER_MOVE extends AionServerPacket
 	}
 	
 	@Override
-	public void writeImpl (AionConnection con) {
+	public void writeImpl (AionChannelHandler con) {
 		writeF(x);
 		writeF(y);
 		writeF(z);

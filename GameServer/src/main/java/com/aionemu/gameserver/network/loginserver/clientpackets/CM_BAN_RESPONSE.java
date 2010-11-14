@@ -18,16 +18,17 @@
 package com.aionemu.gameserver.network.loginserver.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.loginserver.LsClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.loginserver.LoginServerChannelHandler;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.world.World;
 
 /**
  * 
- * @author Watson
+ * @author Lyahim, Watson
  * 
  */
-public class CM_BAN_RESPONSE extends LsClientPacket
+public class CM_BAN_RESPONSE extends AbstractClientPacket<LoginServerChannelHandler>
 {
 	private byte		type;
 	private int			accountId;

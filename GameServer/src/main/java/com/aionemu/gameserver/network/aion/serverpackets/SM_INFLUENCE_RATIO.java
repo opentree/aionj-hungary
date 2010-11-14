@@ -17,22 +17,22 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.siege.Influence;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.SiegeService;
 
 /**
- * @author Nemiroff
+ * @author Lyahim, Nemiroff
  * Total Influence Ratio
  */
-public class SM_INFLUENCE_RATIO extends AionServerPacket
+public class SM_INFLUENCE_RATIO extends AbstractAionServerPacket<AionChannelHandler>
 {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		Influence inf = Influence.getInstance();
 		

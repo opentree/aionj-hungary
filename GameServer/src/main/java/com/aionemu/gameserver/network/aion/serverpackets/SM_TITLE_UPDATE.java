@@ -18,14 +18,14 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author Nemiroff
+ * @author Lyahim, Nemiroff
  * Date: 01.12.2009
  */
-public class SM_TITLE_UPDATE extends AionServerPacket {
+public class SM_TITLE_UPDATE extends AbstractAionServerPacket<AionChannelHandler> {
     private int objectId;
     private int titleId;
 
@@ -40,7 +40,7 @@ public class SM_TITLE_UPDATE extends AionServerPacket {
     }
 
     @Override
-	protected void writeImpl(AionConnection con) {
+	protected void writeImpl(AionChannelHandler cHandler) {
         writeD(this.objectId);
         writeD(this.titleId);
     }

@@ -16,15 +16,15 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * 
- * @author Simple
+ * @author Lyahim, Simple
  * 
  */
-public class SM_LEGION_LEAVE_MEMBER extends AionServerPacket
+public class SM_LEGION_LEAVE_MEMBER extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private String	name;
 	private String	name1;
@@ -47,7 +47,7 @@ public class SM_LEGION_LEAVE_MEMBER extends AionServerPacket
 	}
 
 	@Override
-	public void writeImpl(AionConnection con)
+	public void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(playerObjId);
 		writeC( 0x00); // isMember ? 1 : 0

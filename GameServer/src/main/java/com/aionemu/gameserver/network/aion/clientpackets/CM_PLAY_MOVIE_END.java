@@ -17,15 +17,16 @@
 package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.questEngine.QuestEngine;
 import com.aionemu.gameserver.questEngine.model.QuestEnv;
 
 /**
- * @author MrPoke
+ * @author Lyahim, MrPoke
  *
  */
-public class CM_PLAY_MOVIE_END extends AionClientPacket
+public class CM_PLAY_MOVIE_END extends AbstractClientPacket<AionChannelHandler>
 {
 	@SuppressWarnings("unused")
 	private int	type;
@@ -55,7 +56,7 @@ public class CM_PLAY_MOVIE_END extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player activePlayer = getConnection().getActivePlayer();
+		Player activePlayer = getChannelHandler().getActivePlayer();
 		QuestEngine.getInstance().onMovieEnd(new QuestEnv(null, activePlayer, 0, 0), movieId);
 	}
 

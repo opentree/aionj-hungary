@@ -17,16 +17,16 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.gameobjects.Creature;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * 
- * @author alexa026
- * @author ATracer
+ * @author Lyahim, alexa026
+ * @author Lyahim, ATracer
  * 
  */
-public class SM_ATTACK_STATUS extends AionServerPacket
+public class SM_ATTACK_STATUS extends AbstractAionServerPacket<AionChannelHandler>
 {
     private Creature creature;
     private TYPE type;
@@ -79,7 +79,7 @@ public class SM_ATTACK_STATUS extends AionServerPacket
 	 */
 	
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{		
 		writeD(creature.getObjectId());
 		switch(type)

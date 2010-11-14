@@ -16,16 +16,16 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * In this packet Server is sending response for CM_DELETE_CHARACTER.
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class SM_DELETE_CHARACTER extends AionServerPacket
+public class SM_DELETE_CHARACTER extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int playerObjId;
 	private int deletionTime;
@@ -43,7 +43,7 @@ public class SM_DELETE_CHARACTER extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		if(playerObjId != 0)
 		{

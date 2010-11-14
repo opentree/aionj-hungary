@@ -19,14 +19,14 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 import java.util.List;
 
 import com.aionemu.gameserver.model.gameobjects.Item;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author Avol
+ * @author Lyahim, Avol
  */
 
-public class SM_VIEW_PLAYER_DETAILS extends AionServerPacket
+public class SM_VIEW_PLAYER_DETAILS extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private List<Item> items;
 	private int size;
@@ -40,7 +40,7 @@ public class SM_VIEW_PLAYER_DETAILS extends AionServerPacket
 
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 
 		writeD(targetObjId); // unk

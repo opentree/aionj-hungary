@@ -17,15 +17,15 @@
 
 package com.aionemu.gameserver.network.loginserver.serverpackets;
 
-import com.aionemu.gameserver.network.loginserver.LoginServerConnection;
-import com.aionemu.gameserver.network.loginserver.LsServerPacket;
+import com.aionemu.gameserver.network.loginserver.LoginServerChannelHandler;
+import com.aionemu.commons.network.netty.packet.AbstractServerPacket;
 
 /**
  * 
- * @author Aionchs-Wylovech
+ * @author Lyahim, Aionchs-Wylovech
  * 
  */
-public class SM_LS_CONTROL extends LsServerPacket
+public class SM_LS_CONTROL extends AbstractServerPacket<LoginServerChannelHandler>
 {
 	private final String		accountName;
 
@@ -39,8 +39,6 @@ public class SM_LS_CONTROL extends LsServerPacket
 
 	public SM_LS_CONTROL(String accountName, String playerName, String adminName, int param, int type)
 	{
-
-		super(0x05);
 		this.accountName = accountName;
 		this.param = param;
 		this.playerName = playerName;
@@ -52,7 +50,7 @@ public class SM_LS_CONTROL extends LsServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(LoginServerConnection con)
+	protected void writeImpl(LoginServerChannelHandler cHandler)
 	{
 		writeC(type);
 		writeS(adminName);

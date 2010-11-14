@@ -26,8 +26,8 @@ import com.aionemu.gameserver.model.account.PlayerAccountData;
 import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.Storage;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
-import com.aionemu.gameserver.network.aion.AionConnection;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ABYSS_RANK;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_CHANNEL_INFO;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_CUBE_UPDATE;
@@ -72,10 +72,10 @@ import com.aionemu.gameserver.world.World;
 /**
  * In this packets aion client is asking if given char [by oid] may login into game [ie start playing].
  * 
- * @author -Nemesiss-, Avol
+ * @author Lyahim, -Nemesiss-, Avol
  * 
  */
-public class CM_ENTER_WORLD extends AionClientPacket
+public class CM_ENTER_WORLD extends AbstractClientPacket<AionChannelHandler>
 {
 	/**
 	 * Object Id of player that is entering world
@@ -107,11 +107,11 @@ public class CM_ENTER_WORLD extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		AionConnection client = getConnection();
+		AionChannelHandler client = getChannelHandler();
 		enterWorld(client, objectId);
 	}
 	
-	public static void enterWorld(AionConnection client, int objectId)
+	public static void enterWorld(AionChannelHandler client, int objectId)
 	{
 		Account account = client.getAccount();
 		PlayerAccountData playerAccData = client.getAccount().getPlayerAccountData(objectId);

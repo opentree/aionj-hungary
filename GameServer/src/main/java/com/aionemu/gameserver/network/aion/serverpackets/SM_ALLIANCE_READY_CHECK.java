@@ -16,14 +16,14 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author Sarynth (Thx Rhys2002 for Packets)
+ * @author Lyahim, Sarynth (Thx Rhys2002 for Packets)
  *
  */
-public class SM_ALLIANCE_READY_CHECK extends AionServerPacket
+public class SM_ALLIANCE_READY_CHECK extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int playerObjectId;
 	private int statusCode;
@@ -35,7 +35,7 @@ public class SM_ALLIANCE_READY_CHECK extends AionServerPacket
 	}
 	
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{		
 		writeD(playerObjectId);
 		writeC( statusCode);

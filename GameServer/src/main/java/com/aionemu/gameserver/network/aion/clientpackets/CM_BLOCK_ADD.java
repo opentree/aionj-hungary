@@ -19,17 +19,18 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 import org.apache.log4j.Logger;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_BLOCK_RESPONSE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.services.SocialService;
 import com.aionemu.gameserver.world.World;
 
 /**
- * @author Ben
+ * @author Lyahim, Ben
  *
  */
-public class CM_BLOCK_ADD extends AionClientPacket
+public class CM_BLOCK_ADD extends AbstractClientPacket<AionChannelHandler>
 {
 	private static Logger	log				= Logger.getLogger(CM_BLOCK_ADD.class);
 	
@@ -57,7 +58,7 @@ public class CM_BLOCK_ADD extends AionClientPacket
 	protected void runImpl()
 	{
 		
-		Player activePlayer = getConnection().getActivePlayer();
+		Player activePlayer = getChannelHandler().getActivePlayer();
 		
 		Player targetPlayer = World.getInstance().findPlayer(targetName);
 		

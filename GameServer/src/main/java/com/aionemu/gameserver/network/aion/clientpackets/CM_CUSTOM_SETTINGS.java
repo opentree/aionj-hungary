@@ -17,14 +17,15 @@
 package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_CUSTOM_SETTINGS;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /**
- * @author Sweetkr
+ * @author Lyahim, Sweetkr
  */
-public class CM_CUSTOM_SETTINGS extends AionClientPacket
+public class CM_CUSTOM_SETTINGS extends AbstractClientPacket<AionChannelHandler>
 {
 	private int display;
 	private int deny;
@@ -63,7 +64,7 @@ public class CM_CUSTOM_SETTINGS extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player activePlayer = getConnection().getActivePlayer();
+		Player activePlayer = getChannelHandler().getActivePlayer();
 		activePlayer.getPlayerSettings().setDisplay(display);
 		activePlayer.getPlayerSettings().setDeny(deny);
 

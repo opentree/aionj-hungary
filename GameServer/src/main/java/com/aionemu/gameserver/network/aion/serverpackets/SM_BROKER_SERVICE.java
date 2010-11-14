@@ -26,14 +26,14 @@ import com.aionemu.gameserver.model.gameobjects.stats.modifiers.SimpleModifier;
 import com.aionemu.gameserver.model.gameobjects.stats.modifiers.StatModifier;
 import com.aionemu.gameserver.model.items.ItemStone;
 import com.aionemu.gameserver.model.items.ManaStone;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author IlBuono, kosyachok
+ * @author Lyahim, IlBuono, kosyachok
  *
  */
-public class SM_BROKER_SERVICE extends AionServerPacket
+public class SM_BROKER_SERVICE extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private enum BrokerPacketType
 	{
@@ -105,7 +105,7 @@ public class SM_BROKER_SERVICE extends AionServerPacket
 	}
 	
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{	
 		switch (type)
 		{

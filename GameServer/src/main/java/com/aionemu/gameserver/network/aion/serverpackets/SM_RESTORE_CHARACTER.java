@@ -16,16 +16,16 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * In this packet Server is sending response for CM_RESTORE_CHARACTER.
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class SM_RESTORE_CHARACTER extends AionServerPacket
+public class SM_RESTORE_CHARACTER extends AbstractAionServerPacket<AionChannelHandler>
 {
 	/**
 	 * Character object id.
@@ -49,7 +49,7 @@ public class SM_RESTORE_CHARACTER extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(success ? 0x00 : 0x10);// unk
 		writeD(chaOid);

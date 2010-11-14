@@ -16,17 +16,18 @@
  */
 package com.aionemu.gameserver.network.loginserver.serverpackets;
 
-import com.aionemu.gameserver.network.loginserver.LoginServerConnection;
-import com.aionemu.gameserver.network.loginserver.LsServerPacket;
+import com.aionemu.commons.network.netty.packet.AbstractServerPacket;
+import com.aionemu.gameserver.network.loginserver.LoginServerChannelHandler;
+
 
 /**
  * In this packet Gameserver is asking if given account sessionKey is valid at Loginserver side. [if user that is
  * authenticating on Gameserver is already authenticated on Loginserver]
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class SM_ACCOUNT_AUTH extends LsServerPacket
+public class SM_ACCOUNT_AUTH extends AbstractServerPacket<LoginServerChannelHandler>
 {
 	/**
 	 * accountId [part of session key]
@@ -56,7 +57,6 @@ public class SM_ACCOUNT_AUTH extends LsServerPacket
 	 */
 	public SM_ACCOUNT_AUTH(int accountId, int loginOk, int playOk1, int playOk2)
 	{
-		super(0x01);
 		this.accountId = accountId;
 		this.loginOk = loginOk;
 		this.playOk1 = playOk1;
@@ -67,7 +67,7 @@ public class SM_ACCOUNT_AUTH extends LsServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(LoginServerConnection con)
+	protected void writeImpl(LoginServerChannelHandler cHandler)
 	{
 		writeD(accountId);
 		writeD(loginOk);

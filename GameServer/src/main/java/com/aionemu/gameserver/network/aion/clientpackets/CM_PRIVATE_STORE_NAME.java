@@ -17,13 +17,14 @@
 package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.PrivateStoreService;
 
 /**
- * @author Simple
+ * @author Lyahim, Simple
  */
-public class CM_PRIVATE_STORE_NAME extends AionClientPacket
+public class CM_PRIVATE_STORE_NAME extends AbstractClientPacket<AionChannelHandler>
 {
 	private String		name;
 
@@ -52,7 +53,7 @@ public class CM_PRIVATE_STORE_NAME extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player activePlayer = getConnection().getActivePlayer();
+		Player activePlayer = getChannelHandler().getActivePlayer();
 		PrivateStoreService.openPrivateStore(activePlayer, name);
 	}
 }

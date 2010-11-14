@@ -5,14 +5,15 @@
 package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.ItemService;
 
 /**
  *
- * @author kosyak
+ * @author Lyahim, kosyak
  */
-public class CM_SPLIT_ITEM extends AionClientPacket
+public class CM_SPLIT_ITEM extends AbstractClientPacket<AionChannelHandler>
 {
 
 	int sourceItemObjId;
@@ -44,7 +45,7 @@ public class CM_SPLIT_ITEM extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 
 		if(destinationItemObjId == 0)
 			ItemService.splitItem(player, sourceItemObjId, itemAmount, slotNum, sourceStorageType, destinationStorageType);

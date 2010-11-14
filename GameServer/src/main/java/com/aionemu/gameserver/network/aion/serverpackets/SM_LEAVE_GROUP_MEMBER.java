@@ -16,18 +16,18 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 
 /**
- * @author Lyahim
+ * @author Lyahim, Lyahim
  */
-public class SM_LEAVE_GROUP_MEMBER extends AionServerPacket
+public class SM_LEAVE_GROUP_MEMBER extends AbstractAionServerPacket<AionChannelHandler>
 {
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(0x00);
 		writeD(0x00);

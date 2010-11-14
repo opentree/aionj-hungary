@@ -19,7 +19,7 @@ package com.aionemu.gameserver.services;
 import org.apache.log4j.Logger;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionConnection;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.world.World;
 
@@ -61,7 +61,7 @@ public class DebugService
 			/**
 			 * Check connection
 			 */
-			AionConnection connection = player.getClientConnection();
+			AionChannelHandler connection = player.getClientConnection();
 			if(connection == null)
 			{
 				log.warn(String.format("[DEBUG SERVICE] Player without connection: "

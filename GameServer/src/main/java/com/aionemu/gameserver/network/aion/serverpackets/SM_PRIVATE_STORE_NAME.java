@@ -16,13 +16,13 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author Simple
+ * @author Lyahim, Simple
  */
-public class SM_PRIVATE_STORE_NAME extends AionServerPacket
+public class SM_PRIVATE_STORE_NAME extends AbstractAionServerPacket<AionChannelHandler>
 {
 	/** Private store Information **/
 	private int		playerObjId;
@@ -35,7 +35,7 @@ public class SM_PRIVATE_STORE_NAME extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(playerObjId);
 		writeS(name);

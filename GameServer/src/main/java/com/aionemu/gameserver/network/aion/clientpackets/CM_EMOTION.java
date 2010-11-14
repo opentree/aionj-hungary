@@ -22,16 +22,17 @@ import org.apache.log4j.Logger;
 import com.aionemu.gameserver.model.EmotionType;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.world.zone.ZoneInstance;
 
 /**
- * @author SoulKeeper
+ * @author Lyahim, SoulKeeper
  */
-public class CM_EMOTION extends AionClientPacket
+public class CM_EMOTION extends AbstractClientPacket<AionChannelHandler>
 {
 
 	/**
@@ -120,7 +121,7 @@ public class CM_EMOTION extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 		
 		switch(emotionType)
 		{

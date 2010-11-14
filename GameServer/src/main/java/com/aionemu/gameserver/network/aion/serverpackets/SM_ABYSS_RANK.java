@@ -17,15 +17,15 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.AbyssRank;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.utils.stats.AbyssRankEnum;
 
 /**
- * @author Nemiroff
+ * @author Lyahim, Nemiroff
  * 		Date: 25.01.2010
  */
-public class SM_ABYSS_RANK extends AionServerPacket
+public class SM_ABYSS_RANK extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private AbyssRank rank;
 	private int currentRankId;
@@ -37,7 +37,7 @@ public class SM_ABYSS_RANK extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeQ(rank.getAp()); //curAP
 		writeD(currentRankId); //curRank

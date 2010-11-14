@@ -20,15 +20,16 @@ import org.apache.log4j.Logger;
 
 import com.aionemu.gameserver.model.gameobjects.player.BlockedPlayer;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.services.SocialService;
 
 /**
- * @author Ben
+ * @author Lyahim, Ben
  *
  */
-public class CM_BLOCK_DEL extends AionClientPacket
+public class CM_BLOCK_DEL extends AbstractClientPacket<AionChannelHandler>
 {
 	private static Logger	log				= Logger.getLogger(CM_BLOCK_DEL.class);
 	
@@ -57,7 +58,7 @@ public class CM_BLOCK_DEL extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player activePlayer = getConnection().getActivePlayer();
+		Player activePlayer = getChannelHandler().getActivePlayer();
 		
 		BlockedPlayer target = activePlayer.getBlockList().getBlockedPlayer(targetName);
 		if (target == null)

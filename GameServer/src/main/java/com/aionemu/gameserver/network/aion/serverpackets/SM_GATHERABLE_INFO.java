@@ -17,14 +17,14 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author ATracer
+ * @author Lyahim, ATracer
  *
  */
-public class SM_GATHERABLE_INFO  extends AionServerPacket
+public class SM_GATHERABLE_INFO  extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private VisibleObject visibleObject;
 
@@ -35,7 +35,7 @@ public class SM_GATHERABLE_INFO  extends AionServerPacket
 	}
 	
 	@Override
-	public void writeImpl(AionConnection con)
+	public void writeImpl(AionChannelHandler cHandler)
 	{
 		writeF(visibleObject.getX());
 		writeF(visibleObject.getY());

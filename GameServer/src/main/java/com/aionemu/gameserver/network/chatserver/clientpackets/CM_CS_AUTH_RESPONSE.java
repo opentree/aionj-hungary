@@ -18,19 +18,20 @@ package com.aionemu.gameserver.network.chatserver.clientpackets;
 
 import org.apache.log4j.Logger;
 
-import com.aionemu.commons.netty.State;
+import com.aionemu.commons.network.netty.State;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 import com.aionemu.commons.utils.ExitCode;
-import com.aionemu.gameserver.network.chatserver.CsClientPacket;
+import com.aionemu.gameserver.network.chatserver.ChatServerChannelHandler;
 import com.aionemu.gameserver.network.chatserver.serverpackets.SM_CS_AUTH;
 import com.aionemu.gameserver.services.ChatService;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 
 /**
  * 
- * @author ATracer
+ * @author ATracer, Lyahim
  * 
  */
-public class CM_CS_AUTH_RESPONSE extends CsClientPacket
+public class CM_CS_AUTH_RESPONSE extends AbstractClientPacket<ChatServerChannelHandler>
 {
 
 	/**
@@ -69,7 +70,7 @@ public class CM_CS_AUTH_RESPONSE extends CsClientPacket
 		{
 			case 0: // Authed
 				log.info("GameServer authed successfully IP : "+(ip[0]& 0xFF)+"."+(ip[1] & 0xFF)+"."+(ip[2] & 0xFF)+"."+(ip[3] & 0xFF)+" Port: " +port);
-				getConnection().setState(State.AUTHED);
+				getChannelHandler().setState(State.AUTHED);
 				ChatService.setIp(ip);
 				ChatService.setPort(port);
 				break;
@@ -83,7 +84,7 @@ public class CM_CS_AUTH_RESPONSE extends CsClientPacket
 					@Override
 					public void run()
 					{
-						CM_CS_AUTH_RESPONSE.this.getConnection().sendPacket(new SM_CS_AUTH());
+						CM_CS_AUTH_RESPONSE.this.getChannelHandler().sendPacket(new SM_CS_AUTH());
 					}
 
 				}, 10000);

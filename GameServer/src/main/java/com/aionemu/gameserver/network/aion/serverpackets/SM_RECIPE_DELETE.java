@@ -16,14 +16,14 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author MrPoke and lord_rex
+ * @author Lyahim, MrPoke and lord_rex
  *
  */
-public class SM_RECIPE_DELETE extends AionServerPacket
+public class SM_RECIPE_DELETE extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int recipeId;
 	
@@ -33,7 +33,7 @@ public class SM_RECIPE_DELETE extends AionServerPacket
 	}
 	
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(recipeId);
 	}

@@ -14,22 +14,27 @@
  *  You should have received a copy of the GNU General Public License
  *  along with aion-unique.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aionemu.gameserver.network.chatserver;
+package com.aionemu.gameserver.network.aion;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 
-import com.aionemu.commons.netty.handler.PacketHandler;
+import com.aionemu.commons.network.netty.handler.ClientPacketHandler;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 
 /**
- * @author ATracer
+ * @author lyahim
+ *
  */
-public class CsPacketHandler extends PacketHandler<ChatServerConnection>
-{	/* (non-Javadoc)
-	 * @see com.aionemu.commons.netty.handler.PacketHandler#handle(org.jboss.netty.buffer.ChannelBuffer, com.aionemu.commons.netty.handler.AbstractChannelHandler)
-	 */
+public class AionClientPacketHandler<T extends AionChannelHandler> extends ClientPacketHandler<T>
+{
 	@Override
-	public CsClientPacket handle(ChannelBuffer data, ChatServerConnection client)
+    public AbstractClientPacket<T> handle(ChannelBuffer data, T ch)
 	{
-		return (CsClientPacket)super.handle(data, client);
+        int id = data.readByte() & 0xff;
+		/* Second opcodec. */
+        data.readShort();
+
+		return getPacket(id, data, ch);
 	}
+
 }

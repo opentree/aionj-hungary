@@ -25,7 +25,6 @@ import org.apache.log4j.Logger;
 import com.aionemu.commons.database.DatabaseFactory;
 import com.aionemu.commons.database.dao.DAOManager;
 import com.aionemu.commons.log4j.exceptions.Log4jInitializationError;
-import com.aionemu.commons.scripting.AionScriptEngineManager;
 import com.aionemu.commons.services.LoggingService;
 import com.aionemu.commons.utils.AEFastSet;
 import com.aionemu.commons.utils.AEInfos;
@@ -36,7 +35,7 @@ import com.aionemu.gameserver.configs.main.ThreadConfig;
 import com.aionemu.gameserver.dao.PlayerDAO;
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.siege.Influence;
-import com.aionemu.gameserver.network.NettyServer;
+import com.aionemu.gameserver.network.NettyGameServer;
 import com.aionemu.gameserver.questEngine.QuestEngine;
 import com.aionemu.gameserver.services.AllianceService;
 import com.aionemu.gameserver.services.AnnouncementService;
@@ -206,7 +205,7 @@ public class GameServer
 		AEInfos.printAllInfos();
 
 		AEInfos.printSection("NettyServer");
-		NettyServer.getInstance();
+		NettyGameServer.getInstance();
 		GameTimeManager.startClock();
 
 		if(OptionsConfig.DEADLOCK_DETECTOR_ENABLED)

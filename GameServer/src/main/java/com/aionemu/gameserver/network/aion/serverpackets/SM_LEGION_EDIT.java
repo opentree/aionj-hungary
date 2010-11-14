@@ -17,15 +17,15 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.legion.Legion;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * 
- * @author Simple
+ * @author Lyahim, Simple
  * 
  */
-public class SM_LEGION_EDIT extends AionServerPacket
+public class SM_LEGION_EDIT extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int					type;
 	private Legion				legion;
@@ -57,7 +57,7 @@ public class SM_LEGION_EDIT extends AionServerPacket
 	}
 
 	@Override
-	public void writeImpl(AionConnection con)
+	public void writeImpl(AionChannelHandler cHandler)
 	{
         writeC( type);
 		switch(type)

@@ -23,13 +23,12 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.PrivateStore;
 import com.aionemu.gameserver.model.templates.item.ItemTemplate;
 import com.aionemu.gameserver.model.trade.TradePSItem;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.InventoryPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author Simple
+ * @author Lyahim, Simple
  */
-public class SM_PRIVATE_STORE extends InventoryPacket
+public class SM_PRIVATE_STORE extends _InventoryPacket
 {
 	/** Private store Information **/
 	private PrivateStore	store;
@@ -40,7 +39,7 @@ public class SM_PRIVATE_STORE extends InventoryPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		if(store != null)
 		{

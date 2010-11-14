@@ -18,17 +18,18 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.account.Account;
 import com.aionemu.gameserver.model.account.PlayerAccountData;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_RESTORE_CHARACTER;
 import com.aionemu.gameserver.services.PlayerService;
 
 /**
  * In this packets aion client is requesting cancellation of character deleting.
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class CM_RESTORE_CHARACTER extends AionClientPacket
+public class CM_RESTORE_CHARACTER extends AbstractClientPacket<AionChannelHandler>
 {
 	/**
 	 * PlayOk2 - we dont care...
@@ -65,7 +66,7 @@ public class CM_RESTORE_CHARACTER extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Account account = getConnection().getAccount();
+		Account account = getChannelHandler().getAccount();
 		PlayerAccountData pad = account.getPlayerAccountData(chaOid);
 
 		boolean success = pad != null && PlayerService.cancelPlayerDeletion(pad);

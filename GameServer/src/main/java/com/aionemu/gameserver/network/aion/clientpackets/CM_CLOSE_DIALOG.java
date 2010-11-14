@@ -19,12 +19,13 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 import com.aionemu.gameserver.model.gameobjects.AionObject;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_LOOKATOBJECT;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.world.World;
 
-public class CM_CLOSE_DIALOG extends AionClientPacket
+public class CM_CLOSE_DIALOG extends AbstractClientPacket<AionChannelHandler>
 {
 	/**
 	* Target object id that client wants to TALK WITH or 0 if wants to unselect
@@ -56,7 +57,7 @@ public class CM_CLOSE_DIALOG extends AionClientPacket
 	protected void runImpl()
 	{
 		AionObject targetObject = World.getInstance().findAionObject(targetObjectId);
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 
 		if(targetObject == null || player == null)
 			return;

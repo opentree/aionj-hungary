@@ -17,14 +17,15 @@
 package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.ItemService;
 
 /**
- * @author alexa026, kosyachok
+ * @author Lyahim, alexa026, kosyachok
  * 
  */
-public class CM_MOVE_ITEM extends AionClientPacket
+public class CM_MOVE_ITEM extends AbstractClientPacket<AionChannelHandler>
 {
 
 	/**
@@ -61,7 +62,7 @@ public class CM_MOVE_ITEM extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 		ItemService.moveItem(player, targetObjectId, source, destination, slot);
 	}
 }

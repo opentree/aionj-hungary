@@ -16,16 +16,16 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * Notifies players when their friends log in, out, or delete them
  * 
- * @author Ben
+ * @author Lyahim, Ben
  *
  */
-public class SM_FRIEND_NOTIFY extends AionServerPacket
+public class SM_FRIEND_NOTIFY extends AbstractAionServerPacket<AionChannelHandler>
 {
 	/**
 	 * Buddy has logged in
@@ -57,7 +57,7 @@ public class SM_FRIEND_NOTIFY extends AionServerPacket
 	}
 	
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeS(name);
 		writeC(code);

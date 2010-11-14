@@ -16,16 +16,16 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * This packet is used to update current hp and max hp values.
  * 
- * @author Luno
+ * @author Lyahim, Luno
  * 
  */
-public class SM_STATUPDATE_HP extends AionServerPacket
+public class SM_STATUPDATE_HP extends AbstractAionServerPacket<AionChannelHandler>
 {
 
 	private int	currentHp;
@@ -46,7 +46,7 @@ public class SM_STATUPDATE_HP extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(currentHp);
 		writeD(maxHp);

@@ -1,13 +1,13 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author IlBuono
+ * @author Lyahim, IlBuono
  */
-public class SM_PLASTIC_SURGERY extends AionServerPacket
+public class SM_PLASTIC_SURGERY extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int		playerObjId;
     private boolean    check_ticket; //2 no ticket, 1 have ticket
@@ -22,7 +22,7 @@ public class SM_PLASTIC_SURGERY extends AionServerPacket
 
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
             writeD(playerObjId);
             writeC( check_ticket ? 1 : 2);

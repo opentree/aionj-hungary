@@ -16,15 +16,15 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * ascension quest's morph
- * @author wylovech
+ * @author Lyahim, wylovech
  *
  */
-public class SM_ASCENSION_MORPH extends AionServerPacket
+public class SM_ASCENSION_MORPH extends AbstractAionServerPacket<AionChannelHandler>
 {
    private int inascension;   
    public SM_ASCENSION_MORPH(int inascension)
@@ -33,7 +33,7 @@ public class SM_ASCENSION_MORPH extends AionServerPacket
    }
    
    @Override
-   protected void writeImpl(AionConnection con)
+   protected void writeImpl(AionChannelHandler cHandler)
    {
       writeC(inascension);//if inascension =0x01 morph.   
    }

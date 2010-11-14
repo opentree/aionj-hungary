@@ -23,16 +23,16 @@ import com.aionemu.gameserver.model.gameobjects.player.PlayerCommonData;
 import com.aionemu.gameserver.model.gameobjects.stats.PlayerLifeStats;
 import com.aionemu.gameserver.model.group.GroupEvent;
 import com.aionemu.gameserver.model.group.PlayerGroup;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.skillengine.model.Effect;
 import com.aionemu.gameserver.world.WorldPosition;
 
 /**
- * @author Lyahim, ATracer
+ * @author Lyahim, Lyahim, ATracer
  *
  */
-public class SM_GROUP_MEMBER_INFO extends AionServerPacket
+public class SM_GROUP_MEMBER_INFO extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private PlayerGroup group;
 	private Player player;
@@ -46,7 +46,7 @@ public class SM_GROUP_MEMBER_INFO extends AionServerPacket
 	}
 	
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{		
 		PlayerLifeStats pls = player.getLifeStats();
 		PlayerCommonData pcd = player.getCommonData();

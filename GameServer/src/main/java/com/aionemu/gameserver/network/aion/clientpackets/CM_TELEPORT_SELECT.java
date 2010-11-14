@@ -21,15 +21,16 @@ import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.teleport.TelelocationTemplate;
 import com.aionemu.gameserver.model.templates.teleport.TeleporterTemplate;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.TeleportService;
 import com.aionemu.gameserver.world.World;
 
 /**
- * @author ATracer, orz
+ * @author Lyahim, ATracer, orz
  *
  */
-public class CM_TELEPORT_SELECT extends AionClientPacket
+public class CM_TELEPORT_SELECT extends AbstractClientPacket<AionChannelHandler>
 {
 	/** NPC ID */
 	public  int					targetObjectId;
@@ -63,7 +64,7 @@ public class CM_TELEPORT_SELECT extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player activePlayer = getConnection().getActivePlayer();
+		Player activePlayer = getChannelHandler().getActivePlayer();
 
 		Npc npc = (Npc)World.getInstance().findAionObject(targetObjectId);
 

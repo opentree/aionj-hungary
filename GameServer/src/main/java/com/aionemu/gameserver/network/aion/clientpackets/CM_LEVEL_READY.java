@@ -17,7 +17,8 @@
 package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_PLAYER_INFO;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.questEngine.QuestEngine;
@@ -29,10 +30,10 @@ import com.aionemu.gameserver.world.World;
 /**
  * Client is saying that level[map] is ready.
  * 
- * @author -Nemesiss-
- * @author Kwazar
+ * @author Lyahim, -Nemesiss-
+ * @author Lyahim, Kwazar
  */
-public class CM_LEVEL_READY extends AionClientPacket
+public class CM_LEVEL_READY extends AbstractClientPacket<AionChannelHandler>
 {
 	
 	/**
@@ -60,7 +61,7 @@ public class CM_LEVEL_READY extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player activePlayer = getConnection().getActivePlayer();
+		Player activePlayer = getChannelHandler().getActivePlayer();
 
 		sendPacket(new SM_PLAYER_INFO(activePlayer, false));
 		activePlayer.getController().startProtectionActiveTask();

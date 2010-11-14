@@ -20,14 +20,14 @@ import com.aionemu.gameserver.model.group.LootDistribution;
 import com.aionemu.gameserver.model.group.LootGroupRules;
 import com.aionemu.gameserver.model.group.LootRuleType;
 import com.aionemu.gameserver.model.group.PlayerGroup;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author Lyahim, ATracer
+ * @author Lyahim, Lyahim, ATracer
  *
  */
-public class SM_GROUP_INFO extends AionServerPacket
+public class SM_GROUP_INFO extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int groupid;
 	private int leaderid;
@@ -61,7 +61,7 @@ public class SM_GROUP_INFO extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(this.groupid);
 		writeD(this.leaderid);

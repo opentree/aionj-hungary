@@ -20,16 +20,17 @@ import org.apache.log4j.Logger;
 
 import com.aionemu.gameserver.model.gameobjects.player.DeniedStatus;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_VIEW_PLAYER_DETAILS;
 import com.aionemu.gameserver.world.World;
 
 /**
- * @author Avol
+ * @author Lyahim, Avol
  * 
  */
-public class CM_VIEW_PLAYER_DETAILS extends AionClientPacket
+public class CM_VIEW_PLAYER_DETAILS extends AbstractClientPacket<AionChannelHandler>
 {
 	private static final Logger log = Logger.getLogger(CM_VIEW_PLAYER_DETAILS.class);
 

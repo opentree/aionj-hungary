@@ -8,13 +8,12 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.items.ItemId;
 import com.aionemu.gameserver.model.templates.item.ItemTemplate;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.InventoryPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 /**
  *
- * @author kosyachok
+ * @author Lyahim, kosyachok
  */
-public class SM_WAREHOUSE_UPDATE extends InventoryPacket
+public class SM_WAREHOUSE_UPDATE extends _InventoryPacket
 {
 	private int warehouseType;
 	private Item item;
@@ -27,7 +26,7 @@ public class SM_WAREHOUSE_UPDATE extends InventoryPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeC( warehouseType);
 		writeH(13);

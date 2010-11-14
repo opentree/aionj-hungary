@@ -16,16 +16,16 @@
  */
 package com.aionemu.gameserver.network.loginserver.serverpackets;
 
-import com.aionemu.gameserver.network.loginserver.LoginServerConnection;
-import com.aionemu.gameserver.network.loginserver.LsServerPacket;
+import com.aionemu.gameserver.network.loginserver.LoginServerChannelHandler;
+import com.aionemu.commons.network.netty.packet.AbstractServerPacket;
 
 /**
  * The universal packet for account/IP bans
  * 
- * @author Watson
+ * @author Lyahim, Watson
  * 
  */
-public class SM_BAN extends LsServerPacket
+public class SM_BAN extends AbstractServerPacket<LoginServerChannelHandler>
 {
 	/**
 	 * Ban type
@@ -58,8 +58,6 @@ public class SM_BAN extends LsServerPacket
 
 	public SM_BAN(byte type, int accountId, String ip, int time, int adminObjId)
 	{
-		super(0x06);
-
 		this.type = type;
 		this.accountId = accountId;
 		this.ip = ip;
@@ -70,7 +68,7 @@ public class SM_BAN extends LsServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(LoginServerConnection con)
+	protected void writeImpl(LoginServerChannelHandler cHandler)
 	{
 		writeC(type);
 		writeD(accountId);

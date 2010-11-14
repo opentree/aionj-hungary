@@ -17,18 +17,18 @@
 
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-import com.aionemu.gameserver.network.aion.AionClientPacket;
-import com.aionemu.gameserver.network.aion.AionConnection;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_CREATE_CHARACTER;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_NICKNAME_CHECK_RESPONSE;
 import com.aionemu.gameserver.services.PlayerService;
 /**
  * In this packets aion client is asking if given nickname is ok/free?.
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class CM_CHECK_NICKNAME extends AionClientPacket
+public class CM_CHECK_NICKNAME extends AbstractClientPacket<AionChannelHandler>
 {
 	/**
 	 * nick name that need to be checked
@@ -59,7 +59,7 @@ public class CM_CHECK_NICKNAME extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		AionConnection client = getConnection();
+		AionChannelHandler client = getChannelHandler();
 
 		if(!PlayerService.isValidName(nick))
 		{

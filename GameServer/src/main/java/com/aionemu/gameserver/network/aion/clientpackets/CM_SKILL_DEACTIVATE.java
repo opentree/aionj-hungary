@@ -17,13 +17,14 @@
 package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author ATracer
+ * @author Lyahim, ATracer
  *
  */
-public class CM_SKILL_DEACTIVATE extends AionClientPacket
+public class CM_SKILL_DEACTIVATE extends AbstractClientPacket<AionChannelHandler>
 {
 	private int skillId;
 	
@@ -47,7 +48,7 @@ public class CM_SKILL_DEACTIVATE extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 		player.getEffectController().removeNoshowEffect(skillId);
 	}
 }

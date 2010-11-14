@@ -17,15 +17,16 @@
 package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /**
- * @author rhys2002
+ * @author Lyahim, rhys2002
  *
  */
-public class CM_OPEN_STATICDOOR extends AionClientPacket
+public class CM_OPEN_STATICDOOR extends AbstractClientPacket<AionChannelHandler>
 {
 	private int doorId;
 	
@@ -46,7 +47,7 @@ public class CM_OPEN_STATICDOOR extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player player = this.getConnection().getActivePlayer();
+		Player player = this.getChannelHandler().getActivePlayer();
 		PacketSendUtility.broadcastPacketAndReceive(player, new SM_EMOTION(doorId));
 	}
 

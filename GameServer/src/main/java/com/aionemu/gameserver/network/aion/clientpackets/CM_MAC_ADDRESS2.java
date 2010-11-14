@@ -1,14 +1,15 @@
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * Client sends this only once.
  * 
- * @author Luno
+ * @author Lyahim, Luno
  * 
  */
-public class CM_MAC_ADDRESS2 extends AionClientPacket
+public class CM_MAC_ADDRESS2 extends AbstractClientPacket<AionChannelHandler>
 {
 	/**
 	 * Constructor

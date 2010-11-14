@@ -21,7 +21,8 @@ import org.apache.log4j.Logger;
 import com.aionemu.gameserver.model.gameobjects.AionObject;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.questEngine.QuestEngine;
 import com.aionemu.gameserver.questEngine.model.QuestEnv;
 import com.aionemu.gameserver.services.ClassChangeService;
@@ -29,10 +30,10 @@ import com.aionemu.gameserver.world.World;
 
 /**
  * 
- * @author KKnD , orz, avol
+ * @author Lyahim, KKnD , orz, avol
  * 
  */
-public class CM_DIALOG_SELECT extends AionClientPacket
+public class CM_DIALOG_SELECT extends AbstractClientPacket<AionChannelHandler>
 {
 	/**
 	 * Target object id that client wants to TALK WITH or 0 if wants to unselect
@@ -76,7 +77,7 @@ public class CM_DIALOG_SELECT extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		final Player player = getConnection().getActivePlayer();
+		final Player player = getChannelHandler().getActivePlayer();
 		if(player == null)
 			return;
 

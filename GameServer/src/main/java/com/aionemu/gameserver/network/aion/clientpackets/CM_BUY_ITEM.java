@@ -23,17 +23,18 @@ import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.TradeListTemplate;
 import com.aionemu.gameserver.model.trade.TradeList;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.PrivateStoreService;
 import com.aionemu.gameserver.services.TradeService;
 import com.aionemu.gameserver.world.World;
 
 /**
  * 
- * @author orz modified by ATracer
+ * @author Lyahim, orz modified by ATracer
  * modified by Simple
  */
-public class CM_BUY_ITEM extends AionClientPacket
+public class CM_BUY_ITEM extends AbstractClientPacket<AionChannelHandler>
 {
 	
 	private int	sellerObjId;
@@ -96,7 +97,7 @@ public class CM_BUY_ITEM extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 
 		switch(unk1)
 		{

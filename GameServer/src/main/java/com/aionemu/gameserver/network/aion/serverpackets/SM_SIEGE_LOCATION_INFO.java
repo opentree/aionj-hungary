@@ -20,17 +20,17 @@ import javolution.util.FastMap;
 
 import com.aionemu.gameserver.configs.main.SiegeConfig;
 import com.aionemu.gameserver.model.siege.SiegeLocation;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.SiegeService;
 
 /**
- * @author Sarynth - packets from rhys2002.
+ * @author Lyahim, Sarynth - packets from rhys2002.
  *
  */
 
 // SM_SIEGE_LOCATION_INFO
-public class SM_SIEGE_LOCATION_INFO extends AionServerPacket
+public class SM_SIEGE_LOCATION_INFO extends AbstractAionServerPacket<AionChannelHandler>
 {
 	/***
 	 * infoType
@@ -58,7 +58,7 @@ public class SM_SIEGE_LOCATION_INFO extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		if (SiegeConfig.SIEGE_ENABLED == false)
 		{

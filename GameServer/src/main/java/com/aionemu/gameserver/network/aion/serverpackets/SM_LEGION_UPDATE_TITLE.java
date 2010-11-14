@@ -16,14 +16,14 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author sweetkr
+ * @author Lyahim, sweetkr
  * 
  */
-public class SM_LEGION_UPDATE_TITLE extends AionServerPacket
+public class SM_LEGION_UPDATE_TITLE extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int		objectId;
 	private int		legionId;
@@ -39,7 +39,7 @@ public class SM_LEGION_UPDATE_TITLE extends AionServerPacket
 	}
 
 	@Override
-	public void writeImpl(AionConnection con)
+	public void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(objectId);
 		writeD(legionId);

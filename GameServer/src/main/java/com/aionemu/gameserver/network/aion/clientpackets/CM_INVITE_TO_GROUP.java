@@ -18,7 +18,8 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.DeniedStatus;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.services.AllianceService;
 import com.aionemu.gameserver.services.GroupService;
@@ -28,10 +29,10 @@ import com.aionemu.gameserver.world.World;
 
 /**
  * 
- * @author Lyahim, ATracer
+ * @author Lyahim, Lyahim, ATracer
  * Modified by Simple
  */
-public class CM_INVITE_TO_GROUP extends AionClientPacket
+public class CM_INVITE_TO_GROUP extends AbstractClientPacket<AionChannelHandler>
 {
 
 	private String			name;
@@ -59,7 +60,7 @@ public class CM_INVITE_TO_GROUP extends AionClientPacket
 	{
 		final String playerName = Util.convertName(name);
 
-		final Player inviter = getConnection().getActivePlayer();
+		final Player inviter = getChannelHandler().getActivePlayer();
 		final Player invited = World.getInstance().findPlayer(playerName);
 
 		if(invited != null)

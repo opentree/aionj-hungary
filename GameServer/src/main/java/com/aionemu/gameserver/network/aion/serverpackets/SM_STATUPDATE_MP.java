@@ -16,16 +16,16 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * This packet is used to update mp / max mp value.
  * 
- * @author Luno
+ * @author Lyahim, Luno
  * 
  */
-public class SM_STATUPDATE_MP extends AionServerPacket
+public class SM_STATUPDATE_MP extends AbstractAionServerPacket<AionChannelHandler>
 {
 
 	private int	currentMp;
@@ -46,7 +46,7 @@ public class SM_STATUPDATE_MP extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(currentMp);
 		writeD(maxMp);

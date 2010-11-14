@@ -21,17 +21,17 @@ import java.util.Set;
 
 import com.aionemu.gameserver.model.drop.DropItem;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * 
- * @author alexa026, Avol, Corrected by Metos
+ * @author Lyahim, alexa026, Avol, Corrected by Metos
  * 
  * modified by ATracer
  * 
  */
-public class SM_LOOT_ITEMLIST extends AionServerPacket
+public class SM_LOOT_ITEMLIST extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int	targetObjectId;
 	private DropItem[] dropItems;
@@ -54,7 +54,7 @@ public class SM_LOOT_ITEMLIST extends AionServerPacket
 	 * {@inheritDoc} dc
 	 */
 	@Override
-	protected void writeImpl(AionConnection con) 
+	protected void writeImpl(AionChannelHandler cHandler) 
 	{
 		writeD(targetObjectId);
 		writeC( size);

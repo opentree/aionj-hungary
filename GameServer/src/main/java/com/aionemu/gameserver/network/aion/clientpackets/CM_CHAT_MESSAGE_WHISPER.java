@@ -22,7 +22,8 @@ import com.aionemu.gameserver.configs.main.CustomConfig;
 import com.aionemu.gameserver.configs.main.OptionsConfig;
 import com.aionemu.gameserver.model.ChatType;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_MESSAGE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.restrictions.RestrictionsManager;
@@ -33,9 +34,9 @@ import com.aionemu.gameserver.world.World;
 /**
  * Packet that reads Whisper chat messages.<br>
  * 
- * @author SoulKeeper
+ * @author Lyahim, SoulKeeper
  */
-public class CM_CHAT_MESSAGE_WHISPER extends AionClientPacket
+public class CM_CHAT_MESSAGE_WHISPER extends AbstractClientPacket<AionChannelHandler>
 {
 	private static final Logger	log	= Logger.getLogger(CM_CHAT_MESSAGE_WHISPER.class);
 
@@ -77,7 +78,7 @@ public class CM_CHAT_MESSAGE_WHISPER extends AionClientPacket
 	{
 		String formatname = Util.convertName(name);
 
-		Player sender = getConnection().getActivePlayer();
+		Player sender = getChannelHandler().getActivePlayer();
 		Player receiver = World.getInstance().findPlayer(formatname);
 
 		if(OptionsConfig.LOG_CHAT)

@@ -19,13 +19,14 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 import com.aionemu.gameserver.model.gameobjects.Gatherable;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author ATracer
+ * @author Lyahim, ATracer
  *
  */
-public class CM_GATHER extends AionClientPacket
+public class CM_GATHER extends AbstractClientPacket<AionChannelHandler>
 {
 	boolean isStartGather = false;
 
@@ -48,7 +49,7 @@ public class CM_GATHER extends AionClientPacket
 	protected void runImpl()
 	{
 
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 		if(player != null)
 		{
 			VisibleObject target = player.getTarget();

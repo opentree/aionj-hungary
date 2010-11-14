@@ -16,15 +16,15 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * 
- * @author -orz-, MrPoke
+ * @author Lyahim, -orz-, MrPoke
  * 
  */
-public class SM_PLAY_MOVIE extends AionServerPacket
+public class SM_PLAY_MOVIE extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int	type	= 1;	// if 1: CutSceneMovies else CutScenes
 	private int	movieId	= 0;
@@ -36,7 +36,7 @@ public class SM_PLAY_MOVIE extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeC( type);
 		writeD(0x00);

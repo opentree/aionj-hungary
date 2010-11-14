@@ -16,15 +16,16 @@
  */
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_FRIEND_LIST;
 
 /**
  * Send when the client requests the friendlist
- * @author Ben
+ * @author Lyahim, Ben
  *
  */
-public class CM_SHOW_FRIENDLIST extends AionClientPacket
+public class CM_SHOW_FRIENDLIST extends AbstractClientPacket<AionChannelHandler>
 {
 
 	public CM_SHOW_FRIENDLIST(int opcode)

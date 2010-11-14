@@ -17,14 +17,14 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.account.Account;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class SM_L2AUTH_LOGIN_CHECK extends AionServerPacket
+public class SM_L2AUTH_LOGIN_CHECK extends AbstractAionServerPacket<AionChannelHandler>
 {
 	/**
 	 * True if client is authed.
@@ -45,9 +45,9 @@ public class SM_L2AUTH_LOGIN_CHECK extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
-		Account account = con.getAccount();
+		Account account = cHandler.getAccount();
 		if (account != null)
 		{
 			writeD(ok ? 0x00 : 0x01);

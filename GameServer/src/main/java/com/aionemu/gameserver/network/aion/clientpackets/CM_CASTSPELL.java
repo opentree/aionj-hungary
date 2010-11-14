@@ -2,13 +2,14 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.skillengine.model.SkillTemplate;
 /**
- * @author alexa026
- * @author rhys2002
+ * @author Lyahim, alexa026
+ * @author Lyahim, rhys2002
  */
-public class CM_CASTSPELL extends AionClientPacket
+public class CM_CASTSPELL extends AbstractClientPacket<AionChannelHandler>
 {
 	private int					spellid;
 	private int					targetType; // 0 - obj id, 1 - point location
@@ -65,7 +66,7 @@ public class CM_CASTSPELL extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 		
 		if(player.isProtectionActive())
 		{

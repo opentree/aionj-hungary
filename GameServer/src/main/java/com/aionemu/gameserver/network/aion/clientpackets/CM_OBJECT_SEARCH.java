@@ -20,13 +20,14 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SHOW_NPC_ON_MAP;
 
 /**
- * @author Lyahim
+ * @author Lyahim, Lyahim
  */
-public class CM_OBJECT_SEARCH extends AionClientPacket
+public class CM_OBJECT_SEARCH extends AbstractClientPacket<AionChannelHandler>
 {
 	private int npcId;
 	/**

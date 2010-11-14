@@ -17,15 +17,15 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * 
- * @author Simple
+ * @author Lyahim, Simple
  * 
  */
-public class SM_LEGION_ADD_MEMBER extends AionServerPacket
+public class SM_LEGION_ADD_MEMBER extends AbstractAionServerPacket<AionChannelHandler>
 {	
 	private Player	player;
 	private boolean isMember;
@@ -41,7 +41,7 @@ public class SM_LEGION_ADD_MEMBER extends AionServerPacket
 	}
 
 	@Override
-	public void writeImpl(AionConnection con)
+	public void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(player.getObjectId());
 		writeS(player.getName());

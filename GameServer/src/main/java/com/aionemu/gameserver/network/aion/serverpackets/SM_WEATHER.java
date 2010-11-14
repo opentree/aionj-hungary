@@ -16,14 +16,14 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author ATracer
- * @author Kwazar
+ * @author Lyahim, ATracer
+ * @author Lyahim, Kwazar
  */
-public class SM_WEATHER extends AionServerPacket
+public class SM_WEATHER extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int					weatherCode;
 
@@ -33,7 +33,7 @@ public class SM_WEATHER extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeH(this.weatherCode);
 		writeC( 0x0);

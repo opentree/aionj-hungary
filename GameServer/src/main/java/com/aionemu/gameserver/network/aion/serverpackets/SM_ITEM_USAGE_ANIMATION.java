@@ -16,13 +16,13 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author ATracer
+ * @author Lyahim, ATracer
  */
-public class SM_ITEM_USAGE_ANIMATION extends AionServerPacket
+public class SM_ITEM_USAGE_ANIMATION extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int playerObjId;
 	private int itemObjId;
@@ -61,7 +61,7 @@ public class SM_ITEM_USAGE_ANIMATION extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(playerObjId); // player obj id
 		writeD(playerObjId); // player obj id 2x - other player? maybe item can be used on other player.

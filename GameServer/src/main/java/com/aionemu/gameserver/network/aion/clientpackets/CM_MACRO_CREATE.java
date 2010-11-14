@@ -19,16 +19,17 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 
 import org.apache.log4j.Logger;
 
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_MACRO_RESULT;
 import com.aionemu.gameserver.services.PlayerService;
 
 /**
  * Request to create
  * 
- * @author SoulKeeper
+ * @author Lyahim, SoulKeeper
  */
-public class CM_MACRO_CREATE extends AionClientPacket
+public class CM_MACRO_CREATE extends AbstractClientPacket<AionChannelHandler>
 {
 
 	/**
@@ -73,7 +74,7 @@ public class CM_MACRO_CREATE extends AionClientPacket
 	{
 		log.debug(String.format("Created Macro #%d: %s", macroPosition, macroXML));
 
-		PlayerService.addMacro(getConnection().getActivePlayer(), macroPosition, macroXML);
+		PlayerService.addMacro(getChannelHandler().getActivePlayer(), macroPosition, macroXML);
 		
 		sendPacket(SM_MACRO_RESULT.SM_MACRO_CREATED);
 	}

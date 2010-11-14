@@ -16,16 +16,17 @@
  */
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_CHARACTER_LIST;
 
 /**
  * In this packets aion client is requesting character list.
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class CM_CHARACTER_LIST extends AionClientPacket
+public class CM_CHARACTER_LIST extends AbstractClientPacket<AionChannelHandler>
 {
 	/**
 	 * PlayOk2 - we dont care...

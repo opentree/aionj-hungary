@@ -22,16 +22,16 @@ import com.aionemu.gameserver.model.alliance.PlayerAllianceEvent;
 import com.aionemu.gameserver.model.alliance.PlayerAllianceMember;
 import com.aionemu.gameserver.model.gameobjects.player.PlayerCommonData;
 import com.aionemu.gameserver.model.gameobjects.stats.PlayerLifeStats;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.skillengine.model.Effect;
 import com.aionemu.gameserver.world.WorldPosition;
 
 /**
- * @author Sarynth (Thx Rhys2002 for Packets)
+ * @author Lyahim, Sarynth (Thx Rhys2002 for Packets)
  *
  */
-public class SM_ALLIANCE_MEMBER_INFO extends AionServerPacket
+public class SM_ALLIANCE_MEMBER_INFO extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private PlayerAllianceMember member;
 	private PlayerAllianceEvent event;
@@ -43,7 +43,7 @@ public class SM_ALLIANCE_MEMBER_INFO extends AionServerPacket
 	}
 	
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		PlayerCommonData pcd = member.getCommonData();
 		WorldPosition wp = pcd.getPosition();

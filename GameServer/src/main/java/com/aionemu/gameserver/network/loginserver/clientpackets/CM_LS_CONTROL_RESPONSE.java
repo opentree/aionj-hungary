@@ -19,7 +19,8 @@ package com.aionemu.gameserver.network.loginserver.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.network.loginserver.LoginServer;
-import com.aionemu.gameserver.network.loginserver.LsClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.loginserver.LoginServerChannelHandler;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.Util;
 import com.aionemu.gameserver.utils.rates.Rates;
@@ -27,10 +28,10 @@ import com.aionemu.gameserver.world.World;
 
 /**
  * 
- * @author Aionchs-Wylovech
+ * @author Lyahim, Aionchs-Wylovech
  * 
  */
-public class CM_LS_CONTROL_RESPONSE extends LsClientPacket
+public class CM_LS_CONTROL_RESPONSE extends AbstractClientPacket<LoginServerChannelHandler>
 {
 	private int		type;
 	private boolean		result;

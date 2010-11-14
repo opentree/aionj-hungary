@@ -21,16 +21,16 @@ import org.apache.log4j.Logger;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.teleport.TeleporterTemplate;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.world.World;
 /**
  * 
- * @author alexa026 , orz
+ * @author Lyahim, alexa026 , orz
  * 
  */
-public class SM_TELEPORT_MAP extends AionServerPacket
+public class SM_TELEPORT_MAP extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int	targetObjectId;
 	private Player	player;
@@ -49,7 +49,7 @@ public class SM_TELEPORT_MAP extends AionServerPacket
 	}
 	
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		if ((teleport != null) && (teleport.getNpcId() != 0) && (teleport.getTeleportId() != 0))
 		{

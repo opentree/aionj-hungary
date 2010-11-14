@@ -16,14 +16,14 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author orz
+ * @author Lyahim, orz
  *
  */
-public class SM_QUEST_DELETE extends AionServerPacket
+public class SM_QUEST_DELETE extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int questId;
 
@@ -32,7 +32,7 @@ public class SM_QUEST_DELETE extends AionServerPacket
 		this.questId = questId;
 	}
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{		
 		writeH(questId);
 		writeC( 0x00);

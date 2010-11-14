@@ -19,15 +19,15 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.templates.TradeListTemplate;
 import com.aionemu.gameserver.model.templates.TradeListTemplate.TradeTab;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * 
- * @author alexa026
+ * @author Lyahim, alexa026
  * modified by ATracer, Sarynth
  */
-public class SM_TRADELIST extends AionServerPacket
+public class SM_TRADELIST extends AbstractAionServerPacket<AionChannelHandler>
 {
 	
 	private int	targetObjectId;
@@ -42,7 +42,7 @@ public class SM_TRADELIST extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{		
 		if ((tlist != null)&&(tlist.getNpcId()!=0)&&(tlist.getCount()!=0))
 		{

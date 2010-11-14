@@ -21,14 +21,15 @@ import com.aionemu.gameserver.model.gameobjects.AionObject;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.Summon;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.world.World;
 
 /**
- * @author ATracer
+ * @author Lyahim, ATracer
  *
  */
-public class CM_SUMMON_COMMAND extends AionClientPacket
+public class CM_SUMMON_COMMAND extends AbstractClientPacket<AionChannelHandler>
 {
 
 	private int mode;
@@ -51,7 +52,7 @@ public class CM_SUMMON_COMMAND extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player activePlayer = getConnection().getActivePlayer();
+		Player activePlayer = getChannelHandler().getActivePlayer();
 		Summon summon = activePlayer.getSummon();
 		if(summon != null)
 		{

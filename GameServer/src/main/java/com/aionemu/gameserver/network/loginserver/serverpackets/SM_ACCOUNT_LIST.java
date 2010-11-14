@@ -19,37 +19,36 @@ package com.aionemu.gameserver.network.loginserver.serverpackets;
 
 import java.util.Map;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.loginserver.LoginServerConnection;
-import com.aionemu.gameserver.network.loginserver.LsServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
+import com.aionemu.gameserver.network.loginserver.LoginServerChannelHandler;
+import com.aionemu.commons.network.netty.packet.AbstractServerPacket;
 
 /**
  * GameServer packet that sends list of logged in accounts
  * 
- * @author SoulKeeper
+ * @author Lyahim, SoulKeeper
  */
-public class SM_ACCOUNT_LIST extends LsServerPacket
+public class SM_ACCOUNT_LIST extends AbstractServerPacket<LoginServerChannelHandler>
 {
 
 	/**
 	 * Map with loaded accounts
 	 */
-	private final Map<Integer, AionConnection>	accounts;
+	private final Map<Integer, AionChannelHandler>	accounts;
 
 	/**
 	 * constructs new server packet with specified opcode.
 	 */
-	public SM_ACCOUNT_LIST(Map<Integer, AionConnection> accounts)
+	public SM_ACCOUNT_LIST(Map<Integer, AionChannelHandler> accounts)
 	{
-		super(0x04);
 		this.accounts = accounts;
 	}
 
 	@Override
-	protected void writeImpl(LoginServerConnection con)
+	protected void writeImpl(LoginServerChannelHandler cHandler)
 	{
 		writeD(accounts.size());
-		for(AionConnection ac : accounts.values())
+		for(AionChannelHandler ac : accounts.values())
 		{
 			writeS(ac.getAccount().getName());
 		}

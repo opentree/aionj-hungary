@@ -21,7 +21,8 @@ import com.aionemu.gameserver.model.ChatType;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.legion.Legion;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_MESSAGE;
 
 /**
@@ -62,7 +63,7 @@ public class PacketSendUtility
 	 * @param player
 	 * @param packet
 	 */
-	public static void sendPacket(Player player, AionServerPacket packet)
+	public static void sendPacket(Player player, AbstractAionServerPacket<AionChannelHandler> packet)
 	{
 		if(player.getClientConnection() != null)
 			player.getClientConnection().sendPacket(packet);
@@ -78,7 +79,7 @@ public class PacketSendUtility
 	 * @param toSelf
 	 *            true if packet should also be sent to this player
 	 */
-	public static void broadcastPacket(Player player, AionServerPacket packet, boolean toSelf)
+	public static void broadcastPacket(Player player, AbstractAionServerPacket<AionChannelHandler> packet, boolean toSelf)
 	{
 		if(toSelf)
 			sendPacket(player, packet);
@@ -92,7 +93,7 @@ public class PacketSendUtility
 	 * @param visibleObject
 	 * @param packet
 	 */
-	public static void broadcastPacketAndReceive(VisibleObject visibleObject, AionServerPacket packet)
+	public static void broadcastPacketAndReceive(VisibleObject visibleObject, AbstractAionServerPacket<AionChannelHandler> packet)
 	{
 		if(visibleObject instanceof Player)
 			sendPacket((Player)visibleObject, packet);
@@ -106,7 +107,7 @@ public class PacketSendUtility
 	 * @param visibleObject
 	 * @param packet
 	 */
-	public static void broadcastPacket(VisibleObject visibleObject, AionServerPacket packet)
+	public static void broadcastPacket(VisibleObject visibleObject, AbstractAionServerPacket<AionChannelHandler> packet)
 	{
 		for(VisibleObject obj : visibleObject.getKnownList().getKnownObjects().values())
 		{
@@ -127,7 +128,7 @@ public class PacketSendUtility
 	 * @param filter
 	 *            filter determining who should be messaged
 	 */
-	public static void broadcastPacket(Player player, AionServerPacket packet, boolean toSelf,
+	public static void broadcastPacket(Player player, AbstractAionServerPacket<AionChannelHandler> packet, boolean toSelf,
 		ObjectFilter<Player> filter)
 	{
 		if(toSelf)
@@ -154,7 +155,7 @@ public class PacketSendUtility
 	 * @param packet
 	 *            ServerPacket to be broadcast
 	 */
-	public static void broadcastPacketToLegion(Legion legion, AionServerPacket packet)
+	public static void broadcastPacketToLegion(Legion legion, AbstractAionServerPacket<AionChannelHandler> packet)
 	{
 		for(Player onlineLegionMember : legion.getOnlineLegionMembers())
 		{
@@ -162,7 +163,7 @@ public class PacketSendUtility
 		}
 	}
 
-	public static void broadcastPacketToLegion(Legion legion, AionServerPacket packet, int playerObjId)
+	public static void broadcastPacketToLegion(Legion legion, AbstractAionServerPacket<AionChannelHandler> packet, int playerObjId)
 	{
 		for(Player onlineLegionMember : legion.getOnlineLegionMembers())
 		{

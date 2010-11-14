@@ -16,13 +16,13 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author Sweetkr
+ * @author Lyahim, Sweetkr
  */
-public class SM_SKILL_ACTIVATION extends AionServerPacket
+public class SM_SKILL_ACTIVATION extends AbstractAionServerPacket<AionChannelHandler>
 {
 
 	private boolean isActive;
@@ -57,7 +57,7 @@ public class SM_SKILL_ACTIVATION extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeH(skillId);
 		writeD(unk);

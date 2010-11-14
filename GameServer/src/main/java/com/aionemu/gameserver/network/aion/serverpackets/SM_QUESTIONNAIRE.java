@@ -16,17 +16,17 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * Sends Survey HTML data to the client.
  * This packet can be splitted over max 255 packets
  * The max length of the HTML may therefore be 255 * 65525 byte
  * 
- * @author lhw and Kaipo
+ * @author Lyahim, lhw and Kaipo
  */
-public class SM_QUESTIONNAIRE extends AionServerPacket
+public class SM_QUESTIONNAIRE extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int		messageId;
 	private byte	chunk;
@@ -42,7 +42,7 @@ public class SM_QUESTIONNAIRE extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(messageId);
 		writeC( chunk);

@@ -16,16 +16,16 @@
  */
 package com.aionemu.gameserver.network.loginserver.serverpackets;
 
-import com.aionemu.gameserver.network.loginserver.LoginServerConnection;
-import com.aionemu.gameserver.network.loginserver.LsServerPacket;
+import com.aionemu.gameserver.network.loginserver.LoginServerChannelHandler;
+import com.aionemu.commons.network.netty.packet.AbstractServerPacket;
 
 /**
  * In this packet GameServer is informing LoginServer that some account is no longer on GameServer [ie was disconencted]
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class SM_ACCOUNT_DISCONNECTED extends LsServerPacket
+public class SM_ACCOUNT_DISCONNECTED extends AbstractServerPacket<LoginServerChannelHandler>
 {
 	/**
 	 * AccountId of account that is no longer on GameServer.
@@ -40,8 +40,6 @@ public class SM_ACCOUNT_DISCONNECTED extends LsServerPacket
 	 */
 	public SM_ACCOUNT_DISCONNECTED(int accountId)
 	{
-		super(0x03);
-
 		this.accountId = accountId;
 	}
 
@@ -49,7 +47,7 @@ public class SM_ACCOUNT_DISCONNECTED extends LsServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(LoginServerConnection con)
+	protected void writeImpl(LoginServerChannelHandler cHandler)
 	{
 		writeD(accountId);
 	}

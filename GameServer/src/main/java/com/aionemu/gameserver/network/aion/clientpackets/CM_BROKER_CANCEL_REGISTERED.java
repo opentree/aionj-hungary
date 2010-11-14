@@ -17,14 +17,15 @@
 package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.BrokerService;
 
 /**
- * @author kosyachok
+ * @author Lyahim, kosyachok
  *
  */
-public class CM_BROKER_CANCEL_REGISTERED extends AionClientPacket
+public class CM_BROKER_CANCEL_REGISTERED extends AbstractClientPacket<AionChannelHandler>
 {
 	@SuppressWarnings("unused")
 	private int npcId;
@@ -45,7 +46,7 @@ public class CM_BROKER_CANCEL_REGISTERED extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 		
 		BrokerService.getInstance().cancelRegisteredItem(player, brokerItemId);
 	}

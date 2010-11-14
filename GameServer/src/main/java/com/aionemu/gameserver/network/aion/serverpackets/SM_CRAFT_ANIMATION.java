@@ -16,14 +16,14 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author Mr. Poke
+ * @author Lyahim, Mr. Poke
  *
  */
-public class SM_CRAFT_ANIMATION extends AionServerPacket
+public class SM_CRAFT_ANIMATION extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int senderObjectId;
 	private int targetObjectId;
@@ -48,7 +48,7 @@ public class SM_CRAFT_ANIMATION extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(senderObjectId);
 		writeD(targetObjectId);

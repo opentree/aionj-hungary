@@ -16,13 +16,13 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author Sweetkr
+ * @author Lyahim, Sweetkr
  */
-public class SM_SHOW_BRAND extends AionServerPacket
+public class SM_SHOW_BRAND extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int brandId;
 	private int targetObjectId;
@@ -35,7 +35,7 @@ public class SM_SHOW_BRAND extends AionServerPacket
 
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 
 		writeH(0x01); //unk

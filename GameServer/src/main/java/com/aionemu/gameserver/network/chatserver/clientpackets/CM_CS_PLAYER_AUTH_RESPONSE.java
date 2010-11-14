@@ -18,13 +18,14 @@ package com.aionemu.gameserver.network.chatserver.clientpackets;
 
 import org.apache.log4j.Logger;
 
-import com.aionemu.gameserver.network.chatserver.CsClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.chatserver.ChatServerChannelHandler;
 import com.aionemu.gameserver.services.ChatService;
 
 /**
- * @author ATracer
+ * @author ATracer, Lyahim
  */
-public class CM_CS_PLAYER_AUTH_RESPONSE extends CsClientPacket
+public class CM_CS_PLAYER_AUTH_RESPONSE extends AbstractClientPacket<ChatServerChannelHandler>
 {
 	protected static final Logger	log	= Logger.getLogger(CM_CS_PLAYER_AUTH_RESPONSE.class);
 

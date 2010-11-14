@@ -17,14 +17,14 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.gameobjects.Kisk;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author Sarynth
+ * @author Lyahim, Sarynth
  * 0xB0 for 1.5.1.10 and 1.5.1.15
  */
-public class SM_KISK_UPDATE extends AionServerPacket
+public class SM_KISK_UPDATE extends AbstractAionServerPacket<AionChannelHandler>
 {
 	// useMask values determine who can bind to the kisk.
 	// 1 ~ race
@@ -54,7 +54,7 @@ public class SM_KISK_UPDATE extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(objId);
 		writeD(useMask);

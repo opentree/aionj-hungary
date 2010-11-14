@@ -18,15 +18,15 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 
 import java.util.Collection;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.skillengine.model.Effect;
 
 /**
- * @author Avol, ATracer
+ * @author Lyahim, Avol, ATracer
  * 
  */
-public class SM_ABNORMAL_STATE extends AionServerPacket
+public class SM_ABNORMAL_STATE extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private Collection<Effect> effects;
 	private int abnormals;
@@ -38,7 +38,7 @@ public class SM_ABNORMAL_STATE extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(abnormals);
 		writeH(effects.size()); 

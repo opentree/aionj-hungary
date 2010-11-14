@@ -16,15 +16,16 @@
  */
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_BLOCK_LIST;
 
 /**
  * Send when the client requests the blocklist
- * @author Ben
+ * @author Lyahim, Ben
  *
  */
-public class CM_SHOW_BLOCKLIST extends AionClientPacket
+public class CM_SHOW_BLOCKLIST extends AbstractClientPacket<AionChannelHandler>
 {
 
 	public CM_SHOW_BLOCKLIST(int opcode)

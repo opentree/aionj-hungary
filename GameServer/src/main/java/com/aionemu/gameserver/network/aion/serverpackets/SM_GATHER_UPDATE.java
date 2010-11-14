@@ -18,14 +18,14 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.templates.GatherableTemplate;
 import com.aionemu.gameserver.model.templates.gather.Material;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author ATracer, orz
+ * @author Lyahim, ATracer, orz
  *
  */
-public class SM_GATHER_UPDATE extends AionServerPacket
+public class SM_GATHER_UPDATE extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private GatherableTemplate template;
 	private int action;
@@ -45,7 +45,7 @@ public class SM_GATHER_UPDATE extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeH(template.getSkillLevel());
 		writeC( action);

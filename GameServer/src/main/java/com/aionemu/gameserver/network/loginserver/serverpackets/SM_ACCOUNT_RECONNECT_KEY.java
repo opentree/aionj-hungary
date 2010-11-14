@@ -16,17 +16,17 @@
  */
 package com.aionemu.gameserver.network.loginserver.serverpackets;
 
-import com.aionemu.gameserver.network.loginserver.LoginServerConnection;
-import com.aionemu.gameserver.network.loginserver.LsServerPacket;
+import com.aionemu.gameserver.network.loginserver.LoginServerChannelHandler;
+import com.aionemu.commons.network.netty.packet.AbstractServerPacket;
 
 /**
  * This packet is sended by GameServer when player is requesting fast reconnect to login server. LoginServer in response
  * will send reconectKey.
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class SM_ACCOUNT_RECONNECT_KEY extends LsServerPacket
+public class SM_ACCOUNT_RECONNECT_KEY extends AbstractServerPacket<LoginServerChannelHandler>
 {
 	/**
 	 * AccountId of client that is requested reconnection to LoginServer.
@@ -41,7 +41,6 @@ public class SM_ACCOUNT_RECONNECT_KEY extends LsServerPacket
 	 */
 	public SM_ACCOUNT_RECONNECT_KEY(int accountId)
 	{
-		super(0x02);
 		this.accountId = accountId;
 	}
 
@@ -49,7 +48,7 @@ public class SM_ACCOUNT_RECONNECT_KEY extends LsServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(LoginServerConnection con)
+	protected void writeImpl(LoginServerChannelHandler cHandler)
 	{
 		writeD(accountId);
 	}

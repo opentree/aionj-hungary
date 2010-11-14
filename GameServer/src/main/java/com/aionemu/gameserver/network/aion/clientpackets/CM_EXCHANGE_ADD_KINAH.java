@@ -17,15 +17,16 @@
 package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.ExchangeService;
 
 /**
  * 
- * @author Avol
+ * @author Lyahim, Avol
  * 
  */
-public class CM_EXCHANGE_ADD_KINAH extends AionClientPacket
+public class CM_EXCHANGE_ADD_KINAH extends AbstractClientPacket<AionChannelHandler>
 {
 	public int unk;
 	public int itemCount;
@@ -51,7 +52,7 @@ public class CM_EXCHANGE_ADD_KINAH extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		final Player activePlayer = getConnection().getActivePlayer();		
+		final Player activePlayer = getChannelHandler().getActivePlayer();		
 		ExchangeService.getInstance().addKinah(activePlayer, itemCount);
 	}
 }

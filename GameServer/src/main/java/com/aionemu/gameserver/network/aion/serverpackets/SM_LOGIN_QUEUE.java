@@ -16,13 +16,13 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author Simple
+ * @author Lyahim, Simple
  */
-public class SM_LOGIN_QUEUE extends AionServerPacket
+public class SM_LOGIN_QUEUE extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int		waitingPosition; // What is the player's position in line
 	private int		waitingTime; // Per waiting position in seconds
@@ -36,7 +36,7 @@ public class SM_LOGIN_QUEUE extends AionServerPacket
 	}
 
 	@Override
-	public void writeImpl(AionConnection con)
+	public void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(waitingPosition);
 		writeD(waitingTime);

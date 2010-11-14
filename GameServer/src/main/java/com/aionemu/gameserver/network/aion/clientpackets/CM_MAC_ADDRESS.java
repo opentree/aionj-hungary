@@ -16,15 +16,16 @@
  */
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * In this packet client is sending Mac Address - haha.
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class CM_MAC_ADDRESS extends AionClientPacket
+public class CM_MAC_ADDRESS extends AbstractClientPacket<AionChannelHandler>
 {
 	/**
 	 * Mac Addres send by client in the same format as: ipconfig /all [ie: xx-xx-xx-xx-xx-xx]

@@ -18,16 +18,17 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.ItemService;
 import com.aionemu.gameserver.utils.MathUtil;
 import com.aionemu.gameserver.world.World;
 
 /**
- * @author ATracer
+ * @author Lyahim, ATracer
  *
  */
-public class CM_GODSTONE_SOCKET extends AionClientPacket
+public class CM_GODSTONE_SOCKET extends AbstractClientPacket<AionChannelHandler>
 {
 	
 	private int npcId;
@@ -50,7 +51,7 @@ public class CM_GODSTONE_SOCKET extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player activePlayer = getConnection().getActivePlayer();
+		Player activePlayer = getChannelHandler().getActivePlayer();
 		
 		Npc npc = (Npc) World.getInstance().findAionObject(npcId);
 		if(npc == null)

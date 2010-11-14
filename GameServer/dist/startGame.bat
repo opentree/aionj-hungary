@@ -11,7 +11,7 @@ REM NOTE: Remove tag REM from previous line.
 
 REM -------------------------------------
 REM Default parameters for a basic server.
-java -Xms512m -Xmx1536m -ea -cp ./libs/*;al-game-1.0.1.jar com.aionemu.gameserver.GameServer
+java -Xms512m -Xmx1536m -ea -cp ./libs/*;game-0.1.jar com.aionemu.gameserver.GameServer
 REM -------------------------------------
 
 SET CLASSPATH=%OLDCLASSPATH%

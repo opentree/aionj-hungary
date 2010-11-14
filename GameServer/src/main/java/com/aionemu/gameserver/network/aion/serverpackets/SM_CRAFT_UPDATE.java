@@ -17,14 +17,14 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.templates.item.ItemTemplate;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author Mr. Poke
+ * @author Lyahim, Mr. Poke
  *
  */
-public class SM_CRAFT_UPDATE extends AionServerPacket
+public class SM_CRAFT_UPDATE extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int skillId;
 	private int itemId;
@@ -51,7 +51,7 @@ public class SM_CRAFT_UPDATE extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeH(skillId);
 		writeC( action);

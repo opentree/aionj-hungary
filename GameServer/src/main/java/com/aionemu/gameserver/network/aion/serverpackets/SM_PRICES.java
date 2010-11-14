@@ -17,14 +17,14 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Prices;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author xavier, Sarynth
+ * @author Lyahim, xavier, Sarynth
  * Price/tax in Influence ration dialog
  */
-public class SM_PRICES extends AionServerPacket
+public class SM_PRICES extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private Prices prices;
 	
@@ -40,7 +40,7 @@ public class SM_PRICES extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeC( prices.getGlobalPrices());		// Display Buying Price %
         writeC( prices.getGlobalPricesModifier());	// Buying Modified Price %

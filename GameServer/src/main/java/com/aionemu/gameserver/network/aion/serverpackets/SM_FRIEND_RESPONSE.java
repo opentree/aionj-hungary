@@ -16,16 +16,16 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * Replies to a request to add or delete a friend
  * 
- * @author Ben
+ * @author Lyahim, Ben
  * 
  */
-public class SM_FRIEND_RESPONSE extends AionServerPacket {
+public class SM_FRIEND_RESPONSE extends AbstractAionServerPacket<AionChannelHandler> {
 	/**
 	 * The friend was successfully added to your list
 	 */
@@ -77,7 +77,7 @@ public class SM_FRIEND_RESPONSE extends AionServerPacket {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 
 		writeS(player);

@@ -18,13 +18,14 @@
 package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.ItemService;
 /**
  *
- * @author kosyachok
+ * @author Lyahim, kosyachok
  */
-public class CM_REPLACE_ITEM extends AionClientPacket
+public class CM_REPLACE_ITEM extends AbstractClientPacket<AionChannelHandler>
 {
 
 	private int sourceStorageType;
@@ -49,7 +50,7 @@ public class CM_REPLACE_ITEM extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 		ItemService.switchStoragesItems(player, sourceStorageType, sourceItemObjId, replaceStorageType, replaceItemObjId);
 	}
 

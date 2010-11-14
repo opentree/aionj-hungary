@@ -16,14 +16,15 @@
  */
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * 
- * @author Lyahim
+ * @author Lyahim, Lyahim
  * 
  */
-public class CM_SHOW_MAP extends AionClientPacket
+public class CM_SHOW_MAP extends AbstractClientPacket<AionChannelHandler>
 {
 	public CM_SHOW_MAP(int opcode)
 	{

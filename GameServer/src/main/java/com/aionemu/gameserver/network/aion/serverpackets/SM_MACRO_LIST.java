@@ -19,16 +19,16 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 import java.util.Map;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * Packet with macro list.
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class SM_MACRO_LIST extends AionServerPacket
+public class SM_MACRO_LIST extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private Player	player;
 
@@ -44,7 +44,7 @@ public class SM_MACRO_LIST extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(player.getObjectId());// player oid
 		writeC( 0x01);// unk

@@ -16,13 +16,13 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author Rhys2002
+ * @author Lyahim, Rhys2002
  */
-public class SM_SKILL_REMOVE extends AionServerPacket
+public class SM_SKILL_REMOVE extends AbstractAionServerPacket<AionChannelHandler>
 {
 
 	private int skillId;
@@ -36,7 +36,7 @@ public class SM_SKILL_REMOVE extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeH(skillId);
 		writeC( 1);

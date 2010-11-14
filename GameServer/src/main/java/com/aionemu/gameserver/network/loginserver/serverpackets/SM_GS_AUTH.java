@@ -21,31 +21,23 @@ import java.util.List;
 import com.aionemu.commons.network.IPRange;
 import com.aionemu.gameserver.configs.network.IPConfig;
 import com.aionemu.gameserver.configs.network.NetworkConfig;
-import com.aionemu.gameserver.network.loginserver.LoginServerConnection;
-import com.aionemu.gameserver.network.loginserver.LsServerPacket;
+import com.aionemu.gameserver.network.loginserver.LoginServerChannelHandler;
+import com.aionemu.commons.network.netty.packet.AbstractServerPacket;
 
 /**
  * This is authentication packet that gs will send to login server for registration.
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class SM_GS_AUTH extends LsServerPacket
+public class SM_GS_AUTH extends AbstractServerPacket<LoginServerChannelHandler>
 {
-	/**
-	 * Constructs new instance of <tt>SM_GS_AUTH </tt> packet.
-	 * 
-	 */
-	public SM_GS_AUTH()
-	{
-		super(0x00);
-	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(LoginServerConnection con)
+	protected void writeImpl(LoginServerChannelHandler cHandler)
 	{
 		writeC(NetworkConfig.GAMESERVER_ID);
 		writeC(IPConfig.getDefaultAddress().length);
@@ -67,7 +59,7 @@ public class SM_GS_AUTH extends LsServerPacket
 			writeB(ipRange.getAddress());
 		}
 
-		writeH(NetworkConfig.GAME_ADDRESS.getPort());
+		writeH(NetworkConfig.CLIENT_ADDRESS.getPort());
 		writeD(NetworkConfig.MAX_ONLINE_PLAYERS);
 		writeS(NetworkConfig.LOGIN_PASSWORD);
 	}

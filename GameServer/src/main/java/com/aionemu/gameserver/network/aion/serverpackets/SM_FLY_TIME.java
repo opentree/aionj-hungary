@@ -16,14 +16,14 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author Nemiroff
+ * @author Lyahim, Nemiroff
  *
  */
-public class SM_FLY_TIME extends AionServerPacket
+public class SM_FLY_TIME extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int	currentFp;
 	private int	maxFp;
@@ -38,7 +38,7 @@ public class SM_FLY_TIME extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(currentFp); //current fly time
         writeD(maxFp); //max flytime

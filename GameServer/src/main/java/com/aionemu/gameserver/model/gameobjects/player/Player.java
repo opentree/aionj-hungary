@@ -59,7 +59,7 @@ import com.aionemu.gameserver.model.items.ItemCooldown;
 import com.aionemu.gameserver.model.legion.Legion;
 import com.aionemu.gameserver.model.legion.LegionMember;
 import com.aionemu.gameserver.model.templates.stats.PlayerStatsTemplate;
-import com.aionemu.gameserver.network.aion.AionConnection;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.BrokerService;
 import com.aionemu.gameserver.services.ExchangeService;
 import com.aionemu.gameserver.services.PlayerService;
@@ -137,7 +137,7 @@ public class Player extends Creature
 	/**
 	 * Connection of this Player.
 	 */
-	private AionConnection			clientConnection;
+	private AionChannelHandler			clientConnection;
 
 	public Player(PlayerController controller, PlayerCommonData plCommonData, PlayerAppearance appereance)
 	{
@@ -206,7 +206,7 @@ public class Player extends Creature
 	 * 
 	 * @param clientConnection
 	 */
-	public void setClientConnection(AionConnection clientConnection)
+	public void setClientConnection(AionChannelHandler clientConnection)
 	{
 		this.clientConnection = clientConnection;
 	}
@@ -217,7 +217,7 @@ public class Player extends Creature
 	 * @return AionConnection of this player.
 	 * 
 	 */
-	public AionConnection getClientConnection()
+	public AionChannelHandler getClientConnection()
 	{
 		return this.clientConnection;
 	}

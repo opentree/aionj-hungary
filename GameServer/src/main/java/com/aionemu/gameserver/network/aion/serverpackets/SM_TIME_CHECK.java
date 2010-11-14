@@ -18,15 +18,15 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 
 import java.sql.Timestamp;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 /**
  * I have no idea wtf is this
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class SM_TIME_CHECK extends AionServerPacket
+public class SM_TIME_CHECK extends AbstractAionServerPacket<AionChannelHandler>
 {
 	//Don't be fooled with empty class :D
 	//This packet is just sending opcode, without any content
@@ -49,7 +49,7 @@ public class SM_TIME_CHECK extends AionServerPacket
 	 */
 	
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{		
 		writeD(time);
 		writeD(nanoTime);

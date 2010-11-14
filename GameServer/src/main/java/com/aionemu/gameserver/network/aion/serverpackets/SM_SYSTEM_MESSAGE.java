@@ -18,8 +18,8 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.DescriptionId;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.SystemMessageId;
 
 /**
@@ -33,7 +33,7 @@ import com.aionemu.gameserver.network.aion.SystemMessageId;
  * @author Sarynth
  * 
  */
-public class SM_SYSTEM_MESSAGE extends AionServerPacket
+public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandler>
 {
 	/**
 	 * Coordinates of current location: %WORLDNAME0 Region, X=%1 Y=%2 Z=%3
@@ -1169,7 +1169,7 @@ public class SM_SYSTEM_MESSAGE extends AionServerPacket
 
 	public static final SM_SYSTEM_MESSAGE	MSG_FULL_INVENTORY			= new SM_SYSTEM_MESSAGE(1300762);
 
-	public static final AionServerPacket	CUBEEXPAND_NOT_ENOUGH_KINAH	= new SM_SYSTEM_MESSAGE(1300831);
+	public static final AbstractAionServerPacket<AionChannelHandler>	CUBEEXPAND_NOT_ENOUGH_KINAH	= new SM_SYSTEM_MESSAGE(1300831);
 
 	/**
 	 * Manastone Messages
@@ -1510,7 +1510,7 @@ public class SM_SYSTEM_MESSAGE extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		if(!npcShout)
 		{

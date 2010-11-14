@@ -17,10 +17,10 @@
 
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-import com.aionemu.commons.netty.State;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
-import com.aionemu.gameserver.network.aion.AionConnection;
+import com.aionemu.commons.network.netty.State;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_QUIT_RESPONSE;
 import com.aionemu.gameserver.network.loginserver.LoginServer;
 import com.aionemu.gameserver.services.PlayerService;
@@ -28,10 +28,10 @@ import com.aionemu.gameserver.services.PlayerService;
 /**
  * In this packets aion client is asking if may quit.
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class CM_QUIT extends AionClientPacket
+public class CM_QUIT extends AbstractClientPacket<AionChannelHandler>
 {
 	/**
 	 * Logout - if true player is wanted to go to character selection.
@@ -62,10 +62,10 @@ public class CM_QUIT extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		AionConnection client = getConnection();
+		AionChannelHandler client = getChannelHandler();
 
 		Player player = null;
-		if(client.getState() == State.IN_GAME)
+		if(client.getState() == State.ENTERED)
 		{
 			player = client.getActivePlayer();
 			// TODO! check if may quit

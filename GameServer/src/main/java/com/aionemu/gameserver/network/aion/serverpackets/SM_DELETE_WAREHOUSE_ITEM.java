@@ -18,14 +18,14 @@
 
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  *
- * @author kosyachok
+ * @author Lyahim, kosyachok
  */
-public class SM_DELETE_WAREHOUSE_ITEM extends AionServerPacket
+public class SM_DELETE_WAREHOUSE_ITEM extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int warehouseType;
 	private int itemObjId;
@@ -39,7 +39,7 @@ public class SM_DELETE_WAREHOUSE_ITEM extends AionServerPacket
 
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeC( warehouseType);
 		writeD(itemObjId);

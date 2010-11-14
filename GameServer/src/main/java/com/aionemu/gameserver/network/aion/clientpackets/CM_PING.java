@@ -18,16 +18,17 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 
 import org.apache.log4j.Logger;
 
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_PONG;
 
 /**
  * I have no idea wtf is this
  * 
- * @author -Nemsiss-
+ * @author Lyahim, -Nemsiss-
  * 
  */
-public class CM_PING extends AionClientPacket
+public class CM_PING extends AbstractClientPacket<AionChannelHandler>
 {
 	private static final Logger	log	= Logger.getLogger(CM_PING.class);
 
@@ -56,7 +57,7 @@ public class CM_PING extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		long lastMS = getConnection().getLastPingTimeMS();
+		long lastMS = getChannelHandler().getLastPingTimeMS();
 		
 		if(lastMS > 0)
 		{
@@ -64,16 +65,16 @@ public class CM_PING extends AionClientPacket
 			// PingInterval should be 3min (180000ms)
 			if(pingInterval < 100000)// client timer cheat
 			{
-				String ip = getConnection().getIP();
+				String ip = getChannelHandler().getIP();
 				String name = "[unknown]";
-				if(getConnection().getActivePlayer() != null)
-					name = getConnection().getActivePlayer().getName();
+				if(getChannelHandler().getActivePlayer() != null)
+					name = getChannelHandler().getActivePlayer().getName();
 				log.info("[AUDIT] possible client timer cheat: " + pingInterval + " by " + name + ", ip=" + ip);
-				//getConnection().close(new SM_QUIT_RESPONSE(), true);
+				//getChannelHandler().close(new SM_QUIT_RESPONSE(), true);
 			}
 
 		}
-		getConnection().setLastPingTimeMS(System.currentTimeMillis());
+		getChannelHandler().setLastPingTimeMS(System.currentTimeMillis());
 		sendPacket(new SM_PONG());
 	}
 }

@@ -24,8 +24,8 @@ import com.aionemu.gameserver.model.account.Account;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.PlayerAppearance;
 import com.aionemu.gameserver.model.gameobjects.player.PlayerCommonData;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
-import com.aionemu.gameserver.network.aion.AionConnection;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.ItemService;
 import com.aionemu.gameserver.services.PlayerService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
@@ -33,10 +33,10 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 /**
  * In this packets aion client is requesting edit of character.
  *
- * @author IlBuono
+ * @author Lyahim, IlBuono
  *
  */
-public class CM_CHARACTER_EDIT extends AionClientPacket
+public class CM_CHARACTER_EDIT extends AbstractClientPacket<AionChannelHandler>
 {    
 	
     private int objectId;
@@ -61,7 +61,7 @@ public class CM_CHARACTER_EDIT extends AionClientPacket
 	@Override
 	protected void readImpl()
 	{
-        AionConnection client = getConnection();
+		AionChannelHandler client = getChannelHandler();
 		Account account = client.getAccount();
         objectId = readD();
         Player player = PlayerService.getPlayer(objectId, account);
@@ -166,7 +166,7 @@ public class CM_CHARACTER_EDIT extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		AionConnection client = getConnection();		
+		AionChannelHandler client = getChannelHandler();		
 		CM_ENTER_WORLD.enterWorld(client, objectId);
 		Player player = client.getActivePlayer();
         if (!check_ticket)

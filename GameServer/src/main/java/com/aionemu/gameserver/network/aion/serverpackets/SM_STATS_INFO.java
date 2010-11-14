@@ -21,17 +21,17 @@ import com.aionemu.gameserver.model.gameobjects.player.PlayerCommonData;
 import com.aionemu.gameserver.model.gameobjects.stats.PlayerGameStats;
 import com.aionemu.gameserver.model.gameobjects.stats.PlayerLifeStats;
 import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.utils.gametime.GameTimeManager;
 
 /**
  * In this packet Server is sending User Info?
  * 
- * @author -Nemesiss-
- * @author Luno
+ * @author Lyahim, -Nemesiss-
+ * @author Lyahim, Luno
  */
-public class SM_STATS_INFO extends AionServerPacket
+public class SM_STATS_INFO extends AbstractAionServerPacket<AionChannelHandler>
 {
 	/**
 	 * Player that stats info will be send
@@ -58,7 +58,7 @@ public class SM_STATS_INFO extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(player.getObjectId());
 		writeD(GameTimeManager.getGameTime().getTime()); // Minutes since 1/1/00 00:00:00

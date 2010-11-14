@@ -22,19 +22,18 @@ import java.util.List;
 import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.items.ItemId;
 import com.aionemu.gameserver.model.templates.item.ItemTemplate;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.InventoryPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * In this packet Server is sending Inventory Info
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * @updater alexa026
  * @finisher Avol ;d
  * 
  * modified by ATracer
  */
-public class SM_INVENTORY_INFO extends InventoryPacket
+public class SM_INVENTORY_INFO extends _InventoryPacket
 {	
 	public static final int EMPTY = 0;
 	public static final int FULL = 1;
@@ -69,7 +68,7 @@ public class SM_INVENTORY_INFO extends InventoryPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		if(this.packetType == EMPTY)
 		{

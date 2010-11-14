@@ -20,16 +20,17 @@ import com.aionemu.gameserver.itemengine.actions.EnchantItemAction;
 import com.aionemu.gameserver.model.gameobjects.AionObject;
 import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.services.ItemService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.world.World;
 
 /**
- * @author ATracer
+ * @author Lyahim, ATracer
  */
-public class CM_MANASTONE extends AionClientPacket
+public class CM_MANASTONE extends AbstractClientPacket<AionChannelHandler>
 {
 	
 	private int npcObjId;
@@ -74,7 +75,7 @@ public class CM_MANASTONE extends AionClientPacket
 	protected void runImpl()
 	{
 		AionObject npc = World.getInstance().findAionObject(npcObjId);
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 		
 		switch(actionType)
 		{

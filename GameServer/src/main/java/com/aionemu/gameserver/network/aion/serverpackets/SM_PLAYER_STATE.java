@@ -18,15 +18,15 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * 
  * So far I've found only one usage for this packet - to stop character blinking ( just after login into game, player's
  * character is blinking )
  * 
- * @author Luno, Sweetkr
+ * @author Lyahim, Luno, Sweetkr
  * 
  * states:
  * 0 - normal char
@@ -35,7 +35,7 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
  * 128- char is invisible
  * 
  */
-public class SM_PLAYER_STATE extends AionServerPacket
+public class SM_PLAYER_STATE extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int	playerObjId;
 	private int	visualState;
@@ -52,7 +52,7 @@ public class SM_PLAYER_STATE extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(playerObjId);
 		writeC( visualState);

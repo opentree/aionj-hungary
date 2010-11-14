@@ -17,15 +17,16 @@
 package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.AllianceService;
 import com.aionemu.gameserver.services.GroupService;
 
 /**
- * @author Sweetkr
- * @author Simple
+ * @author Lyahim, Sweetkr
+ * @author Lyahim, Simple
  */
-public class CM_SHOW_BRAND extends AionClientPacket
+public class CM_SHOW_BRAND extends AbstractClientPacket<AionChannelHandler>
 {
 
 	private int				brandId;
@@ -55,7 +56,7 @@ public class CM_SHOW_BRAND extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 		
 		if (player == null)
 			return;

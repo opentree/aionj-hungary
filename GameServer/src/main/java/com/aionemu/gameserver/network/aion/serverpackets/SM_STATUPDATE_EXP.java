@@ -16,17 +16,17 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * This packet is used to update current exp / recoverable exp / max exp values.
  * 
- * @author Luno
+ * @author Lyahim, Luno
  * @updated by alexa026
  * 
  */
-public class SM_STATUPDATE_EXP extends AionServerPacket
+public class SM_STATUPDATE_EXP extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private long	currentExp;
 	private long	recoverableExp;
@@ -52,7 +52,7 @@ public class SM_STATUPDATE_EXP extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeQ(currentExp);
 		writeQ(recoverableExp);

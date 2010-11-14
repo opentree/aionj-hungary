@@ -18,16 +18,17 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.stats.listeners.TitleChangeListener;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_TITLE_SET;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_TITLE_UPDATE;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /**
- * @author Nemiroff
+ * @author Lyahim, Nemiroff
  * Date: 01.12.2009
  */
-public class CM_TITLE_SET extends AionClientPacket 
+public class CM_TITLE_SET extends AbstractClientPacket<AionChannelHandler> 
 {
     /**
      * Title id
@@ -59,7 +60,7 @@ public class CM_TITLE_SET extends AionClientPacket
     @Override
     protected void runImpl() 
     {
-        Player player = getConnection().getActivePlayer();
+        Player player = getChannelHandler().getActivePlayer();
         sendPacket(new SM_TITLE_SET(titleId));
         PacketSendUtility.broadcastPacket(player, (new SM_TITLE_UPDATE(player, titleId)));
         if (player.getCommonData().getTitleId()>0)

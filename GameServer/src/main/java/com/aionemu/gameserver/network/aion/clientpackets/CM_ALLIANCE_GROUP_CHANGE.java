@@ -18,15 +18,16 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.alliance.PlayerAlliance;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.AllianceService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /**
- * @author Sarynth
+ * @author Lyahim, Sarynth
  *
  */
-public class CM_ALLIANCE_GROUP_CHANGE extends AionClientPacket
+public class CM_ALLIANCE_GROUP_CHANGE extends AbstractClientPacket<AionChannelHandler>
 {
 	private int allianceGroupId;
 	private int playerObjectId;
@@ -48,7 +49,7 @@ public class CM_ALLIANCE_GROUP_CHANGE extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 		PlayerAlliance alliance = player.getPlayerAlliance();
 		
 		if (alliance == null)

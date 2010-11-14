@@ -16,26 +16,19 @@
  */
 package com.aionemu.gameserver.network.chatserver.serverpackets;
 
+import com.aionemu.commons.network.netty.packet.AbstractServerPacket;
 import com.aionemu.gameserver.configs.network.IPConfig;
 import com.aionemu.gameserver.configs.network.NetworkConfig;
-import com.aionemu.gameserver.network.chatserver.ChatServerConnection;
-import com.aionemu.gameserver.network.chatserver.CsServerPacket;
+import com.aionemu.gameserver.network.chatserver.ChatServerChannelHandler;
 
 /**
- * @author ATracer
+ * @author ATracer, Lyahim
  */
-public class SM_CS_AUTH extends CsServerPacket
+public class SM_CS_AUTH extends AbstractServerPacket<ChatServerChannelHandler>
 {
-
-	public SM_CS_AUTH()
-	{
-		super(0x00);
-	}
-
 	@Override
-	protected void writeImpl(ChatServerConnection con)
+	protected void writeImpl(ChatServerChannelHandler cHandler)
 	{
-		writeC(getOpCode());
 		writeC(NetworkConfig.GAMESERVER_ID);
 		writeC(IPConfig.getDefaultAddress().length);
 		writeB(IPConfig.getDefaultAddress());

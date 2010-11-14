@@ -17,13 +17,13 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author Sweetkr
+ * @author Lyahim, Sweetkr
  */
-public class SM_CUSTOM_SETTINGS extends AionServerPacket
+public class SM_CUSTOM_SETTINGS extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private Player player;
 
@@ -36,7 +36,7 @@ public class SM_CUSTOM_SETTINGS extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(player.getObjectId());
 		writeC( 0x01); // unk

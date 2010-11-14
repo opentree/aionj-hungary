@@ -16,13 +16,13 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author Avol
+ * @author Lyahim, Avol
  */
-public class SM_EXCHANGE_ADD_KINAH extends AionServerPacket
+public class SM_EXCHANGE_ADD_KINAH extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private long itemCount;
 	private int action;
@@ -34,7 +34,7 @@ public class SM_EXCHANGE_ADD_KINAH extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeC( action); // 0 -self 1-other
 		writeD((int) itemCount); // itemId

@@ -18,16 +18,16 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.gameobjects.Kisk;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /*
  *
- * @author sweetkr
- * @author Sarynth
+ * @author Lyahim, sweetkr
+ * @author Lyahim, Sarynth
  *
  */
-public class SM_SET_BIND_POINT extends AionServerPacket
+public class SM_SET_BIND_POINT extends AbstractAionServerPacket<AionChannelHandler>
 {
 	
 	private final int		mapId;
@@ -49,7 +49,7 @@ public class SM_SET_BIND_POINT extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		// Appears 0x04 if bound to a kisk. 0x00 if not.
 		writeC( (kisk == null ? 0x00 : 0x04)); 

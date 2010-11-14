@@ -16,22 +16,22 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * This packet is response for CM_MAY_LOGIN_INTO_GAME
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class SM_MAY_LOGIN_INTO_GAME extends AionServerPacket
+public class SM_MAY_LOGIN_INTO_GAME extends AbstractAionServerPacket<AionChannelHandler>
 {
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		/**
 		 * probably here is msg if fail.

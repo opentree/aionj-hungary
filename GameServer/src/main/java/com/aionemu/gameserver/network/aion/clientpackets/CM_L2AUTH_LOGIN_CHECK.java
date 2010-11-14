@@ -16,18 +16,19 @@
  */
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.loginserver.LoginServer;
 
 /**
  * In this packets aion client is authenticating himself by providing accountId and rest of sessionKey - we will check
  * if its valid at login server side.
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
 // TODO: L2AUTH? Really? :O
-public class CM_L2AUTH_LOGIN_CHECK extends AionClientPacket
+public class CM_L2AUTH_LOGIN_CHECK extends AbstractClientPacket<AionChannelHandler>
 {
 
 	/**
@@ -78,7 +79,7 @@ public class CM_L2AUTH_LOGIN_CHECK extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		LoginServer.getInstance().requestAuthenticationOfClient(accountId, getConnection(), loginOk, playOk1, playOk2);
+		LoginServer.getInstance().requestAuthenticationOfClient(accountId, getChannelHandler(), loginOk, playOk1, playOk2);
 	}
 	
 	@Override

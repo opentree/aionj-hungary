@@ -16,14 +16,15 @@
  */
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.ArmsfusionService;
 /**
  * 
- * @author zdead
+ * @author Lyahim, zdead
  * 
  */
-public class CM_FUSION_WEAPONS extends AionClientPacket
+public class CM_FUSION_WEAPONS extends AbstractClientPacket<AionChannelHandler>
 {
 	
 	public CM_FUSION_WEAPONS(int opcode)
@@ -57,6 +58,6 @@ public class CM_FUSION_WEAPONS extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		ArmsfusionService.fusionWeapons(getConnection().getActivePlayer(), firstItemId, secondItemId, price);
+		ArmsfusionService.fusionWeapons(getChannelHandler().getActivePlayer(), firstItemId, secondItemId, price);
 	}
 }

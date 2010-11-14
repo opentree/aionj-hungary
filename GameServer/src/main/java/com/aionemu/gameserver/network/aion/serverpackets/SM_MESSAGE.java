@@ -20,16 +20,16 @@ import com.aionemu.gameserver.configs.main.CustomConfig;
 import com.aionemu.gameserver.model.ChatType;
 import com.aionemu.gameserver.model.Race;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * Massage [chat, etc]
  * 
- * @author -Nemesiss-, Sweetkr
+ * @author Lyahim, -Nemesiss-, Sweetkr
  * 
  */
-public class SM_MESSAGE extends AionServerPacket
+public class SM_MESSAGE extends AbstractAionServerPacket<AionChannelHandler>
 {
 	/**
 	 * Player.
@@ -114,14 +114,14 @@ public class SM_MESSAGE extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		boolean canRead = true;
 
 		if(race != null)
 		{
 			canRead = chatType.isSysMsg() || CustomConfig.FACTIONS_SPEAKING_MODE == 1 || player.getAccessLevel() > 0
-				|| (con.getActivePlayer() != null && con.getActivePlayer().getAccessLevel() > 0);
+				|| (cHandler.getActivePlayer() != null && cHandler.getActivePlayer().getAccessLevel() > 0);
 		}
 
 		writeC( chatType.toInteger()); // type

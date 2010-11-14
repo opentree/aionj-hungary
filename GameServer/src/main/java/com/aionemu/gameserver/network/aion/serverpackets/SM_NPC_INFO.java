@@ -31,16 +31,16 @@ import com.aionemu.gameserver.model.items.NpcEquippedGear;
 import com.aionemu.gameserver.model.templates.NpcTemplate;
 import com.aionemu.gameserver.model.templates.item.ItemTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * This packet is displaying visible npc/monsters.
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class SM_NPC_INFO extends AionServerPacket
+public class SM_NPC_INFO extends AbstractAionServerPacket<AionChannelHandler>
 {
 	/**
 	 * Visible npc
@@ -138,7 +138,7 @@ public class SM_NPC_INFO extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeF(npc.getX());// x
 		writeF(npc.getY());// y

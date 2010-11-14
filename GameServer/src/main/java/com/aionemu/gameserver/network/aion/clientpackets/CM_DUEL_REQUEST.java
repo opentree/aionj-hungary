@@ -19,17 +19,18 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 import com.aionemu.gameserver.model.gameobjects.AionObject;
 import com.aionemu.gameserver.model.gameobjects.player.DeniedStatus;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.services.DuelService;
 import com.aionemu.gameserver.world.World;
 
 /**
  * 
- * @author xavier
+ * @author Lyahim, xavier
  * 
  */
-public class CM_DUEL_REQUEST extends AionClientPacket
+public class CM_DUEL_REQUEST extends AbstractClientPacket<AionChannelHandler>
 {
 	/**
 	 * Target object id that client wants to start duel with
@@ -58,7 +59,7 @@ public class CM_DUEL_REQUEST extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player activePlayer = getConnection().getActivePlayer();
+		Player activePlayer = getChannelHandler().getActivePlayer();
 		AionObject target = World.getInstance().findAionObject(objectId);
 
 		if(target == null)

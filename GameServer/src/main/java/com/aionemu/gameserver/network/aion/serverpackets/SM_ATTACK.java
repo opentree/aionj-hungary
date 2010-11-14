@@ -20,15 +20,15 @@ import java.util.List;
 
 import com.aionemu.gameserver.controllers.attack.AttackResult;
 import com.aionemu.gameserver.model.gameobjects.Creature;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * 
- * @author -Nemesiss-, Sweetkr
+ * @author Lyahim, -Nemesiss-, Sweetkr
  * 
  */
-public class SM_ATTACK extends AionServerPacket
+public class SM_ATTACK extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int	attackno;
 	private int	time;
@@ -51,7 +51,7 @@ public class SM_ATTACK extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(attacker.getObjectId());
 		writeC( attackno); // unknown

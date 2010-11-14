@@ -19,14 +19,15 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.Storage;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.ItemService;
 
 /**
- * @author Avol
+ * @author Lyahim, Avol
  * 
  */
-public class CM_DELETE_ITEM extends AionClientPacket
+public class CM_DELETE_ITEM extends AbstractClientPacket<AionChannelHandler>
 {
 	public int objId;
 
@@ -44,7 +45,7 @@ public class CM_DELETE_ITEM extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 		Storage bag = player.getInventory();
 		Item resultItem = bag.getItemByObjId(objId);
 

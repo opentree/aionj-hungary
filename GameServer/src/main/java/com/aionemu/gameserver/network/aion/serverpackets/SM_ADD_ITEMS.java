@@ -21,15 +21,14 @@ import java.util.List;
 import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.items.ItemId;
 import com.aionemu.gameserver.model.templates.item.ItemTemplate;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.InventoryPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * 
- * @author ATracer
+ * @author Lyahim, ATracer
  * 
  */
-public class SM_ADD_ITEMS extends InventoryPacket
+public class SM_ADD_ITEMS extends _InventoryPacket
 {
 	private List<Item> items;
 	private int size;
@@ -45,7 +44,7 @@ public class SM_ADD_ITEMS extends InventoryPacket
 	 */
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{	
 		writeH(25); // padding?
 		writeH(size); // number of entries

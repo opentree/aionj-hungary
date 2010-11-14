@@ -21,14 +21,15 @@ import org.apache.log4j.Logger;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.Summon;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.world.World;
 
 /**
- * @author ATracer
+ * @author Lyahim, ATracer
  *
  */
-public class CM_SUMMON_ATTACK extends AionClientPacket
+public class CM_SUMMON_ATTACK extends AbstractClientPacket<AionChannelHandler>
 {
 	private static final Logger	log	= Logger.getLogger(CM_SUMMON_ATTACK.class);
 
@@ -61,7 +62,7 @@ public class CM_SUMMON_ATTACK extends AionClientPacket
 	protected void runImpl()
 	{
 		// TODO: Use summonObjId to get summon, instead of activePlayer?
-		Player activePlayer = getConnection().getActivePlayer();
+		Player activePlayer = getChannelHandler().getActivePlayer();
 		if (activePlayer == null)
 		{
 			log.error("CM_SUMMON_ATTACK packet received but cannot get master player.");

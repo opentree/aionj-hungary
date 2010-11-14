@@ -16,16 +16,16 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 
 /**
  * 
- * @author orz, Sarynth
+ * @author Lyahim, orz, Sarynth
  * 
  */
-public class SM_SELL_ITEM extends AionServerPacket
+public class SM_SELL_ITEM extends AbstractAionServerPacket<AionChannelHandler>
 {
 
 	private int	targetObjectId;
@@ -44,7 +44,7 @@ public class SM_SELL_ITEM extends AionServerPacket
 	*/
 	
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{		
 
 		writeD(targetObjectId);

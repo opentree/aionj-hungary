@@ -18,14 +18,15 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.legion.Legion;
 import com.aionemu.gameserver.model.legion.LegionEmblem;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_LEGION_SEND_EMBLEM;
 import com.aionemu.gameserver.services.LegionService;
 
 /**
- * @author Simple
+ * @author Lyahim, Simple
  */
-public class CM_LEGION_SEND_EMBLEM extends AionClientPacket
+public class CM_LEGION_SEND_EMBLEM extends AbstractClientPacket<AionChannelHandler>
 {
 	
 	private int	legionId;

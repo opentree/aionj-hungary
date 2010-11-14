@@ -16,16 +16,16 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.world.WorldPosition;
 
 /**
  * 
- * @author ATracer
+ * @author Lyahim, ATracer
  * 
  */
-public class SM_CHANNEL_INFO extends AionServerPacket
+public class SM_CHANNEL_INFO extends AbstractAionServerPacket<AionChannelHandler>
 {
 	int instanceCount = 0;
 	int currentChannel = 0;
@@ -43,7 +43,7 @@ public class SM_CHANNEL_INFO extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(currentChannel);
 		writeD(instanceCount);

@@ -25,7 +25,8 @@ import com.aionemu.gameserver.itemengine.actions.ItemActions;
 import com.aionemu.gameserver.model.Race;
 import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.questEngine.QuestEngine;
 import com.aionemu.gameserver.questEngine.model.QuestEnv;
@@ -33,9 +34,9 @@ import com.aionemu.gameserver.restrictions.RestrictionsManager;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /**
- * @author Avol
+ * @author Lyahim, Avol
  */
-public class CM_USE_ITEM extends AionClientPacket {
+public class CM_USE_ITEM extends AbstractClientPacket<AionChannelHandler> {
 
 	public int uniqueItemId;
 	public int type, targetItemId;
@@ -65,7 +66,7 @@ public class CM_USE_ITEM extends AionClientPacket {
 	@Override
 	protected void runImpl() 
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 		Item item = player.getInventory().getItemByObjId(uniqueItemId);
 		
 		if(item == null)

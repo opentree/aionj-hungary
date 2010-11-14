@@ -17,16 +17,16 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.gameobjects.AionObject;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * This packet is informing client that some AionObject is no longer visible.
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class SM_DELETE extends AionServerPacket
+public class SM_DELETE extends AbstractAionServerPacket<AionChannelHandler>
 {
 	/**
 	 * Object that is no longer visible.
@@ -50,7 +50,7 @@ public class SM_DELETE extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{	
 		int action = 0;
 		if (action != 1){

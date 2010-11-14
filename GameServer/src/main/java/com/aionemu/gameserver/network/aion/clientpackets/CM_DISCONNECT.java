@@ -16,16 +16,16 @@
  */
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-import com.aionemu.gameserver.network.aion.AionClientPacket;
-import com.aionemu.gameserver.network.aion.AionConnection;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * In this packets aion client is notify quit. ie after this packet client will close connection.
  * 
- * @author -Nemesiss-
+ * @author Lyahim, Lyahim, -Nemesiss-
  * 
  */
-public class CM_DISCONNECT extends AionClientPacket
+public class CM_DISCONNECT extends AbstractClientPacket<AionChannelHandler>
 {
 
     boolean unk;
@@ -57,7 +57,7 @@ public class CM_DISCONNECT extends AionClientPacket
 
         if (unk)
         {
-            AionConnection client = getConnection();
+        	AionChannelHandler client = getChannelHandler();
             /**
              * We should close connection but not forced
              */

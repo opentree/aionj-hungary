@@ -25,8 +25,8 @@ public class NetworkConfig
 	/**
 	 * Game Server address
 	 */
-	@Property(key = "network.client.address", defaultValue = "localhost:7777")
-	public static InetSocketAddress			GAME_ADDRESS;
+	@Property(key = "network.client.address", defaultValue = "*:7777")
+	public static InetSocketAddress	CLIENT_ADDRESS;
 
 	/**
 	 * Max allowed online players
@@ -63,16 +63,4 @@ public class NetworkConfig
 	 */
 	@Property(key = "network.login.password", defaultValue = "")
 	public static String			LOGIN_PASSWORD;
-
-	/**
-	 * Number of Threads that will handle io read (>= 0)
-	 */
-	@Property(key = "network.nio.threads.read", defaultValue = "0")
-	public static int				NIO_READ_THREADS;
-
-	/**
-	 * Number of Threads that will handle io write (>= 0)
-	 */
-	@Property(key = "network.nio.threads.write", defaultValue = "0")
-	public static int				NIO_WRITE_THREADS;
 }

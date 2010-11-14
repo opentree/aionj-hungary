@@ -19,14 +19,15 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 import org.apache.log4j.Logger;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * Received when a player reports another player with /ReportAutoHunting
  * 
- * @author Jego
+ * @author Lyahim, Jego
  */
-public class CM_REPORT_PLAYER extends AionClientPacket
+public class CM_REPORT_PLAYER extends AbstractClientPacket<AionChannelHandler>
 {
 	private static final Logger	log	= Logger.getLogger(CM_REPORT_PLAYER.class);
 
@@ -52,7 +53,7 @@ public class CM_REPORT_PLAYER extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player p = getConnection().getActivePlayer();
+		Player p = getChannelHandler().getActivePlayer();
 		log.info("[AUDIT] " + p.getName() + " reports the player: " + player);
 	}
 

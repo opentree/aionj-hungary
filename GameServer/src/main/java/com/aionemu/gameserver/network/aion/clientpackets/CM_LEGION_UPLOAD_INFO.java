@@ -16,14 +16,15 @@
  */
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.LegionService;
 
 /**
- * @author Simple
+ * @author Lyahim, Simple
  * 
  */
-public class CM_LEGION_UPLOAD_INFO extends AionClientPacket
+public class CM_LEGION_UPLOAD_INFO extends AbstractClientPacket<AionChannelHandler>
 {
 
 	/** Emblem related information **/
@@ -50,6 +51,6 @@ public class CM_LEGION_UPLOAD_INFO extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		LegionService.getInstance().uploadEmblemInfo(getConnection().getActivePlayer(), totalSize);
+		LegionService.getInstance().uploadEmblemInfo(getChannelHandler().getActivePlayer(), totalSize);
 	}
 }

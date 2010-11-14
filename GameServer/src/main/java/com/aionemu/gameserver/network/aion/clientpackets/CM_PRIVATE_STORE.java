@@ -18,13 +18,14 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.trade.TradePSItem;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.PrivateStoreService;
 
 /**
- * @author Simple
+ * @author Lyahim, Simple
  */
-public class CM_PRIVATE_STORE extends AionClientPacket
+public class CM_PRIVATE_STORE extends AbstractClientPacket<AionChannelHandler>
 {
 
 	/**
@@ -53,7 +54,7 @@ public class CM_PRIVATE_STORE extends AionClientPacket
 		/**
 		 * Define who wants to create a private store
 		 */
-		activePlayer = getConnection().getActivePlayer();
+		activePlayer = getChannelHandler().getActivePlayer();
 
 		/**
 		 * Read the amount of items that need to be put into the player's store

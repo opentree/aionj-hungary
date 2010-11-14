@@ -18,15 +18,15 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.configs.main.GSConfig;
 import com.aionemu.gameserver.configs.network.NetworkConfig;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.ChatService;
 
 /**
- * @author -Nemesiss- CC fix modified by Novo
+ * @author Lyahim, -Nemesiss- CC fix modified by Novo
  */
 
-public class SM_VERSION_CHECK extends AionServerPacket
+public class SM_VERSION_CHECK extends AbstractAionServerPacket<AionChannelHandler>
 {
 
 	/**
@@ -41,7 +41,7 @@ public class SM_VERSION_CHECK extends AionServerPacket
 	 */
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeC( 0x00);
 		writeC( NetworkConfig.GAMESERVER_ID);

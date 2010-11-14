@@ -16,16 +16,17 @@
  */
 package com.aionemu.gameserver.network.loginserver.clientpackets;
 
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 import com.aionemu.gameserver.network.loginserver.LoginServer;
-import com.aionemu.gameserver.network.loginserver.LsClientPacket;
+import com.aionemu.gameserver.network.loginserver.LoginServerChannelHandler;
 
 /**
  * This packet is request kicking player.
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class CM_REQUEST_KICK_ACCOUNT extends LsClientPacket
+public class CM_REQUEST_KICK_ACCOUNT extends AbstractClientPacket<LoginServerChannelHandler>
 {
 	/**
 	 * account id of account that login server request to kick.

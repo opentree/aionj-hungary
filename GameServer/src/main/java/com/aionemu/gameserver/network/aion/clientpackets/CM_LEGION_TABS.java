@@ -22,16 +22,17 @@ import org.apache.log4j.Logger;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.legion.LegionHistory;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_LEGION_TABS;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /**
  * 
- * @author Simple
+ * @author Lyahim, Simple
  * 
  */
-public class CM_LEGION_TABS extends AionClientPacket
+public class CM_LEGION_TABS extends AbstractClientPacket<AionChannelHandler>
 {
 	private static final Logger	log	= Logger.getLogger(CM_LEGION_TABS.class);
 
@@ -67,7 +68,7 @@ public class CM_LEGION_TABS extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player activePlayer = getConnection().getActivePlayer();
+		Player activePlayer = getChannelHandler().getActivePlayer();
 		Collection<LegionHistory> history = activePlayer.getLegion().getLegionHistory();
 
 		/**

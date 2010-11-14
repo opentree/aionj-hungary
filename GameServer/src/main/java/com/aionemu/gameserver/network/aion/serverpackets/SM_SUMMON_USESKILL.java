@@ -16,14 +16,14 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author ATracer
+ * @author Lyahim, ATracer
  * 
  */
-public class SM_SUMMON_USESKILL extends AionServerPacket
+public class SM_SUMMON_USESKILL extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int summonId;
 	private int skillId;
@@ -46,7 +46,7 @@ public class SM_SUMMON_USESKILL extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(summonId);
 		writeH(skillId);

@@ -17,8 +17,8 @@
 package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.account.PlayerAccountData;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
-import com.aionemu.gameserver.network.aion.AionConnection;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_DELETE_CHARACTER;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.services.PlayerService;
@@ -26,10 +26,10 @@ import com.aionemu.gameserver.services.PlayerService;
 /**
  * In this packets aion client is requesting deletion of character.
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class CM_DELETE_CHARACTER extends AionClientPacket
+public class CM_DELETE_CHARACTER extends AbstractClientPacket<AionChannelHandler>
 {
 	/**
 	 * PlayOk2 - we dont care...
@@ -66,7 +66,7 @@ public class CM_DELETE_CHARACTER extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		AionConnection client = getConnection();
+		AionChannelHandler client = getChannelHandler();
 		PlayerAccountData playerAccData = client.getAccount().getPlayerAccountData(chaOid);
 		if(playerAccData != null && !playerAccData.isLegionMember())
 		{

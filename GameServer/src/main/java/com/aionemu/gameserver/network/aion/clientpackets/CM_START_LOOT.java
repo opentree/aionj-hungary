@@ -17,15 +17,16 @@
 package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.DropService;
 
 /**
  * 
- * @author alexa026, Correted by Metos, ATracer
+ * @author Lyahim, alexa026, Correted by Metos, ATracer
  * 
  */
-public class CM_START_LOOT extends AionClientPacket
+public class CM_START_LOOT extends AbstractClientPacket<AionChannelHandler>
 {
 	/**
 	 * Target object id that client wants to TALK WITH or 0 if wants to unselect
@@ -59,7 +60,7 @@ public class CM_START_LOOT extends AionClientPacket
 	@Override
 	protected void runImpl() 
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 
 		if(action == 0) //open
 		{

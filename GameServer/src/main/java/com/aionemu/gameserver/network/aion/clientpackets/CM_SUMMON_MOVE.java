@@ -21,16 +21,17 @@ import org.apache.log4j.Logger;
 import com.aionemu.gameserver.controllers.movement.MovementType;
 import com.aionemu.gameserver.model.gameobjects.Summon;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_MOVE;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.world.World;
 
 /**
- * @author ATracer
+ * @author Lyahim, ATracer
  * 
  */
-public class CM_SUMMON_MOVE extends AionClientPacket
+public class CM_SUMMON_MOVE extends AbstractClientPacket<AionChannelHandler>
 {
 	private static final Logger	log	= Logger.getLogger(CM_SUMMON_MOVE.class);
 
@@ -58,7 +59,7 @@ public class CM_SUMMON_MOVE extends AionClientPacket
 	@Override
 	protected void readImpl()
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 
 		if(!player.isSpawned())
 			return;
@@ -92,7 +93,7 @@ public class CM_SUMMON_MOVE extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 		if(player == null)
 		{
 			log.error("CM_SUMMON_MOVE packet received but cannot get master player.");

@@ -20,7 +20,8 @@ import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.player.DeniedStatus;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.RequestResponseHandler;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_FRIEND_RESPONSE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_QUESTION_WINDOW;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
@@ -30,10 +31,10 @@ import com.aionemu.gameserver.world.World;
 /**
  * Received when a user tries to add someone as his friend
  * 
- * @author Ben
+ * @author Lyahim, Ben
  *
  */
-public class CM_FRIEND_ADD extends AionClientPacket
+public class CM_FRIEND_ADD extends AbstractClientPacket<AionChannelHandler>
 {
 	private String 				targetName;
 	
@@ -58,7 +59,7 @@ public class CM_FRIEND_ADD extends AionClientPacket
 	protected void runImpl()
 	{
 		
-		final Player activePlayer = getConnection().getActivePlayer();
+		final Player activePlayer = getChannelHandler().getActivePlayer();
 		final Player targetPlayer = World.getInstance().findPlayer(targetName);
 		
 	

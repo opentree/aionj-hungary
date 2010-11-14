@@ -19,18 +19,19 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 import com.aionemu.gameserver.model.gameobjects.AionObject;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_LOOKATOBJECT;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.world.World;
 
 /**
  * 
- * @author alexa026, Avol
+ * @author Lyahim, alexa026, Avol
  * modified by ATracer
  * 
  */
-public class CM_SHOW_DIALOG extends AionClientPacket
+public class CM_SHOW_DIALOG extends AbstractClientPacket<AionChannelHandler>
 {
 	private int	targetObjectId;
 
@@ -59,7 +60,7 @@ public class CM_SHOW_DIALOG extends AionClientPacket
 	protected void runImpl()
 	{
 		AionObject targetObject = World.getInstance().findAionObject(targetObjectId);
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 
 		if(targetObject == null || player == null)
 			return;

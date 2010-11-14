@@ -17,14 +17,15 @@
 package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.BrokerService;
 
 /**
- * @author kosyak
+ * @author Lyahim, kosyak
  *
  */
-public class CM_BUY_BROKER_ITEM extends AionClientPacket
+public class CM_BUY_BROKER_ITEM extends AbstractClientPacket<AionChannelHandler>
 {
 
 	@SuppressWarnings("unused")
@@ -49,7 +50,7 @@ public class CM_BUY_BROKER_ITEM extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 		
 		BrokerService.getInstance().buyBrokerItem(player, itemUniqueId);
 	}

@@ -19,13 +19,13 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 import java.util.Collection;
 
 import com.aionemu.gameserver.model.legion.LegionHistory;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author Simple
+ * @author Lyahim, Simple
  */
-public class SM_LEGION_TABS extends AionServerPacket
+public class SM_LEGION_TABS extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int									page;
 	private Collection<LegionHistory>	legionHistory;
@@ -43,7 +43,7 @@ public class SM_LEGION_TABS extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		/**
 		 * If history size is less than page*8 return

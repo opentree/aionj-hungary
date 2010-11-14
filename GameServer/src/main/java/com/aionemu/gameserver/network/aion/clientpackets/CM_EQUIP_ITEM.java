@@ -19,16 +19,17 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.gameobjects.player.Equipment;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_UPDATE_PLAYER_APPEARANCE;
 import com.aionemu.gameserver.restrictions.RestrictionsManager;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /**
  * 
- * @author Avol modified by ATracer
+ * @author Lyahim, Avol modified by ATracer
  */
-public class CM_EQUIP_ITEM extends AionClientPacket
+public class CM_EQUIP_ITEM extends AbstractClientPacket<AionChannelHandler>
 {
 	public int	slotRead;
 	public int	itemUniqueId;
@@ -50,7 +51,7 @@ public class CM_EQUIP_ITEM extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		final Player activePlayer = getConnection().getActivePlayer();
+		final Player activePlayer = getChannelHandler().getActivePlayer();
 		Equipment equipment = activePlayer.getEquipment();
 		Item resultItem = null;
 

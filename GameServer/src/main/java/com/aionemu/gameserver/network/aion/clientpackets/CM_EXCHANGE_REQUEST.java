@@ -20,7 +20,8 @@ import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.player.DeniedStatus;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.RequestResponseHandler;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.SystemMessageId;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_QUESTION_WINDOW;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
@@ -29,10 +30,10 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.world.World;
 
 /**
- * @author -Avol-
+ * @author Lyahim, -Avol-
  * 
  */
-public class CM_EXCHANGE_REQUEST extends AionClientPacket
+public class CM_EXCHANGE_REQUEST extends AbstractClientPacket<AionChannelHandler>
 {
 	public Integer			targetObjectId;
 
@@ -51,7 +52,7 @@ public class CM_EXCHANGE_REQUEST extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		final Player activePlayer = getConnection().getActivePlayer();
+		final Player activePlayer = getChannelHandler().getActivePlayer();
 		final Player targetPlayer = World.getInstance().findPlayer(targetObjectId);
 
 		/**

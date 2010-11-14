@@ -72,7 +72,6 @@ import com.aionemu.gameserver.model.gameobjects.stats.listeners.TitleChangeListe
 import com.aionemu.gameserver.model.items.ItemSlot;
 import com.aionemu.gameserver.model.legion.LegionMember;
 import com.aionemu.gameserver.model.templates.item.ItemTemplate;
-import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.clientpackets.CM_ENTER_WORLD;
 import com.aionemu.gameserver.network.aion.clientpackets.CM_QUIT;
 import com.aionemu.gameserver.utils.ThreadPoolManager;

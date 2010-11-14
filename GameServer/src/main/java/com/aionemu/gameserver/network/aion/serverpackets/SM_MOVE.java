@@ -17,16 +17,16 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.controllers.movement.MovementType;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * This packet is displaying movement of players etc.
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class SM_MOVE extends AionServerPacket
+public class SM_MOVE extends AbstractAionServerPacket<AionChannelHandler>
 {
 	/**
 	 * Object that is moving.
@@ -100,7 +100,7 @@ public class SM_MOVE extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(movingCreatureId);
 		writeF(x);

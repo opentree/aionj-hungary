@@ -17,7 +17,8 @@
 package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.AllianceService;
 import com.aionemu.gameserver.services.GroupService;
 import com.aionemu.gameserver.world.World;
@@ -25,12 +26,12 @@ import com.aionemu.gameserver.world.World;
 /**
  * Called when entering the world and during group management
  * 
- * @author Lyahim
- * @author ATracer
- * @author Simple
+ * @author Lyahim, Lyahim
+ * @author Lyahim, ATracer
+ * @author Lyahim, Simple
  */
 
-public class CM_PLAYER_STATUS_INFO extends AionClientPacket
+public class CM_PLAYER_STATUS_INFO extends AbstractClientPacket<AionChannelHandler>
 {
 
 	/**
@@ -54,14 +55,14 @@ public class CM_PLAYER_STATUS_INFO extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player myActivePlayer = getConnection().getActivePlayer();
+		Player myActivePlayer = getChannelHandler().getActivePlayer();
 
 		switch(status)
         {
 			// Note: This is currently used for PlayerGroup...
 			// but it also is sent when leaving the alliance.
             case 9:
-                getConnection().getActivePlayer().setLookingForGroup(playerObjId == 2);
+                getChannelHandler().getActivePlayer().setLookingForGroup(playerObjId == 2);
                 break;
             
             //Alliance Statuses
@@ -81,7 +82,7 @@ public class CM_PLAYER_STATUS_INFO extends AionClientPacket
                 Player player = null;
 
                 if(playerObjId == 0)
-                    player = getConnection().getActivePlayer();
+                    player = getChannelHandler().getActivePlayer();
                 else
                     player = World.getInstance().findPlayer(playerObjId);
 

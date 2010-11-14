@@ -17,13 +17,13 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.ToyPet;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author M@xx 
+ * @author Lyahim, M@xx 
  */
-public class SM_PET_MOVE extends AionServerPacket
+public class SM_PET_MOVE extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int actionId;
 	private ToyPet pet;
@@ -36,7 +36,7 @@ public class SM_PET_MOVE extends AionServerPacket
 	
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(pet.getDatabaseIndex());
 		writeC( actionId);

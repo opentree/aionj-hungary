@@ -18,15 +18,16 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Friend;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_FRIEND_LIST;
 
 /**
  * Received when a player sets his note
- * @author Ben
+ * @author Lyahim, Ben
  *
  */
-public class CM_SET_NOTE extends AionClientPacket
+public class CM_SET_NOTE extends AbstractClientPacket<AionChannelHandler>
 {
 	private String note;
 	
@@ -51,7 +52,7 @@ public class CM_SET_NOTE extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player activePlayer = getConnection().getActivePlayer();
+		Player activePlayer = getChannelHandler().getActivePlayer();
 		
 		if (!note.equals(activePlayer.getCommonData().getNote()))
 		{

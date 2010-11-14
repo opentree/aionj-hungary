@@ -19,12 +19,13 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 
 import org.apache.log4j.Logger;
 
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author Lyahim
+ * @author Lyahim, Lyahim
  */
-public class CM_GROUP_RESPONSE extends AionClientPacket
+public class CM_GROUP_RESPONSE extends AbstractClientPacket<AionChannelHandler>
 {	
 	private static Logger log = Logger.getLogger(CM_GROUP_RESPONSE.class);
 	

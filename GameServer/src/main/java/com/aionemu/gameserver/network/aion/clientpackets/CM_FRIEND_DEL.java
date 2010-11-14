@@ -20,15 +20,16 @@ import org.apache.log4j.Logger;
 
 import com.aionemu.gameserver.model.gameobjects.player.Friend;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.services.SocialService;
 
 /**
- * @author Ben
+ * @author Lyahim, Ben
  *
  */
-public class CM_FRIEND_DEL extends AionClientPacket
+public class CM_FRIEND_DEL extends AbstractClientPacket<AionChannelHandler>
 {
 
 	private String 				targetName;
@@ -56,7 +57,7 @@ public class CM_FRIEND_DEL extends AionClientPacket
 	protected void runImpl()
 	{
 		
-		Player activePlayer = getConnection().getActivePlayer();
+		Player activePlayer = getChannelHandler().getActivePlayer();
 		Friend target = activePlayer.getFriendList().getFriend(targetName);
 		if (target == null)
 		{

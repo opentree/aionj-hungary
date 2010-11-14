@@ -20,15 +20,15 @@ import java.util.List;
 
 import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.items.GodStone;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * 
- * @author Avol
+ * @author Lyahim, Avol
  * modified by ATracer
  */
-public class SM_UPDATE_PLAYER_APPEARANCE extends AionServerPacket
+public class SM_UPDATE_PLAYER_APPEARANCE extends AbstractAionServerPacket<AionChannelHandler>
 {
 	public int playerId;
 	public int size;
@@ -42,7 +42,7 @@ public class SM_UPDATE_PLAYER_APPEARANCE extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(playerId);
 		

@@ -17,14 +17,15 @@
 package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.ItemRemodelService;
 
 /**
- * @author Sarynth
+ * @author Lyahim, Sarynth
  *
  */
-public class CM_ITEM_REMODEL extends AionClientPacket
+public class CM_ITEM_REMODEL extends AbstractClientPacket<AionChannelHandler>
 {	
 
 	private int keepItemId;
@@ -52,7 +53,7 @@ public class CM_ITEM_REMODEL extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		final Player activePlayer = getConnection().getActivePlayer();
+		final Player activePlayer = getChannelHandler().getActivePlayer();
 		ItemRemodelService.remodelItem(activePlayer, keepItemId, extractItemId);
 	}
 }

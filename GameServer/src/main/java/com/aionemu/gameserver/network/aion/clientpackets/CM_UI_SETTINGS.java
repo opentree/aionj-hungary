@@ -17,12 +17,13 @@
 package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author ATracer
+ * @author Lyahim, ATracer
  */
-public class CM_UI_SETTINGS extends AionClientPacket
+public class CM_UI_SETTINGS extends AbstractClientPacket<AionChannelHandler>
 {
 	int settingsType;
 	byte[] data;
@@ -48,7 +49,7 @@ public class CM_UI_SETTINGS extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player player =  getConnection().getActivePlayer();
+		Player player =  getChannelHandler().getActivePlayer();
 		if(player == null) //since 1.5.1 needed, investigate
 			return;
 		

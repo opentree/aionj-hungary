@@ -30,8 +30,8 @@ import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.PlayerAppearance;
 import com.aionemu.gameserver.model.gameobjects.player.PlayerCommonData;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
-import com.aionemu.gameserver.network.aion.AionConnection;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_CREATE_CHARACTER;
 import com.aionemu.gameserver.services.PlayerService;
 import com.aionemu.gameserver.utils.Util;
@@ -40,10 +40,10 @@ import com.aionemu.gameserver.utils.idfactory.IDFactory;
 /**
  * In this packets aion client is requesting creation of character.
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class CM_CREATE_CHARACTER extends AionClientPacket
+public class CM_CREATE_CHARACTER extends AbstractClientPacket<AionChannelHandler>
 {
 	/** Character appearance */
 	private PlayerAppearance	playerAppearance;
@@ -172,7 +172,7 @@ public class CM_CREATE_CHARACTER extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		AionConnection client = getConnection();
+		AionChannelHandler client = getChannelHandler();
 
 		/* Some reasons why player can' be created */
 		if(!PlayerService.isValidName(playerCommonData.getName()))

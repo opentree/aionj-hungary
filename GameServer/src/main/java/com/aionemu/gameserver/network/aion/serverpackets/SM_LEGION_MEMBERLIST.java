@@ -19,15 +19,15 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 import java.util.ArrayList;
 
 import com.aionemu.gameserver.model.legion.LegionMemberEx;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * 
- * @author Simple
+ * @author Lyahim, Simple
  * 
  */
-public class SM_LEGION_MEMBERLIST extends AionServerPacket
+public class SM_LEGION_MEMBERLIST extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private static final int			OFFLINE	= 0x00;
 	private static final int			ONLINE	= 0x01;
@@ -45,7 +45,7 @@ public class SM_LEGION_MEMBERLIST extends AionServerPacket
 	}
 
 	@Override
-	public void writeImpl(AionConnection con)
+	public void writeImpl(AionChannelHandler cHandler)
 	{
 		writeC( 0x01);
 		writeH((65536 - legionMembers.size()));

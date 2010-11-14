@@ -16,14 +16,15 @@
  */
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author xavier
+ * @author Lyahim, xavier
  *
  * Packet sent by client when player may quit game in 10 seconds
  */
-public class CM_MAY_QUIT extends AionClientPacket
+public class CM_MAY_QUIT extends AbstractClientPacket<AionChannelHandler>
 {
 
 	/**

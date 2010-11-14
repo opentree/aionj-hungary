@@ -17,14 +17,15 @@
 package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  *  Response to SM_QUESTION_WINDOW
- * @author Ben
- * @author Sarynth
+ * @author Lyahim, Ben
+ * @author Lyahim, Sarynth
  */
-public class CM_QUESTION_RESPONSE extends AionClientPacket
+public class CM_QUESTION_RESPONSE extends AbstractClientPacket<AionChannelHandler>
 {
     private int 			questionid;
     private int 			response;
@@ -58,7 +59,7 @@ public class CM_QUESTION_RESPONSE extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 		player.getResponseRequester().respond(questionid, response);
 	}
 

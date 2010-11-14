@@ -16,15 +16,15 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.questEngine.model.QuestStatus;
 
 /**
- * @author MrPoke
+ * @author Lyahim, MrPoke
  * 
  */
-public class SM_QUEST_STEP extends AionServerPacket
+public class SM_QUEST_STEP extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int	questId;
 	private int	status;
@@ -41,7 +41,7 @@ public class SM_QUEST_STEP extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeH(questId);
 		writeC( status);

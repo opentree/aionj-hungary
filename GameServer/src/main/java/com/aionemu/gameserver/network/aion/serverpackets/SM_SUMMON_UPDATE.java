@@ -18,14 +18,14 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.gameobjects.Summon;
 import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author ATracer
+ * @author Lyahim, ATracer
  * 
  */
-public class SM_SUMMON_UPDATE extends AionServerPacket
+public class SM_SUMMON_UPDATE extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private Summon	summon;
 
@@ -35,7 +35,7 @@ public class SM_SUMMON_UPDATE extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeC( summon.getLevel());
 		writeH(summon.getMode().getId());

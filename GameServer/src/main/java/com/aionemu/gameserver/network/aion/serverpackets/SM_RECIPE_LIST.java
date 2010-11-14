@@ -18,14 +18,14 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 
 import java.util.Set;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author lord_rex
+ * @author Lyahim, lord_rex
  *
  */
-public class SM_RECIPE_LIST extends AionServerPacket
+public class SM_RECIPE_LIST extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private Integer[] recipeIds;
 	private int count;
@@ -37,7 +37,7 @@ public class SM_RECIPE_LIST extends AionServerPacket
 	}
 	
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeH(count);
 		for(int id : recipeIds)

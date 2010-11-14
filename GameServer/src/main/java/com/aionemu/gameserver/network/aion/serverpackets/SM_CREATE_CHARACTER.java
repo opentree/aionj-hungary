@@ -17,16 +17,15 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.account.PlayerAccountData;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.PlayerInfo;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * This packet is response for CM_CREATE_CHARACTER
  * 
- * @author Nemesiss, AEJTester
+ * @author Lyahim, Nemesiss, AEJTester
  * 
  */
-public class SM_CREATE_CHARACTER extends PlayerInfo
+public class SM_CREATE_CHARACTER extends _PlayerInfo
 {	
 	/** If response is ok */
 	public static final int	RESPONSE_OK				= 0x00;
@@ -78,7 +77,7 @@ public class SM_CREATE_CHARACTER extends PlayerInfo
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(responseCode);
 

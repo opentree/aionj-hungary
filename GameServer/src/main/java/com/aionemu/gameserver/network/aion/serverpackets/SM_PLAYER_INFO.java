@@ -24,15 +24,15 @@ import com.aionemu.gameserver.model.gameobjects.player.PlayerAppearance;
 import com.aionemu.gameserver.model.gameobjects.player.PlayerCommonData;
 import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
 import com.aionemu.gameserver.model.items.GodStone;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * This packet is displaying visible players.
  * 
- * @author -Nemesiss-, Avol, srx47  ,M@xx
+ * @author Lyahim, -Nemesiss-, Avol, srx47  ,M@xx
  */
-public class SM_PLAYER_INFO extends AionServerPacket
+public class SM_PLAYER_INFO extends AbstractAionServerPacket<AionChannelHandler>
 {
 
 	/**
@@ -58,7 +58,7 @@ public class SM_PLAYER_INFO extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		PlayerCommonData pcd = player.getCommonData();
 

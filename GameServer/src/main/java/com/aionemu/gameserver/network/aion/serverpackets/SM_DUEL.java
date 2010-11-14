@@ -17,15 +17,15 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.DuelResult;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * 
- * @author xavier
+ * @author Lyahim, xavier
  * 
  */
-public class SM_DUEL extends AionServerPacket
+public class SM_DUEL extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private String		playerName;
 	private DuelResult	result;
@@ -65,7 +65,7 @@ public class SM_DUEL extends AionServerPacket
 	}
 	
 	@Override
-	public void writeImpl(AionConnection con)
+	public void writeImpl(AionChannelHandler cHandler)
 	{
 		writeC( type);
 

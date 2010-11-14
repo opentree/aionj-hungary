@@ -16,22 +16,22 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * dunno wtf this packet is doing. Not sure about id/name
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class SM_ENTER_WORLD_CHECK extends AionServerPacket
+public class SM_ENTER_WORLD_CHECK extends AbstractAionServerPacket<AionChannelHandler>
 {
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeC( 0x00);
 		writeC( 0x00);

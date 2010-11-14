@@ -18,10 +18,11 @@ package com.aionemu.gameserver.network.loginserver.clientpackets;
 
 import org.apache.log4j.Logger;
 
-import com.aionemu.commons.netty.State;
 import com.aionemu.commons.utils.ExitCode;
 import com.aionemu.gameserver.network.loginserver.LoginServer;
-import com.aionemu.gameserver.network.loginserver.LsClientPacket;
+import com.aionemu.commons.network.netty.State;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.loginserver.LoginServerChannelHandler;
 import com.aionemu.gameserver.network.loginserver.serverpackets.SM_ACCOUNT_LIST;
 import com.aionemu.gameserver.network.loginserver.serverpackets.SM_GS_AUTH;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
@@ -29,10 +30,10 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 /**
  * This packet is response for SM_GS_AUTH its notify Gameserver if registration was ok or what was wrong.
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class CM_GS_AUTH_RESPONSE extends LsClientPacket
+public class CM_GS_AUTH_RESPONSE extends AbstractClientPacket<LoginServerChannelHandler>
 {
 	/**
 	 * Logger for this class.
@@ -73,9 +74,9 @@ public class CM_GS_AUTH_RESPONSE extends LsClientPacket
 		 */
 		if(response == 0)
 		{
-			getConnection().setState(State.AUTHED);
+			getChannelHandler().setState(State.AUTHED);
 			sendPacket(new SM_ACCOUNT_LIST(LoginServer.getInstance().getLoggedInAccounts()));
-			LoginServer.getInstance().setLoginServer(this.getConnection());
+//			LoginServer.getInstance().setLoginServer(getChannelHandler());
 		}
 
 		/**
@@ -99,7 +100,7 @@ public class CM_GS_AUTH_RESPONSE extends LsClientPacket
 				@Override
 				public void run()
 				{
-					CM_GS_AUTH_RESPONSE.this.getConnection().sendPacket(new SM_GS_AUTH());
+					CM_GS_AUTH_RESPONSE.this.getChannelHandler().sendPacket(new SM_GS_AUTH());
 				}
 
 			}, 10000);

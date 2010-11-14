@@ -21,14 +21,13 @@ import java.util.Collection;
 import com.aionemu.gameserver.model.gameobjects.Letter;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.mail.MailMessage;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.MailServicePacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author kosyachok
+ * @author Lyahim, kosyachok
  *
  */
-public class SM_MAIL_SERVICE extends MailServicePacket
+public class SM_MAIL_SERVICE extends _MailServicePacket
 {
 	private int serviceId;
 	private Player player;
@@ -119,7 +118,7 @@ public class SM_MAIL_SERVICE extends MailServicePacket
 	}
 	
 	@Override
-	public void writeImpl (AionConnection con)
+	public void writeImpl (AionChannelHandler con)
 	{
 		switch(serviceId)
 		{

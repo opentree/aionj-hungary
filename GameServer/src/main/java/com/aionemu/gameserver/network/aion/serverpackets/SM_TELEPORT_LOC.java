@@ -16,16 +16,16 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * This packet is used to teleport player
  * 
- * @author Luno , orz
+ * @author Lyahim, Luno , orz
  * 
  */
-public class SM_TELEPORT_LOC extends AionServerPacket
+public class SM_TELEPORT_LOC extends AbstractAionServerPacket<AionChannelHandler>
 {
 
 	private int	mapId;
@@ -43,7 +43,7 @@ public class SM_TELEPORT_LOC extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeC( 3); //unk
 		writeC( 0x90);  //unk

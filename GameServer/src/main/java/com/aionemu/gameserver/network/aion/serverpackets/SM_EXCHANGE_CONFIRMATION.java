@@ -16,14 +16,14 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author -Avol-
+ * @author Lyahim, -Avol-
  * 
  */
-public class SM_EXCHANGE_CONFIRMATION extends AionServerPacket
+public class SM_EXCHANGE_CONFIRMATION extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int	action;
 	
@@ -34,7 +34,7 @@ public class SM_EXCHANGE_CONFIRMATION extends AionServerPacket
 	}
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeC( action);
 	}

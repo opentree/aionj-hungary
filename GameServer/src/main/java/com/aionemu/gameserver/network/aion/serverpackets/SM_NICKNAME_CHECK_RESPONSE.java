@@ -17,17 +17,17 @@
 
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * This packet is response for CM_CHECK_NICKNAME.<br>
  * It sends client information if name can be used or not
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class SM_NICKNAME_CHECK_RESPONSE extends AionServerPacket
+public class SM_NICKNAME_CHECK_RESPONSE extends AbstractAionServerPacket<AionChannelHandler>
 {
 	/**
 	 * Value of response object
@@ -49,7 +49,7 @@ public class SM_NICKNAME_CHECK_RESPONSE extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		/**
 		 * Here is some msg: 0x00 = ok 0x0A = not ok and much more

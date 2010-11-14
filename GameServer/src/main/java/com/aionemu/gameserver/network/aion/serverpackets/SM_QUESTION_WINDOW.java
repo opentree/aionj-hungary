@@ -17,16 +17,16 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.DescriptionId;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * Opens a yes/no question window on the client. Question based on the code given, defined in client_strings.xml
  * 
- * @author Ben, avol, Lyahim
+ * @author Lyahim, Ben, avol, Lyahim
  * 
  */
-public class SM_QUESTION_WINDOW extends AionServerPacket
+public class SM_QUESTION_WINDOW extends AbstractAionServerPacket<AionChannelHandler>
 {
 	public static final int	STR_BUDDYLIST_ADD_BUDDY_REQUETS		= 0x0DBEE9;
 	public static final int	STR_EXCHANGE_DO_YOU_ACCEPT_EXCHANGE	= 0x15f91;
@@ -74,7 +74,7 @@ public class SM_QUESTION_WINDOW extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(code);
 

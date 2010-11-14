@@ -20,14 +20,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.BrokerService;
 
 /**
- * @author IlBuono
+ * @author Lyahim, IlBuono
  *
  */
-public class CM_BROKER_SEARCH extends AionClientPacket
+public class CM_BROKER_SEARCH extends AbstractClientPacket<AionChannelHandler>
 {
 	@SuppressWarnings("unused")
 	private int brokerId;
@@ -58,7 +59,7 @@ public class CM_BROKER_SEARCH extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 
 		BrokerService.getInstance().showRequestedItems(player, mask, sortType, page, items_id, true);
 	}

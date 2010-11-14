@@ -17,15 +17,15 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.Petition;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.PetitionService;
 
 /**
- * @author zdead
+ * @author Lyahim, zdead
  *
  */
-public class SM_PETITION extends AionServerPacket
+public class SM_PETITION extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private Petition petition;
 	
@@ -40,7 +40,7 @@ public class SM_PETITION extends AionServerPacket
     }
 
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		if(petition == null)
 		{
@@ -55,7 +55,7 @@ public class SM_PETITION extends AionServerPacket
 		{
 			writeC( 0x01); // Action ID ?
 			writeD(100); // unk (total online players ?)
-			writeH(PetitionService.getInstance().getWaitingPlayers(con.getActivePlayer().getObjectId())); // Users waiting for Support
+			writeH(PetitionService.getInstance().getWaitingPlayers(cHandler.getActivePlayer().getObjectId())); // Users waiting for Support
 			writeS(Integer.toString(petition.getPetitionId())); // Ticket ID
 			writeH(0x00);
 			writeC( 50); // Total Petitions

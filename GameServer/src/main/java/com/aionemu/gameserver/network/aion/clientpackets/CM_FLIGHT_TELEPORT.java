@@ -18,16 +18,17 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.world.World;
 
 /**
  * Packet about player flying teleport movement.
  * 
- * @author -Nemesiss-, Sweetkr
+ * @author Lyahim, -Nemesiss-, Sweetkr
  * 
  */
-public class CM_FLIGHT_TELEPORT extends AionClientPacket
+public class CM_FLIGHT_TELEPORT extends AbstractClientPacket<AionChannelHandler>
 {
 	float x, y, z;
 	int distance;
@@ -62,7 +63,7 @@ public class CM_FLIGHT_TELEPORT extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 
 		if(player != null && player.isInState(CreatureState.FLIGHT_TELEPORT))
 		{

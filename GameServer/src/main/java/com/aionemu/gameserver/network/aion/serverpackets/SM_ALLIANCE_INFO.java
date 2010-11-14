@@ -19,14 +19,14 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 import java.util.List;
 
 import com.aionemu.gameserver.model.alliance.PlayerAlliance;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author Sarynth (Thx Rhys2002 for Packets)
+ * @author Lyahim, Sarynth (Thx Rhys2002 for Packets)
  *
  */
-public class SM_ALLIANCE_INFO extends AionServerPacket
+public class SM_ALLIANCE_INFO extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private PlayerAlliance alliance;
 	
@@ -35,7 +35,7 @@ public class SM_ALLIANCE_INFO extends AionServerPacket
 		this.alliance = alliance;
 	}
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeH(4);
 		writeD(alliance.getObjectId());

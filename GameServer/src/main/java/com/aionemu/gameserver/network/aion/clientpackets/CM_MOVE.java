@@ -23,7 +23,8 @@ import com.aionemu.gameserver.controllers.movement.MovementType;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
 import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_MOVE;
 import com.aionemu.gameserver.taskmanager.tasks.GroupAllianceUpdater;
 import com.aionemu.gameserver.utils.PacketSendUtility;
@@ -33,10 +34,10 @@ import com.aionemu.gameserver.world.World;
 /**
  * Packet about player movement.
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class CM_MOVE extends AionClientPacket
+public class CM_MOVE extends AbstractClientPacket<AionChannelHandler>
 {
 	/**
 	 * logger for this class
@@ -69,7 +70,7 @@ public class CM_MOVE extends AionClientPacket
 	@Override
 	protected void readImpl()
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 
 		if(!player.isSpawned())
 			return;
@@ -111,7 +112,7 @@ public class CM_MOVE extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 		World world = World.getInstance();
 		//packet was not read correctly
 		if(type == null)

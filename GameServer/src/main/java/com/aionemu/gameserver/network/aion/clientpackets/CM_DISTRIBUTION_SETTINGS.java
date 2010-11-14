@@ -22,12 +22,13 @@ import com.aionemu.gameserver.model.group.LootDistribution;
 import com.aionemu.gameserver.model.group.LootGroupRules;
 import com.aionemu.gameserver.model.group.LootRuleType;
 import com.aionemu.gameserver.model.group.PlayerGroup;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author Lyahim, Simple
+ * @author Lyahim, Lyahim, Simple
  */
-public class CM_DISTRIBUTION_SETTINGS extends AionClientPacket
+public class CM_DISTRIBUTION_SETTINGS extends AbstractClientPacket<AionChannelHandler>
 {
 		
 	private LootRuleType lootrules; //0-free-for-all, 1-round-robin 2-leader
@@ -100,7 +101,7 @@ public class CM_DISTRIBUTION_SETTINGS extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player leader = getConnection().getActivePlayer();
+		Player leader = getChannelHandler().getActivePlayer();
 		if(leader != null)
 		{
 			PlayerGroup pg = leader.getPlayerGroup();

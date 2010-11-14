@@ -18,21 +18,21 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Friend;
 import com.aionemu.gameserver.model.gameobjects.player.FriendList;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * Sends a friend list to the client
- * @author Ben
+ * @author Lyahim, Ben
  *
  */
-public class SM_FRIEND_LIST extends AionServerPacket
+public class SM_FRIEND_LIST extends AbstractAionServerPacket<AionChannelHandler>
 {
 	
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
-		FriendList list = con.getActivePlayer().getFriendList();
+		FriendList list = cHandler.getActivePlayer().getFriendList();
 
 		writeH((0 - list.getSize()));
 		writeC( 0); // Unk

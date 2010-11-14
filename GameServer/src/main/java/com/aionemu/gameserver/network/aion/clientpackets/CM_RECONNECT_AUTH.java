@@ -16,17 +16,17 @@
  */
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-import com.aionemu.gameserver.network.aion.AionClientPacket;
-import com.aionemu.gameserver.network.aion.AionConnection;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.loginserver.LoginServer;
 
 /**
  * In this packets aion client is asking for fast reconnection to LoginServer.
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class CM_RECONNECT_AUTH extends AionClientPacket
+public class CM_RECONNECT_AUTH extends AbstractClientPacket<AionChannelHandler>
 {
 
 	/**
@@ -53,7 +53,7 @@ public class CM_RECONNECT_AUTH extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		AionConnection client = getConnection();
+		AionChannelHandler client = getChannelHandler();
 		// TODO! check if may reconnect
 		LoginServer.getInstance().requestAuthReconnection(client);
 	}

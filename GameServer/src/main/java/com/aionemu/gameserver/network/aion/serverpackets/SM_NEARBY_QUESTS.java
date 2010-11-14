@@ -18,15 +18,15 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 
 import java.util.List;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.QuestService;
 
 /**
- * @author MrPoke
+ * @author Lyahim, MrPoke
  */
 
-public class SM_NEARBY_QUESTS extends AionServerPacket
+public class SM_NEARBY_QUESTS extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private Integer[] questIds;
 	private int size;
@@ -39,9 +39,9 @@ public class SM_NEARBY_QUESTS extends AionServerPacket
 
 
 	@Override
- 	protected void writeImpl(AionConnection con)
+ 	protected void writeImpl(AionChannelHandler cHandler)
  	{
- 		int playerLevel = con.getActivePlayer().getLevel();
+ 		int playerLevel = cHandler.getActivePlayer().getLevel();
  		writeD(size);
   		for(int id : questIds)
   		{

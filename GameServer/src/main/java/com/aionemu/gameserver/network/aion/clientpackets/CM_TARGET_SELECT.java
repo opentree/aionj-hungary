@@ -19,7 +19,8 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 import com.aionemu.gameserver.model.gameobjects.AionObject;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_TARGET_SELECTED;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_TARGET_UPDATE;
 import com.aionemu.gameserver.utils.PacketSendUtility;
@@ -31,9 +32,9 @@ import com.aionemu.gameserver.world.World;
  * If client want's to select target - d is object id.<br>
  * If client unselects target - d is 0;
  * 
- * @author SoulKeeper, Sweetkr
+ * @author Lyahim, SoulKeeper, Sweetkr
  */
-public class CM_TARGET_SELECT extends AionClientPacket
+public class CM_TARGET_SELECT extends AbstractClientPacket<AionChannelHandler>
 {
 	/**
 	 * Target object id that client wants to select or 0 if wants to unselect
@@ -68,7 +69,7 @@ public class CM_TARGET_SELECT extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 		if(player == null)
 			return;
 

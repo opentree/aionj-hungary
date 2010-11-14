@@ -19,14 +19,15 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * 
- * @author alexa026, Avol, ATracer
+ * @author Lyahim, alexa026, Avol, ATracer
  * 
  */
-public class CM_ATTACK extends AionClientPacket
+public class CM_ATTACK extends AbstractClientPacket<AionChannelHandler>
 {
 	/**
 	 * Target object id that client wants to TALK WITH or 0 if wants to unselect
@@ -69,7 +70,7 @@ public class CM_ATTACK extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 		if(player != null && !player.getLifeStats().isAlreadyDead())
 		{
 			VisibleObject visibleObject = player.getKnownList().getKnownObjects().get(targetObjectId);

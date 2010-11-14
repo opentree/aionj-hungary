@@ -17,14 +17,15 @@
 package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.MailService;
 
 /**
- * @author kosyachok
+ * @author Lyahim, kosyachok
  *
  */
-public class CM_GET_MAIL_ATTACHMENT extends AionClientPacket
+public class CM_GET_MAIL_ATTACHMENT extends AbstractClientPacket<AionChannelHandler>
 {
 	
 	private int mailObjId;
@@ -45,7 +46,7 @@ public class CM_GET_MAIL_ATTACHMENT extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player player = getConnection().getActivePlayer();
+		Player player = getChannelHandler().getActivePlayer();
 		MailService.getInstance().getAttachments(player, mailObjId, attachmentType);
 	}
 }

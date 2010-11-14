@@ -20,15 +20,15 @@ import java.sql.Timestamp;
 import java.util.Map;
 
 import com.aionemu.gameserver.model.legion.Legion;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * 
- * @author Simple
+ * @author Lyahim, Simple
  * 
  */
-public class SM_LEGION_INFO extends AionServerPacket
+public class SM_LEGION_INFO extends AbstractAionServerPacket<AionChannelHandler>
 {
 	/** Legion information **/
 	private Legion	legion;
@@ -44,7 +44,7 @@ public class SM_LEGION_INFO extends AionServerPacket
 	}
 
 	@Override
-	public void writeImpl(AionConnection con)
+	public void writeImpl(AionChannelHandler cHandler)
 	{
 		writeS(legion.getLegionName());
 		writeC( legion.getLegionLevel());

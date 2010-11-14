@@ -18,13 +18,13 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 
 import java.util.Map;
 
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author ATracer
+ * @author Lyahim, ATracer
  */
-public class SM_SKILL_COOLDOWN extends AionServerPacket
+public class SM_SKILL_COOLDOWN extends AbstractAionServerPacket<AionChannelHandler>
 {
 
 	private Map<Integer, Long> cooldowns;
@@ -38,7 +38,7 @@ public class SM_SKILL_COOLDOWN extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeH(cooldowns.size());
 		long currentTime = System.currentTimeMillis();

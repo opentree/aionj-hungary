@@ -16,17 +16,17 @@
  */
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-import com.aionemu.gameserver.network.aion.AionClientPacket;
-import com.aionemu.gameserver.network.aion.AionConnection;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_MAY_LOGIN_INTO_GAME;
 
 /**
  * In this packets aion client is asking if may login into game [ie start playing].
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class CM_MAY_LOGIN_INTO_GAME extends AionClientPacket
+public class CM_MAY_LOGIN_INTO_GAME extends AbstractClientPacket<AionChannelHandler>
 {
 	/**
 	 * Constructs new instance of <tt>CM_MAY_LOGIN_INTO_GAME </tt> packet
@@ -52,7 +52,7 @@ public class CM_MAY_LOGIN_INTO_GAME extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		AionConnection client = getConnection();
+		AionChannelHandler client = getChannelHandler();
 		// TODO! check if may login into game [play time etc]
 		client.sendPacket(new SM_MAY_LOGIN_INTO_GAME());
 	}

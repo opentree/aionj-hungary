@@ -16,12 +16,13 @@
  */
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
- * @author lhw and Kaipo
+ * @author Lyahim, lhw and Kaipo
  */
-public class CM_QUESTIONNAIRE extends AionClientPacket
+public class CM_QUESTIONNAIRE extends AbstractClientPacket<AionChannelHandler>
 {
 	@SuppressWarnings("unused")
 	private int objectId;

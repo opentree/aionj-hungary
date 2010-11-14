@@ -16,17 +16,17 @@
  */
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-import com.aionemu.gameserver.network.aion.AionClientPacket;
-import com.aionemu.gameserver.network.aion.AionConnection;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_TIME_CHECK;
 
 /**
  * I dont know what this packet is doing - probably its ping/pong packet
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class CM_TIME_CHECK extends AionClientPacket
+public class CM_TIME_CHECK extends AbstractClientPacket<AionChannelHandler>
 {
 	/**
 	 * Nano time / 1000000
@@ -57,7 +57,7 @@ public class CM_TIME_CHECK extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		AionConnection client = getConnection();
+		AionChannelHandler client = getChannelHandler();
 		int timeNow = (int) (System.nanoTime() / 1000000);
 		@SuppressWarnings("unused")
 		int diff = timeNow - nanoTime;

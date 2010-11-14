@@ -18,16 +18,15 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.account.Account;
 import com.aionemu.gameserver.model.account.PlayerAccountData;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.PlayerInfo;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * In this packet Server is sending Character List to client.
  * 
- * @author Nemesiss, AEJTester
+ * @author Lyahim, Nemesiss, AEJTester
  * 
  */
-public class SM_CHARACTER_LIST extends PlayerInfo
+public class SM_CHARACTER_LIST extends _PlayerInfo
 {
 	/**
 	 * PlayOk2 - we dont care...
@@ -46,11 +45,11 @@ public class SM_CHARACTER_LIST extends PlayerInfo
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(playOk2);
 
-		Account account = con.getAccount();
+		Account account = cHandler.getAccount();
 		writeC( account.size());// characters count
 		
 		for(PlayerAccountData playerData : account.getSortedAccountsList())

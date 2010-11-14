@@ -22,16 +22,16 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * Sent to fill the search panel of a players social window<br />
  * I.E.: In response to a <tt>CM_PLAYER_SEARCH</tt>
- * @author Ben
+ * @author Lyahim, Ben
  *
  */
-public class SM_PLAYER_SEARCH extends AionServerPacket
+public class SM_PLAYER_SEARCH extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private static final Logger log = Logger.getLogger(SM_PLAYER_SEARCH.class);
 	
@@ -55,7 +55,7 @@ public class SM_PLAYER_SEARCH extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void writeImpl(AionConnection con)
+	public void writeImpl(AionChannelHandler cHandler)
 	{
 		writeH(players.size());
 		for (Player player : players)

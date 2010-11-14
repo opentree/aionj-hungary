@@ -17,14 +17,15 @@
 package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.TeleportService;
 
 /**
- * @author ATracer
+ * @author Lyahim, ATracer
  *
  */
-public class CM_CHANGE_CHANNEL extends AionClientPacket
+public class CM_CHANGE_CHANNEL extends AbstractClientPacket<AionChannelHandler>
 {
 
 	private int channel;
@@ -43,7 +44,7 @@ public class CM_CHANGE_CHANNEL extends AionClientPacket
 	@Override
 	protected void runImpl()
 	{
-		Player activePlayer = getConnection().getActivePlayer();
+		Player activePlayer = getChannelHandler().getActivePlayer();
 		TeleportService.changeChannel(activePlayer, channel);
 	}	
 }

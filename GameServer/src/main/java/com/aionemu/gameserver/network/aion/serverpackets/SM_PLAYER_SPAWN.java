@@ -17,16 +17,16 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.AionConnection;
-import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
+import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 /**
  * This packet is notify client what map should be loaded.
  * 
- * @author -Nemesiss-
+ * @author Lyahim, -Nemesiss-
  * 
  */
-public class SM_PLAYER_SPAWN extends AionServerPacket
+public class SM_PLAYER_SPAWN extends AbstractAionServerPacket<AionChannelHandler>
 {
 	/**
 	 * Player that is entering game.
@@ -48,7 +48,7 @@ public class SM_PLAYER_SPAWN extends AionServerPacket
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionConnection con)
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(player.getWorldId());
 		writeD(player.getWorldId());//world + chnl
