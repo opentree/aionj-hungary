@@ -1,0 +1,630 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmi:id="_FNuZMLKoEd-Ri5nWziYCEQ" name="aionemu" viewpoint="">
+  <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_7_0pwLKoEd-Ri5nWziYCEQ" name="String"/>
+  <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_YOQD0LKoEd-Ri5nWziYCEQ" name="boolean"/>
+  <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_YOQD0bKoEd-Ri5nWziYCEQ" name="byte"/>
+  <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_YOQD0rKoEd-Ri5nWziYCEQ" name="char"/>
+  <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_YOQD07KoEd-Ri5nWziYCEQ" name="double"/>
+  <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_YOQD1LKoEd-Ri5nWziYCEQ" name="float"/>
+  <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_YOQD1bKoEd-Ri5nWziYCEQ" name="int"/>
+  <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_YOQD1rKoEd-Ri5nWziYCEQ" name="long"/>
+  <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_YOQD17KoEd-Ri5nWziYCEQ" name="short"/>
+  <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_2L6tYLOYEd-cevYMslHsPw" name="Map"/>
+  <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_4HJrALOYEd-cevYMslHsPw" name="List"/>
+  <packagedElement xmi:type="uml:Package" xmi:id="_ZWrEcLKoEd-Ri5nWziYCEQ" name="gameserver">
+    <packagedElement xmi:type="uml:Package" xmi:id="_hHU9ULKoEd-Ri5nWziYCEQ" name="model">
+      <packagedElement xmi:type="uml:Package" xmi:id="_ik6VoLKoEd-Ri5nWziYCEQ" name="gameobjects">
+        <packagedElement xmi:type="uml:Package" xmi:id="_EExAgLK9Ed-Ri5nWziYCEQ" name="player">
+          <packagedElement xmi:type="uml:Class" xmi:id="_KiR2gLK9Ed-Ri5nWziYCEQ" name="Player">
+            <ownedComment xmi:id="_MbbJcLK9Ed-Ri5nWziYCEQ">
+              <body>//TODO Fill it</body>
+            </ownedComment>
+            <generalization xmi:id="_GMASMLhBEd-uidWmyPRI0g" general="_3l9gAbU5Ed-DDdYKshyinA"/>
+          </packagedElement>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_ujgXUbLkEd-7Iem1EtzCtw" name="stats">
+          <packagedElement xmi:type="uml:Class" xmi:id="_zlEzwLLkEd-7Iem1EtzCtw" name="LiveObjectLifeStats&lt;T extends LiveObject>">
+            <ownedComment xmi:id="_McnhkLOUEd-cevYMslHsPw">
+              <body>check all operation...</body>
+            </ownedComment>
+            <ownedAttribute xmi:id="_iSjGkLLlEd-7Iem1EtzCtw" name="owner" visibility="protected" type="_7_gZELNKEd-coYxNzPuRLw"/>
+            <ownedAttribute xmi:id="_gyJpMLNFEd-coYxNzPuRLw" name="currentHp" visibility="protected" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+            <ownedAttribute xmi:id="_g4aCMLNFEd-coYxNzPuRLw" name="currentMp" visibility="protected" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+            <ownedAttribute xmi:id="_g-qbMLNFEd-coYxNzPuRLw" name="alreadyDead" visibility="protected" type="_YOQD0LKoEd-Ri5nWziYCEQ">
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_reHcoLNFEd-coYxNzPuRLw" value="false"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_hF0MELNFEd-coYxNzPuRLw" name="hpLock" visibility="private" isLeaf="true" type="_vwn-MLNGEd-coYxNzPuRLw"/>
+            <ownedAttribute xmi:id="_3-fXgLNGEd-coYxNzPuRLw" name="mpLock" visibility="private" isLeaf="true" type="_vwn-MLNGEd-coYxNzPuRLw"/>
+            <ownedAttribute xmi:id="_D-ygoLNHEd-coYxNzPuRLw" name="lifeRestoreTask" visibility="protected" type="_BZPasLNHEd-coYxNzPuRLw"/>
+            <nestedClassifier xmi:type="uml:Class" xmi:id="_7_gZELNKEd-coYxNzPuRLw" name="T" visibility="private"/>
+            <ownedOperation xmi:id="_qVYUkLLlEd-7Iem1EtzCtw" name="LiveObjectLifeStats">
+              <ownedParameter xmi:id="_TGCYwLLoEd-7Iem1EtzCtw" name="owner" type="_0UrPELLAEd-Ri5nWziYCEQ"/>
+              <ownedParameter xmi:id="_TaAdoLLoEd-7Iem1EtzCtw" name="currectHp" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+              <ownedParameter xmi:id="_TkvG8LLoEd-7Iem1EtzCtw" name="currentMp" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_fSsWsLNHEd-coYxNzPuRLw" name="getCurrentHp">
+              <ownedParameter xmi:id="_jruzgLNHEd-coYxNzPuRLw" type="_YOQD1bKoEd-Ri5nWziYCEQ" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_k59hMLNHEd-coYxNzPuRLw" name="getCurrentMp">
+              <ownedParameter xmi:id="_k59hMbNHEd-coYxNzPuRLw" type="_YOQD1bKoEd-Ri5nWziYCEQ" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_fl60sLNHEd-coYxNzPuRLw" name="getMaxHp">
+              <ownedParameter xmi:id="_qXGfULNHEd-coYxNzPuRLw" type="_YOQD1bKoEd-Ri5nWziYCEQ" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_fthRgLNHEd-coYxNzPuRLw" name="getMaxMp">
+              <ownedParameter xmi:id="_rLslALNHEd-coYxNzPuRLw" type="_YOQD1bKoEd-Ri5nWziYCEQ" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_f0OWcLNHEd-coYxNzPuRLw" name="isAlreadyDead">
+              <ownedParameter xmi:id="_uDuiELNHEd-coYxNzPuRLw" type="_YOQD0LKoEd-Ri5nWziYCEQ" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_f9BGELNHEd-coYxNzPuRLw" name="reduceHp">
+              <ownedParameter xmi:id="_wY5CoLNHEd-coYxNzPuRLw" type="_YOQD1bKoEd-Ri5nWziYCEQ" direction="return"/>
+              <ownedParameter xmi:id="_zDgOwLNHEd-coYxNzPuRLw" name="value" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+              <ownedParameter xmi:id="_zZaNULNHEd-coYxNzPuRLw" name="attacker" type="_0UrPELLAEd-Ri5nWziYCEQ"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_6cw7ULNHEd-coYxNzPuRLw" name="reduceMp">
+              <ownedParameter xmi:id="_6cw7UbNHEd-coYxNzPuRLw" type="_YOQD1bKoEd-Ri5nWziYCEQ" direction="return"/>
+              <ownedParameter xmi:id="_6cw7UrNHEd-coYxNzPuRLw" name="value" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_gD38ALNHEd-coYxNzPuRLw" name="sendAttackStatusPacketUpdate" visibility="protected">
+              <ownedParameter xmi:id="_Bl79cLNIEd-coYxNzPuRLw" name="type" type="_2KrYULLJEd-Ri5nWziYCEQ"/>
+              <ownedParameter xmi:id="_B3N6sLNIEd-coYxNzPuRLw" name="value" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_JUXBsLNIEd-coYxNzPuRLw" name="increaseHp" visibility="protected">
+              <ownedParameter xmi:id="_JUXBsbNIEd-coYxNzPuRLw" name="type" type="_2KrYULLJEd-Ri5nWziYCEQ"/>
+              <ownedParameter xmi:id="_JUXBsrNIEd-coYxNzPuRLw" name="value" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_Reo7gLNIEd-coYxNzPuRLw" name="increaseMp" visibility="protected">
+              <ownedParameter xmi:id="_Reo7gbNIEd-coYxNzPuRLw" name="type" type="_2KrYULLJEd-Ri5nWziYCEQ"/>
+              <ownedParameter xmi:id="_Reo7grNIEd-coYxNzPuRLw" name="value" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_gKuK4LNHEd-coYxNzPuRLw" name="restoreHp"/>
+            <ownedOperation xmi:id="_YbJaoLNIEd-coYxNzPuRLw" name="restoreMp"/>
+            <ownedOperation xmi:id="_gRIU4LNHEd-coYxNzPuRLw" name="triggerRestoreTask" visibility="protected"/>
+            <ownedOperation xmi:id="_gjdbALNHEd-coYxNzPuRLw" name="cancelRestoreTask"/>
+            <ownedOperation xmi:id="_fL4HkLNIEd-coYxNzPuRLw" name="isFullyRestoredHpMp">
+              <ownedParameter xmi:id="_iH7B8LNIEd-coYxNzPuRLw" type="_YOQD0LKoEd-Ri5nWziYCEQ" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_j1mEsLNIEd-coYxNzPuRLw" name="isFullyRestoredHp">
+              <ownedParameter xmi:id="_j1mEsbNIEd-coYxNzPuRLw" type="_YOQD0LKoEd-Ri5nWziYCEQ" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_fg4uQLNIEd-coYxNzPuRLw" name="synchronizeWithMaxStats"/>
+            <ownedOperation xmi:id="_fuS4ILNIEd-coYxNzPuRLw" name="updateCurrentStats"/>
+            <ownedOperation xmi:id="_f8mZ4LNIEd-coYxNzPuRLw" name="getHpPercentage">
+              <ownedParameter xmi:id="_qFZO0LNIEd-coYxNzPuRLw" type="_YOQD1bKoEd-Ri5nWziYCEQ" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_gNvNMLNIEd-coYxNzPuRLw" name="getHpPercentage">
+              <ownedParameter xmi:id="_3Zce0LNIEd-coYxNzPuRLw" type="_YOQD1bKoEd-Ri5nWziYCEQ" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_3zYBwLNIEd-coYxNzPuRLw" name="getMpPercentage">
+              <ownedParameter xmi:id="_3zYBwbNIEd-coYxNzPuRLw" type="_YOQD1bKoEd-Ri5nWziYCEQ" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_1DPccLNIEd-coYxNzPuRLw" name="cancelAllTasks"/>
+            <ownedOperation xmi:id="_1SI0ELNIEd-coYxNzPuRLw" name="setCurrentHpPercent">
+              <ownedParameter xmi:id="_aTRkcLNJEd-coYxNzPuRLw" name="percent" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_m_1WoLNJEd-coYxNzPuRLw" name="setCurrentMpPercent">
+              <ownedParameter xmi:id="_m_1WobNJEd-coYxNzPuRLw" name="percent" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_cmgLULNJEd-coYxNzPuRLw" name="setCurrentHp">
+              <ownedParameter xmi:id="_iNnk0LNJEd-coYxNzPuRLw" name="value" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+              <ownedParameter xmi:id="_useSMLNJEd-coYxNzPuRLw" type="_YOQD1bKoEd-Ri5nWziYCEQ" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_jxAqMLNJEd-coYxNzPuRLw" name="setCurrentMp">
+              <ownedParameter xmi:id="_jxAqMbNJEd-coYxNzPuRLw" name="value" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+              <ownedParameter xmi:id="_vhq00LNJEd-coYxNzPuRLw" type="_YOQD1bKoEd-Ri5nWziYCEQ" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_dBxLALNJEd-coYxNzPuRLw" name="triggerRestoreOnRevive"/>
+            <ownedOperation xmi:id="_0Pr4kLNIEd-coYxNzPuRLw" name="onIncreaseHp" visibility="protected">
+              <ownedParameter xmi:id="_A-efYLNJEd-coYxNzPuRLw" name="type" type="_2KrYULLJEd-Ri5nWziYCEQ"/>
+              <ownedParameter xmi:id="_BOIE8LNJEd-coYxNzPuRLw" name="value" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_IRCHALNJEd-coYxNzPuRLw" name="onIncreaseMp" visibility="protected">
+              <ownedParameter xmi:id="_IRCHAbNJEd-coYxNzPuRLw" name="type" type="_2KrYULLJEd-Ri5nWziYCEQ"/>
+              <ownedParameter xmi:id="_IRCHArNJEd-coYxNzPuRLw" name="value" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_-THFULNIEd-coYxNzPuRLw" name="onReduceHp" visibility="protected" isAbstract="true"/>
+            <ownedOperation xmi:id="_-BYcILNIEd-coYxNzPuRLw" name="onReduceMp" visibility="protected" isAbstract="true"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_OWFhcbOQEd-cevYMslHsPw" name="PlayerLifeStats">
+            <ownedComment xmi:id="_HMlyYLOUEd-cevYMslHsPw">
+              <body>check all operation...</body>
+            </ownedComment>
+            <generalization xmi:id="_R7Q4YLOQEd-cevYMslHsPw" general="_VqcPALLDEd-Ri5nWziYCEQ"/>
+            <ownedAttribute xmi:id="_nkUrgLOQEd-cevYMslHsPw" name="fpLock" visibility="private" isLeaf="true" type="_vwn-MLNGEd-coYxNzPuRLw"/>
+            <ownedAttribute xmi:id="_y7y6ELOQEd-cevYMslHsPw" name="currentFp" visibility="protected" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+            <ownedAttribute xmi:id="_2rHEcLOQEd-cevYMslHsPw" name="flyRestoreTask" visibility="private" type="_BZPasLNHEd-coYxNzPuRLw"/>
+            <ownedAttribute xmi:id="_2wxnkLOQEd-cevYMslHsPw" name="flyreduceTask" visibility="private" type="_BZPasLNHEd-coYxNzPuRLw"/>
+            <ownedOperation xmi:id="_cySP0LOREd-cevYMslHsPw" name="PlayerLifeStats">
+              <ownedParameter xmi:id="_cySP0bOREd-cevYMslHsPw" name="owner" type="_0UrPELLAEd-Ri5nWziYCEQ"/>
+              <ownedParameter xmi:id="_cySP0rOREd-cevYMslHsPw" name="currectHp" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+              <ownedParameter xmi:id="_cySP07OREd-cevYMslHsPw" name="currentMp" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+              <ownedParameter xmi:id="_gOOLMLOREd-cevYMslHsPw" name="currentFp" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_mH-M0LOREd-cevYMslHsPw" name="PlayerLifeStats">
+              <ownedParameter xmi:id="_mH-M0bOREd-cevYMslHsPw" name="owner" type="_KiR2gLK9Ed-Ri5nWziYCEQ"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_0xp9MLNIEd-coYxNzPuRLw" name="getCurrentFp">
+              <ownedParameter xmi:id="_UrHpILNJEd-coYxNzPuRLw" type="_YOQD1bKoEd-Ri5nWziYCEQ" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_0jgMcLNIEd-coYxNzPuRLw" name="increaseFp">
+              <ownedParameter xmi:id="_SbK_wLNJEd-coYxNzPuRLw" name="value" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+              <ownedParameter xmi:id="_WOW9gLNJEd-coYxNzPuRLw" type="_YOQD1bKoEd-Ri5nWziYCEQ" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_J-CbwLOTEd-cevYMslHsPw" name="onReduceHp" visibility="protected" redefinedOperation="_f9BGELNHEd-coYxNzPuRLw"/>
+            <ownedOperation xmi:id="_J-CbwbOTEd-cevYMslHsPw" name="onReduceMp" visibility="protected" redefinedOperation="_6cw7ULNHEd-coYxNzPuRLw"/>
+            <ownedOperation xmi:id="_aozv8LOTEd-cevYMslHsPw" name="onIncreaseHp" visibility="protected" redefinedOperation="_JUXBsLNIEd-coYxNzPuRLw">
+              <ownedParameter xmi:id="_aozv8bOTEd-cevYMslHsPw" name="type" type="_2KrYULLJEd-Ri5nWziYCEQ"/>
+              <ownedParameter xmi:id="_aozv8rOTEd-cevYMslHsPw" name="value" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_f-CvQLOTEd-cevYMslHsPw" name="onIncreaseMp" visibility="protected" redefinedOperation="_Reo7gLNIEd-coYxNzPuRLw">
+              <ownedParameter xmi:id="_f-CvQbOTEd-cevYMslHsPw" name="type" type="_2KrYULLJEd-Ri5nWziYCEQ"/>
+              <ownedParameter xmi:id="_f-CvQrOTEd-cevYMslHsPw" name="value" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_n-f-sLOTEd-cevYMslHsPw" name="sendGroupPacketUpdate" visibility="private"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_d0PUsLOUEd-cevYMslHsPw" name="LiveObjectGameStats&lt;T extends LiveObject>">
+            <ownedComment xmi:id="_lH1eILOUEd-cevYMslHsPw">
+              <body>//TODO fill it</body>
+            </ownedComment>
+          </packagedElement>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_7WKIMLOZEd-cevYMslHsPw" name="state">
+          <packagedElement xmi:type="uml:Enumeration" xmi:id="_EKBKgLOaEd-cevYMslHsPw" name="LiveObjectState">
+            <ownedComment xmi:id="_RehGcLOaEd-cevYMslHsPw">
+              <body>//TODO fill it</body>
+            </ownedComment>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Enumeration" xmi:id="_EdZZgLOaEd-cevYMslHsPw" name="LiveObejctVisualState">
+            <ownedComment xmi:id="_Rl9yQLOaEd-cevYMslHsPw">
+              <body>//TODO fill it</body>
+            </ownedComment>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Enumeration" xmi:id="_EimpoLOaEd-cevYMslHsPw" name="LiveObjectSeeState">
+            <ownedComment xmi:id="_RsX8QLOaEd-cevYMslHsPw">
+              <body>//TODO fill it</body>
+            </ownedComment>
+          </packagedElement>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_lEf9gLKoEd-Ri5nWziYCEQ" name="AionObject" isAbstract="true">
+          <ownedAttribute xmi:id="_pTtI4LKoEd-Ri5nWziYCEQ" name="objectId" visibility="private" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+          <ownedOperation xmi:id="_zpUR0LKoEd-Ri5nWziYCEQ" name="getName" isAbstract="true">
+            <ownedParameter xmi:id="_A7kyELKpEd-Ri5nWziYCEQ" type="_7_0pwLKoEd-Ri5nWziYCEQ" direction="return"/>
+          </ownedOperation>
+          <ownedOperation xmi:id="_EpZHoLKpEd-Ri5nWziYCEQ" name="getObjectId">
+            <ownedParameter xmi:id="_KcQhULKtEd-Ri5nWziYCEQ" name="" type="_YOQD1bKoEd-Ri5nWziYCEQ" direction="return" effect="create"/>
+          </ownedOperation>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_35ZekLK2Ed-Ri5nWziYCEQ" name="Item" isLeaf="true">
+          <ownedComment xmi:id="_7uObELK2Ed-Ri5nWziYCEQ">
+            <body>//TODO Fill it</body>
+          </ownedComment>
+          <generalization xmi:id="_A9NBYLK3Ed-Ri5nWziYCEQ" general="_lEf9gLKoEd-Ri5nWziYCEQ"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_9n-K8LK2Ed-Ri5nWziYCEQ" name="Letter" isLeaf="true">
+          <ownedComment xmi:id="_9_0DMLK2Ed-Ri5nWziYCEQ">
+            <body>//TODO Fill it</body>
+          </ownedComment>
+          <generalization xmi:id="_BK6GMLK3Ed-Ri5nWziYCEQ" general="_lEf9gLKoEd-Ri5nWziYCEQ"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_arb7ILKsEd-Ri5nWziYCEQ" name="SpawnedObject">
+          <generalization xmi:id="_fZVNoLKsEd-Ri5nWziYCEQ" general="_lEf9gLKoEd-Ri5nWziYCEQ"/>
+          <ownedAttribute xmi:id="_7tY08LKzEd-Ri5nWziYCEQ" name="objectTemplate" visibility="protected" type="_Sm4xsLKzEd-Ri5nWziYCEQ"/>
+          <ownedAttribute xmi:id="_8V60kLKzEd-Ri5nWziYCEQ" name="position" visibility="private" type="_pJnXwLKzEd-Ri5nWziYCEQ"/>
+          <ownedAttribute xmi:id="_8a1JwLKzEd-Ri5nWziYCEQ" name="controller" visibility="protected" isLeaf="true" type="_C0UNoLKvEd-Ri5nWziYCEQ"/>
+          <ownedAttribute xmi:id="_9A-jwLKzEd-Ri5nWziYCEQ" name="spawn" visibility="private" type="_1X5H8LKyEd-Ri5nWziYCEQ"/>
+          <ownedAttribute xmi:id="_Escc0LLDEd-Ri5nWziYCEQ" name="knowList" visibility="protected" type="_JAf94LLBEd-Ri5nWziYCEQ"/>
+          <ownedOperation xmi:id="_uWgFoLKuEd-Ri5nWziYCEQ" name="SpawnedObject">
+            <ownedParameter xmi:id="_1GfLsLKuEd-Ri5nWziYCEQ" name="objectId" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+            <ownedParameter xmi:id="_6qBswLKuEd-Ri5nWziYCEQ" name="controller" type="_C0UNoLKvEd-Ri5nWziYCEQ"/>
+            <ownedParameter xmi:id="_7pCV4LKyEd-Ri5nWziYCEQ" name="spawnTemplate" type="_1X5H8LKyEd-Ri5nWziYCEQ"/>
+            <ownedParameter xmi:id="_a2PYwLKzEd-Ri5nWziYCEQ" name="objectTemplate" type="_Sm4xsLKzEd-Ri5nWziYCEQ"/>
+            <ownedParameter xmi:id="_0MOwoLKzEd-Ri5nWziYCEQ" name="worldPosition" type="_pJnXwLKzEd-Ri5nWziYCEQ"/>
+          </ownedOperation>
+          <ownedOperation xmi:id="_2dZFgLK0Ed-Ri5nWziYCEQ" name="getWorldType">
+            <ownedParameter xmi:id="_63LJMLK0Ed-Ri5nWziYCEQ" type="_xaMRYLK0Ed-Ri5nWziYCEQ" direction="return"/>
+          </ownedOperation>
+          <ownedOperation xmi:id="_81sEULK0Ed-Ri5nWziYCEQ" name="getPosition">
+            <ownedParameter xmi:id="_C4OOgLK1Ed-Ri5nWziYCEQ" type="_pJnXwLKzEd-Ri5nWziYCEQ" direction="return"/>
+          </ownedOperation>
+          <ownedOperation xmi:id="_-Rxn0LK0Ed-Ri5nWziYCEQ" name="isSpawned">
+            <ownedParameter xmi:id="_GLq8QLK1Ed-Ri5nWziYCEQ" type="_YOQD0LKoEd-Ri5nWziYCEQ" direction="return"/>
+          </ownedOperation>
+          <ownedOperation xmi:id="_-Zh1oLK0Ed-Ri5nWziYCEQ" name="isInWorld">
+            <ownedParameter xmi:id="_IHzRwLK1Ed-Ri5nWziYCEQ" type="_YOQD0LKoEd-Ri5nWziYCEQ" direction="return"/>
+          </ownedOperation>
+          <ownedOperation xmi:id="_-f7_oLK0Ed-Ri5nWziYCEQ" name="getController">
+            <ownedParameter xmi:id="_LZdPwLK1Ed-Ri5nWziYCEQ" type="_C0UNoLKvEd-Ri5nWziYCEQ" direction="return"/>
+          </ownedOperation>
+          <ownedOperation xmi:id="_-nO6cLK0Ed-Ri5nWziYCEQ" name="getSpawn">
+            <ownedParameter xmi:id="_PLAOwLK1Ed-Ri5nWziYCEQ" type="_1X5H8LKyEd-Ri5nWziYCEQ" direction="return"/>
+          </ownedOperation>
+          <ownedOperation xmi:id="_-weWALK0Ed-Ri5nWziYCEQ" name="setSpawn">
+            <ownedParameter xmi:id="_R58hQLK1Ed-Ri5nWziYCEQ" name="spawn" type="_1X5H8LKyEd-Ri5nWziYCEQ"/>
+          </ownedOperation>
+          <ownedOperation xmi:id="_-24gALK0Ed-Ri5nWziYCEQ" name="getObjectTemplate">
+            <ownedParameter xmi:id="_dEdR4LK1Ed-Ri5nWziYCEQ" type="_Sm4xsLKzEd-Ri5nWziYCEQ" direction="return"/>
+          </ownedOperation>
+          <ownedOperation xmi:id="_-9bz8LK0Ed-Ri5nWziYCEQ" name="getName" redefinedOperation="_zpUR0LKoEd-Ri5nWziYCEQ">
+            <ownedParameter xmi:id="_fEdawLK1Ed-Ri5nWziYCEQ" type="_7_0pwLKoEd-Ri5nWziYCEQ" direction="return"/>
+          </ownedOperation>
+          <ownedOperation xmi:id="_y3Oc0LLEEd-Ri5nWziYCEQ" name="getKnownList">
+            <ownedParameter xmi:id="_FBEXELLFEd-Ri5nWziYCEQ" type="_JAf94LLBEd-Ri5nWziYCEQ" direction="return"/>
+          </ownedOperation>
+          <ownedOperation xmi:id="_0GzOULLEEd-Ri5nWziYCEQ" name="setKnownlist">
+            <ownedParameter xmi:id="_HLWdULLFEd-Ri5nWziYCEQ" name="knowList" type="_JAf94LLBEd-Ri5nWziYCEQ"/>
+          </ownedOperation>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_opzLELK6Ed-Ri5nWziYCEQ" name="Gatherable" isLeaf="true">
+          <generalization xmi:id="_rHmDMLK6Ed-Ri5nWziYCEQ" general="_arb7ILKsEd-Ri5nWziYCEQ"/>
+          <ownedOperation xmi:id="_OkARcLK7Ed-Ri5nWziYCEQ" name="Gatherable">
+            <ownedParameter xmi:id="_OkARcbK7Ed-Ri5nWziYCEQ" name="objectId" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+            <ownedParameter xmi:id="_OkARcrK7Ed-Ri5nWziYCEQ" name="controller" type="_UFT94LK7Ed-Ri5nWziYCEQ"/>
+            <ownedParameter xmi:id="_OkARc7K7Ed-Ri5nWziYCEQ" name="spawnTemplate" type="_1X5H8LKyEd-Ri5nWziYCEQ"/>
+            <ownedParameter xmi:id="_OkARdLK7Ed-Ri5nWziYCEQ" name="objectTemplate" type="_Sm4xsLKzEd-Ri5nWziYCEQ"/>
+            <ownedParameter xmi:id="_OkARdbK7Ed-Ri5nWziYCEQ" name="worldPosition" type="_pJnXwLKzEd-Ri5nWziYCEQ"/>
+          </ownedOperation>
+          <ownedOperation xmi:id="_A7iQoLK7Ed-Ri5nWziYCEQ" name="getName" redefinedOperation="_-9bz8LK0Ed-Ri5nWziYCEQ">
+            <ownedParameter xmi:id="_A7iQobK7Ed-Ri5nWziYCEQ" type="_7_0pwLKoEd-Ri5nWziYCEQ" direction="return"/>
+          </ownedOperation>
+          <ownedOperation xmi:id="_WXwk0LK_Ed-Ri5nWziYCEQ" name="getObjectTemplate">
+            <ownedParameter xmi:id="_bFW8YLK_Ed-Ri5nWziYCEQ" type="_2PrDgLK9Ed-Ri5nWziYCEQ" direction="return"/>
+          </ownedOperation>
+          <ownedOperation xmi:id="_WsLVoLK_Ed-Ri5nWziYCEQ" name="getController">
+            <ownedParameter xmi:id="_mVFkMLK_Ed-Ri5nWziYCEQ" type="_UFT94LK7Ed-Ri5nWziYCEQ" direction="return"/>
+          </ownedOperation>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_0UrPELLAEd-Ri5nWziYCEQ" name="LiveObject">
+          <generalization xmi:id="_DFafgLLBEd-Ri5nWziYCEQ" general="_arb7ILKsEd-Ri5nWziYCEQ"/>
+          <ownedAttribute xmi:id="_IMYCILOZEd-cevYMslHsPw" name="transformedModelId" visibility="protected" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+          <ownedAttribute xmi:id="_wA8uALOaEd-cevYMslHsPw" name="state" visibility="protected" type="_EKBKgLOaEd-cevYMslHsPw"/>
+          <ownedAttribute xmi:id="_HeGYwLNKEd-coYxNzPuRLw" name="lifeStat" visibility="protected" type="_zlEzwLLkEd-7Iem1EtzCtw"/>
+          <ownedAttribute xmi:id="_2TZLMLOUEd-cevYMslHsPw" name="gameStat" visibility="protected" type="_d0PUsLOUEd-cevYMslHsPw"/>
+          <ownedAttribute xmi:id="_OWL8MLOdEd-cevYMslHsPw" name="liveObjectController" visibility="protected" type="_VqcPALLDEd-Ri5nWziYCEQ"/>
+          <ownedAttribute xmi:id="_hj2nwLOZEd-cevYMslHsPw" name="observeController" visibility="protected" type="_a5iE0LOZEd-cevYMslHsPw"/>
+          <ownedOperation xmi:id="_3xySULLEEd-Ri5nWziYCEQ" name="LiveObject">
+            <ownedParameter xmi:id="_3xySUbLEEd-Ri5nWziYCEQ" name="objectId" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+            <ownedParameter xmi:id="_3xySUrLEEd-Ri5nWziYCEQ" name="controller" type="_VqcPALLDEd-Ri5nWziYCEQ"/>
+            <ownedParameter xmi:id="_3xySU7LEEd-Ri5nWziYCEQ" name="spawnTemplate" type="_1X5H8LKyEd-Ri5nWziYCEQ"/>
+            <ownedParameter xmi:id="_3xySVLLEEd-Ri5nWziYCEQ" name="objectTemplate" type="_Sm4xsLKzEd-Ri5nWziYCEQ"/>
+            <ownedParameter xmi:id="_3xySVbLEEd-Ri5nWziYCEQ" name="worldPosition" type="_pJnXwLKzEd-Ri5nWziYCEQ"/>
+          </ownedOperation>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_WH1RcLU7Ed-DDdYKshyinA" name="Kisk" isLeaf="true">
+          <ownedComment xmi:id="_aKX50LU7Ed-DDdYKshyinA">
+            <body>//TODO Fill it</body>
+          </ownedComment>
+          <generalization xmi:id="_YzDhkLU7Ed-DDdYKshyinA" general="_0UrPELLAEd-Ri5nWziYCEQ"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_3l9gAbU5Ed-DDdYKshyinA" name="AdvancedObject">
+          <generalization xmi:id="_y_sqELU6Ed-DDdYKshyinA" general="_0UrPELLAEd-Ri5nWziYCEQ"/>
+          <ownedAttribute xmi:id="_Ji-lgLOVEd-cevYMslHsPw" name="effectController" visibility="protected" type="_DbhfELOVEd-cevYMslHsPw"/>
+          <ownedAttribute xmi:id="_pE_TYLOYEd-cevYMslHsPw" name="castingskill" visibility="protected" type="_e59CwLOYEd-cevYMslHsPw"/>
+          <ownedAttribute xmi:id="_-6Q9kLOYEd-cevYMslHsPw" name="skillCoolDowns" visibility="protected" type="_2L6tYLOYEd-cevYMslHsPw">
+            <ownedComment xmi:id="_C1DYILOZEd-cevYMslHsPw">
+              <body>&lt;Integer, Long></body>
+            </ownedComment>
+          </ownedAttribute>
+          <ownedAttribute xmi:id="_wTugELOaEd-cevYMslHsPw" name="visualState" visibility="protected" type="_EdZZgLOaEd-cevYMslHsPw"/>
+          <ownedAttribute xmi:id="_wZPSMLOaEd-cevYMslHsPw" name="seeState" visibility="protected" type="_EimpoLOaEd-cevYMslHsPw"/>
+          <ownedAttribute xmi:id="_G_qcoLLDEd-Ri5nWziYCEQ" name="target" visibility="protected" type="_arb7ILKsEd-Ri5nWziYCEQ"/>
+          <ownedAttribute xmi:id="_pnBJwLOVEd-cevYMslHsPw" name="moveController" visibility="protected" type="_a2bqULOVEd-cevYMslHsPw"/>
+          <ownedAttribute xmi:id="_HR0sILOeEd-cevYMslHsPw" name="aggroList" visibility="protected" type="_QGRkULOeEd-cevYMslHsPw"/>
+          <ownedAttribute xmi:id="_Z3JnILhBEd-uidWmyPRI0g" name="skillList" visibility="protected" type="_i4kkULhBEd-uidWmyPRI0g"/>
+          <ownedOperation xmi:id="_0NgTQLLEEd-Ri5nWziYCEQ" name="getTarget">
+            <ownedParameter xmi:id="_Ohe9YLLFEd-Ri5nWziYCEQ" type="_arb7ILKsEd-Ri5nWziYCEQ" direction="return"/>
+          </ownedOperation>
+          <ownedOperation xmi:id="_0TwsQLLEEd-Ri5nWziYCEQ" name="setTarget">
+            <ownedParameter xmi:id="_RkFywLLFEd-Ri5nWziYCEQ" name="target" type="_arb7ILKsEd-Ri5nWziYCEQ"/>
+          </ownedOperation>
+          <ownedOperation xmi:id="_0m_KQLLEEd-Ri5nWziYCEQ" name="isTargeting">
+            <ownedParameter xmi:id="_XxzSMLLFEd-Ri5nWziYCEQ" name="objectId" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+          </ownedOperation>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_uuwsALg9Ed-uidWmyPRI0g" name="SummonedObject">
+          <generalization xmi:id="_yehiULg9Ed-uidWmyPRI0g" general="_3l9gAbU5Ed-DDdYKshyinA"/>
+          <ownedAttribute xmi:id="_7kO_ELg8Ed-uidWmyPRI0g" name="master" visibility="private" type="_3l9gAbU5Ed-DDdYKshyinA"/>
+          <ownedOperation xmi:id="_Pb5E0LNBEd-coYxNzPuRLw" name="getMaster">
+            <ownedParameter xmi:id="_UbOFkLNBEd-coYxNzPuRLw" direction="return"/>
+          </ownedOperation>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_e-mtUbg6Ed-uidWmyPRI0g" name="Trap" isLeaf="true">
+          <generalization xmi:id="__6BeILg9Ed-uidWmyPRI0g" general="_uuwsALg9Ed-uidWmyPRI0g"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_XagNQLg7Ed-uidWmyPRI0g" name="Servant" isLeaf="true">
+          <generalization xmi:id="_XagNQbg7Ed-uidWmyPRI0g" general="_uuwsALg9Ed-uidWmyPRI0g"/>
+          <ownedAttribute xmi:id="_jwtU8Lg7Ed-uidWmyPRI0g" name="hpRatio" visibility="private" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_DI2xoLg-Ed-uidWmyPRI0g" name="Summon" isLeaf="true">
+          <generalization xmi:id="_GLwh8Lg-Ed-uidWmyPRI0g" general="_uuwsALg9Ed-uidWmyPRI0g"/>
+          <ownedAttribute xmi:id="_gSn9ILg-Ed-uidWmyPRI0g" name="level" visibility="private" type="_YOQD0bKoEd-Ri5nWziYCEQ"/>
+          <ownedAttribute xmi:id="_mYS64Lg-Ed-uidWmyPRI0g" name="mode" visibility="private" type="_YBChcLg-Ed-uidWmyPRI0g"/>
+          <ownedAttribute xmi:id="_xuV7MLhAEd-uidWmyPRI0g" name="ai" visibility="private" type="_sHEwsLhAEd-uidWmyPRI0g"/>
+          <nestedClassifier xmi:type="uml:Enumeration" xmi:id="_YBChcLg-Ed-uidWmyPRI0g" name="SummonMode">
+            <ownedComment xmi:id="_cdp2sLg-Ed-uidWmyPRI0g">
+              <body>//TODO Fill it</body>
+            </ownedComment>
+          </nestedClassifier>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_Ph_KILhBEd-uidWmyPRI0g" name="Npc">
+          <generalization xmi:id="_QsCicLhBEd-uidWmyPRI0g" general="_3l9gAbU5Ed-DDdYKshyinA"/>
+          <ownedAttribute xmi:id="_U-q1QLhBEd-uidWmyPRI0g" name="ai" visibility="private" type="_sHEwsLhAEd-uidWmyPRI0g"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Enumeration" xmi:id="_Hhx2wLK5Ed-Ri5nWziYCEQ" name="PersistentState">
+          <ownedComment xmi:id="_b0S4QLK6Ed-Ri5nWziYCEQ">
+            <body>//TODO Fill it</body>
+          </ownedComment>
+        </packagedElement>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_usiDMLKyEd-Ri5nWziYCEQ" name="templates">
+        <packagedElement xmi:type="uml:Package" xmi:id="_w1UUoLKyEd-Ri5nWziYCEQ" name="spawn">
+          <packagedElement xmi:type="uml:Class" xmi:id="_1X5H8LKyEd-Ri5nWziYCEQ" name="SpawnTemplate">
+            <ownedComment xmi:id="_JvTF8LKzEd-Ri5nWziYCEQ">
+              <body>//TODO Fill it</body>
+            </ownedComment>
+          </packagedElement>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_Sm4xsLKzEd-Ri5nWziYCEQ" name="ObjectTemplate" isAbstract="true">
+          <ownedComment xmi:id="_wcK_YLKzEd-Ri5nWziYCEQ">
+            <body>//TODO Fill it</body>
+          </ownedComment>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_2PrDgLK9Ed-Ri5nWziYCEQ" name="GatherableTemplate">
+          <ownedComment xmi:id="_7OGsYLK9Ed-Ri5nWziYCEQ">
+            <body>//TODO Fill it</body>
+          </ownedComment>
+          <generalization xmi:id="_5eWmALK9Ed-Ri5nWziYCEQ" general="_Sm4xsLKzEd-Ri5nWziYCEQ"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_aSm-4LLBEd-Ri5nWziYCEQ" name="BindPointTemplate">
+          <ownedComment xmi:id="_aSm-4bLBEd-Ri5nWziYCEQ">
+            <body>//TODO Fill it</body>
+          </ownedComment>
+        </packagedElement>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Enumeration" xmi:id="_L0pSwLK8Ed-Ri5nWziYCEQ" name="GatherState">
+        <ownedLiteral xmi:id="_Qju4ELK8Ed-Ri5nWziYCEQ" name="GATHERED"/>
+        <ownedLiteral xmi:id="_S-RA0LK8Ed-Ri5nWziYCEQ" name="GATHERING"/>
+        <ownedLiteral xmi:id="_TYfesLK8Ed-Ri5nWziYCEQ" name="IDLE"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Enumeration" xmi:id="_2KrYULLJEd-Ri5nWziYCEQ" name="AttackType">
+        <ownedLiteral xmi:id="_4GNQ4LLJEd-Ri5nWziYCEQ" name="NATURAL_HP"/>
+        <ownedLiteral xmi:id="_4MKu8LLJEd-Ri5nWziYCEQ" name="REGULAR"/>
+        <ownedLiteral xmi:id="_4R1SELLJEd-Ri5nWziYCEQ" name="DAMAGE"/>
+        <ownedLiteral xmi:id="_4XWEMLLJEd-Ri5nWziYCEQ" name="HP"/>
+        <ownedLiteral xmi:id="_4dTiQLLJEd-Ri5nWziYCEQ" name="MP"/>
+        <ownedLiteral xmi:id="_4jRAULLJEd-Ri5nWziYCEQ" name="NATURAL_MP"/>
+        <ownedLiteral xmi:id="_4phZULLJEd-Ri5nWziYCEQ" name="FP_RINGS"/>
+        <ownedLiteral xmi:id="_4vL8cLLJEd-Ri5nWziYCEQ" name="FP"/>
+        <ownedLiteral xmi:id="_DIq4wLLKEd-Ri5nWziYCEQ" name="NATURAL_FP"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_gxQ5kLhBEd-uidWmyPRI0g" name="Skills">
+        <packagedElement xmi:type="uml:Class" xmi:id="_i4kkULhBEd-uidWmyPRI0g" name="SkillList" isAbstract="true">
+          <ownedAttribute xmi:id="_p_De0LhBEd-uidWmyPRI0g" name="Id" visibility="protected" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+          <ownedAttribute xmi:id="_qUqicLhBEd-uidWmyPRI0g" name="level" visibility="protected" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+          <ownedAttribute xmi:id="_q3PEALhBEd-uidWmyPRI0g" name="Type" visibility="protected" type="_yEbDcLhBEd-uidWmyPRI0g"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Enumeration" xmi:id="_yEbDcLhBEd-uidWmyPRI0g" name="SKillTypes">
+          <ownedComment xmi:id="_1K6TQLhBEd-uidWmyPRI0g">
+            <body>//TODO fill it</body>
+          </ownedComment>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_c-I7ULhDEd-uidWmyPRI0g" name="PlayerSkillList">
+          <ownedComment xmi:id="_r0PM4LhDEd-uidWmyPRI0g">
+            <body>//TODO fill it</body>
+          </ownedComment>
+          <generalization xmi:id="_jbDUYLhDEd-uidWmyPRI0g" general="_i4kkULhBEd-uidWmyPRI0g"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_dTv-8LhDEd-uidWmyPRI0g" name="NpcSKillList">
+          <ownedComment xmi:id="_rubf0LhDEd-uidWmyPRI0g">
+            <body>//TODO fill it</body>
+          </ownedComment>
+          <generalization xmi:id="_lX7QwLhDEd-uidWmyPRI0g" general="_i4kkULhBEd-uidWmyPRI0g"/>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="__U8jwLKuEd-Ri5nWziYCEQ" name="controllers">
+      <packagedElement xmi:type="uml:Class" xmi:id="_C0UNoLKvEd-Ri5nWziYCEQ" name="SpawnedObjectControllers&lt;T extends SpawnedObject>" isAbstract="true">
+        <ownedAttribute xmi:id="_Of_qQLKyEd-Ri5nWziYCEQ" name="owner" visibility="protected" type="_L77yELKyEd-Ri5nWziYCEQ"/>
+        <nestedClassifier xmi:type="uml:Class" xmi:id="_L77yELKyEd-Ri5nWziYCEQ" name="T" visibility="protected"/>
+        <ownedOperation xmi:id="_V8FoYLKyEd-Ri5nWziYCEQ" name="SetOwner">
+          <ownedParameter xmi:id="_aOkKMLKyEd-Ri5nWziYCEQ" name="owner" type="_L77yELKyEd-Ri5nWziYCEQ"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="_bHKpULK2Ed-Ri5nWziYCEQ" name="delete" visibility="private"/>
+        <ownedOperation xmi:id="_bbIuMLK2Ed-Ri5nWziYCEQ" name="onDelete"/>
+        <ownedOperation xmi:id="_bhGMQLK2Ed-Ri5nWziYCEQ" name="doReward">
+          <ownedParameter xmi:id="_jjI2cLK-Ed-Ri5nWziYCEQ" name="player" type="_KiR2gLK9Ed-Ri5nWziYCEQ"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="_bnDqULK2Ed-Ri5nWziYCEQ" name="onRespawn"/>
+        <ownedOperation xmi:id="_bskccLK2Ed-Ri5nWziYCEQ" name="onDespawn">
+          <ownedParameter xmi:id="_mw00ELK2Ed-Ri5nWziYCEQ" name="forced" type="_YOQD0LKoEd-Ri5nWziYCEQ"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="_cBu0ILK2Ed-Ri5nWziYCEQ" name="onSpawn"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_UFT94LK7Ed-Ri5nWziYCEQ" name="GatherableController">
+        <generalization xmi:id="_cHsf8LK7Ed-Ri5nWziYCEQ" general="_C0UNoLKvEd-Ri5nWziYCEQ"/>
+        <ownedAttribute xmi:id="_lfUWoLK7Ed-Ri5nWziYCEQ" name="gatherCount" visibility="private" type="_YOQD1bKoEd-Ri5nWziYCEQ">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_qkwmcLK7Ed-Ri5nWziYCEQ" value=""/>
+        </ownedAttribute>
+        <ownedAttribute xmi:id="_o4R2gLK7Ed-Ri5nWziYCEQ" name="currentGatherer" visibility="private" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+        <ownedAttribute xmi:id="_o-sAgLK7Ed-Ri5nWziYCEQ" name="task" visibility="private" type="_3qDowLK7Ed-Ri5nWziYCEQ"/>
+        <ownedAttribute xmi:id="_pFGKgLK7Ed-Ri5nWziYCEQ" name="state" visibility="private" type="_L0pSwLK8Ed-Ri5nWziYCEQ">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_k8VI4LK8Ed-Ri5nWziYCEQ" name="" type="_L0pSwLK8Ed-Ri5nWziYCEQ" value="GatherState.IDLE"/>
+        </ownedAttribute>
+        <ownedOperation xmi:id="_vRzH4LK8Ed-Ri5nWziYCEQ" name="GatherableController">
+          <ownedParameter xmi:id="_ycmP8LK8Ed-Ri5nWziYCEQ" name="owner" type="_opzLELK6Ed-Ri5nWziYCEQ"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="_9zB8sLK8Ed-Ri5nWziYCEQ" name="onStartUse">
+          <ownedParameter xmi:id="_Bkk7sLK9Ed-Ri5nWziYCEQ" name="player" type="_KiR2gLK9Ed-Ri5nWziYCEQ">
+            <ownedComment xmi:id="_n-YIILK9Ed-Ri5nWziYCEQ">
+              <body>final</body>
+            </ownedComment>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xmi:id="_-EA_ALK8Ed-Ri5nWziYCEQ" name="checkPlayerSkill" visibility="private">
+          <ownedParameter xmi:id="_xUp7ALK9Ed-Ri5nWziYCEQ" name="player" type="_KiR2gLK9Ed-Ri5nWziYCEQ">
+            <ownedComment xmi:id="_xUp7AbK9Ed-Ri5nWziYCEQ">
+              <body>final</body>
+            </ownedComment>
+          </ownedParameter>
+          <ownedParameter xmi:id="_scerILK9Ed-Ri5nWziYCEQ" name="template" type="_2PrDgLK9Ed-Ri5nWziYCEQ">
+            <ownedComment xmi:id="_AMGQYLK-Ed-Ri5nWziYCEQ">
+              <body>final</body>
+            </ownedComment>
+          </ownedParameter>
+          <ownedParameter xmi:id="_CfU3QLK-Ed-Ri5nWziYCEQ" type="_YOQD0LKoEd-Ri5nWziYCEQ" direction="return"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="_-KR_ELK8Ed-Ri5nWziYCEQ" name="completeInteraction"/>
+        <ownedOperation xmi:id="_-PyxMLK8Ed-Ri5nWziYCEQ" name="doReward" redefinedOperation="_bhGMQLK2Ed-Ri5nWziYCEQ">
+          <ownedParameter xmi:id="_tJ9mwLK-Ed-Ri5nWziYCEQ" name="player" type="_KiR2gLK9Ed-Ri5nWziYCEQ"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="_L0tSQLK-Ed-Ri5nWziYCEQ" name="finishGathering">
+          <ownedParameter xmi:id="_4c0bELK-Ed-Ri5nWziYCEQ" name="player" type="_KiR2gLK9Ed-Ri5nWziYCEQ"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="_71oJ8LK-Ed-Ri5nWziYCEQ" name="onRespawn" redefinedOperation="_bnDqULK2Ed-Ri5nWziYCEQ"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_PiUsILLBEd-Ri5nWziYCEQ" name="BindPointController" clientDependency="_znj08LLBEd-Ri5nWziYCEQ">
+        <generalization xmi:id="_PiUsIbLBEd-Ri5nWziYCEQ" general="_C0UNoLKvEd-Ri5nWziYCEQ"/>
+        <ownedAttribute xmi:id="_PiUsIrLBEd-Ri5nWziYCEQ" name="bindPointTemplate" visibility="private" type="_aSm-4LLBEd-Ri5nWziYCEQ"/>
+        <interfaceRealization xmi:id="_znj08LLBEd-Ri5nWziYCEQ" name="" supplier="_2KuVQLLBEd-Ri5nWziYCEQ" client="_PiUsILLBEd-Ri5nWziYCEQ" contract="_2KuVQLLBEd-Ri5nWziYCEQ"/>
+        <ownedOperation xmi:id="_PiUsKLLBEd-Ri5nWziYCEQ" name="BindPointController">
+          <ownedParameter xmi:id="_PiUsKbLBEd-Ri5nWziYCEQ" name="template" type="_aSm-4LLBEd-Ri5nWziYCEQ"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="_PiUsKrLBEd-Ri5nWziYCEQ" name="bindHere">
+          <ownedParameter xmi:id="_PiUsK7LBEd-Ri5nWziYCEQ" name="player" type="_KiR2gLK9Ed-Ri5nWziYCEQ"/>
+        </ownedOperation>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_1aIPsLLKEd-Ri5nWziYCEQ" name="ActionItemController" clientDependency="_P4sZMLLLEd-Ri5nWziYCEQ">
+        <generalization xmi:id="_64dgoLLKEd-Ri5nWziYCEQ" general="_C0UNoLKvEd-Ri5nWziYCEQ"/>
+        <interfaceRealization xmi:id="_P4sZMLLLEd-Ri5nWziYCEQ" supplier="_2KuVQLLBEd-Ri5nWziYCEQ" client="_1aIPsLLKEd-Ri5nWziYCEQ" contract="_2KuVQLLBEd-Ri5nWziYCEQ"/>
+        <ownedOperation xmi:id="_Wfl0sLLLEd-Ri5nWziYCEQ" name="doReward" redefinedOperation="_bhGMQLK2Ed-Ri5nWziYCEQ">
+          <ownedParameter xmi:id="_Wfl0sbLLEd-Ri5nWziYCEQ" name="player" type="_KiR2gLK9Ed-Ri5nWziYCEQ"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="_W6Q-gLLLEd-Ri5nWziYCEQ" name="onRespawn" redefinedOperation="_bnDqULK2Ed-Ri5nWziYCEQ"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_VqcPALLDEd-Ri5nWziYCEQ" name="LiveObjectController&lt;T extends LiveObject>">
+        <generalization xmi:id="_eKCRgLLDEd-Ri5nWziYCEQ" general="_C0UNoLKvEd-Ri5nWziYCEQ"/>
+        <ownedOperation xmi:id="_rZdgMLLDEd-Ri5nWziYCEQ" name="attackTarget">
+          <ownedParameter xmi:id="_G2A78LLEEd-Ri5nWziYCEQ" direction="return"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="_r8xooLLDEd-Ri5nWziYCEQ" name="kill"/>
+        <ownedOperation xmi:id="_sDCosLLDEd-Ri5nWziYCEQ" name="useSkill">
+          <ownedParameter xmi:id="_Nx6-ILLEEd-Ri5nWziYCEQ" name="skillId" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="_sJcLoLLDEd-Ri5nWziYCEQ" name="abortCast"/>
+        <ownedOperation xmi:id="_sQTBkLLDEd-Ri5nWziYCEQ" name="cancelCurrentSkill"/>
+        <ownedOperation xmi:id="_sjOkoLLDEd-Ri5nWziYCEQ" name="see" isAbstract="true">
+          <ownedParameter xmi:id="_VnWCQLLEEd-Ri5nWziYCEQ" name="object" type="_arb7ILKsEd-Ri5nWziYCEQ"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="_uDoncLLDEd-Ri5nWziYCEQ" name="notSee" isAbstract="true">
+          <ownedParameter xmi:id="_fT-foLLEEd-Ri5nWziYCEQ" name="object" type="_arb7ILKsEd-Ri5nWziYCEQ"/>
+          <ownedParameter xmi:id="_ggHioLLEEd-Ri5nWziYCEQ" name="isOutOfRange" type="_YOQD0LKoEd-Ri5nWziYCEQ"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="_cY0WELLEEd-Ri5nWziYCEQ" name="onDie" isAbstract="true"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_oJM-cLLFEd-Ri5nWziYCEQ" name="PostBoxController" clientDependency="_tkjM0LLFEd-Ri5nWziYCEQ">
+        <generalization xmi:id="_tMtUkLLFEd-Ri5nWziYCEQ" general="_C0UNoLKvEd-Ri5nWziYCEQ"/>
+        <interfaceRealization xmi:id="_tkjM0LLFEd-Ri5nWziYCEQ" supplier="_2KuVQLLBEd-Ri5nWziYCEQ" client="_oJM-cLLFEd-Ri5nWziYCEQ" contract="_2KuVQLLBEd-Ri5nWziYCEQ"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_LWDmYLLJEd-Ri5nWziYCEQ" name="DamageObjectController&lt;T extends DamageObject>">
+        <generalization xmi:id="_QeoCsLLJEd-Ri5nWziYCEQ" general="_VqcPALLDEd-Ri5nWziYCEQ"/>
+        <ownedOperation xmi:id="_mKFCgLLJEd-Ri5nWziYCEQ" name="onAttack">
+          <ownedParameter xmi:id="_ptnasLLJEd-Ri5nWziYCEQ" name="attacker" type="_0UrPELLAEd-Ri5nWziYCEQ"/>
+          <ownedParameter xmi:id="_qAZMwLLJEd-Ri5nWziYCEQ" name="skillId" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+          <ownedParameter xmi:id="_qL3c8LLJEd-Ri5nWziYCEQ" name="type" type="_2KrYULLJEd-Ri5nWziYCEQ"/>
+          <ownedParameter xmi:id="_qUDvoLLJEd-Ri5nWziYCEQ" name="damage" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+        </ownedOperation>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_a2bqULOVEd-cevYMslHsPw" name="MoveController">
+        <ownedComment xmi:id="_eXlc4LOVEd-cevYMslHsPw">
+          <body>//TODO fill it</body>
+        </ownedComment>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_a5iE0LOZEd-cevYMslHsPw" name="ObserveController">
+        <ownedComment xmi:id="_etUfgLOZEd-cevYMslHsPw">
+          <body>//TODO fill it</body>
+        </ownedComment>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_2KuVQLLBEd-Ri5nWziYCEQ" name="IDialogableObject">
+        <ownedOperation xmi:id="_1LodEbNAEd-coYxNzPuRLw" name="onDialogRequest">
+          <ownedParameter xmi:id="_5SC40LNAEd-coYxNzPuRLw" name="player" type="_KiR2gLK9Ed-Ri5nWziYCEQ"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="_1sHT8LNAEd-coYxNzPuRLw" name="onDialogSelect">
+          <ownedParameter xmi:id="_-1vK4LNAEd-coYxNzPuRLw" name="dialogId" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+          <ownedParameter xmi:id="_BblLwLNBEd-coYxNzPuRLw" name="player" type="_KiR2gLK9Ed-Ri5nWziYCEQ">
+            <ownedComment xmi:id="_BblLwbNBEd-coYxNzPuRLw">
+              <body>final</body>
+            </ownedComment>
+          </ownedParameter>
+          <ownedParameter xmi:id="_-7so8LNAEd-coYxNzPuRLw" name="questId" type="_YOQD1bKoEd-Ri5nWziYCEQ"/>
+        </ownedOperation>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_Ax80wLOVEd-cevYMslHsPw" name="effect">
+        <packagedElement xmi:type="uml:Class" xmi:id="_DbhfELOVEd-cevYMslHsPw" name="EffectController">
+          <ownedComment xmi:id="_GFZEULOVEd-cevYMslHsPw">
+            <body>//TODO fill it</body>
+          </ownedComment>
+        </packagedElement>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_OhjCMLOeEd-cevYMslHsPw" name="attack">
+        <packagedElement xmi:type="uml:Class" xmi:id="_QGRkULOeEd-cevYMslHsPw" name="AggroList">
+          <ownedComment xmi:id="_R85HsLOeEd-cevYMslHsPw">
+            <body>//TODO fill it</body>
+          </ownedComment>
+        </packagedElement>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_0m4_MbhMEd-Q14TaxxiCDg"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_kdDiALKzEd-Ri5nWziYCEQ" name="world">
+      <packagedElement xmi:type="uml:Class" xmi:id="_pJnXwLKzEd-Ri5nWziYCEQ" name="WorldPosition">
+        <ownedComment xmi:id="_sarf4LKzEd-Ri5nWziYCEQ">
+          <body>//TODO Fill it</body>
+        </ownedComment>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_xaMRYLK0Ed-Ri5nWziYCEQ" name="WorldType">
+        <ownedComment xmi:id="_ziFyALK0Ed-Ri5nWziYCEQ">
+          <body>//TODO Fill it</body>
+        </ownedComment>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_JAf94LLBEd-Ri5nWziYCEQ" name="KnowList">
+        <ownedComment xmi:id="_JAf94bLBEd-Ri5nWziYCEQ">
+          <body>//TODO Fill it</body>
+        </ownedComment>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_z1OsQLK7Ed-Ri5nWziYCEQ" name="skillengine">
+      <packagedElement xmi:type="uml:Package" xmi:id="_1fenkLK7Ed-Ri5nWziYCEQ" name="task">
+        <packagedElement xmi:type="uml:Class" xmi:id="_3qDowLK7Ed-Ri5nWziYCEQ" name="GatheringTask">
+          <ownedComment xmi:id="_BxqK4LK8Ed-Ri5nWziYCEQ">
+            <body>//TODO Fill it</body>
+          </ownedComment>
+          <generalization xmi:id="__OV5kLK7Ed-Ri5nWziYCEQ" general="_8T7W4LK7Ed-Ri5nWziYCEQ"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_8T7W4LK7Ed-Ri5nWziYCEQ" name="AbstactCraftTask" isAbstract="true">
+          <ownedComment xmi:id="_CDsWELK8Ed-Ri5nWziYCEQ">
+            <body>//TODO Fill it</body>
+          </ownedComment>
+        </packagedElement>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_dld8ELOYEd-cevYMslHsPw" name="model">
+        <packagedElement xmi:type="uml:Class" xmi:id="_e59CwLOYEd-cevYMslHsPw" name="Skill">
+          <ownedComment xmi:id="_mTNvULOYEd-cevYMslHsPw">
+            <body>//TODO Fill it</body>
+          </ownedComment>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_qZso4LhAEd-uidWmyPRI0g" name="AI">
+      <packagedElement xmi:type="uml:Class" xmi:id="_sHEwsLhAEd-uidWmyPRI0g" name="AI">
+        <ownedComment xmi:id="_tgezoLhAEd-uidWmyPRI0g">
+          <body>//TODO fill it</body>
+        </ownedComment>
+      </packagedElement>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_ceDFELKoEd-Ri5nWziYCEQ" name="commons"/>
+  <packagedElement xmi:type="uml:Package" xmi:id="_dnqYgLKoEd-Ri5nWziYCEQ" name="loginserver"/>
+  <packagedElement xmi:type="uml:Package" xmi:id="_sJNLkLNGEd-coYxNzPuRLw" name="Java">
+    <packagedElement xmi:type="uml:Class" xmi:id="_vwn-MLNGEd-coYxNzPuRLw" name="ReentrantLock"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_BZPasLNHEd-coYxNzPuRLw" name="Future&lt;?>"/>
+  </packagedElement>
+</uml:Model>
