@@ -99,6 +99,7 @@ public final class MemoryJavaFileManager extends EclipseFileManager
 			return CharBuffer.wrap(code);
 		}
 		
+		@SuppressWarnings("unused")
 		public Reader openReader()
 		{
 			return new StringReader(code);
