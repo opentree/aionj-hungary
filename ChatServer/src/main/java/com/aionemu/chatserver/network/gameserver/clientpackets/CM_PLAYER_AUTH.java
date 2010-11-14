@@ -25,7 +25,7 @@ import com.aionemu.chatserver.model.ChatClient;
 import com.aionemu.chatserver.network.gameserver.GameServerChannelHandler;
 import com.aionemu.chatserver.network.gameserver.serverpackets.SM_PLAYER_AUTH_RESPONSE;
 import com.aionemu.chatserver.service.ChatService;
-import com.aionemu.commons.network.packet.AbstractClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 
 /**
  * @author ATracer, Lyahim

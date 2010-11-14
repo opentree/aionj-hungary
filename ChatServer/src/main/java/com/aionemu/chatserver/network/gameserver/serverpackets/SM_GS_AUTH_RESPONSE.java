@@ -19,7 +19,7 @@ package com.aionemu.chatserver.network.gameserver.serverpackets;
 import com.aionemu.chatserver.configs.Config;
 import com.aionemu.chatserver.network.gameserver.GameServerChannelHandler;
 import com.aionemu.chatserver.network.gameserver.GsAuthResponse;
-import com.aionemu.commons.network.packet.AbstractServerPacket;
+import com.aionemu.commons.network.netty.packet.AbstractServerPacket;
 
 /**
  * @author ATracer, Lyahim

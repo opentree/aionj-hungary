@@ -20,7 +20,7 @@ import org.apache.log4j.Logger;
 
 import com.aionemu.chatserver.network.gameserver.GameServerChannelHandler;
 import com.aionemu.chatserver.service.ChatService;
-import com.aionemu.commons.network.packet.AbstractClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 
 /**
  * @author ATracer, Lyahim

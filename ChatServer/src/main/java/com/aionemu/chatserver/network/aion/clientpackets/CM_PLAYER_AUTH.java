@@ -18,7 +18,7 @@ package com.aionemu.chatserver.network.aion.clientpackets;
 
 import com.aionemu.chatserver.network.aion.AionChannelHandler;
 import com.aionemu.chatserver.service.ChatService;
-import com.aionemu.commons.network.packet.AbstractClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 
 /**
  * 

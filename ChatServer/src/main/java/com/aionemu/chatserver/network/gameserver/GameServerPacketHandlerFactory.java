@@ -5,7 +5,7 @@ import com.aionemu.chatserver.network.gameserver.clientpackets.CM_PLAYER_AUTH;
 import com.aionemu.chatserver.network.gameserver.clientpackets.CM_PLAYER_LOGOUT;
 import com.aionemu.chatserver.network.gameserver.serverpackets.SM_GS_AUTH_RESPONSE;
 import com.aionemu.chatserver.network.gameserver.serverpackets.SM_PLAYER_AUTH_RESPONSE;
-import com.aionemu.commons.network.netty.handler.AbstractChannelHandler.State;
+import com.aionemu.commons.network.netty.State;
 import com.aionemu.commons.network.netty.handler.AbstractPacketHandlerFactory;
 
 public class GameServerPacketHandlerFactory extends AbstractPacketHandlerFactory<GameServerChannelHandler>

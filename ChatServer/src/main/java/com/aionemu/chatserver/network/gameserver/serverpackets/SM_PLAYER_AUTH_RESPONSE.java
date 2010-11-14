@@ -18,7 +18,7 @@ package com.aionemu.chatserver.network.gameserver.serverpackets;
 
 import com.aionemu.chatserver.model.ChatClient;
 import com.aionemu.chatserver.network.gameserver.GameServerChannelHandler;
-import com.aionemu.commons.network.packet.AbstractServerPacket;
+import com.aionemu.commons.network.netty.packet.AbstractServerPacket;
 
 /**
  * @author ATracer

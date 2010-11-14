@@ -30,7 +30,7 @@ import com.aionemu.chatserver.model.channel.Channel;
 import com.aionemu.chatserver.model.channel.Channels;
 import com.aionemu.chatserver.network.aion.AionChannelHandler;
 import com.aionemu.chatserver.network.aion.serverpackets.SM_PLAYER_AUTH_RESPONSE;
-import com.aionemu.commons.network.netty.handler.AbstractChannelHandler.State;
+import com.aionemu.commons.network.netty.State;
 
 /**
  * @author ATracer, Lyahim

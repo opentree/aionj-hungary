@@ -23,7 +23,7 @@ import com.aionemu.chatserver.model.channel.Channels;
 import com.aionemu.chatserver.model.message.Message;
 import com.aionemu.chatserver.network.aion.AionChannelHandler;
 import com.aionemu.chatserver.service.BroadcastService;
-import com.aionemu.commons.network.packet.AbstractClientPacket;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 
 /**
  * 

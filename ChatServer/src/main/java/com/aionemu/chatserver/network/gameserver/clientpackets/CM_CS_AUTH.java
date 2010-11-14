@@ -20,8 +20,8 @@ import com.aionemu.chatserver.network.gameserver.GameServerChannelHandler;
 import com.aionemu.chatserver.network.gameserver.GsAuthResponse;
 import com.aionemu.chatserver.network.gameserver.serverpackets.SM_GS_AUTH_RESPONSE;
 import com.aionemu.chatserver.service.GameServerService;
-import com.aionemu.commons.network.netty.handler.AbstractChannelHandler.State;
-import com.aionemu.commons.network.packet.AbstractClientPacket;
+import com.aionemu.commons.network.netty.State;
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 
 /**
  * 

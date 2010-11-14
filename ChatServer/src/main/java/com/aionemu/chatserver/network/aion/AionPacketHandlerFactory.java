@@ -22,7 +22,7 @@ import com.aionemu.chatserver.network.aion.clientpackets.CM_PLAYER_AUTH;
 import com.aionemu.chatserver.network.aion.serverpackets.SM_CHANNEL_MESSAGE;
 import com.aionemu.chatserver.network.aion.serverpackets.SM_CHANNEL_RESPONSE;
 import com.aionemu.chatserver.network.aion.serverpackets.SM_PLAYER_AUTH_RESPONSE;
-import com.aionemu.commons.network.netty.handler.AbstractChannelHandler.State;
+import com.aionemu.commons.network.netty.State;
 import com.aionemu.commons.network.netty.handler.AbstractPacketHandlerFactory;
 
 /**
