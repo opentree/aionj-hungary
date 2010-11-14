@@ -26,7 +26,7 @@ import com.aionemu.gameserver.newmodel.gameobject.interfaces.IDialogSelect;
  * @author lyahim
  *
  */
-public class ActionItem extends SpawnedObject implements IDialogSelect, IDialogRequest
+public final class ActionItem extends SpawnedObject<ActionItem> implements IDialogSelect, IDialogRequest
 {
 
 	/**
@@ -50,6 +50,22 @@ public class ActionItem extends SpawnedObject implements IDialogSelect, IDialogR
 	 */
 	@Override
 	public void onDialogSelect(int dialogId, Player player, int questId)
+	{
+	}
+
+	/* (non-Javadoc)
+	 * @see com.aionemu.gameserver.newmodel.gameobject.SpawnedObject#onSpawn()
+	 */
+	@Override
+	protected void onSpawn()
+	{
+	}
+
+	/* (non-Javadoc)
+	 * @see com.aionemu.gameserver.newmodel.gameobject.SpawnedObject#onRespawn()
+	 */
+	@Override
+	protected void onRespawn()
 	{
 	}
 

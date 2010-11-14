@@ -22,7 +22,7 @@ package com.aionemu.gameserver.newmodel.gameobject;
  * @author lyahim
  *
  */
-public class Rift extends SpawnedObject
+public final class Rift extends SpawnedObject<Rift>
 {
 
 	/**
@@ -31,6 +31,22 @@ public class Rift extends SpawnedObject
 	public Rift(Integer objId)
 	{
 		super(objId);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.aionemu.gameserver.newmodel.gameobject.SpawnedObject#onSpawn()
+	 */
+	@Override
+	protected void onSpawn()
+	{
+	}
+
+	/* (non-Javadoc)
+	 * @see com.aionemu.gameserver.newmodel.gameobject.SpawnedObject#onRespawn()
+	 */
+	@Override
+	protected void onRespawn()
+	{
 	}
 
 }

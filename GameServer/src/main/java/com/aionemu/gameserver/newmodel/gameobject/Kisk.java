@@ -23,7 +23,7 @@ package com.aionemu.gameserver.newmodel.gameobject;
  * @author lyahim
  *
  */
-public class Kisk extends SummonedObject
+public final class Kisk extends SummonedObject<Kisk>
 {
 
 	/**
@@ -32,6 +32,22 @@ public class Kisk extends SummonedObject
 	public Kisk(Integer objId)
 	{
 		super(objId);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.aionemu.gameserver.newmodel.gameobject.SpawnedObject#onSpawn()
+	 */
+	@Override
+	protected void onSpawn()
+	{
+	}
+
+	/* (non-Javadoc)
+	 * @see com.aionemu.gameserver.newmodel.gameobject.SpawnedObject#onRespawn()
+	 */
+	@Override
+	protected void onRespawn()
+	{
 	}
 
 }

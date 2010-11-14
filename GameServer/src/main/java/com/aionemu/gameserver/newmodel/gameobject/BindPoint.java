@@ -29,11 +29,11 @@ import com.aionemu.gameserver.newmodel.gameobject.interfaces.IDialogRequest;
  * @author lyahim
  *
  */
-public class BindPoint extends SpawnedObject implements IDialogRequest
+public final class BindPoint extends SpawnedObject<BindPoint> implements IDialogRequest
 {
-	private static Logger 		log = Logger.getLogger(BindpointController.class);
+//	private static Logger 		log = Logger.getLogger(BindpointController.class);
 
-	private BindPointTemplate 	bindPointTemplate;
+//	private BindPointTemplate 	bindPointTemplate;
 
 	public BindPoint(Integer objId)
 	{

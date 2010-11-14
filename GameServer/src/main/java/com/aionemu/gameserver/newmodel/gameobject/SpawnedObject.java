@@ -21,6 +21,7 @@ package com.aionemu.gameserver.newmodel.gameobject;
 import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
 import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.world.KnownList;
+import com.aionemu.gameserver.world.World;
 import com.aionemu.gameserver.world.WorldPosition;
 
 
@@ -28,34 +29,35 @@ import com.aionemu.gameserver.world.WorldPosition;
  * @author lyahim
  *
  */
-@SuppressWarnings("unused")
-public class SpawnedObject extends AionObject
+
+public abstract class SpawnedObject<T> extends AionObject
 {
 	protected IObjectTemplate 	objectTemplate;
-	private WorldPosition		position;
-	private KnownList			knownlist;
-	private SpawnTemplate		spawnTemplate;
-		
+	protected WorldPosition		position;
+	protected KnownList			knownlist;
+	protected SpawnTemplate		spawnTemplate;
 	
-	public static SpawnedObject spawn(Integer objId, IObjectTemplate objectTemplate, SpawnTemplate spawnTemplate, KnownList knownList)
+	@SuppressWarnings("unchecked")
+	public T spawn(IObjectTemplate objectTemplate, SpawnTemplate spawnTemplate, KnownList knownList)
 	{
-		SpawnedObject newspawn = new SpawnedObject(objId, objectTemplate);
-		newspawn.spawnTemplate = spawnTemplate;
-		newspawn.position = new WorldPosition();
-		newspawn.knownlist = knownList;
-		newspawn.onSpawn();
-		return newspawn;
+		this.objectTemplate = objectTemplate;
+		this.spawnTemplate = spawnTemplate;
+		this.position = new WorldPosition();
+		this.position.setIsSpawned(true);
+		this.knownlist = knownList;
+		onSpawn();
+		return (T) this;
 	}
 	
-	public static void respawn(SpawnedObject spawned)
-	{
-		spawned.onRespawn();
+	public void respawn(T spawned)
+	{	
+		delete();
+		onRespawn();
 	}
 		
-	protected SpawnedObject(Integer objId, IObjectTemplate objectTemplate)
+	protected SpawnedObject(Integer objId)
 	{
 		super(objId);
-		this.objectTemplate = objectTemplate;
 	}
 
 	@Override
@@ -71,8 +73,8 @@ public class SpawnedObject extends AionObject
 		World.getInstance().removeObject(getOwner());*/
 	}
 	
-	protected void onSpawn(){}
+	protected abstract void onSpawn();
 	
-	protected void onRespawn(){}
+	protected abstract void onRespawn();
 	
 }

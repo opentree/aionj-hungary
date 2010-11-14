@@ -22,7 +22,7 @@ package com.aionemu.gameserver.newmodel.gameobject;
  * @author lyahim
  *
  */
-public class Summon extends SummonedObject
+public class Summon extends SummonedObject<Summon>
 {
 
 	/**
@@ -31,6 +31,22 @@ public class Summon extends SummonedObject
 	public Summon(Integer objId)
 	{
 		super(objId);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.aionemu.gameserver.newmodel.gameobject.SpawnedObject#onSpawn()
+	 */
+	@Override
+	protected void onSpawn()
+	{
+	}
+
+	/* (non-Javadoc)
+	 * @see com.aionemu.gameserver.newmodel.gameobject.SpawnedObject#onRespawn()
+	 */
+	@Override
+	protected void onRespawn()
+	{
 	}
 
 }

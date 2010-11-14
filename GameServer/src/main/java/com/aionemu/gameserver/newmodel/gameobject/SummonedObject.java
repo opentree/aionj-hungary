@@ -24,9 +24,9 @@ import com.aionemu.gameserver.newmodel.gameobject.interfaces.ISummoned;
  * @author lyahim
  *
  */
-public class SummonedObject extends LiveObject implements ISummoned
+public abstract class SummonedObject<T> extends LiveObject<T> implements ISummoned
 {
-	protected LiveObject master;
+	protected LiveObject<?> master;
 
 	/**
 	 * @param objId
@@ -40,7 +40,7 @@ public class SummonedObject extends LiveObject implements ISummoned
 	 * @see com.aionemu.gameserver.model.newgameobject.interfaces.ISummoned#getMaster()
 	 */
 	@Override
-	public LiveObject getMaster()
+	public LiveObject<?> getMaster()
 	{
 		return null;
 	}

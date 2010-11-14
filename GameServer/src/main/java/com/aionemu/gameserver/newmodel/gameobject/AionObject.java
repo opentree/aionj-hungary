@@ -31,7 +31,7 @@ public abstract class AionObject
 	/**
 	 * Unique id, for all game objects such as: items, players, monsters.
 	 */
-	private int	objectId;
+	protected int	objectId;
 
 	public AionObject(Integer objId)
 	{

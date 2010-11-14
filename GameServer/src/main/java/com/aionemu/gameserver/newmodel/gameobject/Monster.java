@@ -25,7 +25,7 @@ import com.aionemu.gameserver.newmodel.gameobject.interfaces.IReward;
  * @author lyahim
  *
  */
-public class Monster extends Npc implements IReward
+public class Monster extends Npc<Monster> implements IReward
 {
 
 	/**
@@ -41,6 +41,22 @@ public class Monster extends Npc implements IReward
 	 */
 	@Override
 	public void doReward(Player player)
+	{
+	}
+
+	/* (non-Javadoc)
+	 * @see com.aionemu.gameserver.newmodel.gameobject.SpawnedObject#onSpawn()
+	 */
+	@Override
+	protected void onSpawn()
+	{
+	}
+
+	/* (non-Javadoc)
+	 * @see com.aionemu.gameserver.newmodel.gameobject.SpawnedObject#onRespawn()
+	 */
+	@Override
+	protected void onRespawn()
 	{
 	}
 

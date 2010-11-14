@@ -22,7 +22,7 @@ package com.aionemu.gameserver.newmodel.gameobject;
  * @author lyahim
  *
  */
-public class LiveObject extends SpawnedObject
+public abstract class LiveObject<T> extends SpawnedObject<T>
 {
 
 	/**

@@ -181,7 +181,7 @@ public class WorldPosition
 	 * 
 	 * @param val
 	 */
-	void setIsSpawned(boolean val)
+	public void setIsSpawned(boolean val)
 	{
 		isSpawned = val;
 	}

@@ -25,7 +25,7 @@ import com.aionemu.gameserver.newmodel.gameobject.interfaces.IReward;
  * @author lyahim
  *
  */
-public class Gatherable extends SpawnedObject implements IReward
+public final class Gatherable extends SpawnedObject<Gatherable> implements IReward
 {
 
 	public Gatherable(Integer objId)
@@ -38,6 +38,22 @@ public class Gatherable extends SpawnedObject implements IReward
 	 */
 	@Override
 	public void doReward(Player player)
+	{
+	}
+
+	/* (non-Javadoc)
+	 * @see com.aionemu.gameserver.newmodel.gameobject.SpawnedObject#onSpawn()
+	 */
+	@Override
+	protected void onSpawn()
+	{
+	}
+
+	/* (non-Javadoc)
+	 * @see com.aionemu.gameserver.newmodel.gameobject.SpawnedObject#onRespawn()
+	 */
+	@Override
+	protected void onRespawn()
 	{
 	}
 

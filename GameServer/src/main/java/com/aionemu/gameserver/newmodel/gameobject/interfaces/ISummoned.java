@@ -26,5 +26,5 @@ import com.aionemu.gameserver.newmodel.gameobject.LiveObject;
  */
 public interface ISummoned
 {
-	public LiveObject getMaster();
+	public LiveObject<?> getMaster();
 }

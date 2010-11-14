@@ -22,7 +22,7 @@ package com.aionemu.gameserver.newmodel.gameobject;
  * @author lyahim
  *
  */
-public class Npc extends LiveObject
+public abstract class Npc<T> extends LiveObject<T>
 {
 
 	/**
