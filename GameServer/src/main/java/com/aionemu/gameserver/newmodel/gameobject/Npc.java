@@ -18,6 +18,8 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject;
 
+import com.aionemu.gameserver.newmodel.templates.LiveObjectTemplate;
+
 /**
  * @author lyahim
  *
@@ -30,7 +32,7 @@ public abstract class Npc<T> extends LiveObject<T>
 	 */
 	public Npc(Integer objId)
 	{
-		super(objId);
+		super(objId, new LiveObjectTemplate());
 	}
 
 }

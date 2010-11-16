@@ -18,43 +18,32 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject;
 
-import com.aionemu.gameserver.newmodel.gameobject.Player.Player;
-import com.aionemu.gameserver.newmodel.gameobject.interfaces.IReward;
+import com.aionemu.gameserver.newmodel.gameobject.enums.eGatherState;
+import com.aionemu.gameserver.skillengine.task.GatheringTask;
 
 /**
  * @author lyahim
  *
  */
-public final class Gatherable extends SpawnedObject<Gatherable> implements IReward
+public final class Gatherable extends SpawnedObject<Gatherable>
 {
+	private int gatherCount;
+	
+	private int currentGatherer;
+	//TODO move
+	private GatheringTask task;
+	
+	private eGatherState state = eGatherState.IDLE;
 
 	public Gatherable(Integer objId)
 	{
-		super(objId);
+		super(objId, null);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.model.newgameobject.interfaces.IReward#doReward(com.aionemu.gameserver.model.newgameobject.Player.Player)
-	 */
-	@Override
-	public void doReward(Player player)
-	{
-	}
-
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.newmodel.gameobject.SpawnedObject#onSpawn()
-	 */
-	@Override
-	protected void onSpawn()
-	{
-	}
-
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.newmodel.gameobject.SpawnedObject#onRespawn()
-	 */
 	@Override
 	protected void onRespawn()
 	{
+		this.gatherCount = 0;
 	}
 
 }

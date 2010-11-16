@@ -18,55 +18,38 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject;
 
-import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.newmodel.gameobject.interfaces.IDialogRequest;
-import com.aionemu.gameserver.newmodel.gameobject.interfaces.IDialogSelect;
+import com.aionemu.gameserver.newmodel.gameobject.interfaces.IReward;
+import com.aionemu.gameserver.newmodel.gameobject.player.Player;
 
 /**
  * @author lyahim
  *
  */
-public final class ActionItem extends SpawnedObject<ActionItem> implements IDialogSelect, IDialogRequest
+public final class ActionItem extends SpawnedObject<ActionItem> implements IDialogRequest, IReward
 {
+	
+	private Player lastActor = null;
 
-	/**
-	 * @param objId
-	 */
 	public ActionItem(Integer objId)
 	{
-		super(objId);
+		super(objId, null);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.model.newgameobject.interfaces.IDialogRequest#onDialogRequest(com.aionemu.gameserver.model.gameobjects.player.Player)
-	 */
 	@Override
-	public void onDialogRequest(Player player)
+	public void doReward(com.aionemu.gameserver.newmodel.gameobject.player.Player player)
+	{
+		if (lastActor == null)
+			return;
+		
+//		DropService.getInstance().registerDrop(getOwner() , lastActor, lastActor.getLevel());
+//		DropService.getInstance().requestDropList(lastActor, getOwner().getObjectId());
+		
+		lastActor = null;
+	}
+
+	@Override
+	public void onDialogRequest(com.aionemu.gameserver.newmodel.gameobject.player.Player player)
 	{
 	}
-
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.model.newgameobject.interfaces.IDialogSelect#onDialogSelect(int, com.aionemu.gameserver.model.gameobjects.player.Player, int)
-	 */
-	@Override
-	public void onDialogSelect(int dialogId, Player player, int questId)
-	{
-	}
-
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.newmodel.gameobject.SpawnedObject#onSpawn()
-	 */
-	@Override
-	protected void onSpawn()
-	{
-	}
-
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.newmodel.gameobject.SpawnedObject#onRespawn()
-	 */
-	@Override
-	protected void onRespawn()
-	{
-	}
-
 }

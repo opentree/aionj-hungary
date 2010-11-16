@@ -18,6 +18,8 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject;
 
+import com.aionemu.gameserver.newmodel.templates.LiveObjectTemplate;
+
 /**
  * @author lyahim
  *
@@ -28,9 +30,9 @@ public abstract class LiveObject<T> extends SpawnedObject<T>
 	/**
 	 * @param objId
 	 */
-	public LiveObject(Integer objId)
+	public LiveObject(Integer objId, LiveObjectTemplate objectTemplate)
 	{
-		super(objId);
+		super(objId, objectTemplate);
 	}
 
 }

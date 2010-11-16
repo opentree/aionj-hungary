@@ -18,34 +18,40 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject;
 
+import com.aionemu.gameserver.model.gameobjects.Npc;
+import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
+import com.aionemu.gameserver.newmodel.gameobject.interfaces.IDialogRequest;
+import com.aionemu.gameserver.newmodel.gameobject.player.Player;
+import com.aionemu.gameserver.spawnengine.RiftSpawnManager.RiftEnum;
+
 /**
  * @author lyahim
  *
  */
-public final class Rift extends SpawnedObject<Rift>
+public final class Rift extends SpawnedObject<Rift> implements IDialogRequest
 {
+	private boolean isMaster = false;
+	private SpawnTemplate slaveSpawnTemplate;
+	private Npc slave;
+	
+	private Integer maxEntries;
+	private Integer maxLevel;
+	
+	private int usedEntries;
+	private boolean isAccepting;
+	
+	private RiftEnum riftTemplate;
 
 	/**
 	 * @param objId
 	 */
 	public Rift(Integer objId)
 	{
-		super(objId);
+		super(objId, null);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.newmodel.gameobject.SpawnedObject#onSpawn()
-	 */
 	@Override
-	protected void onSpawn()
-	{
-	}
-
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.newmodel.gameobject.SpawnedObject#onRespawn()
-	 */
-	@Override
-	protected void onRespawn()
+	public void onDialogRequest(Player player)
 	{
 	}
 

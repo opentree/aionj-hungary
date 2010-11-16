@@ -18,10 +18,10 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject;
 
+import com.aionemu.gameserver.newmodel.gameobject.interfaces.IReward;
 import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
 import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.world.KnownList;
-import com.aionemu.gameserver.world.World;
 import com.aionemu.gameserver.world.WorldPosition;
 
 
@@ -38,32 +38,38 @@ public abstract class SpawnedObject<T> extends AionObject
 	protected SpawnTemplate		spawnTemplate;
 	
 	@SuppressWarnings("unchecked")
-	public T spawn(IObjectTemplate objectTemplate, SpawnTemplate spawnTemplate, KnownList knownList)
+	public T spawn(SpawnTemplate spawnTemplate, KnownList knownList)
 	{
-		this.objectTemplate = objectTemplate;
 		this.spawnTemplate = spawnTemplate;
 		this.position = new WorldPosition();
-		this.position.setIsSpawned(true);
 		this.knownlist = knownList;
 		onSpawn();
 		return (T) this;
 	}
 	
-	public void respawn(T spawned)
+	public void respawn()
 	{	
-		delete();
+		onDespawn();
 		onRespawn();
 	}
+	
+	public void despawn()
+	{	
+		onDespawn();
+	}
 		
-	protected SpawnedObject(Integer objId)
+	protected SpawnedObject(Integer objId, IObjectTemplate objectTemplate)
 	{
 		super(objId);
+		this.objectTemplate = objectTemplate;
 	}
 
 	@Override
 	public String getName()
 	{
-		return objectTemplate.getName();
+		if(objectTemplate != null)
+			return objectTemplate.getName();
+		return "SpawnedObject: " + this.getClass().getSimpleName();
 	}
 	
 	public void delete()
@@ -72,9 +78,16 @@ public abstract class SpawnedObject<T> extends AionObject
 			World.getInstance().despawn(getOwner());
 		World.getInstance().removeObject(getOwner());*/
 	}
+	protected void onDespawn(){}
 	
-	protected abstract void onSpawn();
+	protected void onSpawn(){}
 	
-	protected abstract void onRespawn();
+	protected void onRespawn()
+	{
+		if(this instanceof IReward)
+		{
+//			DropService.getInstance().unregisterDrop(this);	
+		}
+	}
 	
 }

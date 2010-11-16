@@ -19,6 +19,7 @@
 package com.aionemu.gameserver.newmodel.gameobject;
 
 import com.aionemu.gameserver.newmodel.gameobject.interfaces.ISummoned;
+import com.aionemu.gameserver.newmodel.templates.LiveObjectTemplate;
 
 /**
  * @author lyahim
@@ -33,12 +34,9 @@ public abstract class SummonedObject<T> extends LiveObject<T> implements ISummon
 	 */
 	public SummonedObject(Integer objId)
 	{
-		super(objId);
+		super(objId, new LiveObjectTemplate());
 	}
 
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.model.newgameobject.interfaces.ISummoned#getMaster()
-	 */
 	@Override
 	public LiveObject<?> getMaster()
 	{

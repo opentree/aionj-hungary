@@ -1,5 +1,5 @@
 /*
- * This file is part of aion-emu <aion-unique.com>.
+ * This file is part of aion-unique <aion-unique.org>.
  *
  *  aion-unique is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,11 +20,25 @@ package com.aionemu.gameserver.newmodel.gameobject.enums;
  * @author ATracer
  *
  */
-public enum PersistentState
+public enum eNpcObjectType
 {
-	NEW,
-	UPDATE_REQUIRED,
-	UPDATED,
-	DELETED,
-	NOACTION
+	NORMAL(1),
+	SUMMON(2),
+	TRAP(32),
+	GROUPGATE(256),
+	SERVANT(1024);
+	
+	private eNpcObjectType(int id)
+	{
+		this.id = id;
+	}
+	private int id;
+
+	/**
+	 * @return the id
+	 */
+	public int getId()
+	{
+		return id;
+	}
 }

@@ -16,21 +16,19 @@
  *
  * http://www.gnu.org/copyleft/gpl.html
  */
-package com.aionemu.gameserver.newmodel.gameobject.enums;
+package com.aionemu.gameserver.newmodel.templates;
 
 /**
  * @author lyahim
  *
  */
-public enum SpawnedObjectType
+public class StaticObjectTemplate implements IObjectTemplate
 {
-	GATHER,
-	SUMMON,
-	TRAP,
-	SERVANT,
-	BINDPOINT,
-	NPC,
-	STATIC,
-	KISK,
-	GROUPGATE,
+
+	@Override
+	public String getName()
+	{
+		return null;
+	}
+
 }

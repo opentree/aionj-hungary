@@ -18,12 +18,9 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject;
 
-import org.apache.log4j.Logger;
-
-import com.aionemu.gameserver.controllers.BindpointController;
-import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.model.templates.BindPointTemplate;
 import com.aionemu.gameserver.newmodel.gameobject.interfaces.IDialogRequest;
+import com.aionemu.gameserver.newmodel.gameobject.player.Player;
+import com.aionemu.gameserver.newmodel.templates.BindPointTemplate;
 
 /**
  * @author lyahim
@@ -31,13 +28,9 @@ import com.aionemu.gameserver.newmodel.gameobject.interfaces.IDialogRequest;
  */
 public final class BindPoint extends SpawnedObject<BindPoint> implements IDialogRequest
 {
-//	private static Logger 		log = Logger.getLogger(BindpointController.class);
-
-//	private BindPointTemplate 	bindPointTemplate;
-
-	public BindPoint(Integer objId)
+	public BindPoint(Integer objId, BindPointTemplate bindPointTemplate)
 	{
-		super(objId);
+		super(objId, bindPointTemplate);
 	}
 
 	@Override
@@ -45,15 +38,4 @@ public final class BindPoint extends SpawnedObject<BindPoint> implements IDialog
 	{
 		
 	}
-
-	@Override
-	public void onSpawn()
-	{
-	}
-
-	@Override
-	public void onRespawn()
-	{
-	}
-
 }

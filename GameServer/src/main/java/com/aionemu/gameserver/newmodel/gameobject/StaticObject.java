@@ -18,34 +18,30 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject;
 
+import com.aionemu.gameserver.newmodel.gameobject.interfaces.IDialogRequest;
+import com.aionemu.gameserver.newmodel.gameobject.interfaces.IDialogSelect;
+import com.aionemu.gameserver.newmodel.gameobject.player.Player;
+import com.aionemu.gameserver.newmodel.templates.StaticObjectTemplate;
+
 /**
  * @author lyahim
  *
  */
-public final class StaticObject extends SpawnedObject<StaticObject>
+public final class StaticObject extends SpawnedObject<StaticObject> implements IDialogRequest, IDialogSelect
 {
 
-	/**
-	 * @param objId
-	 */
-	public StaticObject(Integer objId)
+	public StaticObject(Integer objId, StaticObjectTemplate objectTemplate)
 	{
-		super(objId);
+		super(objId, objectTemplate);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.newmodel.gameobject.SpawnedObject#onSpawn()
-	 */
 	@Override
-	protected void onSpawn()
+	public void onDialogSelect(int dialogId, Player player, int questId)
 	{
 	}
 
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.newmodel.gameobject.SpawnedObject#onRespawn()
-	 */
 	@Override
-	protected void onRespawn()
+	public void onDialogRequest(Player player)
 	{
 	}
 

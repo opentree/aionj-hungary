@@ -18,8 +18,9 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject;
 
-import com.aionemu.gameserver.newmodel.gameobject.Player.Player;
 import com.aionemu.gameserver.newmodel.gameobject.interfaces.IReward;
+import com.aionemu.gameserver.newmodel.gameobject.player.Player;
+import com.aionemu.gameserver.newmodel.templates.LiveObjectTemplate;
 
 /**
  * @author lyahim
@@ -36,27 +37,8 @@ public class Monster extends Npc<Monster> implements IReward
 		super(objId);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.model.newgameobject.interfaces.IReward#doReward(com.aionemu.gameserver.model.newgameobject.Player.Player)
-	 */
 	@Override
 	public void doReward(Player player)
-	{
-	}
-
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.newmodel.gameobject.SpawnedObject#onSpawn()
-	 */
-	@Override
-	protected void onSpawn()
-	{
-	}
-
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.newmodel.gameobject.SpawnedObject#onRespawn()
-	 */
-	@Override
-	protected void onRespawn()
 	{
 	}
 

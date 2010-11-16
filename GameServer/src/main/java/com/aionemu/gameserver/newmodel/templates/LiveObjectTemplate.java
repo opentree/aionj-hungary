@@ -16,35 +16,19 @@
  *
  * http://www.gnu.org/copyleft/gpl.html
  */
-package com.aionemu.gameserver.newmodel.gameobject;
-
-import com.aionemu.gameserver.newmodel.gameobject.interfaces.IDialogRequest;
-import com.aionemu.gameserver.newmodel.gameobject.interfaces.IDialogSelect;
-import com.aionemu.gameserver.newmodel.gameobject.player.Player;
+package com.aionemu.gameserver.newmodel.templates;
 
 /**
  * @author lyahim
  *
  */
-public class DialogNpc extends Monster implements IDialogRequest, IDialogSelect
+public class LiveObjectTemplate implements IObjectTemplate
 {
 
-	/**
-	 * @param objId
-	 */
-	public DialogNpc(Integer objId)
-	{
-		super(objId);
-	}
-
 	@Override
-	public void onDialogSelect(int dialogId, Player player, int questId)
+	public String getName()
 	{
-	}
-
-	@Override
-	public void onDialogRequest(Player player)
-	{
+		return null;
 	}
 
 }

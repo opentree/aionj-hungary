@@ -16,35 +16,21 @@
  *
  * http://www.gnu.org/copyleft/gpl.html
  */
-package com.aionemu.gameserver.newmodel.gameobject;
-
-import com.aionemu.gameserver.newmodel.gameobject.interfaces.IDialogRequest;
-import com.aionemu.gameserver.newmodel.gameobject.interfaces.IDialogSelect;
-import com.aionemu.gameserver.newmodel.gameobject.player.Player;
+package com.aionemu.gameserver.newmodel.gameobject.enums;
 
 /**
  * @author lyahim
  *
  */
-public class DialogNpc extends Monster implements IDialogRequest, IDialogSelect
+public enum eSpawnedObjectType
 {
-
-	/**
-	 * @param objId
-	 */
-	public DialogNpc(Integer objId)
-	{
-		super(objId);
-	}
-
-	@Override
-	public void onDialogSelect(int dialogId, Player player, int questId)
-	{
-	}
-
-	@Override
-	public void onDialogRequest(Player player)
-	{
-	}
-
+	GATHER,
+	SUMMON,
+	TRAP,
+	SERVANT,
+	BINDPOINT,
+	NPC,
+	STATIC,
+	KISK,
+	GROUPGATE,
 }

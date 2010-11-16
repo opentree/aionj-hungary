@@ -18,7 +18,7 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject.interfaces;
 
-import com.aionemu.gameserver.newmodel.gameobject.Player.Player;
+import com.aionemu.gameserver.newmodel.gameobject.player.Player;
 
 /**
  * @author lyahim

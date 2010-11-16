@@ -33,20 +33,4 @@ public class Summon extends SummonedObject<Summon>
 		super(objId);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.newmodel.gameobject.SpawnedObject#onSpawn()
-	 */
-	@Override
-	protected void onSpawn()
-	{
-	}
-
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.newmodel.gameobject.SpawnedObject#onRespawn()
-	 */
-	@Override
-	protected void onRespawn()
-	{
-	}
-
 }
