@@ -18,13 +18,10 @@ package com.aionemu.loginserver;
 
 import org.apache.log4j.Logger;
 
-import com.aionemu.commons.consoleCommand.ConsoleCommandHandler;
 import com.aionemu.commons.database.DatabaseFactory;
-import com.aionemu.commons.database.dao.DAOManager;
 import com.aionemu.commons.log4j.exceptions.Log4jInitializationError;
 import com.aionemu.commons.services.LoggingService;
 import com.aionemu.commons.utils.AEInfos;
-import com.aionemu.commons.utils.DeadLockDetector;
 import com.aionemu.commons.utils.ExitCode;
 import com.aionemu.loginserver.configs.Config;
 import com.aionemu.loginserver.controller.AccountController;
@@ -60,7 +57,6 @@ public class LoginServer
 
 		AEInfos.printSection("DataBase");
 		DatabaseFactory.init();
-		DAOManager.init();
 
 		/**
 		 * Initialize Key Generator
@@ -87,13 +83,6 @@ public class LoginServer
 
 		AEInfos.printSection("Network");
 		NettyLoginServer.getInstance();
-		
-		if(Config.CONSOLE_ENABLED)
-		{
-			AEInfos.printSection("ConsoleComamnd");
-			ConsoleCommandHandler.getInstance();
-			ConsoleCommandHandler.getInstance().load();
-		}
 		
 		System.gc();
 		

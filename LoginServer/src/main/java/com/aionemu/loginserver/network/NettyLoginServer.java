@@ -25,7 +25,6 @@ import org.jboss.netty.channel.group.DefaultChannelGroup;
 import com.aionemu.commons.network.netty.AbstractNettyServer;
 import com.aionemu.loginserver.configs.Config;
 import com.aionemu.loginserver.network.aion.AionPipeLineFactory;
-import com.aionemu.loginserver.network.console.ConsolePipelineFactory;
 import com.aionemu.loginserver.network.gameserver.GameServerPipeLineFactory;
 
 /**
@@ -40,11 +39,9 @@ public class NettyLoginServer extends AbstractNettyServer
 	
 	private final AionPipeLineFactory		loginToClientPipeLineFactory;
 	private final GameServerPipeLineFactory	loginToGamePipelineFactory;
-	private ConsolePipelineFactory			consolePipelineFactory = null;
 	
 	private ChannelFactory					loginToClientChannelFactory;
 	private ChannelFactory					loginToGameChannelFactory;
-	private ChannelFactory					consoleChannelFactory = null;
 
 	public static final NettyLoginServer getInstance()
 	{
@@ -55,7 +52,6 @@ public class NettyLoginServer extends AbstractNettyServer
 	{
 		this.loginToClientPipeLineFactory = new AionPipeLineFactory();
 		this.loginToGamePipelineFactory = new GameServerPipeLineFactory();
-		this.consolePipelineFactory = new ConsolePipelineFactory();
 		initialize();		
 	}
 
@@ -67,12 +63,6 @@ public class NettyLoginServer extends AbstractNettyServer
 		
 		channelGroup.add(initServerChannel(loginToClientChannelFactory,Config.CLIENT_ADDRESS, loginToClientPipeLineFactory));
 		channelGroup.add(initServerChannel(loginToGameChannelFactory,Config.GAMESERVER_ADDRESS, loginToGamePipelineFactory));
-
-		if(Config.CONSOLE_ENABLED)
-		{
-			consoleChannelFactory = initServerChannelFactory();
-			channelGroup.add(initServerChannel(consoleChannelFactory,Config.CONSOLE_ADDRESS, consolePipelineFactory));
-		}
 		
 		logger.info("Login Server started");
 	}
