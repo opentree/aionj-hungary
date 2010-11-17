@@ -25,7 +25,7 @@ import com.aionemu.gameserver.skillengine.task.GatheringTask;
  * @author lyahim
  *
  */
-public final class Gatherable extends SpawnedObject<Gatherable>
+public final class Gatherable extends SpawnedObject
 {
 	private int gatherCount;
 	

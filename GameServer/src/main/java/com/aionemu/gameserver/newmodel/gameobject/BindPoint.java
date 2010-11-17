@@ -26,7 +26,7 @@ import com.aionemu.gameserver.newmodel.templates.BindPointTemplate;
  * @author lyahim
  *
  */
-public final class BindPoint extends SpawnedObject<BindPoint> implements IDialogRequest
+public final class BindPoint extends SpawnedObject implements IDialogRequest
 {
 	public BindPoint(Integer objId, BindPointTemplate bindPointTemplate)
 	{

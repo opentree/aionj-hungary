@@ -22,7 +22,7 @@ package com.aionemu.gameserver.newmodel.gameobject;
  * @author lyahim
  *
  */
-public final class Trap extends SummonedObject<Trap>
+public final class Trap extends SummonedObject
 {
 
 	/**

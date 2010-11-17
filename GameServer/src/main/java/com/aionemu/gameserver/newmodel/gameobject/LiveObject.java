@@ -24,7 +24,7 @@ import com.aionemu.gameserver.newmodel.templates.LiveObjectTemplate;
  * @author lyahim
  *
  */
-public abstract class LiveObject<T> extends SpawnedObject<T>
+public abstract class LiveObject extends SpawnedObject
 {
 
 	/**

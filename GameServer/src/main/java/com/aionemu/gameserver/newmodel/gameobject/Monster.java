@@ -20,13 +20,12 @@ package com.aionemu.gameserver.newmodel.gameobject;
 
 import com.aionemu.gameserver.newmodel.gameobject.interfaces.IReward;
 import com.aionemu.gameserver.newmodel.gameobject.player.Player;
-import com.aionemu.gameserver.newmodel.templates.LiveObjectTemplate;
 
 /**
  * @author lyahim
  *
  */
-public class Monster extends Npc<Monster> implements IReward
+public class Monster extends Npc implements IReward
 {
 
 	/**

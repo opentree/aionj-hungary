@@ -26,7 +26,7 @@ import com.aionemu.gameserver.newmodel.gameobject.player.Player;
  * @author lyahim
  *
  */
-public final class ActionItem extends SpawnedObject<ActionItem> implements IDialogRequest, IReward
+public final class ActionItem extends SpawnedObject implements IDialogRequest, IReward
 {
 	
 	private Player lastActor = null;

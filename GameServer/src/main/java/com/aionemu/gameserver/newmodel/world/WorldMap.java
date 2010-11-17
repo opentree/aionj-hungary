@@ -14,7 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with aion-emu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aionemu.gameserver.world;
+package com.aionemu.gameserver.newmodel.world;
 
 import java.util.Collection;
 import java.util.Map;
@@ -98,7 +98,7 @@ public class WorldMap
 	 */
 	public WorldType getWorldType()
 	{
-		return WorldType.NONE;
+		return worldMapTemplate.getWorldType();
 	}
 
 	/**

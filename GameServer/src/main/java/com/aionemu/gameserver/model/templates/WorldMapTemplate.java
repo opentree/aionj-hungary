@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.aionemu.gameserver.world.WorldType;
+import com.aionemu.gameserver.newmodel.world.WorldType;
 /**
  * @author Luno
  * 

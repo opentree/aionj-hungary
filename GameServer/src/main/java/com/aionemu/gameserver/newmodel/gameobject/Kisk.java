@@ -23,7 +23,7 @@ package com.aionemu.gameserver.newmodel.gameobject;
  * @author lyahim
  *
  */
-public final class Kisk extends SummonedObject<Kisk>
+public final class Kisk extends SummonedObject
 {
 
 	/**

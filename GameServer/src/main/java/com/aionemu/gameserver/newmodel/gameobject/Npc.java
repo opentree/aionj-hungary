@@ -24,7 +24,7 @@ import com.aionemu.gameserver.newmodel.templates.LiveObjectTemplate;
  * @author lyahim
  *
  */
-public abstract class Npc<T> extends LiveObject<T>
+public abstract class Npc extends LiveObject
 {
 
 	/**

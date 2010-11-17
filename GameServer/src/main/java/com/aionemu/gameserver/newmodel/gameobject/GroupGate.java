@@ -24,7 +24,7 @@ import com.aionemu.gameserver.newmodel.gameobject.interfaces.ISummoned;
  * @author lyahim
  *
  */
-public final class GroupGate extends SpawnedObject<GroupGate> implements ISummoned
+public final class GroupGate extends SpawnedObject implements ISummoned
 {
 
 	public GroupGate(Integer objId)
@@ -33,7 +33,7 @@ public final class GroupGate extends SpawnedObject<GroupGate> implements ISummon
 	}
 
 	@Override
-	public LiveObject<?> getMaster()
+	public LiveObject getMaster()
 	{
 		return null;
 	}

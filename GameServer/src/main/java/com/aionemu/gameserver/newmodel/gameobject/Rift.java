@@ -28,7 +28,7 @@ import com.aionemu.gameserver.spawnengine.RiftSpawnManager.RiftEnum;
  * @author lyahim
  *
  */
-public final class Rift extends SpawnedObject<Rift> implements IDialogRequest
+public final class Rift extends SpawnedObject implements IDialogRequest
 {
 	private boolean isMaster = false;
 	private SpawnTemplate slaveSpawnTemplate;

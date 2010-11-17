@@ -16,64 +16,28 @@
  */
 package com.aionemu.gameserver.spawnengine;
 
-import javolution.util.FastMap;
-
+import java.lang.reflect.Constructor;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.aionemu.commons.database.dao.DAOManager;
-import com.aionemu.gameserver.controllers.ActionitemController;
-import com.aionemu.gameserver.controllers.BindpointController;
-import com.aionemu.gameserver.controllers.GatherableController;
-import com.aionemu.gameserver.controllers.KiskController;
-import com.aionemu.gameserver.controllers.GroupGateController;
-import com.aionemu.gameserver.controllers.MonsterController;
-import com.aionemu.gameserver.controllers.NpcController;
-import com.aionemu.gameserver.controllers.PortalController;
-import com.aionemu.gameserver.controllers.PostboxController;
-import com.aionemu.gameserver.controllers.PostmanController;
-import com.aionemu.gameserver.controllers.ServantController;
-import com.aionemu.gameserver.controllers.SummonController;
-import com.aionemu.gameserver.controllers.effect.EffectController;
-import com.aionemu.gameserver.controllers.siege.ArtifactController;
-import com.aionemu.gameserver.controllers.siege.SiegeGeneralController;
-import com.aionemu.gameserver.controllers.siege.SiegeGuardController;
-import com.aionemu.gameserver.controllers.siege.SiegeMineController;
-import com.aionemu.gameserver.controllers.siege.SiegeNpcController;
-import com.aionemu.gameserver.dao.SiegeDAO;
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.dataholders.NpcData;
-import com.aionemu.gameserver.model.NpcType;
 import com.aionemu.gameserver.model.gameobjects.Creature;
-import com.aionemu.gameserver.model.gameobjects.Gatherable;
 import com.aionemu.gameserver.model.gameobjects.Kisk;
-import com.aionemu.gameserver.model.gameobjects.Monster;
-import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.Servant;
 import com.aionemu.gameserver.model.gameobjects.Summon;
 import com.aionemu.gameserver.model.gameobjects.Trap;
 import com.aionemu.gameserver.model.gameobjects.GroupGate;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.model.gameobjects.siege.Artifact;
-import com.aionemu.gameserver.model.gameobjects.siege.SiegeGeneral;
-import com.aionemu.gameserver.model.gameobjects.siege.SiegeGuard;
-import com.aionemu.gameserver.model.gameobjects.siege.SiegeMine;
-import com.aionemu.gameserver.model.gameobjects.siege.SiegeNpc;
-import com.aionemu.gameserver.model.siege.SiegeLocation;
-import com.aionemu.gameserver.model.siege.SiegeRace;
-import com.aionemu.gameserver.model.templates.GatherableTemplate;
-import com.aionemu.gameserver.model.templates.NpcTemplate;
 import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
 import com.aionemu.gameserver.model.templates.WorldMapTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnGroup;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
-import com.aionemu.gameserver.model.templates.stats.SummonStatsTemplate;
+import com.aionemu.gameserver.newmodel.gameobject.SpawnedObject;
+import com.aionemu.gameserver.newmodel.gameobject.knowlist.KnownList;
 import com.aionemu.gameserver.utils.idfactory.IDFactory;
-import com.aionemu.gameserver.world.KnownList;
-import com.aionemu.gameserver.world.StaticObjectKnownList;
-import com.aionemu.gameserver.world.World;
 
 /**
  * 
@@ -115,11 +79,22 @@ public class SpawnEngine
 		VisibleObjectTemplate template = null;
 		int objectId = spawn.getSpawnGroup().getNpcid();
 		NpcData	npcData = DataManager.NPC_DATA;
+		Class<?>						clazz;
 		if(objectId > 400000 && objectId < 499999)// gatherable
 		{
 			template = DataManager.GATHERABLE_DATA.getGatherableTemplate(objectId);
 			if(template == null)
 				return null;
+
+			try
+			{
+				clazz = Class.forName("com.aionemu.gameserver.newmodel.gameobject.Gatherable");
+			}
+			catch (ClassNotFoundException e)
+			{
+				log.warn(e);
+				return null;
+			}
 			gatherableCounter++;
 		}
 		else
@@ -128,15 +103,37 @@ public class SpawnEngine
 			template = npcData.getNpcTemplate(objectId);
 			if(template == null)
 				return null;
+			try
+			{
+				clazz = Class.forName("com.aionemu.gameserver.newmodel.gameobject.SpawnedObject");
+			}
+			catch (ClassNotFoundException e)
+			{
+				log.warn(e);
+				return null;
+			}
 			npcCounter++;
 		}
 		IDFactory iDFactory = IDFactory.getInstance();
+		
+		try
+		{
+			Object[] parameters =
+			{iDFactory.nextId(), template };
+			Constructor<?> constructor = clazz.getConstructor(Integer.class, VisibleObjectTemplate.class);
+			SpawnedObject object = (SpawnedObject) constructor.newInstance(parameters);
+			object.spawn(spawn, new KnownList(object));
+		}
+		catch (Exception e)
+		{
+		}
+		/**
 		if(template instanceof NpcTemplate)
 		{
 			NpcType npcType = ((NpcTemplate) template).getNpcType();
 			Npc npc = null;
 
-			/*-------Spawning Npcs,Monsters and other simple Npcs---------*/
+			-------Spawning Npcs,Monsters and other simple Npcs---------
 			if (spawn.getSpawnGroup().getSiegeId()==0) 
 			{
 				switch(npcType)
@@ -181,7 +178,7 @@ public class SpawnEngine
 				}
 
 			}
-            	/*----------Spawn siege npcs like Siege Guardians,Protectors,Vendors------------*/
+            	----------Spawn siege npcs like Siege Guardians,Protectors,Vendors------------
 			else
 			{
 				FastMap<Integer, SiegeLocation> locations = DataManager.SIEGE_LOCATION_DATA.getSiegeLocations();
@@ -240,6 +237,7 @@ public class SpawnEngine
 			bringIntoWorld(gatherable, spawn, instanceIndex);
 			return gatherable;
 		}
+		*/
 		return null;
 	}
 
@@ -252,6 +250,7 @@ public class SpawnEngine
 	 */
 	public Trap spawnTrap(SpawnTemplate spawn, int instanceIndex, Creature creator, int skillId)
 	{
+		/*
 		int objectId = spawn.getSpawnGroup().getNpcid();
 		NpcTemplate npcTemplate = DataManager.NPC_DATA.getNpcTemplate(objectId);
 		Trap trap = new Trap(IDFactory.getInstance().nextId(), new NpcController(), spawn,
@@ -262,7 +261,8 @@ public class SpawnEngine
 		trap.setSkillId(skillId);
 		trap.getController().onRespawn();
 		bringIntoWorld(trap, spawn, instanceIndex);
-		return trap;
+		return trap;*/
+		return null;
 	}
 
 	/**
@@ -273,7 +273,7 @@ public class SpawnEngine
 	 * @return
 	 */
 	public GroupGate spawnGroupGate(SpawnTemplate spawn, int instanceIndex, Creature creator)
-	{
+	{/*
 		int objectId = spawn.getSpawnGroup().getNpcid();
 		NpcTemplate npcTemplate = DataManager.NPC_DATA.getNpcTemplate(objectId);
 		GroupGate groupgate = new GroupGate(IDFactory.getInstance().nextId(), new GroupGateController(), spawn,
@@ -283,7 +283,8 @@ public class SpawnEngine
 		groupgate.setCreator(creator);
 		groupgate.getController().onRespawn();
 		bringIntoWorld(groupgate, spawn, instanceIndex);
-		return groupgate;
+		return groupgate;*/
+		return null;
 	}
 
 	/**
@@ -293,7 +294,7 @@ public class SpawnEngine
 	 * @return
 	 */
 	public Kisk spawnKisk(SpawnTemplate spawn, int instanceIndex, Player creator)
-	{
+	{/*
 		int npcId = spawn.getSpawnGroup().getNpcid();
 		NpcTemplate template = DataManager.NPC_DATA.getNpcTemplate(npcId);
 		Kisk kisk = new Kisk(IDFactory.getInstance().nextId(), new KiskController(),
@@ -302,7 +303,8 @@ public class SpawnEngine
 		kisk.setEffectController(new EffectController(kisk));
 		kisk.getController().onRespawn();
 		bringIntoWorld(kisk, spawn, instanceIndex);
-		return kisk;
+		return kisk;*/
+		return null;
 	}
 	/**
 	 * @param recipient
@@ -311,7 +313,7 @@ public class SpawnEngine
 	 * Spawns postman for express mail
 	 */
 	public void spawnPostman(Player recipient)
-	{
+	{/*
 		NpcData	npcData = DataManager.NPC_DATA;
 		NpcTemplate template = npcData.getNpcTemplate(798044);
 		IDFactory iDFactory = IDFactory.getInstance();
@@ -324,7 +326,7 @@ public class SpawnEngine
 		SpawnTemplate spawn = addNewSpawn(worldId, instanceId, 798044, x, y, z, heading, 0, 0, false, true);
 		Npc postman = new Npc(iDFactory.nextId(), new PostmanController(recipient.getObjectId()), spawn, template);
 		postman.setKnownlist(new StaticObjectKnownList(postman));
-		bringIntoWorld(postman, spawn, instanceId);
+		bringIntoWorld(postman, spawn, instanceId);*/
 	}
 
 	
@@ -338,6 +340,7 @@ public class SpawnEngine
 	 */
 	public Servant spawnServant(SpawnTemplate spawn, int instanceIndex, Creature creator, int skillId, int hpRatio)
 	{
+		/*
 		int objectId = spawn.getSpawnGroup().getNpcid();
 		NpcTemplate npcTemplate = DataManager.NPC_DATA.getNpcTemplate(objectId);
 		Servant servant = new Servant(IDFactory.getInstance().nextId(), new ServantController(), spawn,
@@ -350,7 +353,8 @@ public class SpawnEngine
 		servant.setHpRatio(hpRatio);
 		servant.getController().onRespawn();
 		bringIntoWorld(servant, spawn, instanceIndex);
-		return servant;
+		return servant;*/
+		return null;
 	}
 	
 	/**
@@ -360,7 +364,7 @@ public class SpawnEngine
 	 * @return
 	 */
 	public Summon spawnSummon(Player creator, int npcId, int skillLvl)
-	{	
+	{	/*
 		float x = creator.getX();
 		float y = creator.getY();
 		float z = creator.getZ();
@@ -380,7 +384,8 @@ public class SpawnEngine
 		summon.setMaster(creator);
 
 		bringIntoWorld(summon, spawn, instanceId);
-		return summon;
+		return summon;*/
+		return null;
 	}
 
 	/**
@@ -464,7 +469,7 @@ public class SpawnEngine
 
 		return spawnTemplate;
 	}
-
+/*
 	private void bringIntoWorld(VisibleObject visibleObject, SpawnTemplate spawn, int instanceIndex)
 	{
 		World world = World.getInstance();
@@ -472,7 +477,7 @@ public class SpawnEngine
 		world.setPosition(visibleObject, spawn.getWorldId(), instanceIndex, spawn.getX(), spawn.getY(), spawn.getZ(),
 			spawn.getHeading());
 		world.spawn(visibleObject);
-	}
+	}*/
 
 	/**
 	 * Spawn all NPC's from templates

@@ -27,7 +27,7 @@ import com.aionemu.gameserver.newmodel.templates.StaticObjectTemplate;
  * @author lyahim
  *
  */
-public final class StaticObject extends SpawnedObject<StaticObject> implements IDialogRequest, IDialogSelect
+public final class StaticObject extends SpawnedObject implements IDialogRequest, IDialogSelect
 {
 
 	public StaticObject(Integer objId, StaticObjectTemplate objectTemplate)

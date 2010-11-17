@@ -21,6 +21,7 @@ import java.awt.Point;
 
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.geometry.Point3D;
+import com.aionemu.gameserver.newmodel.gameobject.SpawnedObject;
 
 /**
  * Class with basic math.<br>
@@ -313,6 +314,24 @@ public class MathUtil
 		return dx * dx + dy * dy < range * range;
 	}
 	
+	/**
+	 * Checks whether two given instances of AionObject are within given range.
+	 * 
+	 * @param object1
+	 * @param object2
+	 * @param range
+	 * @return true if objects are in range, false otherwise
+	 */
+	public static boolean isInRange(SpawnedObject object1, SpawnedObject object2, float range)
+	{
+		if(object1.getPosition().getMapId() != object2.getPosition().getMapId() || object1.getPosition().getInstanceId() != object2.getPosition().getInstanceId())
+			return false;
+		
+		float dx = (object2.getPosition().getX() - object1.getPosition().getX());
+		float dy = (object2.getPosition().getY() - object1.getPosition().getY());
+		return dx * dx + dy * dy < range * range;
+	}
+
 	/**
 	 * Checks whether two given instances of AionObject are within given range.
 	 * Includes Z-Axis check.

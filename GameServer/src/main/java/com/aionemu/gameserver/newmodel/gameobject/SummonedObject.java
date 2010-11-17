@@ -25,9 +25,9 @@ import com.aionemu.gameserver.newmodel.templates.LiveObjectTemplate;
  * @author lyahim
  *
  */
-public abstract class SummonedObject<T> extends LiveObject<T> implements ISummoned
+public abstract class SummonedObject extends LiveObject implements ISummoned
 {
-	protected LiveObject<?> master;
+	protected LiveObject master;
 
 	/**
 	 * @param objId
@@ -38,7 +38,7 @@ public abstract class SummonedObject<T> extends LiveObject<T> implements ISummon
 	}
 
 	@Override
-	public LiveObject<?> getMaster()
+	public LiveObject getMaster()
 	{
 		return null;
 	}

@@ -24,7 +24,7 @@ import com.aionemu.gameserver.newmodel.gameobject.SpawnedObject;
  * @author lyahim
  *
  */
-public class Player extends SpawnedObject<Player>
+public class Player extends SpawnedObject
 {
 
 	protected Player(Integer objId)

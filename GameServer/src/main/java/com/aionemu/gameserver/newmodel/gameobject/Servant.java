@@ -22,7 +22,7 @@ package com.aionemu.gameserver.newmodel.gameobject;
  * @author lyahim
  *
  */
-public final class Servant extends SummonedObject<Servant>
+public final class Servant extends SummonedObject
 {
 
 	/**

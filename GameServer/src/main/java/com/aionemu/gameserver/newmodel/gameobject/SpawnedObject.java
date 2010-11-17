@@ -18,11 +18,13 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject;
 
+import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.newmodel.gameobject.interfaces.IReward;
+import com.aionemu.gameserver.newmodel.gameobject.knowlist.KnownList;
 import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
-import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTemplate;
-import com.aionemu.gameserver.world.KnownList;
-import com.aionemu.gameserver.world.WorldPosition;
+import com.aionemu.gameserver.newmodel.world.MapRegion;
+import com.aionemu.gameserver.newmodel.world.World;
+import com.aionemu.gameserver.newmodel.world.WorldPosition;
 
 
 /**
@@ -30,21 +32,19 @@ import com.aionemu.gameserver.world.WorldPosition;
  *
  */
 
-public abstract class SpawnedObject<T> extends AionObject
+public abstract class SpawnedObject extends AionObject
 {
 	protected IObjectTemplate 	objectTemplate;
 	protected WorldPosition		position;
 	protected KnownList			knownlist;
 	protected SpawnTemplate		spawnTemplate;
 	
-	@SuppressWarnings("unchecked")
-	public T spawn(SpawnTemplate spawnTemplate, KnownList knownList)
+	public void spawn(SpawnTemplate spawnTemplate, KnownList knownList)
 	{
 		this.spawnTemplate = spawnTemplate;
 		this.position = new WorldPosition();
 		this.knownlist = knownList;
 		onSpawn();
-		return (T) this;
 	}
 	
 	public void respawn()
@@ -80,7 +80,14 @@ public abstract class SpawnedObject<T> extends AionObject
 	}
 	protected void onDespawn(){}
 	
-	protected void onSpawn(){}
+	private void onSpawn()
+	{
+		World world = World.getInstance();
+		world.storeObject(this);
+		world.setPosition(this, spawnTemplate.getWorldId(), position.getInstanceId(), spawnTemplate.getX(), spawnTemplate.getY(), spawnTemplate.getZ(),
+				spawnTemplate.getHeading());
+		world.spawn(this);
+	}
 	
 	protected void onRespawn()
 	{
@@ -88,6 +95,53 @@ public abstract class SpawnedObject<T> extends AionObject
 		{
 //			DropService.getInstance().unregisterDrop(this);	
 		}
+	}
+
+	/**
+	 * @param object
+	 */
+	public void see(SpawnedObject object)
+	{
+	}
+
+	/**
+	 * @param object
+	 * @param isOutOfRange
+	 */
+	public void notSee(SpawnedObject object, boolean isOutOfRange)
+	{
+	}
+
+	/**
+	 * @return
+	 */
+	public KnownList getKnownList()
+	{
+		return knownlist;
+	}
+
+	/**
+	 * @return
+	 */
+	public MapRegion getActiveRegion()
+	{
+		return null;
+	}
+
+	/**
+	 * @return
+	 */
+	public WorldPosition getPosition()
+	{
+		return position;
+	}
+
+	/**
+	 * @return
+	 */
+	public SpawnTemplate getSpawn()
+	{
+		return spawnTemplate;
 	}
 	
 }
