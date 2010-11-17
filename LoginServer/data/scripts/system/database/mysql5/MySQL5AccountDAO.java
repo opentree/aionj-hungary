@@ -15,7 +15,7 @@
  *  along with aion-emu.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package mysql5;
+package system.database.mysql5;
 
 import com.aionemu.commons.database.DB;
 import com.aionemu.commons.database.IUStH;

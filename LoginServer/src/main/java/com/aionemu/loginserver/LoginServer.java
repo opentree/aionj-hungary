@@ -16,10 +16,14 @@
  */
 package com.aionemu.loginserver;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.apache.log4j.Logger;
 
 import com.aionemu.commons.database.DatabaseFactory;
 import com.aionemu.commons.log4j.exceptions.Log4jInitializationError;
+import com.aionemu.commons.scripting.AionScriptEngineManager;
 import com.aionemu.commons.services.LoggingService;
 import com.aionemu.commons.utils.AEInfos;
 import com.aionemu.commons.utils.ExitCode;
@@ -57,6 +61,16 @@ public class LoginServer
 
 		AEInfos.printSection("DataBase");
 		DatabaseFactory.init();
+
+		try
+		{
+			File scripts = new File("data/scripts/scripts.cfg");
+			AionScriptEngineManager.getInstance().executeScriptList(scripts);
+		}
+		catch (IOException ioe)
+		{
+			log.fatal("Failed loading scripts.cfg, no script going to be loaded");
+		}
 
 		/**
 		 * Initialize Key Generator

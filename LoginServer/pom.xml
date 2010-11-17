@@ -30,8 +30,7 @@
 						</goals>
 						<configuration>
 							<sources>
-								<source>data/scripts/system/database</source>
-								<source>data/scripts/system/consoleCommand</source>
+								<source>data/scripts</source>
 							</sources>
 						</configuration>
 					</execution>
@@ -182,6 +181,10 @@
 				<exclusion>
 					<groupId>gnu</groupId>
 					<artifactId>trove</artifactId>
+				</exclusion>
+				<exclusion>
+					<artifactId>gmaven-runtime-1.7</artifactId>
+					<groupId>org.codehaus.gmaven.runtime</groupId>
 				</exclusion>
 			</exclusions>
 		</dependency>
