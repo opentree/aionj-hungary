@@ -18,7 +18,6 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject;
 
-import com.aionemu.gameserver.newmodel.gameobject.interfaces.IDialogRequest;
 import com.aionemu.gameserver.newmodel.gameobject.player.Player;
 import com.aionemu.gameserver.newmodel.templates.BindPointTemplate;
 
@@ -26,11 +25,11 @@ import com.aionemu.gameserver.newmodel.templates.BindPointTemplate;
  * @author lyahim
  *
  */
-public final class BindPoint extends SpawnedObject implements IDialogRequest
+public final class BindPoint extends StaticObject
 {
-	public BindPoint(Integer objId, BindPointTemplate bindPointTemplate)
+	public BindPoint(BindPointTemplate bindPointTemplate)
 	{
-		super(objId, bindPointTemplate);
+		super(null);
 	}
 
 	@Override

@@ -25,20 +25,20 @@ import com.aionemu.gameserver.newmodel.templates.LiveObjectTemplate;
  * @author lyahim
  *
  */
-public abstract class SummonedObject extends LiveObject implements ISummoned
+public abstract class SummonedObject extends AttackableObject implements ISummoned
 {
-	protected LiveObject master;
+	protected AttackableObject master;
 
 	/**
 	 * @param objId
 	 */
-	public SummonedObject(Integer objId)
+	public SummonedObject()
 	{
-		super(objId, new LiveObjectTemplate());
+		super(new LiveObjectTemplate());
 	}
 
 	@Override
-	public LiveObject getMaster()
+	public AttackableObject getMaster()
 	{
 		return null;
 	}

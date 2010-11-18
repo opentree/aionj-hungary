@@ -58,9 +58,9 @@ public abstract class SpawnedObject extends AionObject
 		onDespawn();
 	}
 		
-	protected SpawnedObject(Integer objId, IObjectTemplate objectTemplate)
+	protected SpawnedObject(IObjectTemplate objectTemplate)
 	{
-		super(objId);
+		super();
 		this.objectTemplate = objectTemplate;
 	}
 

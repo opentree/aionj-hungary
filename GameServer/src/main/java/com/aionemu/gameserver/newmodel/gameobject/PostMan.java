@@ -18,24 +18,27 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject;
 
-import com.aionemu.gameserver.newmodel.gameobject.interfaces.ISummoned;
+import com.aionemu.gameserver.newmodel.gameobject.player.Player;
+import com.aionemu.gameserver.newmodel.templates.StaticObjectTemplate;
 
 /**
  * @author lyahim
  *
  */
-public final class GroupGate extends AttackableObject implements ISummoned
+public final class PostMan extends StaticObject
 {
 
-	public GroupGate()
+	/**
+	 * @param objectTemplate
+	 */
+	public PostMan(StaticObjectTemplate objectTemplate)
 	{
-		super(null);
+		super(objectTemplate);
 	}
 
 	@Override
-	public AttackableObject getMaster()
+	public void onDialogRequest(Player player)
 	{
-		return null;
 	}
 
 }

@@ -32,9 +32,9 @@ public class DialogNpc extends Monster implements IDialogRequest, IDialogSelect
 	/**
 	 * @param objId
 	 */
-	public DialogNpc(Integer objId)
+	public DialogNpc()
 	{
-		super(objId);
+		super();
 	}
 
 	@Override

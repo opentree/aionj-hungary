@@ -18,7 +18,6 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject;
 
-import com.aionemu.gameserver.newmodel.gameobject.interfaces.IDialogRequest;
 import com.aionemu.gameserver.newmodel.gameobject.interfaces.IReward;
 import com.aionemu.gameserver.newmodel.gameobject.player.Player;
 
@@ -26,14 +25,14 @@ import com.aionemu.gameserver.newmodel.gameobject.player.Player;
  * @author lyahim
  *
  */
-public final class ActionItem extends SpawnedObject implements IDialogRequest, IReward
+public final class ActionItem extends StaticObject implements IReward
 {
 	
 	private Player lastActor = null;
 
-	public ActionItem(Integer objId)
+	public ActionItem()
 	{
-		super(objId, null);
+		super(null);
 	}
 
 	@Override

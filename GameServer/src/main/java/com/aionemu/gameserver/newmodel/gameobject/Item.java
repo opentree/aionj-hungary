@@ -25,9 +25,9 @@ package com.aionemu.gameserver.newmodel.gameobject;
 public final class Item extends AionObject
 {
 
-	public Item(Integer objId)
+	public Item()
 	{
-		super(objId);
+		super();
 	}
 	
 

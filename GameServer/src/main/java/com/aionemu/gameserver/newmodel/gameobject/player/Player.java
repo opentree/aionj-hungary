@@ -18,18 +18,18 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject.player;
 
-import com.aionemu.gameserver.newmodel.gameobject.SpawnedObject;
+import com.aionemu.gameserver.newmodel.gameobject.AttackableObject;
 
 /**
  * @author lyahim
  *
  */
-public class Player extends SpawnedObject
+public class Player extends AttackableObject
 {
 
-	protected Player(Integer objId)
+	protected Player()
 	{
-		super(objId, new PlayerCommonData());
+		super(new PlayerCommonData());
 	}
 
 }

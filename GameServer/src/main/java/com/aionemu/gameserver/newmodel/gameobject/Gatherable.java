@@ -35,9 +35,9 @@ public final class Gatherable extends SpawnedObject
 	
 	private eGatherState state = eGatherState.IDLE;
 
-	public Gatherable(Integer objId)
+	public Gatherable()
 	{
-		super(objId, null);
+		super(null);
 	}
 
 	@Override

@@ -33,4 +33,6 @@ public enum eSpawnedObjectType
 	STATIC,
 	KISK,
 	GROUPGATE,
+	POSTBOX,
+	POSTMAN,
 }

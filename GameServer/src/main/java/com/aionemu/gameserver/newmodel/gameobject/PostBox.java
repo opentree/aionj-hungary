@@ -18,21 +18,27 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject;
 
-import com.aionemu.gameserver.newmodel.templates.LiveObjectTemplate;
+import com.aionemu.gameserver.newmodel.gameobject.player.Player;
+import com.aionemu.gameserver.newmodel.templates.StaticObjectTemplate;
 
 /**
  * @author lyahim
  *
  */
-public abstract class LiveObject extends SpawnedObject
+public final class PostBox extends StaticObject
 {
 
 	/**
-	 * @param objId
+	 * @param objectTemplate
 	 */
-	public LiveObject(Integer objId, LiveObjectTemplate objectTemplate)
+	public PostBox(StaticObjectTemplate objectTemplate)
 	{
-		super(objId, objectTemplate);
+		super(objectTemplate);
+	}
+
+	@Override
+	public void onDialogRequest(Player player)
+	{
 	}
 
 }

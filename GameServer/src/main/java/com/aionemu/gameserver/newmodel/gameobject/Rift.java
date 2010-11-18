@@ -20,7 +20,6 @@ package com.aionemu.gameserver.newmodel.gameobject;
 
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
-import com.aionemu.gameserver.newmodel.gameobject.interfaces.IDialogRequest;
 import com.aionemu.gameserver.newmodel.gameobject.player.Player;
 import com.aionemu.gameserver.spawnengine.RiftSpawnManager.RiftEnum;
 
@@ -28,7 +27,7 @@ import com.aionemu.gameserver.spawnengine.RiftSpawnManager.RiftEnum;
  * @author lyahim
  *
  */
-public final class Rift extends SpawnedObject implements IDialogRequest
+public final class Rift extends StaticObject
 {
 	private boolean isMaster = false;
 	private SpawnTemplate slaveSpawnTemplate;
@@ -45,9 +44,9 @@ public final class Rift extends SpawnedObject implements IDialogRequest
 	/**
 	 * @param objId
 	 */
-	public Rift(Integer objId)
+	public Rift()
 	{
-		super(objId, null);
+		super(null);
 	}
 
 	@Override

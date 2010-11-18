@@ -29,9 +29,9 @@ public final class Kisk extends SummonedObject
 	/**
 	 * @param objId
 	 */
-	public Kisk(Integer objId)
+	public Kisk()
 	{
-		super(objId);
+		super();
 	}
 
 }

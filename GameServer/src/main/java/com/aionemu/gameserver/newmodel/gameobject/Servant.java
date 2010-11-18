@@ -28,9 +28,9 @@ public final class Servant extends SummonedObject
 	/**
 	 * @param objId
 	 */
-	public Servant(Integer objId)
+	public Servant()
 	{
-		super(objId);
+		super();
 	}
 
 }

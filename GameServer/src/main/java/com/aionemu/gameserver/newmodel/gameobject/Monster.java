@@ -31,9 +31,9 @@ public class Monster extends Npc implements IReward
 	/**
 	 * @param objId
 	 */
-	public Monster(Integer objId)
+	public Monster()
 	{
-		super(objId);
+		super();
 	}
 
 	@Override

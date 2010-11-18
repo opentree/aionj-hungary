@@ -18,7 +18,7 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject.interfaces;
 
-import com.aionemu.gameserver.newmodel.gameobject.LiveObject;
+import com.aionemu.gameserver.newmodel.gameobject.AttackableObject;
 
 /**
  * @author lyahim
@@ -26,5 +26,5 @@ import com.aionemu.gameserver.newmodel.gameobject.LiveObject;
  */
 public interface ISummoned
 {
-	public LiveObject getMaster();
+	public AttackableObject getMaster();
 }

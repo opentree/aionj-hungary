@@ -28,9 +28,9 @@ public class Summon extends SummonedObject
 	/**
 	 * @param objId
 	 */
-	public Summon(Integer objId)
+	public Summon()
 	{
-		super(objId);
+		super();
 	}
 
 }

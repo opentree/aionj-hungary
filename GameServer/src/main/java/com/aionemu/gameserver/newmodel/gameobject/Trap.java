@@ -28,9 +28,9 @@ public final class Trap extends SummonedObject
 	/**
 	 * @param objId
 	 */
-	public Trap(Integer objId)
+	public Trap()
 	{
-		super(objId);
+		super();
 	}
 
 }

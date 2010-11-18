@@ -24,15 +24,15 @@ import com.aionemu.gameserver.newmodel.templates.LiveObjectTemplate;
  * @author lyahim
  *
  */
-public abstract class Npc extends LiveObject
+public abstract class Npc extends AttackableObject
 {
 
 	/**
 	 * @param objId
 	 */
-	public Npc(Integer objId)
+	public Npc()
 	{
-		super(objId, new LiveObjectTemplate());
+		super(new LiveObjectTemplate());
 	}
 
 }
