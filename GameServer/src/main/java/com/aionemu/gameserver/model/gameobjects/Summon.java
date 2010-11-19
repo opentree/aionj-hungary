@@ -23,7 +23,7 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.stats.SummonGameStats;
 import com.aionemu.gameserver.model.gameobjects.stats.SummonLifeStats;
 import com.aionemu.gameserver.model.templates.NpcTemplate;
-import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
+import com.aionemu.gameserver.model.templates.ObjectTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.model.templates.stats.SummonStatsTemplate;
 import com.aionemu.gameserver.world.WorldPosition;
@@ -71,7 +71,7 @@ public class Summon extends Creature
 	 * @param position
 	 */
 	public Summon(int objId, CreatureController<? extends Creature> controller, SpawnTemplate spawnTemplate,
-		VisibleObjectTemplate objectTemplate, SummonStatsTemplate statsTemplate, byte level)
+		ObjectTemplate objectTemplate, SummonStatsTemplate statsTemplate, byte level)
 	{
 		super(objId, controller, spawnTemplate, objectTemplate, new WorldPosition());
 

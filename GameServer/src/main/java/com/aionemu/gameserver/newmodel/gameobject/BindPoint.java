@@ -19,7 +19,7 @@
 package com.aionemu.gameserver.newmodel.gameobject;
 
 import com.aionemu.gameserver.newmodel.gameobject.player.Player;
-import com.aionemu.gameserver.newmodel.templates.BindPointTemplate;
+import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
 
 /**
  * @author lyahim
@@ -27,9 +27,13 @@ import com.aionemu.gameserver.newmodel.templates.BindPointTemplate;
  */
 public final class BindPoint extends StaticObject
 {
-	public BindPoint(BindPointTemplate bindPointTemplate)
+
+	/**
+	 * @param objectTemplate
+	 */
+	public BindPoint(IObjectTemplate objectTemplate)
 	{
-		super(null);
+		super(objectTemplate);
 	}
 
 	@Override

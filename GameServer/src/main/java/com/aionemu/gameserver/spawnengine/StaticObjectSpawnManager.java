@@ -20,7 +20,7 @@ import com.aionemu.gameserver.controllers.StaticObjectController;
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.gameobjects.StaticObject;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
-import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
+import com.aionemu.gameserver.model.templates.ObjectTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnGroup;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.utils.idfactory.IDFactory;
@@ -40,7 +40,7 @@ public class StaticObjectSpawnManager
 	 */
 	public static void spawnGroup(SpawnGroup spawnGroup, int instanceIndex)
 	{
-		VisibleObjectTemplate objectTemplate = DataManager.ITEM_DATA.getItemTemplate(spawnGroup.getNpcid());
+		ObjectTemplate objectTemplate = DataManager.ITEM_DATA.getItemTemplate(spawnGroup.getNpcid());
 		
 		if(objectTemplate == null)
 			return;

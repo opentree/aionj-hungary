@@ -25,7 +25,7 @@ import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
 import com.aionemu.gameserver.model.gameobjects.stats.NpcGameStats;
 import com.aionemu.gameserver.model.gameobjects.stats.NpcLifeStats;
 import com.aionemu.gameserver.model.templates.NpcTemplate;
-import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
+import com.aionemu.gameserver.model.templates.ObjectTemplate;
 import com.aionemu.gameserver.model.templates.npcskill.NpcSkillList;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.model.templates.stats.NpcRank;
@@ -52,7 +52,7 @@ public class Npc extends Creature
 	 * @param objId
 	 *            unique objId
 	 */
-	public Npc(int objId, NpcController controller, SpawnTemplate spawnTemplate, VisibleObjectTemplate objectTemplate)
+	public Npc(int objId, NpcController controller, SpawnTemplate spawnTemplate, ObjectTemplate objectTemplate)
 	{
 		super(objId, controller, spawnTemplate, objectTemplate, new WorldPosition());
 		controller.setOwner(this);

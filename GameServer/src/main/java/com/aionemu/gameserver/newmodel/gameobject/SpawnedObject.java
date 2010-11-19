@@ -38,13 +38,14 @@ public abstract class SpawnedObject extends AionObject
 	protected WorldPosition		position;
 	protected KnownList			knownlist;
 	protected SpawnTemplate		spawnTemplate;
+	protected int				templateId;
 	
-	public void spawn(SpawnTemplate spawnTemplate, KnownList knownList)
+	public void spawn(SpawnTemplate spawnTemplate, int instanceId)
 	{
 		this.spawnTemplate = spawnTemplate;
 		this.position = new WorldPosition();
-		this.knownlist = knownList;
-		onSpawn();
+		this.knownlist = new KnownList(this);
+		onSpawn(instanceId);
 	}
 	
 	public void respawn()
@@ -72,6 +73,14 @@ public abstract class SpawnedObject extends AionObject
 		return "SpawnedObject: " + this.getClass().getSimpleName();
 	}
 	
+	/**
+	 * @return Returns the objectTemplate.
+	 */
+	public IObjectTemplate getObjectTemplate()
+	{
+		return objectTemplate;
+	}
+
 	public void delete()
 	{
 /*		if(position.isSpawned())
@@ -80,11 +89,11 @@ public abstract class SpawnedObject extends AionObject
 	}
 	protected void onDespawn(){}
 	
-	private void onSpawn()
+	private void onSpawn(int instanceId)
 	{
 		World world = World.getInstance();
 		world.storeObject(this);
-		world.setPosition(this, spawnTemplate.getWorldId(), position.getInstanceId(), spawnTemplate.getX(), spawnTemplate.getY(), spawnTemplate.getZ(),
+		world.setPosition(this, spawnTemplate.getWorldId(), instanceId, spawnTemplate.getX(), spawnTemplate.getY(), spawnTemplate.getZ(),
 				spawnTemplate.getHeading());
 		world.spawn(this);
 	}
@@ -125,7 +134,7 @@ public abstract class SpawnedObject extends AionObject
 	 */
 	public MapRegion getActiveRegion()
 	{
-		return null;
+		return position.getMapRegion();
 	}
 
 	/**

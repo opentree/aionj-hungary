@@ -19,7 +19,7 @@
 package com.aionemu.gameserver.newmodel.gameobject;
 
 import com.aionemu.gameserver.newmodel.gameobject.interfaces.ISummoned;
-import com.aionemu.gameserver.newmodel.templates.LiveObjectTemplate;
+import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
 
 /**
  * @author lyahim
@@ -32,9 +32,9 @@ public abstract class SummonedObject extends AttackableObject implements ISummon
 	/**
 	 * @param objId
 	 */
-	public SummonedObject()
+	public SummonedObject(IObjectTemplate objectTemplate)
 	{
-		super(new LiveObjectTemplate());
+		super(objectTemplate);
 	}
 
 	@Override

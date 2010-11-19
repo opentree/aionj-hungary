@@ -18,6 +18,8 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject;
 
+import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
+
 
 /**
  * @author lyahim
@@ -29,9 +31,9 @@ public final class Kisk extends SummonedObject
 	/**
 	 * @param objId
 	 */
-	public Kisk()
+	public Kisk(IObjectTemplate objectTemplate)
 	{
-		super();
+		super(objectTemplate);
 	}
 
 }

@@ -25,4 +25,6 @@ package com.aionemu.gameserver.newmodel.templates;
 public interface IObjectTemplate
 {
 	public String getName();
+	
+	public int getTemplateId();
 }

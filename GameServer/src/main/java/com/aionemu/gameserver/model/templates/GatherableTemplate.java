@@ -30,7 +30,7 @@ import com.aionemu.gameserver.model.templates.gather.Materials;
 
 @XmlRootElement(name="gatherable_template")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GatherableTemplate extends VisibleObjectTemplate
+public class GatherableTemplate extends ObjectTemplate
 {
 	@XmlElement(required = true)
     protected Materials materials;

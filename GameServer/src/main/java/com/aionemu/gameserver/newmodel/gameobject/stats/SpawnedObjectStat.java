@@ -16,29 +16,72 @@
  *
  * http://www.gnu.org/copyleft/gpl.html
  */
-package com.aionemu.gameserver.newmodel.gameobject;
+package com.aionemu.gameserver.newmodel.gameobject.stats;
 
-import com.aionemu.gameserver.newmodel.gameobject.player.Player;
-import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
+import com.aionemu.gameserver.newmodel.gameobject.SpawnedObject;
 
 /**
- * @author lyahim
+ * @author Mr. Poke
  *
  */
-public final class PostMan extends StaticObject
+public class SpawnedObjectStat
 {
+	private SpawnedObject owner;
 
 	/**
-	 * @param objectTemplate
+	 * @param owner
 	 */
-	public PostMan(IObjectTemplate objectTemplate)
+	public SpawnedObjectStat(SpawnedObject owner)
 	{
-		super(objectTemplate);
+		super();
+		this.owner = owner;
+	}
+	
+	/**
+	 * @return Returns the owner.
+	 */
+	public SpawnedObject getOwner()
+	{
+		return owner;
 	}
 
-	@Override
-	public void onDialogRequest(Player player)
+	/**
+	 * @return the currentHp
+	 */
+	public int getCurrentHp()
 	{
+		return 100;
 	}
 
+	/**
+	 * @return the currentMp
+	 */
+	public int getCurrentMp()
+	{
+		return 100;
+	}
+	
+	/**
+	 * @return maxHp
+	 */
+	public int getMaxHp()
+	{
+		return 100;
+	}
+	
+	/**
+	 * @return maxMp
+	 */
+	public int getMaxMp()
+	{
+		return 100;
+	}
+	
+	/**
+	 * @return movementSpeed
+	 */
+	public int getMovementSpeed()
+	{
+		return 0;
+	}
 }

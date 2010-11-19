@@ -33,7 +33,7 @@ import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureVisualState;
 import com.aionemu.gameserver.model.gameobjects.stats.CreatureGameStats;
 import com.aionemu.gameserver.model.gameobjects.stats.CreatureLifeStats;
-import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
+import com.aionemu.gameserver.model.templates.ObjectTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.skillengine.effect.EffectId;
 import com.aionemu.gameserver.skillengine.model.Skill;
@@ -76,7 +76,7 @@ public abstract class Creature extends VisibleObject
 	 * @param position
 	 */
 	public Creature(int objId, CreatureController<? extends Creature> controller,
-		SpawnTemplate spawnTemplate, VisibleObjectTemplate objectTemplate, WorldPosition position)
+		SpawnTemplate spawnTemplate, ObjectTemplate objectTemplate, WorldPosition position)
 	{
 		super(objId, controller, spawnTemplate, objectTemplate, position);
 		initializeAi();

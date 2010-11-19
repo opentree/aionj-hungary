@@ -20,6 +20,7 @@ package com.aionemu.gameserver.newmodel.gameobject;
 
 import com.aionemu.gameserver.newmodel.gameobject.interfaces.IReward;
 import com.aionemu.gameserver.newmodel.gameobject.player.Player;
+import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
 
 /**
  * @author lyahim
@@ -31,9 +32,9 @@ public class Monster extends Npc implements IReward
 	/**
 	 * @param objId
 	 */
-	public Monster()
+	public Monster(IObjectTemplate objectTemplate)
 	{
-		super();
+		super(objectTemplate);
 	}
 
 	@Override

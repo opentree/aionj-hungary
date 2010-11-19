@@ -18,6 +18,8 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject;
 
+import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
+
 /**
  * @author lyahim
  *
@@ -26,11 +28,11 @@ public final class Trap extends SummonedObject
 {
 
 	/**
-	 * @param objId
+	 * @param objectTemplate
 	 */
-	public Trap()
+	public Trap(IObjectTemplate objectTemplate)
 	{
-		super();
+		super(objectTemplate);
 	}
 
 }

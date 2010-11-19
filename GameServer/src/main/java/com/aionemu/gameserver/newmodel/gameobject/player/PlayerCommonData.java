@@ -33,4 +33,13 @@ public class PlayerCommonData implements IObjectTemplate
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.aionemu.gameserver.newmodel.templates.IObjectTemplate#getTemplateId()
+	 */
+	@Override
+	public int getTemplateId()
+	{
+		return 0;
+	}
+
 }

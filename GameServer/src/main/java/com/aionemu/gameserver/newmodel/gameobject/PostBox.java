@@ -19,7 +19,7 @@
 package com.aionemu.gameserver.newmodel.gameobject;
 
 import com.aionemu.gameserver.newmodel.gameobject.player.Player;
-import com.aionemu.gameserver.newmodel.templates.StaticObjectTemplate;
+import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
 
 /**
  * @author lyahim
@@ -31,7 +31,7 @@ public final class PostBox extends StaticObject
 	/**
 	 * @param objectTemplate
 	 */
-	public PostBox(StaticObjectTemplate objectTemplate)
+	public PostBox(IObjectTemplate objectTemplate)
 	{
 		super(objectTemplate);
 	}

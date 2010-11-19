@@ -21,7 +21,7 @@ import com.aionemu.gameserver.model.Race;
 import com.aionemu.gameserver.model.TribeClass;
 import com.aionemu.gameserver.model.siege.SiegeRace;
 import com.aionemu.gameserver.model.templates.NpcTemplate;
-import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
+import com.aionemu.gameserver.model.templates.ObjectTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 
 /**
@@ -39,7 +39,7 @@ public class SiegeGuard extends SiegeNpc
 	 * @param objectTemplate
 	 */
 	public SiegeGuard(int objId, SiegeGuardController controller, SpawnTemplate spawnTemplate,
-		VisibleObjectTemplate objectTemplate)
+		ObjectTemplate objectTemplate)
 	{
 		super(objId, controller, spawnTemplate, objectTemplate);
 		NpcTemplate npcTemplate = (NpcTemplate)objectTemplate;

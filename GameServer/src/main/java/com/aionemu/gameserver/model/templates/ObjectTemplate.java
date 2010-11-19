@@ -16,11 +16,13 @@
  */
 package com.aionemu.gameserver.model.templates;
 
+import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
+
 /**
  * @author ATracer
  *
  */
-public abstract class VisibleObjectTemplate
+public abstract class ObjectTemplate implements IObjectTemplate
 {
 	/**
 	 * For Npcs it will return npcid from templates xml

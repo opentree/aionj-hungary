@@ -35,7 +35,7 @@ import com.aionemu.gameserver.model.PlayerClass;
 import com.aionemu.gameserver.model.gameobjects.stats.modifiers.StatModifier;
 import com.aionemu.gameserver.model.items.ItemId;
 import com.aionemu.gameserver.model.items.ItemMask;
-import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
+import com.aionemu.gameserver.model.templates.ObjectTemplate;
 import com.aionemu.gameserver.model.templates.itemset.ItemSetTemplate;
 import com.aionemu.gameserver.model.templates.stats.ModifiersTemplate;
 
@@ -44,7 +44,7 @@ import com.aionemu.gameserver.model.templates.stats.ModifiersTemplate;
  */
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "item_templates")
-public class ItemTemplate extends VisibleObjectTemplate
+public class ItemTemplate extends ObjectTemplate
 {
 	@XmlAttribute(name = "id", required = true)
 	@XmlID

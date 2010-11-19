@@ -31,12 +31,11 @@ import com.aionemu.gameserver.model.gameobjects.Trap;
 import com.aionemu.gameserver.model.gameobjects.GroupGate;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
+import com.aionemu.gameserver.model.templates.ObjectTemplate;
 import com.aionemu.gameserver.model.templates.WorldMapTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnGroup;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.newmodel.gameobject.SpawnedObject;
-import com.aionemu.gameserver.newmodel.gameobject.knowlist.KnownList;
 import com.aionemu.gameserver.utils.idfactory.IDFactory;
 
 /**
@@ -76,7 +75,7 @@ public class SpawnEngine
 	 */
 	public VisibleObject spawnObject(SpawnTemplate spawn, int instanceIndex)
 	{
-		VisibleObjectTemplate template = null;
+		ObjectTemplate template = null;
 		int objectId = spawn.getSpawnGroup().getNpcid();
 		NpcData	npcData = DataManager.NPC_DATA;
 		Class<?>						clazz;
@@ -119,10 +118,10 @@ public class SpawnEngine
 		try
 		{
 			Object[] parameters =
-			{iDFactory.nextId(), template };
-			Constructor<?> constructor = clazz.getConstructor(Integer.class, VisibleObjectTemplate.class);
+			{iDFactory.nextId()};
+			Constructor<?> constructor = clazz.getConstructor(Integer.class);
 			SpawnedObject object = (SpawnedObject) constructor.newInstance(parameters);
-			object.spawn(spawn, new KnownList(object));
+			object.spawn(spawn, instanceIndex);
 		}
 		catch (Exception e)
 		{
