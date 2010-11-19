@@ -35,7 +35,6 @@ import com.aionemu.gameserver.model.siege.Influence;
 import com.aionemu.gameserver.model.siege.SiegeLocation;
 import com.aionemu.gameserver.model.siege.SiegeRace;
 import com.aionemu.gameserver.model.templates.spawn.SpawnGroup;
-import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SIEGE_LOCATION_INFO;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_INFLUENCE_RATIO;
 import com.aionemu.gameserver.spawnengine.SpawnEngine;
@@ -248,7 +247,7 @@ public class SiegeService
 	 */
 	public void spawnLocation(int siegeId,SiegeRace race)
 	{
-		List<SpawnGroup> spawnsGroup = DataManager.SPAWNS_DATA.getSpawnsForWorld(400010000);
+/*		List<SpawnGroup> spawnsGroup = DataManager.SPAWNS_DATA.getSpawnsForWorld(400010000);
 		for (SpawnGroup sg : spawnsGroup)
 		{
 			if ((sg.getSiegeId()==siegeId)&&(sg.getRace()==race))	//check on race to improve perfomance(less cycles processing)
@@ -257,7 +256,7 @@ public class SiegeService
 					for (SpawnTemplate stnew : st)
 						SpawnEngine.getInstance().spawnObject(stnew, 1);	//check on Race is in spawnegine,no need here
 			}
-		}
+		}*/
 	}
 
 	/**

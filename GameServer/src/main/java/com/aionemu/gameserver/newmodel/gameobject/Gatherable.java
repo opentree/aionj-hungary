@@ -19,6 +19,7 @@
 package com.aionemu.gameserver.newmodel.gameobject;
 
 import com.aionemu.gameserver.newmodel.gameobject.enums.eGatherState;
+import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
 import com.aionemu.gameserver.skillengine.task.GatheringTask;
 
 /**
@@ -35,9 +36,9 @@ public final class Gatherable extends SpawnedObject
 	
 	private eGatherState state = eGatherState.IDLE;
 
-	public Gatherable()
+	public Gatherable(IObjectTemplate objectTemplate)
 	{
-		super(null);
+		super(objectTemplate);
 	}
 
 	@Override

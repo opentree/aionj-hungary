@@ -17,12 +17,16 @@
 package com.aionemu.gameserver.spawnengine;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.aionemu.gameserver.dataholders.BindPointData;
 import com.aionemu.gameserver.dataholders.DataManager;
+import com.aionemu.gameserver.dataholders.GatherableData;
 import com.aionemu.gameserver.dataholders.NpcData;
+import com.aionemu.gameserver.dataholders.SpawnsData;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.Kisk;
 import com.aionemu.gameserver.model.gameobjects.Servant;
@@ -33,9 +37,10 @@ import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.ObjectTemplate;
 import com.aionemu.gameserver.model.templates.WorldMapTemplate;
-import com.aionemu.gameserver.model.templates.spawn.SpawnGroup;
-import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.newmodel.gameobject.SpawnedObject;
+import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
+import com.aionemu.gameserver.newmodel.templates.spawn.SpawnGroup;
+import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.utils.idfactory.IDFactory;
 
 /**
@@ -73,12 +78,27 @@ public class SpawnEngine
 	 * @param spawn
 	 * @return created and spawned VisibleObject
 	 */
+	public SpawnedObject spawnObject(IObjectTemplate objectTemplate)
+	{
+		Class<?> clazz;
+		try
+		{
+			clazz = Class.forName("com.aionemu.gameserver.newmodel.gameobject.SpawnedObject");
+			Object[] parameters = {objectTemplate};
+			Constructor<?> constructor = clazz.getConstructor(Integer.class);
+			SpawnedObject object = (SpawnedObject) constructor.newInstance(parameters);
+			return object;
+		}
+		catch (Exception e)
+		{
+			log.warn(e);
+			return null;
+		}
+
+	}
 	public VisibleObject spawnObject(SpawnTemplate spawn, int instanceIndex)
 	{
-		ObjectTemplate template = null;
-		int objectId = spawn.getSpawnGroup().getNpcid();
-		NpcData	npcData = DataManager.NPC_DATA;
-		Class<?>						clazz;
+/*		
 		if(objectId > 400000 && objectId < 499999)// gatherable
 		{
 			template = DataManager.GATHERABLE_DATA.getGatherableTemplate(objectId);
@@ -486,7 +506,43 @@ public class SpawnEngine
 		this.npcCounter = 0;
 		this.gatherableCounter = 0;
 		
-		for(WorldMapTemplate worldMapTemplate : DataManager.WORLD_MAPS_DATA)
+		IObjectTemplate template = null;
+		
+		NpcData	npcData = DataManager.NPC_DATA;
+		GatherableData gData = DataManager.GATHERABLE_DATA;
+		BindPointData bpData = DataManager.BIND_POINT_DATA;
+		SpawnsData spawnData = DataManager.SPAWNS_DATA;
+		
+		
+		for(SpawnTemplate sTemplate : spawnData.getAllSpawnTemplate())
+		{
+			template = npcData.getNpcTemplate(sTemplate.getSpawnGroup().getNpcid());
+			if(template != null)
+			{
+				SpawnedObject object = spawnObject(template);
+				object.spawn(sTemplate, 0);//TODO instanceId
+				npcCounter++;
+				continue;
+			}
+			template = gData.getGatherableTemplate(sTemplate.getSpawnGroup().getNpcid());
+			if(template != null)
+			{
+				SpawnedObject object = spawnObject(template);
+				object.spawn(sTemplate, 0);//TODO instanceId
+				npcCounter++;
+				continue;
+			}
+			template = bpData.getBindPointTemplate(sTemplate.getSpawnGroup().getNpcid());
+			if(template != null)
+			{
+				SpawnedObject object = spawnObject(template);
+				object.spawn(sTemplate, 0);//TODO instanceId
+				npcCounter++;
+				continue;
+			}
+		}
+		
+/*		for(WorldMapTemplate worldMapTemplate : DataManager.WORLD_MAPS_DATA)
 		{
 			if(worldMapTemplate.isInstance())
 				continue;
@@ -503,7 +559,7 @@ public class SpawnEngine
 		log.info("Loaded " + npcCounter + " npc spawns");
 		log.info("Loaded " + gatherableCounter + " gatherable spawns");
 
-		RiftSpawnManager.startRiftPool();
+		RiftSpawnManager.startRiftPool();*/
 	}
 
 	/**
@@ -513,7 +569,7 @@ public class SpawnEngine
 	 */
 	public void spawnInstance(int worldId, int instanceIndex)
 	{
-		List<SpawnGroup> worldSpawns = DataManager.SPAWNS_DATA.getSpawnsForWorld(worldId);
+/*		List<SpawnGroup> worldSpawns = DataManager.SPAWNS_DATA.getSpawnsForWorld(worldId);
 
 		if(worldSpawns == null || worldSpawns.size() == 0)
 			return;
@@ -547,7 +603,7 @@ public class SpawnEngine
 			}
 		}
 		log.info("Spawned " + worldId + " [" + instanceIndex + "] : " + instanceSpawnCounter);
-	}
+*/	}
 	
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder

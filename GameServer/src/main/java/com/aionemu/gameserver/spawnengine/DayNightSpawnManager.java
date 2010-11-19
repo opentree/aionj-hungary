@@ -23,8 +23,8 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
-import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
-import com.aionemu.gameserver.model.templates.spawn.SpawnTime;
+import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTemplate;
+import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTime;
 import com.aionemu.gameserver.utils.gametime.DayTime;
 import com.aionemu.gameserver.utils.gametime.GameTimeManager;
 import com.aionemu.gameserver.world.World;

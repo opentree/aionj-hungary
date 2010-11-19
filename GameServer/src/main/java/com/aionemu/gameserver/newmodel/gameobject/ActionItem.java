@@ -20,6 +20,7 @@ package com.aionemu.gameserver.newmodel.gameobject;
 
 import com.aionemu.gameserver.newmodel.gameobject.interfaces.IReward;
 import com.aionemu.gameserver.newmodel.gameobject.player.Player;
+import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
 
 /**
  * @author lyahim
@@ -30,9 +31,9 @@ public final class ActionItem extends StaticObject implements IReward
 	
 	private Player lastActor = null;
 
-	public ActionItem()
+	public ActionItem(IObjectTemplate objectTemplate)
 	{
-		super(null);
+		super(objectTemplate);
 	}
 
 	@Override

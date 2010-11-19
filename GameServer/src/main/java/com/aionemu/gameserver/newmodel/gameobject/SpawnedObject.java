@@ -18,10 +18,10 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject;
 
-import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.newmodel.gameobject.interfaces.IReward;
 import com.aionemu.gameserver.newmodel.gameobject.knowlist.KnownList;
 import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
+import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.newmodel.world.MapRegion;
 import com.aionemu.gameserver.newmodel.world.World;
 import com.aionemu.gameserver.newmodel.world.WorldPosition;

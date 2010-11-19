@@ -19,10 +19,10 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 
 
 import com.aionemu.gameserver.dataholders.DataManager;
-import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SHOW_NPC_ON_MAP;
+import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTemplate;
 
 /**
  * @author Lyahim, Lyahim

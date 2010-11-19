@@ -21,6 +21,7 @@ package com.aionemu.gameserver.newmodel.gameobject;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.newmodel.gameobject.player.Player;
+import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
 import com.aionemu.gameserver.spawnengine.RiftSpawnManager.RiftEnum;
 
 /**
@@ -44,9 +45,9 @@ public final class Rift extends StaticObject
 	/**
 	 * @param objId
 	 */
-	public Rift()
+	public Rift(IObjectTemplate objectTemplate)
 	{
-		super(null);
+		super(objectTemplate);
 	}
 
 	@Override

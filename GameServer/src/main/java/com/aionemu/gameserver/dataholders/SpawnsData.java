@@ -28,8 +28,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import com.aionemu.gameserver.model.templates.spawn.SpawnGroup;
-import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
+import com.aionemu.gameserver.newmodel.templates.spawn.SpawnGroup;
+import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.spawnengine.DayNightSpawnManager;
 
 /**
@@ -53,6 +53,8 @@ public class SpawnsData
 	@XmlTransient
 	private TIntObjectHashMap<ArrayList<SpawnGroup>> spawnsByMapIdNew = new TIntObjectHashMap<ArrayList<SpawnGroup>>();
 	@XmlTransient
+	private List<SpawnTemplate> allSpawnTemplate = new ArrayList<SpawnTemplate>();
+	@XmlTransient	
 	private int counter = 0;
 	
 	void afterUnmarshal(Unmarshaller u, Object parent)
@@ -67,9 +69,10 @@ public class SpawnsData
 			for(SpawnTemplate template : spawnGroup.getObjects())
 			{
 				template.setSpawnGroup(spawnGroup);
+				allSpawnTemplate.add(template);
 				if (spawnGroup.getSpawnTime() != null)
 				{
-						DayNightSpawnManager.getInstance().addSpawnTemplate(template);
+//						DayNightSpawnManager.getInstance().addSpawnTemplate(template);
 				}
 			}
 
@@ -216,5 +219,10 @@ public class SpawnsData
 	{
 		this.spawnGroups = spawns;
 		afterUnmarshal(null, null);
+	}
+	
+	public List<SpawnTemplate> getAllSpawnTemplate()
+	{
+		return allSpawnTemplate;
 	}
 }
