@@ -24,12 +24,16 @@ package com.aionemu.gameserver.newmodel.gameobject;
  */
 public final class Item extends AionObject
 {
-
-	public Item()
-	{
-		super();
-	}
 	
+
+	/**
+	 * @param objectId
+	 * @param templateId
+	 */
+	public Item(int objectId, int templateId)
+	{
+		super(objectId, templateId);
+	}
 
 	@Override
 	public String getName()

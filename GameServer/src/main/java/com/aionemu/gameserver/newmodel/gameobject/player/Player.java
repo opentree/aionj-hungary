@@ -27,9 +27,12 @@ import com.aionemu.gameserver.newmodel.gameobject.AttackableObject;
 public class Player extends AttackableObject
 {
 
-	protected Player()
+	/**
+	 * @param objectId
+	 * @param templateId
+	 */
+	public Player(int objectId, int templateId)
 	{
-		super(new PlayerCommonData());
+		super(objectId, templateId);
 	}
-
 }

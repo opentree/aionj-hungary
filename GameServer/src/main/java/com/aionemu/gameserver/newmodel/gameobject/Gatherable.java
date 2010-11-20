@@ -18,8 +18,10 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject;
 
+import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.newmodel.gameobject.enums.eGatherState;
 import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
+import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.skillengine.task.GatheringTask;
 
 /**
@@ -28,6 +30,15 @@ import com.aionemu.gameserver.skillengine.task.GatheringTask;
  */
 public final class Gatherable extends SpawnedObject
 {
+	/**
+	 * @param objectId
+	 * @param templateId
+	 */
+	public Gatherable(int objectId, int templateId)
+	{
+		super(objectId, templateId);
+	}
+
 	private int gatherCount;
 	
 	private int currentGatherer;
@@ -36,9 +47,14 @@ public final class Gatherable extends SpawnedObject
 	
 	private eGatherState state = eGatherState.IDLE;
 
-	public Gatherable(IObjectTemplate objectTemplate)
+	/* (non-Javadoc)
+	 * @see com.aionemu.gameserver.newmodel.gameobject.SpawnedObject#spawn(com.aionemu.gameserver.newmodel.templates.spawn.SpawnTemplate, int)
+	 */
+	@Override
+	public void spawn(SpawnTemplate spawnTemplate, int instanceId)
 	{
-		super(objectTemplate);
+		super.spawn(spawnTemplate, instanceId);
+		objectTemplate=DataManager.GATHERABLE_DATA.getGatherableTemplate(templateId);
 	}
 
 	@Override

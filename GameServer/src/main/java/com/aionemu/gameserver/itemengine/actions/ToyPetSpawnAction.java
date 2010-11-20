@@ -92,7 +92,7 @@ public class ToyPetSpawnAction extends AbstractItemAction
 		int instanceId = player.getInstanceId();
 
 		SpawnTemplate spawn = spawnEngine.addNewSpawn(worldId, 
-			instanceId, npcid, x, y, z, heading, 0, 0, true, true);
+			instanceId, npcid, x, y, z, heading, true);
 		
 		final Kisk kisk = spawnEngine.spawnKisk(spawn, instanceId, player);
 

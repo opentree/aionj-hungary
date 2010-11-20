@@ -20,7 +20,6 @@ package com.aionemu.gameserver.newmodel.gameobject;
 
 import com.aionemu.gameserver.newmodel.gameobject.interfaces.IDialogRequest;
 import com.aionemu.gameserver.newmodel.gameobject.player.Player;
-import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
 
 /**
  * @author lyahim
@@ -29,9 +28,13 @@ import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
 public class StaticObject extends SpawnedObject implements IDialogRequest
 {
 
-	public StaticObject(IObjectTemplate objectTemplate)
+	/**
+	 * @param objectId
+	 * @param templateId
+	 */
+	public StaticObject(int objectId, int templateId)
 	{
-		super(objectTemplate);
+		super(objectId, templateId);
 	}
 
 	@Override

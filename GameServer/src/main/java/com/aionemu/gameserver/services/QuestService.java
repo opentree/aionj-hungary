@@ -325,7 +325,7 @@ public final class QuestService
 
 	public static VisibleObject addNewSpawn(int worldId, int instanceId, int templateId, float x, float y, float z, byte heading, boolean noRespawn)
 	{
-		SpawnTemplate spawn = SpawnEngine.getInstance().addNewSpawn(worldId, instanceId, templateId, x, y, z, heading, 0, 0, noRespawn);
+		SpawnTemplate spawn = SpawnEngine.getInstance().addNewSpawn(worldId, instanceId, templateId, x, y, z, heading, noRespawn);
 		return SpawnEngine.getInstance().spawnObject(spawn, instanceId);
 	}
 	

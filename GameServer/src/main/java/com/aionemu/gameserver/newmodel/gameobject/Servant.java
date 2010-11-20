@@ -18,8 +18,6 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject;
 
-import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
-
 /**
  * @author lyahim
  *
@@ -28,11 +26,12 @@ public final class Servant extends SummonedObject
 {
 
 	/**
-	 * @param objId
+	 * @param objectId
+	 * @param templateId
 	 */
-	public Servant(IObjectTemplate objectTemplate)
+	public Servant(int objectId, int templateId)
 	{
-		super(objectTemplate);
+		super(objectId, templateId);
 	}
 
 }

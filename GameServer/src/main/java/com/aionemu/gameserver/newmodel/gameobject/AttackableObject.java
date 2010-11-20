@@ -18,8 +18,6 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject;
 
-import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
-
 /**
  * @author lyahim
  *
@@ -28,11 +26,12 @@ public abstract class AttackableObject extends PlayableObject
 {
 
 	/**
-	 * @param objId
+	 * @param objectId
+	 * @param templateId
 	 */
-	public AttackableObject(IObjectTemplate objectTemplate)
+	public AttackableObject(int objectId, int templateId)
 	{
-		super(objectTemplate);
+		super(objectId, templateId);
 	}
 
 }

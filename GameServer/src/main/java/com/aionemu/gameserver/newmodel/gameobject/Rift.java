@@ -30,6 +30,16 @@ import com.aionemu.gameserver.spawnengine.RiftSpawnManager.RiftEnum;
  */
 public final class Rift extends StaticObject
 {
+	/**
+	 * @param objectId
+	 * @param templateId
+	 */
+	public Rift(int objectId, int templateId)
+	{
+		super(objectId, templateId);
+	}
+
+
 	private boolean isMaster = false;
 	private SpawnTemplate slaveSpawnTemplate;
 	private Npc slave;
@@ -42,13 +52,6 @@ public final class Rift extends StaticObject
 	
 	private RiftEnum riftTemplate;
 
-	/**
-	 * @param objId
-	 */
-	public Rift(IObjectTemplate objectTemplate)
-	{
-		super(objectTemplate);
-	}
 
 	@Override
 	public void onDialogRequest(Player player)

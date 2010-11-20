@@ -58,7 +58,7 @@ public class DayNightSpawnManager
 
 	public void addSpawnTemplate(SpawnTemplate spawnTemplate)
 	{
-		if(spawnTemplate.getSpawnGroup().getSpawnTime() == SpawnTime.DAY)
+		if(spawnTemplate.getSpawnTime() == SpawnTime.DAY)
 			daySpawns.add(spawnTemplate);
 		else
 			nightSpawns.add(spawnTemplate);
@@ -68,7 +68,7 @@ public class DayNightSpawnManager
 	{
 		for(SpawnTemplate spawnTemplate : spawns)
 		{
-			Set<Integer> instanceIds = World.getInstance().getWorldMap(spawnTemplate.getWorldId()).getInstanceIds();
+			Set<Integer> instanceIds = World.getInstance().getWorldMap(spawnTemplate.getMapId()).getInstanceIds();
 			for(Integer instanceId : instanceIds)
 			{
 				VisibleObject object = SpawnEngine.getInstance().spawnObject(spawnTemplate, instanceId);

@@ -18,8 +18,6 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject;
 
-import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
-
 /**
  * @author lyahim
  *
@@ -27,9 +25,13 @@ import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
 public class PlayableObject extends SpawnedObject
 {
 
-	protected PlayableObject(IObjectTemplate objectTemplate)
+	/**
+	 * @param objectId
+	 * @param templateId
+	 */
+	public PlayableObject(int objectId, int templateId)
 	{
-		super(objectTemplate);
+		super(objectId, templateId);
 	}
 
 }

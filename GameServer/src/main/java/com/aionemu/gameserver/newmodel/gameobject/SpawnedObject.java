@@ -18,6 +18,7 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject;
 
+import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.newmodel.gameobject.interfaces.IReward;
 import com.aionemu.gameserver.newmodel.gameobject.knowlist.KnownList;
 import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
@@ -34,6 +35,15 @@ import com.aionemu.gameserver.newmodel.world.WorldPosition;
 
 public abstract class SpawnedObject extends AionObject
 {
+	/**
+	 * @param objectId
+	 * @param templateId
+	 */
+	public SpawnedObject(int objectId, int templateId)
+	{
+		super(objectId, templateId);
+	}
+
 	protected IObjectTemplate 	objectTemplate;
 	protected WorldPosition		position;
 	protected KnownList			knownlist;
@@ -42,6 +52,7 @@ public abstract class SpawnedObject extends AionObject
 	
 	public void spawn(SpawnTemplate spawnTemplate, int instanceId)
 	{
+		this.objectTemplate = DataManager.NPC_DATA.getNpcTemplate(templateId);
 		this.spawnTemplate = spawnTemplate;
 		this.position = new WorldPosition();
 		this.knownlist = new KnownList(this);
@@ -57,12 +68,6 @@ public abstract class SpawnedObject extends AionObject
 	public void despawn()
 	{	
 		onDespawn();
-	}
-		
-	protected SpawnedObject(IObjectTemplate objectTemplate)
-	{
-		super();
-		this.objectTemplate = objectTemplate;
 	}
 
 	@Override
@@ -93,7 +98,7 @@ public abstract class SpawnedObject extends AionObject
 	{
 		World world = World.getInstance();
 		world.storeObject(this);
-		world.setPosition(this, spawnTemplate.getWorldId(), instanceId, spawnTemplate.getX(), spawnTemplate.getY(), spawnTemplate.getZ(),
+		world.setPosition(this, spawnTemplate.getMapId(), instanceId, spawnTemplate.getX(), spawnTemplate.getY(), spawnTemplate.getZ(),
 				spawnTemplate.getHeading());
 		world.spawn(this);
 	}

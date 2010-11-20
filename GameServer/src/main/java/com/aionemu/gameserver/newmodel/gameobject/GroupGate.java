@@ -19,7 +19,6 @@
 package com.aionemu.gameserver.newmodel.gameobject;
 
 import com.aionemu.gameserver.newmodel.gameobject.interfaces.ISummoned;
-import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
 
 /**
  * @author lyahim
@@ -28,9 +27,13 @@ import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
 public final class GroupGate extends AttackableObject implements ISummoned
 {
 
-	public GroupGate(IObjectTemplate objectTemplate)
+	/**
+	 * @param objectId
+	 * @param templateId
+	 */
+	public GroupGate(int objectId, int templateId)
 	{
-		super(objectTemplate);
+		super(objectId, templateId);
 	}
 
 	@Override

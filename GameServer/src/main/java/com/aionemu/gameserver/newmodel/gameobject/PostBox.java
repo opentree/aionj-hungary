@@ -19,7 +19,6 @@
 package com.aionemu.gameserver.newmodel.gameobject;
 
 import com.aionemu.gameserver.newmodel.gameobject.player.Player;
-import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
 
 /**
  * @author lyahim
@@ -29,16 +28,16 @@ public final class PostBox extends StaticObject
 {
 
 	/**
-	 * @param objectTemplate
+	 * @param objectId
+	 * @param templateId
 	 */
-	public PostBox(IObjectTemplate objectTemplate)
+	public PostBox(int objectId, int templateId)
 	{
-		super(objectTemplate);
+		super(objectId, templateId);
 	}
 
 	@Override
 	public void onDialogRequest(Player player)
 	{
 	}
-
 }

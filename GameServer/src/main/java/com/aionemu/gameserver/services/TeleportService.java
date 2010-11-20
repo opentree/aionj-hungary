@@ -44,6 +44,7 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_TELEPORT_MAP;
 import com.aionemu.gameserver.newmodel.templates.BindPointTemplate;
 import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.services.ZoneService.ZoneUpdateMode;
+import com.aionemu.gameserver.spawnengine.SpawnEngine;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.world.World;
@@ -460,7 +461,7 @@ public class TeleportService
 	public static void teleportToNpc(Player player, int npcId)
 	{
 		int delay = 0;
-		SpawnTemplate template = DataManager.SPAWNS_DATA.getFirstSpawnByNpcId(npcId);
+		SpawnTemplate template = SpawnEngine.getInstance().getFirstSpawnByNpcId(npcId);
 		
 		if(template == null)
 		{
@@ -468,7 +469,7 @@ public class TeleportService
 			return;
 		}
 		
-		teleportTo(player, template.getWorldId(), template.getX(), template.getY(), template.getZ(), delay);
+		teleportTo(player, template.getMapId(), template.getX(), template.getY(), template.getZ(), delay);
 	}
 
 	/**

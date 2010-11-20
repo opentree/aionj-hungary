@@ -16,8 +16,6 @@
  */
 package com.aionemu.gameserver.newmodel.gameobject;
 
-import com.aionemu.gameserver.utils.idfactory.IDFactory;
-
 /**
  * This is the base class for all "in-game" objects, that player can interact with, such as: npcs, monsters, players,
  * items.<br>
@@ -34,10 +32,12 @@ public abstract class AionObject
 	 * Unique id, for all game objects such as: items, players, monsters.
 	 */
 	protected int	objectId;
+	protected int templateId;
 
-	public AionObject()
+	public AionObject(int objectId, int templateId)
 	{
-		 this.objectId = IDFactory.getInstance().nextId();
+		 this.objectId = objectId;
+		 this.templateId = templateId;
 	}
 
 	/**
