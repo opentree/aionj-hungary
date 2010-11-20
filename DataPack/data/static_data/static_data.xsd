@@ -61,7 +61,6 @@
 				<xs:element ref="quest_scripts" minOccurs="0" />
 				<xs:element ref="zones" minOccurs="0" />
 				<xs:element ref="goodslists" minOccurs="0" />
-				<xs:element ref="spawns" minOccurs="0" />
 				<xs:element ref="tribe_relations" minOccurs="0" />
 				<xs:element ref="recipe_templates" minOccurs="0" />
 				<xs:element ref="portal_templates" minOccurs="0" />

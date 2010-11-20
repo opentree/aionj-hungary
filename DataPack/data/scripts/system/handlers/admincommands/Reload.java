@@ -45,11 +45,9 @@ import com.aionemu.gameserver.dataholders.PortalData;
 import com.aionemu.gameserver.dataholders.QuestScriptsData;
 import com.aionemu.gameserver.dataholders.QuestsData;
 import com.aionemu.gameserver.dataholders.SkillData;
-import com.aionemu.gameserver.dataholders.SpawnsData;
 import com.aionemu.gameserver.dataholders.StaticData;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.portal.PortalTemplate;
-import com.aionemu.gameserver.model.templates.spawn.SpawnGroup;
 import com.aionemu.gameserver.questEngine.QuestEngine;
 import com.aionemu.gameserver.skillengine.model.SkillTemplate;
 import com.aionemu.gameserver.utils.PacketSendUtility;
@@ -169,33 +167,6 @@ public class Reload extends AdminCommand
 			finally
 			{
 				PacketSendUtility.sendMessage(admin, "Portal reload Success!");
-			}
-		}
-		else if(params[0].equals("spawn"))
-		{
-			File dir = new File("./data/static_data/spawns");
-			try
-			{
-				JAXBContext jc = JAXBContext.newInstance(StaticData.class);
-				Unmarshaller un = jc.createUnmarshaller();
-				un.setSchema(getSchema("./data/static_data/static_data.xsd"));
-				List<SpawnGroup> newTemplates = new ArrayList<SpawnGroup>();
-				for(File file : listFiles(dir, true))
-				{
-					SpawnsData data = (SpawnsData)un.unmarshal(file);
-					if(data != null && data.getSpawnGroups() != null)
-						newTemplates.addAll(data.getSpawnGroups());
-				}
-				DataManager.SPAWNS_DATA.setSpawns(newTemplates);
-			}
-			catch(Exception e)
-			{
-				PacketSendUtility.sendMessage(admin, "Spawn reload failed!");
-				log.error(e);
-			}
-			finally
-			{
-				PacketSendUtility.sendMessage(admin, "Spawn reload finished");
 			}
 		}
 		else

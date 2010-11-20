@@ -109,9 +109,6 @@
 	<goodslists>
 		<import file="goodslists" skipRoot="true"/>
 	</goodslists>
-	<spawns>
-		<import file="spawns" skipRoot="true"/>
-	</spawns>
 	<tribe_relations>
 		<import file="tribe" skipRoot="true"/>
 	</tribe_relations>
