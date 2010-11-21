@@ -17,8 +17,11 @@
 package com.aionemu.gameserver.model.gameobjects;
 
 import com.aionemu.gameserver.controllers.VisibleObjectController;
+import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_DELETE;
+import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.world.KnownList;
 import com.aionemu.gameserver.world.MapRegion;
 import com.aionemu.gameserver.world.World;
@@ -46,13 +49,11 @@ public abstract class VisibleObject extends AionObject
 	 * @param objId
 	 * @param objectTemplate 
 	 */
-	public VisibleObject(int objId, VisibleObjectController<? extends VisibleObject> controller, SpawnTemplate spawnTemplate, VisibleObjectTemplate objectTemplate, WorldPosition position)
+	public VisibleObject(int objId, SpawnTemplate spawnTemplate,  WorldPosition position)
 	{
 		super(objId);
-		this.controller = controller;
 		this.position = position;
 		this.spawn = spawnTemplate;
-		this.objectTemplate = objectTemplate;
 	}
 
 	/**
@@ -68,7 +69,7 @@ public abstract class VisibleObject extends AionObject
 	/**
 	 * Controller of this VisibleObject
 	 */
-	private final VisibleObjectController<? extends VisibleObject>	controller;
+	protected VisibleObjectController<? extends VisibleObject>	controller;
 	
 	/**
 	 * Visible object's target
@@ -303,7 +304,8 @@ public abstract class VisibleObject extends AionObject
 	 */
 	public void notSee(VisibleObject object, boolean isOutOfRange)
 	{
-
+		if (object instanceof Player)
+		PacketSendUtility.sendPacket((Player)object, new SM_DELETE(this, isOutOfRange ? 0 : 15));
 	}
 
 	/**

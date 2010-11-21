@@ -16,7 +16,7 @@
  */
 package com.aionemu.gameserver.skillengine.task;
 
-import com.aionemu.gameserver.model.gameobjects.StaticObject;
+import com.aionemu.gameserver.model.gameobjects.instance.StaticObject;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.item.ItemTemplate;
 import com.aionemu.gameserver.model.templates.recipe.RecipeTemplate;

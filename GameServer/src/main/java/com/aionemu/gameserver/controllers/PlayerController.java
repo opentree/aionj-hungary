@@ -33,10 +33,8 @@ import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.Kisk;
 import com.aionemu.gameserver.model.gameobjects.GroupGate;
 import com.aionemu.gameserver.model.gameobjects.Npc;
-import com.aionemu.gameserver.model.gameobjects.StaticObject;
 import com.aionemu.gameserver.model.gameobjects.Summon;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
-import com.aionemu.gameserver.model.gameobjects.instance.Gatherable;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.SkillListEntry;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
@@ -48,10 +46,8 @@ import com.aionemu.gameserver.model.templates.quest.QuestItems;
 import com.aionemu.gameserver.model.templates.stats.PlayerStatsTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_DELETE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_DIE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_GATHERABLE_INFO;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_KISK_UPDATE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_LEVEL_UPDATE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_NEARBY_QUESTS;
@@ -168,10 +164,6 @@ public class PlayerController extends CreatureController<Player>
 			Summon npc = ((Summon) object);		
 			PacketSendUtility.sendPacket(getOwner(), new SM_NPC_INFO(npc));
 		}
-		else if(object instanceof Gatherable || object instanceof StaticObject)
-		{
-			PacketSendUtility.sendPacket(getOwner(), new SM_GATHERABLE_INFO(object));
-		}
 	}
 
 	/**
@@ -198,8 +190,6 @@ public class PlayerController extends CreatureController<Player>
 			if(update)
 				updateNearbyQuestList();
 		}
-		
-		PacketSendUtility.sendPacket(getOwner(), new SM_DELETE(object, isOutOfRange ? 0 : 15));
 	}
 
 	public void updateNearbyQuests()

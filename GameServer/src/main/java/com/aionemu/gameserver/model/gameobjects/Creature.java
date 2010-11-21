@@ -78,7 +78,9 @@ public abstract class Creature extends VisibleObject
 	public Creature(int objId, CreatureController<? extends Creature> controller,
 		SpawnTemplate spawnTemplate, VisibleObjectTemplate objectTemplate, WorldPosition position)
 	{
-		super(objId, controller, spawnTemplate, objectTemplate, position);
+		super(objId, spawnTemplate, position);
+		this.objectTemplate = objectTemplate;
+		this.controller = controller;
 		initializeAi();
 		this.observeController = new ObserveController();
 		
