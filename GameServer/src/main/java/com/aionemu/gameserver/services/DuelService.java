@@ -21,7 +21,7 @@ import javolution.util.FastMap;
 import org.apache.log4j.Logger;
 
 import com.aionemu.gameserver.model.DuelResult;
-import com.aionemu.gameserver.model.gameobjects.Creature;
+import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.RequestResponseHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_DUEL;
@@ -75,13 +75,13 @@ public class DuelService
 
 		RequestResponseHandler rrh = new RequestResponseHandler(requester){
 			@Override
-			public void denyRequest(Creature requester, Player responder)
+			public void denyRequest(StaticNpc requester, Player responder)
 			{
 				rejectDuelRequest((Player) requester, responder);
 			}
 
 			@Override
-			public void acceptRequest(Creature requester, Player responder)
+			public void acceptRequest(StaticNpc requester, Player responder)
 			{
 				startDuel((Player) requester, responder);
 			}
@@ -110,13 +110,13 @@ public class DuelService
 
 		RequestResponseHandler rrh = new RequestResponseHandler(responder){
 			@Override
-			public void denyRequest(Creature requester, Player responder)
+			public void denyRequest(StaticNpc requester, Player responder)
 			{
 				log.debug("[Duel] Player " + responder.getName() + " confirmed his duel with " + requester.getName());
 			}
 
 			@Override
-			public void acceptRequest(Creature requester, Player responder)
+			public void acceptRequest(StaticNpc requester, Player responder)
 			{
 				cancelDuelRequest(responder, (Player) requester);
 			}

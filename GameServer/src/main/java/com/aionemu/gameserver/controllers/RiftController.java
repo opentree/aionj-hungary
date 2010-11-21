@@ -16,9 +16,9 @@
  */
 package com.aionemu.gameserver.controllers;
 
-import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
+import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.RequestResponseHandler;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
@@ -79,7 +79,7 @@ public class RiftController extends NpcController
 		RequestResponseHandler responseHandler = new RequestResponseHandler(getOwner())
 		{
 			@Override
-			public void acceptRequest(Creature requester, Player responder)
+			public void acceptRequest(StaticNpc requester, Player responder)
 			{
 				if(!isAccepting)
 					return;
@@ -104,7 +104,7 @@ public class RiftController extends NpcController
 					
 			}
 			@Override
-			public void denyRequest(Creature requester, Player responder)
+			public void denyRequest(StaticNpc requester, Player responder)
 			{
 				//do nothing
 			}

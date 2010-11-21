@@ -16,7 +16,7 @@
  */
 package com.aionemu.gameserver.model.gameobjects.player;
 
-import com.aionemu.gameserver.model.gameobjects.Creature;
+import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 
 /**
  * Implemented by handlers of <tt>CM_QUESTION_RESPONSE</tt> responses
@@ -27,9 +27,9 @@ import com.aionemu.gameserver.model.gameobjects.Creature;
  */
 public abstract class RequestResponseHandler
 {
-	private Creature requester;
+	private StaticNpc requester;
 
-	public RequestResponseHandler(Creature requester)
+	public RequestResponseHandler(StaticNpc requester)
 	{
 		this.requester = requester;
 	}
@@ -53,13 +53,13 @@ public abstract class RequestResponseHandler
 	 * @param requester Creature whom requested this response
 	 * @param responder Player whom responded to this request
 	 */
-	public abstract void acceptRequest(Creature requester, Player responder);
+	public abstract void acceptRequest(StaticNpc requester, Player responder);
 
 	/**
 	 * Called when the player denies a request
 	 * @param requester Creature whom requested this response
 	 * @param responder Player whom responded to this request
 	 */
-	public abstract void denyRequest(Creature requester, Player responder);
+	public abstract void denyRequest(StaticNpc requester, Player responder);
 
 }

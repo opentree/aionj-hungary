@@ -28,8 +28,8 @@ import com.aionemu.gameserver.configs.main.GroupConfig;
 import com.aionemu.gameserver.model.alliance.PlayerAlliance;
 import com.aionemu.gameserver.model.alliance.PlayerAllianceEvent;
 import com.aionemu.gameserver.model.alliance.PlayerAllianceMember;
-import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.Npc;
+import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.RequestResponseHandler;
 import com.aionemu.gameserver.model.group.PlayerGroup;
@@ -208,7 +208,7 @@ public class AllianceService
 	{
 		RequestResponseHandler responseHandler = new RequestResponseHandler(inviter){
 			@Override
-			public void acceptRequest(Creature requester, Player responder)
+			public void acceptRequest(StaticNpc requester, Player responder)
 			{
 				List<Player> playersToAdd = new ArrayList<Player>();
 				PlayerAlliance alliance = inviter.getPlayerAlliance();
@@ -266,7 +266,7 @@ public class AllianceService
 			}
 
 			@Override
-			public void denyRequest(Creature requester, Player responder)
+			public void denyRequest(StaticNpc requester, Player responder)
 			{
 				PacketSendUtility.sendPacket(inviter, SM_SYSTEM_MESSAGE.STR_PARTY_ALLIANCE_HE_REJECT_INVITATION(responder.getName()));
 			}

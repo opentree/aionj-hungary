@@ -18,7 +18,7 @@ package com.aionemu.gameserver.spawnengine;
 
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
-import com.aionemu.gameserver.model.gameobjects.instance.StaticObject;
+import com.aionemu.gameserver.model.gameobjects.instance.SpawnedItem;
 import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.utils.idfactory.IDFactory;
@@ -43,8 +43,8 @@ public class StaticObjectSpawnManager
 			return;
 
 		int objectId = IDFactory.getInstance().nextId();
-		StaticObject staticObject = new StaticObject(objectId, spawnTemplate);
-		bringIntoWorld(staticObject, spawnTemplate, instanceIndex);
+		SpawnedItem spawnedItem = new SpawnedItem(objectId, spawnTemplate);
+		bringIntoWorld(spawnedItem, spawnTemplate, instanceIndex);
 
 	}
 	

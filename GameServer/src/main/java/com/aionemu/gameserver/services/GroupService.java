@@ -25,8 +25,8 @@ import org.apache.log4j.Logger;
 import javolution.util.FastMap;
 
 import com.aionemu.gameserver.configs.main.GroupConfig;
-import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.Npc;
+import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.RequestResponseHandler;
 import com.aionemu.gameserver.model.group.GroupEvent;
@@ -135,7 +135,7 @@ public class GroupService
 		{
 			RequestResponseHandler responseHandler = new RequestResponseHandler(inviter){
 				@Override
-				public void acceptRequest(Creature requester, Player responder)
+				public void acceptRequest(StaticNpc requester, Player responder)
 				{
 					final PlayerGroup group = inviter.getPlayerGroup();
 					if(group != null && group.isFull())
@@ -157,7 +157,7 @@ public class GroupService
 				}
 
 				@Override
-				public void denyRequest(Creature requester, Player responder)
+				public void denyRequest(StaticNpc requester, Player responder)
 				{
 					PacketSendUtility.sendPacket(inviter, SM_SYSTEM_MESSAGE.REJECT_GROUP_INVITE(responder.getName()));
 				}

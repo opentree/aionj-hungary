@@ -30,6 +30,7 @@ import com.aionemu.gameserver.dao.LegionDAO;
 import com.aionemu.gameserver.dao.LegionMemberDAO;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.Npc;
+import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.player.DeniedStatus;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.RequestResponseHandler;
@@ -533,7 +534,7 @@ public class LegionService
 		{
 			RequestResponseHandler disbandResponseHandler = new RequestResponseHandler(npc){
 				@Override
-				public void acceptRequest(Creature requester, Player responder)
+				public void acceptRequest(StaticNpc requester, Player responder)
 				{
 					int unixTime = (int) ((System.currentTimeMillis() / 1000) + LegionConfig.LEGION_DISBAND_TIME);
 					legion.setDisbandTime(unixTime);
@@ -541,7 +542,7 @@ public class LegionService
 				}
 
 				@Override
-				public void denyRequest(Creature requester, Player responder)
+				public void denyRequest(StaticNpc requester, Player responder)
 				{
 					// no message
 				}
@@ -608,7 +609,7 @@ public class LegionService
 			RequestResponseHandler responseHandler = new RequestResponseHandler(activePlayer){
 
 				@Override
-				public void acceptRequest(Creature requester, Player responder)
+				public void acceptRequest(StaticNpc requester, Player responder)
 				{
 					if(!targetPlayer.getCommonData().isOnline())
 					{
@@ -643,7 +644,7 @@ public class LegionService
 				}
 
 				@Override
-				public void denyRequest(Creature requester, Player responder)
+				public void denyRequest(StaticNpc requester, Player responder)
 				{
 					PacketSendUtility.sendPacket(activePlayer, SM_SYSTEM_MESSAGE.REJECTED_INVITE_REQUEST(targetPlayer
 						.getName()));
@@ -699,7 +700,7 @@ public class LegionService
 			RequestResponseHandler responseHandler = new RequestResponseHandler(activePlayer){
 
 				@Override
-				public void acceptRequest(Creature requester, Player responder)
+				public void acceptRequest(StaticNpc requester, Player responder)
 				{
 					if(!targetPlayer.getCommonData().isOnline())
 					{
@@ -727,7 +728,7 @@ public class LegionService
 				}
 
 				@Override
-				public void denyRequest(Creature requester, Player responder)
+				public void denyRequest(StaticNpc requester, Player responder)
 				{
 					PacketSendUtility.sendPacket(activePlayer, SM_SYSTEM_MESSAGE
 						.LEGION_CHANGE_MASTER_HE_DECLINE_YOUR_OFFER(targetPlayer.getName()));
@@ -1004,7 +1005,7 @@ public class LegionService
 			RequestResponseHandler disbandResponseHandler = new RequestResponseHandler(npc){
 
 				@Override
-				public void acceptRequest(Creature requester, Player responder)
+				public void acceptRequest(StaticNpc requester, Player responder)
 				{
 					legion.setDisbandTime(0);
 					PacketSendUtility.broadcastPacketToLegion(legion, new SM_LEGION_EDIT(0x07));
@@ -1012,7 +1013,7 @@ public class LegionService
 				}
 
 				@Override
-				public void denyRequest(Creature requester, Player responder)
+				public void denyRequest(StaticNpc requester, Player responder)
 				{
 					// no message
 				}

@@ -21,9 +21,9 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.aionemu.gameserver.dataholders.DataManager;
-import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.gameobjects.Npc;
+import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.RequestResponseHandler;
 import com.aionemu.gameserver.model.gameobjects.player.StorageType;
@@ -71,7 +71,7 @@ public class WarehouseService
 				final int price = getPriceByLevel(expandTemplate, player.getWarehouseSize() + 1);
 				RequestResponseHandler responseHandler = new RequestResponseHandler(npc){
 					@Override
-					public void acceptRequest(Creature requester, Player responder)
+					public void acceptRequest(StaticNpc requester, Player responder)
 					{
 						if(!ItemService.decreaseKinah(responder, price))
 						{
@@ -82,7 +82,7 @@ public class WarehouseService
 					}
 
 					@Override
-					public void denyRequest(Creature requester, Player responder)
+					public void denyRequest(StaticNpc requester, Player responder)
 					{
 						// nothing to do
 					}

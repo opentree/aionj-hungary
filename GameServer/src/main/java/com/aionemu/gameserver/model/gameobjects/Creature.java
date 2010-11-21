@@ -30,10 +30,10 @@ import com.aionemu.gameserver.controllers.attack.AggroList;
 import com.aionemu.gameserver.controllers.effect.EffectController;
 import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.TribeClass;
+import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureSeeState;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
-import com.aionemu.gameserver.model.gameobjects.state.CreatureVisualState;
 import com.aionemu.gameserver.model.gameobjects.stats.CreatureGameStats;
 import com.aionemu.gameserver.model.gameobjects.stats.CreatureLifeStats;
 import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
@@ -54,7 +54,7 @@ import com.aionemu.gameserver.world.WorldPosition;
  * @author -Nemesiss-
  * 
  */
-public abstract class Creature extends VisibleObject
+public abstract class Creature extends StaticNpc
 {
 	private static final Logger log = Logger.getLogger(Creature.class);
 
@@ -65,8 +65,6 @@ public abstract class Creature extends VisibleObject
 
 	private EffectController effectController;
 	
-	private int state = CreatureState.ACTIVE.getId();
-	private int visualState = CreatureVisualState.VISIBLE.getId();
 	private int seeState = CreatureSeeState.NORMAL.getId();
 	
 	private Skill castingSkill;
@@ -217,76 +215,6 @@ public abstract class Creature extends VisibleObject
 	public boolean canAttack()
 	{
 		return !(getEffectController().isAbnormalState(EffectId.CANT_ATTACK_STATE) || isCasting() || isInState(CreatureState.RESTING) || isInState(CreatureState.PRIVATE_SHOP));
-	}
-
-	/**
-	 * @return state
-	 */
-	public int getState()
-	{
-		return state;
-	}
-
-	/**
-	 * @param state the state to set
-	 */
-	public void setState(CreatureState state)
-	{
-		this.state |= state.getId();
-	}
-	
-	/** 
-	 * @param state taken usually from templates
-	 */
-	public void setState(int state)
-	{
-		this.state = state;
-	}
-
-	public void unsetState(CreatureState state)
-	{
-		this.state &= ~state.getId();
-	}
-
-	public boolean isInState(CreatureState state)
-	{
-		int isState = this.state & state.getId();
-
-		if(isState == state.getId())
-			return true;
-
-		return false;
-	}
-
-	/**
-	 * @return visualState
-	 */
-	public int getVisualState()
-	{
-		return visualState;
-	}
-
-	/**
-	 * @param visualState the visualState to set
-	 */
-	public void setVisualState(CreatureVisualState visualState)
-	{
-		this.visualState |= visualState.getId();
-	}
-
-	public void unsetVisualState(CreatureVisualState visualState)
-	{
-		this.visualState &= ~visualState.getId();
-	}
-
-	public boolean isInVisualState(CreatureVisualState visualState)
-	{
-		int isVisualState = this.visualState & visualState.getId();
-
-		if(isVisualState == visualState.getId())
-			return true;
-
-		return false;
 	}
 
 	/**
@@ -525,14 +453,6 @@ public abstract class Creature extends VisibleObject
 	protected boolean canSeeNpc(Npc visibleObject)
 	{
 		return true;
-	}
-	
-	/**
-	 * @return NpcObjectType.NORMAL
-	 */
-	public NpcObjectType getNpcObjectType()
-	{
-		return NpcObjectType.NORMAL;
 	}
 	
 	/**

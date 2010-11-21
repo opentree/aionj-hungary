@@ -16,7 +16,7 @@
  */
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-import com.aionemu.gameserver.model.gameobjects.Creature;
+import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.player.DeniedStatus;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.RequestResponseHandler;
@@ -74,13 +74,13 @@ public class CM_EXCHANGE_REQUEST extends AbstractClientPacket<AionChannelHandler
 
 				RequestResponseHandler responseHandler = new RequestResponseHandler(activePlayer){
 					@Override
-					public void acceptRequest(Creature requester, Player responder)
+					public void acceptRequest(StaticNpc requester, Player responder)
 					{
 						ExchangeService.getInstance().registerExchange(activePlayer, targetPlayer);
 					}
 
 					@Override
-					public void denyRequest(Creature requester, Player responder)
+					public void denyRequest(StaticNpc requester, Player responder)
 					{
 						PacketSendUtility.sendPacket(activePlayer, new SM_SYSTEM_MESSAGE(SystemMessageId.EXCHANGE_HE_REJECTED_EXCHANGE, targetPlayer.getName()));
 					}

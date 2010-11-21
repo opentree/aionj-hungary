@@ -17,9 +17,9 @@ import org.apache.log4j.Logger;
 import com.aionemu.gameserver.model.DescriptionId;
 import com.aionemu.gameserver.model.EmotionType;
 import com.aionemu.gameserver.model.Race;
-import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.gameobjects.PersistentState;
+import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
 import com.aionemu.gameserver.model.gameobjects.stats.listeners.ItemEquipmentListener;
 import com.aionemu.gameserver.model.items.ItemSlot;
@@ -889,7 +889,7 @@ public class Equipment
 		RequestResponseHandler responseHandler = new RequestResponseHandler(player){
 
 			@Override
-			public void acceptRequest(Creature requester, Player responder)
+			public void acceptRequest(StaticNpc requester, Player responder)
 			{
 				PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), item
 					.getObjectId(), item.getItemId(), 5000, 4), true);
@@ -918,7 +918,7 @@ public class Equipment
 			}
 
 			@Override
-			public void denyRequest(Creature requester, Player responder)
+			public void denyRequest(StaticNpc requester, Player responder)
 			{
 				PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.SOUL_BOUND_ITEM_CANCELED(new DescriptionId(item
 					.getNameID())));

@@ -16,7 +16,7 @@
  */
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-import com.aionemu.gameserver.model.gameobjects.Creature;
+import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.player.DeniedStatus;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.RequestResponseHandler;
@@ -97,7 +97,7 @@ public class CM_FRIEND_ADD extends AbstractClientPacket<AionChannelHandler>
 			RequestResponseHandler responseHandler = new RequestResponseHandler(activePlayer) {
 				
 				@Override
-				public void acceptRequest(Creature requester, Player responder)
+				public void acceptRequest(StaticNpc requester, Player responder)
 				{
 					if (!targetPlayer.getCommonData().isOnline())
 					{
@@ -116,7 +116,7 @@ public class CM_FRIEND_ADD extends AbstractClientPacket<AionChannelHandler>
 				}
 
 				@Override
-				public void denyRequest(Creature requester, Player responder)
+				public void denyRequest(StaticNpc requester, Player responder)
 				{
 					sendPacket(new SM_FRIEND_RESPONSE(targetName, SM_FRIEND_RESPONSE.TARGET_DENIED));
 					

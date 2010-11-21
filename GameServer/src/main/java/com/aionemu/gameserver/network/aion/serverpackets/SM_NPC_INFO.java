@@ -19,11 +19,11 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 import java.util.Map.Entry;
 
 import com.aionemu.gameserver.model.NpcType;
-import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.GroupGate;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.Summon;
 import com.aionemu.gameserver.model.gameobjects.instance.Kisk;
+import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
 import com.aionemu.gameserver.model.items.ItemSlot;
@@ -45,7 +45,7 @@ public class SM_NPC_INFO extends AbstractAionServerPacket<AionChannelHandler>
 	/**
 	 * Visible npc
 	 */
-	private Creature npc;
+	private StaticNpc npc;
 	private NpcTemplate npcTemplate;
 	private int npcId;
 	private int masterObjId;
@@ -72,6 +72,22 @@ public class SM_NPC_INFO extends AbstractAionServerPacket<AionChannelHandler>
 		
 	}
 	
+	/**
+	 * Constructs new <tt>SM_NPC_INFO </tt> packet
+	 * 
+	 * @param npc
+	 *            visible npc.
+	 * @param player 
+	 */
+	public SM_NPC_INFO(StaticNpc npc)
+	{
+		this.npc = npc;
+		npcTemplate = npc.getObjectTemplate();
+		npcTypeId =  npcTemplate.getNpcType().getId();
+		npcId = npc.getObjectTemplate().getTemplateId();
+		
+	}
+
 	/**
 	 * Constructs new <tt>SM_NPC_INFO </tt> packet
 	 * 
@@ -171,11 +187,11 @@ public class SM_NPC_INFO extends AbstractAionServerPacket<AionChannelHandler>
 		writeD(masterObjId);// masterObjectId
 		writeS(masterName);// masterName
 
-		int maxHp = npc.getLifeStats().getMaxHp();
-		int currHp = npc.getLifeStats().getCurrentHp();
-		writeC( 100 * currHp / maxHp);// %hp
-		writeD(npc.getGameStats().getCurrentStat(StatEnum.MAXHP));
-		writeC( npc.getLevel());// lvl
+		int maxHp = npc.getStats().getMaxHp();
+		int currHp = npc.getStats().getCurrentHp();
+		writeC(100 * currHp / maxHp);// %hp
+		writeD(npc.getStats().getCurrentHp());
+		writeC(npc.getLevel());// lvl
 
 		NpcEquippedGear gear = npcTemplate.getEquipment();
 		if(gear == null)
@@ -195,12 +211,12 @@ public class SM_NPC_INFO extends AbstractAionServerPacket<AionChannelHandler>
 		writeF(1.5f);// unk
 		writeF(npcTemplate.getHeight());
 		//TODO: Walking, Runing, Flying speed....
-		writeF(npc.getGameStats().getCurrentStat(StatEnum.SPEED));// speed
+		writeF(npc.getStats().getMovementSpeed());// speed
 
-		writeH(2000);// 0x834 (depends on speed ? )
-		writeH(2000);// 0x834
+		writeH(npc.getStats().getAttackSpeed());
+		writeH(npc.getStats().getAttackSpeed());
 
-		writeC( 0x00);// unk
+		writeC(0x00);// unk
 
 		/**
 		 * Movement

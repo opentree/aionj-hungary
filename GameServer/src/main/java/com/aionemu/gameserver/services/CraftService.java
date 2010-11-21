@@ -21,7 +21,7 @@ import org.apache.log4j.Logger;
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.DescriptionId;
 import com.aionemu.gameserver.model.gameobjects.AionObject;
-import com.aionemu.gameserver.model.gameobjects.instance.StaticObject;
+import com.aionemu.gameserver.model.gameobjects.instance.SpawnedItem;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.item.ItemTemplate;
 import com.aionemu.gameserver.model.templates.recipe.Component;
@@ -88,7 +88,7 @@ public class CraftService
 			AionObject target = World.getInstance().findAionObject(targetObjId);
 			
 			//morphing dont need static object/npc to use
-			if ((skillId != 40009) && (target == null || !(target instanceof StaticObject)))
+			if ((skillId != 40009) && (target == null || !(target instanceof SpawnedItem)))
 			{
 				log.info("[AUDIT] Player " + player.getName() + " tried to craft incorrect target.");
 				return;
@@ -138,7 +138,7 @@ public class CraftService
 			
 			// start crafting
 			int skillLvlDiff = player.getSkillList().getSkillLevel(skillId)-recipeTemplate.getSkillpoint();
-			player.setCraftingTask(new CraftingTask(player, (StaticObject)target, recipeTemplate, itemTemplate, critItemTemplate, skillLvlDiff));			
+			player.setCraftingTask(new CraftingTask(player, (SpawnedItem)target, recipeTemplate, itemTemplate, critItemTemplate, skillLvlDiff));			
 			player.getCraftingTask().start();
 		}
 	}	

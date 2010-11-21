@@ -418,7 +418,7 @@ public class Kisk extends Npc implements ISummoned
 			RequestResponseHandler responseHandler = new RequestResponseHandler(this) {
 				
 				@Override
-				public void acceptRequest(Creature requester, Player responder)
+				public void acceptRequest(StaticNpc requester, Player responder)
 				{
 					Kisk kisk = (Kisk)requester;
 					
@@ -432,7 +432,7 @@ public class Kisk extends Npc implements ISummoned
 				}
 	
 				@Override
-				public void denyRequest(Creature requester, Player responder)
+				public void denyRequest(StaticNpc requester, Player responder)
 				{
 					// Nothing Happens
 				}

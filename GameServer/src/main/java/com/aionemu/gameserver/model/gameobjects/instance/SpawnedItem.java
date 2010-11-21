@@ -29,9 +29,9 @@ import com.aionemu.gameserver.world.WorldPosition;
  * @author ATracer
  *
  */
-public class StaticObject extends VisibleObject
+public class SpawnedItem extends VisibleObject
 {
-	public StaticObject(int objectId, SpawnTemplate spawnTemplate)
+	public SpawnedItem(int objectId, SpawnTemplate spawnTemplate)
 	{
 		super(objectId, spawnTemplate, new WorldPosition());
 		objectTemplate = DataManager.ITEM_DATA.getItemTemplate(spawnTemplate.getTemplateId());
