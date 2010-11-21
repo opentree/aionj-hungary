@@ -44,6 +44,7 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_TELEPORT_LOC;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_TELEPORT_MAP;
 import com.aionemu.gameserver.services.ZoneService.ZoneUpdateMode;
+import com.aionemu.gameserver.spawnengine.SpawnEngine;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.world.World;
@@ -460,16 +461,18 @@ public class TeleportService
 	public static void teleportToNpc(Player player, int npcId)
 	{
 		int delay = 0;
-		SpawnTemplate template = null;
-		//= DataManager.SPAWNS_DATA.getFirstSpawnByNpcId(npcId);
-		
-		if(template == null)
+		SpawnTemplate spawnTemplate;
+		try
+		{
+			spawnTemplate = SpawnEngine.getInstance().getFirstSpawnByNpcId(npcId);
+		}
+		catch (Exception e)
 		{
 			log.warn("No npc template found for : " + npcId);
 			return;
 		}
 		
-		teleportTo(player, template.getMapId(), template.getX(), template.getY(), template.getZ(), delay);
+		teleportTo(player, spawnTemplate.getMapId(), spawnTemplate.getX(), spawnTemplate.getY(), spawnTemplate.getZ(), delay);
 	}
 
 	/**

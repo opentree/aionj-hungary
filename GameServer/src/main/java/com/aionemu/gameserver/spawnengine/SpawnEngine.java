@@ -16,8 +16,14 @@
  */
 package com.aionemu.gameserver.spawnengine;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 
+import com.aionemu.commons.database.dao.DAOManager;
 import com.aionemu.gameserver.controllers.GroupGateController;
 import com.aionemu.gameserver.controllers.KiskController;
 import com.aionemu.gameserver.controllers.NpcController;
@@ -25,6 +31,7 @@ import com.aionemu.gameserver.controllers.PostmanController;
 import com.aionemu.gameserver.controllers.ServantController;
 import com.aionemu.gameserver.controllers.SummonController;
 import com.aionemu.gameserver.controllers.effect.EffectController;
+import com.aionemu.gameserver.dao.SpawnDAO;
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.dataholders.NpcData;
 import com.aionemu.gameserver.model.gameobjects.Creature;
@@ -44,6 +51,7 @@ import com.aionemu.gameserver.utils.idfactory.IDFactory;
 import com.aionemu.gameserver.world.KnownList;
 import com.aionemu.gameserver.world.StaticObjectKnownList;
 import com.aionemu.gameserver.world.World;
+import com.aionemu.gameserver.world.exceptions.NotSetPositionException;
 
 /**
  * 
@@ -59,6 +67,9 @@ public class SpawnEngine
 {
 	private static Logger				log					= Logger.getLogger(SpawnEngine.class);
 
+	private Map<Integer, List<SpawnTemplate>> spawnByTemplateId = new HashMap<Integer,List<SpawnTemplate>>();
+	private Map<Integer, List<SpawnTemplate>> spawnByMapId = new HashMap<Integer, List<SpawnTemplate>>();
+	
 	/** Counter counting number of npc spawns */
 	private int							npcCounter			= 0;
 	/** Counter counting number of gatherable spawns */
@@ -71,9 +82,33 @@ public class SpawnEngine
 
 	private SpawnEngine()
 	{
+		DAOManager.getDAO(SpawnDAO.class).load();
 		this.spawnAll();
 	}
 
+	public void addSpawn(SpawnTemplate spawnTemplate, String nextRespawnTime)
+	{
+		int mapId = spawnTemplate.getMapId();
+		if (!spawnByMapId.containsKey(mapId))
+		{
+			spawnByMapId.put(mapId, new ArrayList<SpawnTemplate>());
+		}
+		spawnByMapId.get(mapId).add(spawnTemplate);
+		
+		int templateId = spawnTemplate.getTemplateId();
+		if (!spawnByTemplateId.containsKey(templateId))
+		{
+			spawnByTemplateId.put(templateId, new ArrayList<SpawnTemplate>());
+		}
+		spawnByTemplateId.get(templateId).add(spawnTemplate);
+	}
+	
+	public SpawnTemplate getFirstSpawnByNpcId(int templateId)
+	{
+		if (!spawnByTemplateId.containsKey(templateId))
+			throw new NotSetPositionException();
+		return spawnByTemplateId.get(templateId).get(0);
+	}
 	/**
 	 * Creates VisibleObject instance and spawns it using given {@link SpawnTemplate} instance.
 	 * 
@@ -335,37 +370,15 @@ public class SpawnEngine
 	 */
 	public void spawnInstance(int worldId, int instanceIndex)
 	{
-/*
+
 		int instanceSpawnCounter = 0;
-		for(SpawnGroup spawnGroup : worldSpawns)
+		for(SpawnTemplate spawnTemplate : this.spawnByMapId.get(worldId))
 		{
-			spawnGroup.resetLastSpawnCounter(instanceIndex);
-			if(spawnGroup.getHandler() == null)
-			{
-				int pool = spawnGroup.getPool();
-				for(int i = 0; i < pool; i++)
-				{
-					spawnObject(spawnGroup.getNextAvailableTemplate(instanceIndex), instanceIndex);
+					spawnObject(spawnTemplate, instanceIndex);
 
 					instanceSpawnCounter++;
-				}
-			}
-			else
-			{
-				switch(spawnGroup.getHandler())
-				{
-					case RIFT:
-						RiftSpawnManager.addRiftSpawnGroup(spawnGroup);
-						break;
-					case STATIC:
-						StaticObjectSpawnManager.spawnGroup(spawnGroup, instanceIndex);
-					default:
-						break;
-				}
-			}
 		}
 		log.info("Spawned " + worldId + " [" + instanceIndex + "] : " + instanceSpawnCounter);
-		*/
 	}
 	
 	@SuppressWarnings("synthetic-access")

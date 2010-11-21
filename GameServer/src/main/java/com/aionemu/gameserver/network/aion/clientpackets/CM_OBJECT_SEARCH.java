@@ -17,12 +17,11 @@
 
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-
-import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SHOW_NPC_ON_MAP;
+import com.aionemu.gameserver.spawnengine.SpawnEngine;
 
 /**
  * @author Lyahim, Lyahim
@@ -55,12 +54,18 @@ public class CM_OBJECT_SEARCH extends AbstractClientPacket<AionChannelHandler>
 	@Override
 	protected void runImpl()
 	{	
-		SpawnTemplate spawnTemplate = null;
-		//= DataManager.SPAWNS_DATA.getFirstSpawnByNpcId(npcId);
-		if(spawnTemplate != null)
+		SpawnTemplate spawnTemplate;
+		try
 		{
-			sendPacket(new SM_SHOW_NPC_ON_MAP(npcId, spawnTemplate.getMapId(), spawnTemplate.getX(), 
-				spawnTemplate.getY(), spawnTemplate.getZ()));
+			spawnTemplate = SpawnEngine.getInstance().getFirstSpawnByNpcId(npcId);
 		}
+		catch (Exception e)
+		{
+			return;
+		}
+
+		sendPacket(new SM_SHOW_NPC_ON_MAP(npcId, spawnTemplate.getMapId(), spawnTemplate.getX(), 
+				spawnTemplate.getY(), spawnTemplate.getZ()));
+
 	}
 }

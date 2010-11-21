@@ -52,11 +52,11 @@ public class RiftSpawnManager
 	private static final int RIFT_RESPAWN_DELAY = 100 * 60 * 1000;
 	private static final int RIFT_LIFETIME = 26 * 60 * 1000;
 	
-	private static final Map<String, SpawnGroup> spawnGroups = new HashMap<String, SpawnGroup>();
+	private static final Map<String, SpawnTemplate> spawnTemplates = new HashMap<String, SpawnTemplate>();
 	
-	public static void addRiftSpawnGroup(SpawnGroup spawnGroup)
+	public static void addRiftSpawnTemplate(SpawnTemplate spawnTemplate, String anchor)
 	{
-		spawnGroups.put(spawnGroup.getAnchor(), spawnGroup);
+		spawnTemplates.put(anchor, spawnTemplate);
 	}
 
 	public static void startRiftPool()
@@ -84,28 +84,29 @@ public class RiftSpawnManager
 	 */
 	private static void spawnRift(RiftEnum rift)
 	{
+		/*
 		log.info("Spawning rift : " + rift.name());
-		SpawnGroup masterGroup = spawnGroups.get(rift.getMaster());
-		SpawnGroup slaveGroup = spawnGroups.get(rift.getSlave());
+		SpawnTemplate masterTemplate = spawnTemplates.get(rift.getMaster());
+		SpawnTemplate slaveTemplate= spawnTemplates.get(rift.getSlave());
 		
-		if(masterGroup == null || slaveGroup == null)
+		if(masterTemplate == null || slaveTemplate == null)
 			return;
 		
-		int instanceCount = World.getInstance().getWorldMap(masterGroup.getMapid()).getInstanceCount();
+		int instanceCount = World.getInstance().getWorldMap(masterTemplate.getMapId()).getInstanceCount();
 		
-		SpawnTemplate masterTemplate = masterGroup.getNextRandomTemplate();
+		SpawnTemplate masterTemplate = masterTemplate.getNextRandomTemplate();
 		SpawnTemplate slaveTemplate = slaveGroup.getNextRandomTemplate();
 		
 		for(int i = 1; i <= instanceCount; i++)
 		{
 			Npc slave = spawnInstance(i, masterGroup, slaveTemplate, new RiftController(null, rift));
 			spawnInstance(i, masterGroup, masterTemplate, new RiftController(slave, rift));
-		}		
+		}	*/	
 	}
 
 	private static Npc spawnInstance(int instanceIndex, SpawnTemplate spawnTemplate, RiftController riftController)
 	{
-		NpcTemplate masterObjectTemplate = DataManager.NPC_DATA.getNpcTemplate(spawnGroup.getNpcid());
+		NpcTemplate masterObjectTemplate = DataManager.NPC_DATA.getNpcTemplate(spawnTemplate.getTemplateId());
 		Npc npc = new Npc(IDFactory.getInstance().nextId(),riftController,
 			spawnTemplate, masterObjectTemplate);
 		

@@ -101,9 +101,6 @@ public class StaticData
 	@XmlElement(name = "goodslists")
 	public GoodsListData			goodsListData;
 
-	@XmlElement(name = "spawns")
-	public SpawnsData				spawnsData;
-
 	@XmlElement(name = "tribe_relations")
 	public TribeRelationsData		tribeRelationsData;
 
@@ -151,7 +148,6 @@ public class StaticData
 		DataManager.log.info("Loaded " + walkerData.size() + " walker routes");
 		DataManager.log.info("Loaded " + zoneData.size() + " zone entries");
 		DataManager.log.info("Loaded " + goodsListData.size() + " goodslist entries");
-		DataManager.log.info("Loaded " + spawnsData.size() + " spawn entries");
 		DataManager.log.info("Loaded " + tribeRelationsData.size() + " tribe relation entries");
 		DataManager.log.info("Loaded " + recipeData.size() + " recipe entries");
 		DataManager.log.info("Loaded " + portalData.size() + " portal entries");
