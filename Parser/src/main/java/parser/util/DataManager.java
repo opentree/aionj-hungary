@@ -22,10 +22,13 @@ import java.util.List;
 import java.util.Map;
 
 import parser.clientData.clientItems.ClientItem;
+import parser.clientData.clientItems.ClientItemsLoader;
+import parser.clientData.clientNpc.ClientNpcLoader;
 import parser.clientData.clientNpc.NpcClient;
 import parser.clientData.clientStrings.ClientString;
 import parser.clientData.clientStrings.ClientStringLoader;
 import parser.clientData.tribeRelation.Tribe;
+import parser.clientData.tribeRelation.TribeRelationLoader;
 
 /**
  * @author Mr. Poke
@@ -50,12 +53,12 @@ public class DataManager
 	private DataManager()
 	{
 		stringNameMap = ClientStringLoader.load();
-//		tribeRelations = TribeRelationLoader.load();
-//		idNpcMap = ClientNpcLoader.load();
-//		idItemMap =ClientItemsLoader.load();
+		tribeRelations = TribeRelationLoader.load();
+		idNpcMap = ClientNpcLoader.load();
+		idItemMap =ClientItemsLoader.load();
 				
-//		createNpcNameIdMap();
-//		createItemNameIdMap();
+		createNpcNameIdMap();
+		createItemNameIdMap();
 	}
 
 	/**
