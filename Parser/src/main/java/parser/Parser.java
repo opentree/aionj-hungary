@@ -18,11 +18,12 @@
  */
 package parser;
 
+
 import parser.serverData.cubeExpander.CubeExpanderSave;
 import parser.serverData.tribeRelation.TribeRelationSave;
 import parser.serverData.warehouseExpander.WarehouseExpanderSave;
-import parser.util.DataManager;
 import parser.util.FileDecoder;
+import parser.util.SystemMessagesParser;
 
 /**
  * @author Mr. Poke
@@ -31,7 +32,7 @@ import parser.util.FileDecoder;
 public class Parser
 {
 
-	private static boolean	decodeFile	= true;
+	private static boolean	decodeFile	= false;
 
 	/**
 	 * @param args
@@ -45,7 +46,8 @@ public class Parser
 			FileDecoder.decode("npcs", "data\\npcs\\", "", "client_npcs.xml");
 			FileDecoder.decode("Items", "data\\Items\\", "", "client_items.xml");
 		}
-		DataManager.getInstance();
+//		DataManager.getInstance();
+		SystemMessagesParser.writeFile("xml/");
 		
 		TribeRelationSave.save();
 		CubeExpanderSave.save();
