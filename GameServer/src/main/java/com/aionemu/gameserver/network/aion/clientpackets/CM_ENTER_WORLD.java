@@ -52,7 +52,6 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_UI_SETTINGS;
 import com.aionemu.gameserver.services.AllianceService;
 import com.aionemu.gameserver.services.BrokerService;
 import com.aionemu.gameserver.services.ChatService;
-import com.aionemu.gameserver.services.ClassChangeService;
 import com.aionemu.gameserver.services.GroupService;
 import com.aionemu.gameserver.services.HTMLService;
 import com.aionemu.gameserver.services.KiskService;
@@ -236,8 +235,6 @@ public class CM_ENTER_WORLD extends AbstractClientPacket<AionChannelHandler>
 			player.setRates(Rates.getRatesFor(client.getAccount().getMembership()));
 			
 			ToyPetService.getInstance().onPlayerLogin(player);
-
-			ClassChangeService.showClassChangeDialog(player);
 			
 			/**
 			 * Notify mail service to load all mails

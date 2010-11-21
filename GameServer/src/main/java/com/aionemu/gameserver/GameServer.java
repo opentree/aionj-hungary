@@ -41,7 +41,6 @@ import com.aionemu.gameserver.questEngine.QuestEngine;
 import com.aionemu.gameserver.services.AllianceService;
 import com.aionemu.gameserver.services.AnnouncementService;
 import com.aionemu.gameserver.services.BrokerService;
-import com.aionemu.gameserver.services.DebugService;
 import com.aionemu.gameserver.services.DropService;
 import com.aionemu.gameserver.services.DuelService;
 import com.aionemu.gameserver.services.ExchangeService;
@@ -155,10 +154,7 @@ public class GameServer
 
 		AEInfos.printSection("Announcements");
 		AnnouncementService.getInstance();
-		
-		AEInfos.printSection("Debug");
-		DebugService.getInstance();
-		
+				
 		AEInfos.printSection("Zones");
 		ZoneService.getInstance();		
 		

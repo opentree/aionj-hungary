@@ -25,7 +25,6 @@ import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.questEngine.QuestEngine;
 import com.aionemu.gameserver.questEngine.model.QuestEnv;
-import com.aionemu.gameserver.services.ClassChangeService;
 import com.aionemu.gameserver.world.World;
 
 /**
@@ -85,9 +84,6 @@ public class CM_DIALOG_SELECT extends AbstractClientPacket<AionChannelHandler>
 		{
 			if(QuestEngine.getInstance().onDialog(new QuestEnv(null, player, questId, dialogId)))
 				return;
-			// FIXME client sends unk1=1, targetObjectId=0, dialogId=2 (trader) => we miss some packet to close window
-			ClassChangeService.changeClassToSelection(player, dialogId);
-			return;
 		}
 
 		AionObject object = World.getInstance().findAionObject(targetObjectId);
