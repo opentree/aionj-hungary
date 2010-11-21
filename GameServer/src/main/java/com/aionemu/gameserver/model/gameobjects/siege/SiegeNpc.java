@@ -7,7 +7,7 @@ import com.aionemu.gameserver.controllers.siege.SiegeNpcController;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.siege.SiegeRace;
 import com.aionemu.gameserver.model.templates.ObjectTemplate;
-import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
+import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTemplate;
 
 /**
  * @author ViAl
@@ -30,8 +30,6 @@ public class SiegeNpc extends Npc {
 	{
 		super(objId, controller, spawnTemplate, objectTemplate);
 		controller.setOwner(this);
-		this.siegeId = spawnTemplate.getSpawnGroup().getSiegeId();
-		this.siegeRace = spawnTemplate.getSpawnGroup().getRace();
 	}
 	
 	public SiegeRace getSiegeRace() 

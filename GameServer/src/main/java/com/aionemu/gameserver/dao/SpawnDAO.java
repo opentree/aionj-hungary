@@ -16,45 +16,24 @@
  *
  * http://www.gnu.org/copyleft/gpl.html
  */
-package com.aionemu.gameserver.newmodel.gameobject;
+package com.aionemu.gameserver.dao;
 
-import com.aionemu.gameserver.model.gameobjects.Npc;
-import com.aionemu.gameserver.newmodel.gameobject.player.Player;
-import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTime;
-import com.aionemu.gameserver.spawnengine.RiftSpawnManager.RiftEnum;
+import com.aionemu.commons.database.dao.DAO;
 
 /**
- * @author lyahim
+ * @author Mr. Poke
  *
  */
-public final class Rift extends StaticObject
+public abstract class SpawnDAO implements DAO
 {
 	/**
-	 * @param objectId
-	 * @param templateId
+	 * {@inheritDoc}
 	 */
-	public Rift(int objectId, int templateId)
-	{
-		super(objectId, templateId);
-	}
-
-
-	private boolean isMaster = false;
-	private SpawnTime slaveSpawnTemplate;
-	private Npc slave;
-	
-	private Integer maxEntries;
-	private Integer maxLevel;
-	
-	private int usedEntries;
-	private boolean isAccepting;
-	
-	private RiftEnum riftTemplate;
-
-
 	@Override
-	public void onDialogRequest(Player player)
+	public String getClassName()
 	{
+		return SpawnDAO.class.getName();
 	}
-
+	
+	public abstract void load();
 }

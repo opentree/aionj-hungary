@@ -58,7 +58,7 @@ public final class Gatherable extends SpawnedObject
 	}
 
 	@Override
-	protected void onRespawn()
+	public void onRespawn()
 	{
 		this.gatherCount = 0;
 	}

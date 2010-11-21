@@ -17,8 +17,6 @@
 
 package com.aionemu.gameserver.services;
 
-import java.util.List;
-
 import javolution.util.FastMap;
 
 import org.apache.log4j.Logger;
@@ -34,10 +32,8 @@ import com.aionemu.gameserver.model.siege.Fortress;
 import com.aionemu.gameserver.model.siege.Influence;
 import com.aionemu.gameserver.model.siege.SiegeLocation;
 import com.aionemu.gameserver.model.siege.SiegeRace;
-import com.aionemu.gameserver.model.templates.spawn.SpawnGroup;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SIEGE_LOCATION_INFO;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_INFLUENCE_RATIO;
-import com.aionemu.gameserver.spawnengine.SpawnEngine;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.world.World;

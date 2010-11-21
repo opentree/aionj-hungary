@@ -92,7 +92,7 @@ public abstract class SpawnedObject extends AionObject
 			World.getInstance().despawn(getOwner());
 		World.getInstance().removeObject(getOwner());*/
 	}
-	protected void onDespawn(){}
+	public void onDespawn(){}
 	
 	private void onSpawn(int instanceId)
 	{
@@ -103,7 +103,7 @@ public abstract class SpawnedObject extends AionObject
 		world.spawn(this);
 	}
 	
-	protected void onRespawn()
+	public void onRespawn()
 	{
 		if(this instanceof IReward)
 		{

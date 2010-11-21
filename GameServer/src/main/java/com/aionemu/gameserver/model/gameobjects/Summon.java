@@ -24,8 +24,8 @@ import com.aionemu.gameserver.model.gameobjects.stats.SummonGameStats;
 import com.aionemu.gameserver.model.gameobjects.stats.SummonLifeStats;
 import com.aionemu.gameserver.model.templates.NpcTemplate;
 import com.aionemu.gameserver.model.templates.ObjectTemplate;
-import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.model.templates.stats.SummonStatsTemplate;
+import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.world.WorldPosition;
 
 /**

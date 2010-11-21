@@ -28,7 +28,6 @@ import com.aionemu.gameserver.model.gameobjects.Servant;
 import com.aionemu.gameserver.model.gameobjects.Summon;
 import com.aionemu.gameserver.model.gameobjects.Trap;
 import com.aionemu.gameserver.model.gameobjects.GroupGate;
-import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.newmodel.gameobject.SpawnedObject;
 import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
@@ -89,7 +88,7 @@ public class SpawnEngine
 		}
 
 	}
-	public VisibleObject spawnObject(SpawnTemplate spawn, int instanceIndex)
+	public SpawnedObject spawnObject(SpawnTemplate spawn, int instanceIndex)
 	{
 /*		
 		if(objectId > 400000 && objectId < 499999)// gatherable
@@ -479,5 +478,16 @@ public class SpawnEngine
 	public SpawnTemplate addNewSpawn(int worldId, int instanceId, int templateId, float x, float y, float z, byte heading, boolean noRespawn)
 	{
 		return null;
+	}
+
+	/**
+	 * @param template
+	 * @param spawnTime
+	 * @param nextRespawnTime
+	 */
+	public void addSpawn(SpawnTemplate template, String nextRespawnTime)
+	{
+		this.spawnByMap.put(template.getMapId(), template);
+		this.spawnByNpc.put(template.getTemplateId(), template);
 	}
 }

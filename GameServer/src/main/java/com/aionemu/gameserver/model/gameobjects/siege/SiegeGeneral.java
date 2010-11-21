@@ -18,7 +18,7 @@ package com.aionemu.gameserver.model.gameobjects.siege;
 
 import com.aionemu.gameserver.controllers.siege.SiegeGeneralController;
 import com.aionemu.gameserver.model.templates.ObjectTemplate;
-import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
+import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTemplate;
 
 /**
  * @author ViAl

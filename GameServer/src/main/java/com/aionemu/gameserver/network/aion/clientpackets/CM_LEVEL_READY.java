@@ -24,7 +24,6 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.questEngine.QuestEngine;
 import com.aionemu.gameserver.questEngine.model.QuestEnv;
 import com.aionemu.gameserver.services.WeatherService;
-import com.aionemu.gameserver.spawnengine.RiftSpawnManager;
 import com.aionemu.gameserver.world.World;
 
 /**
@@ -83,7 +82,7 @@ public class CM_LEVEL_READY extends AbstractClientPacket<AionChannelHandler>
 		// zone channel message
 		sendPacket(new SM_SYSTEM_MESSAGE(1390122, activePlayer.getPosition().getInstanceId()));
 		
-		RiftSpawnManager.sendRiftStatus(activePlayer);
+		//RiftSpawnManager.sendRiftStatus(activePlayer);
 		
 		activePlayer.getEffectController().updatePlayerEffectIcons();
 	}

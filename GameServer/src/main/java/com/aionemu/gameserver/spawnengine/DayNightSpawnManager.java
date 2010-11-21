@@ -22,7 +22,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
-import com.aionemu.gameserver.model.gameobjects.VisibleObject;
+import com.aionemu.gameserver.newmodel.gameobject.SpawnedObject;
 import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTime;
 import com.aionemu.gameserver.utils.gametime.DayTime;
@@ -39,7 +39,7 @@ public class DayNightSpawnManager
 
 	private final List<SpawnTemplate>	daySpawns;
 	private final List<SpawnTemplate>	nightSpawns;
-	private final List<VisibleObject>	spawnedObjects;
+	private final List<SpawnedObject>	spawnedObjects;
 
 	private SpawnTime					currentSpawnTime	= null;
 
@@ -52,7 +52,7 @@ public class DayNightSpawnManager
 	{
 		daySpawns = new ArrayList<SpawnTemplate>();
 		nightSpawns = new ArrayList<SpawnTemplate>();
-		spawnedObjects = new ArrayList<VisibleObject>();
+		spawnedObjects = new ArrayList<SpawnedObject>();
 		log.info("DayNightSpawnManager: Day/Night handler initialized");
 	}
 
@@ -71,7 +71,7 @@ public class DayNightSpawnManager
 			Set<Integer> instanceIds = World.getInstance().getWorldMap(spawnTemplate.getMapId()).getInstanceIds();
 			for(Integer instanceId : instanceIds)
 			{
-				VisibleObject object = SpawnEngine.getInstance().spawnObject(spawnTemplate, instanceId);
+				SpawnedObject object = SpawnEngine.getInstance().spawnObject(spawnTemplate, instanceId);
 				if(object != null)
 					spawnedObjects.add(object);
 			}
@@ -80,8 +80,8 @@ public class DayNightSpawnManager
 
 	private void deleteObjects()
 	{
-		for(VisibleObject object : spawnedObjects)
-			object.getController().delete();
+		for(SpawnedObject object : spawnedObjects)
+			object.delete();
 		spawnedObjects.clear();
 	}
 

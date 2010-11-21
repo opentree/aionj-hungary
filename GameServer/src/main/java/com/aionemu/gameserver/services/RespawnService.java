@@ -18,17 +18,11 @@ package com.aionemu.gameserver.services;
 
 import java.util.concurrent.Future;
 
-import com.aionemu.gameserver.model.gameobjects.Npc;
-import com.aionemu.gameserver.model.gameobjects.VisibleObject;
-import com.aionemu.gameserver.model.templates.spawn.SpawnTime;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.utils.gametime.DayTime;
 import com.aionemu.gameserver.utils.gametime.GameTimeManager;
-import com.aionemu.gameserver.world.World;
-import com.aionemu.gameserver.services.SiegeService;
-import com.aionemu.gameserver.model.siege.SiegeLocation;
-import com.aionemu.gameserver.model.gameobjects.siege.SiegeNpc;
-
+import com.aionemu.gameserver.newmodel.gameobject.SpawnedObject;
+import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTime;
 /**
  * @author ATracer
  * @Modified by Source
@@ -41,9 +35,9 @@ public class RespawnService
 	 * @param npc
 	 * @return Future<?>
 	 */
-	public static Future<?> scheduleDecayTask(final Npc npc)
+	public static Future<?> scheduleDecayTask(final SpawnedObject npc)
 	{
-		int respawnInterval = npc.getSpawn().getSpawnGroup().getInterval();
+		int respawnInterval = npc.getSpawn().getInterval();
 		int decayInterval = Math.round(respawnInterval * 0.8f);
 		if(decayInterval > 240)
 			decayInterval = 240;
@@ -53,7 +47,7 @@ public class RespawnService
 			@Override
 			public void run()
 			{
-				npc.getController().onDespawn(false);
+				npc.onDespawn();
 			}
 		}, decayInterval * 1000);
 	}
@@ -61,48 +55,24 @@ public class RespawnService
 	 * 
 	 * @param visibleObject
 	 */
-	public static Future<?> scheduleRespawnTask(final VisibleObject visibleObject)
+	public static Future<?> scheduleRespawnTask(final SpawnedObject visibleObject)
 	{
-		final World world = World.getInstance();
-		final int interval = visibleObject.getSpawn().getSpawnGroup().getInterval();		
-	
+		final int interval = visibleObject.getSpawn().getInterval();		
+		if (interval == 0)
+			return null;
 		return ThreadPoolManager.getInstance().schedule(new Runnable()
 		{
 			@Override
 			public void run()
 			{
-				SpawnTime spawnTime = visibleObject.getSpawn().getSpawnGroup().getSpawnTime();
+				SpawnTime spawnTime = visibleObject.getSpawn().getSpawnTime();
 				if(spawnTime != null)
 				{
 					DayTime dayTime = GameTimeManager.getGameTime().getDayTime();
 					if(!spawnTime.isAllowedDuring(dayTime))
 						return;
 				}
-				
-				int instanceId = visibleObject.getInstanceId();
-				int worldId = visibleObject.getSpawn().getWorldId();
-				boolean instanceExists = InstanceService.isInstanceExist(worldId, instanceId);
-
-				//Siege respawn check
-				if (visibleObject instanceof SiegeNpc)
-				{
-					SiegeLocation loc = SiegeService.getInstance().getSiegeLocation(((SiegeNpc)visibleObject).getSiegeId());
-					if (loc.getRace() != ((SiegeNpc)visibleObject).getSiegeRace())
-						return;
-				}
-
-				if(visibleObject.getSpawn().isNoRespawn(instanceId) || !instanceExists)
-				{
-					visibleObject.getController().delete();				
-				}
-				else
-				{
-					visibleObject.getSpawn().getSpawnGroup().exchangeSpawn(visibleObject);		
-					world.setPosition(visibleObject, worldId, visibleObject.getSpawn().getX(), visibleObject.getSpawn().getY(), visibleObject.getSpawn().getZ(), visibleObject.getSpawn().getHeading());
-					//call onRespawn before actual spawning
-					visibleObject.getController().onRespawn();
-					world.spawn(visibleObject);		
-				}				
+				visibleObject.onRespawn();			
 			}
 			
 		}, interval * 1000);

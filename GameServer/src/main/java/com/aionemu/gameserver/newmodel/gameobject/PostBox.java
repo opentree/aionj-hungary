@@ -39,5 +39,6 @@ public final class PostBox extends StaticObject
 	@Override
 	public void onDialogRequest(Player player)
 	{
+		//PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(objectId, 18));
 	}
 }

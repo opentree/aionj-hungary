@@ -24,19 +24,41 @@ package com.aionemu.gameserver.newmodel.templates.spawn;
 
 public class SpawnTemplate
 {
+	private int id;
+	private int templateId;
 	private byte heading;
 	private float z;
 	private float y;
 	private float x;
+	private int interval;
 	private int mapId;
 	private int staticid;
-	
+	private SpawnTime spawnTime;
+
 	/**
-	 * Constructor used by unmarshaller
+	 * @param id
+	 * @param templateId
+	 * @param heading
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param interval
+	 * @param mapId
+	 * @param staticid
 	 */
-	public SpawnTemplate()
+	public SpawnTemplate(int id, int templateId, int mapId, float x, float y, float z, byte heading, int interval, int staticid, SpawnTime spawnTime)
 	{
-		
+		super();
+		this.id = id;
+		this.templateId = templateId;
+		this.heading = heading;
+		this.z = z;
+		this.y = y;
+		this.x = x;
+		this.interval = interval;
+		this.mapId = mapId;
+		this.staticid = staticid;
+		this.spawnTime = spawnTime;
 	}
 
 	/**
@@ -46,17 +68,45 @@ public class SpawnTemplate
 	 * @param z
 	 * @param heading
 	 */
-	public SpawnTemplate(float x, float y, float z, byte heading)
+	public SpawnTemplate(int templateId, int mapId, float x, float y, float z, byte heading)
 	{
+		this.templateId = templateId;
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		this.heading = heading;
+		this.interval = 0;
+		this.staticid = 0;
+		this.spawnTime = SpawnTime.ALL;
 	}
 	
+	/**
+	 * @return Returns the id.
+	 */
+	public int getId()
+	{
+		return id;
+	}
+
+	/**
+	 * @param id The id to set.
+	 */
+	public void setId(int id)
+	{
+		this.id = id;
+	}
+
 	public int getMapId()
 	{
 		return mapId;
+	}
+
+	/**
+	 * @return Returns the templateId.
+	 */
+	public int getTemplateId()
+	{
+		return templateId;
 	}
 
 	public float getX()
@@ -80,6 +130,14 @@ public class SpawnTemplate
 	}
 
 	/**
+	 * @return Returns the interval.
+	 */
+	public int getInterval()
+	{
+		return interval;
+	}
+
+	/**
 	 * @return the staticid
 	 */
 	public int getStaticid()
@@ -88,10 +146,10 @@ public class SpawnTemplate
 	}
 
 	/**
-	 * @return
+	 * @return Returns the spawnTime.
 	 */
 	public SpawnTime getSpawnTime()
 	{
-		return null;
+		return spawnTime;
 	}
 }

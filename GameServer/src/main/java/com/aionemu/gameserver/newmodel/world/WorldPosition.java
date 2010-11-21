@@ -233,19 +233,4 @@ public class WorldPosition
 		return this.x == pos.x && this.y == pos.y && this.z == pos.z && this.isSpawned == pos.isSpawned
 			&& this.heading == pos.heading && this.mapRegion == pos.mapRegion;
 	}
-
-	@Override
-	public WorldPosition clone()
-	{
-		WorldPosition pos = new WorldPosition();
-		pos.heading = this.heading;
-		pos.isSpawned = this.isSpawned;
-		pos.mapRegion = this.mapRegion;
-		pos.mapId = this.mapId;
-		pos.x = this.x;
-		pos.y = this.y;
-		pos.z = this.z;
-		return pos;
-	}
-	
 }

@@ -327,8 +327,6 @@ public class World
 			throw new AlreadySpawnedException();
 
 		object.getPosition().setIsSpawned(true);
-		if(object.getSpawn() != null)
-			object.getSpawn().setSpawned(true, object.getInstanceId());
 		object.getActiveRegion().getParent().addObject(object);
 		object.getActiveRegion().add(object);
 
@@ -351,8 +349,6 @@ public class World
 			object.getActiveRegion().remove(object);
 		}
 		object.getPosition().setIsSpawned(false);
-		if(object.getSpawn() != null)
-			object.getSpawn().setSpawned(false, object.getInstanceId());
 		object.getKnownList().clearKnownList();
 	}
 	

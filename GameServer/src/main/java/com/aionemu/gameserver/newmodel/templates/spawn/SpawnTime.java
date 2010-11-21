@@ -16,19 +16,15 @@
  */
 package com.aionemu.gameserver.newmodel.templates.spawn;
 
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlType;
-
 import com.aionemu.gameserver.utils.gametime.DayTime;
 
 /**
  * @author ATracer
  *
  */
-@XmlType(name = "SpawnTime")
-@XmlEnum
 public enum SpawnTime
 {
+	ALL,
 	DAY,
 	NIGHT;
 

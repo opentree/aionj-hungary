@@ -218,7 +218,7 @@ public class GatherableController extends VisibleObjectController<Gatherable>
 	private void onDie()
 	{
 		Gatherable owner = getOwner();
-		RespawnService.scheduleRespawnTask(owner);
+		//RespawnService.scheduleRespawnTask(owner);
 		World.getInstance().despawn(owner);
 	}
 

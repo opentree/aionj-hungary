@@ -91,10 +91,6 @@ public class NpcController extends CreatureController<Npc>
 			owner.setState(CreatureState.NPC_IDLE);
 		
 		owner.getLifeStats().setCurrentHpPercent(100);
-		if(owner.getSpawn().getNpcFlyState() != 0)
-		{
-			owner.setState(CreatureState.FLYING);
-		}
 	}
 
 	public void onDespawn(boolean forced)
@@ -115,7 +111,7 @@ public class NpcController extends CreatureController<Npc>
 		super.onDie(lastAttacker);
 		Npc owner = getOwner();
 
-		addTask(TaskId.DECAY, RespawnService.scheduleDecayTask(this.getOwner()));
+		//addTask(TaskId.DECAY, RespawnService.scheduleDecayTask(this.getOwner()));
 		scheduleRespawn();
 
 		PacketSendUtility.broadcastPacket(owner,
@@ -525,12 +521,7 @@ public class NpcController extends CreatureController<Npc>
 	{	
 		if(getOwner().isInInstance())
 			return;
-		
-		int instanceId = getOwner().getInstanceId();
-		if(!getOwner().getSpawn().isNoRespawn(instanceId))
-		{
-			Future<?> respawnTask = RespawnService.scheduleRespawnTask(getOwner());
-			addTask(TaskId.RESPAWN, respawnTask);
-		}
+		//Future<?> respawnTask = RespawnService.scheduleRespawnTask(getOwner());
+		//addTask(TaskId.RESPAWN, respawnTask);
 	}
 }
