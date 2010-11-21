@@ -16,17 +16,15 @@
  */
 package system.handlers.quest.ascension;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import com.aionemu.gameserver.configs.main.CustomConfig;
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.EmotionType;
 import com.aionemu.gameserver.model.PlayerClass;
 import com.aionemu.gameserver.model.gameobjects.Item;
+import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
 import com.aionemu.gameserver.model.templates.quest.QuestItems;
 import com.aionemu.gameserver.network.aion.SystemMessageId;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ASCENSION_MORPH;
@@ -35,7 +33,6 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ITEM_USAGE_ANIMATION;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_PLAY_MOVIE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
-import com.aionemu.gameserver.newmodel.gameobject.Npc;
 import com.aionemu.gameserver.questEngine.handlers.QuestHandler;
 import com.aionemu.gameserver.questEngine.model.QuestEnv;
 import com.aionemu.gameserver.questEngine.model.QuestState;
@@ -297,10 +294,10 @@ public class _1006Ascension extends QuestHandler
 		if(targetId != 211043)
 			return false;
 		Npc npc = (Npc) env.getVisibleObject();
-		if(npc.getStats().getCurrentHp() < npc.getStats().getMaxHp() / 2)
+		if(npc.getLifeStats().getCurrentHp() < npc.getLifeStats().getMaxHp() / 2)
 		{
 			PacketSendUtility.sendPacket(player, new SM_PLAY_MOVIE(0, 151));
-			npc.onDelete();
+			npc.getController().onDelete();
 		}
 		return false;
 	}

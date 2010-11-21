@@ -26,8 +26,8 @@ import org.apache.log4j.Logger;
 
 import com.aionemu.commons.database.DatabaseFactory;
 import com.aionemu.gameserver.dao.SpawnDAO;
-import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTemplate;
-import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTime;
+import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
+import com.aionemu.gameserver.model.templates.spawn.SpawnTime;
 import com.aionemu.gameserver.spawnengine.DayNightSpawnManager;
 import com.aionemu.gameserver.spawnengine.SpawnEngine;
 
