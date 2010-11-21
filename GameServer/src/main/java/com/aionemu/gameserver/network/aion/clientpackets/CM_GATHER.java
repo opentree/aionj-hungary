@@ -16,8 +16,8 @@
  */
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-import com.aionemu.gameserver.model.gameobjects.Gatherable;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
+import com.aionemu.gameserver.model.gameobjects.instance.Gatherable;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
@@ -57,11 +57,11 @@ public class CM_GATHER extends AbstractClientPacket<AionChannelHandler>
 			{
 				if(isStartGather)
 				{
-					((Gatherable)target).getController().onStartUse(player);
+					((Gatherable)target).onStartUse(player);
 				}
 				else
 				{
-					((Gatherable)target).getController().finishGathering(player);
+					((Gatherable)target).finishGathering(player);
 				}
 			}
 		}

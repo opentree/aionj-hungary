@@ -285,4 +285,49 @@ public abstract class VisibleObject extends AionObject
 	{
 		this.objectTemplate = objectTemplate;
 	}
+	
+	/**
+	 * Called when controlled object is seeing other VisibleObject.
+	 * 
+	 * @param object
+	 */
+	public void see(VisibleObject object)
+	{
+
+	}
+
+	/**
+	 * Called when controlled object no longer see some other VisibleObject.
+	 * 
+	 * @param object
+	 */
+	public void notSee(VisibleObject object, boolean isOutOfRange)
+	{
+
+	}
+
+	/**
+	 * Removes controlled object from the world.
+	 */
+	public void delete()
+	{
+		/**
+		 * despawn object from world.
+		 */
+		if(isSpawned())
+			World.getInstance().despawn(this);
+		/**
+		 * Delete object from World.
+		 */
+
+		World.getInstance().removeObject(this);
+	}
+	
+	/**
+	 *  Called when object is re-spawned
+	 */
+	public void onRespawn()
+	{
+		
+	}
 }

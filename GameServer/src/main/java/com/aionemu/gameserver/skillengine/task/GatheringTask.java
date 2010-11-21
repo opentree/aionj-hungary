@@ -17,7 +17,7 @@
 package com.aionemu.gameserver.skillengine.task;
 
 import com.aionemu.gameserver.model.DescriptionId;
-import com.aionemu.gameserver.model.gameobjects.Gatherable;
+import com.aionemu.gameserver.model.gameobjects.instance.Gatherable;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.GatherableTemplate;
 import com.aionemu.gameserver.model.templates.gather.Material;
@@ -57,7 +57,7 @@ public class GatheringTask extends AbstractCraftTask
 	@Override
 	protected void onInteractionFinish()
 	{
-		((Gatherable) responder).getController().completeInteraction();
+		((Gatherable) responder).completeInteraction();
 	}
 
 	@Override
@@ -90,6 +90,6 @@ public class GatheringTask extends AbstractCraftTask
 		PacketSendUtility.broadcastPacket(requestor, new SM_GATHER_STATUS(requestor.getObjectId(), responder.getObjectId(), 2), true);
 		PacketSendUtility.sendPacket(requestor,SM_SYSTEM_MESSAGE.EXTRACT_GATHER_SUCCESS_1_BASIC(new DescriptionId(material.getNameid())));
 		ItemService.addItem(requestor, material.getItemid(), 1);
-		((Gatherable)responder).getController().rewardPlayer(requestor);		
+		((Gatherable)responder).rewardPlayer(requestor);		
 	}
 }
