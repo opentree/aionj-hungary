@@ -68,7 +68,7 @@ public class SummonServantEffect extends SummonEffect
 				servant.getController().onDespawn(true);
 			}
 		}, 60 * 1000);
-		servant.getController().addTask(TaskId.DESPAWN, task);
+		servant.addTask(TaskId.DESPAWN, task);
 	}
 
 	@Override

@@ -61,8 +61,8 @@ public class EnchantItemAction extends AbstractItemAction
 	{
 		PacketSendUtility.sendPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(),
 		parentItem.getObjectId(), parentItem.getItemTemplate().getTemplateId(), 5000, 0, 0));
-		player.getController().cancelTask(TaskId.ITEM_USE);
-		player.getController().addNewTask(TaskId.ITEM_USE,
+		player.cancelTask(TaskId.ITEM_USE);
+		player.addNewTask(TaskId.ITEM_USE,
 		ThreadPoolManager.getInstance().schedule(new Runnable(){
 			@Override
 			public void run()

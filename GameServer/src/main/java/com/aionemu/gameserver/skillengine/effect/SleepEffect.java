@@ -51,7 +51,7 @@ public class SleepEffect extends EffectTemplate
 	public void startEffect(final Effect effect)
 	{
 		final Creature effected = effect.getEffected();
-		effected.getController().cancelCurrentSkill(); 
+		effected.cancelCurrentSkill(); 
 		effected.getEffectController().setAbnormal(EffectId.SLEEP.getEffectId());
 		
 		effected.getObserveController().attach(

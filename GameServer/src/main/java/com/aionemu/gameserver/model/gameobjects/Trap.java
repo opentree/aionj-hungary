@@ -18,7 +18,6 @@ package com.aionemu.gameserver.model.gameobjects;
 
 import com.aionemu.gameserver.controllers.NpcController;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 
 /**
@@ -44,9 +43,9 @@ public class Trap extends Npc
 	 * @param spawnTemplate
 	 * @param objectTemplate
 	 */
-	public Trap(int objId, NpcController controller, SpawnTemplate spawnTemplate, VisibleObjectTemplate objectTemplate)
+	public Trap(int objId, NpcController controller, SpawnTemplate spawnTemplate)
 	{
-		super(objId, controller, spawnTemplate, objectTemplate);
+		super(objId, controller, spawnTemplate);
 	}
 
 	/**

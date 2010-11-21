@@ -30,11 +30,11 @@ import com.aionemu.gameserver.model.EmotionType;
 import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.alliance.PlayerAllianceEvent;
 import com.aionemu.gameserver.model.gameobjects.Creature;
-import com.aionemu.gameserver.model.gameobjects.Kisk;
 import com.aionemu.gameserver.model.gameobjects.GroupGate;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.Summon;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
+import com.aionemu.gameserver.model.gameobjects.instance.Kisk;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.SkillListEntry;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
@@ -56,7 +56,6 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_PET;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_PLAYER_INFO;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_PLAYER_STATE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_PRIVATE_STORE;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_SKILL_CANCEL;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SKILL_LIST;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_STATS_INFO;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SUMMON_PANEL;
@@ -454,26 +453,8 @@ public class PlayerController extends CreatureController<Player>
 	@Override
 	public void onStartMove()
 	{
-		cancelCurrentSkill();
+		getOwner().cancelCurrentSkill();
 		super.onStartMove();
-	}
-	
-	/**
-	 * Cancel current skill and remove cooldown
-	 */
-	@Override
-	public void cancelCurrentSkill()
-	{
-		Player player = getOwner();
-		Skill castingSkill = player.getCastingSkill();
-		if(castingSkill != null)
-		{
-			int skillId = castingSkill.getSkillTemplate().getSkillId();
-			player.removeSkillCoolDown(skillId);
-			player.setCasting(null);
-			PacketSendUtility.sendPacket(player, new SM_SKILL_CANCEL(player, skillId));
-			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_SKILL_CANCELED());
-		}	
 	}
 
 	/**
@@ -615,7 +596,7 @@ public class PlayerController extends CreatureController<Player>
 				stopProtectionActiveTask();
 			}
 		}, 60000);
-		addTask(TaskId.PROTECTION_ACTIVE, task);
+		getOwner().addTask(TaskId.PROTECTION_ACTIVE, task);
 	}
 
 	/**
@@ -623,7 +604,7 @@ public class PlayerController extends CreatureController<Player>
 	 */
 	public void stopProtectionActiveTask()
 	{
-		cancelTask(TaskId.PROTECTION_ACTIVE);
+		getOwner().cancelTask(TaskId.PROTECTION_ACTIVE);
 		Player player = getOwner();
 		if(player != null && player.isSpawned())
 		{

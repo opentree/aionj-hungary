@@ -72,7 +72,7 @@ public class PunishmentService
 	 */
 	public static void stopPrisonTask(Player player, boolean save)
 	{
-		Future<?> prisonTask = player.getController().getTask(TaskId.PRISON);
+		Future<?> prisonTask = player.getTask(TaskId.PRISON);
 		if(prisonTask != null)
 		{
 			if(save)
@@ -82,7 +82,7 @@ public class PunishmentService
 					delay = 0;
 				player.setPrisonTimer(delay);
 			}
-			player.getController().cancelTask(TaskId.PRISON);
+			player.cancelTask(TaskId.PRISON);
 		}
 	}
 
@@ -121,7 +121,7 @@ public class PunishmentService
 	private static void schedulePrisonTask(final Player player, long prisonTimer)
 	{
 		player.setPrisonTimer(prisonTimer);
-		player.getController().addTask(TaskId.PRISON, ThreadPoolManager.getInstance().schedule(new Runnable(){
+		player.addTask(TaskId.PRISON, ThreadPoolManager.getInstance().schedule(new Runnable(){
 			@Override
 			public void run()
 			{

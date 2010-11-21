@@ -143,7 +143,7 @@ public class SummonController extends CreatureController<Summon>
 	private void checkCurrentHp()
 	{
 		if(!getOwner().getLifeStats().isFullyRestoredHp())
-			getOwner().getController().addNewTask(TaskId.RESTORE,
+			getOwner().addNewTask(TaskId.RESTORE,
 				LifeStatsRestoreService.getInstance().scheduleHpRestoreTask(getOwner().getLifeStats()));
 	}
 
@@ -168,7 +168,7 @@ public class SummonController extends CreatureController<Summon>
 		Player master = getOwner().getMaster();
 		PacketSendUtility.sendPacket(master, SM_SYSTEM_MESSAGE.SUMMON_ATTACKMODE(getOwner().getNameId()));
 		PacketSendUtility.sendPacket(master, new SM_SUMMON_UPDATE(getOwner()));
-		getOwner().getController().cancelTask(TaskId.RESTORE);
+		getOwner().cancelTask(TaskId.RESTORE);
 	}
 
 	@Override

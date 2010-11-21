@@ -24,18 +24,14 @@ import org.apache.log4j.Logger;
 
 import com.aionemu.commons.utils.Rnd;
 import com.aionemu.gameserver.controllers.RiftController;
-import com.aionemu.gameserver.controllers.effect.EffectController;
-import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.Race;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.model.templates.NpcTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_DELETE;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.utils.idfactory.IDFactory;
-import com.aionemu.gameserver.world.KnownList;
 import com.aionemu.gameserver.world.World;
 
 /**
@@ -106,12 +102,8 @@ public class RiftSpawnManager
 
 	private static Npc spawnInstance(int instanceIndex, SpawnTemplate spawnTemplate, RiftController riftController)
 	{
-		NpcTemplate masterObjectTemplate = DataManager.NPC_DATA.getNpcTemplate(spawnTemplate.getTemplateId());
 		Npc npc = new Npc(IDFactory.getInstance().nextId(),riftController,
-			spawnTemplate, masterObjectTemplate);
-		
-		npc.setKnownlist(new KnownList(npc));
-		npc.setEffectController(new EffectController(npc));
+			spawnTemplate);
 		npc.getController().onRespawn();
 
 		World world = World.getInstance();

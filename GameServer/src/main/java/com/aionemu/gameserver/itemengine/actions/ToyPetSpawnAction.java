@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.gameobjects.Item;
-import com.aionemu.gameserver.model.gameobjects.Kisk;
+import com.aionemu.gameserver.model.gameobjects.instance.Kisk;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ITEM_USAGE_ANIMATION;
@@ -107,7 +107,7 @@ public class ToyPetSpawnAction extends AbstractItemAction
 		}, 7200000);
 		// Fixed 2 hours 2 * 60 * 60 * 1000
 		
-		kisk.getController().addTask(TaskId.DESPAWN, task);
+		kisk.addTask(TaskId.DESPAWN, task);
 		
 		//ShowAction
 		PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(),

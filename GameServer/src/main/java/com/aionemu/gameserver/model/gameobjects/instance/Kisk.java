@@ -14,28 +14,41 @@
  *  You should have received a copy of the GNU General Public License
  *  along with aion-unique.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aionemu.gameserver.model.gameobjects;
+package com.aionemu.gameserver.model.gameobjects.instance;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.aionemu.gameserver.controllers.NpcController;
+import com.aionemu.gameserver.model.EmotionType;
 import com.aionemu.gameserver.model.Race;
+import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.alliance.PlayerAllianceMember;
+import com.aionemu.gameserver.model.gameobjects.Creature;
+import com.aionemu.gameserver.model.gameobjects.Monster;
+import com.aionemu.gameserver.model.gameobjects.Npc;
+import com.aionemu.gameserver.model.gameobjects.NpcObjectType;
+import com.aionemu.gameserver.model.gameobjects.VisibleObject;
+import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
+import com.aionemu.gameserver.model.gameobjects.player.RequestResponseHandler;
 import com.aionemu.gameserver.model.legion.Legion;
-import com.aionemu.gameserver.model.templates.NpcTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.model.templates.stats.KiskStatsTemplate;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_KISK_UPDATE;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_QUESTION_WINDOW;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
+import com.aionemu.gameserver.services.KiskService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
+import com.aionemu.gameserver.utils.ThreadPoolManager;
+import com.aionemu.gameserver.world.World;
 
 /**
  * @author Sarynth
  *
  */
-public class Kisk extends Npc
+public class Kisk extends Npc implements ISummoned
 {
 	private String				ownerName;
 	private Legion				ownerLegion;
@@ -58,21 +71,16 @@ public class Kisk extends Npc
 	 * @param spawnTemplate
 	 * @param objectTemplate
 	 */
-	public Kisk(int objId, NpcController controller, SpawnTemplate spawnTemplate, NpcTemplate npcTemplate, Player owner)
+	public Kisk(int objId, SpawnTemplate spawnTemplate, Player owner)
 	{
-		super(objId, controller, spawnTemplate, npcTemplate);
+		super(objId, null, spawnTemplate);
 		
-		this.kiskStatsTemplate = npcTemplate.getKiskStatsTemplate();
+		this.kiskStatsTemplate = this.getObjectTemplate().getKiskStatsTemplate();
 		if (this.kiskStatsTemplate == null)
 			this.kiskStatsTemplate = new KiskStatsTemplate();
 		
 		remainingResurrections = this.kiskStatsTemplate.getMaxResurrects();
 		kiskSpawnTime = System.currentTimeMillis() / 1000;
-		
-		this.ownerName = owner.getName();
-		this.ownerLegion = owner.getLegion();
-		this.ownerRace = owner.getCommonData().getRace();
-		this.ownerObjectId = owner.getObjectId();
 	}
 	
 	/**
@@ -346,4 +354,119 @@ public class Kisk extends Npc
 		return this.ownerObjectId;
 	}
 
+
+	@Override
+	public void onAttack(Creature creature, int skillId, TYPE type, int damage)
+	{
+
+		if (this.getLifeStats().isFullyRestoredHp())
+		{
+			List<Player> members = this.getCurrentMemberList();
+			for(Player member : members)
+			{
+				PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.STR_BINDSTONE_IS_ATTACKED);
+			}
+		}
+		
+		super.onAttack(creature, skillId, type, damage);
+		
+	}
+	
+	@Override
+	public void onDespawn(boolean forced)
+	{
+		this.broadcastPacket(SM_SYSTEM_MESSAGE.STR_BINDSTONE_IS_REMOVED);
+		removeKisk();
+	}
+	
+	@Override
+	public void onDie(Creature lastAttacker)
+	{
+		PacketSendUtility.broadcastPacket(this, new SM_EMOTION(this, EmotionType.DIE, 0, 0));
+		this.broadcastPacket(SM_SYSTEM_MESSAGE.STR_BINDSTONE_IS_DESTROYED);
+		removeKisk();
+	}
+	
+	private void removeKisk()
+	{
+		KiskService.removeKisk(this);
+		final Kisk kisk = this;
+		// Schedule World Removal
+		addTask(TaskId.DECAY, ThreadPoolManager.getInstance().schedule(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				if (kisk != null && kisk.isSpawned())
+					World.getInstance().despawn(kisk);
+			}
+		}, 3 * 1000));
+	}
+	
+	@Override
+	public void onDialogRequest(Player player)
+	{
+		
+		if (player.getKisk() == this)
+		{
+			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_BINDSTONE_ALREADY_REGISTERED);
+			return;
+		}
+		
+		if (canBind(player))
+		{
+			RequestResponseHandler responseHandler = new RequestResponseHandler(this) {
+				
+				@Override
+				public void acceptRequest(Creature requester, Player responder)
+				{
+					Kisk kisk = (Kisk)requester;
+					
+					// Check again if it's full (If they waited to press OK)
+					if (!kisk.canBind(responder))
+					{
+						PacketSendUtility.sendPacket(responder, SM_SYSTEM_MESSAGE.STR_CANNOT_REGISTER_BINDSTONE_HAVE_NO_AUTHORITY);
+						return;
+					}
+					KiskService.onBind(kisk, responder);
+				}
+	
+				@Override
+				public void denyRequest(Creature requester, Player responder)
+				{
+					// Nothing Happens
+				}
+			};
+			
+			boolean requested = player.getResponseRequester().putRequest(SM_QUESTION_WINDOW.STR_BIND_TO_KISK, responseHandler);
+			if (requested)
+			{
+				PacketSendUtility.sendPacket(player, new SM_QUESTION_WINDOW(SM_QUESTION_WINDOW.STR_BIND_TO_KISK, player.getObjectId()));
+			}
+		}
+		else if (getCurrentMemberCount() >= getMaxMembers())
+		{
+			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_CANNOT_REGISTER_BINDSTONE_FULL);
+		}
+		else
+		{
+			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_CANNOT_REGISTER_BINDSTONE_HAVE_NO_AUTHORITY);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned#setMaster(com.aionemu.gameserver.model.gameobjects.Creature)
+	 */
+	@Override
+	public void setMaster(Creature creature)
+	{
+		if (creature instanceof Player)
+		{
+			Player player = (Player)creature;
+			this.ownerName = player.getName();
+			this.ownerLegion = player.getLegion();
+			this.ownerRace = player.getCommonData().getRace();
+			this.ownerObjectId = player.getObjectId();
+		}
+	}
 }

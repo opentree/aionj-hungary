@@ -46,7 +46,7 @@ public class SiegeMineController extends SiegeNpcController
 				owner.setCasting(null);
 				owner.getEffectController().removeAllEffects();
 				owner.setState(CreatureState.DEAD);
-				addTask(TaskId.DECAY, RespawnService.scheduleDecayTask(this.getOwner()));
+				this.getOwner().addTask(TaskId.DECAY, RespawnService.scheduleDecayTask(this.getOwner()));
 				scheduleRespawn();
 				PacketSendUtility.broadcastPacket(owner,
 					new SM_EMOTION(owner, EmotionType.DIE, 0, object == null ? 0 : object.getObjectId()));

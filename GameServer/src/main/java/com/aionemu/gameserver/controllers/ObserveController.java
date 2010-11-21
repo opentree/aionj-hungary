@@ -111,7 +111,7 @@ public class ObserveController
 	/**
 	 * notify that creature attacked
 	 */
-	protected void notifyAttackedObservers(Creature creature)
+	public void notifyAttackedObservers(Creature creature)
 	{
 		while(!attackedObservers.isEmpty())
 		{

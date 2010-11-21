@@ -25,30 +25,27 @@ import org.apache.log4j.Logger;
 
 import com.aionemu.commons.database.dao.DAOManager;
 import com.aionemu.gameserver.controllers.GroupGateController;
-import com.aionemu.gameserver.controllers.KiskController;
 import com.aionemu.gameserver.controllers.NpcController;
 import com.aionemu.gameserver.controllers.PostmanController;
 import com.aionemu.gameserver.controllers.ServantController;
 import com.aionemu.gameserver.controllers.SummonController;
-import com.aionemu.gameserver.controllers.effect.EffectController;
 import com.aionemu.gameserver.dao.SpawnDAO;
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.dataholders.NpcData;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.GroupGate;
-import com.aionemu.gameserver.model.gameobjects.Kisk;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.Servant;
 import com.aionemu.gameserver.model.gameobjects.Summon;
 import com.aionemu.gameserver.model.gameobjects.Trap;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
+import com.aionemu.gameserver.model.gameobjects.instance.Kisk;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.NpcTemplate;
 import com.aionemu.gameserver.model.templates.WorldMapTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.model.templates.stats.SummonStatsTemplate;
 import com.aionemu.gameserver.utils.idfactory.IDFactory;
-import com.aionemu.gameserver.world.KnownList;
 import com.aionemu.gameserver.world.StaticObjectKnownList;
 import com.aionemu.gameserver.world.World;
 import com.aionemu.gameserver.world.exceptions.NotSetPositionException;
@@ -129,11 +126,7 @@ public class SpawnEngine
 	 */
 	public Trap spawnTrap(SpawnTemplate spawn, int instanceIndex, Creature creator, int skillId)
 	{
-		NpcTemplate npcTemplate = DataManager.NPC_DATA.getNpcTemplate(spawn.getTemplateId());
-		Trap trap = new Trap(IDFactory.getInstance().nextId(), new NpcController(), spawn,
-			npcTemplate);
-		trap.setKnownlist(new KnownList(trap));
-		trap.setEffectController(new EffectController(trap));
+		Trap trap = new Trap(IDFactory.getInstance().nextId(), new NpcController(), spawn);
 		trap.setCreator(creator);
 		trap.setSkillId(skillId);
 		trap.getController().onRespawn();
@@ -154,7 +147,6 @@ public class SpawnEngine
 		GroupGate groupgate = new GroupGate(IDFactory.getInstance().nextId(), new GroupGateController(), spawn,
 			npcTemplate);
 		groupgate.setKnownlist(new StaticObjectKnownList(groupgate));
-		groupgate.setEffectController(new EffectController(groupgate));
 		groupgate.setCreator(creator);
 		groupgate.getController().onRespawn();
 		bringIntoWorld(groupgate, spawn, instanceIndex);
@@ -169,11 +161,8 @@ public class SpawnEngine
 	 */
 	public Kisk spawnKisk(SpawnTemplate spawn, int instanceIndex, Player creator)
 	{
-		NpcTemplate template = DataManager.NPC_DATA.getNpcTemplate(spawn.getTemplateId());
-		Kisk kisk = new Kisk(IDFactory.getInstance().nextId(), new KiskController(),
-			spawn, template, creator);
+		Kisk kisk = new Kisk(IDFactory.getInstance().nextId(), spawn, creator);
 		kisk.setKnownlist(new StaticObjectKnownList(kisk));
-		kisk.setEffectController(new EffectController(kisk));
 		kisk.getController().onRespawn();
 		bringIntoWorld(kisk, spawn, instanceIndex);
 		return kisk;
@@ -196,7 +185,7 @@ public class SpawnEngine
 		float z = recipient.getZ();
 		byte heading = recipient.getHeading();
 		SpawnTemplate spawn = addNewSpawn(worldId, instanceId, 798044, x, y, z, heading, 0, 0, false, true);
-		Npc postman = new Npc(iDFactory.nextId(), new PostmanController(recipient.getObjectId()), spawn, template);
+		Npc postman = new Npc(iDFactory.nextId(), new PostmanController(recipient.getObjectId()), spawn);
 		postman.setKnownlist(new StaticObjectKnownList(postman));
 		bringIntoWorld(postman, spawn, instanceId);
 	}
@@ -212,11 +201,7 @@ public class SpawnEngine
 	 */
 	public Servant spawnServant(SpawnTemplate spawn, int instanceIndex, Creature creator, int skillId, int hpRatio)
 	{
-		NpcTemplate npcTemplate = DataManager.NPC_DATA.getNpcTemplate(spawn.getTemplateId());
-		Servant servant = new Servant(IDFactory.getInstance().nextId(), new ServantController(), spawn,
-			npcTemplate);
-		servant.setKnownlist(new KnownList(servant));
-		servant.setEffectController(new EffectController(servant));
+		Servant servant = new Servant(IDFactory.getInstance().nextId(), new ServantController(), spawn);
 		servant.setCreator(creator);
 		servant.setSkillId(skillId);
 		servant.setTarget(creator.getTarget());
@@ -248,8 +233,6 @@ public class SpawnEngine
 		SummonStatsTemplate statsTemplate = DataManager.SUMMON_STATS_DATA.getSummonTemplate(npcId, level);
 		Summon summon = new Summon(IDFactory.getInstance().nextId(), new SummonController(), spawn,
 			npcTemplate, statsTemplate, level);
-		summon.setKnownlist(new KnownList(summon));
-		summon.setEffectController(new EffectController(summon));
 		summon.setMaster(creator);
 
 		bringIntoWorld(summon, spawn, instanceId);

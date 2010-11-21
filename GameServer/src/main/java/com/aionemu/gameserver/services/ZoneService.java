@@ -322,7 +322,7 @@ public final class ZoneService extends AbstractFIFOPeriodicTaskManager<Player>
 	{
 		if(isDrowning(player))
 		{
-			player.getController().cancelTask(TaskId.DROWN);
+			player.cancelTask(TaskId.DROWN);
 		}
 		
 	}
@@ -334,7 +334,7 @@ public final class ZoneService extends AbstractFIFOPeriodicTaskManager<Player>
 	 */
 	private boolean isDrowning(Player player)
 	{
-		return player.getController().getTask(TaskId.DROWN) == null ? false : true;
+		return player.getTask(TaskId.DROWN) == null ? false : true;
 	}
 	
 	/**
@@ -343,7 +343,7 @@ public final class ZoneService extends AbstractFIFOPeriodicTaskManager<Player>
 	 */
 	private void scheduleDrowningTask(final Player player)
 	{
-		player.getController().addTask(TaskId.DROWN, ThreadPoolManager.getInstance().scheduleAtFixedRate(new Runnable(){
+		player.addTask(TaskId.DROWN, ThreadPoolManager.getInstance().scheduleAtFixedRate(new Runnable(){
 			@Override
 			public void run()
 			{

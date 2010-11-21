@@ -271,7 +271,7 @@ public class Skill
 			if (effector instanceof Player)
 			{
 				Player player = (Player)effector;
-				player.getController().cancelCurrentSkill();
+				player.cancelCurrentSkill();
 				PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_ATTACK_TOO_FAR_FROM_TARGET());
 				return;
 			}

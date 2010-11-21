@@ -17,15 +17,18 @@
 package com.aionemu.gameserver.model.gameobjects;
 
 import java.util.Map;
+import java.util.concurrent.Future;
 
 import javolution.util.FastMap;
 
 import org.apache.log4j.Logger;
 
+import com.aionemu.commons.utils.Rnd;
 import com.aionemu.gameserver.controllers.CreatureController;
 import com.aionemu.gameserver.controllers.ObserveController;
 import com.aionemu.gameserver.controllers.attack.AggroList;
 import com.aionemu.gameserver.controllers.effect.EffectController;
+import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.TribeClass;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureSeeState;
@@ -33,12 +36,16 @@ import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureVisualState;
 import com.aionemu.gameserver.model.gameobjects.stats.CreatureGameStats;
 import com.aionemu.gameserver.model.gameobjects.stats.CreatureLifeStats;
+import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
 import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_SKILL_CANCEL;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
 import com.aionemu.gameserver.skillengine.effect.EffectId;
 import com.aionemu.gameserver.skillengine.model.Skill;
 import com.aionemu.gameserver.taskmanager.tasks.PacketBroadcaster;
 import com.aionemu.gameserver.taskmanager.tasks.PacketBroadcaster.BroadcastMode;
+import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.world.WorldPosition;
 
 /**
@@ -50,6 +57,8 @@ import com.aionemu.gameserver.world.WorldPosition;
 public abstract class Creature extends VisibleObject
 {
 	private static final Logger log = Logger.getLogger(Creature.class);
+
+	private FastMap<Integer, Future<?>> tasks = new FastMap<Integer, Future<?>>().shared();
 
 	private CreatureLifeStats<? extends Creature> lifeStats;
 	private CreatureGameStats<? extends Creature> gameStats;
@@ -621,4 +630,133 @@ public abstract class Creature extends VisibleObject
 			return;
 		skillCoolDowns.remove(skillId);
 	}
+	
+	/**
+	 * 
+	 * @param taskId
+	 * @return
+	 */
+	public Future<?> getTask(TaskId taskId)
+	{
+		return tasks.get(taskId.ordinal());
+	}
+	
+	/**
+	 * 
+	 * @param taskId
+	 * @return
+	 */
+	public boolean hasTask(TaskId taskId)
+	{
+		return tasks.containsKey(taskId.ordinal());
+	}
+
+	/**
+	 * 
+	 * @param taskId
+	 */
+	public void cancelTask(TaskId taskId)
+	{
+		Future<?> task = tasks.remove(taskId.ordinal());
+		if(task != null)
+		{
+			task.cancel(false);
+		}
+	}
+
+	/**
+	 *  If task already exist - it will be canceled
+	 * @param taskId
+	 * @param task
+	 */
+	public void addTask(TaskId taskId, Future<?> task)
+	{
+		cancelTask(taskId);
+		tasks.put(taskId.ordinal(), task);
+	}
+	
+	/**
+	 *  If task already exist - it will not be replaced
+	 * @param taskId
+	 * @param task
+	 */
+	public void addNewTask(TaskId taskId, Future<?> task)
+	{
+		tasks.putIfAbsent(taskId.ordinal(), task);
+	}
+
+	/**
+	 * Cancel all tasks associated with this controller
+	 * (when deleting object)
+	 */
+	public void cancelAllTasks()
+	{
+		for(Future<?> task : tasks.values())
+		{
+			if(task != null)
+			{
+				task.cancel(true);
+			}
+		}
+		// FIXME: This can fill error logs with NPE if left null. Should never happen...
+		tasks = new FastMap<Integer, Future<?>>().shared();
+	}
+	
+	@Override
+	public void delete()
+	{
+		cancelAllTasks();
+		super.delete();
+	}
+	
+	/**
+	 * Perform tasks on Creature death
+	 */
+	public void onDie(Creature lastAttacker)
+	{
+		this.setCasting(null);
+		this.getEffectController().removeAllEffects();
+		this.setState(CreatureState.DEAD);
+	}
+	
+	/**
+	 * Perform tasks when Creature was attacked //TODO may be pass only Skill object - but need to add properties in it
+	 */
+	public void onAttack(Creature creature, int skillId, TYPE type, int damage)
+	{
+		Skill skill = getCastingSkill();
+		if (skill != null && skill.getSkillTemplate().getCancelRate()>0)
+		{
+			int cancelRate = skill.getSkillTemplate().getCancelRate();
+			int conc = getGameStats().getCurrentStat(StatEnum.CONCENTRATION)/10;
+			float maxHp = getGameStats().getCurrentStat(StatEnum.MAXHP);
+			float cancel = (cancelRate - conc)+((damage)/maxHp*50);
+			if(Rnd.get(100) < cancel)
+				cancelCurrentSkill();
+		}
+		getObserveController().notifyAttackedObservers(creature);
+		getAggroList().addDamage(creature, damage);
+	}
+
+	/**
+	 * Perform tasks when Creature was attacked
+	 */
+	public final void onAttack(Creature creature, int damage)
+	{
+		this.onAttack(creature, 0, TYPE.REGULAR, damage);
+	}
+	
+	/** 
+ 	* Cancel current skill and remove cooldown 
+ 	*/ 
+ 	public void cancelCurrentSkill() 
+ 	{ 
+		Skill castingSkill = getCastingSkill(); 
+		if(castingSkill != null) 
+		{ 
+			removeSkillCoolDown(castingSkill.getSkillTemplate().getSkillId()); 
+			setCasting(null); 
+			PacketSendUtility.broadcastPacketAndReceive(this, new SM_SKILL_CANCEL(this, castingSkill.getSkillTemplate().getSkillId())); 
+		}        
+ 	} 
 }

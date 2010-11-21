@@ -30,7 +30,7 @@
  		     */ 
  		    public GroupGate(int objId, NpcController controller, SpawnTemplate spawnTemplate, VisibleObjectTemplate objectTemplate) 
  		    { 
- 		        super(objId, controller, spawnTemplate, objectTemplate); 
+ 		        super(objId, controller, spawnTemplate); 
  		    } 
  		 
  		    /** 

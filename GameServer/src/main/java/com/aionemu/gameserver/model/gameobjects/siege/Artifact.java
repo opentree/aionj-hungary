@@ -18,7 +18,6 @@ package com.aionemu.gameserver.model.gameobjects.siege;
 
 import com.aionemu.gameserver.controllers.siege.ArtifactController;
 import com.aionemu.gameserver.model.gameobjects.Npc;
-import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 
 /**
@@ -32,12 +31,10 @@ public class Artifact extends Npc
 	 * @param objId
 	 * @param controller
 	 * @param spawnTemplate
-	 * @param objectTemplate
 	 */
-	public Artifact(int objId, ArtifactController controller, SpawnTemplate spawnTemplate,
-		VisibleObjectTemplate objectTemplate)
+	public Artifact(int objId, ArtifactController controller, SpawnTemplate spawnTemplate)
 	{
-		super(objId, controller, spawnTemplate, objectTemplate);
+		super(objId, controller, spawnTemplate);
 		// TODO Auto-generated constructor stub
 	}
 	

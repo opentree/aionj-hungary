@@ -18,6 +18,7 @@ package com.aionemu.gameserver.model.gameobjects;
 
 import com.aionemu.gameserver.controllers.CreatureController;
 import com.aionemu.gameserver.controllers.SummonController;
+import com.aionemu.gameserver.controllers.effect.EffectController;
 import com.aionemu.gameserver.model.TribeClass;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.stats.SummonGameStats;
@@ -26,6 +27,7 @@ import com.aionemu.gameserver.model.templates.NpcTemplate;
 import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.model.templates.stats.SummonStatsTemplate;
+import com.aionemu.gameserver.world.KnownList;
 import com.aionemu.gameserver.world.WorldPosition;
 
 /**
@@ -79,7 +81,8 @@ public class Summon extends Creature
 		this.level = level;
 		super.setGameStats(new SummonGameStats(this, statsTemplate));
 		super.setLifeStats(new SummonLifeStats(this));
-		
+		super.setEffectController(new EffectController(this));
+		super.setKnownlist(new KnownList(this));
 		this.mode = SummonMode.GUARD;
 	}
 

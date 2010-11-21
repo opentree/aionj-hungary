@@ -76,12 +76,13 @@ import com.aionemu.gameserver.world.WorldType;
  */
 public class NpcController extends CreatureController<Npc>
 {
+	
 	@Override
 	public void onRespawn()
 	{
 		super.onRespawn();
 		
-		cancelTask(TaskId.DECAY);
+		getOwner().cancelTask(TaskId.DECAY);
 		Npc owner = getOwner();
 		
 		//set state from npc templates
@@ -96,7 +97,7 @@ public class NpcController extends CreatureController<Npc>
 	public void onDespawn(boolean forced)
 	{
 		if(forced)
-			cancelTask(TaskId.DECAY);
+			getOwner().cancelTask(TaskId.DECAY);
 
 		Npc owner = getOwner();
 		if(owner == null || !owner.isSpawned())
@@ -111,7 +112,7 @@ public class NpcController extends CreatureController<Npc>
 		super.onDie(lastAttacker);
 		Npc owner = getOwner();
 
-		addTask(TaskId.DECAY, RespawnService.scheduleDecayTask(this.getOwner()));
+		getOwner().addTask(TaskId.DECAY, RespawnService.scheduleDecayTask(this.getOwner()));
 		scheduleRespawn();
 
 		PacketSendUtility.broadcastPacket(owner,
@@ -525,7 +526,7 @@ public class NpcController extends CreatureController<Npc>
 		if(getOwner().getSpawn().getInterval() > 0)
 		{
 			Future<?> respawnTask = RespawnService.scheduleRespawnTask(getOwner());
-			addTask(TaskId.RESPAWN, respawnTask);
+			getOwner().addTask(TaskId.RESPAWN, respawnTask);
 		}
 	}
 }

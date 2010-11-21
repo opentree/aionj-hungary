@@ -56,7 +56,7 @@ public class StaggerEffect extends EffectTemplate
 	public void startEffect(Effect effect)
 	{
 		final Creature effected = effect.getEffected();
-		effected.getController().cancelCurrentSkill(); 
+		effected.cancelCurrentSkill(); 
 		effect.getEffected().getEffectController().setAbnormal(EffectId.STAGGER.getEffectId());
 		PacketSendUtility.broadcastPacketAndReceive(effect.getEffected(), new SM_FORCED_MOVE(effect.getEffector(), effect.getEffected()));
 	}

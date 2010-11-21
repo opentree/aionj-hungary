@@ -21,7 +21,6 @@ import com.aionemu.gameserver.model.Race;
 import com.aionemu.gameserver.model.TribeClass;
 import com.aionemu.gameserver.model.siege.SiegeRace;
 import com.aionemu.gameserver.model.templates.NpcTemplate;
-import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 
 /**
@@ -36,12 +35,10 @@ public class SiegeGuard extends SiegeNpc
 	 * @param objId
 	 * @param controller
 	 * @param spawnTemplate
-	 * @param objectTemplate
 	 */
-	public SiegeGuard(int objId, SiegeGuardController controller, SpawnTemplate spawnTemplate,
-		VisibleObjectTemplate objectTemplate)
+	public SiegeGuard(int objId, SiegeGuardController controller, SpawnTemplate spawnTemplate)
 	{
-		super(objId, controller, spawnTemplate, objectTemplate);
+		super(objId, controller, spawnTemplate);
 		NpcTemplate npcTemplate = (NpcTemplate)objectTemplate;
 		if (getSiegeRace()==SiegeRace.ELYOS)
 		{

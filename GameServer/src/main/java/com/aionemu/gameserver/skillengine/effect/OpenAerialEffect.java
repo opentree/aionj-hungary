@@ -55,7 +55,7 @@ public class OpenAerialEffect extends EffectTemplate
 	public void startEffect(Effect effect)
 	{
 		final Creature effected = effect.getEffected();
-		effected.getController().cancelCurrentSkill(); 
+		effected.cancelCurrentSkill(); 
 		effected.getEffectController().setAbnormal(EffectId.OPENAERIAL.getEffectId());
 		PacketSendUtility.broadcastPacketAndReceive(effected, new SM_FORCED_MOVE(effect.getEffector(), effected));
 	}

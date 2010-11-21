@@ -44,11 +44,11 @@ import com.aionemu.gameserver.model.TribeClass;
 import com.aionemu.gameserver.model.alliance.PlayerAlliance;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.Item;
-import com.aionemu.gameserver.model.gameobjects.Kisk;
 import com.aionemu.gameserver.model.gameobjects.Monster;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.PersistentState;
 import com.aionemu.gameserver.model.gameobjects.Summon;
+import com.aionemu.gameserver.model.gameobjects.instance.Kisk;
 import com.aionemu.gameserver.model.gameobjects.siege.SiegeNpc;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureVisualState;
@@ -60,10 +60,14 @@ import com.aionemu.gameserver.model.legion.Legion;
 import com.aionemu.gameserver.model.legion.LegionMember;
 import com.aionemu.gameserver.model.templates.stats.PlayerStatsTemplate;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_SKILL_CANCEL;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.services.BrokerService;
 import com.aionemu.gameserver.services.ExchangeService;
 import com.aionemu.gameserver.services.PlayerService;
+import com.aionemu.gameserver.skillengine.model.Skill;
 import com.aionemu.gameserver.skillengine.task.CraftingTask;
+import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.utils.rates.Rates;
 import com.aionemu.gameserver.utils.rates.RegularRates;
@@ -721,7 +725,7 @@ public class Player extends Creature
 	 */
 	public void onLoggedIn()
 	{
-		getController().addTask(TaskId.PLAYER_UPDATE,
+		addTask(TaskId.PLAYER_UPDATE,
 		ThreadPoolManager.getInstance().scheduleAtFixedRate(
 			new GeneralUpdateTask(this), OptionsConfig.PLAYER_GENERAL * 1000, OptionsConfig.PLAYER_GENERAL * 1000));
 	}
@@ -1392,5 +1396,22 @@ public class Player extends Creature
 	public boolean isInEditMode()
 	{
 		return edit_mode;
+	}
+	
+	/**
+	 * Cancel current skill and remove cooldown
+	 */
+	@Override
+	public void cancelCurrentSkill()
+	{
+		Skill castingSkill = getCastingSkill();
+		if(castingSkill != null)
+		{
+			int skillId = castingSkill.getSkillTemplate().getSkillId();
+			removeSkillCoolDown(skillId);
+			setCasting(null);
+			PacketSendUtility.sendPacket(this, new SM_SKILL_CANCEL(this, skillId));
+			PacketSendUtility.sendPacket(this, SM_SYSTEM_MESSAGE.STR_SKILL_CANCELED());
+		}	
 	}
 }

@@ -17,7 +17,6 @@
 package com.aionemu.gameserver.model.gameobjects.siege;
 
 import com.aionemu.gameserver.controllers.siege.SiegeGeneralController;
-import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 
 /**
@@ -32,12 +31,10 @@ public class SiegeGeneral extends SiegeNpc
 	 * @param objId
 	 * @param controller
 	 * @param spawnTemplate
-	 * @param objectTemplate
 	 */
-	public SiegeGeneral(int objId, SiegeGeneralController controller, SpawnTemplate spawnTemplate,
-		VisibleObjectTemplate objectTemplate)
+	public SiegeGeneral(int objId, SiegeGeneralController controller, SpawnTemplate spawnTemplate)
 	{
-		super(objId, controller, spawnTemplate, objectTemplate);
+		super(objId, controller, spawnTemplate);
 		// TODO Auto-generated constructor stub
 	}
 	

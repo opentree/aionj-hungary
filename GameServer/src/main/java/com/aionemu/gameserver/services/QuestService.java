@@ -423,7 +423,7 @@ public final class QuestService
 				player.getController().updateNearbyQuests();					
 			}
 		}, timeInSeconds * 1000);
-		player.getController().addTask(TaskId.QUEST_TIMER, task);
+		player.addTask(TaskId.QUEST_TIMER, task);
 		PacketSendUtility.sendPacket(player, new SM_QUEST_ACCEPTED(id, timeInSeconds));			
 	return true;
 	}
@@ -433,7 +433,7 @@ public final class QuestService
 		final Player player = env.getPlayer();
 		final int id = env.getQuestId();
 		
-		player.getController().cancelTask(TaskId.QUEST_TIMER);
+		player.cancelTask(TaskId.QUEST_TIMER);
 		PacketSendUtility.sendPacket(player, new SM_QUEST_ACCEPTED(id, 0));
 	return true;
 	}	

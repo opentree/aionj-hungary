@@ -58,7 +58,7 @@ public class SiegeGeneralController extends SiegeNpcController
 		this.getOwner().setCasting(null);
 		this.getOwner().getEffectController().removeAllEffects();
 		this.getOwner().setState(CreatureState.DEAD);
-		addTask(TaskId.DECAY, RespawnService.scheduleDecayTask(this.getOwner()));
+		this.getOwner().addTask(TaskId.DECAY, RespawnService.scheduleDecayTask(this.getOwner()));
 		scheduleRespawn();
 		PacketSendUtility.broadcastPacket(this.getOwner(),
 				new SM_EMOTION(this.getOwner(), EmotionType.DIE, 0, lastAttacker == null ? 0 : lastAttacker.getObjectId()));

@@ -186,7 +186,7 @@ public class DuelService
 		 * Stop casting or skill use
 		 */
 		player.getEffectController().removeAbnormalEffectsByTargetSlot(SkillTargetSlot.DEBUFF);
-		player.getController().cancelCurrentSkill();
+		player.cancelCurrentSkill();
 		
 		int opponnentId = duels.get(player.getObjectId());
 		Player opponent = World.getInstance().findPlayer(opponnentId);
@@ -198,7 +198,7 @@ public class DuelService
 			 * Stop casting or skill use
 			 */
 			opponent.getEffectController().removeAbnormalEffectsByTargetSlot(SkillTargetSlot.DEBUFF);
-			opponent.getController().cancelCurrentSkill();
+			opponent.cancelCurrentSkill();
 			
 			PacketSendUtility.sendPacket(opponent, SM_DUEL.SM_DUEL_RESULT(DuelResult.DUEL_WON, player.getName()));
 			PacketSendUtility.sendPacket(player, SM_DUEL.SM_DUEL_RESULT(DuelResult.DUEL_LOST, opponent.getName()));

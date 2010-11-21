@@ -16,12 +16,8 @@
  */
 package com.aionemu.gameserver.controllers;
 
-import java.util.concurrent.Future;
-import javolution.util.FastMap;
-
 import com.aionemu.commons.utils.Rnd;
 import com.aionemu.gameserver.controllers.movement.MovementType;
-import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
@@ -30,7 +26,6 @@ import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_LOOKATOBJECT;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_MOVE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_SKILL_CANCEL; 
 import com.aionemu.gameserver.skillengine.SkillEngine;
 import com.aionemu.gameserver.skillengine.model.HealType;
 import com.aionemu.gameserver.skillengine.model.Skill;
@@ -45,8 +40,6 @@ import com.aionemu.gameserver.world.World;
  */
 public abstract class CreatureController<T extends Creature> extends VisibleObjectController<Creature>
 {
-
-	private FastMap<Integer, Future<?>> tasks = new FastMap<Integer, Future<?>>().shared();
 	
 	/**
 	 * {@inheritDoc}
@@ -119,7 +112,7 @@ public abstract class CreatureController<T extends Creature> extends VisibleObje
 			float maxHp = getOwner().getGameStats().getCurrentStat(StatEnum.MAXHP);
 			float cancel = (cancelRate - conc)+((damage)/maxHp*50);
 			if(Rnd.get(100) < cancel)
-				cancelCurrentSkill();
+				getOwner().cancelCurrentSkill();
 		}
 		getOwner().getObserveController().notifyAttackedObservers(creature);
 		getOwner().getAggroList().addDamage(creature, damage);
@@ -211,81 +204,10 @@ public abstract class CreatureController<T extends Creature> extends VisibleObje
 		// TODO Auto-generated method stub
 	}
 
-	/**
-	 * 
-	 * @param taskId
-	 * @return
-	 */
-	public Future<?> getTask(TaskId taskId)
-	{
-		return tasks.get(taskId.ordinal());
-	}
-	
-	/**
-	 * 
-	 * @param taskId
-	 * @return
-	 */
-	public boolean hasTask(TaskId taskId)
-	{
-		return tasks.containsKey(taskId.ordinal());
-	}
-
-	/**
-	 * 
-	 * @param taskId
-	 */
-	public void cancelTask(TaskId taskId)
-	{
-		Future<?> task = tasks.remove(taskId.ordinal());
-		if(task != null)
-		{
-			task.cancel(false);
-		}
-	}
-
-	/**
-	 *  If task already exist - it will be canceled
-	 * @param taskId
-	 * @param task
-	 */
-	public void addTask(TaskId taskId, Future<?> task)
-	{
-		cancelTask(taskId);
-		tasks.put(taskId.ordinal(), task);
-	}
-	
-	/**
-	 *  If task already exist - it will not be replaced
-	 * @param taskId
-	 * @param task
-	 */
-	public void addNewTask(TaskId taskId, Future<?> task)
-	{
-		tasks.putIfAbsent(taskId.ordinal(), task);
-	}
-
-	/**
-	 * Cancel all tasks associated with this controller
-	 * (when deleting object)
-	 */
-	public void cancelAllTasks()
-	{
-		for(Future<?> task : tasks.values())
-		{
-			if(task != null)
-			{
-				task.cancel(true);
-			}
-		}
-		// FIXME: This can fill error logs with NPE if left null. Should never happen...
-		tasks = new FastMap<Integer, Future<?>>().shared();
-	}
-
 	@Override
 	public void delete()
 	{
-		cancelAllTasks();
+		getOwner().cancelAllTasks();
 		super.delete();
 	}
 
@@ -334,22 +256,7 @@ public abstract class CreatureController<T extends Creature> extends VisibleObje
 	    if (skill == null) 
 			return; 
 	    creature.setCasting(null); 
-	} 
-	
-	/** 
- 	* Cancel current skill and remove cooldown 
- 	*/ 
- 	public void cancelCurrentSkill() 
- 	{ 
-		Creature creature = getOwner(); 
-		Skill castingSkill = creature.getCastingSkill(); 
-		if(castingSkill != null) 
-		{ 
-			creature.removeSkillCoolDown(castingSkill.getSkillTemplate().getSkillId()); 
-			creature.setCasting(null); 
-			PacketSendUtility.broadcastPacketAndReceive(creature, new SM_SKILL_CANCEL(creature, castingSkill.getSkillTemplate().getSkillId())); 
-		}        
- 	} 
+	}
 	
 	/**
 	 * @param npcId

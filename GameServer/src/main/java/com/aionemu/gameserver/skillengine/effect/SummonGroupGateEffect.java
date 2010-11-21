@@ -55,7 +55,7 @@ public class SummonGroupGateEffect extends SummonEffect
                 groupgate.getController().onDespawn(true);
             }
         }, time * 1000);
-       groupgate.getController().addTask(TaskId.DESPAWN, task);
+        groupgate.addTask(TaskId.DESPAWN, task);
     }
     @Override
     public void calculate(Effect effect)

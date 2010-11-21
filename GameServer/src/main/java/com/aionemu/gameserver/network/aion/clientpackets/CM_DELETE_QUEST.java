@@ -49,7 +49,7 @@ public class CM_DELETE_QUEST extends AbstractClientPacket<AionChannelHandler>
 		Player player = getChannelHandler().getActivePlayer();
 		if(questsData.getQuestById(questId).isTimer())
 		{
-			player.getController().cancelTask(TaskId.QUEST_TIMER);
+			player.cancelTask(TaskId.QUEST_TIMER);
 			sendPacket(new SM_QUEST_ACCEPTED(questId, 0));
 		}		
 		if (!QuestEngine.getInstance().deleteQuest(player, questId))

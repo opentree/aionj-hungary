@@ -17,18 +17,22 @@
 package com.aionemu.gameserver.model.gameobjects;
 
 import com.aionemu.gameserver.controllers.NpcController;
+import com.aionemu.gameserver.controllers.effect.EffectController;
 import com.aionemu.gameserver.dataholders.DataManager;
+import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.TribeClass;
+import com.aionemu.gameserver.model.gameobjects.interfaces.IDialog;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
 import com.aionemu.gameserver.model.gameobjects.stats.NpcGameStats;
 import com.aionemu.gameserver.model.gameobjects.stats.NpcLifeStats;
 import com.aionemu.gameserver.model.templates.NpcTemplate;
-import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
 import com.aionemu.gameserver.model.templates.npcskill.NpcSkillList;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.model.templates.stats.NpcRank;
 import com.aionemu.gameserver.utils.MathUtil;
+import com.aionemu.gameserver.world.KnownList;
+import com.aionemu.gameserver.world.World;
 import com.aionemu.gameserver.world.WorldPosition;
 
 /**
@@ -38,7 +42,7 @@ import com.aionemu.gameserver.world.WorldPosition;
  * @author Luno
  * 
  */
-public class Npc extends Creature
+public class Npc extends Creature implements IDialog
 {
 	
 	private NpcSkillList npcSkillList;
@@ -51,11 +55,13 @@ public class Npc extends Creature
 	 * @param objId
 	 *            unique objId
 	 */
-	public Npc(int objId, NpcController controller, SpawnTemplate spawnTemplate, VisibleObjectTemplate objectTemplate)
+	public Npc(int objId, NpcController controller, SpawnTemplate spawnTemplate)
 	{
-		super(objId, controller, spawnTemplate, objectTemplate, new WorldPosition());
+		super(objId, null, spawnTemplate, null, new WorldPosition());
+		this.objectTemplate = DataManager.NPC_DATA.getNpcTemplate(spawnTemplate.getTemplateId());
 		controller.setOwner(this);
-		
+		super.setEffectController(new EffectController(this));
+		super.setKnownlist(new KnownList(this));
 		super.setGameStats(new NpcGameStats(this));
 		super.setLifeStats(new NpcLifeStats(this));
 	}
@@ -246,5 +252,24 @@ public class Npc extends Creature
 		   return false;
 		
 		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.aionemu.gameserver.model.gameobjects.IDialog#onDialogRequest(com.aionemu.gameserver.model.gameobjects.player.Player)
+	 */
+	@Override
+	public void onDialogRequest(Player player)
+	{
+	}
+	
+	public void onDespawn(boolean forced)
+	{
+		if(forced)
+			cancelTask(TaskId.DECAY);
+
+		if(this == null || !isSpawned())
+			return;
+
+		World.getInstance().despawn(this);
 	}
 }
