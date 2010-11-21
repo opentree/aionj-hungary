@@ -21,10 +21,10 @@ import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.RequestResponseHandler;
+import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_QUESTION_WINDOW;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_RIFT_ANNOUNCE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_RIFT_STATUS;
-import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.services.RespawnService;
 import com.aionemu.gameserver.services.TeleportService;
 import com.aionemu.gameserver.spawnengine.RiftSpawnManager.RiftEnum;
@@ -96,8 +96,8 @@ public class RiftController extends NpcController
 				{
 					isAccepting = false;
 					
-					//RespawnService.scheduleDecayTask(getOwner());
-					//RespawnService.scheduleDecayTask(slave);
+					RespawnService.scheduleDecayTask(getOwner());
+					RespawnService.scheduleDecayTask(slave);
 				}
 				PacketSendUtility.broadcastPacket(getOwner(), 
 					new SM_RIFT_STATUS(getOwner().getObjectId(), usedEntries, maxEntries, maxLevel));

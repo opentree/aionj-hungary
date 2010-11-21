@@ -38,7 +38,7 @@ import com.aionemu.gameserver.model.templates.stats.NpcStatsTemplate;
  */
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "npc_template")
-public class NpcTemplate extends ObjectTemplate
+public class NpcTemplate extends VisibleObjectTemplate
 {
 	private int					npcId;
 	@XmlAttribute(name = "level", required = true)

@@ -30,8 +30,8 @@ import com.aionemu.gameserver.model.Race;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.NpcTemplate;
+import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_DELETE;
-import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTime;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.utils.idfactory.IDFactory;
@@ -44,7 +44,6 @@ import com.aionemu.gameserver.world.World;
  */
 public class RiftSpawnManager
 {
-	/*
 	private static final Logger log = Logger.getLogger(RiftSpawnManager.class);
 	
 	private static final ConcurrentLinkedQueue<Npc> rifts = new ConcurrentLinkedQueue<Npc>();
@@ -82,7 +81,7 @@ public class RiftSpawnManager
 	
 	/**
 	 * @param rift1
-	 
+	 */
 	private static void spawnRift(RiftEnum rift)
 	{
 		log.info("Spawning rift : " + rift.name());
@@ -95,7 +94,7 @@ public class RiftSpawnManager
 		int instanceCount = World.getInstance().getWorldMap(masterGroup.getMapid()).getInstanceCount();
 		
 		SpawnTemplate masterTemplate = masterGroup.getNextRandomTemplate();
-		SpawnTime slaveTemplate = slaveGroup.getNextRandomTemplate();
+		SpawnTemplate slaveTemplate = slaveGroup.getNextRandomTemplate();
 		
 		for(int i = 1; i <= instanceCount; i++)
 		{
@@ -104,7 +103,7 @@ public class RiftSpawnManager
 		}		
 	}
 
-	private static Npc spawnInstance(int instanceIndex, SpawnGroup spawnGroup, SpawnTemplate spawnTemplate, RiftController riftController)
+	private static Npc spawnInstance(int instanceIndex, SpawnTemplate spawnTemplate, RiftController riftController)
 	{
 		NpcTemplate masterObjectTemplate = DataManager.NPC_DATA.getNpcTemplate(spawnGroup.getNpcid());
 		Npc npc = new Npc(IDFactory.getInstance().nextId(),riftController,
@@ -116,7 +115,7 @@ public class RiftSpawnManager
 
 		World world = World.getInstance();
 		world.storeObject(npc);
-		world.setPosition(npc, spawnTemplate.getWorldId(), instanceIndex, 
+		world.setPosition(npc, spawnTemplate.getMapId(), instanceIndex, 
 			spawnTemplate.getX(), spawnTemplate.getY(), spawnTemplate.getZ(), spawnTemplate.getHeading());
 		world.spawn(npc);
 		rifts.add(npc);
@@ -129,7 +128,7 @@ public class RiftSpawnManager
 
 	/**
 	 * @param npc
-	 
+	 */
 	private static void scheduleDespawn(final Npc npc)
 	{
 		ThreadPoolManager.getInstance().schedule(new Runnable()
@@ -146,7 +145,7 @@ public class RiftSpawnManager
 			}
 		}, RIFT_LIFETIME);
 	}
-*/
+
 	public enum RiftEnum
 	{
 		ELTNEN_AM("ELTNEN_AM", "MORHEIM_AS", 12, 28, Race.ASMODIANS),
@@ -236,10 +235,10 @@ public class RiftSpawnManager
 			return destination;
 		}
 	}
-/*
+
 	/**
 	 * @param activePlayer
-	 
+	 */
 	public static void sendRiftStatus(Player activePlayer)
 	{
 		for(Npc rift : rifts)
@@ -249,5 +248,5 @@ public class RiftSpawnManager
 				((RiftController) rift.getController()).sendMessage(activePlayer);
 			}
 		}
-	}*/
+	}
 }

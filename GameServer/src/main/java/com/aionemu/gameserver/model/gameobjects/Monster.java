@@ -17,8 +17,8 @@
 package com.aionemu.gameserver.model.gameobjects;
 
 import com.aionemu.gameserver.controllers.MonsterController;
-import com.aionemu.gameserver.model.templates.ObjectTemplate;
-import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTemplate;
+import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
+import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 
 public class Monster extends Npc
 {	
@@ -29,7 +29,7 @@ public class Monster extends Npc
 	 * @param spawn
 	 * @param objectTemplate
 	 */
-	public Monster(int objId, MonsterController controller, SpawnTemplate spawn, ObjectTemplate objectTemplate)
+	public Monster(int objId, MonsterController controller, SpawnTemplate spawn, VisibleObjectTemplate objectTemplate)
 	{
 		super(objId, controller, spawn, objectTemplate);
 	}

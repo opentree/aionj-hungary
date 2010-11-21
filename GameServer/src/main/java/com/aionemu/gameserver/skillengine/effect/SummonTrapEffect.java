@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlType;
 import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.Trap;
-import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTemplate;
+import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.skillengine.model.Effect;
 import com.aionemu.gameserver.spawnengine.SpawnEngine;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
@@ -56,7 +56,7 @@ public class SummonTrapEffect extends SummonEffect
 		int worldId = effector.getWorldId();
 		int instanceId = effector.getInstanceId();
 
-		SpawnTemplate spawn = spawnEngine.addNewSpawn(worldId, instanceId, npcId, x, y, z, heading, true);
+		SpawnTemplate spawn = spawnEngine.addNewSpawn(worldId, instanceId, npcId, x, y, z, heading, 0, 0, true, true);
 		final Trap trap = spawnEngine.spawnTrap(spawn, instanceId, effector, skillId);
 
 		Future<?> task = ThreadPoolManager.getInstance().schedule(new Runnable(){

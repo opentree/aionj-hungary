@@ -59,6 +59,13 @@ public final class DataManager
 	public static GatherableData			GATHERABLE_DATA;
 
 	/**
+	 * Spawn data is keeping information about all spawn definitions.
+	 * 
+	 * @see SpawnsData
+	 */
+	public static SpawnsData				SPAWNS_DATA;
+
+	/**
 	 * World maps data is keeping information about all world maps.
 	 * 
 	 * @see WorldMapsData
@@ -160,6 +167,7 @@ public final class DataManager
 		PLAYER_INITIAL_DATA = data.playerInitialData;
 		SKILL_DATA = data.skillData;
 		SKILL_TREE_DATA = data.skillTreeData;
+		SPAWNS_DATA = data.spawnsData;
 		TITLE_DATA = data.titleData;
 		TRADE_LIST_DATA = data.tradeListData;
 		TELEPORTER_DATA = data.teleporterData;

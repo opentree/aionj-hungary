@@ -111,7 +111,7 @@ public class NpcController extends CreatureController<Npc>
 		super.onDie(lastAttacker);
 		Npc owner = getOwner();
 
-		//addTask(TaskId.DECAY, RespawnService.scheduleDecayTask(this.getOwner()));
+		addTask(TaskId.DECAY, RespawnService.scheduleDecayTask(this.getOwner()));
 		scheduleRespawn();
 
 		PacketSendUtility.broadcastPacket(owner,
@@ -521,7 +521,11 @@ public class NpcController extends CreatureController<Npc>
 	{	
 		if(getOwner().isInInstance())
 			return;
-		//Future<?> respawnTask = RespawnService.scheduleRespawnTask(getOwner());
-		//addTask(TaskId.RESPAWN, respawnTask);
+		
+		if(getOwner().getSpawn().getInterval() > 0)
+		{
+			Future<?> respawnTask = RespawnService.scheduleRespawnTask(getOwner());
+			addTask(TaskId.RESPAWN, respawnTask);
+		}
 	}
 }

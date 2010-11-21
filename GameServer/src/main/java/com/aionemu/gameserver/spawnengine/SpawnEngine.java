@@ -16,22 +16,34 @@
  */
 package com.aionemu.gameserver.spawnengine;
 
-import gnu.trove.TIntObjectHashMap;
-
-import java.lang.reflect.Constructor;
-
 import org.apache.log4j.Logger;
 
+import com.aionemu.gameserver.controllers.GroupGateController;
+import com.aionemu.gameserver.controllers.KiskController;
+import com.aionemu.gameserver.controllers.NpcController;
+import com.aionemu.gameserver.controllers.PostmanController;
+import com.aionemu.gameserver.controllers.ServantController;
+import com.aionemu.gameserver.controllers.SummonController;
+import com.aionemu.gameserver.controllers.effect.EffectController;
+import com.aionemu.gameserver.dataholders.DataManager;
+import com.aionemu.gameserver.dataholders.NpcData;
 import com.aionemu.gameserver.model.gameobjects.Creature;
+import com.aionemu.gameserver.model.gameobjects.GroupGate;
 import com.aionemu.gameserver.model.gameobjects.Kisk;
+import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.Servant;
 import com.aionemu.gameserver.model.gameobjects.Summon;
 import com.aionemu.gameserver.model.gameobjects.Trap;
-import com.aionemu.gameserver.model.gameobjects.GroupGate;
+import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.newmodel.gameobject.SpawnedObject;
-import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
-import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTemplate;
+import com.aionemu.gameserver.model.templates.NpcTemplate;
+import com.aionemu.gameserver.model.templates.WorldMapTemplate;
+import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
+import com.aionemu.gameserver.model.templates.stats.SummonStatsTemplate;
+import com.aionemu.gameserver.utils.idfactory.IDFactory;
+import com.aionemu.gameserver.world.KnownList;
+import com.aionemu.gameserver.world.StaticObjectKnownList;
+import com.aionemu.gameserver.world.World;
 
 /**
  * 
@@ -47,8 +59,10 @@ public class SpawnEngine
 {
 	private static Logger				log					= Logger.getLogger(SpawnEngine.class);
 
-	private TIntObjectHashMap<SpawnTemplate> spawnByMap = new TIntObjectHashMap<SpawnTemplate>();
-	private TIntObjectHashMap<SpawnTemplate> spawnByNpc = new TIntObjectHashMap<SpawnTemplate>();
+	/** Counter counting number of npc spawns */
+	private int							npcCounter			= 0;
+	/** Counter counting number of gatherable spawns */
+	private int							gatherableCounter	= 0;
 
 	public static final SpawnEngine getInstance()
 	{
@@ -60,195 +74,14 @@ public class SpawnEngine
 		this.spawnAll();
 	}
 
-	public SpawnTemplate getFirstSpawnByNpcId(int objectTemplateId)
-	{
-		return spawnByNpc.get(objectTemplateId);
-	}
 	/**
 	 * Creates VisibleObject instance and spawns it using given {@link SpawnTemplate} instance.
 	 * 
 	 * @param spawn
 	 * @return created and spawned VisibleObject
 	 */
-	public SpawnedObject spawnObject(IObjectTemplate objectTemplate)
+	public VisibleObject spawnObject(SpawnTemplate spawn, int instanceIndex)
 	{
-		Class<?> clazz;
-		try
-		{
-			clazz = Class.forName("com.aionemu.gameserver.newmodel.gameobject.SpawnedObject");
-			Object[] parameters = {objectTemplate};
-			Constructor<?> constructor = clazz.getConstructor(Integer.class);
-			SpawnedObject object = (SpawnedObject) constructor.newInstance(parameters);
-			return object;
-		}
-		catch (Exception e)
-		{
-			log.warn(e);
-			return null;
-		}
-
-	}
-	public SpawnedObject spawnObject(SpawnTemplate spawn, int instanceIndex)
-	{
-/*		
-		if(objectId > 400000 && objectId < 499999)// gatherable
-		{
-			template = DataManager.GATHERABLE_DATA.getGatherableTemplate(objectId);
-			if(template == null)
-				return null;
-
-			try
-			{
-				clazz = Class.forName("com.aionemu.gameserver.newmodel.gameobject.Gatherable");
-			}
-			catch (ClassNotFoundException e)
-			{
-				log.warn(e);
-				return null;
-			}
-			gatherableCounter++;
-		}
-		else
-		// npc
-		{
-			template = npcData.getNpcTemplate(objectId);
-			if(template == null)
-				return null;
-			try
-			{
-				clazz = Class.forName("com.aionemu.gameserver.newmodel.gameobject.SpawnedObject");
-			}
-			catch (ClassNotFoundException e)
-			{
-				log.warn(e);
-				return null;
-			}
-			npcCounter++;
-		}
-		IDFactory iDFactory = IDFactory.getInstance();
-		
-		try
-		{
-			Object[] parameters =
-			{iDFactory.nextId()};
-			Constructor<?> constructor = clazz.getConstructor(Integer.class);
-			SpawnedObject object = (SpawnedObject) constructor.newInstance(parameters);
-			object.spawn(spawn, instanceIndex);
-		}
-		catch (Exception e)
-		{
-		}
-		/**
-		if(template instanceof NpcTemplate)
-		{
-			NpcType npcType = ((NpcTemplate) template).getNpcType();
-			Npc npc = null;
-
-			-------Spawning Npcs,Monsters and other simple Npcs---------
-			if (spawn.getSpawnGroup().getSiegeId()==0) 
-			{
-				switch(npcType)
-				{
-					case AGGRESSIVE:
-					case ATTACKABLE:
-						npc = new Monster(iDFactory.nextId(), new MonsterController(),
-							spawn, template);
-						npc.setKnownlist(new KnownList(npc));
-						break;
-					case ARTIFACT :
-						npc = new Npc(iDFactory.nextId(), new ArtifactController(), spawn,
-							template);
-						npc.setKnownlist(new StaticObjectKnownList(npc));
-						break;
-					case POSTBOX:
-						npc = new Npc(iDFactory.nextId(), new PostboxController(), spawn,
-							template);
-						npc.setKnownlist(new StaticObjectKnownList(npc));
-						break;
-					case RESURRECT:
-						BindpointController bindPointController = new BindpointController();
-						bindPointController.setBindPointTemplate(DataManager.BIND_POINT_DATA.getBindPointTemplate(objectId));
-						npc = new Npc(iDFactory.nextId(), bindPointController, spawn, template);
-						npc.setKnownlist(new StaticObjectKnownList(npc));
-						break;
-					case USEITEM:
-						npc = new Npc(iDFactory.nextId(), new ActionitemController(),
-							spawn, template);
-						npc.setKnownlist(new StaticObjectKnownList(npc));
-						break;
-					case PORTAL:
-						npc = new Npc(iDFactory.nextId(), new PortalController(), spawn,
-							template);
-						npc.setKnownlist(new StaticObjectKnownList(npc));
-						break;
-					default: // NON_ATTACKABLE
-						npc = new Npc(iDFactory.nextId(), new NpcController(), spawn,
-							template);
-						npc.setKnownlist(new KnownList(npc));
-	
-				}
-
-			}
-            	----------Spawn siege npcs like Siege Guardians,Protectors,Vendors------------
-			else
-			{
-				FastMap<Integer, SiegeLocation> locations = DataManager.SIEGE_LOCATION_DATA.getSiegeLocations();
-				DAOManager.getDAO(SiegeDAO.class).loadSiegeLocations(locations);
-				int spawnSiegeId = spawn.getSpawnGroup().getSiegeId();
-				SiegeRace spawnRace = spawn.getSpawnGroup().getRace();
-				SiegeLocation siegeLocation = locations.get(spawnSiegeId);
-				SiegeRace siegeRace = siegeLocation.getRace();
-				if ( (spawnSiegeId==siegeLocation.getLocationId()) && (spawnRace==siegeRace))
-				{
-					if(spawn.getSpawnGroup().getSiegeSpawnType()!=null)
-						switch(spawn.getSpawnGroup().getSiegeSpawnType())
-						{
-							case PEACE:
-								SiegeNpcController controller = new SiegeNpcController();
-								npc = new SiegeNpc(iDFactory.nextId(), controller, spawn, template);
-								npc.setKnownlist(new KnownList(npc));
-								break;
-							case ARTIFACT:
-								ArtifactController artifactController= new ArtifactController();
-								npc = new Artifact(iDFactory.nextId(), artifactController, spawn, template);
-								npc.setKnownlist(new KnownList(npc));
-								break;
-							case PROTECTOR:
-								SiegeGeneralController generalController = new SiegeGeneralController();
-								npc = new SiegeGeneral(iDFactory.nextId(), generalController, spawn, template);
-								npc.setKnownlist(new KnownList(npc));
-								break;
-							case MINE:
-								SiegeMineController mineController = new SiegeMineController();
-								npc = new SiegeMine(iDFactory.nextId(), mineController, spawn, template);
-								npc.setKnownlist(new KnownList(npc));
-								break;
-						}
-					else	//default: GUARD
-					{
-						SiegeGuardController guardController= new SiegeGuardController();
-						npc = new SiegeGuard(iDFactory.nextId(), guardController, spawn, template);
-						npc.setKnownlist(new KnownList(npc));
-					}
-				}
-				else
-					return null;
-			}
-
-			npc.setNpcSkillList(DataManager.NPC_SKILL_DATA.getNpcSkillList(template.getTemplateId()));
-			npc.setEffectController(new EffectController(npc));
-			npc.getController().onRespawn();
-			bringIntoWorld(npc, spawn, instanceIndex);
-			return npc;
-		}
-		else if(template instanceof GatherableTemplate)
-		{
-			Gatherable gatherable = new Gatherable(spawn, template, iDFactory.nextId(), new GatherableController());
-			gatherable.setKnownlist(new StaticObjectKnownList(gatherable));
-			bringIntoWorld(gatherable, spawn, instanceIndex);
-			return gatherable;
-		}
-		*/
 		return null;
 	}
 
@@ -261,9 +94,7 @@ public class SpawnEngine
 	 */
 	public Trap spawnTrap(SpawnTemplate spawn, int instanceIndex, Creature creator, int skillId)
 	{
-		/*
-		int objectId = spawn.getSpawnGroup().getNpcid();
-		NpcTemplate npcTemplate = DataManager.NPC_DATA.getNpcTemplate(objectId);
+		NpcTemplate npcTemplate = DataManager.NPC_DATA.getNpcTemplate(spawn.getTemplateId());
 		Trap trap = new Trap(IDFactory.getInstance().nextId(), new NpcController(), spawn,
 			npcTemplate);
 		trap.setKnownlist(new KnownList(trap));
@@ -272,8 +103,7 @@ public class SpawnEngine
 		trap.setSkillId(skillId);
 		trap.getController().onRespawn();
 		bringIntoWorld(trap, spawn, instanceIndex);
-		return trap;*/
-		return null;
+		return trap;
 	}
 
 	/**
@@ -284,9 +114,8 @@ public class SpawnEngine
 	 * @return
 	 */
 	public GroupGate spawnGroupGate(SpawnTemplate spawn, int instanceIndex, Creature creator)
-	{/*
-		int objectId = spawn.getSpawnGroup().getNpcid();
-		NpcTemplate npcTemplate = DataManager.NPC_DATA.getNpcTemplate(objectId);
+	{
+		NpcTemplate npcTemplate = DataManager.NPC_DATA.getNpcTemplate(spawn.getTemplateId());
 		GroupGate groupgate = new GroupGate(IDFactory.getInstance().nextId(), new GroupGateController(), spawn,
 			npcTemplate);
 		groupgate.setKnownlist(new StaticObjectKnownList(groupgate));
@@ -294,8 +123,7 @@ public class SpawnEngine
 		groupgate.setCreator(creator);
 		groupgate.getController().onRespawn();
 		bringIntoWorld(groupgate, spawn, instanceIndex);
-		return groupgate;*/
-		return null;
+		return groupgate;
 	}
 
 	/**
@@ -305,17 +133,15 @@ public class SpawnEngine
 	 * @return
 	 */
 	public Kisk spawnKisk(SpawnTemplate spawn, int instanceIndex, Player creator)
-	{/*
-		int npcId = spawn.getSpawnGroup().getNpcid();
-		NpcTemplate template = DataManager.NPC_DATA.getNpcTemplate(npcId);
+	{
+		NpcTemplate template = DataManager.NPC_DATA.getNpcTemplate(spawn.getTemplateId());
 		Kisk kisk = new Kisk(IDFactory.getInstance().nextId(), new KiskController(),
 			spawn, template, creator);
 		kisk.setKnownlist(new StaticObjectKnownList(kisk));
 		kisk.setEffectController(new EffectController(kisk));
 		kisk.getController().onRespawn();
 		bringIntoWorld(kisk, spawn, instanceIndex);
-		return kisk;*/
-		return null;
+		return kisk;
 	}
 	/**
 	 * @param recipient
@@ -324,7 +150,7 @@ public class SpawnEngine
 	 * Spawns postman for express mail
 	 */
 	public void spawnPostman(Player recipient)
-	{/*
+	{
 		NpcData	npcData = DataManager.NPC_DATA;
 		NpcTemplate template = npcData.getNpcTemplate(798044);
 		IDFactory iDFactory = IDFactory.getInstance();
@@ -337,7 +163,7 @@ public class SpawnEngine
 		SpawnTemplate spawn = addNewSpawn(worldId, instanceId, 798044, x, y, z, heading, 0, 0, false, true);
 		Npc postman = new Npc(iDFactory.nextId(), new PostmanController(recipient.getObjectId()), spawn, template);
 		postman.setKnownlist(new StaticObjectKnownList(postman));
-		bringIntoWorld(postman, spawn, instanceId);*/
+		bringIntoWorld(postman, spawn, instanceId);
 	}
 
 	
@@ -351,9 +177,7 @@ public class SpawnEngine
 	 */
 	public Servant spawnServant(SpawnTemplate spawn, int instanceIndex, Creature creator, int skillId, int hpRatio)
 	{
-		/*
-		int objectId = spawn.getSpawnGroup().getNpcid();
-		NpcTemplate npcTemplate = DataManager.NPC_DATA.getNpcTemplate(objectId);
+		NpcTemplate npcTemplate = DataManager.NPC_DATA.getNpcTemplate(spawn.getTemplateId());
 		Servant servant = new Servant(IDFactory.getInstance().nextId(), new ServantController(), spawn,
 			npcTemplate);
 		servant.setKnownlist(new KnownList(servant));
@@ -364,8 +188,7 @@ public class SpawnEngine
 		servant.setHpRatio(hpRatio);
 		servant.getController().onRespawn();
 		bringIntoWorld(servant, spawn, instanceIndex);
-		return servant;*/
-		return null;
+		return servant;
 	}
 	
 	/**
@@ -375,7 +198,7 @@ public class SpawnEngine
 	 * @return
 	 */
 	public Summon spawnSummon(Player creator, int npcId, int skillLvl)
-	{	/*
+	{	
 		float x = creator.getX();
 		float y = creator.getY();
 		float z = creator.getZ();
@@ -395,25 +218,115 @@ public class SpawnEngine
 		summon.setMaster(creator);
 
 		bringIntoWorld(summon, spawn, instanceId);
-		return summon;*/
-		return null;
+		return summon;
 	}
 
-/*
+	/**
+	 * 
+	 * @param worldId
+	 * @param objectId
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param heading
+	 * @param walkerid
+	 * @param randomwalk
+	 * @return
+	 */
+	private SpawnTemplate createSpawnTemplate(int worldId, int templateId, float x, float y, float z, byte heading,
+		int walkerid, int randomwalk)
+	{
+		SpawnTemplate spawnTemplate = new SpawnTemplate(worldId, templateId, x, y, z, heading);
+		return spawnTemplate;
+	}
+
+	/**
+	 * Should be used when need to define whether spawn will be deleted after death Using this method spawns will not be
+	 * saved with //save_spawn command
+	 * 
+	 * @param worldId
+	 * @param objectId
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param heading
+	 * @param walkerid
+	 * @param randomwalk
+	 * @param noRespawn
+	 * @return SpawnTemplate
+	 */
+	public SpawnTemplate addNewSpawn(int worldId, int instanceId, int objectId, float x, float y, float z,
+		byte heading, int walkerid, int randomwalk, boolean noRespawn)
+	{
+		return this
+			.addNewSpawn(worldId, instanceId, objectId, x, y, z, heading, walkerid, randomwalk, noRespawn, false);
+	}
+
+	/**
+	 * 
+	 * @param worldId
+	 * @param instanceId
+	 * @param objectId
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param heading
+	 * @param walkerid
+	 * @param randomwalk
+	 * @param noRespawn
+	 * @param isNewSpawn
+	 * @return SpawnTemplate
+	 */
+	public SpawnTemplate addNewSpawn(int worldId, int instanceId, int objectId, float x, float y, float z,
+		byte heading, int walkerid, int randomwalk, boolean noRespawn, boolean isNewSpawn)
+	{
+		SpawnTemplate spawnTemplate = createSpawnTemplate(worldId, objectId, x, y, z, heading, walkerid, randomwalk);
+
+		if(spawnTemplate == null)
+		{
+			log.warn("Object couldn't be spawned");
+			return null;
+		}
+
+		return spawnTemplate;
+	}
+
 	private void bringIntoWorld(VisibleObject visibleObject, SpawnTemplate spawn, int instanceIndex)
 	{
 		World world = World.getInstance();
 		world.storeObject(visibleObject);
-		world.setPosition(visibleObject, spawn.getWorldId(), instanceIndex, spawn.getX(), spawn.getY(), spawn.getZ(),
+		world.setPosition(visibleObject, spawn.getMapId(), instanceIndex, spawn.getX(), spawn.getY(), spawn.getZ(),
 			spawn.getHeading());
 		world.spawn(visibleObject);
-	}*/
+	}
 
 	/**
 	 * Spawn all NPC's from templates
 	 */
 	public void spawnAll()
-	{}
+	{
+		this.npcCounter = 0;
+		this.gatherableCounter = 0;
+		
+		for(WorldMapTemplate worldMapTemplate : DataManager.WORLD_MAPS_DATA)
+		{
+			if(worldMapTemplate.isInstance())
+				continue;
+			int maxTwin = worldMapTemplate.getTwinCount();
+			final int mapId = worldMapTemplate.getMapId();
+			int numberToSpawn = maxTwin > 0 ? maxTwin : 1;
+
+			for(int i = 1; i <= numberToSpawn; i++)
+			{
+				spawnInstance(mapId, i);
+			}
+		}
+
+		log.info("Loaded " + npcCounter + " npc spawns");
+		log.info("Loaded " + gatherableCounter + " gatherable spawns");
+
+		RiftSpawnManager.startRiftPool();
+	}
 
 	/**
 	 * 
@@ -422,11 +335,7 @@ public class SpawnEngine
 	 */
 	public void spawnInstance(int worldId, int instanceIndex)
 	{
-/*		List<SpawnGroup> worldSpawns = DataManager.SPAWNS_DATA.getSpawnsForWorld(worldId);
-
-		if(worldSpawns == null || worldSpawns.size() == 0)
-			return;
-
+/*
 		int instanceSpawnCounter = 0;
 		for(SpawnGroup spawnGroup : worldSpawns)
 		{
@@ -456,38 +365,12 @@ public class SpawnEngine
 			}
 		}
 		log.info("Spawned " + worldId + " [" + instanceIndex + "] : " + instanceSpawnCounter);
-*/	}
+		*/
+	}
 	
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
 		protected static final SpawnEngine instance = new SpawnEngine();
-	}
-
-	/**
-	 * @param worldId
-	 * @param instanceId
-	 * @param templateId
-	 * @param x
-	 * @param y
-	 * @param z
-	 * @param heading
-	 * @param noRespawn
-	 * @return
-	 */
-	public SpawnTemplate addNewSpawn(int worldId, int instanceId, int templateId, float x, float y, float z, byte heading, boolean noRespawn)
-	{
-		return null;
-	}
-
-	/**
-	 * @param template
-	 * @param spawnTime
-	 * @param nextRespawnTime
-	 */
-	public void addSpawn(SpawnTemplate template, String nextRespawnTime)
-	{
-		this.spawnByMap.put(template.getMapId(), template);
-		this.spawnByNpc.put(template.getTemplateId(), template);
 	}
 }

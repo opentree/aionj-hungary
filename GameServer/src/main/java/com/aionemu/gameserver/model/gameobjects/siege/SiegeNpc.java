@@ -6,8 +6,8 @@ package com.aionemu.gameserver.model.gameobjects.siege;
 import com.aionemu.gameserver.controllers.siege.SiegeNpcController;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.siege.SiegeRace;
-import com.aionemu.gameserver.model.templates.ObjectTemplate;
-import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTemplate;
+import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
+import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 
 /**
  * @author ViAl
@@ -26,7 +26,7 @@ public class SiegeNpc extends Npc {
 	 * 
 	 * SiegeNpc constructor
 	 */
-	public SiegeNpc	(int objId, SiegeNpcController controller, SpawnTemplate spawnTemplate,	ObjectTemplate objectTemplate) 
+	public SiegeNpc	(int objId, SiegeNpcController controller, SpawnTemplate spawnTemplate,	VisibleObjectTemplate objectTemplate) 
 	{
 		super(objId, controller, spawnTemplate, objectTemplate);
 		controller.setOwner(this);

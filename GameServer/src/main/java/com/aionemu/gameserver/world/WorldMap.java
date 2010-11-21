@@ -98,7 +98,7 @@ public class WorldMap
 	 */
 	public WorldType getWorldType()
 	{
-		return WorldType.NONE;
+		return worldMapTemplate.getWorldType();
 	}
 
 	/**

@@ -17,8 +17,8 @@
 package com.aionemu.gameserver.model.gameobjects;
 
 import com.aionemu.gameserver.controllers.VisibleObjectController;
-import com.aionemu.gameserver.model.templates.ObjectTemplate;
-import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTemplate;
+import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
+import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.world.KnownList;
 import com.aionemu.gameserver.world.MapRegion;
 import com.aionemu.gameserver.world.World;
@@ -38,7 +38,7 @@ import com.aionemu.gameserver.world.WorldType;
  */
 public abstract class VisibleObject extends AionObject
 {
-	protected ObjectTemplate objectTemplate;
+	protected VisibleObjectTemplate objectTemplate;
 	
 	/**
 	 * Constructor.
@@ -46,7 +46,7 @@ public abstract class VisibleObject extends AionObject
 	 * @param objId
 	 * @param objectTemplate 
 	 */
-	public VisibleObject(int objId, VisibleObjectController<? extends VisibleObject> controller, SpawnTemplate spawnTemplate, ObjectTemplate objectTemplate, WorldPosition position)
+	public VisibleObject(int objId, VisibleObjectController<? extends VisibleObject> controller, SpawnTemplate spawnTemplate, VisibleObjectTemplate objectTemplate, WorldPosition position)
 	{
 		super(objId);
 		this.controller = controller;
@@ -273,7 +273,7 @@ public abstract class VisibleObject extends AionObject
 	/**
 	 * @return the objectTemplate
 	 */
-	public ObjectTemplate getObjectTemplate()
+	public VisibleObjectTemplate getObjectTemplate()
 	{
 		return objectTemplate;
 	}
@@ -281,7 +281,7 @@ public abstract class VisibleObject extends AionObject
 	/**
 	 * @param objectTemplate the objectTemplate to set
 	 */
-	public void setObjectTemplate(ObjectTemplate objectTemplate)
+	public void setObjectTemplate(VisibleObjectTemplate objectTemplate)
 	{
 		this.objectTemplate = objectTemplate;
 	}

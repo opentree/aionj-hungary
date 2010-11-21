@@ -18,11 +18,17 @@ package com.aionemu.gameserver.services;
 
 import java.util.concurrent.Future;
 
+import com.aionemu.gameserver.model.gameobjects.Npc;
+import com.aionemu.gameserver.model.gameobjects.VisibleObject;
+import com.aionemu.gameserver.model.templates.spawn.SpawnTime;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.utils.gametime.DayTime;
 import com.aionemu.gameserver.utils.gametime.GameTimeManager;
-import com.aionemu.gameserver.newmodel.gameobject.SpawnedObject;
-import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTime;
+import com.aionemu.gameserver.world.World;
+import com.aionemu.gameserver.services.SiegeService;
+import com.aionemu.gameserver.model.siege.SiegeLocation;
+import com.aionemu.gameserver.model.gameobjects.siege.SiegeNpc;
+
 /**
  * @author ATracer
  * @Modified by Source
@@ -35,7 +41,7 @@ public class RespawnService
 	 * @param npc
 	 * @return Future<?>
 	 */
-	public static Future<?> scheduleDecayTask(final SpawnedObject npc)
+	public static Future<?> scheduleDecayTask(final Npc npc)
 	{
 		int respawnInterval = npc.getSpawn().getInterval();
 		int decayInterval = Math.round(respawnInterval * 0.8f);
@@ -47,7 +53,7 @@ public class RespawnService
 			@Override
 			public void run()
 			{
-				npc.onDespawn();
+				npc.getController().onDespawn(false);
 			}
 		}, decayInterval * 1000);
 	}
@@ -55,11 +61,11 @@ public class RespawnService
 	 * 
 	 * @param visibleObject
 	 */
-	public static Future<?> scheduleRespawnTask(final SpawnedObject visibleObject)
+	public static Future<?> scheduleRespawnTask(final VisibleObject visibleObject)
 	{
+		final World world = World.getInstance();
 		final int interval = visibleObject.getSpawn().getInterval();		
-		if (interval == 0)
-			return null;
+	
 		return ThreadPoolManager.getInstance().schedule(new Runnable()
 		{
 			@Override
@@ -72,7 +78,30 @@ public class RespawnService
 					if(!spawnTime.isAllowedDuring(dayTime))
 						return;
 				}
-				visibleObject.onRespawn();			
+				
+				int instanceId = visibleObject.getInstanceId();
+				int worldId = visibleObject.getSpawn().getMapId();
+				boolean instanceExists = InstanceService.isInstanceExist(worldId, instanceId);
+
+				//Siege respawn check
+				if (visibleObject instanceof SiegeNpc)
+				{
+					SiegeLocation loc = SiegeService.getInstance().getSiegeLocation(((SiegeNpc)visibleObject).getSiegeId());
+					if (loc.getRace() != ((SiegeNpc)visibleObject).getSiegeRace())
+						return;
+				}
+
+				if(!instanceExists)
+				{
+					visibleObject.getController().delete();				
+				}
+				else
+				{
+					world.setPosition(visibleObject, worldId, visibleObject.getSpawn().getX(), visibleObject.getSpawn().getY(), visibleObject.getSpawn().getZ(), visibleObject.getSpawn().getHeading());
+					//call onRespawn before actual spawning
+					visibleObject.getController().onRespawn();
+					world.spawn(visibleObject);		
+				}				
 			}
 			
 		}, interval * 1000);

@@ -27,9 +27,9 @@ import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.gameobjects.Kisk;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
+import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ITEM_USAGE_ANIMATION;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
-import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.services.ItemService;
 import com.aionemu.gameserver.spawnengine.SpawnEngine;
 import com.aionemu.gameserver.utils.PacketSendUtility;
@@ -92,7 +92,7 @@ public class ToyPetSpawnAction extends AbstractItemAction
 		int instanceId = player.getInstanceId();
 
 		SpawnTemplate spawn = spawnEngine.addNewSpawn(worldId, 
-			instanceId, npcid, x, y, z, heading, true);
+			instanceId, npcid, x, y, z, heading, 0, 0, true, true);
 		
 		final Kisk kisk = spawnEngine.spawnKisk(spawn, instanceId, player);
 

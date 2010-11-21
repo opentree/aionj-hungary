@@ -243,7 +243,8 @@ public class SiegeService
 	 */
 	public void spawnLocation(int siegeId,SiegeRace race)
 	{
-/*		List<SpawnGroup> spawnsGroup = DataManager.SPAWNS_DATA.getSpawnsForWorld(400010000);
+		/*
+		List<SpawnGroup> spawnsGroup = DataManager.SPAWNS_DATA.getSpawnsForWorld(400010000);
 		for (SpawnGroup sg : spawnsGroup)
 		{
 			if ((sg.getSiegeId()==siegeId)&&(sg.getRace()==race))	//check on race to improve perfomance(less cycles processing)

@@ -26,8 +26,10 @@ import com.aionemu.gameserver.model.gameobjects.Kisk;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
+import com.aionemu.gameserver.model.templates.BindPointTemplate;
 import com.aionemu.gameserver.model.templates.portal.ExitPoint;
 import com.aionemu.gameserver.model.templates.portal.PortalTemplate;
+import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.model.templates.teleport.TelelocationTemplate;
 import com.aionemu.gameserver.model.templates.teleport.TeleportLocation;
 import com.aionemu.gameserver.model.templates.teleport.TeleporterTemplate;
@@ -41,10 +43,7 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_STATS_INFO;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_TELEPORT_LOC;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_TELEPORT_MAP;
-import com.aionemu.gameserver.newmodel.templates.BindPointTemplate;
-import com.aionemu.gameserver.newmodel.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.services.ZoneService.ZoneUpdateMode;
-import com.aionemu.gameserver.spawnengine.SpawnEngine;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.world.World;
@@ -461,7 +460,8 @@ public class TeleportService
 	public static void teleportToNpc(Player player, int npcId)
 	{
 		int delay = 0;
-		SpawnTemplate template = SpawnEngine.getInstance().getFirstSpawnByNpcId(npcId);
+		SpawnTemplate template = null;
+		//= DataManager.SPAWNS_DATA.getFirstSpawnByNpcId(npcId);
 		
 		if(template == null)
 		{

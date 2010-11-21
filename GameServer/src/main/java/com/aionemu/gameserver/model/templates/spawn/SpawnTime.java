@@ -1,5 +1,5 @@
 /*
- * This file is part of aion-unique <aion-unique.com>.
+ * This file is part of aion-unique <aion-unique.org>.
  *
  *  aion-unique is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,40 +14,34 @@
  *  You should have received a copy of the GNU General Public License
  *  along with aion-unique.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aionemu.gameserver.model.templates;
+package com.aionemu.gameserver.model.templates.spawn;
 
-import com.aionemu.gameserver.newmodel.templates.IObjectTemplate;
+import com.aionemu.gameserver.utils.gametime.DayTime;
 
 /**
  * @author ATracer
  *
  */
-public abstract class ObjectTemplate implements IObjectTemplate
+public enum SpawnTime
 {
+	ALL,
+	DAY,
+	NIGHT;
+
 	/**
-	 * For Npcs it will return npcid from templates xml
-	 * 
-	 * @return id of object template
+	 * @param dayTime
+	 * @return true or false
 	 */
-	public abstract int getTemplateId();
-	/**
-	 * For Npcs it will return name from templates xml
-	 * 
-	 * @return name of object
-	 */
-	public abstract String getName();
-	
-	/**
-	 *  Name id of object template
-	 * @return int
-	 */
-	public abstract int getNameId();
-	
-	/**
-	 * @return default state
-	 */
-	public int getState()
+	public boolean isAllowedDuring(DayTime dayTime)
 	{
-		return 0;
+		switch(this)
+		{
+			case DAY:
+				return dayTime == DayTime.AFTERNOON || dayTime == DayTime.MORNING
+					|| dayTime == DayTime.EVENING;
+			case NIGHT:
+				return dayTime == DayTime.NIGHT;
+		}
+		return true;
 	}
 }
