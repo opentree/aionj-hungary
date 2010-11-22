@@ -51,7 +51,7 @@ public class DelayDamageEffect extends DamageEffect
 			@Override
 			public void run()
 			{				
-				effect.getEffected().getController().onAttack(effect.getEffector(), 
+				effect.getEffected().onAttack(effect.getEffector(), 
 					effect.getSkillId(), TYPE.REGULAR, effect.getReserved1());
 			}
 		}, delay);	

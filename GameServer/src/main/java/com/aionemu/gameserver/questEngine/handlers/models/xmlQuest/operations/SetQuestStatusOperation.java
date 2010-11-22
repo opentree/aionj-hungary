@@ -56,7 +56,7 @@ public class SetQuestStatusOperation
         	qs.setStatus(status);
     		PacketSendUtility.sendPacket(player, new SM_QUEST_ACCEPTED(questId, qs.getStatus(), qs.getQuestVars().getQuestVars()));
     		if (qs.getStatus() == QuestStatus.COMPLETE)
-    			player.getController().updateNearbyQuests();
+    			player.updateNearbyQuests();
         }
 	}
 }

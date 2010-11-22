@@ -128,7 +128,7 @@ public class CM_MOVE extends AbstractClientPacket<AionChannelHandler>
 			case MOVEMENT_ON_ELEVATOR:
 			case MOVEMENT_STAYIN_ELEVATOR:
 				world.updatePosition(player, x, y, z, heading);
-				player.getController().onStartMove();
+				player.onStartMove();
 				player.getFlyController().onStopGliding();
 				PacketSendUtility.broadcastPacket(player, new SM_MOVE(player.getObjectId(), x, y, z, x2, y2, z2, heading, type),
 					false);
@@ -137,21 +137,21 @@ public class CM_MOVE extends AbstractClientPacket<AionChannelHandler>
 				// no break
 			case MOVEMENT_GLIDE_DOWN:
 				world.updatePosition(player, x, y, z, heading);
-				player.getController().onMove();
+				player.onMove();
 				PacketSendUtility.broadcastPacket(player, new SM_MOVE(player.getObjectId(), x, y, z, x2, y2, z2, heading, glideFlag, type),
 					false);
 				player.getFlyController().switchToGliding();
 				break;
 			case MOVEMENT_GLIDE_UP:
 				world.updatePosition(player, x, y, z, heading);
-				player.getController().onMove();
+				player.onMove();
 				PacketSendUtility.broadcastPacket(player, new SM_MOVE(player.getObjectId(), x, y, z, heading, glideFlag, type),
 					false);
 				player.getFlyController().switchToGliding();
 				break;
 			case VALIDATE_GLIDE_MOUSE:
 				world.updatePosition(player, x, y, z, heading);
-				player.getController().onMove();
+				player.onMove();
 				player.getFlyController().switchToGliding();
 
 				/**
@@ -169,7 +169,7 @@ public class CM_MOVE extends AbstractClientPacket<AionChannelHandler>
 				break;
 			case VALIDATE_MOUSE:
 			case VALIDATE_KEYBOARD:
-				player.getController().onMove();
+				player.onMove();
 				player.getFlyController().onStopGliding();
 				world.updatePosition(player, x, y, z, heading);
 
@@ -187,7 +187,7 @@ public class CM_MOVE extends AbstractClientPacket<AionChannelHandler>
 				PacketSendUtility.broadcastPacket(player, new SM_MOVE(player.getObjectId(), x, y, z, heading, type),
 					false);
 				world.updatePosition(player, x, y, z, heading);
-				player.getController().onStopMove();
+				player.onStopMove();
 				player.getFlyController().onStopGliding();
 				break;
 			case UNKNOWN:
@@ -221,7 +221,7 @@ public class CM_MOVE extends AbstractClientPacket<AionChannelHandler>
 
 		if(type != MovementType.MOVEMENT_STOP && player.isProtectionActive())
 		{
-			player.getController().stopProtectionActiveTask();
+			player.stopProtectionActiveTask();
 		}
 	}
 }

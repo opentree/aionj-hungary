@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.model.gameobjects.instance;
 
-import com.aionemu.gameserver.controllers.NpcController;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
@@ -46,9 +45,9 @@ public class Trap extends Npc implements ISummoned
 	 * @param spawnTemplate
 	 * @param objectTemplate
 	 */
-	public Trap(int objId, NpcController controller, SpawnTemplate spawnTemplate)
+	public Trap(int objId, SpawnTemplate spawnTemplate)
 	{
-		super(objId, controller, spawnTemplate);
+		super(objId, spawnTemplate);
 	}
 
 	/**

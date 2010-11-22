@@ -70,7 +70,7 @@ public class CM_CASTSPELL extends AbstractClientPacket<AionChannelHandler>
 		
 		if(player.isProtectionActive())
 		{
-			player.getController().stopProtectionActiveTask();
+			player.stopProtectionActiveTask();
 		}
 		
 		if(!player.getLifeStats().isAlreadyDead())
@@ -80,7 +80,7 @@ public class CM_CASTSPELL extends AbstractClientPacket<AionChannelHandler>
 				return;
 			if (!player.getSkillList().isSkillPresent(spellid))
 				return;
-			player.getController().useSkill(spellid, targetType, x, y, z);
+			player.useSkill(spellid, targetType, x, y, z);
 		}
 	}
 }

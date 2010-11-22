@@ -24,16 +24,13 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.aionemu.commons.database.dao.DAOManager;
-import com.aionemu.gameserver.controllers.NpcController;
-import com.aionemu.gameserver.controllers.PostmanController;
 import com.aionemu.gameserver.dao.SpawnDAO;
 import com.aionemu.gameserver.dataholders.DataManager;
-import com.aionemu.gameserver.dataholders.NpcData;
 import com.aionemu.gameserver.model.gameobjects.Creature;
-import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.instance.GroupGate;
 import com.aionemu.gameserver.model.gameobjects.instance.Kisk;
+import com.aionemu.gameserver.model.gameobjects.instance.Postman;
 import com.aionemu.gameserver.model.gameobjects.instance.Servant;
 import com.aionemu.gameserver.model.gameobjects.instance.Summon;
 import com.aionemu.gameserver.model.gameobjects.instance.Trap;
@@ -123,10 +120,10 @@ public class SpawnEngine
 	 */
 	public Trap spawnTrap(SpawnTemplate spawn, int instanceIndex, Creature creator, int skillId)
 	{
-		Trap trap = new Trap(IDFactory.getInstance().nextId(), new NpcController(), spawn);
+		Trap trap = new Trap(IDFactory.getInstance().nextId(), spawn);
 		trap.setMaster(creator);
 		trap.setSkillId(skillId);
-		trap.getController().onRespawn();
+		trap.onRespawn();
 		bringIntoWorld(trap, spawn, instanceIndex);
 		return trap;
 	}
@@ -143,7 +140,7 @@ public class SpawnEngine
 		GroupGate groupgate = new GroupGate(IDFactory.getInstance().nextId(), spawn);
 		groupgate.setKnownlist(new StaticObjectKnownList(groupgate));
 		groupgate.setMaster(creator);
-		groupgate.getController().onRespawn();
+		groupgate.onRespawn();
 		bringIntoWorld(groupgate, spawn, instanceIndex);
 		return groupgate;
 	}
@@ -158,7 +155,7 @@ public class SpawnEngine
 	{
 		Kisk kisk = new Kisk(IDFactory.getInstance().nextId(), spawn, creator);
 		kisk.setKnownlist(new StaticObjectKnownList(kisk));
-		kisk.getController().onRespawn();
+		kisk.onRespawn();
 		bringIntoWorld(kisk, spawn, instanceIndex);
 		return kisk;
 	}
@@ -170,8 +167,6 @@ public class SpawnEngine
 	 */
 	public void spawnPostman(Player recipient)
 	{
-		NpcData	npcData = DataManager.NPC_DATA;
-		NpcTemplate template = npcData.getNpcTemplate(798044);
 		IDFactory iDFactory = IDFactory.getInstance();
 		int worldId = recipient.getWorldId();
 		int instanceId = recipient.getInstanceId();
@@ -180,7 +175,7 @@ public class SpawnEngine
 		float z = recipient.getZ();
 		byte heading = recipient.getHeading();
 		SpawnTemplate spawn = addNewSpawn(worldId, instanceId, 798044, x, y, z, heading, 0, 0, false, true);
-		Npc postman = new Npc(iDFactory.nextId(), new PostmanController(recipient.getObjectId()), spawn);
+		Postman postman = new Postman(iDFactory.nextId(), spawn, recipient.getObjectId());
 		postman.setKnownlist(new StaticObjectKnownList(postman));
 		bringIntoWorld(postman, spawn, instanceId);
 	}
@@ -201,7 +196,7 @@ public class SpawnEngine
 		servant.setSkillId(skillId);
 		servant.setTarget(creator.getTarget());
 		servant.setHpRatio(hpRatio);
-		servant.getController().onRespawn();
+		servant.onRespawn();
 		bringIntoWorld(servant, spawn, instanceIndex);
 		return servant;
 	}

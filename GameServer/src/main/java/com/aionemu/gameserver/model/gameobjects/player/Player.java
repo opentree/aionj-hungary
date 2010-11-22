@@ -18,8 +18,10 @@ package com.aionemu.gameserver.model.gameobjects.player;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 import javolution.util.FastMap;
 
@@ -28,49 +30,95 @@ import org.apache.log4j.Logger;
 import com.aionemu.commons.database.dao.DAOManager;
 import com.aionemu.gameserver.configs.main.OptionsConfig;
 import com.aionemu.gameserver.controllers.FlyController;
-import com.aionemu.gameserver.controllers.PlayerController;
 import com.aionemu.gameserver.controllers.ReviveController;
+import com.aionemu.gameserver.controllers.attack.AttackResult;
+import com.aionemu.gameserver.controllers.attack.AttackUtil;
 import com.aionemu.gameserver.controllers.effect.PlayerEffectController;
 import com.aionemu.gameserver.dao.AbyssRankDAO;
 import com.aionemu.gameserver.dao.PlayerDAO;
 import com.aionemu.gameserver.dao.PlayerQuestListDAO;
 import com.aionemu.gameserver.dao.PlayerSkillListDAO;
 import com.aionemu.gameserver.dataholders.DataManager;
+import com.aionemu.gameserver.model.EmotionType;
 import com.aionemu.gameserver.model.Gender;
 import com.aionemu.gameserver.model.PlayerClass;
 import com.aionemu.gameserver.model.Race;
 import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.TribeClass;
 import com.aionemu.gameserver.model.alliance.PlayerAlliance;
+import com.aionemu.gameserver.model.alliance.PlayerAllianceEvent;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.PersistentState;
+import com.aionemu.gameserver.model.gameobjects.VisibleObject;
+import com.aionemu.gameserver.model.gameobjects.instance.GroupGate;
 import com.aionemu.gameserver.model.gameobjects.instance.Kisk;
 import com.aionemu.gameserver.model.gameobjects.instance.Monster;
+import com.aionemu.gameserver.model.gameobjects.instance.SiegeNpc;
 import com.aionemu.gameserver.model.gameobjects.instance.Summon;
-import com.aionemu.gameserver.model.gameobjects.siege.SiegeNpc;
+import com.aionemu.gameserver.model.gameobjects.instance.Summon.UnsummonType;
+import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureVisualState;
 import com.aionemu.gameserver.model.gameobjects.stats.PlayerGameStats;
 import com.aionemu.gameserver.model.gameobjects.stats.PlayerLifeStats;
+import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
+import com.aionemu.gameserver.model.group.GroupEvent;
 import com.aionemu.gameserver.model.group.PlayerGroup;
 import com.aionemu.gameserver.model.items.ItemCooldown;
 import com.aionemu.gameserver.model.legion.Legion;
 import com.aionemu.gameserver.model.legion.LegionMember;
+import com.aionemu.gameserver.model.templates.quest.QuestItems;
 import com.aionemu.gameserver.model.templates.stats.PlayerStatsTemplate;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_DIE;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_KISK_UPDATE;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_LEVEL_UPDATE;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_NEARBY_QUESTS;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_NPC_INFO;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_PET;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_PLAYER_INFO;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_PLAYER_STATE;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_PRIVATE_STORE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SKILL_CANCEL;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_SKILL_LIST;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_STATS_INFO;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_SUMMON_PANEL;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_SUMMON_UPDATE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
+import com.aionemu.gameserver.questEngine.QuestEngine;
+import com.aionemu.gameserver.questEngine.model.QuestEnv;
+import com.aionemu.gameserver.restrictions.RestrictionsManager;
+import com.aionemu.gameserver.services.AllianceService;
 import com.aionemu.gameserver.services.BrokerService;
+import com.aionemu.gameserver.services.DuelService;
 import com.aionemu.gameserver.services.ExchangeService;
+import com.aionemu.gameserver.services.ItemService;
+import com.aionemu.gameserver.services.LegionService;
 import com.aionemu.gameserver.services.PlayerService;
+import com.aionemu.gameserver.services.PvpService;
+import com.aionemu.gameserver.services.QuestService;
+import com.aionemu.gameserver.services.SkillLearnService;
+import com.aionemu.gameserver.services.ZoneService;
+import com.aionemu.gameserver.services.ZoneService.ZoneUpdateMode;
+import com.aionemu.gameserver.skillengine.SkillEngine;
+import com.aionemu.gameserver.skillengine.model.HealType;
 import com.aionemu.gameserver.skillengine.model.Skill;
 import com.aionemu.gameserver.skillengine.task.CraftingTask;
+import com.aionemu.gameserver.spawnengine.SpawnEngine;
+import com.aionemu.gameserver.taskmanager.tasks.PacketBroadcaster.BroadcastMode;
+import com.aionemu.gameserver.utils.MathUtil;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.utils.rates.Rates;
 import com.aionemu.gameserver.utils.rates.RegularRates;
+import com.aionemu.gameserver.world.World;
+import com.aionemu.gameserver.world.WorldType;
 import com.aionemu.gameserver.world.zone.ZoneInstance;
 
 /**
@@ -129,7 +177,14 @@ public class Player extends Creature
 	private Prices 				prices;
 	private boolean				isGagged		= false;
 	private boolean				edit_mode 		= false;
+	private boolean			isInShutdownProgress;
 
+	/**
+	 * Zone update mask
+	 */
+	private volatile byte	zoneUpdateMask;
+
+	private long lastAttackMilis = 0;
 	private Map<Integer, ItemCooldown>	itemCoolDowns;
 	
 	/**
@@ -143,16 +198,16 @@ public class Player extends Creature
 	 */
 	private AionChannelHandler			clientConnection;
 
-	public Player(PlayerController controller, PlayerCommonData plCommonData, PlayerAppearance appereance)
+	public Player(PlayerCommonData plCommonData, PlayerAppearance appereance)
 	{
-		super(plCommonData.getPlayerObjId(), controller, null, plCommonData, plCommonData.getPosition());
+		super(plCommonData.getPlayerObjId(), null);
+		this.objectTemplate = plCommonData;
 		this.playerAppearance = appereance;
-
+		this.position = plCommonData.getPosition();
 		this.prices = new Prices();
 		this.requester = new ResponseRequester(this);
 		this.questStateList = new QuestStateList();
 		this.titleList = new TitleList();
-		controller.setOwner(this);
 	}
 
 	public PlayerCommonData getCommonData()
@@ -377,17 +432,6 @@ public class Player extends Creature
 	public Gender getGender()
 	{
 		return getCommonData().getGender();
-	}
-
-	/**
-	 * Return PlayerController of this Player Object.
-	 * 
-	 * @return PlayerController.
-	 */
-	@Override
-	public PlayerController getController()
-	{
-		return (PlayerController) super.getController();
 	}
 
 	@Override
@@ -1118,7 +1162,7 @@ public class Player extends Creature
 	public boolean isEnemyPlayer(Player player)
 	{
 		return player.getCommonData().getRace() != getCommonData().getRace()
-			|| getController().isDueling(player);
+			|| isDueling(player);
 	}
 	
 	/**
@@ -1141,7 +1185,7 @@ public class Player extends Creature
 	 */
 	public boolean isFriend(Player player)
 	{
-		return player.getCommonData().getRace() == getCommonData().getRace() && !getController().isDueling(player);
+		return player.getCommonData().getRace() == getCommonData().getRace() && !isDueling(player);
 	}
 
 	@Override
@@ -1413,5 +1457,594 @@ public class Player extends Creature
 			PacketSendUtility.sendPacket(this, new SM_SKILL_CANCEL(this, skillId));
 			PacketSendUtility.sendPacket(this, SM_SYSTEM_MESSAGE.STR_SKILL_CANCELED());
 		}	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void see(VisibleObject object)
+	{   
+		super.see(object);
+		if(object instanceof Player) 
+		{
+			Player player = (Player)object;
+			PacketSendUtility.sendPacket(this, new SM_PLAYER_INFO(player, isEnemyPlayer((Player)object)));
+			if(player.getToyPet() != null)
+			{
+			Logger.getLogger(Player.class).debug("Player " + getName() + " sees " + object.getName() + " that has toypet");
+			PacketSendUtility.sendPacket(this, new SM_PET(3, player.getToyPet()));
+			}  
+		{  			
+			getEffectController().sendEffectIconsTo((Player) object);
+		}
+		}
+		else if (object instanceof Kisk)
+		{
+			Kisk kisk = ((Kisk) object);
+			PacketSendUtility.sendPacket(this, new SM_NPC_INFO(this, kisk));
+			if (getCommonData().getRace() == kisk.getOwnerRace())
+				PacketSendUtility.sendPacket(this, new SM_KISK_UPDATE(kisk));
+		}
+		else if (object instanceof GroupGate)
+		{
+			GroupGate groupgate = ((GroupGate) object);
+			PacketSendUtility.sendPacket(this, new SM_NPC_INFO(this, groupgate));
+		}
+		else if(object instanceof Npc)
+		{
+			boolean update = false;
+			Npc npc = ((Npc) object);
+
+			PacketSendUtility.sendPacket(this, new SM_NPC_INFO(npc, this));
+
+			for(int questId : QuestEngine.getInstance().getNpcQuestData(npc.getNpcId()).getOnQuestStart())
+			{
+				if(QuestService.checkStartCondition(new QuestEnv(object, this, questId, 0)))
+				{
+					if(!getNearbyQuests().contains(questId))
+					{
+						update = true;
+						getNearbyQuests().add(questId);
+					}
+				}
+			}
+			if(update)
+				updateNearbyQuestList();
+		}
+		else if(object instanceof Summon)
+		{
+			Summon npc = ((Summon) object);		
+			PacketSendUtility.sendPacket(this, new SM_NPC_INFO(npc));
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void notSee(VisibleObject object, boolean isOutOfRange)
+	{
+		super.notSee(object, isOutOfRange);
+		if(object instanceof Npc)
+		{
+			boolean update = false;
+			for(int questId : QuestEngine.getInstance().getNpcQuestData(((Npc) object).getNpcId()).getOnQuestStart())
+			{
+				if(QuestService.checkStartCondition(new QuestEnv(object, this, questId, 0)))
+				{
+					if(getNearbyQuests().contains(questId))
+					{
+						update = true;
+						getNearbyQuests().remove(getNearbyQuests().indexOf(questId));
+					}
+				}
+			}
+			if(update)
+				updateNearbyQuestList();
+		}
+	}
+
+	public void updateNearbyQuests()
+	{
+		getNearbyQuests().clear();
+		for(VisibleObject obj : getKnownList().getKnownObjects().values())
+		{
+			if(obj instanceof Npc)
+			{
+				for(int questId : QuestEngine.getInstance().getNpcQuestData(((Npc) obj).getNpcId()).getOnQuestStart())
+				{
+					if(QuestService.checkStartCondition(new QuestEnv(obj, this, questId, 0)))
+					{
+						if(!getNearbyQuests().contains(questId))
+						{
+							getNearbyQuests().add(questId);
+						}
+					}
+				}
+			}
+		}
+		updateNearbyQuestList();
+	}
+
+	/**
+	 * Will be called by ZoneManager when player enters specific zone
+	 * 
+	 * @param zoneInstance
+	 */
+	public void onEnterZone(ZoneInstance zoneInstance)
+	{
+		QuestEngine.getInstance().onEnterZone(new QuestEnv(null, this, 0, 0), zoneInstance.getTemplate().getName());
+		WorldType worldType = World.getInstance().getWorldMap(getWorldId()).getWorldType();
+		if(worldType == WorldType.ABYSS)
+			checkEnemyAbyssBase();
+	}
+
+	/**
+	 * Check if the player has entered the Protective Shield of the Enemy Abyss Base
+	 *
+	 */
+	public void checkEnemyAbyssBase()
+	{
+		if(getLifeStats().isAlreadyDead() || isGM())
+			return;
+		if ( (getCommonData().getRace() == Race.ELYOS) && (MathUtil.isInSphere(this,878.6906f,2950.4717f,1646.4772f,290)) )
+			die();
+		else if ( (getCommonData().getRace() == Race.ASMODIANS) && (MathUtil.isInSphere(this,2979.622f,906.5588f,1540.2731f,290)) )
+			die();
+	}
+	
+	/**
+	 * Will be called by ZoneManager when player leaves specific zone
+	 * 
+	 * @param zoneInstance
+	 */
+	public void onLeaveZone(ZoneInstance zoneInstance)
+	{
+
+	}
+
+	/**
+	 * Set zone instance as null (Where no zones defined)
+	 */
+	public void resetZone()
+	{
+		setZoneInstance(null);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * Should only be triggered from one place (life stats)
+	 */
+	@Override
+	public void onDie(Creature lastAttacker)
+	{
+		
+		Creature master = null;
+		if(lastAttacker != null && lastAttacker instanceof ISummoned)
+			master = ((ISummoned)lastAttacker).getMaster();
+		
+		if(master instanceof Player)
+		{
+			if(isDueling((Player) master))
+			{
+				DuelService.getInstance().onDie(this);
+				return;
+			}
+		}
+		
+		this.doReward();
+		
+		// Effects removed with super.onDie()
+		boolean hasSelfRezEffect = getReviveController().checkForSelfRezEffect(this);
+		
+		super.onDie(lastAttacker);
+		
+		if(master instanceof Npc || master == this)
+		{
+			if(getLevel() > 4)
+				getCommonData().calculateExpLoss();
+		}
+		
+		/**
+		 * Release summon
+		 */
+		Summon summon = getSummon();
+		if(summon != null)
+			summon.release(UnsummonType.UNSPECIFIED);
+
+		PacketSendUtility.broadcastPacket(this, new SM_EMOTION(this, EmotionType.DIE, 0, lastAttacker == null ? 0 :
+			lastAttacker.getObjectId()), true);
+		
+		// SM_DIE Packet
+		int kiskTimeRemaining = (getKisk() != null ? getKisk().getRemainingLifetime() : 0);
+		boolean hasSelfRezItem = getReviveController().checkForSelfRezItem(this);
+		PacketSendUtility.sendPacket(this, new SM_DIE(hasSelfRezEffect, hasSelfRezItem, kiskTimeRemaining));
+		
+		PacketSendUtility.sendPacket(this, SM_SYSTEM_MESSAGE.DIE);
+		QuestEngine.getInstance().onDie(new QuestEnv(null, this, 0, 0));
+	}
+
+
+
+
+	@Override
+	public void doReward()
+	{
+		PvpService.getInstance().doReward(this);
+		
+		// DP reward 
+		// TODO: Figure out what DP reward should be for PvP
+		//int currentDp = winner.getCommonData().getDp();
+		//int dpReward = StatFunctions.calculateSoloDPReward(winner, getOwner());
+		//winner.getCommonData().setDp(dpReward + currentDp);
+		
+	}
+	
+	@Override
+	public void onRespawn()
+	{
+		super.onRespawn();
+		startProtectionActiveTask();
+	}
+
+	@Override
+	public void attackTarget(Creature target)
+	{
+		
+		/**
+		 * Check all prerequisites
+		 */
+		if(target == null || !canAttack())
+			return;
+
+		PlayerGameStats gameStats = getGameStats();
+
+		// check player attack Z distance
+		if(Math.abs(getZ() - target.getZ()) > 6)
+			return;
+
+		if(!RestrictionsManager.canAttack(this, target))
+			return;
+
+		int attackSpeed = gameStats.getCurrentStat(StatEnum.ATTACK_SPEED);
+		long milis = System.currentTimeMillis();
+		if (milis - lastAttackMilis < attackSpeed)
+		{
+			/**
+			 * Hack!
+			 */
+			return;
+		}
+		lastAttackMilis = milis;
+
+		/**
+		 * notify attack observers
+		 */
+		super.attackTarget(target);
+		
+		/**
+		 * Calculate and apply damage
+		 */
+		List<AttackResult> attackResult = AttackUtil.calculateAttackResult(this, target);
+
+		int damage = 0;
+		for(AttackResult result : attackResult)
+		{
+			damage += result.getDamage();
+		}
+
+		long time = System.currentTimeMillis();
+		int attackType = 0; // TODO investigate attack types
+		PacketSendUtility.broadcastPacket(this, new SM_ATTACK(this, target, gameStats.getAttackCounter(),
+			(int) time, attackType, attackResult), true);
+
+		target.onAttack(this, damage);
+
+		gameStats.increaseAttackCounter();
+	}
+
+	@Override
+	public void onAttack(Creature creature, int skillId, TYPE type, int damage)
+	{
+		if(getLifeStats().isAlreadyDead())
+			return;
+		
+		// Reduce the damage to exactly what is required to ensure death.
+		// - Important that we don't include 7k worth of damage when the
+		//   creature only has 100 hp remaining. (For AggroList dmg count.)
+		if (damage > getLifeStats().getCurrentHp())
+			damage = getLifeStats().getCurrentHp() + 1;
+		
+		super.onAttack(creature, skillId, type, damage);
+
+		if(isInvul())
+			damage = 0;
+
+		getLifeStats().reduceHp(damage, creature);
+		PacketSendUtility.broadcastPacket(this, new SM_ATTACK_STATUS(this, type, skillId, damage), true);
+	}
+
+	/**
+	 * @param skillId
+	 * @param targetType
+	 * @param x
+	 * @param y
+	 * @param z
+	 */
+	public void useSkill(int skillId, int targetType, float x, float y, float z)
+	{
+		
+		Skill skill = SkillEngine.getInstance().getSkillFor(this, skillId, getTarget());
+		
+		if(skill != null)
+		{
+			skill.setTargetType(targetType, x, y, z);
+			if(!RestrictionsManager.canUseSkill(this, skill))
+				return;
+
+			skill.useSkill();
+		}
+	}
+	
+	@Override
+	public void onMove()
+	{
+		super.onMove();
+		addZoneUpdateMask(ZoneUpdateMode.ZONE_UPDATE);
+	}
+
+	@Override
+	public void onStopMove()
+	{
+		super.onStopMove();
+	}
+
+	@Override
+	public void onStartMove()
+	{
+		cancelCurrentSkill();
+		super.onStartMove();
+	}
+
+	/**
+	 * 
+	 */
+	public void updatePassiveStats()
+	{
+		for(SkillListEntry skillEntry : getSkillList().getAllSkills())
+		{
+			Skill skill = SkillEngine.getInstance().getSkillFor(this, skillEntry.getSkillId(), getTarget());
+			if(skill != null && skill.isPassive())
+			{
+				skill.useSkill();
+			}
+		}
+	}
+
+	@Override
+	public void onRestore(HealType healType, int value)
+	{
+		super.onRestore(healType, value);
+		switch(healType)
+		{
+			case DP:
+				getCommonData().addDp(value);
+				break;
+		}
+	}
+	
+	
+	
+	/**
+	 * 
+	 * @param player
+	 * @return
+	 */
+	public boolean isDueling(Player player)
+	{
+		return DuelService.getInstance().isDueling(player.getObjectId(), getObjectId());
+	}
+
+	public void updateNearbyQuestList()
+	{
+		addPacketBroadcastMask(BroadcastMode.UPDATE_NEARBY_QUEST_LIST);
+	}
+
+	public void updateNearbyQuestListImpl()
+	{
+		PacketSendUtility.sendPacket(this, new SM_NEARBY_QUESTS(getNearbyQuests()));
+	}
+
+	public boolean isInShutdownProgress()
+	{
+		return isInShutdownProgress;
+	}
+
+	public void setInShutdownProgress(boolean isInShutdownProgress)
+	{
+		this.isInShutdownProgress = isInShutdownProgress;
+	}
+
+	/**
+	 * Handle dialog
+	 */
+	@Override
+	public void onDialogSelect(int dialogId, Player player, int questId)
+	{
+		switch(dialogId)
+		{
+			case 2:
+				PacketSendUtility.sendPacket(player, new SM_PRIVATE_STORE(getStore()));
+				break;
+		}
+	}
+
+	/**
+	 * @param level
+	 */
+	public void upgradePlayer(int level)
+	{
+
+		PlayerStatsTemplate statsTemplate = DataManager.PLAYER_STATS_DATA.getTemplate(this);
+		setPlayerStatsTemplate(statsTemplate);
+		
+		// update stats after setting new template
+		getGameStats().doLevelUpgrade();
+		getLifeStats().synchronizeWithMaxStats();
+		getLifeStats().updateCurrentStats();
+		
+		PacketSendUtility.broadcastPacket(this, new SM_LEVEL_UPDATE(getObjectId(), 0, level), true);
+
+		QuestEngine.getInstance().onLvlUp(new QuestEnv(null, this, 0, 0));
+		updateNearbyQuests();
+		
+		PacketSendUtility.sendPacket(this, new SM_STATS_INFO(this));
+
+		if(level >= 10 && getSkillList().getSkillEntry(30001) != null)
+		{
+			int skillLevel = getSkillList().getSkillLevel(30001);
+			getSkillList().removeSkill(this, 30001);
+			PacketSendUtility.sendPacket(this, new SM_SKILL_LIST(this));
+			getSkillList().addSkill(this, 30002, skillLevel, true);
+		}
+		// add new skills
+		SkillLearnService.addNewSkills(this, false);
+
+		/**
+		 * Broadcast Update to all that may care.
+		 */
+		if (isInGroup())
+			getPlayerGroup().updateGroupUIToEvent(this, GroupEvent.UPDATE);
+		if (isInAlliance())
+			AllianceService.getInstance().updateAllianceUIToEvent(this, PlayerAllianceEvent.UPDATE);
+		if(isLegionMember())
+			LegionService.getInstance().updateMemberInfo(this);
+	}
+
+	/**
+	 * After entering game player char is "blinking" which means that it's in under some protection, after making an
+	 * action char stops blinking. - Starts protection active - Schedules task to end protection
+	 */
+	public void startProtectionActiveTask()
+	{
+		setVisualState(CreatureVisualState.BLINKING);
+		PacketSendUtility.broadcastPacket(this, new SM_PLAYER_STATE(this), true);
+		Future<?> task = ThreadPoolManager.getInstance().schedule(new Runnable(){
+
+			@Override
+			public void run()
+			{
+				stopProtectionActiveTask();
+			}
+		}, 60000);
+		addTask(TaskId.PROTECTION_ACTIVE, task);
+	}
+
+	/**
+	 * Stops protection active task after first move or use skill
+	 */
+	public void stopProtectionActiveTask()
+	{
+		cancelTask(TaskId.PROTECTION_ACTIVE);
+		if(isSpawned())
+		{
+			unsetVisualState(CreatureVisualState.BLINKING);
+			PacketSendUtility.broadcastPacket(this, new SM_PLAYER_STATE(this), true);
+		}
+	}
+
+	/**
+	 * When player arrives at destination point of flying teleport
+	 */
+	public void onFlyTeleportEnd()
+	{
+		unsetState(CreatureState.FLIGHT_TELEPORT);
+		setFlightTeleportId(0);
+		setFlightDistance(0);
+		setState(CreatureState.ACTIVE);
+		addZoneUpdateMask(ZoneUpdateMode.ZONE_REFRESH);
+	}
+
+	/**
+	 * Zone update mask management
+	 * 
+	 * @param mode
+	 */
+	public final void addZoneUpdateMask(ZoneUpdateMode mode)
+	{
+		zoneUpdateMask |= mode.mask();
+		ZoneService.getInstance().add(this);
+	}
+
+	public final void removeZoneUpdateMask(ZoneUpdateMode mode)
+	{
+		zoneUpdateMask &= ~mode.mask();
+	}
+
+	public final byte getZoneUpdateMask()
+	{
+		return zoneUpdateMask;
+	}
+
+	/**
+	 * Update zone taking into account the current zone
+	 */
+	public void updateZoneImpl()
+	{
+		ZoneService.getInstance().checkZone(this);
+	}
+
+	/**
+	 * Refresh completely zone irrespective of the current zone
+	 */
+	public void refreshZoneImpl()
+	{
+		ZoneService.getInstance().findZoneInCurrentMap(this);
+	}
+
+	/**
+	 * Check water level (start drowning) and map death level (die)
+	 */
+	public void checkWaterLevel()
+	{
+		World world = World.getInstance();
+		float z = getZ();
+		
+		if(getLifeStats().isAlreadyDead())
+			return;
+		
+		if(z < world.getWorldMap(getWorldId()).getDeathLevel())
+		{
+			die();
+			return;
+		}
+		
+		ZoneInstance currentZone = getZoneInstance();
+		if(currentZone != null && currentZone.isBreath())
+			return;
+		
+		//TODO need fix character height
+		float playerheight = getPlayerAppearance().getHeight() * 1.6f;
+		if(z < world.getWorldMap(getWorldId()).getWaterLevel() - playerheight)
+			ZoneService.getInstance().startDrowning(this);
+		else
+			ZoneService.getInstance().stopDrowning(this);
+	}
+
+	@Override
+	public void createSummon(int npcId, int skillLvl)
+	{
+		Summon summon = SpawnEngine.getInstance().spawnSummon(this, npcId, skillLvl);
+		setSummon(summon);
+		PacketSendUtility.sendPacket(this, new SM_SUMMON_PANEL(summon));
+		PacketSendUtility.broadcastPacket(summon, new SM_EMOTION(summon, EmotionType.START_EMOTE2));
+		PacketSendUtility.broadcastPacket(summon, new SM_SUMMON_UPDATE(summon));
+	}
+	
+	public boolean addItems(int itemId, int count)
+	{
+		return ItemService.addItems(this, Collections.singletonList(new QuestItems(itemId, count)));
 	}
 }

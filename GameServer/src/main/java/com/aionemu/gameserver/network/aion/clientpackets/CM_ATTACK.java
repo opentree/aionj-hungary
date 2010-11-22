@@ -75,7 +75,7 @@ public class CM_ATTACK extends AbstractClientPacket<AionChannelHandler>
 		{
 			VisibleObject visibleObject = player.getKnownList().getKnownObjects().get(targetObjectId);
 			if (visibleObject instanceof Creature)
-				player.getController().attackTarget((Creature)visibleObject);
+				player.attackTarget((Creature)visibleObject);
 		}
 	}
 }

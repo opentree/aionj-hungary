@@ -90,7 +90,7 @@ public class InstanceService
 			}
 			else
 			{
-				obj.getController().delete();
+				obj.delete();
 			}
 		}
 	}

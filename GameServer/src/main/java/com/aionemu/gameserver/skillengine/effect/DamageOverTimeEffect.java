@@ -67,7 +67,7 @@ public class DamageOverTimeEffect extends DamageEffect
 		Creature effector = effect.getEffector();
 		int valueWithDelta = value + delta * effect.getSkillLevel();
 		int damage = StatFunctions.calculateMagicDamageToTarget(effector, effected, valueWithDelta, getElement());
-		effected.getController().onAttack(effector, effect.getSkillId(), TYPE.DAMAGE, damage);			
+		effected.onAttack(effector, effect.getSkillId(), TYPE.DAMAGE, damage);			
 	}
 
 	@Override

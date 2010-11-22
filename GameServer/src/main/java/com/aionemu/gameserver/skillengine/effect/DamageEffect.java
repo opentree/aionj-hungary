@@ -48,7 +48,7 @@ extends EffectTemplate
 	@Override
 	public void applyEffect(Effect effect)
 	{
-		effect.getEffected().getController().onAttack(effect.getEffector(),
+		effect.getEffected().onAttack(effect.getEffector(),
 			effect.getSkillId(), TYPE.REGULAR, effect.getReserved1());
 		effect.getEffector().getObserveController().notifyAttackObservers(effect.getEffected());
 	}

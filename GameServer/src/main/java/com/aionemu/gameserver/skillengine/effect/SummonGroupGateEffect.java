@@ -52,7 +52,7 @@ public class SummonGroupGateEffect extends SummonEffect
             public void run()
             {
 		
-                groupgate.getController().onDespawn(true);
+                groupgate.onDespawn(true);
             }
         }, time * 1000);
         groupgate.addTask(TaskId.DESPAWN, task);

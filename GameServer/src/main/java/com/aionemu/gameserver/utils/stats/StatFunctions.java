@@ -756,9 +756,9 @@ public class StatFunctions
 
 		if(distance >= FallDamageConfig.MAXIMUM_DISTANCE_DAMAGE)
 		{
-			player.getController().onStopMove();
+			player.onStopMove();
 			player.getFlyController().onStopGliding();
-			player.getController().onDie(player);
+			player.onDie(player);
 
 			player.getReviveController().bindRevive();
 			return true;

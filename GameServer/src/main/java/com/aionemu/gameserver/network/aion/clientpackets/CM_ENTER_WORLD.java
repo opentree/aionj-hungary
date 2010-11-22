@@ -208,7 +208,7 @@ public class CM_ENTER_WORLD extends AbstractClientPacket<AionChannelHandler>
 			
 			client.sendPacket(new SM_MACRO_LIST(player));
 			client.sendPacket(new SM_GAME_TIME());
-			player.getController().updateNearbyQuests();
+			player.updateNearbyQuests();
 
 			client.sendPacket(new SM_TITLE_LIST(player));		
 			client.sendPacket(new SM_CHANNEL_INFO(player.getPosition()));

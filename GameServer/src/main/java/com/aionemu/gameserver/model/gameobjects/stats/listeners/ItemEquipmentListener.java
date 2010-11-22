@@ -162,7 +162,7 @@ public class ItemEquipmentListener
 		//add effect if weapon is equiped
 		if(!masterySet && weaponEquiped)
 		{
-			owner.getController().useSkill(skillId);
+			owner.useSkill(skillId);
 		}
 	}
 	
@@ -191,7 +191,7 @@ public class ItemEquipmentListener
 			//add effect if armor is equiped
 			if(!masterySet && armorEquiped)
 			{
-				owner.getController().useSkill(skillId);
+				owner.useSkill(skillId);
 			}
 		}
 	}

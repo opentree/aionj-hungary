@@ -70,7 +70,7 @@ public class Kisk extends Npc implements ISummoned
 	 */
 	public Kisk(int objId, SpawnTemplate spawnTemplate, Player owner)
 	{
-		super(objId, null, spawnTemplate);
+		super(objId, spawnTemplate);
 
 		this.kiskStatsTemplate = this.getObjectTemplate().getKiskStatsTemplate();
 		if (this.kiskStatsTemplate == null)
@@ -311,7 +311,7 @@ public class Kisk extends Npc implements ISummoned
 		remainingResurrections--;
 		if (remainingResurrections <= 0)
 		{
-			player.getKisk().getController().onDespawn(true);
+			player.getKisk().onDespawn(true);
 		}
 		else
 		{

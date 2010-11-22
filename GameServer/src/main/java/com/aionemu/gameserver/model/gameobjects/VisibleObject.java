@@ -20,7 +20,6 @@ import java.util.concurrent.Future;
 
 import javolution.util.FastMap;
 
-import com.aionemu.gameserver.controllers.VisibleObjectController;
 import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
@@ -66,17 +65,12 @@ public abstract class VisibleObject extends AionObject
 	/**
 	 * Position of object in the world.
 	 */
-	private WorldPosition											position;
+	protected WorldPosition											position;
 
 	/**
 	 * KnownList of this VisibleObject.
 	 */
 	private KnownList												knownlist;
-
-	/**
-	 * Controller of this VisibleObject
-	 */
-	protected VisibleObjectController<? extends VisibleObject>	controller;
 	
 	/**
 	 * Visible object's target
@@ -220,16 +214,6 @@ public abstract class VisibleObject extends AionObject
 	public KnownList getKnownList()
 	{
 		return knownlist;
-	}
-
-	/**
-	 * Return VisibleObjectController of this VisibleObject
-	 * 
-	 * @return VisibleObjectController.
-	 */
-	public VisibleObjectController<? extends VisibleObject> getController()
-	{
-		return controller;
 	}
 	
 	/**
@@ -420,5 +404,17 @@ public abstract class VisibleObject extends AionObject
 		}
 		// FIXME: This can fill error logs with NPE if left null. Should never happen...
 		tasks = new FastMap<Integer, Future<?>>().shared();
+	}
+	
+	/**
+	 * This method should be called to make forced despawn of NPC and delete it from the world
+	 */
+	public void onDelete()
+	{
+		if(isInWorld())
+		{
+			this.onDespawn(true);
+			this.delete();
+		}
 	}
 }

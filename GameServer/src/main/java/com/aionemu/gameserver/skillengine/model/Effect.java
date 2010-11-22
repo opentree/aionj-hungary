@@ -555,7 +555,7 @@ public class Effect
 		 * broadcast final hate to all visible objects
 		 */
 		if(effectHate != 0)
-			effector.getController().broadcastHate(effectHate);
+			effector.broadcastHate(effectHate);
 	}
 	/**
 	 * Start effect which includes:

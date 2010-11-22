@@ -82,7 +82,7 @@ public class QuestHandler
 	{
 		PacketSendUtility.sendPacket(player, new SM_QUEST_ACCEPTED(questId, qs.getStatus(), qs.getQuestVars().getQuestVars()));
 		if (qs.getStatus() == QuestStatus.COMPLETE)
-			player.getController().updateNearbyQuests();
+			player.updateNearbyQuests();
 	}
 	
 	public boolean sendQuestDialog(Player player, int objId, int dialogId)

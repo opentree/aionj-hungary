@@ -19,14 +19,13 @@ package com.aionemu.gameserver.services;
 import java.util.concurrent.Future;
 
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
+import com.aionemu.gameserver.model.gameobjects.instance.SiegeNpc;
+import com.aionemu.gameserver.model.siege.SiegeLocation;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTime;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.utils.gametime.DayTime;
 import com.aionemu.gameserver.utils.gametime.GameTimeManager;
 import com.aionemu.gameserver.world.World;
-import com.aionemu.gameserver.services.SiegeService;
-import com.aionemu.gameserver.model.siege.SiegeLocation;
-import com.aionemu.gameserver.model.gameobjects.siege.SiegeNpc;
 
 /**
  * @author ATracer
@@ -92,13 +91,13 @@ public class RespawnService
 
 				if(!instanceExists)
 				{
-					visibleObject.getController().delete();				
+					visibleObject.delete();				
 				}
 				else
 				{
 					world.setPosition(visibleObject, worldId, visibleObject.getSpawn().getX(), visibleObject.getSpawn().getY(), visibleObject.getSpawn().getZ(), visibleObject.getSpawn().getHeading());
 					//call onRespawn before actual spawning
-					visibleObject.getController().onRespawn();
+					visibleObject.onRespawn();
 					world.spawn(visibleObject);		
 				}				
 			}

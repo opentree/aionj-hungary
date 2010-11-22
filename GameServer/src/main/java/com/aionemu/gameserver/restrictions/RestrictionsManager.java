@@ -40,7 +40,7 @@ import com.aionemu.gameserver.skillengine.model.Skill;
  * 			@Override 
  * 			public boolean canEatApple(Player player)  
  * 			{
- * 				if(player.getController().isInEvent()) { // only example, don't forget! 
+ * 				if(player.isInEvent()) { // only example, don't forget! 
  * 					return true; // player can eat apple in event.
  * 				}
  * 				return false; // player cannot eat apple in normal game.

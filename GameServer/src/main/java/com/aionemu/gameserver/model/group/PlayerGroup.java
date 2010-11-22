@@ -23,7 +23,7 @@ import javolution.util.FastMap;
 import com.aionemu.commons.objects.filter.ObjectFilter;
 import com.aionemu.gameserver.configs.main.GroupConfig;
 import com.aionemu.gameserver.model.gameobjects.AionObject;
-import com.aionemu.gameserver.model.gameobjects.Npc;
+import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_GROUP_INFO;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_GROUP_MEMBER_INFO;
@@ -107,7 +107,7 @@ public class PlayerGroup extends AionObject
 	 *            The killed Npc
 	 * @return memberObjId or 0 if the selected player isn't in range.
 	 */
-	public int getRoundRobinMember(Npc npc)
+	public int getRoundRobinMember(StaticNpc npc)
 	{
 		RoundRobinNr = ++RoundRobinNr % size();
 		int i = 0;

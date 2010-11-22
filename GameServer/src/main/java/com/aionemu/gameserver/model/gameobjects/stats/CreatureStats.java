@@ -41,11 +41,20 @@ public class CreatureStats extends StaticNpcStats
 	 * @see com.aionemu.gameserver.model.gameobjects.stats.StaticNpcStats#getAttackSpeed()
 	 */
 	@Override
-	public int getAttackSpeed()
+	public int getCurrentAttackSpeed()
 	{
 		return owner.getGameStats().getCurrentStat(StatEnum.ATTACK_SPEED);
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.aionemu.gameserver.model.gameobjects.stats.StaticNpcStats#getBaseAttackSpeed()
+	 */
+	@Override
+	public int getBaseAttackSpeed()
+	{
+		return owner.getGameStats().getBaseStat(StatEnum.ATTACK_SPEED);
+	}
+
 	/* (non-Javadoc)
 	 * @see com.aionemu.gameserver.model.gameobjects.stats.StaticNpcStats#getMovementSpeed()
 	 */

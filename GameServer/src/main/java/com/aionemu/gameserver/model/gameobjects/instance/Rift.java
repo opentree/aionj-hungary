@@ -30,7 +30,6 @@ import com.aionemu.gameserver.services.TeleportService;
 import com.aionemu.gameserver.spawnengine.RiftSpawnManager.RiftEnum;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.world.WorldMapInstance;
-import com.aionemu.gameserver.world.WorldPosition;
 
 /**
  * @author Mr. Poke
@@ -56,9 +55,9 @@ public class Rift extends StaticNpc
 	 * @param spawnTemplate
 	 * @param position
 	 */
-	public Rift(int objId, SpawnTemplate spawnTemplate, WorldPosition position, Rift slave, RiftEnum riftTemplate)
+	public Rift(int objId, SpawnTemplate spawnTemplate, Rift slave, RiftEnum riftTemplate)
 	{
-		super(objId, spawnTemplate, position);
+		super(objId, spawnTemplate);
 		this.riftTemplate = riftTemplate;
 		if(slave != null)//master rift should be created
 		{

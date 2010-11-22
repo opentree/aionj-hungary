@@ -25,7 +25,6 @@ import com.aionemu.commons.database.dao.DAOManager;
 import com.aionemu.gameserver.configs.main.CacheConfig;
 import com.aionemu.gameserver.configs.main.GSConfig;
 import com.aionemu.gameserver.controllers.FlyController;
-import com.aionemu.gameserver.controllers.PlayerController;
 import com.aionemu.gameserver.controllers.ReviveController;
 import com.aionemu.gameserver.controllers.effect.PlayerEffectController;
 import com.aionemu.gameserver.dao.AbyssRankDAO;
@@ -175,7 +174,7 @@ public class PlayerService
 		PlayerCommonData pcd = playerAccountData.getPlayerCommonData();
 		PlayerAppearance appearance = playerAccountData.getAppereance();
 
-		player = new Player(new PlayerController(), pcd, appearance);		
+		player = new Player(pcd, appearance);		
 		
 		LegionMember legionMember = LegionService.getInstance().getLegionMember(player.getObjectId());
 		if(legionMember != null)
@@ -251,7 +250,7 @@ public class PlayerService
 		ItemService.restoreKinah(player);
 
 		// update passive stats after effect controller, stats and equipment are initialized
-		player.getController().updatePassiveStats();
+		player.updatePassiveStats();
 		// load saved effects
 		DAOManager.getDAO(PlayerEffectsDAO.class).loadPlayerEffects(player);
 		// load item cooldowns
@@ -288,7 +287,7 @@ public class PlayerService
 		WorldPosition position = World.getInstance().createPosition(ld.getMapId(), ld.getX(), ld.getY(), ld.getZ(), ld.getHeading());
 		playerCommonData.setPosition(position);
 
-		Player newPlayer = new Player(new PlayerController(), playerCommonData, playerAppearance);
+		Player newPlayer = new Player(playerCommonData, playerAppearance);
 
 		// Starting skills
 		SkillLearnService.addNewSkills(newPlayer, true);
@@ -421,7 +420,7 @@ public class PlayerService
 		if (player.isInAlliance())
 			AllianceService.getInstance().onLogout(player);
 		
-		player.getController().delete();
+		player.delete();
 		DAOManager.getDAO(PlayerDAO.class).onlinePlayer(player, false);
 		
 		if(!GSConfig.DISABLE_CHAT_SERVER)
@@ -434,7 +433,7 @@ public class PlayerService
 	public static void playerLoggedOutDelay(final Player player, int delay)
 	{
 		// force stop movement of player
-		player.getController().stopMoving();
+		player.stopMoving();
 		
 		ThreadPoolManager.getInstance().scheduleTaskManager(new Runnable(){
 			@Override

@@ -40,6 +40,7 @@ import com.aionemu.gameserver.model.drop.DropList;
 import com.aionemu.gameserver.model.drop.DropTemplate;
 import com.aionemu.gameserver.model.gameobjects.DropNpc;
 import com.aionemu.gameserver.model.gameobjects.Npc;
+import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
 import com.aionemu.gameserver.model.templates.item.ItemQuality;
@@ -88,7 +89,7 @@ public class DropService
 	 * 
 	 * @param npc
 	 */
-	public void registerDrop(Npc npc, Player player, int lvl)
+	public void registerDrop(StaticNpc npc, Player player, int lvl)
 	{
 		// TODO: Player should not be null
 		if(player == null) 
@@ -172,7 +173,7 @@ public class DropService
 	 * 
 	 * @param npc
 	 */
-	public void unregisterDrop(Npc npc)
+	public void unregisterDrop(StaticNpc npc)
 	{
 		int npcUniqueId = npc.getObjectId();
 		currentDropMap.remove(npcUniqueId);
@@ -247,7 +248,7 @@ public class DropService
 		{
 			if(dropItems == null || dropItems.size() == 0)
 			{
-				npc.getController().onDespawn(true);
+				npc.onDespawn(true);
 				return;
 			}
 

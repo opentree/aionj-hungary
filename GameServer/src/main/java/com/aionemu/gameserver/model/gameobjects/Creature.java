@@ -23,10 +23,10 @@ import javolution.util.FastMap;
 import org.apache.log4j.Logger;
 
 import com.aionemu.commons.utils.Rnd;
-import com.aionemu.gameserver.controllers.CreatureController;
 import com.aionemu.gameserver.controllers.ObserveController;
 import com.aionemu.gameserver.controllers.attack.AggroList;
 import com.aionemu.gameserver.controllers.effect.EffectController;
+import com.aionemu.gameserver.controllers.movement.MovementType;
 import com.aionemu.gameserver.model.TribeClass;
 import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.instance.Summon;
@@ -36,16 +36,19 @@ import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
 import com.aionemu.gameserver.model.gameobjects.stats.CreatureGameStats;
 import com.aionemu.gameserver.model.gameobjects.stats.CreatureLifeStats;
 import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
-import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_LOOKATOBJECT;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_MOVE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SKILL_CANCEL;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
+import com.aionemu.gameserver.skillengine.SkillEngine;
 import com.aionemu.gameserver.skillengine.effect.EffectId;
+import com.aionemu.gameserver.skillengine.model.HealType;
 import com.aionemu.gameserver.skillengine.model.Skill;
 import com.aionemu.gameserver.taskmanager.tasks.PacketBroadcaster;
 import com.aionemu.gameserver.taskmanager.tasks.PacketBroadcaster.BroadcastMode;
 import com.aionemu.gameserver.utils.PacketSendUtility;
-import com.aionemu.gameserver.world.WorldPosition;
+import com.aionemu.gameserver.world.World;
 
 /**
  * This class is representing movable objects, its base class for all in game objects that may move
@@ -79,28 +82,13 @@ public abstract class Creature extends StaticNpc
 	 * @param objectTemplate
 	 * @param position
 	 */
-	public Creature(int objId, CreatureController<? extends Creature> controller,
-		SpawnTemplate spawnTemplate, VisibleObjectTemplate objectTemplate, WorldPosition position)
+	public Creature(int objId, SpawnTemplate spawnTemplate)
 	{
-		super(objId, spawnTemplate, position);
-		this.objectTemplate = objectTemplate;
-		this.controller = controller;
+		super(objId, spawnTemplate);
 		initializeAi();
 		this.observeController = new ObserveController();
 		
 		this.aggroList = new AggroList(this);
-	}
-
-	/**
-	 * Return CreatureController of this Creature object.
-	 * 
-	 * @return CreatureController.
-	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@Override
-	public CreatureController getController()
-	{
-		return (CreatureController) super.getController();
 	}
 
 	/**
@@ -546,9 +534,9 @@ public abstract class Creature extends StaticNpc
 	 */
 	public void onDie(Creature lastAttacker)
 	{
+		super.onDie(lastAttacker);
 		this.setCasting(null);
 		this.getEffectController().removeAllEffects();
-		this.setState(CreatureState.DEAD);
 	}
 	
 	/**
@@ -599,5 +587,158 @@ public abstract class Creature extends StaticNpc
 	public void attackTarget(Creature target)
 	{
 		getObserveController().notifyAttackObservers(target);
+	}
+	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void notSee(VisibleObject object, boolean isOutOfRange)
+	{
+		super.notSee(object, isOutOfRange);
+		if(object == getTarget())
+		{
+			setTarget(null);
+			PacketSendUtility.broadcastPacket(this, new SM_LOOKATOBJECT(this));
+		}
+	}
+
+	/**
+	 * Perform tasks on Creature starting to move
+	 */
+	public void onStartMove()
+	{
+		getObserveController().notifyMoveObservers();
+	}
+
+	/**
+	 * Perform tasks on Creature move in progress
+	 */
+	public void onMove()
+	{
+       
+	}
+
+	/**
+	 * Perform tasks on Creature stop move
+	 */
+	public void onStopMove()
+	{
+
+	}
+
+	/**
+	 * Perform tasks on Creature respawn
+	 */
+	@Override
+	public void onRespawn()
+	{
+		unsetState(CreatureState.DEAD);
+		getAggroList().clear();
+	}
+
+	/**
+	 * 
+	 * @param hopType
+	 * @param value
+	 */
+	public void onRestore(HealType hopType, int value)
+	{
+		switch(hopType)
+		{
+			case HP:
+				getLifeStats().increaseHp(TYPE.HP, value);
+				break;
+			case MP:
+				getLifeStats().increaseMp(TYPE.MP, value);
+				break;
+			case FP:
+				getLifeStats().increaseFp(value);
+				break;
+		}
+	}
+
+	/**
+	 * This method should be overriden in more specific controllers
+	 */
+	public void onDialogRequest(Player player)
+	{
+
+	}
+
+	/**
+	    * Stops movements
+	    */
+	   public void stopMoving()
+	   {
+	      World.getInstance().updatePosition(this, getX(), getY(), getZ(), getHeading());
+	        PacketSendUtility.broadcastPacket(this, new SM_MOVE(getObjectId(), getX(), getY(), getZ(), getHeading(), MovementType.MOVEMENT_STOP));
+	    }
+
+
+	/**
+	 * Handle Dialog_Select
+	 * 
+	 * @param dialogId
+	 * @param player
+	 * @param questId
+	 */
+	public void onDialogSelect(int dialogId, Player player, int questId)
+	{
+		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * Die by reducing HP to 0
+	 */
+	public void die()
+	{
+		getLifeStats().reduceHp(getLifeStats().getCurrentHp() + 1, null);
+	}
+	
+	/**
+	 * 
+	 * @param skillId
+	 */
+	public void useSkill(int skillId)
+	{
+		Skill skill = SkillEngine.getInstance().getSkill(this, skillId, 1, getTarget());
+		if(skill != null)
+		{
+			skill.useSkill();
+		}
+	}
+	
+	/**
+	 *  Notify hate value to all visible creatures
+	 *  
+	 * @param value
+	 */
+	public void broadcastHate(int value)
+	{
+		for(VisibleObject visibleObject : getKnownList().getKnownObjects().values())
+		{
+			if(visibleObject instanceof Creature)
+			{
+				((Creature)visibleObject).getAggroList().notifyHate(this, value);
+			}
+		}
+	}
+   public void abortCast() 
+	{
+	    Skill skill = getCastingSkill(); 
+	    if (skill == null) 
+			return; 
+	    setCasting(null); 
+	}
+	
+	/**
+	 * @param npcId
+	 */
+	public void createSummon(int npcId, int skillLvl)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }

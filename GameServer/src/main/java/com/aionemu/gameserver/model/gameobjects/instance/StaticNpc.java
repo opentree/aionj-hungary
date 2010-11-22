@@ -18,7 +18,11 @@
  */
 package com.aionemu.gameserver.model.gameobjects.instance;
 
+import java.util.concurrent.Future;
+
 import com.aionemu.gameserver.dataholders.DataManager;
+import com.aionemu.gameserver.model.TaskId;
+import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.interfaces.IDialog;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
@@ -28,6 +32,7 @@ import com.aionemu.gameserver.model.gameobjects.stats.StaticNpcStats;
 import com.aionemu.gameserver.model.templates.NpcTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_NPC_INFO;
+import com.aionemu.gameserver.services.RespawnService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.world.StaticObjectKnownList;
 import com.aionemu.gameserver.world.WorldPosition;
@@ -48,11 +53,12 @@ public class StaticNpc extends VisibleObject implements IDialog
 	 * @param spawnTemplate
 	 * @param position
 	 */
-	public StaticNpc(int objId, SpawnTemplate spawnTemplate, WorldPosition position)
+	public StaticNpc(int objId, SpawnTemplate spawnTemplate)
 	{
-		super(objId, spawnTemplate, position);
+		super(objId, spawnTemplate, new WorldPosition());
 		this.objectTemplate = DataManager.NPC_DATA.getNpcTemplate(spawnTemplate.getTemplateId());
 		this.setKnownlist(new StaticObjectKnownList(this));
+		
 	}
 
 	/* (non-Javadoc)
@@ -173,6 +179,47 @@ public class StaticNpc extends VisibleObject implements IDialog
 		if (object instanceof Player)
 		{
 			PacketSendUtility.sendPacket((Player)object, new SM_NPC_INFO(this));
+		}
+	}
+	
+	/**
+	 * Perform tasks on Creature death
+	 */
+	public void onDie(Creature lastAttacker)
+	{
+		this.setState(CreatureState.DEAD);
+	}
+	
+	/**
+	 * Perform reward operation
+	 * 
+	 */
+	public void doReward()
+	{
+
+	}
+
+	/* (non-Javadoc)
+	 * @see com.aionemu.gameserver.model.gameobjects.interfaces.IDialog#onDialogSelect(int, com.aionemu.gameserver.model.gameobjects.player.Player, int)
+	 */
+	@Override
+	public void onDialogSelect(int dialogId, Player player, int questId)
+	{
+	}
+	
+	/**
+	 * Schedule respawn of npc
+	 * In instances - no npc respawn
+	 */
+	public void scheduleRespawn()
+	{	
+		if(isInInstance())
+			return;
+		
+		if(getSpawn().getInterval() > 0)
+		{
+			Future<?> respawnTask = RespawnService.scheduleRespawnTask(this);
+			addTask(TaskId.RESPAWN, respawnTask);
 		}
 	}
 }

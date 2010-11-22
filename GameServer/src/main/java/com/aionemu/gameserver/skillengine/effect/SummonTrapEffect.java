@@ -64,7 +64,7 @@ public class SummonTrapEffect extends SummonEffect
 			@Override
 			public void run()
 			{
-				trap.getController().onDespawn(true);
+				trap.onDespawn(true);
 			}
 		}, time * 1000);
 		trap.addTask(TaskId.DESPAWN, task);

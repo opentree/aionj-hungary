@@ -54,7 +54,7 @@ public class Servant extends Npc implements ISummoned
 	 */
 	public Servant(int objId, SpawnTemplate spawnTemplate)
 	{
-		super(objId, null, spawnTemplate);
+		super(objId, spawnTemplate);
 	}
 
 	/**

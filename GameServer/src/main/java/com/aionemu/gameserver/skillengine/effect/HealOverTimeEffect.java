@@ -69,7 +69,7 @@ public class HealOverTimeEffect extends EffectTemplate
 	{
 		Creature effected = effect.getEffected();
 		int valueWithDelta = value + delta * effect.getSkillLevel();
-		effected.getController().onRestore(type, valueWithDelta);
+		effected.onRestore(type, valueWithDelta);
 	}
 
 	@Override

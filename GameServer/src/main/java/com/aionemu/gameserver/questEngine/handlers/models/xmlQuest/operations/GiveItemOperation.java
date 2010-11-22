@@ -46,7 +46,7 @@ public class GiveItemOperation extends QuestOperation
 	public void doOperate(QuestEnv env)
 	{
 		Player player = env.getPlayer();
-		player.getController().addItems(itemId, count);
+		player.addItems(itemId, count);
 	}
 
 }

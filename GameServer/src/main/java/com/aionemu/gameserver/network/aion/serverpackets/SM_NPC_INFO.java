@@ -213,8 +213,8 @@ public class SM_NPC_INFO extends AbstractAionServerPacket<AionChannelHandler>
 		//TODO: Walking, Runing, Flying speed....
 		writeF(npc.getStats().getMovementSpeed());// speed
 
-		writeH(npc.getStats().getAttackSpeed());
-		writeH(npc.getStats().getAttackSpeed());
+		writeH(npc.getStats().getBaseAttackSpeed());
+		writeH(npc.getStats().getCurrentAttackSpeed());
 
 		writeC(0x00);// unk
 

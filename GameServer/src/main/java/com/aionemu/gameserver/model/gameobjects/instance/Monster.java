@@ -31,7 +31,7 @@ public class Monster extends Npc
 	 */
 	public Monster(int objId, SpawnTemplate spawn)
 	{
-		super(objId, null, spawn);
+		super(objId, spawn);
 	}
 
 	@Override

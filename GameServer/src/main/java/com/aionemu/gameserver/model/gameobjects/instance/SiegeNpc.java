@@ -16,17 +16,36 @@
  *
  * http://www.gnu.org/copyleft/gpl.html
  */
-package com.aionemu.gameserver.model.gameobjects.interfaces;
+package com.aionemu.gameserver.model.gameobjects.instance;
 
-import com.aionemu.gameserver.model.gameobjects.player.Player;
+import com.aionemu.gameserver.model.gameobjects.Npc;
+import com.aionemu.gameserver.model.siege.SiegeRace;
+import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 
 /**
  * @author Mr. Poke
  *
  */
-public interface IDialog
+public class SiegeNpc extends Npc
 {
-	public void onDialogRequest(Player player);
-	
-	public void onDialogSelect(int dialogId, Player player, int questId);
+	private int siegeId;
+	SiegeRace siegeRace;
+	/**
+	 * @param objId
+	 * @param spawnTemplate
+	 */
+	public SiegeNpc(int objId, SpawnTemplate spawnTemplate)
+	{
+		super(objId, spawnTemplate);
+	}
+
+	public SiegeRace getSiegeRace() 
+	{
+		return siegeRace;
+	}
+
+	public int getSiegeId() 
+	{
+		return siegeId;
+	}
 }

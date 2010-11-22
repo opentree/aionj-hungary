@@ -81,7 +81,7 @@ public class DayNightSpawnManager
 	private void deleteObjects()
 	{
 		for(VisibleObject object : spawnedObjects)
-			object.getController().delete();
+			object.delete();
 		spawnedObjects.clear();
 	}
 

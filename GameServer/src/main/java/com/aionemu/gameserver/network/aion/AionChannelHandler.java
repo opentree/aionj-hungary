@@ -143,7 +143,7 @@ public class AionChannelHandler extends AbstractChannelHandler implements ICrypt
 		{
 			Player player = getActivePlayer();
 			
-			if(player.getController().isInShutdownProgress())
+			if(player.isInShutdownProgress())
 				PlayerService.playerLoggedOut(player);
 			
 			// prevent ctrl+alt+del / close window exploit

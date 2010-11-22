@@ -246,7 +246,7 @@ public class PlayerCommonData extends VisibleObjectTemplate
 		Player player = this.getPlayer();
 		if(player != null)
 		{
-			player.getController().upgradePlayer(level);
+			player.upgradePlayer(level);
 		}
 	}
 

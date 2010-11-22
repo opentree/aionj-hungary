@@ -130,7 +130,7 @@ public class KnownList
 		if(getKnownObjects().put(object.getObjectId(), object) != null)
 			return false;
 
-		getOwner().getController().see(object);
+		getOwner().see(object);
 
 		return true;
 	}
@@ -149,7 +149,7 @@ public class KnownList
 		if(getKnownObjects().remove(object.getObjectId()) == null)
 			return false;
 
-		getOwner().getController().notSee(object, isOutOfRange);
+		getOwner().notSee(object, isOutOfRange);
 
 		return true;
 	}

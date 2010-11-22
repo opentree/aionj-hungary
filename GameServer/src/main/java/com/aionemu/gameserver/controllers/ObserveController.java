@@ -73,7 +73,7 @@ public class ObserveController
 	/**
 	 * notify that creature moved
 	 */
-	protected void notifyMoveObservers()
+	public void notifyMoveObservers()
 	{
 		while(!moveObservers.isEmpty())
 		{

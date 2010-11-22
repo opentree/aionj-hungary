@@ -40,7 +40,12 @@ public class StaticNpcStats
 		return 0;
 	}
 	
-	public int getAttackSpeed()
+	public int getBaseAttackSpeed()
+	{
+		return 2000;
+	}
+	
+	public int getCurrentAttackSpeed()
 	{
 		return 2000;
 	}

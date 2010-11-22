@@ -137,7 +137,7 @@ public abstract class CreatureLifeStats<T extends Creature>
 
 			if(alreadyDead)
 			{
-				getOwner().getController().onDie(attacker);	
+				getOwner().onDie(attacker);	
 			}
 		}
 		finally

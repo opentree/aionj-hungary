@@ -55,6 +55,6 @@ public class CM_DELETE_QUEST extends AbstractClientPacket<AionChannelHandler>
 		if (!QuestEngine.getInstance().deleteQuest(player, questId))
 			return;
 		sendPacket(new SM_QUEST_ACCEPTED(questId));
-		player.getController().updateNearbyQuests();
+		player.updateNearbyQuests();
 	}
 }

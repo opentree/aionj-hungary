@@ -119,7 +119,7 @@ public class ShutdownRestrictions extends AbstractRestrictions
 	
 	private boolean isInShutdownProgress(Player player)
 	{
-		return player.getController().isInShutdownProgress();
+		return player.isInShutdownProgress();
 	}
 
 }

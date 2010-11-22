@@ -29,8 +29,8 @@ import com.aionemu.gameserver.model.PlayerClass;
 import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.drop.DropItem;
 import com.aionemu.gameserver.model.drop.DropTemplate;
-import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
+import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.PlayerCommonData;
 import com.aionemu.gameserver.model.gameobjects.player.SkillListEntry;
@@ -177,7 +177,7 @@ public final class QuestService
 			qs.setStatus(QuestStatus.COMPLETE);
 			qs.setCompliteCount(qs.getCompliteCount() + 1);
 			PacketSendUtility.sendPacket(player, new SM_QUEST_ACCEPTED(id, qs.getStatus(), qs.getQuestVars().getQuestVars()));
-			player.getController().updateNearbyQuests();
+			player.updateNearbyQuests();
 			QuestEngine.getInstance().onLvlUp(env);
 			return true;
 		}
@@ -277,7 +277,7 @@ public final class QuestService
 			}
 		}
 
-		player.getController().updateNearbyQuests();
+		player.updateNearbyQuests();
 		return true;
 	}
 
@@ -292,7 +292,7 @@ public final class QuestService
 		qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
 		qs.setStatus(QuestStatus.REWARD);
 		PacketSendUtility.sendPacket(player, new SM_QUEST_ACCEPTED(id, qs.getStatus(), qs.getQuestVars().getQuestVars()));
-		player.getController().updateNearbyQuests();
+		player.updateNearbyQuests();
 		return true;
 	}
 
@@ -329,9 +329,9 @@ public final class QuestService
 		return SpawnEngine.getInstance().spawnObject(spawn, instanceId);
 	}
 	
-	public static void getQuestDrop(Set<DropItem> droppedItems, int index, Npc npc, Player player)
+	public static void getQuestDrop(Set<DropItem> droppedItems, int index, StaticNpc npc, Player player)
 	{
-		List<QuestDrop> drops = QuestEngine.getInstance().getQuestDrop(npc.getNpcId());
+		List<QuestDrop> drops = QuestEngine.getInstance().getQuestDrop(npc.getObjectTemplate().getTemplateId());
 		if (drops.isEmpty())
 			return;
 		List<Player> players = new ArrayList<Player>();
@@ -420,7 +420,7 @@ public final class QuestService
 				QuestEngine.getInstance().onQuestTimerEnd(new QuestEnv(null, player, 0, 0));
 				QuestEngine.getInstance().deleteQuest(player, id);
 				PacketSendUtility.sendPacket(player, new SM_QUEST_ACCEPTED(id));
-				player.getController().updateNearbyQuests();					
+				player.updateNearbyQuests();					
 			}
 		}, timeInSeconds * 1000);
 		player.addTask(TaskId.QUEST_TIMER, task);

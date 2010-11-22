@@ -57,7 +57,7 @@ public class FearEffect extends EffectTemplate
 		obj.cancelCurrentSkill();
 		obj.getEffectController().setAbnormal(EffectId.FEAR.getEffectId());
 		PacketSendUtility.broadcastPacketAndReceive(obj, new SM_TARGET_IMMOBILIZE(obj));
-		obj.getController().stopMoving();
+		obj.stopMoving();
 	}
 	
 	@Override

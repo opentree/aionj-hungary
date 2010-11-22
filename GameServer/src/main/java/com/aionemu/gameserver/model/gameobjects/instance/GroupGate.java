@@ -36,7 +36,7 @@ public class GroupGate extends Npc implements ISummoned
 	 */
 	public GroupGate(int objId, SpawnTemplate spawnTemplate)
 	{
-		super(objId, null, spawnTemplate);
+		super(objId, spawnTemplate);
 	}
 
 	@Override

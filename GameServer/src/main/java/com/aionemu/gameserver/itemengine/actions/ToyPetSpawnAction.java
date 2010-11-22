@@ -102,7 +102,7 @@ public class ToyPetSpawnAction extends AbstractItemAction
 			@Override
 			public void run()
 			{
-				kisk.getController().onDespawn(true);
+				kisk.onDespawn(true);
 			}
 		}, 7200000);
 		// Fixed 2 hours 2 * 60 * 60 * 1000

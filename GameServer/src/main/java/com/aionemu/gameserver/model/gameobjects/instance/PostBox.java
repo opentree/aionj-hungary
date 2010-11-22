@@ -16,17 +16,34 @@
  *
  * http://www.gnu.org/copyleft/gpl.html
  */
-package com.aionemu.gameserver.model.gameobjects.interfaces;
+package com.aionemu.gameserver.model.gameobjects.instance;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
+import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_DIALOG_WINDOW;
+import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /**
  * @author Mr. Poke
  *
  */
-public interface IDialog
+public class PostBox extends StaticNpc
 {
-	public void onDialogRequest(Player player);
-	
-	public void onDialogSelect(int dialogId, Player player, int questId);
+
+	/**
+	 * @param objId
+	 * @param spawnTemplate
+	 * @param position
+	 */
+	public PostBox(int objId, SpawnTemplate spawnTemplate)
+	{
+		super(objId, spawnTemplate);
+	}
+
+	@Override
+	public void onDialogRequest(Player player)
+	{
+		PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 18));
+	}
+
 }

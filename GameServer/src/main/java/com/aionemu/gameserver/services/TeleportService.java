@@ -316,18 +316,18 @@ public class TeleportService
 			PacketSendUtility.sendPacket(player, new SM_PLAYER_INFO(player, false));
 			world.spawn(player);
 			player.getEffectController().updatePlayerEffectIcons();
-			player.getController().addZoneUpdateMask(ZoneUpdateMode.ZONE_REFRESH);
+			player.addZoneUpdateMask(ZoneUpdateMode.ZONE_REFRESH);
 		}
 		/**
 		 * teleport with full map reloading
 		 */
 		else
 		{			
-			player.getController().startProtectionActiveTask();
+			player.startProtectionActiveTask();
 			PacketSendUtility.sendPacket(player, new SM_CHANNEL_INFO(player.getPosition()));
 			PacketSendUtility.sendPacket(player, new SM_PLAYER_SPAWN(player));	
 		}
-		player.getController().startProtectionActiveTask();		
+		player.startProtectionActiveTask();		
 			
 	}
 
@@ -355,7 +355,7 @@ public class TeleportService
 		world.despawn(player);
 		world.setPosition(player, player.getWorldId(), channel + 1, player.getX(), player.getY(), player.getZ(), player
 			.getHeading());
-		player.getController().startProtectionActiveTask();
+		player.startProtectionActiveTask();
 		PacketSendUtility.sendPacket(player, new SM_CHANNEL_INFO(player.getPosition()));
 		PacketSendUtility.sendPacket(player, new SM_PLAYER_SPAWN(player));
 	}

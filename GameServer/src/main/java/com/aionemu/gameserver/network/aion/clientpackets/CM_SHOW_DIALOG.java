@@ -73,7 +73,7 @@ public class CM_SHOW_DIALOG extends AbstractClientPacket<AionChannelHandler>
 			PacketSendUtility.broadcastPacket((Npc) targetObject,
 				new SM_LOOKATOBJECT((Npc) targetObject));
 
-			((Npc) targetObject).getController().onDialogRequest(player);
+			((Npc) targetObject).onDialogRequest(player);
 		}
 	}
 }

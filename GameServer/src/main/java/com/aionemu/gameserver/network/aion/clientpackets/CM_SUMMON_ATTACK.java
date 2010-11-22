@@ -78,6 +78,6 @@ public class CM_SUMMON_ATTACK extends AbstractClientPacket<AionChannelHandler>
 		}
 		
 		Creature creature = (Creature) World.getInstance().findAionObject(targetObjId);
-		summon.getController().attackTarget(creature);
+		summon.attackTarget(creature);
 	}
 }

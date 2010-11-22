@@ -32,7 +32,6 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.utils.idfactory.IDFactory;
 import com.aionemu.gameserver.world.World;
-import com.aionemu.gameserver.world.WorldPosition;
 
 /**
  * @author ATracer
@@ -99,7 +98,7 @@ public class RiftSpawnManager
 
 	private static Rift spawnInstance(int instanceIndex, SpawnTemplate spawnTemplate, Rift slave, RiftEnum rift)
 	{
-		Rift riftObject = new Rift(IDFactory.getInstance().nextId(), spawnTemplate, new WorldPosition(), slave, rift);
+		Rift riftObject = new Rift(IDFactory.getInstance().nextId(), spawnTemplate, slave, rift);
 		riftObject.onRespawn();
 
 		World world = World.getInstance();

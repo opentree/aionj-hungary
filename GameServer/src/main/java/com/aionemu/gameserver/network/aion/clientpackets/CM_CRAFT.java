@@ -62,7 +62,7 @@ public class CM_CRAFT extends AbstractClientPacket<AionChannelHandler>
 			return;
 
 		//disallow crafting in shutdown progress..
-		if(player.getController().isInShutdownProgress())
+		if(player.isInShutdownProgress())
 			return;
 			
 		CraftService.startCrafting(player, targetTemplateId, recipeId, targetObjId);				

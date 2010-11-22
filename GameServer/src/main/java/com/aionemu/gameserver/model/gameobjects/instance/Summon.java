@@ -51,7 +51,6 @@ import com.aionemu.gameserver.skillengine.model.Skill;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.world.KnownList;
-import com.aionemu.gameserver.world.WorldPosition;
 
 /**
  * @author ATracer
@@ -98,8 +97,8 @@ public class Summon extends Creature implements ISummoned
 	public Summon(int objId, SpawnTemplate spawnTemplate,
 		VisibleObjectTemplate objectTemplate, SummonStatsTemplate statsTemplate, byte level)
 	{
-		super(objId, null, spawnTemplate, objectTemplate, new WorldPosition());
-
+		super(objId, spawnTemplate);
+		this.objectTemplate = objectTemplate;
 		this.level = level;
 		super.setGameStats(new SummonGameStats(this, statsTemplate));
 		super.setLifeStats(new SummonLifeStats(this));
@@ -270,7 +269,7 @@ public class Summon extends Creature implements ISummoned
 			{
 				setMaster(null);
 				master.setSummon(null);
-				getController().delete();
+				delete();
 
 				switch(unsummonType)
 				{
@@ -375,7 +374,7 @@ public class Summon extends Creature implements ISummoned
 		PacketSendUtility.broadcastPacket(this, new SM_ATTACK(this, target, getGameStats()
 			.getAttackCounter(), 274, attackType, attackList));
 
-		target.getController().onAttack(this, damage);
+		target.onAttack(this, damage);
 		getGameStats().increaseAttackCounter();
 
 	}

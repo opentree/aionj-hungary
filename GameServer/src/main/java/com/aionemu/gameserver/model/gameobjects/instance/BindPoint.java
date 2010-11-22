@@ -36,7 +36,6 @@ import com.aionemu.gameserver.services.ItemService;
 import com.aionemu.gameserver.services.TeleportService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.world.World;
-import com.aionemu.gameserver.world.WorldPosition;
 import com.aionemu.gameserver.world.WorldType;
 
 /**
@@ -55,9 +54,9 @@ public class BindPoint extends StaticNpc
 	 * @param spawnTemplate
 	 * @param position
 	 */
-	public BindPoint(int objId, SpawnTemplate spawnTemplate, WorldPosition position)
+	public BindPoint(int objId, SpawnTemplate spawnTemplate)
 	{
-		super(objId, spawnTemplate, position);
+		super(objId, spawnTemplate);
 		bindPointTemplate = DataManager.BIND_POINT_DATA.getBindPointTemplate(spawnTemplate.getTemplateId());
 	}
 

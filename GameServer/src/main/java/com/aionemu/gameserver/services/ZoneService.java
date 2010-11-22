@@ -69,7 +69,7 @@ public final class ZoneService extends AbstractFIFOPeriodicTaskManager<Player>
 	{
 		if(player != null)
 		{
-			for(byte mask; (mask = player.getController().getZoneUpdateMask()) != 0;)
+			for(byte mask; (mask = player.getZoneUpdateMask()) != 0;)
 			{
 				for(ZoneUpdateMode mode : VALUES)
 				{
@@ -90,15 +90,15 @@ public final class ZoneService extends AbstractFIFOPeriodicTaskManager<Player>
 			@Override
 			public void zoneTask(Player player)
 			{
-				player.getController().updateZoneImpl();
-				player.getController().checkWaterLevel();
+				player.updateZoneImpl();
+				player.checkWaterLevel();
 			}
 		},
 		ZONE_REFRESH {
 			@Override
 			public void zoneTask(Player player)
 			{
-				player.getController().refreshZoneImpl();
+				player.refreshZoneImpl();
 			}
 		}
 		;
@@ -122,7 +122,7 @@ public final class ZoneService extends AbstractFIFOPeriodicTaskManager<Player>
 			if((mask & mask()) == mask())
 			{
 				zoneTask(player);		
-				player.getController().removeZoneUpdateMask(this);
+				player.removeZoneUpdateMask(this);
 			}
 		}
 	}
@@ -205,8 +205,8 @@ public final class ZoneService extends AbstractFIFOPeriodicTaskManager<Player>
 			if(checkPointInZone(zone, player.getPosition()))
 			{
 				player.setZoneInstance(zone);
-				player.getController().onEnterZone(zone);
-				player.getController().onLeaveZone(currentInstance);
+				player.onEnterZone(zone);
+				player.onLeaveZone(currentInstance);
 				return;
 			}
 		}
@@ -224,7 +224,7 @@ public final class ZoneService extends AbstractFIFOPeriodicTaskManager<Player>
 		Collection<ZoneInstance> zones = zoneByMapIdMap.get(mapRegion.getMapId());
 		if(zones == null)
 		{
-			player.getController().resetZone();
+			player.resetZone();
 			return;
 		}			
 		
@@ -233,7 +233,7 @@ public final class ZoneService extends AbstractFIFOPeriodicTaskManager<Player>
 			if(checkPointInZone(zone, player.getPosition()))
 			{
 				player.setZoneInstance(zone);
-				player.getController().onEnterZone(zone);
+				player.onEnterZone(zone);
 				return;
 			}
 		}

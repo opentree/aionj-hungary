@@ -64,14 +64,14 @@ public class CM_LEVEL_READY extends AbstractClientPacket<AionChannelHandler>
 		Player activePlayer = getChannelHandler().getActivePlayer();
 
 		sendPacket(new SM_PLAYER_INFO(activePlayer, false));
-		activePlayer.getController().startProtectionActiveTask();
+		activePlayer.startProtectionActiveTask();
 
 		/**
 		 * Spawn player into the world.
 		 */
 		World.getInstance().spawn(activePlayer);
 		
-		activePlayer.getController().refreshZoneImpl();
+		activePlayer.refreshZoneImpl();
 		
 		/**
 		 * Loading weather for the player's region

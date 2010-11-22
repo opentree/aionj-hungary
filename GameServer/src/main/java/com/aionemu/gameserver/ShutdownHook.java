@@ -98,7 +98,7 @@ public class ShutdownHook extends Thread
 			for(Player player : World.getInstance().getAllPlayers())
 			{
 				if(player != null && player.getClientConnection() != null)
-					player.getController().setInShutdownProgress(status);
+					player.setInShutdownProgress(status);
 			}
 		}
 		catch(Exception e)

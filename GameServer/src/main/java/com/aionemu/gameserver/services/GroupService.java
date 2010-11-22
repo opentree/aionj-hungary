@@ -451,7 +451,7 @@ public class GroupService
 	/**
 	 * @return FastMap<Integer, Boolean>
 	 */
-	public List<Integer> getMembersToRegistrateByRules(Player player, PlayerGroup group, Npc npc)
+	public List<Integer> getMembersToRegistrateByRules(Player player, PlayerGroup group, StaticNpc npc)
 	{
 		LootGroupRules lootRules = group.getLootGroupRules();
 		LootRuleType lootRule = lootRules.getLootRule();

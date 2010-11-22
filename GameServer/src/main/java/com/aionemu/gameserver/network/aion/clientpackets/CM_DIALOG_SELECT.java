@@ -19,7 +19,7 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 import org.apache.log4j.Logger;
 
 import com.aionemu.gameserver.model.gameobjects.AionObject;
-import com.aionemu.gameserver.model.gameobjects.Creature;
+import com.aionemu.gameserver.model.gameobjects.interfaces.IDialog;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
@@ -88,10 +88,9 @@ public class CM_DIALOG_SELECT extends AbstractClientPacket<AionChannelHandler>
 
 		AionObject object = World.getInstance().findAionObject(targetObjectId);
 
-		if(object instanceof Creature)
+		if(object instanceof IDialog)
 		{
-			Creature creature = (Creature) object;
-			creature.getController().onDialogSelect(dialogId, player, questId);
+			((IDialog)object).onDialogSelect(dialogId, player, questId);
 		}
 		//log.info("id: "+targetObjectId+" dialogId: " + dialogId +" unk1: " + unk1 + " questId: "+questId);
 	}

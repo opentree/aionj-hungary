@@ -127,7 +127,7 @@ public class ReviveController
 		player.getCommonData().setDp(0);
 		player.getLifeStats().triggerRestoreOnRevive();
 		
-		player.getController().onRespawn();
+		player.onRespawn();
 	}
 
 	/**

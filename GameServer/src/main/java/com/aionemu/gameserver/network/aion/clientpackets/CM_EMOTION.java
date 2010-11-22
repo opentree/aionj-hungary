@@ -142,7 +142,7 @@ public class CM_EMOTION extends AbstractClientPacket<AionChannelHandler>
 				player.setState(CreatureState.ACTIVE);
 				break;
 			case LAND_FLYTELEPORT:
-				player.getController().onFlyTeleportEnd();
+				player.onFlyTeleportEnd();
 				break;
 			case FLY:
 				// TODO move to player controller? but after states working

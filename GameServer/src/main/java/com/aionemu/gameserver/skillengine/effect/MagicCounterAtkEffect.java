@@ -72,9 +72,9 @@ public class MagicCounterAtkEffect extends EffectTemplate
 					if (skill.getSkillTemplate().getType()==SkillType.MAGICAL)
 					{
 						if (cls.getMaxHp()/100*percent<=maxdmg)
-							effected.getController().onAttack(effector, effect.getSkillId(), TYPE.DAMAGE, cls.getMaxHp()/100*percent);
+							effected.onAttack(effector, effect.getSkillId(), TYPE.DAMAGE, cls.getMaxHp()/100*percent);
 						else
-							effected.getController().onAttack(effector, maxdmg);
+							effected.onAttack(effector, maxdmg);
 					}
 						
 				}
