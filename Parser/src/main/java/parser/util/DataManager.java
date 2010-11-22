@@ -18,11 +18,12 @@
  */
 package parser.util;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import parser.clientData.clientGather.GatherSrc;
+import parser.clientData.clientGather.GatherSrcLoader;
 import parser.clientData.clientItems.ClientItem;
 import parser.clientData.clientItems.ClientItemsLoader;
 import parser.clientData.clientNpc.ClientNpcLoader;
@@ -46,9 +47,11 @@ public class DataManager
 	private Map<Integer, NpcClient>	idNpcMap;
 	private Map<Integer, ClientItem>	idItemMap;
 	private List<Data> worldIds;
-	private Map<String, Integer>	itemNameIdMap = new HashMap<String, Integer>();
-	private Map<String, Integer>	npcNameIdMap = new HashMap<String, Integer>();
-	
+	private Map<String, Integer>	itemNameIdMap;
+	private Map<String, Integer>	npcNameIdMap;
+	private Map<Integer, GatherSrc> idGatherebleMap;
+	private Map<String, Integer> nameGatherebleIdMap;
+
 	public static final DataManager getInstance()
 	{
 		return SingletonHolder.instance;
@@ -56,25 +59,6 @@ public class DataManager
 
 	private DataManager()
 	{
-		stringNameMap = ClientStringLoader.load();
-		tribeRelations = TribeRelationLoader.load();
-		idNpcMap = ClientNpcLoader.load();
-		idItemMap =ClientItemsLoader.load();
-		worldIds = WorldIdLoader.load();
-		
-		createNpcNameIdMap();
-		createItemNameIdMap();
-		
-		List<String> names = new ArrayList<String>();
-		for (NpcClient npc: idNpcMap.values())
-		{
-			String name = npc.getNpcfactionName();
-			if (name != null && !names.contains(name.toLowerCase()))
-				names.add(name.toLowerCase());
-		}
-		
-		for (String name : names)
-			System.out.println(name);
 	}
 
 	/**
@@ -82,6 +66,8 @@ public class DataManager
 	 */
 	public Map<String, ClientString> getStringNameMap()
 	{
+		if (stringNameMap == null)
+			stringNameMap = ClientStringLoader.load();
 		return stringNameMap;
 	}
 
@@ -90,11 +76,15 @@ public class DataManager
 	 */
 	public List<Tribe> getTribeRelations()
 	{
+		if (tribeRelations == null)
+			tribeRelations = TribeRelationLoader.load();
 		return tribeRelations;
 	}
 
 	public Map<Integer, NpcClient> getIdNpcMap()
 	{
+		if (idNpcMap == null)
+			idNpcMap = ClientNpcLoader.load();
 		return idNpcMap;
 	}
 
@@ -103,6 +93,8 @@ public class DataManager
 	 */
 	public Map<Integer, ClientItem> getIdItemMap()
 	{
+		if (idItemMap == null)
+			idItemMap =ClientItemsLoader.load();
 		return idItemMap;
 	}
 
@@ -111,6 +103,8 @@ public class DataManager
 	 */
 	public Map<String, Integer> getItemNameIdMap()
 	{
+		if (itemNameIdMap == null)
+			createItemNameIdMap();
 		return itemNameIdMap;
 	}
 
@@ -119,6 +113,8 @@ public class DataManager
 	 */
 	public Map<String, Integer> getNpcNameIdMap()
 	{
+		if (npcNameIdMap == null)
+			createNpcNameIdMap();
 		return npcNameIdMap;
 	}
 
@@ -127,11 +123,14 @@ public class DataManager
 	 */
 	public List<Data> getWorldIds()
 	{
+		if (worldIds == null)
+			worldIds = WorldIdLoader.load();
 		return worldIds;
 	}
 
 	private void createNpcNameIdMap()
 	{
+		npcNameIdMap = new HashMap<String, Integer>();
 		for (NpcClient npc : idNpcMap.values())
 		{
 			npcNameIdMap.put(npc.getName(), npc.getId());
@@ -140,12 +139,36 @@ public class DataManager
 	
 	private void createItemNameIdMap()
 	{
+		itemNameIdMap = new HashMap<String, Integer>();
 		for (ClientItem item: idItemMap.values())
 		{
 			itemNameIdMap.put(item.getName(), item.getId());
 		}
 			
 	}
+	/**
+	 * @return Returns the idGatherebleMap.
+	 */
+	public Map<Integer, GatherSrc> getIdGatherebleMap()
+	{
+		if (idGatherebleMap == null)
+			GatherSrcLoader.load();
+		return idGatherebleMap;
+	}
+
+	/**
+	 * @return Returns the nameGatherebleIdMap.
+	 */
+	public Map<String, Integer> getNameGatherebleIdMap()
+	{
+		nameGatherebleIdMap = new HashMap<String, Integer>();
+		for (GatherSrc item: getIdGatherebleMap().values())
+		{
+			nameGatherebleIdMap.put(item.getName(), item.getId());
+		}
+		return nameGatherebleIdMap;
+	}
+
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{

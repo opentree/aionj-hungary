@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+	<xs:element name="gather_srcs">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" ref="gather_src" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="gather_src">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id" type="xs:int" />
+				<xs:element name="name" type="xs:string" />
+				<xs:element name="desc" type="xs:string" />
+				<xs:element name="category" type="xs:string" />
+				<xs:element name="source_type" type="xs:string" />
+				<xs:element name="mesh" type="xs:string" />
+				<xs:element name="source_color" type="xs:string" />
+				<xs:element name="source_upper" type="xs:decimal" />
+				<xs:element name="source_fx" type="xs:string" />
+				<xs:element name="motion_name" type="xs:string" />
+				<xs:element name="harvestskill" type="xs:string" />
+				<xs:element name="skill_level" type="xs:int" />
+				<xs:element name="char_level_limit" type="xs:int" />
+				<xs:element name="gather_delay_id" type="xs:int" />
+				<xs:element name="gather_delay" type="xs:int" />
+				<xs:element name="required_item" type="xs:string" />
+				<xs:element name="check_type" type="xs:int" />
+				<xs:element name="erase_value" type="xs:int" />
+				<xs:element name="material1" type="xs:string" />
+				<xs:element name="normal_rate1" type="xs:int" />
+				<xs:element name="material2" type="xs:string" />
+				<xs:element name="normal_rate2" type="xs:int" />
+				<xs:element name="material3" type="xs:NMTOKEN" />
+				<xs:element name="normal_rate3" type="xs:int" />
+				<xs:element name="material4" type="xs:string" />
+				<xs:element name="normal_rate4" type="xs:int" />
+				<xs:element name="material5" type="xs:string" />
+				<xs:element name="normal_rate5" type="xs:int" />
+				<xs:element name="material6" type="xs:string" />
+				<xs:element name="normal_rate6" type="xs:int" />
+				<xs:element name="material7" type="xs:string" />
+				<xs:element name="normal_rate7" type="xs:int" />
+				<xs:element name="material8" type="xs:string" />
+				<xs:element name="normal_rate8" type="xs:int" />
+				<xs:element name="extra_material1" type="xs:string" />
+				<xs:element name="extra_normal_rate1" type="xs:int" />
+				<xs:element name="extra_material2" type="xs:string" />
+				<xs:element name="extra_normal_rate2" type="xs:int" />
+				<xs:element name="extra_material3" type="xs:string" />
+				<xs:element name="extra_normal_rate3" type="xs:int" />
+				<xs:element name="extra_material4" type="xs:string" />
+				<xs:element name="extra_normal_rate4" type="xs:int" />
+				<xs:element name="extra_material5" type="xs:string" />
+				<xs:element name="extra_normal_rate5" type="xs:int" />
+				<xs:element name="extra_material6" type="xs:string" />
+				<xs:element name="extra_normal_rate6" type="xs:int" />
+				<xs:element name="extra_material7" type="xs:string" />
+				<xs:element name="extra_normal_rate7" type="xs:int" />
+				<xs:element name="extra_material8" type="xs:string" />
+				<xs:element name="extra_normal_rate8" type="xs:int" />
+				<xs:element name="harvest_count" type="xs:int" />
+				<xs:element name="success_adj" type="xs:int" />
+				<xs:element name="failure_adj" type="xs:int" />
+				<xs:element name="aerial_adj" type="xs:int" />
+				<xs:element name="captcha_rate" type="xs:int" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

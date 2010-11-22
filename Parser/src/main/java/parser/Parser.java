@@ -47,6 +47,7 @@ public class Parser
 			FileDecoder.decode("npcs", "data\\npcs\\", "", "client_npcs.xml",true, "client_npcs.xml");
 			FileDecoder.decode("Items", "data\\Items\\", "", "client_items.xml", true, "client_items.xml");
 			FileDecoder.decode("World", "data\\World\\", "", "WorldId.xml", true, "WorldId.xml");
+			FileDecoder.decode("Gather", "data\\Gather\\", "", "gather_src.xml", true, "gather_src.xml");
 		}
 		DataManager.getInstance();
 		
