@@ -27,7 +27,6 @@ import com.aionemu.gameserver.configs.main.GSConfig;
 import com.aionemu.gameserver.controllers.FlyController;
 import com.aionemu.gameserver.controllers.PlayerController;
 import com.aionemu.gameserver.controllers.ReviveController;
-import com.aionemu.gameserver.controllers.SummonController.UnsummonType;
 import com.aionemu.gameserver.controllers.effect.PlayerEffectController;
 import com.aionemu.gameserver.dao.AbyssRankDAO;
 import com.aionemu.gameserver.dao.BlockListDAO;
@@ -57,6 +56,7 @@ import com.aionemu.gameserver.model.account.Account;
 import com.aionemu.gameserver.model.account.PlayerAccountData;
 import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.gameobjects.PersistentState;
+import com.aionemu.gameserver.model.gameobjects.instance.Summon.UnsummonType;
 import com.aionemu.gameserver.model.gameobjects.player.Equipment;
 import com.aionemu.gameserver.model.gameobjects.player.MacroList;
 import com.aionemu.gameserver.model.gameobjects.player.Mailbox;
@@ -403,7 +403,7 @@ public class PlayerService
 			DuelService.getInstance().loseDuel(player);
 		
 		if(player.getSummon() != null)
-			player.getSummon().getController().release(UnsummonType.LOGOUT);
+			player.getSummon().release(UnsummonType.LOGOUT);
 
 		PunishmentService.stopPrisonTask(player, true);
 

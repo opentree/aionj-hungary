@@ -22,7 +22,6 @@ import java.util.concurrent.Future;
 
 import org.apache.log4j.Logger;
 
-import com.aionemu.gameserver.controllers.SummonController.UnsummonType;
 import com.aionemu.gameserver.controllers.attack.AttackResult;
 import com.aionemu.gameserver.controllers.attack.AttackUtil;
 import com.aionemu.gameserver.dataholders.DataManager;
@@ -31,11 +30,12 @@ import com.aionemu.gameserver.model.Race;
 import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.alliance.PlayerAllianceEvent;
 import com.aionemu.gameserver.model.gameobjects.Creature;
-import com.aionemu.gameserver.model.gameobjects.GroupGate;
 import com.aionemu.gameserver.model.gameobjects.Npc;
-import com.aionemu.gameserver.model.gameobjects.Summon;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
+import com.aionemu.gameserver.model.gameobjects.instance.GroupGate;
 import com.aionemu.gameserver.model.gameobjects.instance.Kisk;
+import com.aionemu.gameserver.model.gameobjects.instance.Summon;
+import com.aionemu.gameserver.model.gameobjects.instance.Summon.UnsummonType;
 import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.SkillListEntry;
@@ -299,7 +299,7 @@ public class PlayerController extends CreatureController<Player>
 		 */
 		Summon summon = player.getSummon();
 		if(summon != null)
-			summon.getController().release(UnsummonType.UNSPECIFIED);
+			summon.release(UnsummonType.UNSPECIFIED);
 
 		PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.DIE, 0, lastAttacker == null ? 0 :
 			lastAttacker.getObjectId()), true);

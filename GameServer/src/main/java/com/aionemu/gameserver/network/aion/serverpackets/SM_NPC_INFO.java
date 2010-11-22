@@ -19,11 +19,11 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 import java.util.Map.Entry;
 
 import com.aionemu.gameserver.model.NpcType;
-import com.aionemu.gameserver.model.gameobjects.GroupGate;
 import com.aionemu.gameserver.model.gameobjects.Npc;
-import com.aionemu.gameserver.model.gameobjects.Summon;
+import com.aionemu.gameserver.model.gameobjects.instance.GroupGate;
 import com.aionemu.gameserver.model.gameobjects.instance.Kisk;
 import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
+import com.aionemu.gameserver.model.gameobjects.instance.Summon;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
 import com.aionemu.gameserver.model.items.ItemSlot;
@@ -119,7 +119,7 @@ public class SM_NPC_INFO extends AbstractAionServerPacket<AionChannelHandler>
 		npcTemplate = groupgate.getObjectTemplate();
 		npcId = groupgate.getNpcId();
 		
-		Player owner = (Player)groupgate.getCreator();
+		Player owner = (Player)groupgate.getMaster();
 		if(owner != null)
 		{
 			masterObjId = owner.getObjectId();
@@ -246,7 +246,8 @@ public class SM_NPC_INFO extends AbstractAionServerPacket<AionChannelHandler>
 		 * 32 : trap
 		 * 1024 : holy servant, noble energy
 		 */
-		writeH(npc.getNpcObjectType().getId());
+		//TODO ??????????
+		writeH(1);
 		writeC( 0x00);// unk
 		writeD(npc.getTarget() == null ? 0 : npc.getTarget().getObjectId());
 	}

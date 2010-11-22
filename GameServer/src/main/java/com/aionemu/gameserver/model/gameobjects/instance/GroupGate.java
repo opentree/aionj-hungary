@@ -1,37 +1,97 @@
 /* 
  * This file is part of the requirements for the Illusion Gate Skill. 
+ * Code References from ATracer's Trap.java of Aion-Unique 
  */
-package com.aionemu.gameserver.controllers;
+package com.aionemu.gameserver.model.gameobjects.instance;
 
-import com.aionemu.gameserver.model.gameobjects.GroupGate;
-import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
+import com.aionemu.gameserver.model.gameobjects.Creature;
+import com.aionemu.gameserver.model.gameobjects.Npc;
+import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.RequestResponseHandler;
-import com.aionemu.gameserver.services.TeleportService;
+import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_QUESTION_WINDOW;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
+import com.aionemu.gameserver.services.TeleportService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /** 
- * @author 
+ * @author LokiReborn 
+ * 
  */
-public class GroupGateController extends NpcController
+public class GroupGate extends Npc implements ISummoned
 {
 
+	/** 
+	 * Creator of this GroupGate. 
+	 */
+	private Creature	creator;
+
+	/** 
+	 *  
+	 * @param objId 
+	 * @param controller 
+	 * @param spawnTemplate 
+	 * @param objectTemplate 
+	 */
+	public GroupGate(int objId, SpawnTemplate spawnTemplate)
+	{
+		super(objId, null, spawnTemplate);
+	}
+
+	@Override
+	public byte getLevel()
+	{
+		return (1);
+	}
+
+	@Override
+	public boolean isEnemyNpc(Npc visibleObject)
+	{
+		return this.creator.isEnemyNpc(visibleObject);
+	}
+
+	@Override
+	public boolean isEnemyPlayer(Player visibleObject)
+	{
+		return this.creator.isEnemyPlayer(visibleObject);
+	}
+
+	@Override
+	public Creature getActingCreature()
+	{
+		return this.creator;
+	}
+
+	@Override
+	public Creature getMaster()
+	{
+		return this.creator;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned#setMaster(com.aionemu.gameserver.model.gameobjects.Creature)
+	 */
+	@Override
+	public void setMaster(Creature creature)
+	{
+		this.creator = creature;
+	}
+	
 	@Override
 	public void onDialogRequest(Player player)
 	{
-		final GroupGate groupgate = (GroupGate) this.getOwner();
+		final GroupGate groupgate = this;
 		boolean isMember = false;
 
-		if (player.getObjectId() == ((Player) groupgate.getCreator()).getObjectId())
+		if (player.getObjectId() == ((Player) groupgate.getMaster()).getObjectId())
 			isMember = true;
 
 		if (player.isInGroup())
 		{
 			for (Player member : player.getPlayerGroup().getMembers())
 			{
-				if (member.getObjectId() == ((Player) groupgate.getCreator()).getObjectId())
+				if (member.getObjectId() == ((Player) groupgate.getMaster()).getObjectId())
 				{
 					isMember = true;
 					break;

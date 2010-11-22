@@ -24,9 +24,7 @@ import com.aionemu.gameserver.model.Race;
 import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.alliance.PlayerAllianceMember;
 import com.aionemu.gameserver.model.gameobjects.Creature;
-import com.aionemu.gameserver.model.gameobjects.Monster;
 import com.aionemu.gameserver.model.gameobjects.Npc;
-import com.aionemu.gameserver.model.gameobjects.NpcObjectType;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
@@ -107,15 +105,6 @@ public class Kisk extends Npc implements ISummoned
 	public boolean isEnemyPlayer(Player player)
 	{
 		return player.getCommonData().getRace() != this.ownerRace;
-	}
-
-	/**
-	 * @return NpcObjectType.NORMAL 
-	 */
-	@Override
-	public NpcObjectType getNpcObjectType()
-	{
-		return NpcObjectType.NORMAL;
 	}
 
 	/**

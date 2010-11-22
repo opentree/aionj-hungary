@@ -16,10 +16,10 @@
  */
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-import com.aionemu.gameserver.controllers.SummonController.UnsummonType;
 import com.aionemu.gameserver.model.gameobjects.AionObject;
 import com.aionemu.gameserver.model.gameobjects.Creature;
-import com.aionemu.gameserver.model.gameobjects.Summon;
+import com.aionemu.gameserver.model.gameobjects.instance.Summon;
+import com.aionemu.gameserver.model.gameobjects.instance.Summon.UnsummonType;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
@@ -62,17 +62,17 @@ public class CM_SUMMON_COMMAND extends AbstractClientPacket<AionChannelHandler>
 					AionObject target = World.getInstance().findAionObject(targetObjId);
 					if(target != null && target instanceof Creature)
 					{
-						summon.getController().attackMode();
+						summon.attackMode();
 					}
 					break;
 				case 1:
-					summon.getController().guardMode();
+					summon.guardMode();
 					break;
 				case 2:
-					summon.getController().restMode();
+					summon.restMode();
 					break;
 				case 3:
-					summon.getController().release(UnsummonType.COMMAND);
+					summon.release(UnsummonType.COMMAND);
 					break;
 					
 			}

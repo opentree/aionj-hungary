@@ -19,7 +19,6 @@
 package com.aionemu.gameserver.model.gameobjects.instance;
 
 import com.aionemu.gameserver.dataholders.DataManager;
-import com.aionemu.gameserver.model.gameobjects.NpcObjectType;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.interfaces.IDialog;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
@@ -154,14 +153,6 @@ public class StaticNpc extends VisibleObject implements IDialog
 	public byte getLevel()
 	{
 		return this.getObjectTemplate().getLevel();
-	}
-	
-	/**
-	 * @return NpcObjectType.NORMAL
-	 */
-	public NpcObjectType getNpcObjectType()
-	{
-		return NpcObjectType.NORMAL;
 	}
 
 	/* (non-Javadoc)

@@ -16,7 +16,7 @@
  */
 package com.aionemu.gameserver.model.gameobjects.stats;
 
-import com.aionemu.gameserver.model.gameobjects.Summon;
+import com.aionemu.gameserver.model.gameobjects.instance.Summon;
 import com.aionemu.gameserver.model.templates.stats.SummonStatsTemplate;
 
 /**

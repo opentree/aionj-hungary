@@ -24,20 +24,18 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.aionemu.commons.database.dao.DAOManager;
-import com.aionemu.gameserver.controllers.GroupGateController;
 import com.aionemu.gameserver.controllers.NpcController;
 import com.aionemu.gameserver.controllers.PostmanController;
-import com.aionemu.gameserver.controllers.SummonController;
 import com.aionemu.gameserver.dao.SpawnDAO;
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.dataholders.NpcData;
 import com.aionemu.gameserver.model.gameobjects.Creature;
-import com.aionemu.gameserver.model.gameobjects.GroupGate;
 import com.aionemu.gameserver.model.gameobjects.Npc;
-import com.aionemu.gameserver.model.gameobjects.Summon;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
+import com.aionemu.gameserver.model.gameobjects.instance.GroupGate;
 import com.aionemu.gameserver.model.gameobjects.instance.Kisk;
 import com.aionemu.gameserver.model.gameobjects.instance.Servant;
+import com.aionemu.gameserver.model.gameobjects.instance.Summon;
 import com.aionemu.gameserver.model.gameobjects.instance.Trap;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.NpcTemplate;
@@ -142,11 +140,9 @@ public class SpawnEngine
 	 */
 	public GroupGate spawnGroupGate(SpawnTemplate spawn, int instanceIndex, Creature creator)
 	{
-		NpcTemplate npcTemplate = DataManager.NPC_DATA.getNpcTemplate(spawn.getTemplateId());
-		GroupGate groupgate = new GroupGate(IDFactory.getInstance().nextId(), new GroupGateController(), spawn,
-			npcTemplate);
+		GroupGate groupgate = new GroupGate(IDFactory.getInstance().nextId(), spawn);
 		groupgate.setKnownlist(new StaticObjectKnownList(groupgate));
-		groupgate.setCreator(creator);
+		groupgate.setMaster(creator);
 		groupgate.getController().onRespawn();
 		bringIntoWorld(groupgate, spawn, instanceIndex);
 		return groupgate;
@@ -230,7 +226,7 @@ public class SpawnEngine
 		
 		byte level = (byte) (npcTemplate.getLevel() + skillLvl - 1);
 		SummonStatsTemplate statsTemplate = DataManager.SUMMON_STATS_DATA.getSummonTemplate(npcId, level);
-		Summon summon = new Summon(IDFactory.getInstance().nextId(), new SummonController(), spawn,
+		Summon summon = new Summon(IDFactory.getInstance().nextId(), spawn,
 			npcTemplate, statsTemplate, level);
 		summon.setMaster(creator);
 

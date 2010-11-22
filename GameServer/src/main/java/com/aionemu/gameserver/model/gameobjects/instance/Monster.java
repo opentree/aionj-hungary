@@ -1,4 +1,4 @@
-/*
+/**
  * This file is part of aion-emu <aion-emu.com>.
  *
  *  aion-emu is free software: you can redistribute it and/or modify
@@ -14,28 +14,37 @@
  *  You should have received a copy of the GNU General Public License
  *  along with aion-emu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aionemu.gameserver.controllers;
+package com.aionemu.gameserver.model.gameobjects.instance;
 
-import com.aionemu.gameserver.model.gameobjects.Monster;
+import com.aionemu.gameserver.model.gameobjects.Npc;
+import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.services.DropService;
 
+public class Monster extends Npc
+{	
+	/**
+	 * 
+	 * @param objId
+	 * @param controller
+	 * @param spawn
+	 * @param objectTemplate
+	 */
+	public Monster(int objId, SpawnTemplate spawn)
+	{
+		super(objId, null, spawn);
+	}
 
-/**
- * @author ATracer, Sarynth
- */
-public class MonsterController extends NpcController
-{
+	@Override
+	public void initializeAi()
+	{
+		
+	}
+	
 	
 	@Override
 	public void onRespawn()
 	{
 		super.onRespawn();
-		DropService.getInstance().unregisterDrop(getOwner());
-	}
-
-	@Override
-	public Monster getOwner()
-	{
-		return (Monster) super.getOwner();
+		DropService.getInstance().unregisterDrop(this);
 	}
 }

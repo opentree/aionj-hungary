@@ -29,6 +29,7 @@ import com.aionemu.gameserver.controllers.attack.AggroList;
 import com.aionemu.gameserver.controllers.effect.EffectController;
 import com.aionemu.gameserver.model.TribeClass;
 import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
+import com.aionemu.gameserver.model.gameobjects.instance.Summon;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureSeeState;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
@@ -589,5 +590,14 @@ public abstract class Creature extends StaticNpc
 			setCasting(null); 
 			PacketSendUtility.broadcastPacketAndReceive(this, new SM_SKILL_CANCEL(this, castingSkill.getSkillTemplate().getSkillId())); 
 		}        
- 	} 
+ 	}
+ 	
+	/**
+	 * 
+	 * @param target
+	 */
+	public void attackTarget(Creature target)
+	{
+		getObserveController().notifyAttackObservers(target);
+	}
 }
