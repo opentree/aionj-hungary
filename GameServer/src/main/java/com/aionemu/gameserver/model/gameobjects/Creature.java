@@ -17,7 +17,6 @@
 package com.aionemu.gameserver.model.gameobjects;
 
 import java.util.Map;
-import java.util.concurrent.Future;
 
 import javolution.util.FastMap;
 
@@ -28,7 +27,6 @@ import com.aionemu.gameserver.controllers.CreatureController;
 import com.aionemu.gameserver.controllers.ObserveController;
 import com.aionemu.gameserver.controllers.attack.AggroList;
 import com.aionemu.gameserver.controllers.effect.EffectController;
-import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.TribeClass;
 import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
@@ -57,8 +55,6 @@ import com.aionemu.gameserver.world.WorldPosition;
 public abstract class Creature extends StaticNpc
 {
 	private static final Logger log = Logger.getLogger(Creature.class);
-
-	private FastMap<Integer, Future<?>> tasks = new FastMap<Integer, Future<?>>().shared();
 
 	private CreatureLifeStats<? extends Creature> lifeStats;
 	private CreatureGameStats<? extends Creature> gameStats;
@@ -340,7 +336,7 @@ public abstract class Creature extends StaticNpc
 	 * @param summon
 	 * @return
 	 */
-	protected boolean isEnemySummon(Summon summon)
+	public boolean isEnemySummon(Summon summon)
 	{
 		return false;
 	}
@@ -349,7 +345,7 @@ public abstract class Creature extends StaticNpc
 	 * @param player
 	 * @return
 	 */
-	protected boolean isEnemyPlayer(Player player)
+	public boolean isEnemyPlayer(Player player)
 	{
 		return false;
 	}
@@ -358,7 +354,7 @@ public abstract class Creature extends StaticNpc
 	 * @param npc
 	 * @return
 	 */
-	protected boolean isEnemyNpc(Npc npc)
+	public boolean isEnemyNpc(Npc npc)
 	{
 		return false;
 	}
@@ -456,20 +452,6 @@ public abstract class Creature extends StaticNpc
 	}
 	
 	/**
-	 * For summons and different kind of servants<br>
-	 *  it will return currently acting player.<br>
-	 *  
-	 *  This method is used for duel and enemy relations,<br>
-	 *  rewards<br>
-	 *  
-	 * @return Master of this creature or self
-	 */
-	public Creature getMaster()
-	{
-		return this;
-	}
-	
-	/**
 	 * For summons it will return summon object and for <br>
 	 * servants - player object.<br>
 	 * 
@@ -549,77 +531,6 @@ public abstract class Creature extends StaticNpc
 		if(skillCoolDowns == null)
 			return;
 		skillCoolDowns.remove(skillId);
-	}
-	
-	/**
-	 * 
-	 * @param taskId
-	 * @return
-	 */
-	public Future<?> getTask(TaskId taskId)
-	{
-		return tasks.get(taskId.ordinal());
-	}
-	
-	/**
-	 * 
-	 * @param taskId
-	 * @return
-	 */
-	public boolean hasTask(TaskId taskId)
-	{
-		return tasks.containsKey(taskId.ordinal());
-	}
-
-	/**
-	 * 
-	 * @param taskId
-	 */
-	public void cancelTask(TaskId taskId)
-	{
-		Future<?> task = tasks.remove(taskId.ordinal());
-		if(task != null)
-		{
-			task.cancel(false);
-		}
-	}
-
-	/**
-	 *  If task already exist - it will be canceled
-	 * @param taskId
-	 * @param task
-	 */
-	public void addTask(TaskId taskId, Future<?> task)
-	{
-		cancelTask(taskId);
-		tasks.put(taskId.ordinal(), task);
-	}
-	
-	/**
-	 *  If task already exist - it will not be replaced
-	 * @param taskId
-	 * @param task
-	 */
-	public void addNewTask(TaskId taskId, Future<?> task)
-	{
-		tasks.putIfAbsent(taskId.ordinal(), task);
-	}
-
-	/**
-	 * Cancel all tasks associated with this controller
-	 * (when deleting object)
-	 */
-	public void cancelAllTasks()
-	{
-		for(Future<?> task : tasks.values())
-		{
-			if(task != null)
-			{
-				task.cancel(true);
-			}
-		}
-		// FIXME: This can fill error logs with NPE if left null. Should never happen...
-		tasks = new FastMap<Integer, Future<?>>().shared();
 	}
 	
 	@Override

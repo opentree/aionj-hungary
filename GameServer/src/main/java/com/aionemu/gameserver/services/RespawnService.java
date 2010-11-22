@@ -18,7 +18,6 @@ package com.aionemu.gameserver.services;
 
 import java.util.concurrent.Future;
 
-import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTime;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
@@ -41,7 +40,7 @@ public class RespawnService
 	 * @param npc
 	 * @return Future<?>
 	 */
-	public static Future<?> scheduleDecayTask(final Npc npc)
+	public static Future<?> scheduleDecayTask(final VisibleObject npc)
 	{
 		int respawnInterval = npc.getSpawn().getInterval();
 		int decayInterval = Math.round(respawnInterval * 0.8f);
@@ -53,7 +52,7 @@ public class RespawnService
 			@Override
 			public void run()
 			{
-				npc.getController().onDespawn(false);
+				npc.onDespawn(false);
 			}
 		}, decayInterval * 1000);
 	}

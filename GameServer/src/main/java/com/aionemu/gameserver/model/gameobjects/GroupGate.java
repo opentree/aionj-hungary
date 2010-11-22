@@ -5,15 +5,16 @@
  		package com.aionemu.gameserver.model.gameobjects; 
  		 
  		import com.aionemu.gameserver.controllers.NpcController; 
+import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
  		import com.aionemu.gameserver.model.gameobjects.player.Player; 
  		import com.aionemu.gameserver.model.templates.VisibleObjectTemplate; 
- 		import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate; 
+import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate; 
  		 
  		/** 
  		 * @author LokiReborn 
  		 * 
  		 */ 
- 		public class GroupGate extends Npc 
+ 		public class GroupGate extends Npc implements ISummoned
  		{ 
  		 
  		    /** 
@@ -55,14 +56,14 @@
  		        return (1); 
  		    } 
  		     
- 		    @Override 
- 		    protected boolean isEnemyNpc(Npc visibleObject) 
+ 		    @Override
+			public boolean isEnemyNpc(Npc visibleObject) 
  		    { 
  		        return this.creator.isEnemyNpc(visibleObject); 
  		    } 
  		 
- 		    @Override 
- 		    protected boolean isEnemyPlayer(Player visibleObject) 
+ 		    @Override
+			public boolean isEnemyPlayer(Player visibleObject) 
  		    { 
  		        return this.creator.isEnemyPlayer(visibleObject); 
  		    } 
@@ -86,5 +87,14 @@
  		    public Creature getMaster() 
  		    { 
  		        return this.creator; 
- 		    } 
+ 		    }
+
+			/* (non-Javadoc)
+			 * @see com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned#setMaster(com.aionemu.gameserver.model.gameobjects.Creature)
+			 */
+			@Override
+			public void setMaster(Creature creature)
+			{
+				this.creator = creature;
+			} 
  		} 

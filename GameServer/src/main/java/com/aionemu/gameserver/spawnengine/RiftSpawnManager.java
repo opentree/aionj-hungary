@@ -23,9 +23,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import org.apache.log4j.Logger;
 
 import com.aionemu.commons.utils.Rnd;
-import com.aionemu.gameserver.controllers.RiftController;
 import com.aionemu.gameserver.model.Race;
-import com.aionemu.gameserver.model.gameobjects.Npc;
+import com.aionemu.gameserver.model.gameobjects.instance.Rift;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_DELETE;
@@ -33,6 +32,7 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.utils.idfactory.IDFactory;
 import com.aionemu.gameserver.world.World;
+import com.aionemu.gameserver.world.WorldPosition;
 
 /**
  * @author ATracer
@@ -42,7 +42,7 @@ public class RiftSpawnManager
 {
 	private static final Logger log = Logger.getLogger(RiftSpawnManager.class);
 	
-	private static final ConcurrentLinkedQueue<Npc> rifts = new ConcurrentLinkedQueue<Npc>();
+	private static final ConcurrentLinkedQueue<Rift> rifts = new ConcurrentLinkedQueue<Rift>();
 	
 	
 	private static final int RIFT_RESPAWN_DELAY = 100 * 60 * 1000;
@@ -80,7 +80,7 @@ public class RiftSpawnManager
 	 */
 	private static void spawnRift(RiftEnum rift)
 	{
-		/*
+		
 		log.info("Spawning rift : " + rift.name());
 		SpawnTemplate masterTemplate = spawnTemplates.get(rift.getMaster());
 		SpawnTemplate slaveTemplate= spawnTemplates.get(rift.getSlave());
@@ -90,39 +90,35 @@ public class RiftSpawnManager
 		
 		int instanceCount = World.getInstance().getWorldMap(masterTemplate.getMapId()).getInstanceCount();
 		
-		SpawnTemplate masterTemplate = masterTemplate.getNextRandomTemplate();
-		SpawnTemplate slaveTemplate = slaveGroup.getNextRandomTemplate();
-		
 		for(int i = 1; i <= instanceCount; i++)
 		{
-			Npc slave = spawnInstance(i, masterGroup, slaveTemplate, new RiftController(null, rift));
-			spawnInstance(i, masterGroup, masterTemplate, new RiftController(slave, rift));
-		}	*/	
+			Rift slave = spawnInstance(i, slaveTemplate, null, rift);
+			spawnInstance(i, masterTemplate, slave, rift);
+		}
 	}
 
-	private static Npc spawnInstance(int instanceIndex, SpawnTemplate spawnTemplate, RiftController riftController)
+	private static Rift spawnInstance(int instanceIndex, SpawnTemplate spawnTemplate, Rift slave, RiftEnum rift)
 	{
-		Npc npc = new Npc(IDFactory.getInstance().nextId(),riftController,
-			spawnTemplate);
-		npc.getController().onRespawn();
+		Rift riftObject = new Rift(IDFactory.getInstance().nextId(), spawnTemplate, new WorldPosition(), slave, rift);
+		riftObject.onRespawn();
 
 		World world = World.getInstance();
-		world.storeObject(npc);
-		world.setPosition(npc, spawnTemplate.getMapId(), instanceIndex, 
+		world.storeObject(riftObject);
+		world.setPosition(riftObject, spawnTemplate.getMapId(), instanceIndex, 
 			spawnTemplate.getX(), spawnTemplate.getY(), spawnTemplate.getZ(), spawnTemplate.getHeading());
-		world.spawn(npc);
-		rifts.add(npc);
+		world.spawn(riftObject);
+		rifts.add(riftObject);
 
-		scheduleDespawn(npc);		
-		riftController.sendAnnounce();
+		scheduleDespawn(riftObject);		
+		riftObject.sendAnnounce();
 		
-		return npc;
+		return riftObject;
 	}
 
 	/**
 	 * @param npc
 	 */
-	private static void scheduleDespawn(final Npc npc)
+	private static void scheduleDespawn(final Rift npc)
 	{
 		ThreadPoolManager.getInstance().schedule(new Runnable()
 		{
@@ -132,7 +128,7 @@ public class RiftSpawnManager
 				if(npc != null && npc.isSpawned())
 				{
 					PacketSendUtility.broadcastPacket(npc, new SM_DELETE(npc, 15));
-					npc.getController().onDespawn(true);
+					npc.onDespawn(true);
 				}	
 				rifts.remove(npc);
 			}
@@ -234,11 +230,11 @@ public class RiftSpawnManager
 	 */
 	public static void sendRiftStatus(Player activePlayer)
 	{
-		for(Npc rift : rifts)
+		for(Rift rift : rifts)
 		{
 			if(rift.getWorldId() == activePlayer.getWorldId())
 			{
-				((RiftController) rift.getController()).sendMessage(activePlayer);
+				rift.sendMessage(activePlayer);
 			}
 		}
 	}

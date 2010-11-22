@@ -27,7 +27,6 @@ import com.aionemu.commons.database.dao.DAOManager;
 import com.aionemu.gameserver.controllers.GroupGateController;
 import com.aionemu.gameserver.controllers.NpcController;
 import com.aionemu.gameserver.controllers.PostmanController;
-import com.aionemu.gameserver.controllers.ServantController;
 import com.aionemu.gameserver.controllers.SummonController;
 import com.aionemu.gameserver.dao.SpawnDAO;
 import com.aionemu.gameserver.dataholders.DataManager;
@@ -35,11 +34,11 @@ import com.aionemu.gameserver.dataholders.NpcData;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.GroupGate;
 import com.aionemu.gameserver.model.gameobjects.Npc;
-import com.aionemu.gameserver.model.gameobjects.Servant;
 import com.aionemu.gameserver.model.gameobjects.Summon;
-import com.aionemu.gameserver.model.gameobjects.Trap;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.instance.Kisk;
+import com.aionemu.gameserver.model.gameobjects.instance.Servant;
+import com.aionemu.gameserver.model.gameobjects.instance.Trap;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.NpcTemplate;
 import com.aionemu.gameserver.model.templates.WorldMapTemplate;
@@ -127,7 +126,7 @@ public class SpawnEngine
 	public Trap spawnTrap(SpawnTemplate spawn, int instanceIndex, Creature creator, int skillId)
 	{
 		Trap trap = new Trap(IDFactory.getInstance().nextId(), new NpcController(), spawn);
-		trap.setCreator(creator);
+		trap.setMaster(creator);
 		trap.setSkillId(skillId);
 		trap.getController().onRespawn();
 		bringIntoWorld(trap, spawn, instanceIndex);
@@ -201,8 +200,8 @@ public class SpawnEngine
 	 */
 	public Servant spawnServant(SpawnTemplate spawn, int instanceIndex, Creature creator, int skillId, int hpRatio)
 	{
-		Servant servant = new Servant(IDFactory.getInstance().nextId(), new ServantController(), spawn);
-		servant.setCreator(creator);
+		Servant servant = new Servant(IDFactory.getInstance().nextId(), spawn);
+		servant.setMaster(creator);
 		servant.setSkillId(skillId);
 		servant.setTarget(creator.getTarget());
 		servant.setHpRatio(hpRatio);

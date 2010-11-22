@@ -22,6 +22,7 @@ import java.util.Map;
 import com.aionemu.commons.utils.SingletonMap;
 import com.aionemu.gameserver.model.gameobjects.AionObject;
 import com.aionemu.gameserver.model.gameobjects.Creature;
+import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 
 /**
@@ -277,7 +278,9 @@ public class AggroList
 			
 			// Check to see if this is a summon, if so add the damage to the group. 
 			
-			Creature master = ((Creature)ai.getAttacker()).getMaster();
+			Creature master = (Creature) ai.getAttacker();
+			if (master instanceof ISummoned)
+				master = ((ISummoned) master).getMaster();
 			
 			if (!(master instanceof Player))
 				continue;

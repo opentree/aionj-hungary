@@ -99,7 +99,7 @@ public class SiegeGeneralController extends SiegeNpcController
 
 			// Check to see if this is a summon, if so add the damage to the group. 
 			
-			Creature master = ((Creature)ai.getAttacker()).getMaster();
+			Creature master = ((Creature)ai.getAttacker()).getActingCreature();
 			
 			if (master == null)
 				continue;

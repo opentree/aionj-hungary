@@ -26,6 +26,15 @@ import com.aionemu.gameserver.model.gameobjects.Creature;
  */
 public interface ISummoned
 {
+	/**
+	 * For summons and different kind of servants<br>
+	 *  it will return currently acting player.<br>
+	 *  
+	 *  This method is used for duel and enemy relations,<br>
+	 *  rewards<br>
+	 *  
+	 * @return Master of this creature or self
+	 */
 	public Creature getMaster();
 	
 	public void setMaster(Creature creature);

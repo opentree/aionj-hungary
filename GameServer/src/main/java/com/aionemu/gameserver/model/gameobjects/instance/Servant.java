@@ -14,9 +14,13 @@
  *  You should have received a copy of the GNU General Public License
  *  along with aion-unique.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aionemu.gameserver.model.gameobjects;
+package com.aionemu.gameserver.model.gameobjects.instance;
 
-import com.aionemu.gameserver.controllers.NpcController;
+import com.aionemu.gameserver.model.gameobjects.Creature;
+import com.aionemu.gameserver.model.gameobjects.Npc;
+import com.aionemu.gameserver.model.gameobjects.NpcObjectType;
+import com.aionemu.gameserver.model.gameobjects.Summon;
+import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 
@@ -24,7 +28,7 @@ import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
  * @author ATracer
  *
  */
-public class Servant extends Npc
+public class Servant extends Npc implements ISummoned
 {
 	/**
 	 * Skill that will be used upon execution
@@ -50,9 +54,9 @@ public class Servant extends Npc
 	 * @param spawnTemplate
 	 * @param objectTemplate
 	 */
-	public Servant(int objId, NpcController controller, SpawnTemplate spawnTemplate)
+	public Servant(int objId, SpawnTemplate spawnTemplate)
 	{
-		super(objId, controller, spawnTemplate);
+		super(objId, null, spawnTemplate);
 	}
 
 	/**
@@ -69,22 +73,6 @@ public class Servant extends Npc
 	public void setSkillId(int skillId)
 	{
 		this.skillId = skillId;
-	}
-
-	/**
-	 * @return the creator
-	 */
-	public Creature getCreator()
-	{
-		return creator;
-	}
-
-	/**
-	 * @param creator the creator to set
-	 */
-	public void setCreator(Creature creator)
-	{
-		this.creator = creator;
 	}
 	
 	/**
@@ -126,19 +114,19 @@ public class Servant extends Npc
 	}
 	
 	@Override
-	protected boolean isEnemyNpc(Npc visibleObject)
+	public boolean isEnemyNpc(Npc visibleObject)
 	{
 		return this.creator.isEnemyNpc(visibleObject);
 	}
 
 	@Override
-	protected boolean isEnemyPlayer(Player visibleObject)
+	public boolean isEnemyPlayer(Player visibleObject)
 	{
 		return this.creator.isEnemyPlayer(visibleObject);
 	}
 	
 	@Override
-	protected boolean isEnemySummon(Summon summon)
+	public boolean isEnemySummon(Summon summon)
 	{
 		return this.creator.isEnemySummon(summon);
 	}
@@ -162,5 +150,20 @@ public class Servant extends Npc
 	public Creature getMaster()
 	{
 		return this.creator;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned#setMaster(com.aionemu.gameserver.model.gameobjects.Creature)
+	 */
+	@Override
+	public void setMaster(Creature creature)
+	{
+		this.creator = creature;
+	}
+	
+	@Override
+	public void onDie(Creature lastAttacker)
+	{
+		super.onDelete();
 	}
 }

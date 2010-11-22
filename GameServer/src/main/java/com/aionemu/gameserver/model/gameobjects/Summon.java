@@ -20,6 +20,7 @@ import com.aionemu.gameserver.controllers.CreatureController;
 import com.aionemu.gameserver.controllers.SummonController;
 import com.aionemu.gameserver.controllers.effect.EffectController;
 import com.aionemu.gameserver.model.TribeClass;
+import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.stats.SummonGameStats;
 import com.aionemu.gameserver.model.gameobjects.stats.SummonLifeStats;
@@ -34,7 +35,7 @@ import com.aionemu.gameserver.world.WorldPosition;
  * @author ATracer
  * 
  */
-public class Summon extends Creature
+public class Summon extends Creature implements ISummoned
 {
 
 	private Player	master;
@@ -93,15 +94,6 @@ public class Summon extends Creature
 	public Player getMaster()
 	{
 		return master;
-	}
-
-	/**
-	 * @param master
-	 *            the master to set
-	 */
-	public void setMaster(Player master)
-	{
-		this.master = master;
 	}
 
 	@Override
@@ -173,19 +165,19 @@ public class Summon extends Creature
 	}
 
 	@Override
-	protected boolean isEnemyNpc(Npc visibleObject)
+	public boolean isEnemyNpc(Npc visibleObject)
 	{
 		return master.isEnemyNpc(visibleObject);
 	}
 
 	@Override
-	protected boolean isEnemyPlayer(Player visibleObject)
+	public boolean isEnemyPlayer(Player visibleObject)
 	{
 		return master.isEnemyPlayer(visibleObject);
 	}
 
 	@Override
-	protected boolean isEnemySummon(Summon summon)
+	public boolean isEnemySummon(Summon summon)
 	{
 		return master.isEnemySummon(summon);
 	}
@@ -209,5 +201,14 @@ public class Summon extends Creature
 			return false;
 		
 		return getMaster().isAggroFrom(npc);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned#setMaster(com.aionemu.gameserver.model.gameobjects.Creature)
+	 */
+	@Override
+	public void setMaster(Creature creature)
+	{
+		this.master = (Player) creature;
 	}
 }

@@ -27,8 +27,8 @@ import org.apache.log4j.Logger;
 
 import com.aionemu.gameserver.model.alliance.PlayerAllianceMember;
 import com.aionemu.gameserver.model.gameobjects.Creature;
-import com.aionemu.gameserver.model.gameobjects.Trap;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
+import com.aionemu.gameserver.model.gameobjects.instance.Trap;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.skillengine.model.Skill;
 import com.aionemu.gameserver.utils.MathUtil;
@@ -89,7 +89,7 @@ extends Property
 						continue;
 					
 					//TODO this is a temporary hack for traps
-					if(skill.getEffector() instanceof Trap && ((Trap) skill.getEffector()).getCreator() == nextCreature)
+					if(skill.getEffector() instanceof Trap && ((Trap) skill.getEffector()).getMaster() == nextCreature)
 						continue;
 					
 					//TODO: here value +4 till better move controller developed

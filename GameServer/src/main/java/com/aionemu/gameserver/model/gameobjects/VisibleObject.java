@@ -16,7 +16,12 @@
  */
 package com.aionemu.gameserver.model.gameobjects;
 
+import java.util.concurrent.Future;
+
+import javolution.util.FastMap;
+
 import com.aionemu.gameserver.controllers.VisibleObjectController;
+import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
@@ -43,6 +48,8 @@ public abstract class VisibleObject extends AionObject
 {
 	protected VisibleObjectTemplate objectTemplate;
 	
+	private FastMap<Integer, Future<?>> tasks = new FastMap<Integer, Future<?>>().shared();
+
 	/**
 	 * Constructor.
 	 * 
@@ -331,5 +338,87 @@ public abstract class VisibleObject extends AionObject
 	public void onRespawn()
 	{
 		
+	}
+	
+	public void onDespawn(boolean forced)
+	{
+		if(forced)
+			cancelTask(TaskId.DECAY);
+
+		if(!this.isSpawned())
+			return;
+
+		World.getInstance().despawn(this);
+	}
+	
+	/**
+	 * 
+	 * @param taskId
+	 * @return
+	 */
+	public Future<?> getTask(TaskId taskId)
+	{
+		return tasks.get(taskId.ordinal());
+	}
+	
+	/**
+	 * 
+	 * @param taskId
+	 * @return
+	 */
+	public boolean hasTask(TaskId taskId)
+	{
+		return tasks.containsKey(taskId.ordinal());
+	}
+
+	/**
+	 * 
+	 * @param taskId
+	 */
+	public void cancelTask(TaskId taskId)
+	{
+		Future<?> task = tasks.remove(taskId.ordinal());
+		if(task != null)
+		{
+			task.cancel(false);
+		}
+	}
+
+	/**
+	 *  If task already exist - it will be canceled
+	 * @param taskId
+	 * @param task
+	 */
+	public void addTask(TaskId taskId, Future<?> task)
+	{
+		cancelTask(taskId);
+		tasks.put(taskId.ordinal(), task);
+	}
+	
+	/**
+	 *  If task already exist - it will not be replaced
+	 * @param taskId
+	 * @param task
+	 */
+	public void addNewTask(TaskId taskId, Future<?> task)
+	{
+		tasks.putIfAbsent(taskId.ordinal(), task);
+	}
+
+	/**
+	 * Cancel all tasks associated with this controller
+	 * (when deleting object)
+	 */
+	public void cancelAllTasks()
+	{
+		for(Future<?> task : tasks.values())
+		{
+			if(task != null)
+			{
+				task.cancel(true);
+			}
+		}
+		// FIXME: This can fill error logs with NPE if left null. Should never happen...
+		tasks = new FastMap<Integer, Future<?>>().shared();
 	}
 }

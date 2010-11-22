@@ -1,24 +1,24 @@
 /*
- * This file is part of aion-unique <aion-unique.org>.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
  *
- *  aion-unique is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  aion-unique is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, 
+ * MA  02110-1301, USA.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with aion-unique.  If not, see <http://www.gnu.org/licenses/>.
+ * http://www.gnu.org/copyleft/gpl.html
  */
-package com.aionemu.gameserver.controllers;
+package com.aionemu.gameserver.model.gameobjects.instance;
 
-import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
-import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.RequestResponseHandler;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
@@ -30,16 +30,18 @@ import com.aionemu.gameserver.services.TeleportService;
 import com.aionemu.gameserver.spawnengine.RiftSpawnManager.RiftEnum;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.world.WorldMapInstance;
+import com.aionemu.gameserver.world.WorldPosition;
 
 /**
- * @author ATracer
+ * @author Mr. Poke
  *
  */
-public class RiftController extends NpcController
+public class Rift extends StaticNpc
 {
+
 	private boolean isMaster = false;
 	private SpawnTemplate slaveSpawnTemplate;
-	private Npc slave;
+	private Rift slave;
 	
 	private Integer maxEntries;
 	private Integer maxLevel;
@@ -48,15 +50,15 @@ public class RiftController extends NpcController
 	private boolean isAccepting;
 	
 	private RiftEnum riftTemplate;
-	
-	/**
-	 * Used to create master rifts or slave rifts (slave == null)
-	 * 
-	 * @param slaveSpawnTemplate
-	 */
 
-	public RiftController(Npc slave, RiftEnum riftTemplate)
+	/**
+	 * @param objId
+	 * @param spawnTemplate
+	 * @param position
+	 */
+	public Rift(int objId, SpawnTemplate spawnTemplate, WorldPosition position, Rift slave, RiftEnum riftTemplate)
 	{
+		super(objId, spawnTemplate, position);
 		this.riftTemplate = riftTemplate;
 		if(slave != null)//master rift should be created
 		{
@@ -67,7 +69,7 @@ public class RiftController extends NpcController
 			
 			isMaster = true;
 			isAccepting = true;
-		}	
+		}
 	}
 
 	@Override
@@ -76,7 +78,8 @@ public class RiftController extends NpcController
 		if(!isMaster && !isAccepting)
 			return;
 		
-		RequestResponseHandler responseHandler = new RequestResponseHandler(getOwner())
+		final Rift rift = this;
+		RequestResponseHandler responseHandler = new RequestResponseHandler(this)
 		{
 			@Override
 			public void acceptRequest(StaticNpc requester, Player responder)
@@ -96,11 +99,11 @@ public class RiftController extends NpcController
 				{
 					isAccepting = false;
 					
-					RespawnService.scheduleDecayTask(getOwner());
+					RespawnService.scheduleDecayTask(rift);
 					RespawnService.scheduleDecayTask(slave);
 				}
-				PacketSendUtility.broadcastPacket(getOwner(), 
-					new SM_RIFT_STATUS(getOwner().getObjectId(), usedEntries, maxEntries, maxLevel));
+				PacketSendUtility.broadcastPacket(rift, 
+					new SM_RIFT_STATUS(getObjectId(), usedEntries, maxEntries, maxLevel));
 					
 			}
 			@Override
@@ -120,13 +123,14 @@ public class RiftController extends NpcController
 	@Override
 	public void see(VisibleObject object)
 	{
+		super.see(object);
 		if(!isMaster)
 			return;
 		
 		if(object instanceof Player)
 		{
 			PacketSendUtility.sendPacket((Player) object, 
-				new SM_RIFT_STATUS(getOwner().getObjectId(), usedEntries, maxEntries, maxLevel));
+				new SM_RIFT_STATUS(getObjectId(), usedEntries, maxEntries, maxLevel));
 		}
 	}
 
@@ -135,7 +139,7 @@ public class RiftController extends NpcController
 	 */
 	public void sendMessage(Player activePlayer)
 	{
-		if(isMaster && getOwner().isSpawned())
+		if(isMaster && isSpawned())
 			PacketSendUtility.sendPacket(activePlayer, new SM_RIFT_ANNOUNCE(riftTemplate.getDestination()));
 	}
 
@@ -144,9 +148,9 @@ public class RiftController extends NpcController
 	 */
 	public void sendAnnounce()
 	{
-		if(isMaster && getOwner().isSpawned())
+		if(isMaster && isSpawned())
 		{
-			WorldMapInstance worldInstance = getOwner().getPosition().getMapRegion().getParent();	
+			WorldMapInstance worldInstance = getPosition().getMapRegion().getParent();	
 			for(Player player : worldInstance.getAllWorldMapPlayers())
 			{
 				if(player.isSpawned())				

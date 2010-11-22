@@ -54,16 +54,15 @@ public class Kisk extends Npc implements ISummoned
 	private Legion				ownerLegion;
 	private Race				ownerRace;
 	private int					ownerObjectId;
-	
+	private Player				master;
 	private KiskStatsTemplate	kiskStatsTemplate;
 
 	private int					remainingResurrections;
 	private long				kiskSpawnTime;
-	
-	private final List<Player>	kiskMembers = new ArrayList<Player>();
-	private int					currentMemberCount = 0;
 
-	
+	private final List<Player>	kiskMembers			= new ArrayList<Player>();
+	private int					currentMemberCount	= 0;
+
 	/**
 	 * 
 	 * @param objId
@@ -74,15 +73,15 @@ public class Kisk extends Npc implements ISummoned
 	public Kisk(int objId, SpawnTemplate spawnTemplate, Player owner)
 	{
 		super(objId, null, spawnTemplate);
-		
+
 		this.kiskStatsTemplate = this.getObjectTemplate().getKiskStatsTemplate();
 		if (this.kiskStatsTemplate == null)
 			this.kiskStatsTemplate = new KiskStatsTemplate();
-		
+
 		remainingResurrections = this.kiskStatsTemplate.getMaxResurrects();
 		kiskSpawnTime = System.currentTimeMillis() / 1000;
 	}
-	
+
 	/**
 	 * Required so that the enemy race can attack the Kisk!
 	 */
@@ -91,7 +90,7 @@ public class Kisk extends Npc implements ISummoned
 	{
 		if (creature instanceof Player)
 		{
-			Player player = (Player)creature;
+			Player player = (Player) creature;
 			if (player.getCommonData().getRace() != this.ownerRace)
 				return true;
 		}
@@ -99,17 +98,17 @@ public class Kisk extends Npc implements ISummoned
 	}
 
 	@Override
-	protected boolean isEnemyNpc(Npc npc)
+	public boolean isEnemyNpc(Npc npc)
 	{
 		return npc instanceof Monster || npc.isAggressiveTo(this);
 	}
 
 	@Override
-	protected boolean isEnemyPlayer(Player player)
+	public boolean isEnemyPlayer(Player player)
 	{
 		return player.getCommonData().getRace() != this.ownerRace;
 	}
-	
+
 	/**
 	 * @return NpcObjectType.NORMAL 
 	 */
@@ -118,7 +117,7 @@ public class Kisk extends Npc implements ISummoned
 	{
 		return NpcObjectType.NORMAL;
 	}
-	
+
 	/**
 	 * 1 ~ race
 	 * 2 ~ legion
@@ -136,7 +135,7 @@ public class Kisk extends Npc implements ISummoned
 	{
 		return this.kiskMembers;
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -160,7 +159,7 @@ public class Kisk extends Npc implements ISummoned
 	{
 		return this.remainingResurrections;
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -175,7 +174,7 @@ public class Kisk extends Npc implements ISummoned
 	public int getRemainingLifetime()
 	{
 		long timeElapsed = (System.currentTimeMillis() / 1000) - kiskSpawnTime;
-		int timeRemaining = (int)(7200 - timeElapsed); // Fixed 2 hours 2 * 60 * 60
+		int timeRemaining = (int) (7200 - timeElapsed); // Fixed 2 hours 2 * 60 * 60
 		return (timeRemaining > 0 ? timeRemaining : 0);
 	}
 
@@ -186,7 +185,7 @@ public class Kisk extends Npc implements ISummoned
 	public boolean canBind(Player player)
 	{
 		String playerName = player.getName();
-		
+
 		if (playerName != this.ownerName)
 		{
 			// Check if they fit the usemask
@@ -196,33 +195,35 @@ public class Kisk extends Npc implements ISummoned
 					if (this.ownerRace == player.getCommonData().getRace())
 						return false;
 					break;
-					
+
 				case 2: // Legion
 					if (ownerLegion == null)
 						return false;
 					if (!ownerLegion.isMember(player.getObjectId()))
 						return false;
 					break;
-					
+
 				case 3: // Solo
 					return false; // Already Checked Name
-				
+
 				case 4: // Group (PlayerGroup or PlayerAllianceGroup)
 					boolean isMember = false;
 					if (player.isInGroup())
 					{
-						for(Player member : player.getPlayerGroup().getMembers())
+						for (Player member : player.getPlayerGroup().getMembers())
 						{
-							if (member.getObjectId() == this.ownerObjectId) {
+							if (member.getObjectId() == this.ownerObjectId)
+							{
 								isMember = true;
 							}
 						}
 					}
 					else if (player.isInAlliance())
 					{
-						for(PlayerAllianceMember allianceMember : player.getPlayerAlliance().getMembersForGroup(player.getObjectId()))
+						for (PlayerAllianceMember allianceMember : player.getPlayerAlliance().getMembersForGroup(player.getObjectId()))
 						{
-							if (allianceMember.getObjectId() == this.ownerObjectId) {
+							if (allianceMember.getObjectId() == this.ownerObjectId)
+							{
 								isMember = true;
 							}
 						}
@@ -230,24 +231,23 @@ public class Kisk extends Npc implements ISummoned
 					if (isMember == false)
 						return false;
 					break;
-					
+
 				case 5: // Alliance
-					if(!player.isInAlliance() ||
-						player.getPlayerAlliance().getPlayer(this.ownerObjectId) == null)
+					if (!player.isInAlliance() || player.getPlayerAlliance().getPlayer(this.ownerObjectId) == null)
 						return false;
 					break;
-					
+
 				default:
 					return false;
 			}
 		}
-		
+
 		if (this.getCurrentMemberCount() >= getMaxMembers())
 			return false;
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * @param player
 	 */
@@ -268,7 +268,7 @@ public class Kisk extends Npc implements ISummoned
 		player.setKisk(this);
 		PacketSendUtility.sendPacket(player, new SM_KISK_UPDATE(this));
 	}
-	
+
 	/**
 	 * @param player
 	 */
@@ -279,29 +279,29 @@ public class Kisk extends Npc implements ISummoned
 		this.currentMemberCount--;
 		this.broadcastKiskUpdate();
 	}
-	
+
 	/**
 	 * Sends SM_KISK_UPDATE to each member
 	 */
 	private void broadcastKiskUpdate()
 	{
 		// Logic to prevent enemy race from knowing kisk information.
-		for(Player member : this.kiskMembers)
+		for (Player member : this.kiskMembers)
 		{
 			if (!this.getKnownList().knowns(member))
 				PacketSendUtility.sendPacket(member, new SM_KISK_UPDATE(this));
 		}
-		for(VisibleObject obj : this.getKnownList().getKnownObjects().values())
+		for (VisibleObject obj : this.getKnownList().getKnownObjects().values())
 		{
-			if(obj instanceof Player)
+			if (obj instanceof Player)
 			{
 				Player target = (Player) obj;
-				if(target.getCommonData().getRace() == this.ownerRace)
+				if (target.getCommonData().getRace() == this.ownerRace)
 					PacketSendUtility.sendPacket(target, new SM_KISK_UPDATE(this));
 			}
 		}
 	}
-	
+
 	/**
 	 * @param message
 	 */
@@ -313,7 +313,7 @@ public class Kisk extends Npc implements ISummoned
 				PacketSendUtility.sendPacket(member, message);
 		}
 	}
-	
+
 	/**
 	 * @param player
 	 */
@@ -345,7 +345,7 @@ public class Kisk extends Npc implements ISummoned
 	{
 		return this.ownerName;
 	}
-	
+
 	/**
 	 * @return ownerObjectId
 	 */
@@ -354,7 +354,6 @@ public class Kisk extends Npc implements ISummoned
 		return this.ownerObjectId;
 	}
 
-
 	@Override
 	public void onAttack(Creature creature, int skillId, TYPE type, int damage)
 	{
@@ -362,23 +361,23 @@ public class Kisk extends Npc implements ISummoned
 		if (this.getLifeStats().isFullyRestoredHp())
 		{
 			List<Player> members = this.getCurrentMemberList();
-			for(Player member : members)
+			for (Player member : members)
 			{
 				PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.STR_BINDSTONE_IS_ATTACKED);
 			}
 		}
-		
+
 		super.onAttack(creature, skillId, type, damage);
-		
+
 	}
-	
+
 	@Override
 	public void onDespawn(boolean forced)
 	{
 		this.broadcastPacket(SM_SYSTEM_MESSAGE.STR_BINDSTONE_IS_REMOVED);
 		removeKisk();
 	}
-	
+
 	@Override
 	public void onDie(Creature lastAttacker)
 	{
@@ -386,7 +385,7 @@ public class Kisk extends Npc implements ISummoned
 		this.broadcastPacket(SM_SYSTEM_MESSAGE.STR_BINDSTONE_IS_DESTROYED);
 		removeKisk();
 	}
-	
+
 	private void removeKisk()
 	{
 		KiskService.removeKisk(this);
@@ -402,26 +401,27 @@ public class Kisk extends Npc implements ISummoned
 			}
 		}, 3 * 1000));
 	}
-	
+
 	@Override
 	public void onDialogRequest(Player player)
 	{
-		
+
 		if (player.getKisk() == this)
 		{
 			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_BINDSTONE_ALREADY_REGISTERED);
 			return;
 		}
-		
+
 		if (canBind(player))
 		{
-			RequestResponseHandler responseHandler = new RequestResponseHandler(this) {
-				
+			RequestResponseHandler responseHandler = new RequestResponseHandler(this)
+			{
+
 				@Override
 				public void acceptRequest(StaticNpc requester, Player responder)
 				{
-					Kisk kisk = (Kisk)requester;
-					
+					Kisk kisk = (Kisk) requester;
+
 					// Check again if it's full (If they waited to press OK)
 					if (!kisk.canBind(responder))
 					{
@@ -430,14 +430,14 @@ public class Kisk extends Npc implements ISummoned
 					}
 					KiskService.onBind(kisk, responder);
 				}
-	
+
 				@Override
 				public void denyRequest(StaticNpc requester, Player responder)
 				{
 					// Nothing Happens
 				}
 			};
-			
+
 			boolean requested = player.getResponseRequester().putRequest(SM_QUESTION_WINDOW.STR_BIND_TO_KISK, responseHandler);
 			if (requested)
 			{
@@ -462,11 +462,21 @@ public class Kisk extends Npc implements ISummoned
 	{
 		if (creature instanceof Player)
 		{
-			Player player = (Player)creature;
+			Player player = (Player) creature;
+			this.master = player;
 			this.ownerName = player.getName();
 			this.ownerLegion = player.getLegion();
 			this.ownerRace = player.getCommonData().getRace();
 			this.ownerObjectId = player.getObjectId();
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned#getMaster()
+	 */
+	@Override
+	public Creature getMaster()
+	{
+		return this.master;
 	}
 }

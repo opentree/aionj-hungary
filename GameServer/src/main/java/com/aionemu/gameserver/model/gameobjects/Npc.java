@@ -210,19 +210,19 @@ public class Npc extends Creature implements IDialog
 	}
 	
 	@Override
-	protected boolean isEnemyNpc(Npc visibleObject)
+	public boolean isEnemyNpc(Npc visibleObject)
 	{
 		return ((DataManager.TRIBE_RELATIONS_DATA.isAggressiveRelation(getTribe(),visibleObject.getTribe())) || (DataManager.TRIBE_RELATIONS_DATA.isHostileRelation(getTribe(),visibleObject.getTribe())));
 	}
 
 	@Override
-	protected boolean isEnemyPlayer(Player visibleObject)
+	public boolean isEnemyPlayer(Player visibleObject)
 	{
 		return (!((DataManager.TRIBE_RELATIONS_DATA.isSupportRelation(getTribe(),visibleObject.getTribe())) || (DataManager.TRIBE_RELATIONS_DATA.isFriendlyRelation(getTribe(),visibleObject.getTribe()))) );
 	}
 	
 	@Override
-	protected boolean isEnemySummon(Summon visibleObject)
+	public boolean isEnemySummon(Summon visibleObject)
 	{
 		Player player = visibleObject.getMaster();
 		if (player != null)
@@ -271,5 +271,17 @@ public class Npc extends Creature implements IDialog
 			return;
 
 		World.getInstance().despawn(this);
+	}
+	
+	/**
+	 * This method should be called to make forced despawn of NPC and delete it from the world
+	 */
+	public void onDelete()
+	{
+		if(isInWorld())
+		{
+			this.onDespawn(true);
+			this.delete();
+		}
 	}
 }
