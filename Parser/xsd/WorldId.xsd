@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="world_id">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" name="data" type="Data"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+    <xs:complexType name= "Data">
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="cool_time" type="xs:integer"/>
+          <xs:attribute name="enable_chase_user_by_trace" type="xs:boolean"/>
+          <xs:attribute name="except_buff" type="xs:boolean"/>
+          <xs:attribute name="id" use="required" type="xs:integer"/>
+          <xs:attribute name="max_move_broadcast_count" type="xs:integer"/>
+          <xs:attribute name="max_user" type="xs:integer"/>
+          <xs:attribute name="min_attack_dist_chase_user_by_trace" type="xs:decimal"/>
+          <xs:attribute name="min_move_broadcast_range" type="xs:integer"/>
+          <xs:attribute name="prison" type="xs:boolean"/>
+          <xs:attribute name="twin_count" type="xs:integer"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+</xs:schema>

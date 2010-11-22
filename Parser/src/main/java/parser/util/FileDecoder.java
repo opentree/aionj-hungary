@@ -36,7 +36,7 @@ public class FileDecoder
 {
 	private static String	clientDir	= "D:\\NCsoft\\AionEU\\";
 
-	public static void decode(String pakFileName, String pakFileDir, String xmlDir, String xmlFileName)
+	public static void decode(String pakFileName, String pakFileDir, String xmlDir, String xmlFileName, boolean disasm, String outputFileName)
 	{
 
 		String s = null;
@@ -72,7 +72,7 @@ public class FileDecoder
 			{
 				if (e.getName().equalsIgnoreCase(xmlDir + xmlFileName))
 				{
-					unzip(zin, xmlFileName);
+					unzip(zin, outputFileName, disasm);
 					break;
 				}
 			}
@@ -82,9 +82,12 @@ public class FileDecoder
 		{
 			e.printStackTrace();
 		}
+		
+		if (!disasm)
+			return;
 		try
 		{
-			Process process = Runtime.getRuntime().exec("AIONdisasm.exe tmp/xml/" + xmlFileName + " xml/" + xmlFileName);
+			Process process = Runtime.getRuntime().exec("AIONdisasm.exe tmp/xml/" + outputFileName + " xml/" + outputFileName);
 			BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 
@@ -106,9 +109,14 @@ public class FileDecoder
 		}
 	}
 
-	private static void unzip(ZipInputStream zin, String s) throws IOException
+	private static void unzip(ZipInputStream zin, String s, boolean disasm) throws IOException
 	{
-		FileOutputStream out = new FileOutputStream("tmp\\xml\\" + s);
+		String outDir;
+		if (disasm)
+			outDir = "tmp\\xml\\" + s;
+		else
+			outDir = "xml\\" + s;
+		FileOutputStream out = new FileOutputStream(outDir);
 		byte[] b = new byte[1024];
 		int len = 0;
 		while ((len = zin.read(b)) != -1)
