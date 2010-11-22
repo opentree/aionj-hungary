@@ -246,7 +246,7 @@ public class _1929ASliverofDarkness extends QuestHandler
 							{
 								Npc npc = (Npc) env.getVisibleObject();
 								PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 0));
-								npc.getController().delete();
+								npc.delete();
 								ThreadPoolManager.getInstance().schedule(new Runnable(){
 									@Override
 									public void run()

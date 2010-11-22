@@ -162,7 +162,7 @@ public class _1019FlyingReconnaissance extends QuestHandler
 									targetObjectId, 3000, 0));
 								PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.START_LOOT, 0,
 									targetObjectId), true);
-								npc.getController().onDie(null); //TODO check null or player
+								npc.onDie(null); //TODO check null or player
 								qs.setQuestVarById(0, var + 1);
 								updateQuestStatus(player, qs);
 							}
@@ -215,7 +215,7 @@ public class _1019FlyingReconnaissance extends QuestHandler
 			return false;
 		if (MathUtil.getDistance(env.getVisibleObject(), 1552.74f, 1160.36f, 114) < 6)
 		{
-			((Npc) env.getVisibleObject()).getController().onDie(null);
+			((Npc) env.getVisibleObject()).onDie(null);
 			qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
 			updateQuestStatus(player, qs);
 		}

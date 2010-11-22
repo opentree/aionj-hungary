@@ -131,7 +131,7 @@ public class _2008Ascension extends QuestHandler
 		if(npc.getLifeStats().getCurrentHp() < npc.getLifeStats().getMaxHp() / 2)
 		{
 			PacketSendUtility.sendPacket(player, new SM_PLAY_MOVIE(0, 152));
-			npc.getController().onDelete();
+			npc.onDelete();
 		}
 		return false;
 	}

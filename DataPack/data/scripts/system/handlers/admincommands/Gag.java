@@ -80,10 +80,10 @@ public class Gag extends AdminCommand
 		player.setGagged(true);
 		if (time != 0)
 		{
-			Future<?> task = player.getController().getTask(TaskId.GAG);
+			Future<?> task = player.getTask(TaskId.GAG);
 			if(task != null)
-				player.getController().cancelTask(TaskId.GAG);
-			player.getController().addTask(TaskId.GAG, ThreadPoolManager.getInstance().schedule(new Runnable(){
+				player.cancelTask(TaskId.GAG);
+			player.addTask(TaskId.GAG, ThreadPoolManager.getInstance().schedule(new Runnable(){
 				@Override
 				public void run()
 				{

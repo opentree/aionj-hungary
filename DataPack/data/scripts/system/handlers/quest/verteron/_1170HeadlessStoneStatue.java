@@ -89,7 +89,7 @@ public class _1170HeadlessStoneStatue extends QuestHandler
 							return;
 						if (ItemService.addItems(player, Collections.singletonList(new QuestItems(182200504, 1))))
 						{
-							((Npc)player.getTarget()).getController().onDespawn(true);
+							((Npc)player.getTarget()).onDespawn(true);
 							qs.setStatus(QuestStatus.REWARD);
 							updateQuestStatus(player, qs);
 						}

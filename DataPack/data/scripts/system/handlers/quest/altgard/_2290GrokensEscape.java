@@ -96,8 +96,8 @@ public class _2290GrokensEscape extends QuestHandler
 								continue;
 							if (MathUtil.getDistance(player.getX(), player.getY(), player.getZ(),obj.getX(), obj.getY(), obj.getZ()) > 4)
 								return false;
-							((Npc)obj).getController().onDie(null); //TODO check null or player
-							((Npc)obj).getController().onDespawn(false);
+							((Npc)obj).onDie(null); //TODO check null or player
+							((Npc)obj).onDespawn(false);
 						}
 						final int targetObjectId = env.getVisibleObject().getObjectId();
 						PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(player.getObjectId(), targetObjectId, 3000,

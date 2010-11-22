@@ -122,7 +122,7 @@ public class _2232TheBrokenHoneyJar extends QuestHandler
 								PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.START_LOOT, 0,
 									targetObjectId), true);
 								if (ItemService.addItems(player, Collections.singletonList(new QuestItems(182203224, 1))))
-									((Npc)player.getTarget()).getController().onDie(null);
+									((Npc)player.getTarget()).onDie(null);
 							}
 						}, 3000);
 					}

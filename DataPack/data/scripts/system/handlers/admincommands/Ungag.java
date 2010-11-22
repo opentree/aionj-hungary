@@ -63,9 +63,9 @@ public class Ungag extends AdminCommand
 		}
 		
 		player.setGagged(false);
-		Future<?> task = player.getController().getTask(TaskId.GAG);
+		Future<?> task = player.getTask(TaskId.GAG);
 		if(task != null)
-			player.getController().cancelTask(TaskId.GAG);
+			player.cancelTask(TaskId.GAG);
 		PacketSendUtility.sendMessage(player, "You have been ungagged");
 		
 		PacketSendUtility.sendMessage(admin, "Player " + name + " ungagged");

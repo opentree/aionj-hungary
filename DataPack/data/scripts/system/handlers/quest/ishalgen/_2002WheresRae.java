@@ -214,7 +214,7 @@ public class _2002WheresRae extends QuestHandler
 						updateQuestStatus(player, qs);
 						Npc npc = (Npc)env.getVisibleObject();
 						QuestService.addNewSpawn(player.getWorldId(), player.getInstanceId(), 203553, npc.getX(), npc.getY(), npc.getZ(), npc.getHeading(), true);
-						npc.getController().onDie(null); //TODO check null or player
+						npc.onDie(null); //TODO check null or player
 						PacketSendUtility.sendPacket(player, new SM_PLAY_MOVIE(0, 256));
 						return true;
 					}
@@ -228,7 +228,7 @@ public class _2002WheresRae extends QuestHandler
 						case 10006:
 							if(var == 15)
 							{
-								env.getVisibleObject().getController().delete();
+								env.getVisibleObject().delete();
 								qs.setStatus(QuestStatus.REWARD);
 								updateQuestStatus(player, qs);
 								PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));

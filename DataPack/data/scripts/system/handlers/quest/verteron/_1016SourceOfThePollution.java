@@ -246,7 +246,7 @@ public class _1016SourceOfThePollution extends QuestHandler
 									@Override
 										public void run()
 										{
-											npc.getController().onDelete();	
+											npc.onDelete();	
 										}
 						}, 40000);								
 								return true;

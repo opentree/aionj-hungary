@@ -18,10 +18,10 @@ package system.handlers.admincommands;
 
 import com.aionemu.gameserver.configs.administration.AdminConfig;
 import com.aionemu.gameserver.model.gameobjects.AionObject;
-import com.aionemu.gameserver.model.gameobjects.Gatherable;
 import com.aionemu.gameserver.model.gameobjects.Npc;
-import com.aionemu.gameserver.model.gameobjects.StaticObject;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
+import com.aionemu.gameserver.model.gameobjects.instance.Gatherable;
+import com.aionemu.gameserver.model.gameobjects.instance.SpawnedItem;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.spawnengine.SpawnEngine;
 import com.aionemu.gameserver.utils.PacketSendUtility;
@@ -57,9 +57,9 @@ public class ReloadSpawns extends AdminCommand
 		// despawn all
 		for(AionObject obj : World.getInstance().getAllObjects())
 		{
-			if(obj instanceof Npc || obj instanceof Gatherable || obj instanceof StaticObject)
+			if(obj instanceof Npc || obj instanceof Gatherable || obj instanceof SpawnedItem)
 			{
-				((VisibleObject) obj).getController().delete();
+				((VisibleObject) obj).delete();
 			}
 		}
 		

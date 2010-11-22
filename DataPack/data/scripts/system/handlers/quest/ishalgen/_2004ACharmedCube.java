@@ -127,7 +127,7 @@ public class _2004ACharmedCube extends QuestHandler
 								PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.START_LOOT, 0,
 									targetObjectId), true);
 								QuestService.addNewSpawn(player.getWorldId(), player.getInstanceId(), 211755, npc.getX(), npc.getY(), npc.getZ(), npc.getHeading(), true);
-								npc.getController().onDie(null); //TODO check null or player
+								npc.onDie(null); //TODO check null or player
 							}
 						}, 3000);
 						}

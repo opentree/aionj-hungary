@@ -297,7 +297,7 @@ public class _1006Ascension extends QuestHandler
 		if(npc.getLifeStats().getCurrentHp() < npc.getLifeStats().getMaxHp() / 2)
 		{
 			PacketSendUtility.sendPacket(player, new SM_PLAY_MOVIE(0, 151));
-			npc.getController().onDelete();
+			npc.onDelete();
 		}
 		return false;
 	}
