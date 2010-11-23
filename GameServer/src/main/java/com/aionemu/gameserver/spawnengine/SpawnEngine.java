@@ -56,15 +56,15 @@ import com.aionemu.gameserver.world.exceptions.NotSetPositionException;
  */
 public class SpawnEngine
 {
-	private static Logger				log					= Logger.getLogger(SpawnEngine.class);
+	private static Logger						log					= Logger.getLogger(SpawnEngine.class);
 
-	private Map<Integer, List<SpawnTemplate>> spawnByTemplateId = new HashMap<Integer,List<SpawnTemplate>>();
-	private Map<Integer, List<SpawnTemplate>> spawnByMapId = new HashMap<Integer, List<SpawnTemplate>>();
-	
+	private Map<Integer, List<SpawnTemplate>>	spawnByTemplateId	= new HashMap<Integer, List<SpawnTemplate>>();
+	private Map<Integer, List<SpawnTemplate>>	spawnByMapId		= new HashMap<Integer, List<SpawnTemplate>>();
+
 	/** Counter counting number of npc spawns */
-	private int							npcCounter			= 0;
+	private int									npcCounter			= 0;
 	/** Counter counting number of gatherable spawns */
-	private int							gatherableCounter	= 0;
+	private int									gatherableCounter	= 0;
 
 	public static final SpawnEngine getInstance()
 	{
@@ -85,7 +85,7 @@ public class SpawnEngine
 			spawnByMapId.put(mapId, new ArrayList<SpawnTemplate>());
 		}
 		spawnByMapId.get(mapId).add(spawnTemplate);
-		
+
 		int templateId = spawnTemplate.getTemplateId();
 		if (!spawnByTemplateId.containsKey(templateId))
 		{
@@ -93,13 +93,14 @@ public class SpawnEngine
 		}
 		spawnByTemplateId.get(templateId).add(spawnTemplate);
 	}
-	
+
 	public SpawnTemplate getFirstSpawnByNpcId(int templateId)
 	{
 		if (!spawnByTemplateId.containsKey(templateId))
 			throw new NotSetPositionException();
 		return spawnByTemplateId.get(templateId).get(0);
 	}
+
 	/**
 	 * Creates VisibleObject instance and spawns it using given {@link SpawnTemplate} instance.
 	 * 
@@ -159,6 +160,7 @@ public class SpawnEngine
 		bringIntoWorld(kisk, spawn, instanceIndex);
 		return kisk;
 	}
+
 	/**
 	 * @param recipient
 	 * @author leo
@@ -180,7 +182,6 @@ public class SpawnEngine
 		bringIntoWorld(postman, spawn, instanceId);
 	}
 
-	
 	/**
 	 * 
 	 * @param spawn
@@ -200,7 +201,7 @@ public class SpawnEngine
 		bringIntoWorld(servant, spawn, instanceIndex);
 		return servant;
 	}
-	
+
 	/**
 	 * 
 	 * @param creator
@@ -208,21 +209,20 @@ public class SpawnEngine
 	 * @return
 	 */
 	public Summon spawnSummon(Player creator, int npcId, int skillLvl)
-	{	
+	{
 		float x = creator.getX();
 		float y = creator.getY();
 		float z = creator.getZ();
 		byte heading = creator.getHeading();
 		int worldId = creator.getWorldId();
 		int instanceId = creator.getInstanceId();
-		
+
 		SpawnTemplate spawn = createSpawnTemplate(worldId, npcId, x, y, z, heading, 0, 0);
 		NpcTemplate npcTemplate = DataManager.NPC_DATA.getNpcTemplate(npcId);
-		
+
 		byte level = (byte) (npcTemplate.getLevel() + skillLvl - 1);
 		SummonStatsTemplate statsTemplate = DataManager.SUMMON_STATS_DATA.getSummonTemplate(npcId, level);
-		Summon summon = new Summon(IDFactory.getInstance().nextId(), spawn,
-			npcTemplate, statsTemplate, level);
+		Summon summon = new Summon(IDFactory.getInstance().nextId(), spawn, npcTemplate, statsTemplate, level);
 		summon.setMaster(creator);
 
 		bringIntoWorld(summon, spawn, instanceId);
@@ -241,8 +241,7 @@ public class SpawnEngine
 	 * @param randomwalk
 	 * @return
 	 */
-	private SpawnTemplate createSpawnTemplate(int worldId, int templateId, float x, float y, float z, byte heading,
-		int walkerid, int randomwalk)
+	private SpawnTemplate createSpawnTemplate(int worldId, int templateId, float x, float y, float z, byte heading, int walkerid, int randomwalk)
 	{
 		SpawnTemplate spawnTemplate = new SpawnTemplate(worldId, templateId, x, y, z, heading);
 		return spawnTemplate;
@@ -263,11 +262,10 @@ public class SpawnEngine
 	 * @param noRespawn
 	 * @return SpawnTemplate
 	 */
-	public SpawnTemplate addNewSpawn(int worldId, int instanceId, int objectId, float x, float y, float z,
-		byte heading, int walkerid, int randomwalk, boolean noRespawn)
+	public SpawnTemplate addNewSpawn(int worldId, int instanceId, int objectId, float x, float y, float z, byte heading, int walkerid, int randomwalk,
+			boolean noRespawn)
 	{
-		return this
-			.addNewSpawn(worldId, instanceId, objectId, x, y, z, heading, walkerid, randomwalk, noRespawn, false);
+		return this.addNewSpawn(worldId, instanceId, objectId, x, y, z, heading, walkerid, randomwalk, noRespawn, false);
 	}
 
 	/**
@@ -285,12 +283,12 @@ public class SpawnEngine
 	 * @param isNewSpawn
 	 * @return SpawnTemplate
 	 */
-	public SpawnTemplate addNewSpawn(int worldId, int instanceId, int objectId, float x, float y, float z,
-		byte heading, int walkerid, int randomwalk, boolean noRespawn, boolean isNewSpawn)
+	public SpawnTemplate addNewSpawn(int worldId, int instanceId, int objectId, float x, float y, float z, byte heading, int walkerid, int randomwalk,
+			boolean noRespawn, boolean isNewSpawn)
 	{
 		SpawnTemplate spawnTemplate = createSpawnTemplate(worldId, objectId, x, y, z, heading, walkerid, randomwalk);
 
-		if(spawnTemplate == null)
+		if (spawnTemplate == null)
 		{
 			log.warn("Object couldn't be spawned");
 			return null;
@@ -303,8 +301,7 @@ public class SpawnEngine
 	{
 		World world = World.getInstance();
 		world.storeObject(visibleObject);
-		world.setPosition(visibleObject, spawn.getMapId(), instanceIndex, spawn.getX(), spawn.getY(), spawn.getZ(),
-			spawn.getHeading());
+		world.setPosition(visibleObject, spawn.getMapId(), instanceIndex, spawn.getX(), spawn.getY(), spawn.getZ(), spawn.getHeading());
 		world.spawn(visibleObject);
 	}
 
@@ -315,16 +312,16 @@ public class SpawnEngine
 	{
 		this.npcCounter = 0;
 		this.gatherableCounter = 0;
-		
-		for(WorldMapTemplate worldMapTemplate : DataManager.WORLD_MAPS_DATA)
+
+		for (WorldMapTemplate worldMapTemplate : DataManager.WORLD_MAPS_DATA)
 		{
-			if(worldMapTemplate.isInstance())
+			if (worldMapTemplate.isInstance())
 				continue;
 			int maxTwin = worldMapTemplate.getTwinCount();
 			final int mapId = worldMapTemplate.getMapId();
 			int numberToSpawn = maxTwin > 0 ? maxTwin : 1;
 
-			for(int i = 1; i <= numberToSpawn; i++)
+			for (int i = 1; i <= numberToSpawn; i++)
 			{
 				spawnInstance(mapId, i);
 			}
@@ -345,18 +342,22 @@ public class SpawnEngine
 	{
 
 		int instanceSpawnCounter = 0;
-		for(SpawnTemplate spawnTemplate : this.spawnByMapId.get(worldId))
+		List<SpawnTemplate> spawns = spawnByMapId.get(worldId);
+		if (spawns != null)
 		{
-					spawnObject(spawnTemplate, instanceIndex);
+			for (SpawnTemplate spawnTemplate : spawns)
+			{
+				spawnObject(spawnTemplate, instanceIndex);
 
-					instanceSpawnCounter++;
+				instanceSpawnCounter++;
+			}
 		}
 		log.info("Spawned " + worldId + " [" + instanceIndex + "] : " + instanceSpawnCounter);
 	}
-	
+
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
-		protected static final SpawnEngine instance = new SpawnEngine();
+		protected static final SpawnEngine	instance	= new SpawnEngine();
 	}
 }

@@ -56,7 +56,8 @@ public class StaticNpc extends VisibleObject implements IDialog
 	public StaticNpc(int objId, SpawnTemplate spawnTemplate)
 	{
 		super(objId, spawnTemplate, new WorldPosition());
-		this.objectTemplate = DataManager.NPC_DATA.getNpcTemplate(spawnTemplate.getTemplateId());
+		if (spawnTemplate != null)
+			this.objectTemplate = DataManager.NPC_DATA.getNpcTemplate(spawnTemplate.getTemplateId());
 		this.setKnownlist(new StaticObjectKnownList(this));
 		
 	}
