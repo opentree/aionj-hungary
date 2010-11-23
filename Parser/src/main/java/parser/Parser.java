@@ -25,6 +25,7 @@ import parser.serverData.tribeRelation.TribeRelationSave;
 import parser.serverData.warehouseExpander.WarehouseExpanderSave;
 import parser.util.DataManager;
 import parser.util.FileDecoder;
+import parser.util.SpawnSave;
 
 /**
  * @author Mr. Poke
@@ -62,5 +63,6 @@ public class Parser
 		CubeExpanderSave.save();
 		WarehouseExpanderSave.save();
 		ObjectInfosSave.save();
+		SpawnSave.save();
 	}
 }

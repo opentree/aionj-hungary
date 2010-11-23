@@ -133,16 +133,16 @@ public class DataManager
 		npcNameIdMap = new HashMap<String, Integer>();
 		for (NpcClient npc : idNpcMap.values())
 		{
-			npcNameIdMap.put(npc.getName(), npc.getId());
+			npcNameIdMap.put(npc.getName().toLowerCase(), npc.getId());
 		}
 	}
 	
 	private void createItemNameIdMap()
 	{
 		itemNameIdMap = new HashMap<String, Integer>();
-		for (ClientItem item: idItemMap.values())
+		for (ClientItem item: getIdItemMap().values())
 		{
-			itemNameIdMap.put(item.getName(), item.getId());
+			itemNameIdMap.put(item.getName().toLowerCase(), item.getId());
 		}
 			
 	}
@@ -152,7 +152,7 @@ public class DataManager
 	public Map<Integer, GatherSrc> getIdGatherebleMap()
 	{
 		if (idGatherebleMap == null)
-			GatherSrcLoader.load();
+			idGatherebleMap = GatherSrcLoader.load();
 		return idGatherebleMap;
 	}
 
@@ -164,7 +164,7 @@ public class DataManager
 		nameGatherebleIdMap = new HashMap<String, Integer>();
 		for (GatherSrc item: getIdGatherebleMap().values())
 		{
-			nameGatherebleIdMap.put(item.getName(), item.getId());
+			nameGatherebleIdMap.put(item.getName().toLowerCase(), item.getId());
 		}
 		return nameGatherebleIdMap;
 	}

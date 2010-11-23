@@ -1,0 +1,93 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+            jxb:version="2.1">
+         
+	<xs:element name="Mission">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element name="Objects" type="ObjectsClass" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="CommonShapeList" type="CommonShapeList" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="CommonShapeList">
+		<xs:sequence>
+			<xs:element name="flying_zones" type="FlyingZones" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="sub_zones" type="SubZones" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="FlyingZones">
+		<xs:sequence>
+			<xs:element name="flying_zone" type="FlyingZone" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="FlyingZone">
+		<xs:sequence>
+			<xs:element name="points_info" type="PointsInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SubZones">
+		<xs:sequence>
+			<xs:element name="subzone" type="SubZone" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SubZone">
+		<xs:sequence>
+			<xs:element name="points_info" type="PointsInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="string" type="xs:string"/>
+	</xs:complexType>
+
+	<xs:complexType name="PointsInfo">
+		<xs:sequence maxOccurs="1" minOccurs="1">
+			<xs:element name="points" type="Points" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+		<xs:attribute name="bottom" type="xs:float"/>
+		<xs:attribute name="top" type="xs:float"/>
+		<xs:attribute name="type" type="xs:string"/>
+	</xs:complexType>
+
+	<xs:complexType name="Points">
+		<xs:sequence>
+			<xs:element name="data" type="Data" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Data">
+		<xs:attribute name="x" type="xs:float"/>
+		<xs:attribute name="y" type="xs:float"/>
+	</xs:complexType>
+
+	<xs:complexType name="ObjectClass">
+		<xs:attribute name="npc" type="xs:string"/>
+		<xs:attribute name="Pos" type="xs:string"/>
+		<xs:attribute name="Name" type="xs:string"/>
+	</xs:complexType>
+
+	<xs:complexType name="ObjectsClass">
+	  <xs:sequence>
+	  	<xs:element name="Object" type="ObjectClass" minOccurs="1" maxOccurs="unbounded"/>
+		<xs:element name="Entity" type="EntityClass" minOccurs="1" maxOccurs="unbounded"/>
+	  </xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="EntityClass">
+		<xs:sequence>
+			<xs:element name="Properties" type="Properties" minOccurs="1" maxOccurs="unbounded"/>
+	  	</xs:sequence>
+		<xs:attribute name="EntityClass" type="xs:string"/>
+		<xs:attribute name="EntityId" type="xs:int"/>
+		<xs:attribute name="Pos" type="xs:string"/>
+		<xs:attribute name="Name" type="xs:string"/>
+	</xs:complexType>
+	
+	<xs:complexType name="Properties">
+		<xs:attribute name="fileLadderCGF" type="xs:string"/>
+		<xs:attribute name="gostring_Text" type="xs:string"/>
+	</xs:complexType>
+</xs:schema>
