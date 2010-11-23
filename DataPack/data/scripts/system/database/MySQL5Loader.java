@@ -52,6 +52,7 @@ public class MySQL5Loader
 		DAOManager.getInstance().registerDAO(new MySQL5PlayerDAO());
 		DAOManager.getInstance().registerDAO(new MySQL5PlayerEffectsDAO());
 		DAOManager.getInstance().registerDAO(new MySQL5PlayerLifeStatsDAO());
+		DAOManager.getInstance().registerDAO(new MySQL5PlayerMacrossesDAO());
 		DAOManager.getInstance().registerDAO(new MySQL5PlayerPetsDAO());
 		DAOManager.getInstance().registerDAO(new MySQL5PlayerPunishmentsDAO());
 		DAOManager.getInstance().registerDAO(new MySQL5PlayerQuestListDAO());
@@ -60,6 +61,7 @@ public class MySQL5Loader
 		DAOManager.getInstance().registerDAO(new MySQL5PlayerSkillListDAO());
 		DAOManager.getInstance().registerDAO(new MySQL5PlayerTitleListDAO());
 		DAOManager.getInstance().registerDAO(new MySQL5SiegeDAO());
+		DAOManager.getInstance().registerDAO(new MYSQL5SpawnDAO());
 		DAOManager.getInstance().registerDAO(new MySQL5TaskFromDBDAO());
 	}
 
