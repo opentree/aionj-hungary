@@ -31,7 +31,7 @@ public class Crypt
 	/**
 	 * Second byte of client packet must be equal to this
 	 */
-	public final static byte	staticClientPacketCode	= 0x55;
+	public final static byte	staticClientPacketCode	= 0x57;
 	/**
 	 * Second byte of server packet must be equal to this
 	 */
@@ -204,6 +204,6 @@ public class Crypt
 	 */
 	public static final byte encodeOpcodec(int op)
 	{
-		return (byte) ((op + 0xAE) ^ 0xEE);
+		return (byte)(~(op - 0x44));
 	}
 }
