@@ -18,7 +18,6 @@ package com.aionemu.gameserver.network.aion;
 
 import com.aionemu.commons.network.netty.State;
 import com.aionemu.commons.network.netty.handler.AbstractPacketHandlerFactory;
-import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 import com.aionemu.gameserver.network.aion.clientpackets.*;
 import com.aionemu.gameserver.network.aion.serverpackets.*;
 
@@ -332,11 +331,5 @@ public class AionPacketHandlerFactory extends AbstractPacketHandlerFactory<AionC
 		
 		addPacket(SM_CUSTOM_PACKET.class, 99999); // fake packet
 
-	}
-	
-	public void addPacket(AbstractClientPacket<AionChannelHandler> packetPrototype, State... states)
-	{
-		packetPrototype.setOpCode((byte)(packetPrototype.getOpCode()-1));
-		super.addPacket(packetPrototype, states);
 	}
 }
