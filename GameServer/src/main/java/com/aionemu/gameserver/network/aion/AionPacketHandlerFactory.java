@@ -39,21 +39,38 @@ public class AionPacketHandlerFactory extends AbstractPacketHandlerFactory<AionC
 	{
 		super(null, new AionClientPacketHandler<AionChannelHandler>());
 		
+		addPacket(new CM_CHARACTER_LIST(0x04), State.AUTHED);// 2.1
+		addPacket(new CM_CREATE_CHARACTER(0x05), State.AUTHED);// 2.1
 		addPacket(new CM_L2AUTH_LOGIN_CHECK(0x07), State.CONNECTED);// 2.1
+		addPacket(new CM_DELETE_CHARACTER(0x0A), State.AUTHED);// 2.1
+		addPacket(new CM_MOVE_ITEM(0x0E), State.ENTERED);// 2.1
+		addPacket(new CM_MAC_ADDRESS2(0x1C), State.ENTERED);// 2.1
+		addPacket(new CM_MACRO_CREATE(0x1D), State.ENTERED);// 2.1
+		addPacket(new CM_CHECK_NICKNAME(0x23), State.AUTHED);// 2.1
+		addPacket(new CM_MACRO_DELETE(0x22), State.ENTERED);// 2.1
+		addPacket(new CM_MAY_LOGIN_INTO_GAME(0x28), State.AUTHED);// 2.1
 		addPacket(new CM_MAC_ADDRESS(0x2F), State.CONNECTED, State.AUTHED, State.ENTERED);// 2.1
+		addPacket(new CM_CLIENT_COMMAND_ROLL(0x59), State.ENTERED);// 2.1
+		addPacket(new CM_DELETE_ITEM(0x66), State.ENTERED);// 2.1
+		addPacket(new CM_CLIENT_COMMAND_LOC(0x7C), State.ENTERED);// 2.1
 		addPacket(new CM_TIME_CHECK(0x80), State.CONNECTED, State.AUTHED, State.ENTERED);// 2.1
+		addPacket(new CM_CHAT_MESSAGE_PUBLIC(0x89), State.ENTERED);// 2.1
+		addPacket(new CM_CHAT_MESSAGE_WHISPER(0x8E), State.ENTERED);// 2.1
+		addPacket(new CM_CASTSPELL(0x93), State.ENTERED);// 2.1
+		addPacket(new CM_EQUIP_ITEM(0x94), State.ENTERED);// 2.1
+		addPacket(new CM_USE_ITEM(0x97), State.ENTERED);// 2.1
+		addPacket(new CM_EMOTION(0x99), State.ENTERED);// 2.1
+		addPacket(new CM_PING(0x9A), State.AUTHED, State.ENTERED);// 2.1
+		addPacket(new CM_MOVE(0xA2), State.ENTERED);// 2.1
 		addPacket(new CM_VERSION_CHECK(0xF2), State.CONNECTED); // 2.1
+		addPacket(new CM_UI_SETTINGS(0xF8), State.ENTERED);// 2.1
+		addPacket(new CM_ENTER_WORLD(0xFA), State.AUTHED); //2.1
 		
 		//Client Packet's
 		addPacket(new CM_CRAFT(0x00), State.ENTERED);// 1.9
-		addPacket(new CM_CLIENT_COMMAND_LOC(0x01), State.ENTERED);// 1.9
-		addPacket(new CM_RESTORE_CHARACTER(0x04), State.AUTHED);// 1.9
-		addPacket(new CM_START_LOOT(0x05), State.ENTERED);// 1.9
+		//addPacket(new CM_RESTORE_CHARACTER(0x04), State.AUTHED);// 1.9
+		//addPacket(new CM_START_LOOT(0x05), State.ENTERED);// 1.9
 		addPacket(new CM_LOOT_ITEM(0x06), State.ENTERED);// 1.9
-		//addPacket(new CM_MOVE_ITEM(0x07), State.ENTERED);// 1.9
-		addPacket(new CM_CHARACTER_LIST(0x09), State.AUTHED);// 1.9
-		addPacket(new CM_CREATE_CHARACTER(0x0A), State.AUTHED);// 1.9
-		addPacket(new CM_DELETE_CHARACTER(0x0B), State.AUTHED);// 1.9
 		addPacket(new CM_LEGION_UPLOAD_EMBLEM(0x0C), State.ENTERED);// testing
 		addPacket(new CM_SPLIT_ITEM(0x10), State.ENTERED);// 1.9
 		addPacket(new CM_PLAYER_SEARCH(0x12), State.ENTERED);// 1.9
@@ -63,15 +80,10 @@ public class AionPacketHandlerFactory extends AbstractPacketHandlerFactory<AionC
 		addPacket(new CM_BLOCK_ADD(0x19), State.ENTERED);// 1.9
 		addPacket(new CM_BLOCK_DEL(0x1A), State.ENTERED);// 1.9
 		addPacket(new CM_SHOW_BLOCKLIST(0x1B), State.ENTERED);// 1.9
-		addPacket(new CM_CHECK_NICKNAME(0x1C), State.AUTHED);// 1.9
-		addPacket(new CM_REPLACE_ITEM(0x1D), State.ENTERED);// testing
+		//addPacket(new CM_REPLACE_ITEM(0x1D), State.ENTERED);// testing
 		addPacket(new CM_BLOCK_SET_REASON(0x1E), State.ENTERED);// 1.9
-		addPacket(new CM_MAC_ADDRESS2(0x21), State.ENTERED);// 1.9
-		addPacket(new CM_MACRO_CREATE(0x22), State.ENTERED);// 1.9
-		addPacket(new CM_MACRO_DELETE(0x23), State.ENTERED);// 1.9
 		addPacket(new CM_DISTRIBUTION_SETTINGS(0x24), State.ENTERED);// 1.9
-		addPacket(new CM_MAY_LOGIN_INTO_GAME(0x25), State.AUTHED);// 1.9
-		addPacket(new CM_SHOW_BRAND(0x28), State.ENTERED);// 1.9
+		//addPacket(new CM_SHOW_BRAND(0x28), State.ENTERED);// 1.9
 		addPacket(new CM_RECONNECT_AUTH(0x2A), State.AUTHED);// 1.9
 		addPacket(new CM_GROUP_LOOT(0x2B), State.ENTERED);	
 		//addPacket(new CM_SHOW_MAP(0x2F), State.ENTERED);// 1.9
@@ -87,16 +99,14 @@ public class AionPacketHandlerFactory extends AbstractPacketHandlerFactory<AionC
 		addPacket(new CM_ALLIANCE_GROUP_CHANGE(0x4D), State.ENTERED);// 1.9
 		addPacket(new CM_VIEW_PLAYER_DETAILS(0x4F), State.ENTERED);// 1.9
 		addPacket(new CM_PLAYER_STATUS_INFO(0x53), State.ENTERED);// 1.9
-		addPacket(new CM_CLIENT_COMMAND_ROLL(0x56), State.ENTERED);// 1.9			
 		addPacket(new CM_GROUP_DISTRIBUTION(0x57), State.ENTERED);// 1.9
 		addPacket(new CM_PING_REQUEST(0x5A), State.ENTERED);// 1.9
 		addPacket(new CM_DUEL_REQUEST(0x5D), State.ENTERED);// 1.9
-		addPacket(new CM_DELETE_ITEM(0x5F), State.ENTERED);// 1.9
 		addPacket(new CM_SHOW_FRIENDLIST(0x61), State.ENTERED);// 1.9
 		addPacket(new CM_FRIEND_ADD(0x62), State.ENTERED);// 1.9
 		addPacket(new CM_FRIEND_DEL(0x63), State.ENTERED);// 1.9
 		addPacket(new CM_SUMMON_COMMAND(0x64), State.ENTERED);// 1.9
-		addPacket(new CM_BROKER_LIST(0x66), State.ENTERED);// 1.9
+		//addPacket(new CM_BROKER_LIST(0x66), State.ENTERED);// 1.9
 		addPacket(new CM_BROKER_SEARCH(0x67), State.ENTERED);// 2.0
 		addPacket(new CM_PRIVATE_STORE(0x6A), State.ENTERED);// 1.9
 		addPacket(new CM_PRIVATE_STORE_NAME(0x6B), State.ENTERED);// 1.9
@@ -113,26 +123,18 @@ public class AionPacketHandlerFactory extends AbstractPacketHandlerFactory<AionC
 		addPacket(new CM_GET_MAIL_ATTACHMENT(0x7B), State.ENTERED);// 1.9
 		addPacket(new CM_TELEPORT_SELECT(0x7F), State.ENTERED);// 1.9
 		addPacket(new CM_PETITION(0x85), State.ENTERED);// 1.9
-		addPacket(new CM_CHAT_MESSAGE_PUBLIC(0x86), State.ENTERED);// 1.9
-		addPacket(new CM_CHAT_MESSAGE_WHISPER(0x87), State.ENTERED);// 1.9
 		addPacket(new CM_PET_MOVE(0x88), State.ENTERED);// 2.0
-		addPacket(new CM_PET(0x89), State.ENTERED);// 2.0
+		//addPacket(new CM_PET(0x89), State.ENTERED);// 2.0
 		addPacket(new CM_OPEN_STATICDOOR(0x8A), State.ENTERED);// 1.9
-		addPacket(new CM_CASTSPELL(0x8C), State.ENTERED);// 1.9
 		addPacket(new CM_SKILL_DEACTIVATE(0x8D), State.ENTERED);// 1.9
-		addPacket(new CM_REMOVE_ALTERED_STATE(0x8E), State.ENTERED);// 1.9
+		//addPacket(new CM_REMOVE_ALTERED_STATE(0x8E), State.ENTERED);// 1.9
 		addPacket(new CM_TARGET_SELECT(0x92), State.ENTERED);// 1.9
 		addPacket(new CM_ATTACK(0x93), State.ENTERED);// 1.9
-		addPacket(new CM_EMOTION(0x96), State.ENTERED);// 1.9
-		addPacket(new CM_PING(0x97), State.AUTHED, State.ENTERED);// 1.9
-		addPacket(new CM_USE_ITEM(0x98), State.ENTERED);// 1.9
-		addPacket(new CM_EQUIP_ITEM(0x99), State.ENTERED);// 1.9
 		addPacket(new CM_FLIGHT_TELEPORT(0x9C), State.ENTERED);// 1.9
 		addPacket(new CM_QUESTION_RESPONSE(0x9D), State.ENTERED);// 1.9
-		addPacket(new CM_BUY_ITEM(0x9E), State.ENTERED);// 1.9
+		//addPacket(new CM_BUY_ITEM(0x9E), State.ENTERED);// 1.9
 		addPacket(new CM_SHOW_DIALOG(0x9F), State.ENTERED);// 1.9
 		addPacket(new CM_LEGION(0xA0), State.ENTERED);// 1.9
-		addPacket(new CM_MOVE(0xA3), State.ENTERED);// 1.9
 		addPacket(new CM_SET_NOTE(0xA5), State.ENTERED);// 1.9
 		addPacket(new CM_LEGION_MODIFY_EMBLEM(0xA6), State.ENTERED);// 1.9
 		addPacket(new CM_CLOSE_DIALOG(0xA8), State.ENTERED);// 1.9
@@ -154,12 +156,10 @@ public class AionPacketHandlerFactory extends AbstractPacketHandlerFactory<AionC
 		addPacket(new CM_QUIT(0xEE), State.AUTHED, State.ENTERED);// 1.9
 		addPacket(new CM_MAY_QUIT(0xEF), State.AUTHED, State.ENTERED);// 1.9
 		addPacket(new CM_LEVEL_READY(0xF4), State.ENTERED);// 1.9
-		addPacket(new CM_UI_SETTINGS(0xF5), State.ENTERED);// 1.9
 		addPacket(new CM_OBJECT_SEARCH(0xF6), State.ENTERED);// 1.9
 		addPacket(new CM_CUSTOM_SETTINGS(0xF7), State.ENTERED);// 1.9
-		addPacket(new CM_REVIVE(0xF8), State.ENTERED);// 1.9
-		addPacket(new CM_CHARACTER_EDIT(0xFA), State.AUTHED);// 1.9
-		addPacket(new CM_ENTER_WORLD(0xFB), State.AUTHED); // 1.9
+		//addPacket(new CM_REVIVE(0xF8), State.ENTERED);// 1.9
+		//addPacket(new CM_CHARACTER_EDIT(0xFA), State.AUTHED);// 1.9
 		addPacket(new CM_TIME_CHECK(0xFD), State.CONNECTED, State.AUTHED, State.ENTERED);// 1.9
 		addPacket(new CM_GATHER(0xFE), State.ENTERED);// 1.9
 		addPacket(new CM_QUESTIONNAIRE(0x7c), State.ENTERED); // 1.9
