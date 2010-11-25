@@ -208,4 +208,7 @@ public class AdminConfig
 
 	@Property(key = "administration.command.html", defaultValue = "3")
 	public static int	COMMAND_HTML;
+	
+	@Property(key = "administration.command.scriptLoad", defaultValue = "3")
+	public static int	COMMAND_SCRIPT_LOAD;
 }
