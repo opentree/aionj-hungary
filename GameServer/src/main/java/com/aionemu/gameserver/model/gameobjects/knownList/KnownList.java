@@ -14,7 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with aion-emu.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aionemu.gameserver.world;
+package com.aionemu.gameserver.model.gameobjects.knownList;
 
 import java.util.Map;
 
@@ -22,6 +22,7 @@ import com.aionemu.commons.utils.SingletonMap;
 import com.aionemu.gameserver.model.gameobjects.AionObject;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.utils.MathUtil;
+import com.aionemu.gameserver.world.MapRegion;
 
 /**
  * KnownList.

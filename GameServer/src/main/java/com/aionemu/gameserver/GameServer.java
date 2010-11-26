@@ -34,6 +34,7 @@ import com.aionemu.gameserver.configs.Config;
 import com.aionemu.gameserver.configs.main.OptionsConfig;
 import com.aionemu.gameserver.configs.main.ThreadConfig;
 import com.aionemu.gameserver.dao.PlayerDAO;
+import com.aionemu.gameserver.dao.SpawnDAO;
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.siege.Influence;
 import com.aionemu.gameserver.network.NettyGameServer;
@@ -143,6 +144,8 @@ public class GameServer
 
 		AEInfos.printSection("Spawns");
 		SpawnEngine.getInstance();
+		DAOManager.getDAO(SpawnDAO.class).load();
+		SpawnEngine.getInstance().spawnAll();
 		DayNightSpawnManager.getInstance().notifyChangeMode();
 		
 		AEInfos.printSection("Quests");

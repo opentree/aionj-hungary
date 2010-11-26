@@ -25,6 +25,7 @@ import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.interfaces.IDialog;
+import com.aionemu.gameserver.model.gameobjects.knownList.StaticObjectKnownList;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureVisualState;
@@ -34,8 +35,6 @@ import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_NPC_INFO;
 import com.aionemu.gameserver.services.RespawnService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
-import com.aionemu.gameserver.world.StaticObjectKnownList;
-import com.aionemu.gameserver.world.WorldPosition;
 
 /**
  * @author Mr. Poke
@@ -55,7 +54,7 @@ public class StaticNpc extends VisibleObject implements IDialog
 	 */
 	public StaticNpc(int objId, SpawnTemplate spawnTemplate)
 	{
-		super(objId, spawnTemplate, new WorldPosition());
+		super(objId, spawnTemplate);
 		if (spawnTemplate != null)
 			this.objectTemplate = DataManager.NPC_DATA.getNpcTemplate(spawnTemplate.getTemplateId());
 		this.setKnownlist(new StaticObjectKnownList(this));

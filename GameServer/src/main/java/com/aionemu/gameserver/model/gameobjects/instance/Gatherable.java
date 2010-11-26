@@ -26,6 +26,7 @@ import com.aionemu.gameserver.controllers.movement.StartMovingListener;
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.DescriptionId;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
+import com.aionemu.gameserver.model.gameobjects.knownList.StaticObjectKnownList;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.GatherableTemplate;
 import com.aionemu.gameserver.model.templates.gather.Material;
@@ -35,9 +36,7 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.services.RespawnService;
 import com.aionemu.gameserver.skillengine.task.GatheringTask;
 import com.aionemu.gameserver.utils.PacketSendUtility;
-import com.aionemu.gameserver.world.StaticObjectKnownList;
 import com.aionemu.gameserver.world.World;
-import com.aionemu.gameserver.world.WorldPosition;
 
 /**
  * @author ATracer
@@ -58,9 +57,9 @@ public class Gatherable extends VisibleObject
 
 	private GatherState	state	= GatherState.IDLE;
 
-	public Gatherable(SpawnTemplate spawnTemplate, int objId)
+	public Gatherable(int objId, SpawnTemplate spawnTemplate)
 	{
-		super(objId, spawnTemplate, new WorldPosition());
+		super(objId, spawnTemplate);
 		objectTemplate = DataManager.GATHERABLE_DATA.getGatherableTemplate(spawnTemplate.getTemplateId());
 		this.setKnownlist(new StaticObjectKnownList(this));
 	}

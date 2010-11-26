@@ -18,12 +18,11 @@ package com.aionemu.gameserver.model.gameobjects.instance;
 
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
+import com.aionemu.gameserver.model.gameobjects.knownList.StaticObjectKnownList;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_GATHERABLE_INFO;
 import com.aionemu.gameserver.utils.PacketSendUtility;
-import com.aionemu.gameserver.world.StaticObjectKnownList;
-import com.aionemu.gameserver.world.WorldPosition;
 
 /**
  * @author ATracer
@@ -33,7 +32,7 @@ public class SpawnedItem extends VisibleObject
 {
 	public SpawnedItem(int objectId, SpawnTemplate spawnTemplate)
 	{
-		super(objectId, spawnTemplate, new WorldPosition());
+		super(objectId, spawnTemplate);
 		objectTemplate = DataManager.ITEM_DATA.getItemTemplate(spawnTemplate.getTemplateId());
 		this.setKnownlist(new StaticObjectKnownList(this));
 	}

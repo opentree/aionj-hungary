@@ -38,11 +38,10 @@ public class Postman extends StaticNpc
 	 * @param spawnTemplate
 	 * @param position
 	 */
-	public Postman(int objId, SpawnTemplate spawnTemplate, int PlayerId)
+	public Postman(int objId, SpawnTemplate spawnTemplate)
 	{
 		super(objId, spawnTemplate);
 		this.objectTemplate = DataManager.NPC_DATA.getNpcTemplate(798044);
-		this.RecipientId = PlayerId;
 		ThreadPoolManager.getInstance().schedule(new Runnable(){
 
 			@Override

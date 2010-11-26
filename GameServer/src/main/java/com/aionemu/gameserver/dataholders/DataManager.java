@@ -132,6 +132,8 @@ public final class DataManager
 	
 	public static SiegeLocationData		SIEGE_LOCATION_DATA;
 	
+	public static ObjectInfos			OBJECT_INFOS_DATA;
+	
 	private XmlDataLoader loader;
 
 	/**
@@ -179,6 +181,7 @@ public final class DataManager
 		NPC_SKILL_DATA = data.npcSkillData;
 		PET_SKILL_DATA = data.petSkillData;
 		SIEGE_LOCATION_DATA = data.siegeLocationData;
+		OBJECT_INFOS_DATA = data.objectInfosData;
 	}
 	
 	@SuppressWarnings("synthetic-access")

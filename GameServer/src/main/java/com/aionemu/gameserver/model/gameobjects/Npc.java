@@ -30,6 +30,7 @@ import com.aionemu.gameserver.model.alliance.PlayerAlliance;
 import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.instance.Summon;
 import com.aionemu.gameserver.model.gameobjects.interfaces.IDialog;
+import com.aionemu.gameserver.model.gameobjects.knownList.KnownList;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.RequestResponseHandler;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
@@ -71,7 +72,6 @@ import com.aionemu.gameserver.services.WarehouseService;
 import com.aionemu.gameserver.utils.MathUtil;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.stats.StatFunctions;
-import com.aionemu.gameserver.world.KnownList;
 import com.aionemu.gameserver.world.World;
 import com.aionemu.gameserver.world.WorldType;
 

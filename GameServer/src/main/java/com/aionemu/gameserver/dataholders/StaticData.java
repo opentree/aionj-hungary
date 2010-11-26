@@ -122,6 +122,9 @@ public class StaticData
 	@XmlElement(name = "siege_locations")
 	public SiegeLocationData		siegeLocationData;
 	
+	@XmlElement(name = "object_infos")
+	public ObjectInfos		objectInfosData;
+
 	// JAXB callback
 	@SuppressWarnings("unused")
 	private void afterUnmarshal(Unmarshaller unmarshaller, Object parent)
@@ -155,5 +158,6 @@ public class StaticData
 		DataManager.log.info("Loaded " + npcSkillData.size() + " npc skill list entries");
 		DataManager.log.info("Loaded " + petSkillData.size() + " pet skill list entries");
 		DataManager.log.info("Loaded " + siegeLocationData.size() + " siege location entries");
+		DataManager.log.info("Loaded " + objectInfosData.size() + " objectInfos entries");
 	}
 }

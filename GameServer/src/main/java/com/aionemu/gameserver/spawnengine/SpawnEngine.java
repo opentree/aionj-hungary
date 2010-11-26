@@ -16,6 +16,7 @@
  */
 package com.aionemu.gameserver.spawnengine;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,8 +24,6 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.aionemu.commons.database.dao.DAOManager;
-import com.aionemu.gameserver.dao.SpawnDAO;
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
@@ -34,13 +33,14 @@ import com.aionemu.gameserver.model.gameobjects.instance.Postman;
 import com.aionemu.gameserver.model.gameobjects.instance.Servant;
 import com.aionemu.gameserver.model.gameobjects.instance.Summon;
 import com.aionemu.gameserver.model.gameobjects.instance.Trap;
+import com.aionemu.gameserver.model.gameobjects.knownList.StaticObjectKnownList;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
+import com.aionemu.gameserver.model.templates.NpcInfo;
 import com.aionemu.gameserver.model.templates.NpcTemplate;
 import com.aionemu.gameserver.model.templates.WorldMapTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.model.templates.stats.SummonStatsTemplate;
 import com.aionemu.gameserver.utils.idfactory.IDFactory;
-import com.aionemu.gameserver.world.StaticObjectKnownList;
 import com.aionemu.gameserver.world.World;
 import com.aionemu.gameserver.world.exceptions.NotSetPositionException;
 
@@ -73,8 +73,6 @@ public class SpawnEngine
 
 	private SpawnEngine()
 	{
-		DAOManager.getDAO(SpawnDAO.class).load();
-		this.spawnAll();
 	}
 
 	public void addSpawn(SpawnTemplate spawnTemplate, String nextRespawnTime)
@@ -109,7 +107,62 @@ public class SpawnEngine
 	 */
 	public VisibleObject spawnObject(SpawnTemplate spawn, int instanceIndex)
 	{
-		return null;
+		int objectId = spawn.getTemplateId();
+		NpcInfo npcInfo = DataManager.OBJECT_INFOS_DATA.getNpcInfoByTemplateId(spawn.getTemplateId());
+		Class<?> clazz;
+		if(objectId > 400000 && objectId < 499999)// gatherable
+        {
+                try
+                {
+                        clazz = Class.forName("com.aionemu.gameserver.model.gameobjects.instance.Gatherable");
+                }
+                catch (ClassNotFoundException e)
+                {
+                        log.warn(e);
+                        return null;
+                }
+                gatherableCounter++;
+        }
+        else
+        // npc
+        {
+        	if (DataManager.NPC_DATA.getNpcTemplate(spawn.getTemplateId()) == null)
+        	{
+        		log.warn("Missing npc template!! Template id: "+spawn.getTemplateId());
+        		return null;
+        	}
+                try
+                {
+                	if (npcInfo == null)
+                        clazz = Class.forName("com.aionemu.gameserver.model.gameobjects.instance.SpawnedObject");
+                	else
+                		clazz = Class.forName("com.aionemu.gameserver.model.gameobjects.instance."+npcInfo.getClassName());
+                }
+                catch (ClassNotFoundException e)
+                {
+                        log.warn(e);
+                        return null;
+                }
+                npcCounter++;
+        }
+        IDFactory iDFactory = IDFactory.getInstance();
+        
+        VisibleObject object;
+        try
+        {
+                Object[] parameters =
+                {iDFactory.nextId(), spawn};
+                Constructor<?> constructor = clazz.getConstructor(Integer.TYPE, SpawnTemplate.class);
+                object = (VisibleObject) constructor.newInstance(parameters);
+        }
+        catch (Exception e)
+        {
+        	 log.error("Spawn error create class: "+npcInfo.getClassName(),e);
+        	 return null;
+        }
+        object.onRespawn();
+		bringIntoWorld(object, spawn, instanceIndex);
+        return object;
 	}
 
 	/**
@@ -154,7 +207,7 @@ public class SpawnEngine
 	 */
 	public Kisk spawnKisk(SpawnTemplate spawn, int instanceIndex, Player creator)
 	{
-		Kisk kisk = new Kisk(IDFactory.getInstance().nextId(), spawn, creator);
+		Kisk kisk = new Kisk(IDFactory.getInstance().nextId(), spawn);
 		kisk.setKnownlist(new StaticObjectKnownList(kisk));
 		kisk.onRespawn();
 		bringIntoWorld(kisk, spawn, instanceIndex);
@@ -177,7 +230,7 @@ public class SpawnEngine
 		float z = recipient.getZ();
 		byte heading = recipient.getHeading();
 		SpawnTemplate spawn = addNewSpawn(worldId, instanceId, 798044, x, y, z, heading, 0, 0, false, true);
-		Postman postman = new Postman(iDFactory.nextId(), spawn, recipient.getObjectId());
+		Postman postman = new Postman(iDFactory.nextId(), spawn);
 		postman.setKnownlist(new StaticObjectKnownList(postman));
 		bringIntoWorld(postman, spawn, instanceId);
 	}

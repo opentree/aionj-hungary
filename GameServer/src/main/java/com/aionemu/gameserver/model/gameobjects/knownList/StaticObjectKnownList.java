@@ -14,10 +14,11 @@
  *  You should have received a copy of the GNU General Public License
  *  along with aion-unique.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aionemu.gameserver.world;
+package com.aionemu.gameserver.model.gameobjects.knownList;
 
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
+import com.aionemu.gameserver.world.MapRegion;
 
 /**
  * @author Mr. Poke

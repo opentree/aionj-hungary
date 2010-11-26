@@ -86,7 +86,6 @@ public abstract class Creature extends StaticNpc
 	{
 		super(objId, spawnTemplate);
 		initializeAi();
-		this.observeController = new ObserveController();
 		
 		this.aggroList = new AggroList(this);
 	}
@@ -301,6 +300,8 @@ public abstract class Creature extends StaticNpc
 	 */
 	public ObserveController getObserveController()
 	{
+		if (observeController == null)
+			observeController = new ObserveController();
 		return observeController;
 	}
 	

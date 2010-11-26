@@ -68,7 +68,7 @@ public class Kisk extends Npc implements ISummoned
 	 * @param spawnTemplate
 	 * @param objectTemplate
 	 */
-	public Kisk(int objId, SpawnTemplate spawnTemplate, Player owner)
+	public Kisk(int objId, SpawnTemplate spawnTemplate)
 	{
 		super(objId, spawnTemplate);
 

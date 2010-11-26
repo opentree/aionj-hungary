@@ -21,12 +21,12 @@ import java.util.concurrent.Future;
 import javolution.util.FastMap;
 
 import com.aionemu.gameserver.model.TaskId;
+import com.aionemu.gameserver.model.gameobjects.knownList.KnownList;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_DELETE;
 import com.aionemu.gameserver.utils.PacketSendUtility;
-import com.aionemu.gameserver.world.KnownList;
 import com.aionemu.gameserver.world.MapRegion;
 import com.aionemu.gameserver.world.World;
 import com.aionemu.gameserver.world.WorldPosition;
@@ -55,10 +55,10 @@ public abstract class VisibleObject extends AionObject
 	 * @param objId
 	 * @param objectTemplate 
 	 */
-	public VisibleObject(int objId, SpawnTemplate spawnTemplate,  WorldPosition position)
+	public VisibleObject(int objId, SpawnTemplate spawnTemplate)
 	{
 		super(objId);
-		this.position = position;
+		this.position = new WorldPosition();
 		this.spawn = spawnTemplate;
 	}
 
