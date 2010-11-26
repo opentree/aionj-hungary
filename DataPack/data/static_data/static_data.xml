@@ -133,4 +133,8 @@
 	<pets>
 		<import file="pets/pets.xml" skipRoot="true"/>
 	</pets>
+	
+	<object_infos>
+		<import file="object_infos/object_infos.xml" skipRoot="true"/>
+	</object_infos>
 </ae_static_data>

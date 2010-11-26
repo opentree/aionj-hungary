@@ -34,6 +34,7 @@
 	<xs:include schemaLocation="pet_skills/pet_skills.xsd" />
 	<xs:include schemaLocation="siege/siege_locations.xsd" />
 	<xs:include schemaLocation="pets/pets.xsd"/>
+	<xs:include schemaLocation="object_infos/object_infos.xsd"/>
 	
 	<xs:element name="ae_static_data">
 		<xs:complexType>
@@ -69,6 +70,7 @@
 				<xs:element ref="pet_skill_templates" minOccurs="0" />
 				<xs:element ref="siege_locations" minOccurs="0" />
 				<xs:element ref="pets" minOccurs="0" />
+				<xs:element ref="object_infos" minOccurs="0" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
