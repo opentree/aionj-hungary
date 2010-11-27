@@ -42,26 +42,27 @@ public class WarehouseExpanderSave
 		ObjectFactory objFactory = new ObjectFactory();
 		WarehouseExpander collection = (WarehouseExpander) objFactory.createWarehouseExpander();
 		List<WarehouseNpcTemplate> templateList = collection.getWarehouseNpc();
-		
-		int[] price = {1200, 24000, 72600, 181500, 363000};
-		
+
+		int[] price =
+		{ 1200, 24000, 72600, 181500, 363000 };
+
 		Collection<NpcClient> npcs = DataManager.getInstance().getIdNpcMap().values();
-		for (NpcClient npc: npcs)
+		for (NpcClient npc : npcs)
 		{
 			if (npc.getExtendcharwarehouseStart() != 0)
 			{
 				WarehouseNpcTemplate template = new WarehouseNpcTemplate();
 				template.setId(npc.getId());
-				for (int i=npc.getExtendcharwarehouseStart(); i<= npc.getExtendcharwarehouseEnd(); i++)
+				for (int i = npc.getExtendcharwarehouseStart(); i <= npc.getExtendcharwarehouseEnd(); i++)
 				{
 					WarehouseExpand expand = new WarehouseExpand();
 					expand.setLevel(i);
-					expand.setPrice(price[i-1]);
+					expand.setPrice(price[i - 1]);
 					template.getExpand().add(expand);
 				}
 				templateList.add(template);
 			}
-				
+
 		}
 
 		try

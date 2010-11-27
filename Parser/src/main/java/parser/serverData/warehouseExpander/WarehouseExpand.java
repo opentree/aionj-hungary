@@ -5,14 +5,12 @@
 // Generated on: 2010.11.08 at 07:16:56 DU CET 
 //
 
-
 package parser.serverData.warehouseExpander;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for WarehouseExpand complex type.
@@ -34,59 +32,64 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "WarehouseExpand")
-public class WarehouseExpand {
+public class WarehouseExpand
+{
 
-    @XmlAttribute
-    protected Integer level;
-    @XmlAttribute
-    protected Integer price;
+	@XmlAttribute
+	protected Integer	level;
+	@XmlAttribute
+	protected Integer	price;
 
-    /**
-     * Gets the value of the level property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getLevel() {
-        return level;
-    }
+	/**
+	 * Gets the value of the level property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link Integer }
+	 *     
+	 */
+	public Integer getLevel()
+	{
+		return level;
+	}
 
-    /**
-     * Sets the value of the level property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setLevel(Integer value) {
-        this.level = value;
-    }
+	/**
+	 * Sets the value of the level property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link Integer }
+	 *     
+	 */
+	public void setLevel(Integer value)
+	{
+		this.level = value;
+	}
 
-    /**
-     * Gets the value of the price property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getPrice() {
-        return price;
-    }
+	/**
+	 * Gets the value of the price property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link Integer }
+	 *     
+	 */
+	public Integer getPrice()
+	{
+		return price;
+	}
 
-    /**
-     * Sets the value of the price property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setPrice(Integer value) {
-        this.price = value;
-    }
+	/**
+	 * Sets the value of the price property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link Integer }
+	 *     
+	 */
+	public void setPrice(Integer value)
+	{
+		this.price = value;
+	}
 
 }

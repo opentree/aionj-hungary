@@ -5,7 +5,6 @@
 // Generated on: 2010.11.23 at 05:57:07 DE CET 
 //
 
-
 package parser.clientData.mission;
 
 import java.util.ArrayList;
@@ -14,7 +13,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for ObjectsClass complex type.
@@ -37,73 +35,76 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ObjectsClass", propOrder = {
-    "object",
-    "entity"
-})
-public class ObjectsClass {
+@XmlType(name = "ObjectsClass", propOrder =
+{ "object", "entity" })
+public class ObjectsClass
+{
 
-    @XmlElement(name = "Object", required = true)
-    protected List<ObjectClass> object;
-    @XmlElement(name = "Entity", required = true)
-    protected List<EntityClass> entity;
+	@XmlElement(name = "Object", required = true)
+	protected List<ObjectClass>	object;
+	@XmlElement(name = "Entity", required = true)
+	protected List<EntityClass>	entity;
 
-    /**
-     * Gets the value of the object property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the object property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getObject().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link ObjectClass }
-     * 
-     * 
-     */
-    public List<ObjectClass> getObject() {
-        if (object == null) {
-            object = new ArrayList<ObjectClass>();
-        }
-        return this.object;
-    }
+	/**
+	 * Gets the value of the object property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list,
+	 * not a snapshot. Therefore any modification you make to the
+	 * returned list will be present inside the JAXB object.
+	 * This is why there is not a <CODE>set</CODE> method for the object property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getObject().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link ObjectClass }
+	 * 
+	 * 
+	 */
+	public List<ObjectClass> getObject()
+	{
+		if (object == null)
+		{
+			object = new ArrayList<ObjectClass>();
+		}
+		return this.object;
+	}
 
-    /**
-     * Gets the value of the entity property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the entity property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getEntity().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link EntityClass }
-     * 
-     * 
-     */
-    public List<EntityClass> getEntity() {
-        if (entity == null) {
-            entity = new ArrayList<EntityClass>();
-        }
-        return this.entity;
-    }
+	/**
+	 * Gets the value of the entity property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list,
+	 * not a snapshot. Therefore any modification you make to the
+	 * returned list will be present inside the JAXB object.
+	 * This is why there is not a <CODE>set</CODE> method for the entity property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getEntity().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link EntityClass }
+	 * 
+	 * 
+	 */
+	public List<EntityClass> getEntity()
+	{
+		if (entity == null)
+		{
+			entity = new ArrayList<EntityClass>();
+		}
+		return this.entity;
+	}
 
 }

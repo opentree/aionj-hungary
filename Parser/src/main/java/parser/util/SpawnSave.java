@@ -43,17 +43,18 @@ import parser.clientData.mission.ObjectsClass;
  */
 public class SpawnSave
 {
-	private static Map<String, NpcClient> npcDir = new HashMap<String, NpcClient>();
-	private static int id = 1000;
+	private static Map<String, NpcClient>	npcDir	= new HashMap<String, NpcClient>();
+	private static int						id		= 1000;
+
 	public static void save()
 	{
 		createDirMap();
 		String out = "";
 		for (Data world : DataManager.getInstance().getWorldIds())
 		{
-			System.out.println("Mission file: "+world.getId()+".xml");
+			System.out.println("Mission file: " + world.getId() + ".xml");
 			for (ObjectsClass object : loadMissionFile(world.getId()).getObjects())
-			out+=parseSpawns(object, world.getId());
+				out += parseSpawns(object, world.getId());
 		}
 		FileWriter fw;
 		try
@@ -69,61 +70,66 @@ public class SpawnSave
 		}
 	}
 
-	private static String parseSpawns(ObjectsClass objects, BigInteger bigInteger) {
+	private static String parseSpawns(ObjectsClass objects, BigInteger bigInteger)
+	{
 		String sql = "INSERT INTO `spawn`(`id`, `world`,`templateId`,`x`,`y`,`z`,`heading`,`staticId`)VALUES\n";
-			for (ObjectClass object : objects.getObject()) {
-				if (object.getNpc() == null)
-					continue;
-				Integer npcId = DataManager.getInstance().getNpcNameIdMap().get(object.getNpc().toLowerCase());
+		for (ObjectClass object : objects.getObject())
+		{
+			if (object.getNpc() == null)
+				continue;
+			Integer npcId = DataManager.getInstance().getNpcNameIdMap().get(object.getNpc().toLowerCase());
+			if (npcId == null)
+			{
+				npcId = DataManager.getInstance().getNameGatherebleIdMap().get(object.getNpc().toLowerCase());
 				if (npcId == null)
 				{
-					npcId = DataManager.getInstance().getNameGatherebleIdMap().get(object.getNpc().toLowerCase());
-					if (npcId == null)
-					{
-						continue;
-					}
-				}
-				StringTokenizer st = new StringTokenizer(object.getPos().trim()
-						.toLowerCase(), ",");
-				if (st != null) {
-					sql += "('"+(id++)+"', '"+bigInteger+"', '"+npcId+"', '"+st.nextToken()+"', '"+st.nextToken()+"', '"+st.nextToken()+"', 0,0),\n";
+					continue;
 				}
 			}
-			for (EntityClass entity : objects.getEntity()) {
-				if (entity.getProperties().size() == 0)
-					continue;
-				String dir = entity.getProperties().get(0).getFileLadderCGF();
-				if (dir == null)
-					continue;
-				// System.out.println(dir);
-				NpcClient npc = npcDir.get(dir.toLowerCase().trim());
-				if (npc == null)
-					continue;
-				Integer npcId = DataManager.getInstance().getNpcNameIdMap().get(entity.getName());
-				if (npcId == null)
-					continue;
+			StringTokenizer st = new StringTokenizer(object.getPos().trim().toLowerCase(), ",");
+			if (st != null)
+			{
+				sql += "('" + (id++) + "', '" + bigInteger + "', '" + npcId + "', '" + st.nextToken() + "', '" + st.nextToken() + "', '" + st.nextToken()
+						+ "', 0,0),\n";
+			}
+		}
+		for (EntityClass entity : objects.getEntity())
+		{
+			if (entity.getProperties().size() == 0)
+				continue;
+			String dir = entity.getProperties().get(0).getFileLadderCGF();
+			if (dir == null)
+				continue;
+			// System.out.println(dir);
+			NpcClient npc = npcDir.get(dir.toLowerCase().trim());
+			if (npc == null)
+				continue;
+			Integer npcId = DataManager.getInstance().getNpcNameIdMap().get(entity.getName());
+			if (npcId == null)
+				continue;
 
-				if (entity.getPos() == null) {
-					continue;
-				}
-				
-				StringTokenizer st = new StringTokenizer(entity.getPos().trim()
-						.toLowerCase(), ",");
-				if (st != null)
-				{
-					sql += "('"+(id++)+"', '"+bigInteger+"', '"+npcId+"', '"+st.nextToken()+"', '"+st.nextToken()+"', '"+st.nextToken()+"', 0,"+entity.getEntityId()+"),\n";
-				}
+			if (entity.getPos() == null)
+			{
+				continue;
 			}
-			return sql;
+
+			StringTokenizer st = new StringTokenizer(entity.getPos().trim().toLowerCase(), ",");
+			if (st != null)
+			{
+				sql += "('" + (id++) + "', '" + bigInteger + "', '" + npcId + "', '" + st.nextToken() + "', '" + st.nextToken() + "', '" + st.nextToken()
+						+ "', 0," + entity.getEntityId() + "),\n";
+			}
+		}
+		return sql;
 	}
 
-	private static void createDirMap() {
+	private static void createDirMap()
+	{
 		for (NpcClient npc : DataManager.getInstance().getIdNpcMap().values())
 		{
 			if (npc.getDir() == null || npc.getMesh() == null)
 				continue;
-			String dir = "objects\\" + npc.getDir().replace("/", "\\") + "\\"
-					+ npc.getMesh() + ".cgf";
+			String dir = "objects\\" + npc.getDir().replace("/", "\\") + "\\" + npc.getMesh() + ".cgf";
 			// System.out.println(dir.toLowerCase().trim());
 			npcDir.put(dir.toLowerCase().trim(), npc);
 		}
@@ -137,7 +143,7 @@ public class SpawnSave
 			Unmarshaller unmarshaller = jc.createUnmarshaller();
 
 			Mission collection;
-			collection = (Mission) unmarshaller.unmarshal(new File("xml/world/"+bigInteger+".xml"));
+			collection = (Mission) unmarshaller.unmarshal(new File("xml/world/" + bigInteger + ".xml"));
 			return collection;
 		}
 		catch (JAXBException e)

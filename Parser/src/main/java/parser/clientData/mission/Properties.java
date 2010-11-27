@@ -5,14 +5,12 @@
 // Generated on: 2010.11.23 at 05:57:07 DE CET 
 //
 
-
 package parser.clientData.mission;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for Properties complex type.
@@ -34,59 +32,64 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Properties")
-public class Properties {
+public class Properties
+{
 
-    @XmlAttribute
-    protected String fileLadderCGF;
-    @XmlAttribute(name = "gostring_Text")
-    protected String gostringText;
+	@XmlAttribute
+	protected String	fileLadderCGF;
+	@XmlAttribute(name = "gostring_Text")
+	protected String	gostringText;
 
-    /**
-     * Gets the value of the fileLadderCGF property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getFileLadderCGF() {
-        return fileLadderCGF;
-    }
+	/**
+	 * Gets the value of the fileLadderCGF property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getFileLadderCGF()
+	{
+		return fileLadderCGF;
+	}
 
-    /**
-     * Sets the value of the fileLadderCGF property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setFileLadderCGF(String value) {
-        this.fileLadderCGF = value;
-    }
+	/**
+	 * Sets the value of the fileLadderCGF property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setFileLadderCGF(String value)
+	{
+		this.fileLadderCGF = value;
+	}
 
-    /**
-     * Gets the value of the gostringText property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getGostringText() {
-        return gostringText;
-    }
+	/**
+	 * Gets the value of the gostringText property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getGostringText()
+	{
+		return gostringText;
+	}
 
-    /**
-     * Sets the value of the gostringText property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setGostringText(String value) {
-        this.gostringText = value;
-    }
+	/**
+	 * Sets the value of the gostringText property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setGostringText(String value)
+	{
+		this.gostringText = value;
+	}
 
 }

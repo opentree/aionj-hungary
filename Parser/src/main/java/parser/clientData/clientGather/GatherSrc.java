@@ -5,7 +5,6 @@
 // Generated on: 2010.11.22 at 02:28:37 DU CET 
 //
 
-
 package parser.clientData.clientGather;
 
 import java.math.BigDecimal;
@@ -17,7 +16,6 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 
 /**
  * <p>Java class for anonymous complex type.
@@ -93,1272 +91,1383 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "id",
-    "name",
-    "desc",
-    "category",
-    "sourceType",
-    "mesh",
-    "sourceColor",
-    "sourceUpper",
-    "sourceFx",
-    "motionName",
-    "harvestskill",
-    "skillLevel",
-    "charLevelLimit",
-    "gatherDelayId",
-    "gatherDelay",
-    "requiredItem",
-    "checkType",
-    "eraseValue",
-    "material1",
-    "normalRate1",
-    "material2",
-    "normalRate2",
-    "material3",
-    "normalRate3",
-    "material4",
-    "normalRate4",
-    "material5",
-    "normalRate5",
-    "material6",
-    "normalRate6",
-    "material7",
-    "normalRate7",
-    "material8",
-    "normalRate8",
-    "extraMaterial1",
-    "extraNormalRate1",
-    "extraMaterial2",
-    "extraNormalRate2",
-    "extraMaterial3",
-    "extraNormalRate3",
-    "extraMaterial4",
-    "extraNormalRate4",
-    "extraMaterial5",
-    "extraNormalRate5",
-    "extraMaterial6",
-    "extraNormalRate6",
-    "extraMaterial7",
-    "extraNormalRate7",
-    "extraMaterial8",
-    "extraNormalRate8",
-    "harvestCount",
-    "successAdj",
-    "failureAdj",
-    "aerialAdj",
-    "captchaRate"
-})
+@XmlType(name = "", propOrder =
+{
+		"id",
+		"name",
+		"desc",
+		"category",
+		"sourceType",
+		"mesh",
+		"sourceColor",
+		"sourceUpper",
+		"sourceFx",
+		"motionName",
+		"harvestskill",
+		"skillLevel",
+		"charLevelLimit",
+		"gatherDelayId",
+		"gatherDelay",
+		"requiredItem",
+		"checkType",
+		"eraseValue",
+		"material1",
+		"normalRate1",
+		"material2",
+		"normalRate2",
+		"material3",
+		"normalRate3",
+		"material4",
+		"normalRate4",
+		"material5",
+		"normalRate5",
+		"material6",
+		"normalRate6",
+		"material7",
+		"normalRate7",
+		"material8",
+		"normalRate8",
+		"extraMaterial1",
+		"extraNormalRate1",
+		"extraMaterial2",
+		"extraNormalRate2",
+		"extraMaterial3",
+		"extraNormalRate3",
+		"extraMaterial4",
+		"extraNormalRate4",
+		"extraMaterial5",
+		"extraNormalRate5",
+		"extraMaterial6",
+		"extraNormalRate6",
+		"extraMaterial7",
+		"extraNormalRate7",
+		"extraMaterial8",
+		"extraNormalRate8",
+		"harvestCount",
+		"successAdj",
+		"failureAdj",
+		"aerialAdj",
+		"captchaRate" })
 @XmlRootElement(name = "gather_src")
-public class GatherSrc {
-
-    protected int id;
-    @XmlElement(required = true)
-    protected String name;
-    @XmlElement(required = true)
-    protected String desc;
-    @XmlElement(required = true)
-    protected String category;
-    @XmlElement(name = "source_type", required = true)
-    protected String sourceType;
-    @XmlElement(required = true)
-    protected String mesh;
-    @XmlElement(name = "source_color", required = true)
-    protected String sourceColor;
-    @XmlElement(name = "source_upper", required = true)
-    protected BigDecimal sourceUpper;
-    @XmlElement(name = "source_fx", required = true)
-    protected String sourceFx;
-    @XmlElement(name = "motion_name", required = true)
-    protected String motionName;
-    @XmlElement(required = true)
-    protected String harvestskill;
-    @XmlElement(name = "skill_level")
-    protected int skillLevel;
-    @XmlElement(name = "char_level_limit")
-    protected int charLevelLimit;
-    @XmlElement(name = "gather_delay_id")
-    protected int gatherDelayId;
-    @XmlElement(name = "gather_delay")
-    protected int gatherDelay;
-    @XmlElement(name = "required_item", required = true)
-    protected String requiredItem;
-    @XmlElement(name = "check_type")
-    protected int checkType;
-    @XmlElement(name = "erase_value")
-    protected int eraseValue;
-    @XmlElement(required = true)
-    protected String material1;
-    @XmlElement(name = "normal_rate1")
-    protected int normalRate1;
-    @XmlElement(required = true)
-    protected String material2;
-    @XmlElement(name = "normal_rate2")
-    protected int normalRate2;
-    @XmlElement(required = true)
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlSchemaType(name = "NMTOKEN")
-    protected String material3;
-    @XmlElement(name = "normal_rate3")
-    protected int normalRate3;
-    @XmlElement(required = true)
-    protected String material4;
-    @XmlElement(name = "normal_rate4")
-    protected int normalRate4;
-    @XmlElement(required = true)
-    protected String material5;
-    @XmlElement(name = "normal_rate5")
-    protected int normalRate5;
-    @XmlElement(required = true)
-    protected String material6;
-    @XmlElement(name = "normal_rate6")
-    protected int normalRate6;
-    @XmlElement(required = true)
-    protected String material7;
-    @XmlElement(name = "normal_rate7")
-    protected int normalRate7;
-    @XmlElement(required = true)
-    protected String material8;
-    @XmlElement(name = "normal_rate8")
-    protected int normalRate8;
-    @XmlElement(name = "extra_material1", required = true)
-    protected String extraMaterial1;
-    @XmlElement(name = "extra_normal_rate1")
-    protected int extraNormalRate1;
-    @XmlElement(name = "extra_material2", required = true)
-    protected String extraMaterial2;
-    @XmlElement(name = "extra_normal_rate2")
-    protected int extraNormalRate2;
-    @XmlElement(name = "extra_material3", required = true)
-    protected String extraMaterial3;
-    @XmlElement(name = "extra_normal_rate3")
-    protected int extraNormalRate3;
-    @XmlElement(name = "extra_material4", required = true)
-    protected String extraMaterial4;
-    @XmlElement(name = "extra_normal_rate4")
-    protected int extraNormalRate4;
-    @XmlElement(name = "extra_material5", required = true)
-    protected String extraMaterial5;
-    @XmlElement(name = "extra_normal_rate5")
-    protected int extraNormalRate5;
-    @XmlElement(name = "extra_material6", required = true)
-    protected String extraMaterial6;
-    @XmlElement(name = "extra_normal_rate6")
-    protected int extraNormalRate6;
-    @XmlElement(name = "extra_material7", required = true)
-    protected String extraMaterial7;
-    @XmlElement(name = "extra_normal_rate7")
-    protected int extraNormalRate7;
-    @XmlElement(name = "extra_material8", required = true)
-    protected String extraMaterial8;
-    @XmlElement(name = "extra_normal_rate8")
-    protected int extraNormalRate8;
-    @XmlElement(name = "harvest_count")
-    protected int harvestCount;
-    @XmlElement(name = "success_adj")
-    protected int successAdj;
-    @XmlElement(name = "failure_adj")
-    protected int failureAdj;
-    @XmlElement(name = "aerial_adj")
-    protected int aerialAdj;
-    @XmlElement(name = "captcha_rate")
-    protected int captchaRate;
-
-    /**
-     * Gets the value of the id property.
-     * 
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     * 
-     */
-    public void setId(int value) {
-        this.id = value;
-    }
-
-    /**
-     * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Sets the value of the name property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setName(String value) {
-        this.name = value;
-    }
-
-    /**
-     * Gets the value of the desc property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getDesc() {
-        return desc;
-    }
-
-    /**
-     * Sets the value of the desc property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setDesc(String value) {
-        this.desc = value;
-    }
-
-    /**
-     * Gets the value of the category property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getCategory() {
-        return category;
-    }
-
-    /**
-     * Sets the value of the category property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setCategory(String value) {
-        this.category = value;
-    }
-
-    /**
-     * Gets the value of the sourceType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getSourceType() {
-        return sourceType;
-    }
-
-    /**
-     * Sets the value of the sourceType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setSourceType(String value) {
-        this.sourceType = value;
-    }
-
-    /**
-     * Gets the value of the mesh property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getMesh() {
-        return mesh;
-    }
-
-    /**
-     * Sets the value of the mesh property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setMesh(String value) {
-        this.mesh = value;
-    }
-
-    /**
-     * Gets the value of the sourceColor property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getSourceColor() {
-        return sourceColor;
-    }
-
-    /**
-     * Sets the value of the sourceColor property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setSourceColor(String value) {
-        this.sourceColor = value;
-    }
-
-    /**
-     * Gets the value of the sourceUpper property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getSourceUpper() {
-        return sourceUpper;
-    }
-
-    /**
-     * Sets the value of the sourceUpper property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setSourceUpper(BigDecimal value) {
-        this.sourceUpper = value;
-    }
-
-    /**
-     * Gets the value of the sourceFx property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getSourceFx() {
-        return sourceFx;
-    }
-
-    /**
-     * Sets the value of the sourceFx property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setSourceFx(String value) {
-        this.sourceFx = value;
-    }
-
-    /**
-     * Gets the value of the motionName property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getMotionName() {
-        return motionName;
-    }
-
-    /**
-     * Sets the value of the motionName property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setMotionName(String value) {
-        this.motionName = value;
-    }
-
-    /**
-     * Gets the value of the harvestskill property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getHarvestskill() {
-        return harvestskill;
-    }
-
-    /**
-     * Sets the value of the harvestskill property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setHarvestskill(String value) {
-        this.harvestskill = value;
-    }
-
-    /**
-     * Gets the value of the skillLevel property.
-     * 
-     */
-    public int getSkillLevel() {
-        return skillLevel;
-    }
-
-    /**
-     * Sets the value of the skillLevel property.
-     * 
-     */
-    public void setSkillLevel(int value) {
-        this.skillLevel = value;
-    }
-
-    /**
-     * Gets the value of the charLevelLimit property.
-     * 
-     */
-    public int getCharLevelLimit() {
-        return charLevelLimit;
-    }
-
-    /**
-     * Sets the value of the charLevelLimit property.
-     * 
-     */
-    public void setCharLevelLimit(int value) {
-        this.charLevelLimit = value;
-    }
-
-    /**
-     * Gets the value of the gatherDelayId property.
-     * 
-     */
-    public int getGatherDelayId() {
-        return gatherDelayId;
-    }
-
-    /**
-     * Sets the value of the gatherDelayId property.
-     * 
-     */
-    public void setGatherDelayId(int value) {
-        this.gatherDelayId = value;
-    }
-
-    /**
-     * Gets the value of the gatherDelay property.
-     * 
-     */
-    public int getGatherDelay() {
-        return gatherDelay;
-    }
-
-    /**
-     * Sets the value of the gatherDelay property.
-     * 
-     */
-    public void setGatherDelay(int value) {
-        this.gatherDelay = value;
-    }
-
-    /**
-     * Gets the value of the requiredItem property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getRequiredItem() {
-        return requiredItem;
-    }
-
-    /**
-     * Sets the value of the requiredItem property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setRequiredItem(String value) {
-        this.requiredItem = value;
-    }
-
-    /**
-     * Gets the value of the checkType property.
-     * 
-     */
-    public int getCheckType() {
-        return checkType;
-    }
-
-    /**
-     * Sets the value of the checkType property.
-     * 
-     */
-    public void setCheckType(int value) {
-        this.checkType = value;
-    }
-
-    /**
-     * Gets the value of the eraseValue property.
-     * 
-     */
-    public int getEraseValue() {
-        return eraseValue;
-    }
-
-    /**
-     * Sets the value of the eraseValue property.
-     * 
-     */
-    public void setEraseValue(int value) {
-        this.eraseValue = value;
-    }
-
-    /**
-     * Gets the value of the material1 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getMaterial1() {
-        return material1;
-    }
-
-    /**
-     * Sets the value of the material1 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setMaterial1(String value) {
-        this.material1 = value;
-    }
-
-    /**
-     * Gets the value of the normalRate1 property.
-     * 
-     */
-    public int getNormalRate1() {
-        return normalRate1;
-    }
-
-    /**
-     * Sets the value of the normalRate1 property.
-     * 
-     */
-    public void setNormalRate1(int value) {
-        this.normalRate1 = value;
-    }
-
-    /**
-     * Gets the value of the material2 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getMaterial2() {
-        return material2;
-    }
-
-    /**
-     * Sets the value of the material2 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setMaterial2(String value) {
-        this.material2 = value;
-    }
-
-    /**
-     * Gets the value of the normalRate2 property.
-     * 
-     */
-    public int getNormalRate2() {
-        return normalRate2;
-    }
-
-    /**
-     * Sets the value of the normalRate2 property.
-     * 
-     */
-    public void setNormalRate2(int value) {
-        this.normalRate2 = value;
-    }
-
-    /**
-     * Gets the value of the material3 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getMaterial3() {
-        return material3;
-    }
-
-    /**
-     * Sets the value of the material3 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setMaterial3(String value) {
-        this.material3 = value;
-    }
-
-    /**
-     * Gets the value of the normalRate3 property.
-     * 
-     */
-    public int getNormalRate3() {
-        return normalRate3;
-    }
-
-    /**
-     * Sets the value of the normalRate3 property.
-     * 
-     */
-    public void setNormalRate3(int value) {
-        this.normalRate3 = value;
-    }
-
-    /**
-     * Gets the value of the material4 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getMaterial4() {
-        return material4;
-    }
-
-    /**
-     * Sets the value of the material4 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setMaterial4(String value) {
-        this.material4 = value;
-    }
-
-    /**
-     * Gets the value of the normalRate4 property.
-     * 
-     */
-    public int getNormalRate4() {
-        return normalRate4;
-    }
-
-    /**
-     * Sets the value of the normalRate4 property.
-     * 
-     */
-    public void setNormalRate4(int value) {
-        this.normalRate4 = value;
-    }
-
-    /**
-     * Gets the value of the material5 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getMaterial5() {
-        return material5;
-    }
-
-    /**
-     * Sets the value of the material5 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setMaterial5(String value) {
-        this.material5 = value;
-    }
-
-    /**
-     * Gets the value of the normalRate5 property.
-     * 
-     */
-    public int getNormalRate5() {
-        return normalRate5;
-    }
-
-    /**
-     * Sets the value of the normalRate5 property.
-     * 
-     */
-    public void setNormalRate5(int value) {
-        this.normalRate5 = value;
-    }
-
-    /**
-     * Gets the value of the material6 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getMaterial6() {
-        return material6;
-    }
-
-    /**
-     * Sets the value of the material6 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setMaterial6(String value) {
-        this.material6 = value;
-    }
-
-    /**
-     * Gets the value of the normalRate6 property.
-     * 
-     */
-    public int getNormalRate6() {
-        return normalRate6;
-    }
-
-    /**
-     * Sets the value of the normalRate6 property.
-     * 
-     */
-    public void setNormalRate6(int value) {
-        this.normalRate6 = value;
-    }
-
-    /**
-     * Gets the value of the material7 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getMaterial7() {
-        return material7;
-    }
-
-    /**
-     * Sets the value of the material7 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setMaterial7(String value) {
-        this.material7 = value;
-    }
-
-    /**
-     * Gets the value of the normalRate7 property.
-     * 
-     */
-    public int getNormalRate7() {
-        return normalRate7;
-    }
-
-    /**
-     * Sets the value of the normalRate7 property.
-     * 
-     */
-    public void setNormalRate7(int value) {
-        this.normalRate7 = value;
-    }
-
-    /**
-     * Gets the value of the material8 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getMaterial8() {
-        return material8;
-    }
-
-    /**
-     * Sets the value of the material8 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setMaterial8(String value) {
-        this.material8 = value;
-    }
-
-    /**
-     * Gets the value of the normalRate8 property.
-     * 
-     */
-    public int getNormalRate8() {
-        return normalRate8;
-    }
-
-    /**
-     * Sets the value of the normalRate8 property.
-     * 
-     */
-    public void setNormalRate8(int value) {
-        this.normalRate8 = value;
-    }
-
-    /**
-     * Gets the value of the extraMaterial1 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getExtraMaterial1() {
-        return extraMaterial1;
-    }
-
-    /**
-     * Sets the value of the extraMaterial1 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setExtraMaterial1(String value) {
-        this.extraMaterial1 = value;
-    }
-
-    /**
-     * Gets the value of the extraNormalRate1 property.
-     * 
-     */
-    public int getExtraNormalRate1() {
-        return extraNormalRate1;
-    }
-
-    /**
-     * Sets the value of the extraNormalRate1 property.
-     * 
-     */
-    public void setExtraNormalRate1(int value) {
-        this.extraNormalRate1 = value;
-    }
-
-    /**
-     * Gets the value of the extraMaterial2 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getExtraMaterial2() {
-        return extraMaterial2;
-    }
-
-    /**
-     * Sets the value of the extraMaterial2 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setExtraMaterial2(String value) {
-        this.extraMaterial2 = value;
-    }
-
-    /**
-     * Gets the value of the extraNormalRate2 property.
-     * 
-     */
-    public int getExtraNormalRate2() {
-        return extraNormalRate2;
-    }
-
-    /**
-     * Sets the value of the extraNormalRate2 property.
-     * 
-     */
-    public void setExtraNormalRate2(int value) {
-        this.extraNormalRate2 = value;
-    }
-
-    /**
-     * Gets the value of the extraMaterial3 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getExtraMaterial3() {
-        return extraMaterial3;
-    }
-
-    /**
-     * Sets the value of the extraMaterial3 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setExtraMaterial3(String value) {
-        this.extraMaterial3 = value;
-    }
-
-    /**
-     * Gets the value of the extraNormalRate3 property.
-     * 
-     */
-    public int getExtraNormalRate3() {
-        return extraNormalRate3;
-    }
-
-    /**
-     * Sets the value of the extraNormalRate3 property.
-     * 
-     */
-    public void setExtraNormalRate3(int value) {
-        this.extraNormalRate3 = value;
-    }
-
-    /**
-     * Gets the value of the extraMaterial4 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getExtraMaterial4() {
-        return extraMaterial4;
-    }
-
-    /**
-     * Sets the value of the extraMaterial4 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setExtraMaterial4(String value) {
-        this.extraMaterial4 = value;
-    }
-
-    /**
-     * Gets the value of the extraNormalRate4 property.
-     * 
-     */
-    public int getExtraNormalRate4() {
-        return extraNormalRate4;
-    }
-
-    /**
-     * Sets the value of the extraNormalRate4 property.
-     * 
-     */
-    public void setExtraNormalRate4(int value) {
-        this.extraNormalRate4 = value;
-    }
-
-    /**
-     * Gets the value of the extraMaterial5 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getExtraMaterial5() {
-        return extraMaterial5;
-    }
-
-    /**
-     * Sets the value of the extraMaterial5 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setExtraMaterial5(String value) {
-        this.extraMaterial5 = value;
-    }
-
-    /**
-     * Gets the value of the extraNormalRate5 property.
-     * 
-     */
-    public int getExtraNormalRate5() {
-        return extraNormalRate5;
-    }
-
-    /**
-     * Sets the value of the extraNormalRate5 property.
-     * 
-     */
-    public void setExtraNormalRate5(int value) {
-        this.extraNormalRate5 = value;
-    }
-
-    /**
-     * Gets the value of the extraMaterial6 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getExtraMaterial6() {
-        return extraMaterial6;
-    }
-
-    /**
-     * Sets the value of the extraMaterial6 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setExtraMaterial6(String value) {
-        this.extraMaterial6 = value;
-    }
-
-    /**
-     * Gets the value of the extraNormalRate6 property.
-     * 
-     */
-    public int getExtraNormalRate6() {
-        return extraNormalRate6;
-    }
-
-    /**
-     * Sets the value of the extraNormalRate6 property.
-     * 
-     */
-    public void setExtraNormalRate6(int value) {
-        this.extraNormalRate6 = value;
-    }
-
-    /**
-     * Gets the value of the extraMaterial7 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getExtraMaterial7() {
-        return extraMaterial7;
-    }
-
-    /**
-     * Sets the value of the extraMaterial7 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setExtraMaterial7(String value) {
-        this.extraMaterial7 = value;
-    }
-
-    /**
-     * Gets the value of the extraNormalRate7 property.
-     * 
-     */
-    public int getExtraNormalRate7() {
-        return extraNormalRate7;
-    }
-
-    /**
-     * Sets the value of the extraNormalRate7 property.
-     * 
-     */
-    public void setExtraNormalRate7(int value) {
-        this.extraNormalRate7 = value;
-    }
-
-    /**
-     * Gets the value of the extraMaterial8 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getExtraMaterial8() {
-        return extraMaterial8;
-    }
-
-    /**
-     * Sets the value of the extraMaterial8 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setExtraMaterial8(String value) {
-        this.extraMaterial8 = value;
-    }
-
-    /**
-     * Gets the value of the extraNormalRate8 property.
-     * 
-     */
-    public int getExtraNormalRate8() {
-        return extraNormalRate8;
-    }
-
-    /**
-     * Sets the value of the extraNormalRate8 property.
-     * 
-     */
-    public void setExtraNormalRate8(int value) {
-        this.extraNormalRate8 = value;
-    }
-
-    /**
-     * Gets the value of the harvestCount property.
-     * 
-     */
-    public int getHarvestCount() {
-        return harvestCount;
-    }
-
-    /**
-     * Sets the value of the harvestCount property.
-     * 
-     */
-    public void setHarvestCount(int value) {
-        this.harvestCount = value;
-    }
-
-    /**
-     * Gets the value of the successAdj property.
-     * 
-     */
-    public int getSuccessAdj() {
-        return successAdj;
-    }
-
-    /**
-     * Sets the value of the successAdj property.
-     * 
-     */
-    public void setSuccessAdj(int value) {
-        this.successAdj = value;
-    }
-
-    /**
-     * Gets the value of the failureAdj property.
-     * 
-     */
-    public int getFailureAdj() {
-        return failureAdj;
-    }
-
-    /**
-     * Sets the value of the failureAdj property.
-     * 
-     */
-    public void setFailureAdj(int value) {
-        this.failureAdj = value;
-    }
-
-    /**
-     * Gets the value of the aerialAdj property.
-     * 
-     */
-    public int getAerialAdj() {
-        return aerialAdj;
-    }
-
-    /**
-     * Sets the value of the aerialAdj property.
-     * 
-     */
-    public void setAerialAdj(int value) {
-        this.aerialAdj = value;
-    }
-
-    /**
-     * Gets the value of the captchaRate property.
-     * 
-     */
-    public int getCaptchaRate() {
-        return captchaRate;
-    }
-
-    /**
-     * Sets the value of the captchaRate property.
-     * 
-     */
-    public void setCaptchaRate(int value) {
-        this.captchaRate = value;
-    }
+public class GatherSrc
+{
+
+	protected int			id;
+	@XmlElement(required = true)
+	protected String		name;
+	@XmlElement(required = true)
+	protected String		desc;
+	@XmlElement(required = true)
+	protected String		category;
+	@XmlElement(name = "source_type", required = true)
+	protected String		sourceType;
+	@XmlElement(required = true)
+	protected String		mesh;
+	@XmlElement(name = "source_color", required = true)
+	protected String		sourceColor;
+	@XmlElement(name = "source_upper", required = true)
+	protected BigDecimal	sourceUpper;
+	@XmlElement(name = "source_fx", required = true)
+	protected String		sourceFx;
+	@XmlElement(name = "motion_name", required = true)
+	protected String		motionName;
+	@XmlElement(required = true)
+	protected String		harvestskill;
+	@XmlElement(name = "skill_level")
+	protected int			skillLevel;
+	@XmlElement(name = "char_level_limit")
+	protected int			charLevelLimit;
+	@XmlElement(name = "gather_delay_id")
+	protected int			gatherDelayId;
+	@XmlElement(name = "gather_delay")
+	protected int			gatherDelay;
+	@XmlElement(name = "required_item", required = true)
+	protected String		requiredItem;
+	@XmlElement(name = "check_type")
+	protected int			checkType;
+	@XmlElement(name = "erase_value")
+	protected int			eraseValue;
+	@XmlElement(required = true)
+	protected String		material1;
+	@XmlElement(name = "normal_rate1")
+	protected int			normalRate1;
+	@XmlElement(required = true)
+	protected String		material2;
+	@XmlElement(name = "normal_rate2")
+	protected int			normalRate2;
+	@XmlElement(required = true)
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	@XmlSchemaType(name = "NMTOKEN")
+	protected String		material3;
+	@XmlElement(name = "normal_rate3")
+	protected int			normalRate3;
+	@XmlElement(required = true)
+	protected String		material4;
+	@XmlElement(name = "normal_rate4")
+	protected int			normalRate4;
+	@XmlElement(required = true)
+	protected String		material5;
+	@XmlElement(name = "normal_rate5")
+	protected int			normalRate5;
+	@XmlElement(required = true)
+	protected String		material6;
+	@XmlElement(name = "normal_rate6")
+	protected int			normalRate6;
+	@XmlElement(required = true)
+	protected String		material7;
+	@XmlElement(name = "normal_rate7")
+	protected int			normalRate7;
+	@XmlElement(required = true)
+	protected String		material8;
+	@XmlElement(name = "normal_rate8")
+	protected int			normalRate8;
+	@XmlElement(name = "extra_material1", required = true)
+	protected String		extraMaterial1;
+	@XmlElement(name = "extra_normal_rate1")
+	protected int			extraNormalRate1;
+	@XmlElement(name = "extra_material2", required = true)
+	protected String		extraMaterial2;
+	@XmlElement(name = "extra_normal_rate2")
+	protected int			extraNormalRate2;
+	@XmlElement(name = "extra_material3", required = true)
+	protected String		extraMaterial3;
+	@XmlElement(name = "extra_normal_rate3")
+	protected int			extraNormalRate3;
+	@XmlElement(name = "extra_material4", required = true)
+	protected String		extraMaterial4;
+	@XmlElement(name = "extra_normal_rate4")
+	protected int			extraNormalRate4;
+	@XmlElement(name = "extra_material5", required = true)
+	protected String		extraMaterial5;
+	@XmlElement(name = "extra_normal_rate5")
+	protected int			extraNormalRate5;
+	@XmlElement(name = "extra_material6", required = true)
+	protected String		extraMaterial6;
+	@XmlElement(name = "extra_normal_rate6")
+	protected int			extraNormalRate6;
+	@XmlElement(name = "extra_material7", required = true)
+	protected String		extraMaterial7;
+	@XmlElement(name = "extra_normal_rate7")
+	protected int			extraNormalRate7;
+	@XmlElement(name = "extra_material8", required = true)
+	protected String		extraMaterial8;
+	@XmlElement(name = "extra_normal_rate8")
+	protected int			extraNormalRate8;
+	@XmlElement(name = "harvest_count")
+	protected int			harvestCount;
+	@XmlElement(name = "success_adj")
+	protected int			successAdj;
+	@XmlElement(name = "failure_adj")
+	protected int			failureAdj;
+	@XmlElement(name = "aerial_adj")
+	protected int			aerialAdj;
+	@XmlElement(name = "captcha_rate")
+	protected int			captchaRate;
+
+	/**
+	 * Gets the value of the id property.
+	 * 
+	 */
+	public int getId()
+	{
+		return id;
+	}
+
+	/**
+	 * Sets the value of the id property.
+	 * 
+	 */
+	public void setId(int value)
+	{
+		this.id = value;
+	}
+
+	/**
+	 * Gets the value of the name property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getName()
+	{
+		return name;
+	}
+
+	/**
+	 * Sets the value of the name property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setName(String value)
+	{
+		this.name = value;
+	}
+
+	/**
+	 * Gets the value of the desc property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getDesc()
+	{
+		return desc;
+	}
+
+	/**
+	 * Sets the value of the desc property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setDesc(String value)
+	{
+		this.desc = value;
+	}
+
+	/**
+	 * Gets the value of the category property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getCategory()
+	{
+		return category;
+	}
+
+	/**
+	 * Sets the value of the category property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setCategory(String value)
+	{
+		this.category = value;
+	}
+
+	/**
+	 * Gets the value of the sourceType property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getSourceType()
+	{
+		return sourceType;
+	}
+
+	/**
+	 * Sets the value of the sourceType property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setSourceType(String value)
+	{
+		this.sourceType = value;
+	}
+
+	/**
+	 * Gets the value of the mesh property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getMesh()
+	{
+		return mesh;
+	}
+
+	/**
+	 * Sets the value of the mesh property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setMesh(String value)
+	{
+		this.mesh = value;
+	}
+
+	/**
+	 * Gets the value of the sourceColor property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getSourceColor()
+	{
+		return sourceColor;
+	}
+
+	/**
+	 * Sets the value of the sourceColor property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setSourceColor(String value)
+	{
+		this.sourceColor = value;
+	}
+
+	/**
+	 * Gets the value of the sourceUpper property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link BigDecimal }
+	 *     
+	 */
+	public BigDecimal getSourceUpper()
+	{
+		return sourceUpper;
+	}
+
+	/**
+	 * Sets the value of the sourceUpper property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link BigDecimal }
+	 *     
+	 */
+	public void setSourceUpper(BigDecimal value)
+	{
+		this.sourceUpper = value;
+	}
+
+	/**
+	 * Gets the value of the sourceFx property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getSourceFx()
+	{
+		return sourceFx;
+	}
+
+	/**
+	 * Sets the value of the sourceFx property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setSourceFx(String value)
+	{
+		this.sourceFx = value;
+	}
+
+	/**
+	 * Gets the value of the motionName property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getMotionName()
+	{
+		return motionName;
+	}
+
+	/**
+	 * Sets the value of the motionName property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setMotionName(String value)
+	{
+		this.motionName = value;
+	}
+
+	/**
+	 * Gets the value of the harvestskill property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getHarvestskill()
+	{
+		return harvestskill;
+	}
+
+	/**
+	 * Sets the value of the harvestskill property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setHarvestskill(String value)
+	{
+		this.harvestskill = value;
+	}
+
+	/**
+	 * Gets the value of the skillLevel property.
+	 * 
+	 */
+	public int getSkillLevel()
+	{
+		return skillLevel;
+	}
+
+	/**
+	 * Sets the value of the skillLevel property.
+	 * 
+	 */
+	public void setSkillLevel(int value)
+	{
+		this.skillLevel = value;
+	}
+
+	/**
+	 * Gets the value of the charLevelLimit property.
+	 * 
+	 */
+	public int getCharLevelLimit()
+	{
+		return charLevelLimit;
+	}
+
+	/**
+	 * Sets the value of the charLevelLimit property.
+	 * 
+	 */
+	public void setCharLevelLimit(int value)
+	{
+		this.charLevelLimit = value;
+	}
+
+	/**
+	 * Gets the value of the gatherDelayId property.
+	 * 
+	 */
+	public int getGatherDelayId()
+	{
+		return gatherDelayId;
+	}
+
+	/**
+	 * Sets the value of the gatherDelayId property.
+	 * 
+	 */
+	public void setGatherDelayId(int value)
+	{
+		this.gatherDelayId = value;
+	}
+
+	/**
+	 * Gets the value of the gatherDelay property.
+	 * 
+	 */
+	public int getGatherDelay()
+	{
+		return gatherDelay;
+	}
+
+	/**
+	 * Sets the value of the gatherDelay property.
+	 * 
+	 */
+	public void setGatherDelay(int value)
+	{
+		this.gatherDelay = value;
+	}
+
+	/**
+	 * Gets the value of the requiredItem property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getRequiredItem()
+	{
+		return requiredItem;
+	}
+
+	/**
+	 * Sets the value of the requiredItem property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setRequiredItem(String value)
+	{
+		this.requiredItem = value;
+	}
+
+	/**
+	 * Gets the value of the checkType property.
+	 * 
+	 */
+	public int getCheckType()
+	{
+		return checkType;
+	}
+
+	/**
+	 * Sets the value of the checkType property.
+	 * 
+	 */
+	public void setCheckType(int value)
+	{
+		this.checkType = value;
+	}
+
+	/**
+	 * Gets the value of the eraseValue property.
+	 * 
+	 */
+	public int getEraseValue()
+	{
+		return eraseValue;
+	}
+
+	/**
+	 * Sets the value of the eraseValue property.
+	 * 
+	 */
+	public void setEraseValue(int value)
+	{
+		this.eraseValue = value;
+	}
+
+	/**
+	 * Gets the value of the material1 property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getMaterial1()
+	{
+		return material1;
+	}
+
+	/**
+	 * Sets the value of the material1 property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setMaterial1(String value)
+	{
+		this.material1 = value;
+	}
+
+	/**
+	 * Gets the value of the normalRate1 property.
+	 * 
+	 */
+	public int getNormalRate1()
+	{
+		return normalRate1;
+	}
+
+	/**
+	 * Sets the value of the normalRate1 property.
+	 * 
+	 */
+	public void setNormalRate1(int value)
+	{
+		this.normalRate1 = value;
+	}
+
+	/**
+	 * Gets the value of the material2 property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getMaterial2()
+	{
+		return material2;
+	}
+
+	/**
+	 * Sets the value of the material2 property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setMaterial2(String value)
+	{
+		this.material2 = value;
+	}
+
+	/**
+	 * Gets the value of the normalRate2 property.
+	 * 
+	 */
+	public int getNormalRate2()
+	{
+		return normalRate2;
+	}
+
+	/**
+	 * Sets the value of the normalRate2 property.
+	 * 
+	 */
+	public void setNormalRate2(int value)
+	{
+		this.normalRate2 = value;
+	}
+
+	/**
+	 * Gets the value of the material3 property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getMaterial3()
+	{
+		return material3;
+	}
+
+	/**
+	 * Sets the value of the material3 property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setMaterial3(String value)
+	{
+		this.material3 = value;
+	}
+
+	/**
+	 * Gets the value of the normalRate3 property.
+	 * 
+	 */
+	public int getNormalRate3()
+	{
+		return normalRate3;
+	}
+
+	/**
+	 * Sets the value of the normalRate3 property.
+	 * 
+	 */
+	public void setNormalRate3(int value)
+	{
+		this.normalRate3 = value;
+	}
+
+	/**
+	 * Gets the value of the material4 property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getMaterial4()
+	{
+		return material4;
+	}
+
+	/**
+	 * Sets the value of the material4 property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setMaterial4(String value)
+	{
+		this.material4 = value;
+	}
+
+	/**
+	 * Gets the value of the normalRate4 property.
+	 * 
+	 */
+	public int getNormalRate4()
+	{
+		return normalRate4;
+	}
+
+	/**
+	 * Sets the value of the normalRate4 property.
+	 * 
+	 */
+	public void setNormalRate4(int value)
+	{
+		this.normalRate4 = value;
+	}
+
+	/**
+	 * Gets the value of the material5 property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getMaterial5()
+	{
+		return material5;
+	}
+
+	/**
+	 * Sets the value of the material5 property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setMaterial5(String value)
+	{
+		this.material5 = value;
+	}
+
+	/**
+	 * Gets the value of the normalRate5 property.
+	 * 
+	 */
+	public int getNormalRate5()
+	{
+		return normalRate5;
+	}
+
+	/**
+	 * Sets the value of the normalRate5 property.
+	 * 
+	 */
+	public void setNormalRate5(int value)
+	{
+		this.normalRate5 = value;
+	}
+
+	/**
+	 * Gets the value of the material6 property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getMaterial6()
+	{
+		return material6;
+	}
+
+	/**
+	 * Sets the value of the material6 property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setMaterial6(String value)
+	{
+		this.material6 = value;
+	}
+
+	/**
+	 * Gets the value of the normalRate6 property.
+	 * 
+	 */
+	public int getNormalRate6()
+	{
+		return normalRate6;
+	}
+
+	/**
+	 * Sets the value of the normalRate6 property.
+	 * 
+	 */
+	public void setNormalRate6(int value)
+	{
+		this.normalRate6 = value;
+	}
+
+	/**
+	 * Gets the value of the material7 property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getMaterial7()
+	{
+		return material7;
+	}
+
+	/**
+	 * Sets the value of the material7 property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setMaterial7(String value)
+	{
+		this.material7 = value;
+	}
+
+	/**
+	 * Gets the value of the normalRate7 property.
+	 * 
+	 */
+	public int getNormalRate7()
+	{
+		return normalRate7;
+	}
+
+	/**
+	 * Sets the value of the normalRate7 property.
+	 * 
+	 */
+	public void setNormalRate7(int value)
+	{
+		this.normalRate7 = value;
+	}
+
+	/**
+	 * Gets the value of the material8 property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getMaterial8()
+	{
+		return material8;
+	}
+
+	/**
+	 * Sets the value of the material8 property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setMaterial8(String value)
+	{
+		this.material8 = value;
+	}
+
+	/**
+	 * Gets the value of the normalRate8 property.
+	 * 
+	 */
+	public int getNormalRate8()
+	{
+		return normalRate8;
+	}
+
+	/**
+	 * Sets the value of the normalRate8 property.
+	 * 
+	 */
+	public void setNormalRate8(int value)
+	{
+		this.normalRate8 = value;
+	}
+
+	/**
+	 * Gets the value of the extraMaterial1 property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getExtraMaterial1()
+	{
+		return extraMaterial1;
+	}
+
+	/**
+	 * Sets the value of the extraMaterial1 property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setExtraMaterial1(String value)
+	{
+		this.extraMaterial1 = value;
+	}
+
+	/**
+	 * Gets the value of the extraNormalRate1 property.
+	 * 
+	 */
+	public int getExtraNormalRate1()
+	{
+		return extraNormalRate1;
+	}
+
+	/**
+	 * Sets the value of the extraNormalRate1 property.
+	 * 
+	 */
+	public void setExtraNormalRate1(int value)
+	{
+		this.extraNormalRate1 = value;
+	}
+
+	/**
+	 * Gets the value of the extraMaterial2 property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getExtraMaterial2()
+	{
+		return extraMaterial2;
+	}
+
+	/**
+	 * Sets the value of the extraMaterial2 property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setExtraMaterial2(String value)
+	{
+		this.extraMaterial2 = value;
+	}
+
+	/**
+	 * Gets the value of the extraNormalRate2 property.
+	 * 
+	 */
+	public int getExtraNormalRate2()
+	{
+		return extraNormalRate2;
+	}
+
+	/**
+	 * Sets the value of the extraNormalRate2 property.
+	 * 
+	 */
+	public void setExtraNormalRate2(int value)
+	{
+		this.extraNormalRate2 = value;
+	}
+
+	/**
+	 * Gets the value of the extraMaterial3 property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getExtraMaterial3()
+	{
+		return extraMaterial3;
+	}
+
+	/**
+	 * Sets the value of the extraMaterial3 property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setExtraMaterial3(String value)
+	{
+		this.extraMaterial3 = value;
+	}
+
+	/**
+	 * Gets the value of the extraNormalRate3 property.
+	 * 
+	 */
+	public int getExtraNormalRate3()
+	{
+		return extraNormalRate3;
+	}
+
+	/**
+	 * Sets the value of the extraNormalRate3 property.
+	 * 
+	 */
+	public void setExtraNormalRate3(int value)
+	{
+		this.extraNormalRate3 = value;
+	}
+
+	/**
+	 * Gets the value of the extraMaterial4 property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getExtraMaterial4()
+	{
+		return extraMaterial4;
+	}
+
+	/**
+	 * Sets the value of the extraMaterial4 property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setExtraMaterial4(String value)
+	{
+		this.extraMaterial4 = value;
+	}
+
+	/**
+	 * Gets the value of the extraNormalRate4 property.
+	 * 
+	 */
+	public int getExtraNormalRate4()
+	{
+		return extraNormalRate4;
+	}
+
+	/**
+	 * Sets the value of the extraNormalRate4 property.
+	 * 
+	 */
+	public void setExtraNormalRate4(int value)
+	{
+		this.extraNormalRate4 = value;
+	}
+
+	/**
+	 * Gets the value of the extraMaterial5 property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getExtraMaterial5()
+	{
+		return extraMaterial5;
+	}
+
+	/**
+	 * Sets the value of the extraMaterial5 property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setExtraMaterial5(String value)
+	{
+		this.extraMaterial5 = value;
+	}
+
+	/**
+	 * Gets the value of the extraNormalRate5 property.
+	 * 
+	 */
+	public int getExtraNormalRate5()
+	{
+		return extraNormalRate5;
+	}
+
+	/**
+	 * Sets the value of the extraNormalRate5 property.
+	 * 
+	 */
+	public void setExtraNormalRate5(int value)
+	{
+		this.extraNormalRate5 = value;
+	}
+
+	/**
+	 * Gets the value of the extraMaterial6 property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getExtraMaterial6()
+	{
+		return extraMaterial6;
+	}
+
+	/**
+	 * Sets the value of the extraMaterial6 property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setExtraMaterial6(String value)
+	{
+		this.extraMaterial6 = value;
+	}
+
+	/**
+	 * Gets the value of the extraNormalRate6 property.
+	 * 
+	 */
+	public int getExtraNormalRate6()
+	{
+		return extraNormalRate6;
+	}
+
+	/**
+	 * Sets the value of the extraNormalRate6 property.
+	 * 
+	 */
+	public void setExtraNormalRate6(int value)
+	{
+		this.extraNormalRate6 = value;
+	}
+
+	/**
+	 * Gets the value of the extraMaterial7 property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getExtraMaterial7()
+	{
+		return extraMaterial7;
+	}
+
+	/**
+	 * Sets the value of the extraMaterial7 property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setExtraMaterial7(String value)
+	{
+		this.extraMaterial7 = value;
+	}
+
+	/**
+	 * Gets the value of the extraNormalRate7 property.
+	 * 
+	 */
+	public int getExtraNormalRate7()
+	{
+		return extraNormalRate7;
+	}
+
+	/**
+	 * Sets the value of the extraNormalRate7 property.
+	 * 
+	 */
+	public void setExtraNormalRate7(int value)
+	{
+		this.extraNormalRate7 = value;
+	}
+
+	/**
+	 * Gets the value of the extraMaterial8 property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getExtraMaterial8()
+	{
+		return extraMaterial8;
+	}
+
+	/**
+	 * Sets the value of the extraMaterial8 property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setExtraMaterial8(String value)
+	{
+		this.extraMaterial8 = value;
+	}
+
+	/**
+	 * Gets the value of the extraNormalRate8 property.
+	 * 
+	 */
+	public int getExtraNormalRate8()
+	{
+		return extraNormalRate8;
+	}
+
+	/**
+	 * Sets the value of the extraNormalRate8 property.
+	 * 
+	 */
+	public void setExtraNormalRate8(int value)
+	{
+		this.extraNormalRate8 = value;
+	}
+
+	/**
+	 * Gets the value of the harvestCount property.
+	 * 
+	 */
+	public int getHarvestCount()
+	{
+		return harvestCount;
+	}
+
+	/**
+	 * Sets the value of the harvestCount property.
+	 * 
+	 */
+	public void setHarvestCount(int value)
+	{
+		this.harvestCount = value;
+	}
+
+	/**
+	 * Gets the value of the successAdj property.
+	 * 
+	 */
+	public int getSuccessAdj()
+	{
+		return successAdj;
+	}
+
+	/**
+	 * Sets the value of the successAdj property.
+	 * 
+	 */
+	public void setSuccessAdj(int value)
+	{
+		this.successAdj = value;
+	}
+
+	/**
+	 * Gets the value of the failureAdj property.
+	 * 
+	 */
+	public int getFailureAdj()
+	{
+		return failureAdj;
+	}
+
+	/**
+	 * Sets the value of the failureAdj property.
+	 * 
+	 */
+	public void setFailureAdj(int value)
+	{
+		this.failureAdj = value;
+	}
+
+	/**
+	 * Gets the value of the aerialAdj property.
+	 * 
+	 */
+	public int getAerialAdj()
+	{
+		return aerialAdj;
+	}
+
+	/**
+	 * Sets the value of the aerialAdj property.
+	 * 
+	 */
+	public void setAerialAdj(int value)
+	{
+		this.aerialAdj = value;
+	}
+
+	/**
+	 * Gets the value of the captchaRate property.
+	 * 
+	 */
+	public int getCaptchaRate()
+	{
+		return captchaRate;
+	}
+
+	/**
+	 * Sets the value of the captchaRate property.
+	 * 
+	 */
+	public void setCaptchaRate(int value)
+	{
+		this.captchaRate = value;
+	}
 
 }

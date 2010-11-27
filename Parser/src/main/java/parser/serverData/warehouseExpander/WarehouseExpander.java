@@ -5,7 +5,6 @@
 // Generated on: 2010.11.08 at 07:16:56 DU CET 
 //
 
-
 package parser.serverData.warehouseExpander;
 
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for warehouseExpander complex type.
@@ -38,74 +36,77 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "warehouseExpander", propOrder = {
-    "_import",
-    "warehouseNpc"
-})
+@XmlType(name = "warehouseExpander", propOrder =
+{ "_import", "warehouseNpc" })
 @XmlRootElement(name = "warehouse_expander")
-public class WarehouseExpander {
+public class WarehouseExpander
+{
 
-    @XmlElement(name = "import")
-    protected List<Import> _import;
-    @XmlElement(name = "warehouse_npc")
-    protected List<WarehouseNpcTemplate> warehouseNpc;
+	@XmlElement(name = "import")
+	protected List<Import>					_import;
+	@XmlElement(name = "warehouse_npc")
+	protected List<WarehouseNpcTemplate>	warehouseNpc;
 
-    /**
-     * Gets the value of the import property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the import property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getImport().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Import }
-     * 
-     * 
-     */
-    public List<Import> getImport() {
-        if (_import == null) {
-            _import = new ArrayList<Import>();
-        }
-        return this._import;
-    }
+	/**
+	 * Gets the value of the import property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list,
+	 * not a snapshot. Therefore any modification you make to the
+	 * returned list will be present inside the JAXB object.
+	 * This is why there is not a <CODE>set</CODE> method for the import property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getImport().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link Import }
+	 * 
+	 * 
+	 */
+	public List<Import> getImport()
+	{
+		if (_import == null)
+		{
+			_import = new ArrayList<Import>();
+		}
+		return this._import;
+	}
 
-    /**
-     * Gets the value of the warehouseNpc property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the warehouseNpc property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getWarehouseNpc().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link WarehouseNpcTemplate }
-     * 
-     * 
-     */
-    public List<WarehouseNpcTemplate> getWarehouseNpc() {
-        if (warehouseNpc == null) {
-            warehouseNpc = new ArrayList<WarehouseNpcTemplate>();
-        }
-        return this.warehouseNpc;
-    }
+	/**
+	 * Gets the value of the warehouseNpc property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list,
+	 * not a snapshot. Therefore any modification you make to the
+	 * returned list will be present inside the JAXB object.
+	 * This is why there is not a <CODE>set</CODE> method for the warehouseNpc property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getWarehouseNpc().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link WarehouseNpcTemplate }
+	 * 
+	 * 
+	 */
+	public List<WarehouseNpcTemplate> getWarehouseNpc()
+	{
+		if (warehouseNpc == null)
+		{
+			warehouseNpc = new ArrayList<WarehouseNpcTemplate>();
+		}
+		return this.warehouseNpc;
+	}
 
 }

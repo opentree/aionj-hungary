@@ -5,11 +5,9 @@
 // Generated on: 2010.11.08 at 07:07:21 DE CET 
 //
 
-
 package parser.serverData.tribeRelation;
 
 import javax.xml.bind.annotation.XmlEnum;
-
 
 /**
  * <p>Java class for Race.
@@ -56,46 +54,49 @@ import javax.xml.bind.annotation.XmlEnum;
  * 
  */
 @XmlEnum
-public enum Race {
+public enum Race
+{
 
-    ELYOS,
-    ASMODIANS,
-    LYCAN,
-    CONSTRUCT,
-    CARRIER,
-    DRAKAN,
-    LIZARDMAN,
-    TELEPORTER,
-    NAGA,
-    BROWNIE,
-    KRALL,
-    SHULACK,
-    BARRIER,
-    PC_LIGHT_CASTLE_DOOR,
-    PC_DARK_CASTLE_DOOR,
-    DRAGON_CASTLE_DOOR,
-    GCHIEF_LIGHT,
-    GCHIEF_DARK,
-    DRAGON,
-    OUTSIDER,
-    RATMAN,
-    DEMIHUMANOID,
-    UNDEAD,
-    BEAST,
-    MAGICALMONSTER,
-    ELEMENTAL,
-    NONE,
-    PC_ALL,
-    GOBLIN,
-    GENERAL,
-    NPC;
+	ELYOS,
+	ASMODIANS,
+	LYCAN,
+	CONSTRUCT,
+	CARRIER,
+	DRAKAN,
+	LIZARDMAN,
+	TELEPORTER,
+	NAGA,
+	BROWNIE,
+	KRALL,
+	SHULACK,
+	BARRIER,
+	PC_LIGHT_CASTLE_DOOR,
+	PC_DARK_CASTLE_DOOR,
+	DRAGON_CASTLE_DOOR,
+	GCHIEF_LIGHT,
+	GCHIEF_DARK,
+	DRAGON,
+	OUTSIDER,
+	RATMAN,
+	DEMIHUMANOID,
+	UNDEAD,
+	BEAST,
+	MAGICALMONSTER,
+	ELEMENTAL,
+	NONE,
+	PC_ALL,
+	GOBLIN,
+	GENERAL,
+	NPC;
 
-    public String value() {
-        return name();
-    }
+	public String value()
+	{
+		return name();
+	}
 
-    public static Race fromValue(String v) {
-        return valueOf(v);
-    }
+	public static Race fromValue(String v)
+	{
+		return valueOf(v);
+	}
 
 }

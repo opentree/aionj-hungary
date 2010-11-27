@@ -5,7 +5,6 @@
 // Generated on: 2010.11.23 at 05:57:07 DE CET 
 //
 
-
 package parser.clientData.mission;
 
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for SubZone complex type.
@@ -38,67 +36,71 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SubZone", propOrder = {
-    "pointsInfo"
-})
-public class SubZone {
+@XmlType(name = "SubZone", propOrder =
+{ "pointsInfo" })
+public class SubZone
+{
 
-    @XmlElement(name = "points_info")
-    protected List<PointsInfo> pointsInfo;
-    @XmlAttribute
-    protected String string;
+	@XmlElement(name = "points_info")
+	protected List<PointsInfo>	pointsInfo;
+	@XmlAttribute
+	protected String			string;
 
-    /**
-     * Gets the value of the pointsInfo property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the pointsInfo property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getPointsInfo().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link PointsInfo }
-     * 
-     * 
-     */
-    public List<PointsInfo> getPointsInfo() {
-        if (pointsInfo == null) {
-            pointsInfo = new ArrayList<PointsInfo>();
-        }
-        return this.pointsInfo;
-    }
+	/**
+	 * Gets the value of the pointsInfo property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list,
+	 * not a snapshot. Therefore any modification you make to the
+	 * returned list will be present inside the JAXB object.
+	 * This is why there is not a <CODE>set</CODE> method for the pointsInfo property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getPointsInfo().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link PointsInfo }
+	 * 
+	 * 
+	 */
+	public List<PointsInfo> getPointsInfo()
+	{
+		if (pointsInfo == null)
+		{
+			pointsInfo = new ArrayList<PointsInfo>();
+		}
+		return this.pointsInfo;
+	}
 
-    /**
-     * Gets the value of the string property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getString() {
-        return string;
-    }
+	/**
+	 * Gets the value of the string property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getString()
+	{
+		return string;
+	}
 
-    /**
-     * Sets the value of the string property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setString(String value) {
-        this.string = value;
-    }
+	/**
+	 * Sets the value of the string property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setString(String value)
+	{
+		this.string = value;
+	}
 
 }

@@ -5,14 +5,12 @@
 // Generated on: 2010.11.08 at 07:16:56 DU CET 
 //
 
-
 package parser.serverData.warehouseExpander;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
-
 
 /**
  * This object contains factory methods for each 
@@ -29,56 +27,63 @@ import javax.xml.namespace.QName;
  * 
  */
 @XmlRegistry
-public class ObjectFactory {
+public class ObjectFactory
+{
 
-    private final static QName _WarehouseExpander_QNAME = new QName("", "warehouse_expander");
+	private final static QName	_WarehouseExpander_QNAME	= new QName("", "warehouse_expander");
 
-    /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: parser.serverData.warehouseExpander
-     * 
-     */
-    public ObjectFactory() {
-    }
+	/**
+	 * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: parser.serverData.warehouseExpander
+	 * 
+	 */
+	public ObjectFactory()
+	{
+	}
 
-    /**
-     * Create an instance of {@link Import }
-     * 
-     */
-    public Import createImport() {
-        return new Import();
-    }
+	/**
+	 * Create an instance of {@link Import }
+	 * 
+	 */
+	public Import createImport()
+	{
+		return new Import();
+	}
 
-    /**
-     * Create an instance of {@link WarehouseExpand }
-     * 
-     */
-    public WarehouseExpand createWarehouseExpand() {
-        return new WarehouseExpand();
-    }
+	/**
+	 * Create an instance of {@link WarehouseExpand }
+	 * 
+	 */
+	public WarehouseExpand createWarehouseExpand()
+	{
+		return new WarehouseExpand();
+	}
 
-    /**
-     * Create an instance of {@link WarehouseNpcTemplate }
-     * 
-     */
-    public WarehouseNpcTemplate createWarehouseNpcTemplate() {
-        return new WarehouseNpcTemplate();
-    }
+	/**
+	 * Create an instance of {@link WarehouseNpcTemplate }
+	 * 
+	 */
+	public WarehouseNpcTemplate createWarehouseNpcTemplate()
+	{
+		return new WarehouseNpcTemplate();
+	}
 
-    /**
-     * Create an instance of {@link WarehouseExpander }
-     * 
-     */
-    public WarehouseExpander createWarehouseExpander() {
-        return new WarehouseExpander();
-    }
+	/**
+	 * Create an instance of {@link WarehouseExpander }
+	 * 
+	 */
+	public WarehouseExpander createWarehouseExpander()
+	{
+		return new WarehouseExpander();
+	}
 
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link WarehouseExpander }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "warehouse_expander")
-    public JAXBElement<WarehouseExpander> createWarehouseExpander(WarehouseExpander value) {
-        return new JAXBElement<WarehouseExpander>(_WarehouseExpander_QNAME, WarehouseExpander.class, null, value);
-    }
+	/**
+	 * Create an instance of {@link JAXBElement }{@code <}{@link WarehouseExpander }{@code >}}
+	 * 
+	 */
+	@XmlElementDecl(namespace = "", name = "warehouse_expander")
+	public JAXBElement<WarehouseExpander> createWarehouseExpander(WarehouseExpander value)
+	{
+		return new JAXBElement<WarehouseExpander>(_WarehouseExpander_QNAME, WarehouseExpander.class, null, value);
+	}
 
 }

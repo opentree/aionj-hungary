@@ -5,11 +5,9 @@
 // Generated on: 2010.11.08 at 07:07:21 DE CET 
 //
 
-
 package parser.serverData.tribeRelation;
 
 import javax.xml.bind.annotation.XmlEnum;
-
 
 /**
  * <p>Java class for startingPlayerClass.
@@ -29,19 +27,19 @@ import javax.xml.bind.annotation.XmlEnum;
  * 
  */
 @XmlEnum
-public enum StartingPlayerClass {
+public enum StartingPlayerClass
+{
 
-    WARRIOR,
-    SCOUT,
-    MAGE,
-    PRIEST;
+	WARRIOR, SCOUT, MAGE, PRIEST;
 
-    public String value() {
-        return name();
-    }
+	public String value()
+	{
+		return name();
+	}
 
-    public static StartingPlayerClass fromValue(String v) {
-        return valueOf(v);
-    }
+	public static StartingPlayerClass fromValue(String v)
+	{
+		return valueOf(v);
+	}
 
 }

@@ -5,11 +5,9 @@
 // Generated on: 2010.11.08 at 08:26:54 DU CET 
 //
 
-
 package parser.clientData.clientItems;
 
 import javax.xml.bind.annotation.XmlRegistry;
-
 
 /**
  * This object contains factory methods for each 
@@ -26,30 +24,33 @@ import javax.xml.bind.annotation.XmlRegistry;
  * 
  */
 @XmlRegistry
-public class ObjectFactory {
+public class ObjectFactory
+{
 
+	/**
+	 * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: parser.clientData.clientItems
+	 * 
+	 */
+	public ObjectFactory()
+	{
+	}
 
-    /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: parser.clientData.clientItems
-     * 
-     */
-    public ObjectFactory() {
-    }
+	/**
+	 * Create an instance of {@link ClientItems }
+	 * 
+	 */
+	public ClientItems createClientItems()
+	{
+		return new ClientItems();
+	}
 
-    /**
-     * Create an instance of {@link ClientItems }
-     * 
-     */
-    public ClientItems createClientItems() {
-        return new ClientItems();
-    }
-
-    /**
-     * Create an instance of {@link ClientItem }
-     * 
-     */
-    public ClientItem createClientItem() {
-        return new ClientItem();
-    }
+	/**
+	 * Create an instance of {@link ClientItem }
+	 * 
+	 */
+	public ClientItem createClientItem()
+	{
+		return new ClientItem();
+	}
 
 }

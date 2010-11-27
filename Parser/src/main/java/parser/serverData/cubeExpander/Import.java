@@ -5,7 +5,6 @@
 // Generated on: 2010.11.08 at 06:02:42 DU CET 
 //
 
-
 package parser.serverData.cubeExpander;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,7 +12,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for anonymous complex type.
@@ -37,93 +35,106 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
 @XmlRootElement(name = "import")
-public class Import {
+public class Import
+{
 
-    @XmlAttribute(required = true)
-    protected String file;
-    @XmlAttribute
-    protected Boolean skipRoot;
-    @XmlAttribute
-    protected Boolean recursiveImport;
+	@XmlAttribute(required = true)
+	protected String	file;
+	@XmlAttribute
+	protected Boolean	skipRoot;
+	@XmlAttribute
+	protected Boolean	recursiveImport;
 
-    /**
-     * Gets the value of the file property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getFile() {
-        return file;
-    }
+	/**
+	 * Gets the value of the file property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getFile()
+	{
+		return file;
+	}
 
-    /**
-     * Sets the value of the file property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setFile(String value) {
-        this.file = value;
-    }
+	/**
+	 * Sets the value of the file property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setFile(String value)
+	{
+		this.file = value;
+	}
 
-    /**
-     * Gets the value of the skipRoot property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
-     */
-    public boolean isSkipRoot() {
-        if (skipRoot == null) {
-            return false;
-        } else {
-            return skipRoot;
-        }
-    }
+	/**
+	 * Gets the value of the skipRoot property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link Boolean }
+	 *     
+	 */
+	public boolean isSkipRoot()
+	{
+		if (skipRoot == null)
+		{
+			return false;
+		}
+		else
+		{
+			return skipRoot;
+		}
+	}
 
-    /**
-     * Sets the value of the skipRoot property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
-     */
-    public void setSkipRoot(Boolean value) {
-        this.skipRoot = value;
-    }
+	/**
+	 * Sets the value of the skipRoot property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link Boolean }
+	 *     
+	 */
+	public void setSkipRoot(Boolean value)
+	{
+		this.skipRoot = value;
+	}
 
-    /**
-     * Gets the value of the recursiveImport property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
-     */
-    public boolean isRecursiveImport() {
-        if (recursiveImport == null) {
-            return true;
-        } else {
-            return recursiveImport;
-        }
-    }
+	/**
+	 * Gets the value of the recursiveImport property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link Boolean }
+	 *     
+	 */
+	public boolean isRecursiveImport()
+	{
+		if (recursiveImport == null)
+		{
+			return true;
+		}
+		else
+		{
+			return recursiveImport;
+		}
+	}
 
-    /**
-     * Sets the value of the recursiveImport property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
-     */
-    public void setRecursiveImport(Boolean value) {
-        this.recursiveImport = value;
-    }
+	/**
+	 * Sets the value of the recursiveImport property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link Boolean }
+	 *     
+	 */
+	public void setRecursiveImport(Boolean value)
+	{
+		this.recursiveImport = value;
+	}
 
 }

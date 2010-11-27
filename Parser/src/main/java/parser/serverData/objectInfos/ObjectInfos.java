@@ -5,7 +5,6 @@
 // Generated on: 2010.11.17 at 07:33:37 DE CET 
 //
 
-
 package parser.serverData.objectInfos;
 
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for anonymous complex type.
@@ -37,42 +35,44 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "npcInfo"
-})
+@XmlType(name = "", propOrder =
+{ "npcInfo" })
 @XmlRootElement(name = "object_infos")
-public class ObjectInfos {
+public class ObjectInfos
+{
 
-    @XmlElement(name = "npc_info")
-    protected List<NpcInfo> npcInfo;
+	@XmlElement(name = "npc_info")
+	protected List<NpcInfo>	npcInfo;
 
-    /**
-     * Gets the value of the npcInfo property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the npcInfo property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getNpcInfo().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link NpcInfo }
-     * 
-     * 
-     */
-    public List<NpcInfo> getNpcInfo() {
-        if (npcInfo == null) {
-            npcInfo = new ArrayList<NpcInfo>();
-        }
-        return this.npcInfo;
-    }
+	/**
+	 * Gets the value of the npcInfo property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list,
+	 * not a snapshot. Therefore any modification you make to the
+	 * returned list will be present inside the JAXB object.
+	 * This is why there is not a <CODE>set</CODE> method for the npcInfo property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getNpcInfo().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link NpcInfo }
+	 * 
+	 * 
+	 */
+	public List<NpcInfo> getNpcInfo()
+	{
+		if (npcInfo == null)
+		{
+			npcInfo = new ArrayList<NpcInfo>();
+		}
+		return this.npcInfo;
+	}
 
 }

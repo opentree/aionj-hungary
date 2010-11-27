@@ -5,14 +5,12 @@
 // Generated on: 2010.11.08 at 05:57:01 DU CET 
 //
 
-
 package parser.clientData.clientNpc;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for Appearance complex type.
@@ -38,136 +36,142 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Appearance", propOrder = {
-    "pcType",
-    "faceType",
-    "faceColor",
-    "hairType",
-    "hairColor"
-})
-public class Appearance {
+@XmlType(name = "Appearance", propOrder =
+{ "pcType", "faceType", "faceColor", "hairType", "hairColor" })
+public class Appearance
+{
 
-    @XmlElement(name = "pc_type", required = true)
-    protected String pcType;
-    @XmlElement(name = "face_type")
-    protected int faceType;
-    @XmlElement(name = "face_color", required = true)
-    protected String faceColor;
-    @XmlElement(name = "hair_type", required = true)
-    protected String hairType;
-    @XmlElement(name = "hair_color", required = true)
-    protected String hairColor;
+	@XmlElement(name = "pc_type", required = true)
+	protected String	pcType;
+	@XmlElement(name = "face_type")
+	protected int		faceType;
+	@XmlElement(name = "face_color", required = true)
+	protected String	faceColor;
+	@XmlElement(name = "hair_type", required = true)
+	protected String	hairType;
+	@XmlElement(name = "hair_color", required = true)
+	protected String	hairColor;
 
-    /**
-     * Gets the value of the pcType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getPcType() {
-        return pcType;
-    }
+	/**
+	 * Gets the value of the pcType property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getPcType()
+	{
+		return pcType;
+	}
 
-    /**
-     * Sets the value of the pcType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setPcType(String value) {
-        this.pcType = value;
-    }
+	/**
+	 * Sets the value of the pcType property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setPcType(String value)
+	{
+		this.pcType = value;
+	}
 
-    /**
-     * Gets the value of the faceType property.
-     * 
-     */
-    public int getFaceType() {
-        return faceType;
-    }
+	/**
+	 * Gets the value of the faceType property.
+	 * 
+	 */
+	public int getFaceType()
+	{
+		return faceType;
+	}
 
-    /**
-     * Sets the value of the faceType property.
-     * 
-     */
-    public void setFaceType(int value) {
-        this.faceType = value;
-    }
+	/**
+	 * Sets the value of the faceType property.
+	 * 
+	 */
+	public void setFaceType(int value)
+	{
+		this.faceType = value;
+	}
 
-    /**
-     * Gets the value of the faceColor property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getFaceColor() {
-        return faceColor;
-    }
+	/**
+	 * Gets the value of the faceColor property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getFaceColor()
+	{
+		return faceColor;
+	}
 
-    /**
-     * Sets the value of the faceColor property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setFaceColor(String value) {
-        this.faceColor = value;
-    }
+	/**
+	 * Sets the value of the faceColor property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setFaceColor(String value)
+	{
+		this.faceColor = value;
+	}
 
-    /**
-     * Gets the value of the hairType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getHairType() {
-        return hairType;
-    }
+	/**
+	 * Gets the value of the hairType property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getHairType()
+	{
+		return hairType;
+	}
 
-    /**
-     * Sets the value of the hairType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setHairType(String value) {
-        this.hairType = value;
-    }
+	/**
+	 * Sets the value of the hairType property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setHairType(String value)
+	{
+		this.hairType = value;
+	}
 
-    /**
-     * Gets the value of the hairColor property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getHairColor() {
-        return hairColor;
-    }
+	/**
+	 * Gets the value of the hairColor property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getHairColor()
+	{
+		return hairColor;
+	}
 
-    /**
-     * Sets the value of the hairColor property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setHairColor(String value) {
-        this.hairColor = value;
-    }
+	/**
+	 * Sets the value of the hairColor property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setHairColor(String value)
+	{
+		this.hairColor = value;
+	}
 
 }

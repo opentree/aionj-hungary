@@ -5,14 +5,12 @@
 // Generated on: 2010.11.23 at 05:57:07 DE CET 
 //
 
-
 package parser.clientData.mission;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for Data complex type.
@@ -34,59 +32,64 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Data")
-public class Data {
+public class Data
+{
 
-    @XmlAttribute
-    protected Float x;
-    @XmlAttribute
-    protected Float y;
+	@XmlAttribute
+	protected Float	x;
+	@XmlAttribute
+	protected Float	y;
 
-    /**
-     * Gets the value of the x property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Float }
-     *     
-     */
-    public Float getX() {
-        return x;
-    }
+	/**
+	 * Gets the value of the x property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link Float }
+	 *     
+	 */
+	public Float getX()
+	{
+		return x;
+	}
 
-    /**
-     * Sets the value of the x property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Float }
-     *     
-     */
-    public void setX(Float value) {
-        this.x = value;
-    }
+	/**
+	 * Sets the value of the x property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link Float }
+	 *     
+	 */
+	public void setX(Float value)
+	{
+		this.x = value;
+	}
 
-    /**
-     * Gets the value of the y property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Float }
-     *     
-     */
-    public Float getY() {
-        return y;
-    }
+	/**
+	 * Gets the value of the y property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link Float }
+	 *     
+	 */
+	public Float getY()
+	{
+		return y;
+	}
 
-    /**
-     * Sets the value of the y property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Float }
-     *     
-     */
-    public void setY(Float value) {
-        this.y = value;
-    }
+	/**
+	 * Sets the value of the y property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link Float }
+	 *     
+	 */
+	public void setY(Float value)
+	{
+		this.y = value;
+	}
 
 }

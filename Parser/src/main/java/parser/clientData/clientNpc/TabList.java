@@ -5,14 +5,12 @@
 // Generated on: 2010.11.08 at 05:57:01 DU CET 
 //
 
-
 package parser.clientData.clientNpc;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for TabList complex type.
@@ -34,36 +32,38 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TabList", propOrder = {
-    "data"
-})
-public class TabList {
+@XmlType(name = "TabList", propOrder =
+{ "data" })
+public class TabList
+{
 
-    @XmlElement(required = true)
-    protected Data data;
+	@XmlElement(required = true)
+	protected Data	data;
 
-    /**
-     * Gets the value of the data property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Data }
-     *     
-     */
-    public Data getData() {
-        return data;
-    }
+	/**
+	 * Gets the value of the data property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link Data }
+	 *     
+	 */
+	public Data getData()
+	{
+		return data;
+	}
 
-    /**
-     * Sets the value of the data property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Data }
-     *     
-     */
-    public void setData(Data value) {
-        this.data = value;
-    }
+	/**
+	 * Sets the value of the data property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link Data }
+	 *     
+	 */
+	public void setData(Data value)
+	{
+		this.data = value;
+	}
 
 }

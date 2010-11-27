@@ -5,7 +5,6 @@
 // Generated on: 2010.10.20 at 05:33:46 DU CEST 
 //
 
-
 package parser.clientData.tribeRelation;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,7 +12,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for Tribe complex type.
@@ -42,224 +40,234 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Tribe", propOrder = {
-    "baseTribe",
-    "friendly",
-    "none",
-    "aggressive",
-    "support",
-    "hostile",
-    "neutral"
-})
-public class Tribe {
+@XmlType(name = "Tribe", propOrder =
+{ "baseTribe", "friendly", "none", "aggressive", "support", "hostile", "neutral" })
+public class Tribe
+{
 
-    @XmlElement(name = "base_tribe", required = true)
-    protected String baseTribe;
-    @XmlElement(required = true)
-    protected String friendly;
-    @XmlElement(required = true)
-    protected String none;
-    @XmlElement(required = true)
-    protected String aggressive;
-    @XmlElement(required = true)
-    protected String support;
-    @XmlElement(required = true)
-    protected String hostile;
-    @XmlElement(required = true)
-    protected String neutral;
-    @XmlAttribute(name = "Tribe")
-    protected String tribe;
+	@XmlElement(name = "base_tribe", required = true)
+	protected String	baseTribe;
+	@XmlElement(required = true)
+	protected String	friendly;
+	@XmlElement(required = true)
+	protected String	none;
+	@XmlElement(required = true)
+	protected String	aggressive;
+	@XmlElement(required = true)
+	protected String	support;
+	@XmlElement(required = true)
+	protected String	hostile;
+	@XmlElement(required = true)
+	protected String	neutral;
+	@XmlAttribute(name = "Tribe")
+	protected String	tribe;
 
-    /**
-     * Gets the value of the baseTribe property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getBaseTribe() {
-        return baseTribe;
-    }
+	/**
+	 * Gets the value of the baseTribe property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getBaseTribe()
+	{
+		return baseTribe;
+	}
 
-    /**
-     * Sets the value of the baseTribe property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setBaseTribe(String value) {
-        this.baseTribe = value;
-    }
+	/**
+	 * Sets the value of the baseTribe property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setBaseTribe(String value)
+	{
+		this.baseTribe = value;
+	}
 
-    /**
-     * Gets the value of the friendly property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getFriendly() {
-        return friendly;
-    }
+	/**
+	 * Gets the value of the friendly property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getFriendly()
+	{
+		return friendly;
+	}
 
-    /**
-     * Sets the value of the friendly property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setFriendly(String value) {
-        this.friendly = value;
-    }
+	/**
+	 * Sets the value of the friendly property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setFriendly(String value)
+	{
+		this.friendly = value;
+	}
 
-    /**
-     * Gets the value of the none property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getNone() {
-        return none;
-    }
+	/**
+	 * Gets the value of the none property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getNone()
+	{
+		return none;
+	}
 
-    /**
-     * Sets the value of the none property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setNone(String value) {
-        this.none = value;
-    }
+	/**
+	 * Sets the value of the none property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setNone(String value)
+	{
+		this.none = value;
+	}
 
-    /**
-     * Gets the value of the aggressive property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAggressive() {
-        return aggressive;
-    }
+	/**
+	 * Gets the value of the aggressive property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getAggressive()
+	{
+		return aggressive;
+	}
 
-    /**
-     * Sets the value of the aggressive property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAggressive(String value) {
-        this.aggressive = value;
-    }
+	/**
+	 * Sets the value of the aggressive property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setAggressive(String value)
+	{
+		this.aggressive = value;
+	}
 
-    /**
-     * Gets the value of the support property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getSupport() {
-        return support;
-    }
+	/**
+	 * Gets the value of the support property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getSupport()
+	{
+		return support;
+	}
 
-    /**
-     * Sets the value of the support property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setSupport(String value) {
-        this.support = value;
-    }
+	/**
+	 * Sets the value of the support property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setSupport(String value)
+	{
+		this.support = value;
+	}
 
-    /**
-     * Gets the value of the hostile property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getHostile() {
-        return hostile;
-    }
+	/**
+	 * Gets the value of the hostile property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getHostile()
+	{
+		return hostile;
+	}
 
-    /**
-     * Sets the value of the hostile property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setHostile(String value) {
-        this.hostile = value;
-    }
+	/**
+	 * Sets the value of the hostile property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setHostile(String value)
+	{
+		this.hostile = value;
+	}
 
-    /**
-     * Gets the value of the neutral property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getNeutral() {
-        return neutral;
-    }
+	/**
+	 * Gets the value of the neutral property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getNeutral()
+	{
+		return neutral;
+	}
 
-    /**
-     * Sets the value of the neutral property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setNeutral(String value) {
-        this.neutral = value;
-    }
+	/**
+	 * Sets the value of the neutral property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setNeutral(String value)
+	{
+		this.neutral = value;
+	}
 
-    /**
-     * Gets the value of the tribe property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getTribe() {
-        return tribe;
-    }
+	/**
+	 * Gets the value of the tribe property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getTribe()
+	{
+		return tribe;
+	}
 
-    /**
-     * Sets the value of the tribe property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setTribe(String value) {
-        this.tribe = value;
-    }
+	/**
+	 * Sets the value of the tribe property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setTribe(String value)
+	{
+		this.tribe = value;
+	}
 
 }

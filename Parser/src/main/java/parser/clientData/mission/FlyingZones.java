@@ -5,7 +5,6 @@
 // Generated on: 2010.11.23 at 05:57:07 DE CET 
 //
 
-
 package parser.clientData.mission;
 
 import java.util.ArrayList;
@@ -14,7 +13,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for FlyingZones complex type.
@@ -36,41 +34,43 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "FlyingZones", propOrder = {
-    "flyingZone"
-})
-public class FlyingZones {
+@XmlType(name = "FlyingZones", propOrder =
+{ "flyingZone" })
+public class FlyingZones
+{
 
-    @XmlElement(name = "flying_zone")
-    protected List<FlyingZone> flyingZone;
+	@XmlElement(name = "flying_zone")
+	protected List<FlyingZone>	flyingZone;
 
-    /**
-     * Gets the value of the flyingZone property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the flyingZone property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getFlyingZone().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link FlyingZone }
-     * 
-     * 
-     */
-    public List<FlyingZone> getFlyingZone() {
-        if (flyingZone == null) {
-            flyingZone = new ArrayList<FlyingZone>();
-        }
-        return this.flyingZone;
-    }
+	/**
+	 * Gets the value of the flyingZone property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list,
+	 * not a snapshot. Therefore any modification you make to the
+	 * returned list will be present inside the JAXB object.
+	 * This is why there is not a <CODE>set</CODE> method for the flyingZone property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getFlyingZone().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link FlyingZone }
+	 * 
+	 * 
+	 */
+	public List<FlyingZone> getFlyingZone()
+	{
+		if (flyingZone == null)
+		{
+			flyingZone = new ArrayList<FlyingZone>();
+		}
+		return this.flyingZone;
+	}
 
 }

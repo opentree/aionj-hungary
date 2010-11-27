@@ -5,7 +5,6 @@
 // Generated on: 2010.11.08 at 06:02:42 DU CET 
 //
 
-
 package parser.serverData.cubeExpander;
 
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for cubeExpander complex type.
@@ -38,74 +36,77 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "cubeExpander", propOrder = {
-    "_import",
-    "cubeNpc"
-})
+@XmlType(name = "cubeExpander", propOrder =
+{ "_import", "cubeNpc" })
 @XmlRootElement(name = "cube_expander")
-public class CubeExpander {
+public class CubeExpander
+{
 
-    @XmlElement(name = "import")
-    protected List<Import> _import;
-    @XmlElement(name = "cube_npc")
-    protected List<CubeNpcTemplate> cubeNpc;
+	@XmlElement(name = "import")
+	protected List<Import>			_import;
+	@XmlElement(name = "cube_npc")
+	protected List<CubeNpcTemplate>	cubeNpc;
 
-    /**
-     * Gets the value of the import property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the import property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getImport().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Import }
-     * 
-     * 
-     */
-    public List<Import> getImport() {
-        if (_import == null) {
-            _import = new ArrayList<Import>();
-        }
-        return this._import;
-    }
+	/**
+	 * Gets the value of the import property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list,
+	 * not a snapshot. Therefore any modification you make to the
+	 * returned list will be present inside the JAXB object.
+	 * This is why there is not a <CODE>set</CODE> method for the import property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getImport().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link Import }
+	 * 
+	 * 
+	 */
+	public List<Import> getImport()
+	{
+		if (_import == null)
+		{
+			_import = new ArrayList<Import>();
+		}
+		return this._import;
+	}
 
-    /**
-     * Gets the value of the cubeNpc property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the cubeNpc property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getCubeNpc().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link CubeNpcTemplate }
-     * 
-     * 
-     */
-    public List<CubeNpcTemplate> getCubeNpc() {
-        if (cubeNpc == null) {
-            cubeNpc = new ArrayList<CubeNpcTemplate>();
-        }
-        return this.cubeNpc;
-    }
+	/**
+	 * Gets the value of the cubeNpc property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list,
+	 * not a snapshot. Therefore any modification you make to the
+	 * returned list will be present inside the JAXB object.
+	 * This is why there is not a <CODE>set</CODE> method for the cubeNpc property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getCubeNpc().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link CubeNpcTemplate }
+	 * 
+	 * 
+	 */
+	public List<CubeNpcTemplate> getCubeNpc()
+	{
+		if (cubeNpc == null)
+		{
+			cubeNpc = new ArrayList<CubeNpcTemplate>();
+		}
+		return this.cubeNpc;
+	}
 
 }

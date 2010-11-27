@@ -5,7 +5,6 @@
 // Generated on: 2010.11.08 at 07:04:17 DE CET 
 //
 
-
 package parser.serverData.tribeRelation;
 
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlList;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for Tribe complex type.
@@ -43,221 +41,231 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Tribe", propOrder = {
-    "aggro",
-    "hostile",
-    "friend",
-    "neutral",
-    "support"
-})
-public class Tribe {
+@XmlType(name = "Tribe", propOrder =
+{ "aggro", "hostile", "friend", "neutral", "support" })
+public class Tribe
+{
 
-    @XmlList
-    protected List<TribeClass> aggro;
-    @XmlList
-    protected List<TribeClass> hostile;
-    @XmlList
-    protected List<TribeClass> friend;
-    @XmlList
-    protected List<TribeClass> neutral;
-    @XmlList
-    protected List<TribeClass> support;
-    @XmlAttribute
-    protected TribeClass base;
-    @XmlAttribute(required = true)
-    protected TribeClass name;
+	@XmlList
+	protected List<TribeClass>	aggro;
+	@XmlList
+	protected List<TribeClass>	hostile;
+	@XmlList
+	protected List<TribeClass>	friend;
+	@XmlList
+	protected List<TribeClass>	neutral;
+	@XmlList
+	protected List<TribeClass>	support;
+	@XmlAttribute
+	protected TribeClass		base;
+	@XmlAttribute(required = true)
+	protected TribeClass		name;
 
-    /**
-     * Gets the value of the aggro property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the aggro property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getAggro().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     * 
-     * 
-     */
-    public List<TribeClass> getAggro() {
-        if (aggro == null) {
-            aggro = new ArrayList<TribeClass>();
-        }
-        return this.aggro;
-    }
+	/**
+	 * Gets the value of the aggro property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list,
+	 * not a snapshot. Therefore any modification you make to the
+	 * returned list will be present inside the JAXB object.
+	 * This is why there is not a <CODE>set</CODE> method for the aggro property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getAggro().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link String }
+	 * 
+	 * 
+	 */
+	public List<TribeClass> getAggro()
+	{
+		if (aggro == null)
+		{
+			aggro = new ArrayList<TribeClass>();
+		}
+		return this.aggro;
+	}
 
-    /**
-     * Gets the value of the hostile property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the hostile property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getHostile().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     * 
-     * 
-     */
-    public List<TribeClass> getHostile() {
-        if (hostile == null) {
-            hostile = new ArrayList<TribeClass>();
-        }
-        return this.hostile;
-    }
+	/**
+	 * Gets the value of the hostile property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list,
+	 * not a snapshot. Therefore any modification you make to the
+	 * returned list will be present inside the JAXB object.
+	 * This is why there is not a <CODE>set</CODE> method for the hostile property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getHostile().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link String }
+	 * 
+	 * 
+	 */
+	public List<TribeClass> getHostile()
+	{
+		if (hostile == null)
+		{
+			hostile = new ArrayList<TribeClass>();
+		}
+		return this.hostile;
+	}
 
-    /**
-     * Gets the value of the friend property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the friend property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getFriend().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     * 
-     * 
-     */
-    public List<TribeClass> getFriend() {
-        if (friend == null) {
-            friend = new ArrayList<TribeClass>();
-        }
-        return this.friend;
-    }
+	/**
+	 * Gets the value of the friend property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list,
+	 * not a snapshot. Therefore any modification you make to the
+	 * returned list will be present inside the JAXB object.
+	 * This is why there is not a <CODE>set</CODE> method for the friend property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getFriend().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link String }
+	 * 
+	 * 
+	 */
+	public List<TribeClass> getFriend()
+	{
+		if (friend == null)
+		{
+			friend = new ArrayList<TribeClass>();
+		}
+		return this.friend;
+	}
 
-    /**
-     * Gets the value of the neutral property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the neutral property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getNeutral().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     * 
-     * 
-     */
-    public List<TribeClass> getNeutral() {
-        if (neutral == null) {
-            neutral = new ArrayList<TribeClass>();
-        }
-        return this.neutral;
-    }
+	/**
+	 * Gets the value of the neutral property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list,
+	 * not a snapshot. Therefore any modification you make to the
+	 * returned list will be present inside the JAXB object.
+	 * This is why there is not a <CODE>set</CODE> method for the neutral property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getNeutral().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link String }
+	 * 
+	 * 
+	 */
+	public List<TribeClass> getNeutral()
+	{
+		if (neutral == null)
+		{
+			neutral = new ArrayList<TribeClass>();
+		}
+		return this.neutral;
+	}
 
-    /**
-     * Gets the value of the support property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the support property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getSupport().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     * 
-     * 
-     */
-    public List<TribeClass> getSupport() {
-        if (support == null) {
-            support = new ArrayList<TribeClass>();
-        }
-        return this.support;
-    }
+	/**
+	 * Gets the value of the support property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list,
+	 * not a snapshot. Therefore any modification you make to the
+	 * returned list will be present inside the JAXB object.
+	 * This is why there is not a <CODE>set</CODE> method for the support property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getSupport().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link String }
+	 * 
+	 * 
+	 */
+	public List<TribeClass> getSupport()
+	{
+		if (support == null)
+		{
+			support = new ArrayList<TribeClass>();
+		}
+		return this.support;
+	}
 
-    /**
-     * Gets the value of the base property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public TribeClass getBase() {
-        return base;
-    }
+	/**
+	 * Gets the value of the base property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public TribeClass getBase()
+	{
+		return base;
+	}
 
-    /**
-     * Sets the value of the base property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setBase(TribeClass value) {
-        this.base = value;
-    }
+	/**
+	 * Sets the value of the base property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setBase(TribeClass value)
+	{
+		this.base = value;
+	}
 
-    /**
-     * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public TribeClass getName() {
-        return name;
-    }
+	/**
+	 * Gets the value of the name property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public TribeClass getName()
+	{
+		return name;
+	}
 
-    /**
-     * Sets the value of the name property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setName(TribeClass value) {
-        this.name = value;
-    }
+	/**
+	 * Sets the value of the name property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setName(TribeClass value)
+	{
+		this.name = value;
+	}
 
 }

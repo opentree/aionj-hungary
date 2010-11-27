@@ -5,7 +5,6 @@
 // Generated on: 2010.11.22 at 02:28:37 DU CET 
 //
 
-
 package parser.clientData.clientGather;
 
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for anonymous complex type.
@@ -37,42 +35,44 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "gatherSrc"
-})
+@XmlType(name = "", propOrder =
+{ "gatherSrc" })
 @XmlRootElement(name = "gather_srcs")
-public class GatherSrcs {
+public class GatherSrcs
+{
 
-    @XmlElement(name = "gather_src", required = true)
-    protected List<GatherSrc> gatherSrc;
+	@XmlElement(name = "gather_src", required = true)
+	protected List<GatherSrc>	gatherSrc;
 
-    /**
-     * Gets the value of the gatherSrc property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the gatherSrc property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getGatherSrc().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link GatherSrc }
-     * 
-     * 
-     */
-    public List<GatherSrc> getGatherSrc() {
-        if (gatherSrc == null) {
-            gatherSrc = new ArrayList<GatherSrc>();
-        }
-        return this.gatherSrc;
-    }
+	/**
+	 * Gets the value of the gatherSrc property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list,
+	 * not a snapshot. Therefore any modification you make to the
+	 * returned list will be present inside the JAXB object.
+	 * This is why there is not a <CODE>set</CODE> method for the gatherSrc property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getGatherSrc().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link GatherSrc }
+	 * 
+	 * 
+	 */
+	public List<GatherSrc> getGatherSrc()
+	{
+		if (gatherSrc == null)
+		{
+			gatherSrc = new ArrayList<GatherSrc>();
+		}
+		return this.gatherSrc;
+	}
 
 }

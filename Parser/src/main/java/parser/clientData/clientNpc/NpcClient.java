@@ -5,7 +5,6 @@
 // Generated on: 2010.11.08 at 05:57:01 DU CET 
 //
 
-
 package parser.clientData.clientNpc;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,7 +12,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for anonymous complex type.
@@ -155,2725 +153,2968 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "id",
-    "name",
-    "abyssNpcType",
-    "aiName",
-    "airlinesName",
-    "altitude",
-    "ammoBone",
-    "ammoFx",
-    "ammoHitFx",
-    "ammoSpeed",
-    "animationMarker",
-    "appearance",
-    "appearanceCustom",
-    "arrangeMidair",
-    "arrangePlace",
-    "arrangeRotationSide",
-    "arrangeRotationUpdown",
-    "artOrgMoveSpeedNormalWalk",
-    "artOrgSpeedCombatRun",
-    "artifactId",
-    "attackDelay",
-    "attackRange",
-    "attackRate",
-    "boundRadius",
-    "cursorType",
-    "deadbodyNameId",
-    "desc",
-    "dir",
-    "diskType",
-    "dmgDecalTexture",
-    "dmgTexture",
-    "erect",
-    "floatCorpse",
-    "footMat",
-    "furnitureCategory",
-    "fxcType",
-    "gameLang",
-    "guideFunc",
-    "hidePath",
-    "hidePcFxShader",
-    "hideShadow",
-    "hpgaugeLevel",
-    "hugeMob",
-    "idleAnimation",
-    "inTime",
-    "jobfactionName",
-    "magicalSkillBoost",
-    "material",
-    "mesh",
-    "moveSpeedCombatRun",
-    "moveSpeedNormalRun",
-    "moveSpeedNormalWalk",
-    "neckAngle",
-    "npcType",
-    "objectType",
-    "outTime",
-    "petAiName",
-    "pushedRange",
-    "questAiName",
-    "raceType",
-    "recovery",
-    "recoveryOpt1",
-    "recoveryOpt2",
-    "rotationPeriod",
-    "sanctuaryAnimation",
-    "scale",
-    "sensoryRange",
-    "showDmgDecal",
-    "spawnAnimation",
-    "spineAngle",
-    "stareAngle",
-    "stareDistance",
-    "_static",
-    "strType",
-    "talkAnimation",
-    "talkDelayTime",
-    "talkingDistance",
-    "titleOffset",
-    "tribe",
-    "uiRaceType",
-    "uiType",
-    "visibleEquipments",
-    "visibleRange",
-    "walkAnimation",
-    "weaponHitFx",
-    "weaponScale",
-    "removeItemOption",
-    "matchMaker",
-    "checkCanSee",
-    "compoundWeapon",
-    "extendinventoryStart",
-    "extendinventoryEnd",
-    "editCharacterGender",
-    "tradeInfo",
-    "instanceEntry",
-    "funcPetManage",
-    "gatherSkillLevelup",
-    "undetectable",
-    "packagePermitted",
-    "extendaccountwarehouseStart",
-    "extendaccountwarehouseEnd",
-    "npcfactionName",
-    "bindstoneType",
-    "bindstoneCapacity",
-    "bindstoneUsecount",
-    "changeItemSkin",
-    "data",
-    "editCharacterAll",
-    "giveItemProc",
-    "pvpzone",
-    "pvpzoneWorldName",
-    "pvpzoneLocationAlias",
-    "extendcharwarehouseStart",
-    "extendcharwarehouseEnd",
-    "ment",
-    "userAnimation",
-    "abyssTradeInfo",
-    "couponTradeInfo",
-    "extraCurrencyTradeInfo",
-    "htmlBg",
-    "useScript"
-})
+@XmlType(name = "", propOrder =
+{
+		"id",
+		"name",
+		"abyssNpcType",
+		"aiName",
+		"airlinesName",
+		"altitude",
+		"ammoBone",
+		"ammoFx",
+		"ammoHitFx",
+		"ammoSpeed",
+		"animationMarker",
+		"appearance",
+		"appearanceCustom",
+		"arrangeMidair",
+		"arrangePlace",
+		"arrangeRotationSide",
+		"arrangeRotationUpdown",
+		"artOrgMoveSpeedNormalWalk",
+		"artOrgSpeedCombatRun",
+		"artifactId",
+		"attackDelay",
+		"attackRange",
+		"attackRate",
+		"boundRadius",
+		"cursorType",
+		"deadbodyNameId",
+		"desc",
+		"dir",
+		"diskType",
+		"dmgDecalTexture",
+		"dmgTexture",
+		"erect",
+		"floatCorpse",
+		"footMat",
+		"furnitureCategory",
+		"fxcType",
+		"gameLang",
+		"guideFunc",
+		"hidePath",
+		"hidePcFxShader",
+		"hideShadow",
+		"hpgaugeLevel",
+		"hugeMob",
+		"idleAnimation",
+		"inTime",
+		"jobfactionName",
+		"magicalSkillBoost",
+		"material",
+		"mesh",
+		"moveSpeedCombatRun",
+		"moveSpeedNormalRun",
+		"moveSpeedNormalWalk",
+		"neckAngle",
+		"npcType",
+		"objectType",
+		"outTime",
+		"petAiName",
+		"pushedRange",
+		"questAiName",
+		"raceType",
+		"recovery",
+		"recoveryOpt1",
+		"recoveryOpt2",
+		"rotationPeriod",
+		"sanctuaryAnimation",
+		"scale",
+		"sensoryRange",
+		"showDmgDecal",
+		"spawnAnimation",
+		"spineAngle",
+		"stareAngle",
+		"stareDistance",
+		"_static",
+		"strType",
+		"talkAnimation",
+		"talkDelayTime",
+		"talkingDistance",
+		"titleOffset",
+		"tribe",
+		"uiRaceType",
+		"uiType",
+		"visibleEquipments",
+		"visibleRange",
+		"walkAnimation",
+		"weaponHitFx",
+		"weaponScale",
+		"removeItemOption",
+		"matchMaker",
+		"checkCanSee",
+		"compoundWeapon",
+		"extendinventoryStart",
+		"extendinventoryEnd",
+		"editCharacterGender",
+		"tradeInfo",
+		"instanceEntry",
+		"funcPetManage",
+		"gatherSkillLevelup",
+		"undetectable",
+		"packagePermitted",
+		"extendaccountwarehouseStart",
+		"extendaccountwarehouseEnd",
+		"npcfactionName",
+		"bindstoneType",
+		"bindstoneCapacity",
+		"bindstoneUsecount",
+		"changeItemSkin",
+		"data",
+		"editCharacterAll",
+		"giveItemProc",
+		"pvpzone",
+		"pvpzoneWorldName",
+		"pvpzoneLocationAlias",
+		"extendcharwarehouseStart",
+		"extendcharwarehouseEnd",
+		"ment",
+		"userAnimation",
+		"abyssTradeInfo",
+		"couponTradeInfo",
+		"extraCurrencyTradeInfo",
+		"htmlBg",
+		"useScript" })
 @XmlRootElement(name = "npc_client")
-public class NpcClient {
-
-    protected int id;
-    @XmlElement(required = true)
-    protected String name;
-    @XmlElement(name = "abyss_npc_type", required = true)
-    protected String abyssNpcType;
-    @XmlElement(name = "ai_name", required = true)
-    protected String aiName;
-    @XmlElement(name = "airlines_name", required = true)
-    protected String airlinesName;
-    protected float altitude;
-    @XmlElement(name = "ammo_bone", required = true)
-    protected String ammoBone;
-    @XmlElement(name = "ammo_fx", required = true)
-    protected String ammoFx;
-    @XmlElement(name = "ammo_hit_fx", required = true)
-    protected String ammoHitFx;
-    @XmlElement(name = "ammo_speed")
-    protected int ammoSpeed;
-    @XmlElement(name = "animation_marker", required = true)
-    protected String animationMarker;
-    protected Appearance appearance;
-    @XmlElement(name = "appearance_custom", required = true)
-    protected String appearanceCustom;
-    @XmlElement(name = "arrange_midair")
-    protected boolean arrangeMidair;
-    @XmlElement(name = "arrange_place", required = true)
-    protected String arrangePlace;
-    @XmlElement(name = "arrange_rotation_side")
-    protected boolean arrangeRotationSide;
-    @XmlElement(name = "arrange_rotation_updown")
-    protected boolean arrangeRotationUpdown;
-    @XmlElement(name = "art_org_move_speed_normal_walk")
-    protected float artOrgMoveSpeedNormalWalk;
-    @XmlElement(name = "art_org_speed_combat_run")
-    protected float artOrgSpeedCombatRun;
-    @XmlElement(name = "artifact_id")
-    protected int artifactId;
-    @XmlElement(name = "attack_delay")
-    protected int attackDelay;
-    @XmlElement(name = "attack_range")
-    protected float attackRange;
-    @XmlElement(name = "attack_rate")
-    protected int attackRate;
-    @XmlElement(name = "bound_radius")
-    protected BoundRadius boundRadius;
-    @XmlElement(name = "cursor_type", required = true)
-    protected String cursorType;
-    @XmlElement(name = "deadbody_name_id", required = true)
-    protected String deadbodyNameId;
-    @XmlElement(required = true)
-    protected String desc;
-    @XmlElement(required = true)
-    protected String dir;
-    @XmlElement(name = "disk_type", required = true)
-    protected String diskType;
-    @XmlElement(name = "dmg_decal_texture", required = true)
-    protected String dmgDecalTexture;
-    @XmlElement(name = "dmg_texture")
-    protected int dmgTexture;
-    protected int erect;
-    @XmlElement(name = "float_corpse")
-    protected int floatCorpse;
-    @XmlElement(name = "foot_mat", required = true)
-    protected String footMat;
-    @XmlElement(name = "furniture_category", required = true)
-    protected String furnitureCategory;
-    @XmlElement(name = "fxc_type", required = true)
-    protected String fxcType;
-    @XmlElement(name = "game_lang", required = true)
-    protected String gameLang;
-    @XmlElement(name = "guide_func", required = true)
-    protected String guideFunc;
-    @XmlElement(name = "hide_path")
-    protected int hidePath;
-    @XmlElement(name = "hide_pc_fx_shader")
-    protected int hidePcFxShader;
-    @XmlElement(name = "hide_shadow")
-    protected int hideShadow;
-    @XmlElement(name = "hpgauge_level")
-    protected int hpgaugeLevel;
-    @XmlElement(name = "huge_mob")
-    protected float hugeMob;
-    @XmlElement(name = "idle_animation", required = true)
-    protected String idleAnimation;
-    @XmlElement(name = "in_time")
-    protected float inTime;
-    @XmlElement(name = "jobfaction_name")
-    protected int jobfactionName;
-    @XmlElement(name = "magical_skill_boost")
-    protected int magicalSkillBoost;
-    @XmlElement(required = true)
-    protected String material;
-    @XmlElement(required = true)
-    protected String mesh;
-    @XmlElement(name = "move_speed_combat_run")
-    protected float moveSpeedCombatRun;
-    @XmlElement(name = "move_speed_normal_run")
-    protected float moveSpeedNormalRun;
-    @XmlElement(name = "move_speed_normal_walk")
-    protected float moveSpeedNormalWalk;
-    @XmlElement(name = "neck_angle")
-    protected float neckAngle;
-    @XmlElement(name = "npc_type", required = true)
-    protected String npcType;
-    @XmlElement(name = "object_type")
-    protected int objectType;
-    @XmlElement(name = "out_time")
-    protected float outTime;
-    @XmlElement(name = "pet_ai_name", required = true)
-    protected String petAiName;
-    @XmlElement(name = "pushed_range")
-    protected float pushedRange;
-    @XmlElement(name = "quest_ai_name", required = true)
-    protected String questAiName;
-    @XmlElement(name = "race_type", required = true)
-    protected String raceType;
-    protected int recovery;
-    @XmlElement(name = "recovery_opt1")
-    protected int recoveryOpt1;
-    @XmlElement(name = "recovery_opt2")
-    protected int recoveryOpt2;
-    @XmlElement(name = "rotation_period")
-    protected float rotationPeriod;
-    @XmlElement(name = "sanctuary_animation", required = true)
-    protected String sanctuaryAnimation;
-    protected int scale;
-    @XmlElement(name = "sensory_range")
-    protected float sensoryRange;
-    @XmlElement(name = "show_dmg_decal")
-    protected int showDmgDecal;
-    @XmlElement(name = "spawn_animation", required = true)
-    protected String spawnAnimation;
-    @XmlElement(name = "spine_angle")
-    protected float spineAngle;
-    @XmlElement(name = "stare_angle")
-    protected float stareAngle;
-    @XmlElement(name = "stare_distance")
-    protected float stareDistance;
-    @XmlElement(name = "static")
-    protected int _static;
-    @XmlElement(name = "str_type", required = true)
-    protected String strType;
-    @XmlElement(name = "talk_animation", required = true)
-    protected String talkAnimation;
-    @XmlElement(name = "talk_delay_time")
-    protected int talkDelayTime;
-    @XmlElement(name = "talking_distance")
-    protected float talkingDistance;
-    @XmlElement(name = "title_offset")
-    protected float titleOffset;
-    @XmlElement(required = true)
-    protected String tribe;
-    @XmlElement(name = "ui_race_type", required = true)
-    protected String uiRaceType;
-    @XmlElement(name = "ui_type", required = true)
-    protected String uiType;
-    @XmlElement(name = "visible_equipments")
-    protected VisibleEquipments visibleEquipments;
-    @XmlElement(name = "visible_range")
-    protected int visibleRange;
-    @XmlElement(name = "walk_animation", required = true)
-    protected String walkAnimation;
-    @XmlElement(name = "weapon_hit_fx", required = true)
-    protected String weaponHitFx;
-    @XmlElement(name = "weapon_scale")
-    protected int weaponScale;
-    @XmlElement(name = "remove_item_option")
-    protected int removeItemOption;
-    @XmlElement(name = "match_maker")
-    protected int matchMaker;
-    @XmlElement(name = "check_can_see")
-    protected int checkCanSee;
-    @XmlElement(name = "compound_weapon")
-    protected int compoundWeapon;
-    @XmlElement(name = "extendinventory_start")
-    protected int extendinventoryStart;
-    @XmlElement(name = "extendinventory_end")
-    protected int extendinventoryEnd;
-    @XmlElement(name = "edit_character_gender")
-    protected int editCharacterGender;
-    @XmlElement(name = "trade_info")
-    protected TradeInfo tradeInfo;
-    @XmlElement(name = "instance_entry")
-    protected int instanceEntry;
-    @XmlElement(name = "func_pet_manage")
-    protected int funcPetManage;
-    @XmlElement(name = "gather_skill_levelup", required = true)
-    protected String gatherSkillLevelup;
-    protected int undetectable;
-    @XmlElement(name = "package_permitted")
-    protected int packagePermitted;
-    @XmlElement(name = "extendaccountwarehouse_start")
-    protected int extendaccountwarehouseStart;
-    @XmlElement(name = "extendaccountwarehouse_end")
-    protected int extendaccountwarehouseEnd;
-    @XmlElement(name = "npcfaction_name", required = true)
-    protected String npcfactionName;
-    @XmlElement(name = "bindstone_type", required = true)
-    protected String bindstoneType;
-    @XmlElement(name = "bindstone_capacity")
-    protected int bindstoneCapacity;
-    @XmlElement(name = "bindstone_usecount")
-    protected int bindstoneUsecount;
-    @XmlElement(name = "change_item_skin")
-    protected int changeItemSkin;
-    @XmlElement(required = true)
-    protected Data data;
-    @XmlElement(name = "edit_character_all")
-    protected int editCharacterAll;
-    @XmlElement(name = "give_item_proc")
-    protected int giveItemProc;
-    protected int pvpzone;
-    @XmlElement(name = "pvpzone_world_name", required = true)
-    protected String pvpzoneWorldName;
-    @XmlElement(name = "pvpzone_location_alias", required = true)
-    protected String pvpzoneLocationAlias;
-    @XmlElement(name = "extendcharwarehouse_start")
-    protected int extendcharwarehouseStart;
-    @XmlElement(name = "extendcharwarehouse_end")
-    protected int extendcharwarehouseEnd;
-    @XmlElement(required = true)
-    protected String ment;
-    @XmlElement(name = "user_animation", required = true)
-    protected String userAnimation;
-    @XmlElement(name = "abyss_trade_info", required = true)
-    protected TradeInfo abyssTradeInfo;
-    @XmlElement(name = "coupon_trade_info", required = true)
-    protected TradeInfo couponTradeInfo;
-    @XmlElement(name = "extra_currency_trade_info", required = true)
-    protected TradeInfo extraCurrencyTradeInfo;
-    @XmlElement(name = "html_bg", required = true)
-    protected String htmlBg;
-    @XmlElement(name = "use_script")
-    protected int useScript;
-
-    /**
-     * Gets the value of the id property.
-     * 
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     * 
-     */
-    public void setId(int value) {
-        this.id = value;
-    }
-
-    /**
-     * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Sets the value of the name property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setName(String value) {
-        this.name = value;
-    }
-
-    /**
-     * Gets the value of the abyssNpcType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAbyssNpcType() {
-        return abyssNpcType;
-    }
-
-    /**
-     * Sets the value of the abyssNpcType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAbyssNpcType(String value) {
-        this.abyssNpcType = value;
-    }
-
-    /**
-     * Gets the value of the aiName property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAiName() {
-        return aiName;
-    }
-
-    /**
-     * Sets the value of the aiName property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAiName(String value) {
-        this.aiName = value;
-    }
-
-    /**
-     * Gets the value of the airlinesName property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAirlinesName() {
-        return airlinesName;
-    }
-
-    /**
-     * Sets the value of the airlinesName property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAirlinesName(String value) {
-        this.airlinesName = value;
-    }
-
-    /**
-     * Gets the value of the altitude property.
-     * 
-     */
-    public float getAltitude() {
-        return altitude;
-    }
-
-    /**
-     * Sets the value of the altitude property.
-     * 
-     */
-    public void setAltitude(float value) {
-        this.altitude = value;
-    }
-
-    /**
-     * Gets the value of the ammoBone property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAmmoBone() {
-        return ammoBone;
-    }
-
-    /**
-     * Sets the value of the ammoBone property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAmmoBone(String value) {
-        this.ammoBone = value;
-    }
-
-    /**
-     * Gets the value of the ammoFx property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAmmoFx() {
-        return ammoFx;
-    }
-
-    /**
-     * Sets the value of the ammoFx property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAmmoFx(String value) {
-        this.ammoFx = value;
-    }
-
-    /**
-     * Gets the value of the ammoHitFx property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAmmoHitFx() {
-        return ammoHitFx;
-    }
-
-    /**
-     * Sets the value of the ammoHitFx property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAmmoHitFx(String value) {
-        this.ammoHitFx = value;
-    }
-
-    /**
-     * Gets the value of the ammoSpeed property.
-     * 
-     */
-    public int getAmmoSpeed() {
-        return ammoSpeed;
-    }
-
-    /**
-     * Sets the value of the ammoSpeed property.
-     * 
-     */
-    public void setAmmoSpeed(int value) {
-        this.ammoSpeed = value;
-    }
-
-    /**
-     * Gets the value of the animationMarker property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAnimationMarker() {
-        return animationMarker;
-    }
-
-    /**
-     * Sets the value of the animationMarker property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAnimationMarker(String value) {
-        this.animationMarker = value;
-    }
-
-    /**
-     * Gets the value of the appearance property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Appearance }
-     *     
-     */
-    public Appearance getAppearance() {
-        return appearance;
-    }
-
-    /**
-     * Sets the value of the appearance property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Appearance }
-     *     
-     */
-    public void setAppearance(Appearance value) {
-        this.appearance = value;
-    }
-
-    /**
-     * Gets the value of the appearanceCustom property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAppearanceCustom() {
-        return appearanceCustom;
-    }
-
-    /**
-     * Sets the value of the appearanceCustom property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAppearanceCustom(String value) {
-        this.appearanceCustom = value;
-    }
-
-    /**
-     * Gets the value of the arrangeMidair property.
-     * 
-     */
-    public boolean isArrangeMidair() {
-        return arrangeMidair;
-    }
-
-    /**
-     * Sets the value of the arrangeMidair property.
-     * 
-     */
-    public void setArrangeMidair(boolean value) {
-        this.arrangeMidair = value;
-    }
-
-    /**
-     * Gets the value of the arrangePlace property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getArrangePlace() {
-        return arrangePlace;
-    }
-
-    /**
-     * Sets the value of the arrangePlace property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setArrangePlace(String value) {
-        this.arrangePlace = value;
-    }
-
-    /**
-     * Gets the value of the arrangeRotationSide property.
-     * 
-     */
-    public boolean isArrangeRotationSide() {
-        return arrangeRotationSide;
-    }
-
-    /**
-     * Sets the value of the arrangeRotationSide property.
-     * 
-     */
-    public void setArrangeRotationSide(boolean value) {
-        this.arrangeRotationSide = value;
-    }
-
-    /**
-     * Gets the value of the arrangeRotationUpdown property.
-     * 
-     */
-    public boolean isArrangeRotationUpdown() {
-        return arrangeRotationUpdown;
-    }
-
-    /**
-     * Sets the value of the arrangeRotationUpdown property.
-     * 
-     */
-    public void setArrangeRotationUpdown(boolean value) {
-        this.arrangeRotationUpdown = value;
-    }
-
-    /**
-     * Gets the value of the artOrgMoveSpeedNormalWalk property.
-     * 
-     */
-    public float getArtOrgMoveSpeedNormalWalk() {
-        return artOrgMoveSpeedNormalWalk;
-    }
-
-    /**
-     * Sets the value of the artOrgMoveSpeedNormalWalk property.
-     * 
-     */
-    public void setArtOrgMoveSpeedNormalWalk(float value) {
-        this.artOrgMoveSpeedNormalWalk = value;
-    }
-
-    /**
-     * Gets the value of the artOrgSpeedCombatRun property.
-     * 
-     */
-    public float getArtOrgSpeedCombatRun() {
-        return artOrgSpeedCombatRun;
-    }
-
-    /**
-     * Sets the value of the artOrgSpeedCombatRun property.
-     * 
-     */
-    public void setArtOrgSpeedCombatRun(float value) {
-        this.artOrgSpeedCombatRun = value;
-    }
-
-    /**
-     * Gets the value of the artifactId property.
-     * 
-     */
-    public int getArtifactId() {
-        return artifactId;
-    }
-
-    /**
-     * Sets the value of the artifactId property.
-     * 
-     */
-    public void setArtifactId(int value) {
-        this.artifactId = value;
-    }
-
-    /**
-     * Gets the value of the attackDelay property.
-     * 
-     */
-    public int getAttackDelay() {
-        return attackDelay;
-    }
-
-    /**
-     * Sets the value of the attackDelay property.
-     * 
-     */
-    public void setAttackDelay(int value) {
-        this.attackDelay = value;
-    }
-
-    /**
-     * Gets the value of the attackRange property.
-     * 
-     */
-    public float getAttackRange() {
-        return attackRange;
-    }
-
-    /**
-     * Sets the value of the attackRange property.
-     * 
-     */
-    public void setAttackRange(float value) {
-        this.attackRange = value;
-    }
-
-    /**
-     * Gets the value of the attackRate property.
-     * 
-     */
-    public int getAttackRate() {
-        return attackRate;
-    }
-
-    /**
-     * Sets the value of the attackRate property.
-     * 
-     */
-    public void setAttackRate(int value) {
-        this.attackRate = value;
-    }
-
-    /**
-     * Gets the value of the boundRadius property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BoundRadius }
-     *     
-     */
-    public BoundRadius getBoundRadius() {
-        return boundRadius;
-    }
-
-    /**
-     * Sets the value of the boundRadius property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BoundRadius }
-     *     
-     */
-    public void setBoundRadius(BoundRadius value) {
-        this.boundRadius = value;
-    }
-
-    /**
-     * Gets the value of the cursorType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getCursorType() {
-        return cursorType;
-    }
-
-    /**
-     * Sets the value of the cursorType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setCursorType(String value) {
-        this.cursorType = value;
-    }
-
-    /**
-     * Gets the value of the deadbodyNameId property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getDeadbodyNameId() {
-        return deadbodyNameId;
-    }
-
-    /**
-     * Sets the value of the deadbodyNameId property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setDeadbodyNameId(String value) {
-        this.deadbodyNameId = value;
-    }
-
-    /**
-     * Gets the value of the desc property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getDesc() {
-        return desc;
-    }
-
-    /**
-     * Sets the value of the desc property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setDesc(String value) {
-        this.desc = value;
-    }
-
-    /**
-     * Gets the value of the dir property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getDir() {
-        return dir;
-    }
-
-    /**
-     * Sets the value of the dir property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setDir(String value) {
-        this.dir = value;
-    }
-
-    /**
-     * Gets the value of the diskType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getDiskType() {
-        return diskType;
-    }
-
-    /**
-     * Sets the value of the diskType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setDiskType(String value) {
-        this.diskType = value;
-    }
-
-    /**
-     * Gets the value of the dmgDecalTexture property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getDmgDecalTexture() {
-        return dmgDecalTexture;
-    }
-
-    /**
-     * Sets the value of the dmgDecalTexture property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setDmgDecalTexture(String value) {
-        this.dmgDecalTexture = value;
-    }
-
-    /**
-     * Gets the value of the dmgTexture property.
-     * 
-     */
-    public int getDmgTexture() {
-        return dmgTexture;
-    }
-
-    /**
-     * Sets the value of the dmgTexture property.
-     * 
-     */
-    public void setDmgTexture(int value) {
-        this.dmgTexture = value;
-    }
-
-    /**
-     * Gets the value of the erect property.
-     * 
-     */
-    public int getErect() {
-        return erect;
-    }
-
-    /**
-     * Sets the value of the erect property.
-     * 
-     */
-    public void setErect(int value) {
-        this.erect = value;
-    }
-
-    /**
-     * Gets the value of the floatCorpse property.
-     * 
-     */
-    public int getFloatCorpse() {
-        return floatCorpse;
-    }
-
-    /**
-     * Sets the value of the floatCorpse property.
-     * 
-     */
-    public void setFloatCorpse(int value) {
-        this.floatCorpse = value;
-    }
-
-    /**
-     * Gets the value of the footMat property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getFootMat() {
-        return footMat;
-    }
-
-    /**
-     * Sets the value of the footMat property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setFootMat(String value) {
-        this.footMat = value;
-    }
-
-    /**
-     * Gets the value of the furnitureCategory property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getFurnitureCategory() {
-        return furnitureCategory;
-    }
-
-    /**
-     * Sets the value of the furnitureCategory property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setFurnitureCategory(String value) {
-        this.furnitureCategory = value;
-    }
-
-    /**
-     * Gets the value of the fxcType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getFxcType() {
-        return fxcType;
-    }
-
-    /**
-     * Sets the value of the fxcType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setFxcType(String value) {
-        this.fxcType = value;
-    }
-
-    /**
-     * Gets the value of the gameLang property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getGameLang() {
-        return gameLang;
-    }
-
-    /**
-     * Sets the value of the gameLang property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setGameLang(String value) {
-        this.gameLang = value;
-    }
-
-    /**
-     * Gets the value of the guideFunc property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getGuideFunc() {
-        return guideFunc;
-    }
-
-    /**
-     * Sets the value of the guideFunc property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setGuideFunc(String value) {
-        this.guideFunc = value;
-    }
-
-    /**
-     * Gets the value of the hidePath property.
-     * 
-     */
-    public int getHidePath() {
-        return hidePath;
-    }
-
-    /**
-     * Sets the value of the hidePath property.
-     * 
-     */
-    public void setHidePath(int value) {
-        this.hidePath = value;
-    }
-
-    /**
-     * Gets the value of the hidePcFxShader property.
-     * 
-     */
-    public int getHidePcFxShader() {
-        return hidePcFxShader;
-    }
-
-    /**
-     * Sets the value of the hidePcFxShader property.
-     * 
-     */
-    public void setHidePcFxShader(int value) {
-        this.hidePcFxShader = value;
-    }
-
-    /**
-     * Gets the value of the hideShadow property.
-     * 
-     */
-    public int getHideShadow() {
-        return hideShadow;
-    }
-
-    /**
-     * Sets the value of the hideShadow property.
-     * 
-     */
-    public void setHideShadow(int value) {
-        this.hideShadow = value;
-    }
-
-    /**
-     * Gets the value of the hpgaugeLevel property.
-     * 
-     */
-    public int getHpgaugeLevel() {
-        return hpgaugeLevel;
-    }
-
-    /**
-     * Sets the value of the hpgaugeLevel property.
-     * 
-     */
-    public void setHpgaugeLevel(int value) {
-        this.hpgaugeLevel = value;
-    }
-
-    /**
-     * Gets the value of the hugeMob property.
-     * 
-     */
-    public float getHugeMob() {
-        return hugeMob;
-    }
-
-    /**
-     * Sets the value of the hugeMob property.
-     * 
-     */
-    public void setHugeMob(float value) {
-        this.hugeMob = value;
-    }
-
-    /**
-     * Gets the value of the idleAnimation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getIdleAnimation() {
-        return idleAnimation;
-    }
-
-    /**
-     * Sets the value of the idleAnimation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setIdleAnimation(String value) {
-        this.idleAnimation = value;
-    }
-
-    /**
-     * Gets the value of the inTime property.
-     * 
-     */
-    public float getInTime() {
-        return inTime;
-    }
-
-    /**
-     * Sets the value of the inTime property.
-     * 
-     */
-    public void setInTime(float value) {
-        this.inTime = value;
-    }
-
-    /**
-     * Gets the value of the jobfactionName property.
-     * 
-     */
-    public int getJobfactionName() {
-        return jobfactionName;
-    }
-
-    /**
-     * Sets the value of the jobfactionName property.
-     * 
-     */
-    public void setJobfactionName(int value) {
-        this.jobfactionName = value;
-    }
-
-    /**
-     * Gets the value of the magicalSkillBoost property.
-     * 
-     */
-    public int getMagicalSkillBoost() {
-        return magicalSkillBoost;
-    }
-
-    /**
-     * Sets the value of the magicalSkillBoost property.
-     * 
-     */
-    public void setMagicalSkillBoost(int value) {
-        this.magicalSkillBoost = value;
-    }
-
-    /**
-     * Gets the value of the material property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getMaterial() {
-        return material;
-    }
-
-    /**
-     * Sets the value of the material property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setMaterial(String value) {
-        this.material = value;
-    }
-
-    /**
-     * Gets the value of the mesh property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getMesh() {
-        return mesh;
-    }
-
-    /**
-     * Sets the value of the mesh property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setMesh(String value) {
-        this.mesh = value;
-    }
-
-    /**
-     * Gets the value of the moveSpeedCombatRun property.
-     * 
-     */
-    public float getMoveSpeedCombatRun() {
-        return moveSpeedCombatRun;
-    }
-
-    /**
-     * Sets the value of the moveSpeedCombatRun property.
-     * 
-     */
-    public void setMoveSpeedCombatRun(float value) {
-        this.moveSpeedCombatRun = value;
-    }
-
-    /**
-     * Gets the value of the moveSpeedNormalRun property.
-     * 
-     */
-    public float getMoveSpeedNormalRun() {
-        return moveSpeedNormalRun;
-    }
-
-    /**
-     * Sets the value of the moveSpeedNormalRun property.
-     * 
-     */
-    public void setMoveSpeedNormalRun(float value) {
-        this.moveSpeedNormalRun = value;
-    }
-
-    /**
-     * Gets the value of the moveSpeedNormalWalk property.
-     * 
-     */
-    public float getMoveSpeedNormalWalk() {
-        return moveSpeedNormalWalk;
-    }
-
-    /**
-     * Sets the value of the moveSpeedNormalWalk property.
-     * 
-     */
-    public void setMoveSpeedNormalWalk(float value) {
-        this.moveSpeedNormalWalk = value;
-    }
-
-    /**
-     * Gets the value of the neckAngle property.
-     * 
-     */
-    public float getNeckAngle() {
-        return neckAngle;
-    }
-
-    /**
-     * Sets the value of the neckAngle property.
-     * 
-     */
-    public void setNeckAngle(float value) {
-        this.neckAngle = value;
-    }
-
-    /**
-     * Gets the value of the npcType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getNpcType() {
-        return npcType;
-    }
-
-    /**
-     * Sets the value of the npcType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setNpcType(String value) {
-        this.npcType = value;
-    }
-
-    /**
-     * Gets the value of the objectType property.
-     * 
-     */
-    public int getObjectType() {
-        return objectType;
-    }
-
-    /**
-     * Sets the value of the objectType property.
-     * 
-     */
-    public void setObjectType(int value) {
-        this.objectType = value;
-    }
-
-    /**
-     * Gets the value of the outTime property.
-     * 
-     */
-    public float getOutTime() {
-        return outTime;
-    }
-
-    /**
-     * Sets the value of the outTime property.
-     * 
-     */
-    public void setOutTime(float value) {
-        this.outTime = value;
-    }
-
-    /**
-     * Gets the value of the petAiName property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getPetAiName() {
-        return petAiName;
-    }
-
-    /**
-     * Sets the value of the petAiName property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setPetAiName(String value) {
-        this.petAiName = value;
-    }
-
-    /**
-     * Gets the value of the pushedRange property.
-     * 
-     */
-    public float getPushedRange() {
-        return pushedRange;
-    }
-
-    /**
-     * Sets the value of the pushedRange property.
-     * 
-     */
-    public void setPushedRange(float value) {
-        this.pushedRange = value;
-    }
-
-    /**
-     * Gets the value of the questAiName property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getQuestAiName() {
-        return questAiName;
-    }
-
-    /**
-     * Sets the value of the questAiName property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setQuestAiName(String value) {
-        this.questAiName = value;
-    }
-
-    /**
-     * Gets the value of the raceType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getRaceType() {
-        return raceType;
-    }
-
-    /**
-     * Sets the value of the raceType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setRaceType(String value) {
-        this.raceType = value;
-    }
-
-    /**
-     * Gets the value of the recovery property.
-     * 
-     */
-    public int getRecovery() {
-        return recovery;
-    }
-
-    /**
-     * Sets the value of the recovery property.
-     * 
-     */
-    public void setRecovery(int value) {
-        this.recovery = value;
-    }
-
-    /**
-     * Gets the value of the recoveryOpt1 property.
-     * 
-     */
-    public int getRecoveryOpt1() {
-        return recoveryOpt1;
-    }
-
-    /**
-     * Sets the value of the recoveryOpt1 property.
-     * 
-     */
-    public void setRecoveryOpt1(int value) {
-        this.recoveryOpt1 = value;
-    }
-
-    /**
-     * Gets the value of the recoveryOpt2 property.
-     * 
-     */
-    public int getRecoveryOpt2() {
-        return recoveryOpt2;
-    }
-
-    /**
-     * Sets the value of the recoveryOpt2 property.
-     * 
-     */
-    public void setRecoveryOpt2(int value) {
-        this.recoveryOpt2 = value;
-    }
-
-    /**
-     * Gets the value of the rotationPeriod property.
-     * 
-     */
-    public float getRotationPeriod() {
-        return rotationPeriod;
-    }
-
-    /**
-     * Sets the value of the rotationPeriod property.
-     * 
-     */
-    public void setRotationPeriod(float value) {
-        this.rotationPeriod = value;
-    }
-
-    /**
-     * Gets the value of the sanctuaryAnimation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getSanctuaryAnimation() {
-        return sanctuaryAnimation;
-    }
-
-    /**
-     * Sets the value of the sanctuaryAnimation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setSanctuaryAnimation(String value) {
-        this.sanctuaryAnimation = value;
-    }
-
-    /**
-     * Gets the value of the scale property.
-     * 
-     */
-    public int getScale() {
-        return scale;
-    }
-
-    /**
-     * Sets the value of the scale property.
-     * 
-     */
-    public void setScale(int value) {
-        this.scale = value;
-    }
-
-    /**
-     * Gets the value of the sensoryRange property.
-     * 
-     */
-    public float getSensoryRange() {
-        return sensoryRange;
-    }
-
-    /**
-     * Sets the value of the sensoryRange property.
-     * 
-     */
-    public void setSensoryRange(float value) {
-        this.sensoryRange = value;
-    }
-
-    /**
-     * Gets the value of the showDmgDecal property.
-     * 
-     */
-    public int getShowDmgDecal() {
-        return showDmgDecal;
-    }
-
-    /**
-     * Sets the value of the showDmgDecal property.
-     * 
-     */
-    public void setShowDmgDecal(int value) {
-        this.showDmgDecal = value;
-    }
-
-    /**
-     * Gets the value of the spawnAnimation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getSpawnAnimation() {
-        return spawnAnimation;
-    }
-
-    /**
-     * Sets the value of the spawnAnimation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setSpawnAnimation(String value) {
-        this.spawnAnimation = value;
-    }
-
-    /**
-     * Gets the value of the spineAngle property.
-     * 
-     */
-    public float getSpineAngle() {
-        return spineAngle;
-    }
-
-    /**
-     * Sets the value of the spineAngle property.
-     * 
-     */
-    public void setSpineAngle(float value) {
-        this.spineAngle = value;
-    }
-
-    /**
-     * Gets the value of the stareAngle property.
-     * 
-     */
-    public float getStareAngle() {
-        return stareAngle;
-    }
-
-    /**
-     * Sets the value of the stareAngle property.
-     * 
-     */
-    public void setStareAngle(float value) {
-        this.stareAngle = value;
-    }
-
-    /**
-     * Gets the value of the stareDistance property.
-     * 
-     */
-    public float getStareDistance() {
-        return stareDistance;
-    }
-
-    /**
-     * Sets the value of the stareDistance property.
-     * 
-     */
-    public void setStareDistance(float value) {
-        this.stareDistance = value;
-    }
-
-    /**
-     * Gets the value of the static property.
-     * 
-     */
-    public int getStatic() {
-        return _static;
-    }
-
-    /**
-     * Sets the value of the static property.
-     * 
-     */
-    public void setStatic(int value) {
-        this._static = value;
-    }
-
-    /**
-     * Gets the value of the strType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getStrType() {
-        return strType;
-    }
-
-    /**
-     * Sets the value of the strType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setStrType(String value) {
-        this.strType = value;
-    }
-
-    /**
-     * Gets the value of the talkAnimation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getTalkAnimation() {
-        return talkAnimation;
-    }
-
-    /**
-     * Sets the value of the talkAnimation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setTalkAnimation(String value) {
-        this.talkAnimation = value;
-    }
-
-    /**
-     * Gets the value of the talkDelayTime property.
-     * 
-     */
-    public int getTalkDelayTime() {
-        return talkDelayTime;
-    }
-
-    /**
-     * Sets the value of the talkDelayTime property.
-     * 
-     */
-    public void setTalkDelayTime(int value) {
-        this.talkDelayTime = value;
-    }
-
-    /**
-     * Gets the value of the talkingDistance property.
-     * 
-     */
-    public float getTalkingDistance() {
-        return talkingDistance;
-    }
-
-    /**
-     * Sets the value of the talkingDistance property.
-     * 
-     */
-    public void setTalkingDistance(float value) {
-        this.talkingDistance = value;
-    }
-
-    /**
-     * Gets the value of the titleOffset property.
-     * 
-     */
-    public float getTitleOffset() {
-        return titleOffset;
-    }
-
-    /**
-     * Sets the value of the titleOffset property.
-     * 
-     */
-    public void setTitleOffset(float value) {
-        this.titleOffset = value;
-    }
-
-    /**
-     * Gets the value of the tribe property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getTribe() {
-        return tribe;
-    }
-
-    /**
-     * Sets the value of the tribe property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setTribe(String value) {
-        this.tribe = value;
-    }
-
-    /**
-     * Gets the value of the uiRaceType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getUiRaceType() {
-        return uiRaceType;
-    }
-
-    /**
-     * Sets the value of the uiRaceType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setUiRaceType(String value) {
-        this.uiRaceType = value;
-    }
-
-    /**
-     * Gets the value of the uiType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getUiType() {
-        return uiType;
-    }
-
-    /**
-     * Sets the value of the uiType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setUiType(String value) {
-        this.uiType = value;
-    }
-
-    /**
-     * Gets the value of the visibleEquipments property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link VisibleEquipments }
-     *     
-     */
-    public VisibleEquipments getVisibleEquipments() {
-        return visibleEquipments;
-    }
-
-    /**
-     * Sets the value of the visibleEquipments property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link VisibleEquipments }
-     *     
-     */
-    public void setVisibleEquipments(VisibleEquipments value) {
-        this.visibleEquipments = value;
-    }
-
-    /**
-     * Gets the value of the visibleRange property.
-     * 
-     */
-    public int getVisibleRange() {
-        return visibleRange;
-    }
-
-    /**
-     * Sets the value of the visibleRange property.
-     * 
-     */
-    public void setVisibleRange(int value) {
-        this.visibleRange = value;
-    }
-
-    /**
-     * Gets the value of the walkAnimation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getWalkAnimation() {
-        return walkAnimation;
-    }
-
-    /**
-     * Sets the value of the walkAnimation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setWalkAnimation(String value) {
-        this.walkAnimation = value;
-    }
-
-    /**
-     * Gets the value of the weaponHitFx property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getWeaponHitFx() {
-        return weaponHitFx;
-    }
-
-    /**
-     * Sets the value of the weaponHitFx property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setWeaponHitFx(String value) {
-        this.weaponHitFx = value;
-    }
-
-    /**
-     * Gets the value of the weaponScale property.
-     * 
-     */
-    public int getWeaponScale() {
-        return weaponScale;
-    }
-
-    /**
-     * Sets the value of the weaponScale property.
-     * 
-     */
-    public void setWeaponScale(int value) {
-        this.weaponScale = value;
-    }
-
-    /**
-     * Gets the value of the removeItemOption property.
-     * 
-     */
-    public int getRemoveItemOption() {
-        return removeItemOption;
-    }
-
-    /**
-     * Sets the value of the removeItemOption property.
-     * 
-     */
-    public void setRemoveItemOption(int value) {
-        this.removeItemOption = value;
-    }
-
-    /**
-     * Gets the value of the matchMaker property.
-     * 
-     */
-    public int getMatchMaker() {
-        return matchMaker;
-    }
-
-    /**
-     * Sets the value of the matchMaker property.
-     * 
-     */
-    public void setMatchMaker(int value) {
-        this.matchMaker = value;
-    }
-
-    /**
-     * Gets the value of the checkCanSee property.
-     * 
-     */
-    public int getCheckCanSee() {
-        return checkCanSee;
-    }
-
-    /**
-     * Sets the value of the checkCanSee property.
-     * 
-     */
-    public void setCheckCanSee(int value) {
-        this.checkCanSee = value;
-    }
-
-    /**
-     * Gets the value of the compoundWeapon property.
-     * 
-     */
-    public int getCompoundWeapon() {
-        return compoundWeapon;
-    }
-
-    /**
-     * Sets the value of the compoundWeapon property.
-     * 
-     */
-    public void setCompoundWeapon(int value) {
-        this.compoundWeapon = value;
-    }
-
-    /**
-     * Gets the value of the extendinventoryStart property.
-     * 
-     */
-    public int getExtendinventoryStart() {
-        return extendinventoryStart;
-    }
-
-    /**
-     * Sets the value of the extendinventoryStart property.
-     * 
-     */
-    public void setExtendinventoryStart(int value) {
-        this.extendinventoryStart = value;
-    }
-
-    /**
-     * Gets the value of the extendinventoryEnd property.
-     * 
-     */
-    public int getExtendinventoryEnd() {
-        return extendinventoryEnd;
-    }
-
-    /**
-     * Sets the value of the extendinventoryEnd property.
-     * 
-     */
-    public void setExtendinventoryEnd(int value) {
-        this.extendinventoryEnd = value;
-    }
-
-    /**
-     * Gets the value of the editCharacterGender property.
-     * 
-     */
-    public int getEditCharacterGender() {
-        return editCharacterGender;
-    }
-
-    /**
-     * Sets the value of the editCharacterGender property.
-     * 
-     */
-    public void setEditCharacterGender(int value) {
-        this.editCharacterGender = value;
-    }
-
-    /**
-     * Gets the value of the tradeInfo property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TradeInfo }
-     *     
-     */
-    public TradeInfo getTradeInfo() {
-        return tradeInfo;
-    }
-
-    /**
-     * Sets the value of the tradeInfo property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TradeInfo }
-     *     
-     */
-    public void setTradeInfo(TradeInfo value) {
-        this.tradeInfo = value;
-    }
-
-    /**
-     * Gets the value of the instanceEntry property.
-     * 
-     */
-    public int getInstanceEntry() {
-        return instanceEntry;
-    }
-
-    /**
-     * Sets the value of the instanceEntry property.
-     * 
-     */
-    public void setInstanceEntry(int value) {
-        this.instanceEntry = value;
-    }
-
-    /**
-     * Gets the value of the funcPetManage property.
-     * 
-     */
-    public int getFuncPetManage() {
-        return funcPetManage;
-    }
-
-    /**
-     * Sets the value of the funcPetManage property.
-     * 
-     */
-    public void setFuncPetManage(int value) {
-        this.funcPetManage = value;
-    }
-
-    /**
-     * Gets the value of the gatherSkillLevelup property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getGatherSkillLevelup() {
-        return gatherSkillLevelup;
-    }
-
-    /**
-     * Sets the value of the gatherSkillLevelup property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setGatherSkillLevelup(String value) {
-        this.gatherSkillLevelup = value;
-    }
-
-    /**
-     * Gets the value of the undetectable property.
-     * 
-     */
-    public int getUndetectable() {
-        return undetectable;
-    }
-
-    /**
-     * Sets the value of the undetectable property.
-     * 
-     */
-    public void setUndetectable(int value) {
-        this.undetectable = value;
-    }
-
-    /**
-     * Gets the value of the packagePermitted property.
-     * 
-     */
-    public int getPackagePermitted() {
-        return packagePermitted;
-    }
-
-    /**
-     * Sets the value of the packagePermitted property.
-     * 
-     */
-    public void setPackagePermitted(int value) {
-        this.packagePermitted = value;
-    }
-
-    /**
-     * Gets the value of the extendaccountwarehouseStart property.
-     * 
-     */
-    public int getExtendaccountwarehouseStart() {
-        return extendaccountwarehouseStart;
-    }
-
-    /**
-     * Sets the value of the extendaccountwarehouseStart property.
-     * 
-     */
-    public void setExtendaccountwarehouseStart(int value) {
-        this.extendaccountwarehouseStart = value;
-    }
-
-    /**
-     * Gets the value of the extendaccountwarehouseEnd property.
-     * 
-     */
-    public int getExtendaccountwarehouseEnd() {
-        return extendaccountwarehouseEnd;
-    }
-
-    /**
-     * Sets the value of the extendaccountwarehouseEnd property.
-     * 
-     */
-    public void setExtendaccountwarehouseEnd(int value) {
-        this.extendaccountwarehouseEnd = value;
-    }
-
-    /**
-     * Gets the value of the npcfactionName property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getNpcfactionName() {
-        return npcfactionName;
-    }
-
-    /**
-     * Sets the value of the npcfactionName property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setNpcfactionName(String value) {
-        this.npcfactionName = value;
-    }
-
-    /**
-     * Gets the value of the bindstoneType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getBindstoneType() {
-        return bindstoneType;
-    }
-
-    /**
-     * Sets the value of the bindstoneType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setBindstoneType(String value) {
-        this.bindstoneType = value;
-    }
-
-    /**
-     * Gets the value of the bindstoneCapacity property.
-     * 
-     */
-    public int getBindstoneCapacity() {
-        return bindstoneCapacity;
-    }
-
-    /**
-     * Sets the value of the bindstoneCapacity property.
-     * 
-     */
-    public void setBindstoneCapacity(int value) {
-        this.bindstoneCapacity = value;
-    }
-
-    /**
-     * Gets the value of the bindstoneUsecount property.
-     * 
-     */
-    public int getBindstoneUsecount() {
-        return bindstoneUsecount;
-    }
-
-    /**
-     * Sets the value of the bindstoneUsecount property.
-     * 
-     */
-    public void setBindstoneUsecount(int value) {
-        this.bindstoneUsecount = value;
-    }
-
-    /**
-     * Gets the value of the changeItemSkin property.
-     * 
-     */
-    public int getChangeItemSkin() {
-        return changeItemSkin;
-    }
-
-    /**
-     * Sets the value of the changeItemSkin property.
-     * 
-     */
-    public void setChangeItemSkin(int value) {
-        this.changeItemSkin = value;
-    }
-
-    /**
-     * Gets the value of the data property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Data }
-     *     
-     */
-    public Data getData() {
-        return data;
-    }
-
-    /**
-     * Sets the value of the data property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Data }
-     *     
-     */
-    public void setData(Data value) {
-        this.data = value;
-    }
-
-    /**
-     * Gets the value of the editCharacterAll property.
-     * 
-     */
-    public int getEditCharacterAll() {
-        return editCharacterAll;
-    }
-
-    /**
-     * Sets the value of the editCharacterAll property.
-     * 
-     */
-    public void setEditCharacterAll(int value) {
-        this.editCharacterAll = value;
-    }
-
-    /**
-     * Gets the value of the giveItemProc property.
-     * 
-     */
-    public int getGiveItemProc() {
-        return giveItemProc;
-    }
-
-    /**
-     * Sets the value of the giveItemProc property.
-     * 
-     */
-    public void setGiveItemProc(int value) {
-        this.giveItemProc = value;
-    }
-
-    /**
-     * Gets the value of the pvpzone property.
-     * 
-     */
-    public int getPvpzone() {
-        return pvpzone;
-    }
-
-    /**
-     * Sets the value of the pvpzone property.
-     * 
-     */
-    public void setPvpzone(int value) {
-        this.pvpzone = value;
-    }
-
-    /**
-     * Gets the value of the pvpzoneWorldName property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getPvpzoneWorldName() {
-        return pvpzoneWorldName;
-    }
-
-    /**
-     * Sets the value of the pvpzoneWorldName property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setPvpzoneWorldName(String value) {
-        this.pvpzoneWorldName = value;
-    }
-
-    /**
-     * Gets the value of the pvpzoneLocationAlias property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getPvpzoneLocationAlias() {
-        return pvpzoneLocationAlias;
-    }
-
-    /**
-     * Sets the value of the pvpzoneLocationAlias property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setPvpzoneLocationAlias(String value) {
-        this.pvpzoneLocationAlias = value;
-    }
-
-    /**
-     * Gets the value of the extendcharwarehouseStart property.
-     * 
-     */
-    public int getExtendcharwarehouseStart() {
-        return extendcharwarehouseStart;
-    }
-
-    /**
-     * Sets the value of the extendcharwarehouseStart property.
-     * 
-     */
-    public void setExtendcharwarehouseStart(int value) {
-        this.extendcharwarehouseStart = value;
-    }
-
-    /**
-     * Gets the value of the extendcharwarehouseEnd property.
-     * 
-     */
-    public int getExtendcharwarehouseEnd() {
-        return extendcharwarehouseEnd;
-    }
-
-    /**
-     * Sets the value of the extendcharwarehouseEnd property.
-     * 
-     */
-    public void setExtendcharwarehouseEnd(int value) {
-        this.extendcharwarehouseEnd = value;
-    }
-
-    /**
-     * Gets the value of the ment property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getMent() {
-        return ment;
-    }
-
-    /**
-     * Sets the value of the ment property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setMent(String value) {
-        this.ment = value;
-    }
-
-    /**
-     * Gets the value of the userAnimation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getUserAnimation() {
-        return userAnimation;
-    }
-
-    /**
-     * Sets the value of the userAnimation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setUserAnimation(String value) {
-        this.userAnimation = value;
-    }
-
-    /**
-     * Gets the value of the abyssTradeInfo property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TradeInfo }
-     *     
-     */
-    public TradeInfo getAbyssTradeInfo() {
-        return abyssTradeInfo;
-    }
-
-    /**
-     * Sets the value of the abyssTradeInfo property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TradeInfo }
-     *     
-     */
-    public void setAbyssTradeInfo(TradeInfo value) {
-        this.abyssTradeInfo = value;
-    }
-
-    /**
-     * Gets the value of the couponTradeInfo property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TradeInfo }
-     *     
-     */
-    public TradeInfo getCouponTradeInfo() {
-        return couponTradeInfo;
-    }
-
-    /**
-     * Sets the value of the couponTradeInfo property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TradeInfo }
-     *     
-     */
-    public void setCouponTradeInfo(TradeInfo value) {
-        this.couponTradeInfo = value;
-    }
-
-    /**
-     * Gets the value of the extraCurrencyTradeInfo property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TradeInfo }
-     *     
-     */
-    public TradeInfo getExtraCurrencyTradeInfo() {
-        return extraCurrencyTradeInfo;
-    }
-
-    /**
-     * Sets the value of the extraCurrencyTradeInfo property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TradeInfo }
-     *     
-     */
-    public void setExtraCurrencyTradeInfo(TradeInfo value) {
-        this.extraCurrencyTradeInfo = value;
-    }
-
-    /**
-     * Gets the value of the htmlBg property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getHtmlBg() {
-        return htmlBg;
-    }
-
-    /**
-     * Sets the value of the htmlBg property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setHtmlBg(String value) {
-        this.htmlBg = value;
-    }
-
-    /**
-     * Gets the value of the useScript property.
-     * 
-     */
-    public int getUseScript() {
-        return useScript;
-    }
-
-    /**
-     * Sets the value of the useScript property.
-     * 
-     */
-    public void setUseScript(int value) {
-        this.useScript = value;
-    }
+public class NpcClient
+{
+
+	protected int				id;
+	@XmlElement(required = true)
+	protected String			name;
+	@XmlElement(name = "abyss_npc_type", required = true)
+	protected String			abyssNpcType;
+	@XmlElement(name = "ai_name", required = true)
+	protected String			aiName;
+	@XmlElement(name = "airlines_name", required = true)
+	protected String			airlinesName;
+	protected float				altitude;
+	@XmlElement(name = "ammo_bone", required = true)
+	protected String			ammoBone;
+	@XmlElement(name = "ammo_fx", required = true)
+	protected String			ammoFx;
+	@XmlElement(name = "ammo_hit_fx", required = true)
+	protected String			ammoHitFx;
+	@XmlElement(name = "ammo_speed")
+	protected int				ammoSpeed;
+	@XmlElement(name = "animation_marker", required = true)
+	protected String			animationMarker;
+	protected Appearance		appearance;
+	@XmlElement(name = "appearance_custom", required = true)
+	protected String			appearanceCustom;
+	@XmlElement(name = "arrange_midair")
+	protected boolean			arrangeMidair;
+	@XmlElement(name = "arrange_place", required = true)
+	protected String			arrangePlace;
+	@XmlElement(name = "arrange_rotation_side")
+	protected boolean			arrangeRotationSide;
+	@XmlElement(name = "arrange_rotation_updown")
+	protected boolean			arrangeRotationUpdown;
+	@XmlElement(name = "art_org_move_speed_normal_walk")
+	protected float				artOrgMoveSpeedNormalWalk;
+	@XmlElement(name = "art_org_speed_combat_run")
+	protected float				artOrgSpeedCombatRun;
+	@XmlElement(name = "artifact_id")
+	protected int				artifactId;
+	@XmlElement(name = "attack_delay")
+	protected int				attackDelay;
+	@XmlElement(name = "attack_range")
+	protected float				attackRange;
+	@XmlElement(name = "attack_rate")
+	protected int				attackRate;
+	@XmlElement(name = "bound_radius")
+	protected BoundRadius		boundRadius;
+	@XmlElement(name = "cursor_type", required = true)
+	protected String			cursorType;
+	@XmlElement(name = "deadbody_name_id", required = true)
+	protected String			deadbodyNameId;
+	@XmlElement(required = true)
+	protected String			desc;
+	@XmlElement(required = true)
+	protected String			dir;
+	@XmlElement(name = "disk_type", required = true)
+	protected String			diskType;
+	@XmlElement(name = "dmg_decal_texture", required = true)
+	protected String			dmgDecalTexture;
+	@XmlElement(name = "dmg_texture")
+	protected int				dmgTexture;
+	protected int				erect;
+	@XmlElement(name = "float_corpse")
+	protected int				floatCorpse;
+	@XmlElement(name = "foot_mat", required = true)
+	protected String			footMat;
+	@XmlElement(name = "furniture_category", required = true)
+	protected String			furnitureCategory;
+	@XmlElement(name = "fxc_type", required = true)
+	protected String			fxcType;
+	@XmlElement(name = "game_lang", required = true)
+	protected String			gameLang;
+	@XmlElement(name = "guide_func", required = true)
+	protected String			guideFunc;
+	@XmlElement(name = "hide_path")
+	protected int				hidePath;
+	@XmlElement(name = "hide_pc_fx_shader")
+	protected int				hidePcFxShader;
+	@XmlElement(name = "hide_shadow")
+	protected int				hideShadow;
+	@XmlElement(name = "hpgauge_level")
+	protected int				hpgaugeLevel;
+	@XmlElement(name = "huge_mob")
+	protected float				hugeMob;
+	@XmlElement(name = "idle_animation", required = true)
+	protected String			idleAnimation;
+	@XmlElement(name = "in_time")
+	protected float				inTime;
+	@XmlElement(name = "jobfaction_name")
+	protected int				jobfactionName;
+	@XmlElement(name = "magical_skill_boost")
+	protected int				magicalSkillBoost;
+	@XmlElement(required = true)
+	protected String			material;
+	@XmlElement(required = true)
+	protected String			mesh;
+	@XmlElement(name = "move_speed_combat_run")
+	protected float				moveSpeedCombatRun;
+	@XmlElement(name = "move_speed_normal_run")
+	protected float				moveSpeedNormalRun;
+	@XmlElement(name = "move_speed_normal_walk")
+	protected float				moveSpeedNormalWalk;
+	@XmlElement(name = "neck_angle")
+	protected float				neckAngle;
+	@XmlElement(name = "npc_type", required = true)
+	protected String			npcType;
+	@XmlElement(name = "object_type")
+	protected int				objectType;
+	@XmlElement(name = "out_time")
+	protected float				outTime;
+	@XmlElement(name = "pet_ai_name", required = true)
+	protected String			petAiName;
+	@XmlElement(name = "pushed_range")
+	protected float				pushedRange;
+	@XmlElement(name = "quest_ai_name", required = true)
+	protected String			questAiName;
+	@XmlElement(name = "race_type", required = true)
+	protected String			raceType;
+	protected int				recovery;
+	@XmlElement(name = "recovery_opt1")
+	protected int				recoveryOpt1;
+	@XmlElement(name = "recovery_opt2")
+	protected int				recoveryOpt2;
+	@XmlElement(name = "rotation_period")
+	protected float				rotationPeriod;
+	@XmlElement(name = "sanctuary_animation", required = true)
+	protected String			sanctuaryAnimation;
+	protected int				scale;
+	@XmlElement(name = "sensory_range")
+	protected float				sensoryRange;
+	@XmlElement(name = "show_dmg_decal")
+	protected int				showDmgDecal;
+	@XmlElement(name = "spawn_animation", required = true)
+	protected String			spawnAnimation;
+	@XmlElement(name = "spine_angle")
+	protected float				spineAngle;
+	@XmlElement(name = "stare_angle")
+	protected float				stareAngle;
+	@XmlElement(name = "stare_distance")
+	protected float				stareDistance;
+	@XmlElement(name = "static")
+	protected int				_static;
+	@XmlElement(name = "str_type", required = true)
+	protected String			strType;
+	@XmlElement(name = "talk_animation", required = true)
+	protected String			talkAnimation;
+	@XmlElement(name = "talk_delay_time")
+	protected int				talkDelayTime;
+	@XmlElement(name = "talking_distance")
+	protected float				talkingDistance;
+	@XmlElement(name = "title_offset")
+	protected float				titleOffset;
+	@XmlElement(required = true)
+	protected String			tribe;
+	@XmlElement(name = "ui_race_type", required = true)
+	protected String			uiRaceType;
+	@XmlElement(name = "ui_type", required = true)
+	protected String			uiType;
+	@XmlElement(name = "visible_equipments")
+	protected VisibleEquipments	visibleEquipments;
+	@XmlElement(name = "visible_range")
+	protected int				visibleRange;
+	@XmlElement(name = "walk_animation", required = true)
+	protected String			walkAnimation;
+	@XmlElement(name = "weapon_hit_fx", required = true)
+	protected String			weaponHitFx;
+	@XmlElement(name = "weapon_scale")
+	protected int				weaponScale;
+	@XmlElement(name = "remove_item_option")
+	protected int				removeItemOption;
+	@XmlElement(name = "match_maker")
+	protected int				matchMaker;
+	@XmlElement(name = "check_can_see")
+	protected int				checkCanSee;
+	@XmlElement(name = "compound_weapon")
+	protected int				compoundWeapon;
+	@XmlElement(name = "extendinventory_start")
+	protected int				extendinventoryStart;
+	@XmlElement(name = "extendinventory_end")
+	protected int				extendinventoryEnd;
+	@XmlElement(name = "edit_character_gender")
+	protected int				editCharacterGender;
+	@XmlElement(name = "trade_info")
+	protected TradeInfo			tradeInfo;
+	@XmlElement(name = "instance_entry")
+	protected int				instanceEntry;
+	@XmlElement(name = "func_pet_manage")
+	protected int				funcPetManage;
+	@XmlElement(name = "gather_skill_levelup", required = true)
+	protected String			gatherSkillLevelup;
+	protected int				undetectable;
+	@XmlElement(name = "package_permitted")
+	protected int				packagePermitted;
+	@XmlElement(name = "extendaccountwarehouse_start")
+	protected int				extendaccountwarehouseStart;
+	@XmlElement(name = "extendaccountwarehouse_end")
+	protected int				extendaccountwarehouseEnd;
+	@XmlElement(name = "npcfaction_name", required = true)
+	protected String			npcfactionName;
+	@XmlElement(name = "bindstone_type", required = true)
+	protected String			bindstoneType;
+	@XmlElement(name = "bindstone_capacity")
+	protected int				bindstoneCapacity;
+	@XmlElement(name = "bindstone_usecount")
+	protected int				bindstoneUsecount;
+	@XmlElement(name = "change_item_skin")
+	protected int				changeItemSkin;
+	@XmlElement(required = true)
+	protected Data				data;
+	@XmlElement(name = "edit_character_all")
+	protected int				editCharacterAll;
+	@XmlElement(name = "give_item_proc")
+	protected int				giveItemProc;
+	protected int				pvpzone;
+	@XmlElement(name = "pvpzone_world_name", required = true)
+	protected String			pvpzoneWorldName;
+	@XmlElement(name = "pvpzone_location_alias", required = true)
+	protected String			pvpzoneLocationAlias;
+	@XmlElement(name = "extendcharwarehouse_start")
+	protected int				extendcharwarehouseStart;
+	@XmlElement(name = "extendcharwarehouse_end")
+	protected int				extendcharwarehouseEnd;
+	@XmlElement(required = true)
+	protected String			ment;
+	@XmlElement(name = "user_animation", required = true)
+	protected String			userAnimation;
+	@XmlElement(name = "abyss_trade_info", required = true)
+	protected TradeInfo			abyssTradeInfo;
+	@XmlElement(name = "coupon_trade_info", required = true)
+	protected TradeInfo			couponTradeInfo;
+	@XmlElement(name = "extra_currency_trade_info", required = true)
+	protected TradeInfo			extraCurrencyTradeInfo;
+	@XmlElement(name = "html_bg", required = true)
+	protected String			htmlBg;
+	@XmlElement(name = "use_script")
+	protected int				useScript;
+
+	/**
+	 * Gets the value of the id property.
+	 * 
+	 */
+	public int getId()
+	{
+		return id;
+	}
+
+	/**
+	 * Sets the value of the id property.
+	 * 
+	 */
+	public void setId(int value)
+	{
+		this.id = value;
+	}
+
+	/**
+	 * Gets the value of the name property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getName()
+	{
+		return name;
+	}
+
+	/**
+	 * Sets the value of the name property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setName(String value)
+	{
+		this.name = value;
+	}
+
+	/**
+	 * Gets the value of the abyssNpcType property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getAbyssNpcType()
+	{
+		return abyssNpcType;
+	}
+
+	/**
+	 * Sets the value of the abyssNpcType property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setAbyssNpcType(String value)
+	{
+		this.abyssNpcType = value;
+	}
+
+	/**
+	 * Gets the value of the aiName property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getAiName()
+	{
+		return aiName;
+	}
+
+	/**
+	 * Sets the value of the aiName property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setAiName(String value)
+	{
+		this.aiName = value;
+	}
+
+	/**
+	 * Gets the value of the airlinesName property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getAirlinesName()
+	{
+		return airlinesName;
+	}
+
+	/**
+	 * Sets the value of the airlinesName property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setAirlinesName(String value)
+	{
+		this.airlinesName = value;
+	}
+
+	/**
+	 * Gets the value of the altitude property.
+	 * 
+	 */
+	public float getAltitude()
+	{
+		return altitude;
+	}
+
+	/**
+	 * Sets the value of the altitude property.
+	 * 
+	 */
+	public void setAltitude(float value)
+	{
+		this.altitude = value;
+	}
+
+	/**
+	 * Gets the value of the ammoBone property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getAmmoBone()
+	{
+		return ammoBone;
+	}
+
+	/**
+	 * Sets the value of the ammoBone property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setAmmoBone(String value)
+	{
+		this.ammoBone = value;
+	}
+
+	/**
+	 * Gets the value of the ammoFx property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getAmmoFx()
+	{
+		return ammoFx;
+	}
+
+	/**
+	 * Sets the value of the ammoFx property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setAmmoFx(String value)
+	{
+		this.ammoFx = value;
+	}
+
+	/**
+	 * Gets the value of the ammoHitFx property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getAmmoHitFx()
+	{
+		return ammoHitFx;
+	}
+
+	/**
+	 * Sets the value of the ammoHitFx property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setAmmoHitFx(String value)
+	{
+		this.ammoHitFx = value;
+	}
+
+	/**
+	 * Gets the value of the ammoSpeed property.
+	 * 
+	 */
+	public int getAmmoSpeed()
+	{
+		return ammoSpeed;
+	}
+
+	/**
+	 * Sets the value of the ammoSpeed property.
+	 * 
+	 */
+	public void setAmmoSpeed(int value)
+	{
+		this.ammoSpeed = value;
+	}
+
+	/**
+	 * Gets the value of the animationMarker property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getAnimationMarker()
+	{
+		return animationMarker;
+	}
+
+	/**
+	 * Sets the value of the animationMarker property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setAnimationMarker(String value)
+	{
+		this.animationMarker = value;
+	}
+
+	/**
+	 * Gets the value of the appearance property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link Appearance }
+	 *     
+	 */
+	public Appearance getAppearance()
+	{
+		return appearance;
+	}
+
+	/**
+	 * Sets the value of the appearance property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link Appearance }
+	 *     
+	 */
+	public void setAppearance(Appearance value)
+	{
+		this.appearance = value;
+	}
+
+	/**
+	 * Gets the value of the appearanceCustom property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getAppearanceCustom()
+	{
+		return appearanceCustom;
+	}
+
+	/**
+	 * Sets the value of the appearanceCustom property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setAppearanceCustom(String value)
+	{
+		this.appearanceCustom = value;
+	}
+
+	/**
+	 * Gets the value of the arrangeMidair property.
+	 * 
+	 */
+	public boolean isArrangeMidair()
+	{
+		return arrangeMidair;
+	}
+
+	/**
+	 * Sets the value of the arrangeMidair property.
+	 * 
+	 */
+	public void setArrangeMidair(boolean value)
+	{
+		this.arrangeMidair = value;
+	}
+
+	/**
+	 * Gets the value of the arrangePlace property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getArrangePlace()
+	{
+		return arrangePlace;
+	}
+
+	/**
+	 * Sets the value of the arrangePlace property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setArrangePlace(String value)
+	{
+		this.arrangePlace = value;
+	}
+
+	/**
+	 * Gets the value of the arrangeRotationSide property.
+	 * 
+	 */
+	public boolean isArrangeRotationSide()
+	{
+		return arrangeRotationSide;
+	}
+
+	/**
+	 * Sets the value of the arrangeRotationSide property.
+	 * 
+	 */
+	public void setArrangeRotationSide(boolean value)
+	{
+		this.arrangeRotationSide = value;
+	}
+
+	/**
+	 * Gets the value of the arrangeRotationUpdown property.
+	 * 
+	 */
+	public boolean isArrangeRotationUpdown()
+	{
+		return arrangeRotationUpdown;
+	}
+
+	/**
+	 * Sets the value of the arrangeRotationUpdown property.
+	 * 
+	 */
+	public void setArrangeRotationUpdown(boolean value)
+	{
+		this.arrangeRotationUpdown = value;
+	}
+
+	/**
+	 * Gets the value of the artOrgMoveSpeedNormalWalk property.
+	 * 
+	 */
+	public float getArtOrgMoveSpeedNormalWalk()
+	{
+		return artOrgMoveSpeedNormalWalk;
+	}
+
+	/**
+	 * Sets the value of the artOrgMoveSpeedNormalWalk property.
+	 * 
+	 */
+	public void setArtOrgMoveSpeedNormalWalk(float value)
+	{
+		this.artOrgMoveSpeedNormalWalk = value;
+	}
+
+	/**
+	 * Gets the value of the artOrgSpeedCombatRun property.
+	 * 
+	 */
+	public float getArtOrgSpeedCombatRun()
+	{
+		return artOrgSpeedCombatRun;
+	}
+
+	/**
+	 * Sets the value of the artOrgSpeedCombatRun property.
+	 * 
+	 */
+	public void setArtOrgSpeedCombatRun(float value)
+	{
+		this.artOrgSpeedCombatRun = value;
+	}
+
+	/**
+	 * Gets the value of the artifactId property.
+	 * 
+	 */
+	public int getArtifactId()
+	{
+		return artifactId;
+	}
+
+	/**
+	 * Sets the value of the artifactId property.
+	 * 
+	 */
+	public void setArtifactId(int value)
+	{
+		this.artifactId = value;
+	}
+
+	/**
+	 * Gets the value of the attackDelay property.
+	 * 
+	 */
+	public int getAttackDelay()
+	{
+		return attackDelay;
+	}
+
+	/**
+	 * Sets the value of the attackDelay property.
+	 * 
+	 */
+	public void setAttackDelay(int value)
+	{
+		this.attackDelay = value;
+	}
+
+	/**
+	 * Gets the value of the attackRange property.
+	 * 
+	 */
+	public float getAttackRange()
+	{
+		return attackRange;
+	}
+
+	/**
+	 * Sets the value of the attackRange property.
+	 * 
+	 */
+	public void setAttackRange(float value)
+	{
+		this.attackRange = value;
+	}
+
+	/**
+	 * Gets the value of the attackRate property.
+	 * 
+	 */
+	public int getAttackRate()
+	{
+		return attackRate;
+	}
+
+	/**
+	 * Sets the value of the attackRate property.
+	 * 
+	 */
+	public void setAttackRate(int value)
+	{
+		this.attackRate = value;
+	}
+
+	/**
+	 * Gets the value of the boundRadius property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link BoundRadius }
+	 *     
+	 */
+	public BoundRadius getBoundRadius()
+	{
+		return boundRadius;
+	}
+
+	/**
+	 * Sets the value of the boundRadius property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link BoundRadius }
+	 *     
+	 */
+	public void setBoundRadius(BoundRadius value)
+	{
+		this.boundRadius = value;
+	}
+
+	/**
+	 * Gets the value of the cursorType property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getCursorType()
+	{
+		return cursorType;
+	}
+
+	/**
+	 * Sets the value of the cursorType property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setCursorType(String value)
+	{
+		this.cursorType = value;
+	}
+
+	/**
+	 * Gets the value of the deadbodyNameId property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getDeadbodyNameId()
+	{
+		return deadbodyNameId;
+	}
+
+	/**
+	 * Sets the value of the deadbodyNameId property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setDeadbodyNameId(String value)
+	{
+		this.deadbodyNameId = value;
+	}
+
+	/**
+	 * Gets the value of the desc property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getDesc()
+	{
+		return desc;
+	}
+
+	/**
+	 * Sets the value of the desc property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setDesc(String value)
+	{
+		this.desc = value;
+	}
+
+	/**
+	 * Gets the value of the dir property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getDir()
+	{
+		return dir;
+	}
+
+	/**
+	 * Sets the value of the dir property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setDir(String value)
+	{
+		this.dir = value;
+	}
+
+	/**
+	 * Gets the value of the diskType property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getDiskType()
+	{
+		return diskType;
+	}
+
+	/**
+	 * Sets the value of the diskType property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setDiskType(String value)
+	{
+		this.diskType = value;
+	}
+
+	/**
+	 * Gets the value of the dmgDecalTexture property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getDmgDecalTexture()
+	{
+		return dmgDecalTexture;
+	}
+
+	/**
+	 * Sets the value of the dmgDecalTexture property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setDmgDecalTexture(String value)
+	{
+		this.dmgDecalTexture = value;
+	}
+
+	/**
+	 * Gets the value of the dmgTexture property.
+	 * 
+	 */
+	public int getDmgTexture()
+	{
+		return dmgTexture;
+	}
+
+	/**
+	 * Sets the value of the dmgTexture property.
+	 * 
+	 */
+	public void setDmgTexture(int value)
+	{
+		this.dmgTexture = value;
+	}
+
+	/**
+	 * Gets the value of the erect property.
+	 * 
+	 */
+	public int getErect()
+	{
+		return erect;
+	}
+
+	/**
+	 * Sets the value of the erect property.
+	 * 
+	 */
+	public void setErect(int value)
+	{
+		this.erect = value;
+	}
+
+	/**
+	 * Gets the value of the floatCorpse property.
+	 * 
+	 */
+	public int getFloatCorpse()
+	{
+		return floatCorpse;
+	}
+
+	/**
+	 * Sets the value of the floatCorpse property.
+	 * 
+	 */
+	public void setFloatCorpse(int value)
+	{
+		this.floatCorpse = value;
+	}
+
+	/**
+	 * Gets the value of the footMat property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getFootMat()
+	{
+		return footMat;
+	}
+
+	/**
+	 * Sets the value of the footMat property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setFootMat(String value)
+	{
+		this.footMat = value;
+	}
+
+	/**
+	 * Gets the value of the furnitureCategory property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getFurnitureCategory()
+	{
+		return furnitureCategory;
+	}
+
+	/**
+	 * Sets the value of the furnitureCategory property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setFurnitureCategory(String value)
+	{
+		this.furnitureCategory = value;
+	}
+
+	/**
+	 * Gets the value of the fxcType property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getFxcType()
+	{
+		return fxcType;
+	}
+
+	/**
+	 * Sets the value of the fxcType property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setFxcType(String value)
+	{
+		this.fxcType = value;
+	}
+
+	/**
+	 * Gets the value of the gameLang property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getGameLang()
+	{
+		return gameLang;
+	}
+
+	/**
+	 * Sets the value of the gameLang property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setGameLang(String value)
+	{
+		this.gameLang = value;
+	}
+
+	/**
+	 * Gets the value of the guideFunc property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getGuideFunc()
+	{
+		return guideFunc;
+	}
+
+	/**
+	 * Sets the value of the guideFunc property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setGuideFunc(String value)
+	{
+		this.guideFunc = value;
+	}
+
+	/**
+	 * Gets the value of the hidePath property.
+	 * 
+	 */
+	public int getHidePath()
+	{
+		return hidePath;
+	}
+
+	/**
+	 * Sets the value of the hidePath property.
+	 * 
+	 */
+	public void setHidePath(int value)
+	{
+		this.hidePath = value;
+	}
+
+	/**
+	 * Gets the value of the hidePcFxShader property.
+	 * 
+	 */
+	public int getHidePcFxShader()
+	{
+		return hidePcFxShader;
+	}
+
+	/**
+	 * Sets the value of the hidePcFxShader property.
+	 * 
+	 */
+	public void setHidePcFxShader(int value)
+	{
+		this.hidePcFxShader = value;
+	}
+
+	/**
+	 * Gets the value of the hideShadow property.
+	 * 
+	 */
+	public int getHideShadow()
+	{
+		return hideShadow;
+	}
+
+	/**
+	 * Sets the value of the hideShadow property.
+	 * 
+	 */
+	public void setHideShadow(int value)
+	{
+		this.hideShadow = value;
+	}
+
+	/**
+	 * Gets the value of the hpgaugeLevel property.
+	 * 
+	 */
+	public int getHpgaugeLevel()
+	{
+		return hpgaugeLevel;
+	}
+
+	/**
+	 * Sets the value of the hpgaugeLevel property.
+	 * 
+	 */
+	public void setHpgaugeLevel(int value)
+	{
+		this.hpgaugeLevel = value;
+	}
+
+	/**
+	 * Gets the value of the hugeMob property.
+	 * 
+	 */
+	public float getHugeMob()
+	{
+		return hugeMob;
+	}
+
+	/**
+	 * Sets the value of the hugeMob property.
+	 * 
+	 */
+	public void setHugeMob(float value)
+	{
+		this.hugeMob = value;
+	}
+
+	/**
+	 * Gets the value of the idleAnimation property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getIdleAnimation()
+	{
+		return idleAnimation;
+	}
+
+	/**
+	 * Sets the value of the idleAnimation property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setIdleAnimation(String value)
+	{
+		this.idleAnimation = value;
+	}
+
+	/**
+	 * Gets the value of the inTime property.
+	 * 
+	 */
+	public float getInTime()
+	{
+		return inTime;
+	}
+
+	/**
+	 * Sets the value of the inTime property.
+	 * 
+	 */
+	public void setInTime(float value)
+	{
+		this.inTime = value;
+	}
+
+	/**
+	 * Gets the value of the jobfactionName property.
+	 * 
+	 */
+	public int getJobfactionName()
+	{
+		return jobfactionName;
+	}
+
+	/**
+	 * Sets the value of the jobfactionName property.
+	 * 
+	 */
+	public void setJobfactionName(int value)
+	{
+		this.jobfactionName = value;
+	}
+
+	/**
+	 * Gets the value of the magicalSkillBoost property.
+	 * 
+	 */
+	public int getMagicalSkillBoost()
+	{
+		return magicalSkillBoost;
+	}
+
+	/**
+	 * Sets the value of the magicalSkillBoost property.
+	 * 
+	 */
+	public void setMagicalSkillBoost(int value)
+	{
+		this.magicalSkillBoost = value;
+	}
+
+	/**
+	 * Gets the value of the material property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getMaterial()
+	{
+		return material;
+	}
+
+	/**
+	 * Sets the value of the material property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setMaterial(String value)
+	{
+		this.material = value;
+	}
+
+	/**
+	 * Gets the value of the mesh property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getMesh()
+	{
+		return mesh;
+	}
+
+	/**
+	 * Sets the value of the mesh property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setMesh(String value)
+	{
+		this.mesh = value;
+	}
+
+	/**
+	 * Gets the value of the moveSpeedCombatRun property.
+	 * 
+	 */
+	public float getMoveSpeedCombatRun()
+	{
+		return moveSpeedCombatRun;
+	}
+
+	/**
+	 * Sets the value of the moveSpeedCombatRun property.
+	 * 
+	 */
+	public void setMoveSpeedCombatRun(float value)
+	{
+		this.moveSpeedCombatRun = value;
+	}
+
+	/**
+	 * Gets the value of the moveSpeedNormalRun property.
+	 * 
+	 */
+	public float getMoveSpeedNormalRun()
+	{
+		return moveSpeedNormalRun;
+	}
+
+	/**
+	 * Sets the value of the moveSpeedNormalRun property.
+	 * 
+	 */
+	public void setMoveSpeedNormalRun(float value)
+	{
+		this.moveSpeedNormalRun = value;
+	}
+
+	/**
+	 * Gets the value of the moveSpeedNormalWalk property.
+	 * 
+	 */
+	public float getMoveSpeedNormalWalk()
+	{
+		return moveSpeedNormalWalk;
+	}
+
+	/**
+	 * Sets the value of the moveSpeedNormalWalk property.
+	 * 
+	 */
+	public void setMoveSpeedNormalWalk(float value)
+	{
+		this.moveSpeedNormalWalk = value;
+	}
+
+	/**
+	 * Gets the value of the neckAngle property.
+	 * 
+	 */
+	public float getNeckAngle()
+	{
+		return neckAngle;
+	}
+
+	/**
+	 * Sets the value of the neckAngle property.
+	 * 
+	 */
+	public void setNeckAngle(float value)
+	{
+		this.neckAngle = value;
+	}
+
+	/**
+	 * Gets the value of the npcType property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getNpcType()
+	{
+		return npcType;
+	}
+
+	/**
+	 * Sets the value of the npcType property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setNpcType(String value)
+	{
+		this.npcType = value;
+	}
+
+	/**
+	 * Gets the value of the objectType property.
+	 * 
+	 */
+	public int getObjectType()
+	{
+		return objectType;
+	}
+
+	/**
+	 * Sets the value of the objectType property.
+	 * 
+	 */
+	public void setObjectType(int value)
+	{
+		this.objectType = value;
+	}
+
+	/**
+	 * Gets the value of the outTime property.
+	 * 
+	 */
+	public float getOutTime()
+	{
+		return outTime;
+	}
+
+	/**
+	 * Sets the value of the outTime property.
+	 * 
+	 */
+	public void setOutTime(float value)
+	{
+		this.outTime = value;
+	}
+
+	/**
+	 * Gets the value of the petAiName property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getPetAiName()
+	{
+		return petAiName;
+	}
+
+	/**
+	 * Sets the value of the petAiName property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setPetAiName(String value)
+	{
+		this.petAiName = value;
+	}
+
+	/**
+	 * Gets the value of the pushedRange property.
+	 * 
+	 */
+	public float getPushedRange()
+	{
+		return pushedRange;
+	}
+
+	/**
+	 * Sets the value of the pushedRange property.
+	 * 
+	 */
+	public void setPushedRange(float value)
+	{
+		this.pushedRange = value;
+	}
+
+	/**
+	 * Gets the value of the questAiName property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getQuestAiName()
+	{
+		return questAiName;
+	}
+
+	/**
+	 * Sets the value of the questAiName property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setQuestAiName(String value)
+	{
+		this.questAiName = value;
+	}
+
+	/**
+	 * Gets the value of the raceType property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getRaceType()
+	{
+		return raceType;
+	}
+
+	/**
+	 * Sets the value of the raceType property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setRaceType(String value)
+	{
+		this.raceType = value;
+	}
+
+	/**
+	 * Gets the value of the recovery property.
+	 * 
+	 */
+	public int getRecovery()
+	{
+		return recovery;
+	}
+
+	/**
+	 * Sets the value of the recovery property.
+	 * 
+	 */
+	public void setRecovery(int value)
+	{
+		this.recovery = value;
+	}
+
+	/**
+	 * Gets the value of the recoveryOpt1 property.
+	 * 
+	 */
+	public int getRecoveryOpt1()
+	{
+		return recoveryOpt1;
+	}
+
+	/**
+	 * Sets the value of the recoveryOpt1 property.
+	 * 
+	 */
+	public void setRecoveryOpt1(int value)
+	{
+		this.recoveryOpt1 = value;
+	}
+
+	/**
+	 * Gets the value of the recoveryOpt2 property.
+	 * 
+	 */
+	public int getRecoveryOpt2()
+	{
+		return recoveryOpt2;
+	}
+
+	/**
+	 * Sets the value of the recoveryOpt2 property.
+	 * 
+	 */
+	public void setRecoveryOpt2(int value)
+	{
+		this.recoveryOpt2 = value;
+	}
+
+	/**
+	 * Gets the value of the rotationPeriod property.
+	 * 
+	 */
+	public float getRotationPeriod()
+	{
+		return rotationPeriod;
+	}
+
+	/**
+	 * Sets the value of the rotationPeriod property.
+	 * 
+	 */
+	public void setRotationPeriod(float value)
+	{
+		this.rotationPeriod = value;
+	}
+
+	/**
+	 * Gets the value of the sanctuaryAnimation property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getSanctuaryAnimation()
+	{
+		return sanctuaryAnimation;
+	}
+
+	/**
+	 * Sets the value of the sanctuaryAnimation property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setSanctuaryAnimation(String value)
+	{
+		this.sanctuaryAnimation = value;
+	}
+
+	/**
+	 * Gets the value of the scale property.
+	 * 
+	 */
+	public int getScale()
+	{
+		return scale;
+	}
+
+	/**
+	 * Sets the value of the scale property.
+	 * 
+	 */
+	public void setScale(int value)
+	{
+		this.scale = value;
+	}
+
+	/**
+	 * Gets the value of the sensoryRange property.
+	 * 
+	 */
+	public float getSensoryRange()
+	{
+		return sensoryRange;
+	}
+
+	/**
+	 * Sets the value of the sensoryRange property.
+	 * 
+	 */
+	public void setSensoryRange(float value)
+	{
+		this.sensoryRange = value;
+	}
+
+	/**
+	 * Gets the value of the showDmgDecal property.
+	 * 
+	 */
+	public int getShowDmgDecal()
+	{
+		return showDmgDecal;
+	}
+
+	/**
+	 * Sets the value of the showDmgDecal property.
+	 * 
+	 */
+	public void setShowDmgDecal(int value)
+	{
+		this.showDmgDecal = value;
+	}
+
+	/**
+	 * Gets the value of the spawnAnimation property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getSpawnAnimation()
+	{
+		return spawnAnimation;
+	}
+
+	/**
+	 * Sets the value of the spawnAnimation property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setSpawnAnimation(String value)
+	{
+		this.spawnAnimation = value;
+	}
+
+	/**
+	 * Gets the value of the spineAngle property.
+	 * 
+	 */
+	public float getSpineAngle()
+	{
+		return spineAngle;
+	}
+
+	/**
+	 * Sets the value of the spineAngle property.
+	 * 
+	 */
+	public void setSpineAngle(float value)
+	{
+		this.spineAngle = value;
+	}
+
+	/**
+	 * Gets the value of the stareAngle property.
+	 * 
+	 */
+	public float getStareAngle()
+	{
+		return stareAngle;
+	}
+
+	/**
+	 * Sets the value of the stareAngle property.
+	 * 
+	 */
+	public void setStareAngle(float value)
+	{
+		this.stareAngle = value;
+	}
+
+	/**
+	 * Gets the value of the stareDistance property.
+	 * 
+	 */
+	public float getStareDistance()
+	{
+		return stareDistance;
+	}
+
+	/**
+	 * Sets the value of the stareDistance property.
+	 * 
+	 */
+	public void setStareDistance(float value)
+	{
+		this.stareDistance = value;
+	}
+
+	/**
+	 * Gets the value of the static property.
+	 * 
+	 */
+	public int getStatic()
+	{
+		return _static;
+	}
+
+	/**
+	 * Sets the value of the static property.
+	 * 
+	 */
+	public void setStatic(int value)
+	{
+		this._static = value;
+	}
+
+	/**
+	 * Gets the value of the strType property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getStrType()
+	{
+		return strType;
+	}
+
+	/**
+	 * Sets the value of the strType property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setStrType(String value)
+	{
+		this.strType = value;
+	}
+
+	/**
+	 * Gets the value of the talkAnimation property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getTalkAnimation()
+	{
+		return talkAnimation;
+	}
+
+	/**
+	 * Sets the value of the talkAnimation property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setTalkAnimation(String value)
+	{
+		this.talkAnimation = value;
+	}
+
+	/**
+	 * Gets the value of the talkDelayTime property.
+	 * 
+	 */
+	public int getTalkDelayTime()
+	{
+		return talkDelayTime;
+	}
+
+	/**
+	 * Sets the value of the talkDelayTime property.
+	 * 
+	 */
+	public void setTalkDelayTime(int value)
+	{
+		this.talkDelayTime = value;
+	}
+
+	/**
+	 * Gets the value of the talkingDistance property.
+	 * 
+	 */
+	public float getTalkingDistance()
+	{
+		return talkingDistance;
+	}
+
+	/**
+	 * Sets the value of the talkingDistance property.
+	 * 
+	 */
+	public void setTalkingDistance(float value)
+	{
+		this.talkingDistance = value;
+	}
+
+	/**
+	 * Gets the value of the titleOffset property.
+	 * 
+	 */
+	public float getTitleOffset()
+	{
+		return titleOffset;
+	}
+
+	/**
+	 * Sets the value of the titleOffset property.
+	 * 
+	 */
+	public void setTitleOffset(float value)
+	{
+		this.titleOffset = value;
+	}
+
+	/**
+	 * Gets the value of the tribe property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getTribe()
+	{
+		return tribe;
+	}
+
+	/**
+	 * Sets the value of the tribe property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setTribe(String value)
+	{
+		this.tribe = value;
+	}
+
+	/**
+	 * Gets the value of the uiRaceType property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getUiRaceType()
+	{
+		return uiRaceType;
+	}
+
+	/**
+	 * Sets the value of the uiRaceType property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setUiRaceType(String value)
+	{
+		this.uiRaceType = value;
+	}
+
+	/**
+	 * Gets the value of the uiType property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getUiType()
+	{
+		return uiType;
+	}
+
+	/**
+	 * Sets the value of the uiType property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setUiType(String value)
+	{
+		this.uiType = value;
+	}
+
+	/**
+	 * Gets the value of the visibleEquipments property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link VisibleEquipments }
+	 *     
+	 */
+	public VisibleEquipments getVisibleEquipments()
+	{
+		return visibleEquipments;
+	}
+
+	/**
+	 * Sets the value of the visibleEquipments property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link VisibleEquipments }
+	 *     
+	 */
+	public void setVisibleEquipments(VisibleEquipments value)
+	{
+		this.visibleEquipments = value;
+	}
+
+	/**
+	 * Gets the value of the visibleRange property.
+	 * 
+	 */
+	public int getVisibleRange()
+	{
+		return visibleRange;
+	}
+
+	/**
+	 * Sets the value of the visibleRange property.
+	 * 
+	 */
+	public void setVisibleRange(int value)
+	{
+		this.visibleRange = value;
+	}
+
+	/**
+	 * Gets the value of the walkAnimation property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getWalkAnimation()
+	{
+		return walkAnimation;
+	}
+
+	/**
+	 * Sets the value of the walkAnimation property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setWalkAnimation(String value)
+	{
+		this.walkAnimation = value;
+	}
+
+	/**
+	 * Gets the value of the weaponHitFx property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getWeaponHitFx()
+	{
+		return weaponHitFx;
+	}
+
+	/**
+	 * Sets the value of the weaponHitFx property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setWeaponHitFx(String value)
+	{
+		this.weaponHitFx = value;
+	}
+
+	/**
+	 * Gets the value of the weaponScale property.
+	 * 
+	 */
+	public int getWeaponScale()
+	{
+		return weaponScale;
+	}
+
+	/**
+	 * Sets the value of the weaponScale property.
+	 * 
+	 */
+	public void setWeaponScale(int value)
+	{
+		this.weaponScale = value;
+	}
+
+	/**
+	 * Gets the value of the removeItemOption property.
+	 * 
+	 */
+	public int getRemoveItemOption()
+	{
+		return removeItemOption;
+	}
+
+	/**
+	 * Sets the value of the removeItemOption property.
+	 * 
+	 */
+	public void setRemoveItemOption(int value)
+	{
+		this.removeItemOption = value;
+	}
+
+	/**
+	 * Gets the value of the matchMaker property.
+	 * 
+	 */
+	public int getMatchMaker()
+	{
+		return matchMaker;
+	}
+
+	/**
+	 * Sets the value of the matchMaker property.
+	 * 
+	 */
+	public void setMatchMaker(int value)
+	{
+		this.matchMaker = value;
+	}
+
+	/**
+	 * Gets the value of the checkCanSee property.
+	 * 
+	 */
+	public int getCheckCanSee()
+	{
+		return checkCanSee;
+	}
+
+	/**
+	 * Sets the value of the checkCanSee property.
+	 * 
+	 */
+	public void setCheckCanSee(int value)
+	{
+		this.checkCanSee = value;
+	}
+
+	/**
+	 * Gets the value of the compoundWeapon property.
+	 * 
+	 */
+	public int getCompoundWeapon()
+	{
+		return compoundWeapon;
+	}
+
+	/**
+	 * Sets the value of the compoundWeapon property.
+	 * 
+	 */
+	public void setCompoundWeapon(int value)
+	{
+		this.compoundWeapon = value;
+	}
+
+	/**
+	 * Gets the value of the extendinventoryStart property.
+	 * 
+	 */
+	public int getExtendinventoryStart()
+	{
+		return extendinventoryStart;
+	}
+
+	/**
+	 * Sets the value of the extendinventoryStart property.
+	 * 
+	 */
+	public void setExtendinventoryStart(int value)
+	{
+		this.extendinventoryStart = value;
+	}
+
+	/**
+	 * Gets the value of the extendinventoryEnd property.
+	 * 
+	 */
+	public int getExtendinventoryEnd()
+	{
+		return extendinventoryEnd;
+	}
+
+	/**
+	 * Sets the value of the extendinventoryEnd property.
+	 * 
+	 */
+	public void setExtendinventoryEnd(int value)
+	{
+		this.extendinventoryEnd = value;
+	}
+
+	/**
+	 * Gets the value of the editCharacterGender property.
+	 * 
+	 */
+	public int getEditCharacterGender()
+	{
+		return editCharacterGender;
+	}
+
+	/**
+	 * Sets the value of the editCharacterGender property.
+	 * 
+	 */
+	public void setEditCharacterGender(int value)
+	{
+		this.editCharacterGender = value;
+	}
+
+	/**
+	 * Gets the value of the tradeInfo property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link TradeInfo }
+	 *     
+	 */
+	public TradeInfo getTradeInfo()
+	{
+		return tradeInfo;
+	}
+
+	/**
+	 * Sets the value of the tradeInfo property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link TradeInfo }
+	 *     
+	 */
+	public void setTradeInfo(TradeInfo value)
+	{
+		this.tradeInfo = value;
+	}
+
+	/**
+	 * Gets the value of the instanceEntry property.
+	 * 
+	 */
+	public int getInstanceEntry()
+	{
+		return instanceEntry;
+	}
+
+	/**
+	 * Sets the value of the instanceEntry property.
+	 * 
+	 */
+	public void setInstanceEntry(int value)
+	{
+		this.instanceEntry = value;
+	}
+
+	/**
+	 * Gets the value of the funcPetManage property.
+	 * 
+	 */
+	public int getFuncPetManage()
+	{
+		return funcPetManage;
+	}
+
+	/**
+	 * Sets the value of the funcPetManage property.
+	 * 
+	 */
+	public void setFuncPetManage(int value)
+	{
+		this.funcPetManage = value;
+	}
+
+	/**
+	 * Gets the value of the gatherSkillLevelup property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getGatherSkillLevelup()
+	{
+		return gatherSkillLevelup;
+	}
+
+	/**
+	 * Sets the value of the gatherSkillLevelup property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setGatherSkillLevelup(String value)
+	{
+		this.gatherSkillLevelup = value;
+	}
+
+	/**
+	 * Gets the value of the undetectable property.
+	 * 
+	 */
+	public int getUndetectable()
+	{
+		return undetectable;
+	}
+
+	/**
+	 * Sets the value of the undetectable property.
+	 * 
+	 */
+	public void setUndetectable(int value)
+	{
+		this.undetectable = value;
+	}
+
+	/**
+	 * Gets the value of the packagePermitted property.
+	 * 
+	 */
+	public int getPackagePermitted()
+	{
+		return packagePermitted;
+	}
+
+	/**
+	 * Sets the value of the packagePermitted property.
+	 * 
+	 */
+	public void setPackagePermitted(int value)
+	{
+		this.packagePermitted = value;
+	}
+
+	/**
+	 * Gets the value of the extendaccountwarehouseStart property.
+	 * 
+	 */
+	public int getExtendaccountwarehouseStart()
+	{
+		return extendaccountwarehouseStart;
+	}
+
+	/**
+	 * Sets the value of the extendaccountwarehouseStart property.
+	 * 
+	 */
+	public void setExtendaccountwarehouseStart(int value)
+	{
+		this.extendaccountwarehouseStart = value;
+	}
+
+	/**
+	 * Gets the value of the extendaccountwarehouseEnd property.
+	 * 
+	 */
+	public int getExtendaccountwarehouseEnd()
+	{
+		return extendaccountwarehouseEnd;
+	}
+
+	/**
+	 * Sets the value of the extendaccountwarehouseEnd property.
+	 * 
+	 */
+	public void setExtendaccountwarehouseEnd(int value)
+	{
+		this.extendaccountwarehouseEnd = value;
+	}
+
+	/**
+	 * Gets the value of the npcfactionName property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getNpcfactionName()
+	{
+		return npcfactionName;
+	}
+
+	/**
+	 * Sets the value of the npcfactionName property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setNpcfactionName(String value)
+	{
+		this.npcfactionName = value;
+	}
+
+	/**
+	 * Gets the value of the bindstoneType property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getBindstoneType()
+	{
+		return bindstoneType;
+	}
+
+	/**
+	 * Sets the value of the bindstoneType property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setBindstoneType(String value)
+	{
+		this.bindstoneType = value;
+	}
+
+	/**
+	 * Gets the value of the bindstoneCapacity property.
+	 * 
+	 */
+	public int getBindstoneCapacity()
+	{
+		return bindstoneCapacity;
+	}
+
+	/**
+	 * Sets the value of the bindstoneCapacity property.
+	 * 
+	 */
+	public void setBindstoneCapacity(int value)
+	{
+		this.bindstoneCapacity = value;
+	}
+
+	/**
+	 * Gets the value of the bindstoneUsecount property.
+	 * 
+	 */
+	public int getBindstoneUsecount()
+	{
+		return bindstoneUsecount;
+	}
+
+	/**
+	 * Sets the value of the bindstoneUsecount property.
+	 * 
+	 */
+	public void setBindstoneUsecount(int value)
+	{
+		this.bindstoneUsecount = value;
+	}
+
+	/**
+	 * Gets the value of the changeItemSkin property.
+	 * 
+	 */
+	public int getChangeItemSkin()
+	{
+		return changeItemSkin;
+	}
+
+	/**
+	 * Sets the value of the changeItemSkin property.
+	 * 
+	 */
+	public void setChangeItemSkin(int value)
+	{
+		this.changeItemSkin = value;
+	}
+
+	/**
+	 * Gets the value of the data property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link Data }
+	 *     
+	 */
+	public Data getData()
+	{
+		return data;
+	}
+
+	/**
+	 * Sets the value of the data property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link Data }
+	 *     
+	 */
+	public void setData(Data value)
+	{
+		this.data = value;
+	}
+
+	/**
+	 * Gets the value of the editCharacterAll property.
+	 * 
+	 */
+	public int getEditCharacterAll()
+	{
+		return editCharacterAll;
+	}
+
+	/**
+	 * Sets the value of the editCharacterAll property.
+	 * 
+	 */
+	public void setEditCharacterAll(int value)
+	{
+		this.editCharacterAll = value;
+	}
+
+	/**
+	 * Gets the value of the giveItemProc property.
+	 * 
+	 */
+	public int getGiveItemProc()
+	{
+		return giveItemProc;
+	}
+
+	/**
+	 * Sets the value of the giveItemProc property.
+	 * 
+	 */
+	public void setGiveItemProc(int value)
+	{
+		this.giveItemProc = value;
+	}
+
+	/**
+	 * Gets the value of the pvpzone property.
+	 * 
+	 */
+	public int getPvpzone()
+	{
+		return pvpzone;
+	}
+
+	/**
+	 * Sets the value of the pvpzone property.
+	 * 
+	 */
+	public void setPvpzone(int value)
+	{
+		this.pvpzone = value;
+	}
+
+	/**
+	 * Gets the value of the pvpzoneWorldName property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getPvpzoneWorldName()
+	{
+		return pvpzoneWorldName;
+	}
+
+	/**
+	 * Sets the value of the pvpzoneWorldName property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setPvpzoneWorldName(String value)
+	{
+		this.pvpzoneWorldName = value;
+	}
+
+	/**
+	 * Gets the value of the pvpzoneLocationAlias property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getPvpzoneLocationAlias()
+	{
+		return pvpzoneLocationAlias;
+	}
+
+	/**
+	 * Sets the value of the pvpzoneLocationAlias property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setPvpzoneLocationAlias(String value)
+	{
+		this.pvpzoneLocationAlias = value;
+	}
+
+	/**
+	 * Gets the value of the extendcharwarehouseStart property.
+	 * 
+	 */
+	public int getExtendcharwarehouseStart()
+	{
+		return extendcharwarehouseStart;
+	}
+
+	/**
+	 * Sets the value of the extendcharwarehouseStart property.
+	 * 
+	 */
+	public void setExtendcharwarehouseStart(int value)
+	{
+		this.extendcharwarehouseStart = value;
+	}
+
+	/**
+	 * Gets the value of the extendcharwarehouseEnd property.
+	 * 
+	 */
+	public int getExtendcharwarehouseEnd()
+	{
+		return extendcharwarehouseEnd;
+	}
+
+	/**
+	 * Sets the value of the extendcharwarehouseEnd property.
+	 * 
+	 */
+	public void setExtendcharwarehouseEnd(int value)
+	{
+		this.extendcharwarehouseEnd = value;
+	}
+
+	/**
+	 * Gets the value of the ment property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getMent()
+	{
+		return ment;
+	}
+
+	/**
+	 * Sets the value of the ment property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setMent(String value)
+	{
+		this.ment = value;
+	}
+
+	/**
+	 * Gets the value of the userAnimation property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getUserAnimation()
+	{
+		return userAnimation;
+	}
+
+	/**
+	 * Sets the value of the userAnimation property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setUserAnimation(String value)
+	{
+		this.userAnimation = value;
+	}
+
+	/**
+	 * Gets the value of the abyssTradeInfo property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link TradeInfo }
+	 *     
+	 */
+	public TradeInfo getAbyssTradeInfo()
+	{
+		return abyssTradeInfo;
+	}
+
+	/**
+	 * Sets the value of the abyssTradeInfo property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link TradeInfo }
+	 *     
+	 */
+	public void setAbyssTradeInfo(TradeInfo value)
+	{
+		this.abyssTradeInfo = value;
+	}
+
+	/**
+	 * Gets the value of the couponTradeInfo property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link TradeInfo }
+	 *     
+	 */
+	public TradeInfo getCouponTradeInfo()
+	{
+		return couponTradeInfo;
+	}
+
+	/**
+	 * Sets the value of the couponTradeInfo property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link TradeInfo }
+	 *     
+	 */
+	public void setCouponTradeInfo(TradeInfo value)
+	{
+		this.couponTradeInfo = value;
+	}
+
+	/**
+	 * Gets the value of the extraCurrencyTradeInfo property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link TradeInfo }
+	 *     
+	 */
+	public TradeInfo getExtraCurrencyTradeInfo()
+	{
+		return extraCurrencyTradeInfo;
+	}
+
+	/**
+	 * Sets the value of the extraCurrencyTradeInfo property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link TradeInfo }
+	 *     
+	 */
+	public void setExtraCurrencyTradeInfo(TradeInfo value)
+	{
+		this.extraCurrencyTradeInfo = value;
+	}
+
+	/**
+	 * Gets the value of the htmlBg property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getHtmlBg()
+	{
+		return htmlBg;
+	}
+
+	/**
+	 * Sets the value of the htmlBg property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setHtmlBg(String value)
+	{
+		this.htmlBg = value;
+	}
+
+	/**
+	 * Gets the value of the useScript property.
+	 * 
+	 */
+	public int getUseScript()
+	{
+		return useScript;
+	}
+
+	/**
+	 * Sets the value of the useScript property.
+	 * 
+	 */
+	public void setUseScript(int value)
+	{
+		this.useScript = value;
+	}
 
 }

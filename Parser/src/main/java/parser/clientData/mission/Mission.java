@@ -5,7 +5,6 @@
 // Generated on: 2010.11.23 at 05:57:07 DE CET 
 //
 
-
 package parser.clientData.mission;
 
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for anonymous complex type.
@@ -38,74 +36,77 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "objects",
-    "commonShapeList"
-})
+@XmlType(name = "", propOrder =
+{ "objects", "commonShapeList" })
 @XmlRootElement(name = "Mission")
-public class Mission {
+public class Mission
+{
 
-    @XmlElement(name = "Objects", required = true)
-    protected List<ObjectsClass> objects;
-    @XmlElement(name = "CommonShapeList")
-    protected List<CommonShapeList> commonShapeList;
+	@XmlElement(name = "Objects", required = true)
+	protected List<ObjectsClass>	objects;
+	@XmlElement(name = "CommonShapeList")
+	protected List<CommonShapeList>	commonShapeList;
 
-    /**
-     * Gets the value of the objects property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the objects property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getObjects().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link ObjectsClass }
-     * 
-     * 
-     */
-    public List<ObjectsClass> getObjects() {
-        if (objects == null) {
-            objects = new ArrayList<ObjectsClass>();
-        }
-        return this.objects;
-    }
+	/**
+	 * Gets the value of the objects property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list,
+	 * not a snapshot. Therefore any modification you make to the
+	 * returned list will be present inside the JAXB object.
+	 * This is why there is not a <CODE>set</CODE> method for the objects property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getObjects().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link ObjectsClass }
+	 * 
+	 * 
+	 */
+	public List<ObjectsClass> getObjects()
+	{
+		if (objects == null)
+		{
+			objects = new ArrayList<ObjectsClass>();
+		}
+		return this.objects;
+	}
 
-    /**
-     * Gets the value of the commonShapeList property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the commonShapeList property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getCommonShapeList().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link CommonShapeList }
-     * 
-     * 
-     */
-    public List<CommonShapeList> getCommonShapeList() {
-        if (commonShapeList == null) {
-            commonShapeList = new ArrayList<CommonShapeList>();
-        }
-        return this.commonShapeList;
-    }
+	/**
+	 * Gets the value of the commonShapeList property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list,
+	 * not a snapshot. Therefore any modification you make to the
+	 * returned list will be present inside the JAXB object.
+	 * This is why there is not a <CODE>set</CODE> method for the commonShapeList property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getCommonShapeList().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link CommonShapeList }
+	 * 
+	 * 
+	 */
+	public List<CommonShapeList> getCommonShapeList()
+	{
+		if (commonShapeList == null)
+		{
+			commonShapeList = new ArrayList<CommonShapeList>();
+		}
+		return this.commonShapeList;
+	}
 
 }

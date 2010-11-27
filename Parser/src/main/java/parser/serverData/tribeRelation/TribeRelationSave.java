@@ -37,7 +37,7 @@ import parser.util.DataManager;
  */
 public class TribeRelationSave
 {
-	public static void save ()
+	public static void save()
 	{
 		List<String> enumList = new ArrayList<String>();
 		ObjectFactory objFactory = new ObjectFactory();
@@ -48,19 +48,19 @@ public class TribeRelationSave
 		for (parser.clientData.tribeRelation.Tribe clientTribe : DataManager.getInstance().getTribeRelations())
 		{
 			Tribe tribe = new Tribe();
-			
+
 			tribe.setName(TribeClass.valueOf(clientTribe.getTribe().toUpperCase()));
-			
+
 			if (!enumList.contains(clientTribe.getTribe().toUpperCase()))
 				enumList.add(clientTribe.getTribe().toUpperCase());
-			
+
 			if (clientTribe.getBaseTribe() != null)
 			{
 				if (!enumList.contains(clientTribe.getBaseTribe().toUpperCase()))
 					enumList.add(clientTribe.getBaseTribe().toUpperCase());
 				tribe.setBase(TribeClass.valueOf(clientTribe.getBaseTribe().toUpperCase()));
 			}
-			
+
 			if (clientTribe.getAggressive() != null)
 			{
 				StringTokenizer st = new StringTokenizer(clientTribe.getAggressive(), ",");
@@ -75,7 +75,7 @@ public class TribeRelationSave
 					}
 				}
 			}
-			
+
 			if (clientTribe.getFriendly() != null)
 			{
 				StringTokenizer st = new StringTokenizer(clientTribe.getFriendly(), ",");
@@ -135,13 +135,12 @@ public class TribeRelationSave
 			}
 			templateList.add(tribe);
 		}
-		
+
 		try
 		{
 			JAXBContext jaxbContext = JAXBContext.newInstance("parser.serverData.tribeRelation");
 			Marshaller marshaller = jaxbContext.createMarshaller();
-				marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
-						new Boolean(true));
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, new Boolean(true));
 			marshaller.marshal(collection, new FileOutputStream("static_data/tribe/tribe_relations.xml"));
 		}
 		catch (PropertyException e)

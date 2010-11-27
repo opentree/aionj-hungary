@@ -5,14 +5,12 @@
 // Generated on: 2010.11.23 at 05:57:07 DE CET 
 //
 
-
 package parser.clientData.mission;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for ObjectClass complex type.
@@ -35,85 +33,92 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ObjectClass")
-public class ObjectClass {
+public class ObjectClass
+{
 
-    @XmlAttribute
-    protected String npc;
-    @XmlAttribute(name = "Pos")
-    protected String pos;
-    @XmlAttribute(name = "Name")
-    protected String name;
+	@XmlAttribute
+	protected String	npc;
+	@XmlAttribute(name = "Pos")
+	protected String	pos;
+	@XmlAttribute(name = "Name")
+	protected String	name;
 
-    /**
-     * Gets the value of the npc property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getNpc() {
-        return npc;
-    }
+	/**
+	 * Gets the value of the npc property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getNpc()
+	{
+		return npc;
+	}
 
-    /**
-     * Sets the value of the npc property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setNpc(String value) {
-        this.npc = value;
-    }
+	/**
+	 * Sets the value of the npc property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setNpc(String value)
+	{
+		this.npc = value;
+	}
 
-    /**
-     * Gets the value of the pos property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getPos() {
-        return pos;
-    }
+	/**
+	 * Gets the value of the pos property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getPos()
+	{
+		return pos;
+	}
 
-    /**
-     * Sets the value of the pos property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setPos(String value) {
-        this.pos = value;
-    }
+	/**
+	 * Sets the value of the pos property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setPos(String value)
+	{
+		this.pos = value;
+	}
 
-    /**
-     * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getName() {
-        return name;
-    }
+	/**
+	 * Gets the value of the name property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getName()
+	{
+		return name;
+	}
 
-    /**
-     * Sets the value of the name property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setName(String value) {
-        this.name = value;
-    }
+	/**
+	 * Sets the value of the name property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setName(String value)
+	{
+		this.name = value;
+	}
 
 }

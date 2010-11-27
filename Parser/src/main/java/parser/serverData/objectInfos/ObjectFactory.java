@@ -5,11 +5,9 @@
 // Generated on: 2010.11.17 at 07:33:37 DE CET 
 //
 
-
 package parser.serverData.objectInfos;
 
 import javax.xml.bind.annotation.XmlRegistry;
-
 
 /**
  * This object contains factory methods for each 
@@ -26,30 +24,33 @@ import javax.xml.bind.annotation.XmlRegistry;
  * 
  */
 @XmlRegistry
-public class ObjectFactory {
+public class ObjectFactory
+{
 
+	/**
+	 * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: parser.serverData.objectInfos
+	 * 
+	 */
+	public ObjectFactory()
+	{
+	}
 
-    /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: parser.serverData.objectInfos
-     * 
-     */
-    public ObjectFactory() {
-    }
+	/**
+	 * Create an instance of {@link ObjectInfos }
+	 * 
+	 */
+	public ObjectInfos createObjectInfos()
+	{
+		return new ObjectInfos();
+	}
 
-    /**
-     * Create an instance of {@link ObjectInfos }
-     * 
-     */
-    public ObjectInfos createObjectInfos() {
-        return new ObjectInfos();
-    }
-
-    /**
-     * Create an instance of {@link NpcInfo }
-     * 
-     */
-    public NpcInfo createNpcInfo() {
-        return new NpcInfo();
-    }
+	/**
+	 * Create an instance of {@link NpcInfo }
+	 * 
+	 */
+	public NpcInfo createNpcInfo()
+	{
+		return new NpcInfo();
+	}
 
 }

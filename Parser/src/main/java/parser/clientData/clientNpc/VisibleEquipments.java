@@ -5,14 +5,12 @@
 // Generated on: 2010.11.08 at 05:57:01 DU CET 
 //
 
-
 package parser.clientData.clientNpc;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for VisibleEquipments complex type.
@@ -41,225 +39,234 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "VisibleEquipments", propOrder = {
-    "head",
-    "torso",
-    "leg",
-    "foot",
-    "shoulder",
-    "glove",
-    "main",
-    "sub"
-})
-public class VisibleEquipments {
+@XmlType(name = "VisibleEquipments", propOrder =
+{ "head", "torso", "leg", "foot", "shoulder", "glove", "main", "sub" })
+public class VisibleEquipments
+{
 
-    @XmlElement(required = true)
-    protected String head;
-    @XmlElement(required = true)
-    protected String torso;
-    @XmlElement(required = true)
-    protected String leg;
-    @XmlElement(required = true)
-    protected String foot;
-    @XmlElement(required = true)
-    protected String shoulder;
-    @XmlElement(required = true)
-    protected String glove;
-    @XmlElement(required = true)
-    protected String main;
-    @XmlElement(required = true)
-    protected String sub;
+	@XmlElement(required = true)
+	protected String	head;
+	@XmlElement(required = true)
+	protected String	torso;
+	@XmlElement(required = true)
+	protected String	leg;
+	@XmlElement(required = true)
+	protected String	foot;
+	@XmlElement(required = true)
+	protected String	shoulder;
+	@XmlElement(required = true)
+	protected String	glove;
+	@XmlElement(required = true)
+	protected String	main;
+	@XmlElement(required = true)
+	protected String	sub;
 
-    /**
-     * Gets the value of the head property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getHead() {
-        return head;
-    }
+	/**
+	 * Gets the value of the head property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getHead()
+	{
+		return head;
+	}
 
-    /**
-     * Sets the value of the head property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setHead(String value) {
-        this.head = value;
-    }
+	/**
+	 * Sets the value of the head property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setHead(String value)
+	{
+		this.head = value;
+	}
 
-    /**
-     * Gets the value of the torso property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getTorso() {
-        return torso;
-    }
+	/**
+	 * Gets the value of the torso property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getTorso()
+	{
+		return torso;
+	}
 
-    /**
-     * Sets the value of the torso property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setTorso(String value) {
-        this.torso = value;
-    }
+	/**
+	 * Sets the value of the torso property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setTorso(String value)
+	{
+		this.torso = value;
+	}
 
-    /**
-     * Gets the value of the leg property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getLeg() {
-        return leg;
-    }
+	/**
+	 * Gets the value of the leg property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getLeg()
+	{
+		return leg;
+	}
 
-    /**
-     * Sets the value of the leg property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setLeg(String value) {
-        this.leg = value;
-    }
+	/**
+	 * Sets the value of the leg property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setLeg(String value)
+	{
+		this.leg = value;
+	}
 
-    /**
-     * Gets the value of the foot property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getFoot() {
-        return foot;
-    }
+	/**
+	 * Gets the value of the foot property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getFoot()
+	{
+		return foot;
+	}
 
-    /**
-     * Sets the value of the foot property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setFoot(String value) {
-        this.foot = value;
-    }
+	/**
+	 * Sets the value of the foot property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setFoot(String value)
+	{
+		this.foot = value;
+	}
 
-    /**
-     * Gets the value of the shoulder property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getShoulder() {
-        return shoulder;
-    }
+	/**
+	 * Gets the value of the shoulder property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getShoulder()
+	{
+		return shoulder;
+	}
 
-    /**
-     * Sets the value of the shoulder property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setShoulder(String value) {
-        this.shoulder = value;
-    }
+	/**
+	 * Sets the value of the shoulder property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setShoulder(String value)
+	{
+		this.shoulder = value;
+	}
 
-    /**
-     * Gets the value of the glove property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getGlove() {
-        return glove;
-    }
+	/**
+	 * Gets the value of the glove property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getGlove()
+	{
+		return glove;
+	}
 
-    /**
-     * Sets the value of the glove property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setGlove(String value) {
-        this.glove = value;
-    }
+	/**
+	 * Sets the value of the glove property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setGlove(String value)
+	{
+		this.glove = value;
+	}
 
-    /**
-     * Gets the value of the main property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getMain() {
-        return main;
-    }
+	/**
+	 * Gets the value of the main property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getMain()
+	{
+		return main;
+	}
 
-    /**
-     * Sets the value of the main property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setMain(String value) {
-        this.main = value;
-    }
+	/**
+	 * Sets the value of the main property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setMain(String value)
+	{
+		this.main = value;
+	}
 
-    /**
-     * Gets the value of the sub property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getSub() {
-        return sub;
-    }
+	/**
+	 * Gets the value of the sub property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getSub()
+	{
+		return sub;
+	}
 
-    /**
-     * Sets the value of the sub property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setSub(String value) {
-        this.sub = value;
-    }
+	/**
+	 * Sets the value of the sub property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setSub(String value)
+	{
+		this.sub = value;
+	}
 
 }

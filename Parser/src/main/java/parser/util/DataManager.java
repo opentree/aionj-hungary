@@ -43,14 +43,14 @@ public class DataManager
 {
 
 	private Map<String, ClientString>	stringNameMap;
-	private List<Tribe> tribeRelations;
-	private Map<Integer, NpcClient>	idNpcMap;
+	private List<Tribe>					tribeRelations;
+	private Map<Integer, NpcClient>		idNpcMap;
 	private Map<Integer, ClientItem>	idItemMap;
-	private List<Data> worldIds;
-	private Map<String, Integer>	itemNameIdMap;
-	private Map<String, Integer>	npcNameIdMap;
-	private Map<Integer, GatherSrc> idGatherebleMap;
-	private Map<String, Integer> nameGatherebleIdMap;
+	private List<Data>					worldIds;
+	private Map<String, Integer>		itemNameIdMap;
+	private Map<String, Integer>		npcNameIdMap;
+	private Map<Integer, GatherSrc>		idGatherebleMap;
+	private Map<String, Integer>		nameGatherebleIdMap;
 
 	public static final DataManager getInstance()
 	{
@@ -94,7 +94,7 @@ public class DataManager
 	public Map<Integer, ClientItem> getIdItemMap()
 	{
 		if (idItemMap == null)
-			idItemMap =ClientItemsLoader.load();
+			idItemMap = ClientItemsLoader.load();
 		return idItemMap;
 	}
 
@@ -136,16 +136,17 @@ public class DataManager
 			npcNameIdMap.put(npc.getName().toLowerCase(), npc.getId());
 		}
 	}
-	
+
 	private void createItemNameIdMap()
 	{
 		itemNameIdMap = new HashMap<String, Integer>();
-		for (ClientItem item: getIdItemMap().values())
+		for (ClientItem item : getIdItemMap().values())
 		{
 			itemNameIdMap.put(item.getName().toLowerCase(), item.getId());
 		}
-			
+
 	}
+
 	/**
 	 * @return Returns the idGatherebleMap.
 	 */
@@ -162,7 +163,7 @@ public class DataManager
 	public Map<String, Integer> getNameGatherebleIdMap()
 	{
 		nameGatherebleIdMap = new HashMap<String, Integer>();
-		for (GatherSrc item: getIdGatherebleMap().values())
+		for (GatherSrc item : getIdGatherebleMap().values())
 		{
 			nameGatherebleIdMap.put(item.getName().toLowerCase(), item.getId());
 		}

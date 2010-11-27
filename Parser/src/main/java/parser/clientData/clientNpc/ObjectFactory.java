@@ -5,11 +5,9 @@
 // Generated on: 2010.11.08 at 05:57:01 DU CET 
 //
 
-
 package parser.clientData.clientNpc;
 
 import javax.xml.bind.annotation.XmlRegistry;
-
 
 /**
  * This object contains factory methods for each 
@@ -26,78 +24,87 @@ import javax.xml.bind.annotation.XmlRegistry;
  * 
  */
 @XmlRegistry
-public class ObjectFactory {
+public class ObjectFactory
+{
 
+	/**
+	 * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: parser.clientData.clientNpc
+	 * 
+	 */
+	public ObjectFactory()
+	{
+	}
 
-    /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: parser.clientData.clientNpc
-     * 
-     */
-    public ObjectFactory() {
-    }
+	/**
+	 * Create an instance of {@link VisibleEquipments }
+	 * 
+	 */
+	public VisibleEquipments createVisibleEquipments()
+	{
+		return new VisibleEquipments();
+	}
 
-    /**
-     * Create an instance of {@link VisibleEquipments }
-     * 
-     */
-    public VisibleEquipments createVisibleEquipments() {
-        return new VisibleEquipments();
-    }
+	/**
+	 * Create an instance of {@link TradeInfo }
+	 * 
+	 */
+	public TradeInfo createTradeInfo()
+	{
+		return new TradeInfo();
+	}
 
-    /**
-     * Create an instance of {@link TradeInfo }
-     * 
-     */
-    public TradeInfo createTradeInfo() {
-        return new TradeInfo();
-    }
+	/**
+	 * Create an instance of {@link NpcClients }
+	 * 
+	 */
+	public NpcClients createNpcClients()
+	{
+		return new NpcClients();
+	}
 
-    /**
-     * Create an instance of {@link NpcClients }
-     * 
-     */
-    public NpcClients createNpcClients() {
-        return new NpcClients();
-    }
+	/**
+	 * Create an instance of {@link TabList }
+	 * 
+	 */
+	public TabList createTabList()
+	{
+		return new TabList();
+	}
 
-    /**
-     * Create an instance of {@link TabList }
-     * 
-     */
-    public TabList createTabList() {
-        return new TabList();
-    }
+	/**
+	 * Create an instance of {@link Data }
+	 * 
+	 */
+	public Data createData()
+	{
+		return new Data();
+	}
 
-    /**
-     * Create an instance of {@link Data }
-     * 
-     */
-    public Data createData() {
-        return new Data();
-    }
+	/**
+	 * Create an instance of {@link Appearance }
+	 * 
+	 */
+	public Appearance createAppearance()
+	{
+		return new Appearance();
+	}
 
-    /**
-     * Create an instance of {@link Appearance }
-     * 
-     */
-    public Appearance createAppearance() {
-        return new Appearance();
-    }
+	/**
+	 * Create an instance of {@link BoundRadius }
+	 * 
+	 */
+	public BoundRadius createBoundRadius()
+	{
+		return new BoundRadius();
+	}
 
-    /**
-     * Create an instance of {@link BoundRadius }
-     * 
-     */
-    public BoundRadius createBoundRadius() {
-        return new BoundRadius();
-    }
-
-    /**
-     * Create an instance of {@link NpcClient }
-     * 
-     */
-    public NpcClient createNpcClient() {
-        return new NpcClient();
-    }
+	/**
+	 * Create an instance of {@link NpcClient }
+	 * 
+	 */
+	public NpcClient createNpcClient()
+	{
+		return new NpcClient();
+	}
 
 }

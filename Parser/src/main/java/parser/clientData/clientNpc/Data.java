@@ -5,7 +5,6 @@
 // Generated on: 2010.11.08 at 05:57:01 DU CET 
 //
 
-
 package parser.clientData.clientNpc;
 
 import java.math.BigInteger;
@@ -13,7 +12,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for Data complex type.
@@ -39,144 +37,150 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Data", propOrder = {
-    "buyPriceRate",
-    "atab",
-    "ctab",
-    "etab",
-    "tab"
-})
-public class Data {
+@XmlType(name = "Data", propOrder =
+{ "buyPriceRate", "atab", "ctab", "etab", "tab" })
+public class Data
+{
 
-    @XmlElement(name = "buy_price_rate", required = true)
-    protected BigInteger buyPriceRate;
-    @XmlElement(required = true)
-    protected String atab;
-    @XmlElement(required = true)
-    protected String ctab;
-    @XmlElement(required = true)
-    protected String etab;
-    @XmlElement(required = true)
-    protected String tab;
+	@XmlElement(name = "buy_price_rate", required = true)
+	protected BigInteger	buyPriceRate;
+	@XmlElement(required = true)
+	protected String		atab;
+	@XmlElement(required = true)
+	protected String		ctab;
+	@XmlElement(required = true)
+	protected String		etab;
+	@XmlElement(required = true)
+	protected String		tab;
 
-    /**
-     * Gets the value of the buyPriceRate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
-     */
-    public BigInteger getBuyPriceRate() {
-        return buyPriceRate;
-    }
+	/**
+	 * Gets the value of the buyPriceRate property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link BigInteger }
+	 *     
+	 */
+	public BigInteger getBuyPriceRate()
+	{
+		return buyPriceRate;
+	}
 
-    /**
-     * Sets the value of the buyPriceRate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
-     */
-    public void setBuyPriceRate(BigInteger value) {
-        this.buyPriceRate = value;
-    }
+	/**
+	 * Sets the value of the buyPriceRate property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link BigInteger }
+	 *     
+	 */
+	public void setBuyPriceRate(BigInteger value)
+	{
+		this.buyPriceRate = value;
+	}
 
-    /**
-     * Gets the value of the atab property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAtab() {
-        return atab;
-    }
+	/**
+	 * Gets the value of the atab property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getAtab()
+	{
+		return atab;
+	}
 
-    /**
-     * Sets the value of the atab property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAtab(String value) {
-        this.atab = value;
-    }
+	/**
+	 * Sets the value of the atab property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setAtab(String value)
+	{
+		this.atab = value;
+	}
 
-    /**
-     * Gets the value of the ctab property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getCtab() {
-        return ctab;
-    }
+	/**
+	 * Gets the value of the ctab property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getCtab()
+	{
+		return ctab;
+	}
 
-    /**
-     * Sets the value of the ctab property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setCtab(String value) {
-        this.ctab = value;
-    }
+	/**
+	 * Sets the value of the ctab property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setCtab(String value)
+	{
+		this.ctab = value;
+	}
 
-    /**
-     * Gets the value of the etab property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getEtab() {
-        return etab;
-    }
+	/**
+	 * Gets the value of the etab property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getEtab()
+	{
+		return etab;
+	}
 
-    /**
-     * Sets the value of the etab property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setEtab(String value) {
-        this.etab = value;
-    }
+	/**
+	 * Sets the value of the etab property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setEtab(String value)
+	{
+		this.etab = value;
+	}
 
-    /**
-     * Gets the value of the tab property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getTab() {
-        return tab;
-    }
+	/**
+	 * Gets the value of the tab property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getTab()
+	{
+		return tab;
+	}
 
-    /**
-     * Sets the value of the tab property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setTab(String value) {
-        this.tab = value;
-    }
+	/**
+	 * Sets the value of the tab property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setTab(String value)
+	{
+		this.tab = value;
+	}
 
 }

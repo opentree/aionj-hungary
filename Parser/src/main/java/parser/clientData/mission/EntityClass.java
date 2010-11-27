@@ -5,7 +5,6 @@
 // Generated on: 2010.11.23 at 05:57:07 DE CET 
 //
 
-
 package parser.clientData.mission;
 
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for EntityClass complex type.
@@ -41,145 +39,155 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "EntityClass", propOrder = {
-    "properties"
-})
-public class EntityClass {
+@XmlType(name = "EntityClass", propOrder =
+{ "properties" })
+public class EntityClass
+{
 
-    @XmlElement(name = "Properties", required = true)
-    protected List<Properties> properties;
-    @XmlAttribute(name = "EntityClass")
-    protected String entityClass;
-    @XmlAttribute(name = "EntityId")
-    protected Integer entityId;
-    @XmlAttribute(name = "Pos")
-    protected String pos;
-    @XmlAttribute(name = "Name")
-    protected String name;
+	@XmlElement(name = "Properties", required = true)
+	protected List<Properties>	properties;
+	@XmlAttribute(name = "EntityClass")
+	protected String			entityClass;
+	@XmlAttribute(name = "EntityId")
+	protected Integer			entityId;
+	@XmlAttribute(name = "Pos")
+	protected String			pos;
+	@XmlAttribute(name = "Name")
+	protected String			name;
 
-    /**
-     * Gets the value of the properties property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the properties property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getProperties().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Properties }
-     * 
-     * 
-     */
-    public List<Properties> getProperties() {
-        if (properties == null) {
-            properties = new ArrayList<Properties>();
-        }
-        return this.properties;
-    }
+	/**
+	 * Gets the value of the properties property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list,
+	 * not a snapshot. Therefore any modification you make to the
+	 * returned list will be present inside the JAXB object.
+	 * This is why there is not a <CODE>set</CODE> method for the properties property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getProperties().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link Properties }
+	 * 
+	 * 
+	 */
+	public List<Properties> getProperties()
+	{
+		if (properties == null)
+		{
+			properties = new ArrayList<Properties>();
+		}
+		return this.properties;
+	}
 
-    /**
-     * Gets the value of the entityClass property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getEntityClass() {
-        return entityClass;
-    }
+	/**
+	 * Gets the value of the entityClass property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getEntityClass()
+	{
+		return entityClass;
+	}
 
-    /**
-     * Sets the value of the entityClass property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setEntityClass(String value) {
-        this.entityClass = value;
-    }
+	/**
+	 * Sets the value of the entityClass property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setEntityClass(String value)
+	{
+		this.entityClass = value;
+	}
 
-    /**
-     * Gets the value of the entityId property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getEntityId() {
-        return entityId;
-    }
+	/**
+	 * Gets the value of the entityId property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link Integer }
+	 *     
+	 */
+	public Integer getEntityId()
+	{
+		return entityId;
+	}
 
-    /**
-     * Sets the value of the entityId property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setEntityId(Integer value) {
-        this.entityId = value;
-    }
+	/**
+	 * Sets the value of the entityId property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link Integer }
+	 *     
+	 */
+	public void setEntityId(Integer value)
+	{
+		this.entityId = value;
+	}
 
-    /**
-     * Gets the value of the pos property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getPos() {
-        return pos;
-    }
+	/**
+	 * Gets the value of the pos property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getPos()
+	{
+		return pos;
+	}
 
-    /**
-     * Sets the value of the pos property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setPos(String value) {
-        this.pos = value;
-    }
+	/**
+	 * Sets the value of the pos property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setPos(String value)
+	{
+		this.pos = value;
+	}
 
-    /**
-     * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getName() {
-        return name;
-    }
+	/**
+	 * Gets the value of the name property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getName()
+	{
+		return name;
+	}
 
-    /**
-     * Sets the value of the name property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setName(String value) {
-        this.name = value;
-    }
+	/**
+	 * Sets the value of the name property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setName(String value)
+	{
+		this.name = value;
+	}
 
 }

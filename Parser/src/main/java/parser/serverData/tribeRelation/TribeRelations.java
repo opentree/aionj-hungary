@@ -5,7 +5,6 @@
 // Generated on: 2010.11.08 at 07:04:17 DE CET 
 //
 
-
 package parser.serverData.tribeRelation;
 
 import java.util.ArrayList;
@@ -14,7 +13,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for anonymous complex type.
@@ -36,41 +34,43 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "tribe"
-})
+@XmlType(name = "", propOrder =
+{ "tribe" })
 @XmlRootElement(name = "tribe_relations")
-public class TribeRelations {
+public class TribeRelations
+{
 
-    protected List<Tribe> tribe;
+	protected List<Tribe>	tribe;
 
-    /**
-     * Gets the value of the tribe property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the tribe property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getTribe().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Tribe }
-     * 
-     * 
-     */
-    public List<Tribe> getTribe() {
-        if (tribe == null) {
-            tribe = new ArrayList<Tribe>();
-        }
-        return this.tribe;
-    }
+	/**
+	 * Gets the value of the tribe property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list,
+	 * not a snapshot. Therefore any modification you make to the
+	 * returned list will be present inside the JAXB object.
+	 * This is why there is not a <CODE>set</CODE> method for the tribe property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getTribe().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link Tribe }
+	 * 
+	 * 
+	 */
+	public List<Tribe> getTribe()
+	{
+		if (tribe == null)
+		{
+			tribe = new ArrayList<Tribe>();
+		}
+		return this.tribe;
+	}
 
 }

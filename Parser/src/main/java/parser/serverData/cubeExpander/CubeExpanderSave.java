@@ -42,26 +42,27 @@ public class CubeExpanderSave
 		ObjectFactory objFactory = new ObjectFactory();
 		CubeExpander collection = (CubeExpander) objFactory.createCubeExpander();
 		List<CubeNpcTemplate> templateList = collection.getCubeNpc();
-		
-		int[] price = {1000, 12000, 80000, 180000, 360000};
-		
+
+		int[] price =
+		{ 1000, 12000, 80000, 180000, 360000 };
+
 		Collection<NpcClient> npcs = DataManager.getInstance().getIdNpcMap().values();
-		for (NpcClient npc: npcs)
+		for (NpcClient npc : npcs)
 		{
 			if (npc.getExtendinventoryStart() != 0)
 			{
 				CubeNpcTemplate template = new CubeNpcTemplate();
 				template.setId(npc.getId());
-				for (int i=npc.getExtendinventoryStart(); i<= npc.getExtendinventoryEnd(); i++)
+				for (int i = npc.getExtendinventoryStart(); i <= npc.getExtendinventoryEnd(); i++)
 				{
 					CubeExpand expand = new CubeExpand();
 					expand.setLevel(i);
-					expand.setPrice(price[i-1]);
+					expand.setPrice(price[i - 1]);
 					template.getExpand().add(expand);
 				}
 				templateList.add(template);
 			}
-				
+
 		}
 
 		try

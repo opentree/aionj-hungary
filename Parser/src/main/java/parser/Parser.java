@@ -45,18 +45,18 @@ public class Parser
 		{
 			FileDecoder.decode("data", "L10N\\1_enu\\data\\", "strings/", "client_strings.xml", true, "client_strings.xml");
 			FileDecoder.decode("npcs", "data\\npcs\\", "", "npc_tribe_relation.xml", true, "npc_tribe_relation.xml");
-			FileDecoder.decode("npcs", "data\\npcs\\", "", "client_npcs.xml",true, "client_npcs.xml");
+			FileDecoder.decode("npcs", "data\\npcs\\", "", "client_npcs.xml", true, "client_npcs.xml");
 			FileDecoder.decode("Items", "data\\Items\\", "", "client_items.xml", true, "client_items.xml");
 			FileDecoder.decode("World", "data\\World\\", "", "WorldId.xml", true, "WorldId.xml");
 			FileDecoder.decode("Gather", "data\\Gather\\", "", "gather_src.xml", true, "gather_src.xml");
 		}
 		DataManager.getInstance();
-		
+
 		if (decodeFile)
 		{
 			for (Data data : DataManager.getInstance().getWorldIds())
 			{
-				FileDecoder.decode("Level", "Levels\\"+data.getValue()+"\\", "", "mission_mission0.xml", false, "world/"+data.getId()+".xml");
+				FileDecoder.decode("Level", "Levels\\" + data.getValue() + "\\", "", "mission_mission0.xml", false, "world/" + data.getId() + ".xml");
 			}
 		}
 		TribeRelationSave.save();

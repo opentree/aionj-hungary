@@ -5,11 +5,9 @@
 // Generated on: 2010.11.08 at 07:07:21 DE CET 
 //
 
-
 package parser.serverData.tribeRelation;
 
 import javax.xml.bind.annotation.XmlEnum;
-
 
 /**
  * <p>Java class for playerClass.
@@ -37,27 +35,19 @@ import javax.xml.bind.annotation.XmlEnum;
  * 
  */
 @XmlEnum
-public enum PlayerClass {
+public enum PlayerClass
+{
 
-    WARRIOR,
-    GLADIATOR,
-    TEMPLAR,
-    SCOUT,
-    ASSASSIN,
-    RANGER,
-    MAGE,
-    SORCERER,
-    SPIRIT_MASTER,
-    PRIEST,
-    CLERIC,
-    CHANTER;
+	WARRIOR, GLADIATOR, TEMPLAR, SCOUT, ASSASSIN, RANGER, MAGE, SORCERER, SPIRIT_MASTER, PRIEST, CLERIC, CHANTER;
 
-    public String value() {
-        return name();
-    }
+	public String value()
+	{
+		return name();
+	}
 
-    public static PlayerClass fromValue(String v) {
-        return valueOf(v);
-    }
+	public static PlayerClass fromValue(String v)
+	{
+		return valueOf(v);
+	}
 
 }

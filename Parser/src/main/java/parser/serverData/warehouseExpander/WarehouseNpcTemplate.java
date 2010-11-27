@@ -5,7 +5,6 @@
 // Generated on: 2010.11.08 at 07:16:56 DU CET 
 //
 
-
 package parser.serverData.warehouseExpander;
 
 import java.util.ArrayList;
@@ -14,7 +13,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for warehouseNpcTemplate complex type.
@@ -37,58 +35,62 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "warehouseNpcTemplate", propOrder = {
-    "expand"
-})
-public class WarehouseNpcTemplate {
+@XmlType(name = "warehouseNpcTemplate", propOrder =
+{ "expand" })
+public class WarehouseNpcTemplate
+{
 
-    protected List<WarehouseExpand> expand;
-    @XmlAttribute(required = true)
-    protected int id;
+	protected List<WarehouseExpand>	expand;
+	@XmlAttribute(required = true)
+	protected int					id;
 
-    /**
-     * Gets the value of the expand property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the expand property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getExpand().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link WarehouseExpand }
-     * 
-     * 
-     */
-    public List<WarehouseExpand> getExpand() {
-        if (expand == null) {
-            expand = new ArrayList<WarehouseExpand>();
-        }
-        return this.expand;
-    }
+	/**
+	 * Gets the value of the expand property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list,
+	 * not a snapshot. Therefore any modification you make to the
+	 * returned list will be present inside the JAXB object.
+	 * This is why there is not a <CODE>set</CODE> method for the expand property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getExpand().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link WarehouseExpand }
+	 * 
+	 * 
+	 */
+	public List<WarehouseExpand> getExpand()
+	{
+		if (expand == null)
+		{
+			expand = new ArrayList<WarehouseExpand>();
+		}
+		return this.expand;
+	}
 
-    /**
-     * Gets the value of the id property.
-     * 
-     */
-    public int getId() {
-        return id;
-    }
+	/**
+	 * Gets the value of the id property.
+	 * 
+	 */
+	public int getId()
+	{
+		return id;
+	}
 
-    /**
-     * Sets the value of the id property.
-     * 
-     */
-    public void setId(int value) {
-        this.id = value;
-    }
+	/**
+	 * Sets the value of the id property.
+	 * 
+	 */
+	public void setId(int value)
+	{
+		this.id = value;
+	}
 
 }

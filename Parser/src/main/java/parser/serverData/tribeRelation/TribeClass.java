@@ -5,11 +5,9 @@
 // Generated on: 2010.10.20 at 07:25:49 DU CEST 
 //
 
-
 package parser.serverData.tribeRelation;
 
 import javax.xml.bind.annotation.XmlEnum;
-
 
 /**
  * <p>Java class for tribeClass.
@@ -270,7 +268,8 @@ import javax.xml.bind.annotation.XmlEnum;
  * 
  */
 @XmlEnum
-public enum TribeClass {
+public enum TribeClass
+{
 
 	PC(0),
 	LIGHT_SUR_MOB(1),
@@ -579,13 +578,15 @@ public enum TribeClass {
 	ATKDRAKAN(304),
 	CRYSTAL_SUM(305);
 
-    private final int value;
+	private final int	value;
 
-    TribeClass(int v) {
-        value = v;
-    }
+	TribeClass(int v)
+	{
+		value = v;
+	}
 
-    public int value() {
-        return value;
-    }
+	public int value()
+	{
+		return value;
+	}
 }

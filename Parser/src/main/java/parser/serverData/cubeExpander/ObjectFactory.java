@@ -5,14 +5,12 @@
 // Generated on: 2010.11.08 at 06:02:42 DU CET 
 //
 
-
 package parser.serverData.cubeExpander;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
-
 
 /**
  * This object contains factory methods for each 
@@ -29,56 +27,63 @@ import javax.xml.namespace.QName;
  * 
  */
 @XmlRegistry
-public class ObjectFactory {
+public class ObjectFactory
+{
 
-    private final static QName _CubeExpander_QNAME = new QName("", "cube_expander");
+	private final static QName	_CubeExpander_QNAME	= new QName("", "cube_expander");
 
-    /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: parser.serverData.cubeExpander
-     * 
-     */
-    public ObjectFactory() {
-    }
+	/**
+	 * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: parser.serverData.cubeExpander
+	 * 
+	 */
+	public ObjectFactory()
+	{
+	}
 
-    /**
-     * Create an instance of {@link CubeExpand }
-     * 
-     */
-    public CubeExpand createCubeExpand() {
-        return new CubeExpand();
-    }
+	/**
+	 * Create an instance of {@link CubeExpand }
+	 * 
+	 */
+	public CubeExpand createCubeExpand()
+	{
+		return new CubeExpand();
+	}
 
-    /**
-     * Create an instance of {@link CubeExpander }
-     * 
-     */
-    public CubeExpander createCubeExpander() {
-        return new CubeExpander();
-    }
+	/**
+	 * Create an instance of {@link CubeExpander }
+	 * 
+	 */
+	public CubeExpander createCubeExpander()
+	{
+		return new CubeExpander();
+	}
 
-    /**
-     * Create an instance of {@link CubeNpcTemplate }
-     * 
-     */
-    public CubeNpcTemplate createCubeNpcTemplate() {
-        return new CubeNpcTemplate();
-    }
+	/**
+	 * Create an instance of {@link CubeNpcTemplate }
+	 * 
+	 */
+	public CubeNpcTemplate createCubeNpcTemplate()
+	{
+		return new CubeNpcTemplate();
+	}
 
-    /**
-     * Create an instance of {@link Import }
-     * 
-     */
-    public Import createImport() {
-        return new Import();
-    }
+	/**
+	 * Create an instance of {@link Import }
+	 * 
+	 */
+	public Import createImport()
+	{
+		return new Import();
+	}
 
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link CubeExpander }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "cube_expander")
-    public JAXBElement<CubeExpander> createCubeExpander(CubeExpander value) {
-        return new JAXBElement<CubeExpander>(_CubeExpander_QNAME, CubeExpander.class, null, value);
-    }
+	/**
+	 * Create an instance of {@link JAXBElement }{@code <}{@link CubeExpander }{@code >}}
+	 * 
+	 */
+	@XmlElementDecl(namespace = "", name = "cube_expander")
+	public JAXBElement<CubeExpander> createCubeExpander(CubeExpander value)
+	{
+		return new JAXBElement<CubeExpander>(_CubeExpander_QNAME, CubeExpander.class, null, value);
+	}
 
 }

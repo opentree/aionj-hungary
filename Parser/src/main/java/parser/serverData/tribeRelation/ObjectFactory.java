@@ -5,11 +5,9 @@
 // Generated on: 2010.11.08 at 07:04:17 DE CET 
 //
 
-
 package parser.serverData.tribeRelation;
 
 import javax.xml.bind.annotation.XmlRegistry;
-
 
 /**
  * This object contains factory methods for each 
@@ -26,30 +24,33 @@ import javax.xml.bind.annotation.XmlRegistry;
  * 
  */
 @XmlRegistry
-public class ObjectFactory {
+public class ObjectFactory
+{
 
+	/**
+	 * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: parser.serverData.tribeRelation
+	 * 
+	 */
+	public ObjectFactory()
+	{
+	}
 
-    /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: parser.serverData.tribeRelation
-     * 
-     */
-    public ObjectFactory() {
-    }
+	/**
+	 * Create an instance of {@link Tribe }
+	 * 
+	 */
+	public Tribe createTribe()
+	{
+		return new Tribe();
+	}
 
-    /**
-     * Create an instance of {@link Tribe }
-     * 
-     */
-    public Tribe createTribe() {
-        return new Tribe();
-    }
-
-    /**
-     * Create an instance of {@link TribeRelations }
-     * 
-     */
-    public TribeRelations createTribeRelations() {
-        return new TribeRelations();
-    }
+	/**
+	 * Create an instance of {@link TribeRelations }
+	 * 
+	 */
+	public TribeRelations createTribeRelations()
+	{
+		return new TribeRelations();
+	}
 
 }

@@ -42,10 +42,10 @@ public class ObjectInfosSave
 		ObjectFactory objFactory = new ObjectFactory();
 		ObjectInfos collection = (ObjectInfos) objFactory.createObjectInfos();
 		List<NpcInfo> templateList = collection.getNpcInfo();
-		
+
 		Collection<NpcClient> npcs = DataManager.getInstance().getIdNpcMap().values();
-		
-		for (NpcClient npc: npcs)
+
+		for (NpcClient npc : npcs)
 		{
 			NpcInfo template = new NpcInfo();
 			if (npc.getUiType() != null && npc.getUiType().equalsIgnoreCase("Binding_Stone"))
@@ -53,11 +53,11 @@ public class ObjectInfosSave
 				template.setClassName("BindPoint");
 				template.setKnowlistName("StaticObjectKnowlist");
 			}
-			else if(npc.getUiType() != null && npc.getUiType().equalsIgnoreCase("Trap"))
+			else if (npc.getUiType() != null && npc.getUiType().equalsIgnoreCase("Trap"))
 			{
 				template.setClassName("Trap");
 			}
-			else if(npc.getUiType() != null && npc.getUiType().equalsIgnoreCase("summoned"))
+			else if (npc.getUiType() != null && npc.getUiType().equalsIgnoreCase("summoned"))
 			{
 				template.setClassName("Summon");
 			}

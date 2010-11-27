@@ -5,7 +5,6 @@
 // Generated on: 2010.11.08 at 06:02:42 DU CET 
 //
 
-
 package parser.serverData.cubeExpander;
 
 import java.util.ArrayList;
@@ -14,7 +13,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for cubeNpcTemplate complex type.
@@ -38,84 +36,90 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "cubeNpcTemplate", propOrder = {
-    "expand"
-})
-public class CubeNpcTemplate {
+@XmlType(name = "cubeNpcTemplate", propOrder =
+{ "expand" })
+public class CubeNpcTemplate
+{
 
-    protected List<CubeExpand> expand;
-    @XmlAttribute(required = true)
-    protected int id;
-    @XmlAttribute(required = true)
-    protected String name;
+	protected List<CubeExpand>	expand;
+	@XmlAttribute(required = true)
+	protected int				id;
+	@XmlAttribute(required = true)
+	protected String			name;
 
-    /**
-     * Gets the value of the expand property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the expand property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getExpand().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link CubeExpand }
-     * 
-     * 
-     */
-    public List<CubeExpand> getExpand() {
-        if (expand == null) {
-            expand = new ArrayList<CubeExpand>();
-        }
-        return this.expand;
-    }
+	/**
+	 * Gets the value of the expand property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list,
+	 * not a snapshot. Therefore any modification you make to the
+	 * returned list will be present inside the JAXB object.
+	 * This is why there is not a <CODE>set</CODE> method for the expand property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getExpand().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link CubeExpand }
+	 * 
+	 * 
+	 */
+	public List<CubeExpand> getExpand()
+	{
+		if (expand == null)
+		{
+			expand = new ArrayList<CubeExpand>();
+		}
+		return this.expand;
+	}
 
-    /**
-     * Gets the value of the id property.
-     * 
-     */
-    public int getId() {
-        return id;
-    }
+	/**
+	 * Gets the value of the id property.
+	 * 
+	 */
+	public int getId()
+	{
+		return id;
+	}
 
-    /**
-     * Sets the value of the id property.
-     * 
-     */
-    public void setId(int value) {
-        this.id = value;
-    }
+	/**
+	 * Sets the value of the id property.
+	 * 
+	 */
+	public void setId(int value)
+	{
+		this.id = value;
+	}
 
-    /**
-     * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getName() {
-        return name;
-    }
+	/**
+	 * Gets the value of the name property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getName()
+	{
+		return name;
+	}
 
-    /**
-     * Sets the value of the name property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setName(String value) {
-        this.name = value;
-    }
+	/**
+	 * Sets the value of the name property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link String }
+	 *     
+	 */
+	public void setName(String value)
+	{
+		this.name = value;
+	}
 
 }

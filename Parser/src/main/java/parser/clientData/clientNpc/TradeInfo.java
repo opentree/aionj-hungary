@@ -5,7 +5,6 @@
 // Generated on: 2010.11.08 at 05:57:01 DU CET 
 //
 
-
 package parser.clientData.clientNpc;
 
 import java.math.BigInteger;
@@ -13,7 +12,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for TradeInfo complex type.
@@ -37,90 +35,94 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TradeInfo", propOrder = {
-    "tabList",
-    "sellPriceRate",
-    "buyPriceRate"
-})
-public class TradeInfo {
+@XmlType(name = "TradeInfo", propOrder =
+{ "tabList", "sellPriceRate", "buyPriceRate" })
+public class TradeInfo
+{
 
-    @XmlElement(name = "tab_list")
-    protected TabList tabList;
-    @XmlElement(name = "sell_price_rate")
-    protected BigInteger sellPriceRate;
-    @XmlElement(name = "buy_price_rate")
-    protected BigInteger buyPriceRate;
+	@XmlElement(name = "tab_list")
+	protected TabList		tabList;
+	@XmlElement(name = "sell_price_rate")
+	protected BigInteger	sellPriceRate;
+	@XmlElement(name = "buy_price_rate")
+	protected BigInteger	buyPriceRate;
 
-    /**
-     * Gets the value of the tabList property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TabList }
-     *     
-     */
-    public TabList getTabList() {
-        return tabList;
-    }
+	/**
+	 * Gets the value of the tabList property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link TabList }
+	 *     
+	 */
+	public TabList getTabList()
+	{
+		return tabList;
+	}
 
-    /**
-     * Sets the value of the tabList property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TabList }
-     *     
-     */
-    public void setTabList(TabList value) {
-        this.tabList = value;
-    }
+	/**
+	 * Sets the value of the tabList property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link TabList }
+	 *     
+	 */
+	public void setTabList(TabList value)
+	{
+		this.tabList = value;
+	}
 
-    /**
-     * Gets the value of the sellPriceRate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
-     */
-    public BigInteger getSellPriceRate() {
-        return sellPriceRate;
-    }
+	/**
+	 * Gets the value of the sellPriceRate property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link BigInteger }
+	 *     
+	 */
+	public BigInteger getSellPriceRate()
+	{
+		return sellPriceRate;
+	}
 
-    /**
-     * Sets the value of the sellPriceRate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
-     */
-    public void setSellPriceRate(BigInteger value) {
-        this.sellPriceRate = value;
-    }
+	/**
+	 * Sets the value of the sellPriceRate property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link BigInteger }
+	 *     
+	 */
+	public void setSellPriceRate(BigInteger value)
+	{
+		this.sellPriceRate = value;
+	}
 
-    /**
-     * Gets the value of the buyPriceRate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
-     */
-    public BigInteger getBuyPriceRate() {
-        return buyPriceRate;
-    }
+	/**
+	 * Gets the value of the buyPriceRate property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link BigInteger }
+	 *     
+	 */
+	public BigInteger getBuyPriceRate()
+	{
+		return buyPriceRate;
+	}
 
-    /**
-     * Sets the value of the buyPriceRate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
-     */
-    public void setBuyPriceRate(BigInteger value) {
-        this.buyPriceRate = value;
-    }
+	/**
+	 * Sets the value of the buyPriceRate property.
+	 * 
+	 * @param value
+	 *     allowed object is
+	 *     {@link BigInteger }
+	 *     
+	 */
+	public void setBuyPriceRate(BigInteger value)
+	{
+		this.buyPriceRate = value;
+	}
 
 }

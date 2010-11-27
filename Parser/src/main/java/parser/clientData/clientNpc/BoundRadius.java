@@ -5,13 +5,11 @@
 // Generated on: 2010.11.08 at 05:57:01 DU CET 
 //
 
-
 package parser.clientData.clientNpc;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for BoundRadius complex type.
@@ -35,63 +33,67 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "BoundRadius", propOrder = {
-    "front",
-    "side",
-    "upper"
-})
-public class BoundRadius {
+@XmlType(name = "BoundRadius", propOrder =
+{ "front", "side", "upper" })
+public class BoundRadius
+{
 
-    protected float front;
-    protected float side;
-    protected float upper;
+	protected float	front;
+	protected float	side;
+	protected float	upper;
 
-    /**
-     * Gets the value of the front property.
-     * 
-     */
-    public float getFront() {
-        return front;
-    }
+	/**
+	 * Gets the value of the front property.
+	 * 
+	 */
+	public float getFront()
+	{
+		return front;
+	}
 
-    /**
-     * Sets the value of the front property.
-     * 
-     */
-    public void setFront(float value) {
-        this.front = value;
-    }
+	/**
+	 * Sets the value of the front property.
+	 * 
+	 */
+	public void setFront(float value)
+	{
+		this.front = value;
+	}
 
-    /**
-     * Gets the value of the side property.
-     * 
-     */
-    public float getSide() {
-        return side;
-    }
+	/**
+	 * Gets the value of the side property.
+	 * 
+	 */
+	public float getSide()
+	{
+		return side;
+	}
 
-    /**
-     * Sets the value of the side property.
-     * 
-     */
-    public void setSide(float value) {
-        this.side = value;
-    }
+	/**
+	 * Sets the value of the side property.
+	 * 
+	 */
+	public void setSide(float value)
+	{
+		this.side = value;
+	}
 
-    /**
-     * Gets the value of the upper property.
-     * 
-     */
-    public float getUpper() {
-        return upper;
-    }
+	/**
+	 * Gets the value of the upper property.
+	 * 
+	 */
+	public float getUpper()
+	{
+		return upper;
+	}
 
-    /**
-     * Sets the value of the upper property.
-     * 
-     */
-    public void setUpper(float value) {
-        this.upper = value;
-    }
+	/**
+	 * Sets the value of the upper property.
+	 * 
+	 */
+	public void setUpper(float value)
+	{
+		this.upper = value;
+	}
 
 }
