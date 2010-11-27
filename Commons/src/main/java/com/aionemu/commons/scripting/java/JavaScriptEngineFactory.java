@@ -45,27 +45,27 @@ public class JavaScriptEngineFactory implements ScriptEngineFactory
 	{
 		return "java";
 	}
-	
+
 	public String getEngineVersion()
 	{
 		return "1.6";
 	}
-	
+
 	public List<String> getExtensions()
 	{
 		return extensions;
 	}
-	
+
 	public String getLanguageName()
 	{
 		return "java";
 	}
-	
+
 	public String getLanguageVersion()
 	{
 		return "1.6";
 	}
-	
+
 	public String getMethodCallSyntax(String obj, String m, String... args)
 	{
 		StringBuilder buf = new StringBuilder();
@@ -73,10 +73,10 @@ public class JavaScriptEngineFactory implements ScriptEngineFactory
 		buf.append(".");
 		buf.append(m);
 		buf.append("(");
-		if (args.length != 0)
+		if(args.length != 0)
 		{
 			int i = 0;
-			for (; i < args.length - 1; i++)
+			for(; i < args.length - 1; i++)
 			{
 				buf.append(args[i] + ", ");
 			}
@@ -85,26 +85,26 @@ public class JavaScriptEngineFactory implements ScriptEngineFactory
 		buf.append(")");
 		return buf.toString();
 	}
-	
+
 	public List<String> getMimeTypes()
 	{
 		return mimeTypes;
 	}
-	
+
 	public List<String> getNames()
 	{
 		return names;
 	}
-	
+
 	public String getOutputStatement(String toDisplay)
 	{
 		StringBuilder buf = new StringBuilder();
 		buf.append("System.out.print(\"");
 		int len = toDisplay.length();
-		for (int i = 0; i < len; i++)
+		for(int i = 0; i < len; i++)
 		{
 			char ch = toDisplay.charAt(i);
-			switch (ch)
+			switch(ch)
 			{
 				case '"':
 					buf.append("\\\"");
@@ -120,30 +120,30 @@ public class JavaScriptEngineFactory implements ScriptEngineFactory
 		buf.append("\");");
 		return buf.toString();
 	}
-	
+
 	public String getParameter(String key)
 	{
-		if (key.equals(ScriptEngine.ENGINE))
+		if(key.equals(ScriptEngine.ENGINE))
 		{
 			return getEngineName();
 		}
-		else if (key.equals(ScriptEngine.ENGINE_VERSION))
+		else if(key.equals(ScriptEngine.ENGINE_VERSION))
 		{
 			return getEngineVersion();
 		}
-		else if (key.equals(ScriptEngine.NAME))
+		else if(key.equals(ScriptEngine.NAME))
 		{
 			return getEngineName();
 		}
-		else if (key.equals(ScriptEngine.LANGUAGE))
+		else if(key.equals(ScriptEngine.LANGUAGE))
 		{
 			return getLanguageName();
 		}
-		else if (key.equals(ScriptEngine.LANGUAGE_VERSION))
+		else if(key.equals(ScriptEngine.LANGUAGE_VERSION))
 		{
 			return getLanguageVersion();
 		}
-		else if (key.equals("THREADING"))
+		else if(key.equals("THREADING"))
 		{
 			return "MULTITHREADED";
 		}
@@ -152,7 +152,7 @@ public class JavaScriptEngineFactory implements ScriptEngineFactory
 			return null;
 		}
 	}
-	
+
 	public String getProgram(String... statements)
 	{
 		// we generate a Main class with main method
@@ -162,9 +162,9 @@ public class JavaScriptEngineFactory implements ScriptEngineFactory
 		buf.append(getClassName());
 		buf.append(" {\n");
 		buf.append("    public static void main(String[] args) {\n");
-		if (statements.length != 0)
+		if(statements.length != 0)
 		{
-			for (int i = 0; i < statements.length; i++)
+			for(int i = 0; i < statements.length; i++)
 			{
 				buf.append("        ");
 				buf.append(statements[i]);
@@ -175,29 +175,29 @@ public class JavaScriptEngineFactory implements ScriptEngineFactory
 		buf.append("}\n");
 		return buf.toString();
 	}
-	
+
 	public ScriptEngine getScriptEngine()
 	{
 		JavaScriptEngine engine = new JavaScriptEngine();
 		engine.setFactory(this);
 		return engine;
 	}
-	
+
 	// used to generate a unique class name in getProgram
 	private String getClassName()
 	{
 		return "com_sun_script_java_Main$" + getNextClassNumber();
 	}
-	
+
 	private static synchronized long getNextClassNumber()
 	{
 		return nextClassNum++;
 	}
-	
-	private static long nextClassNum = 0L;
-	private static List<String> names;
-	private static List<String> extensions;
-	private static List<String> mimeTypes;
+
+	private static long			nextClassNum	= 0L;
+	private static List<String>	names;
+	private static List<String>	extensions;
+	private static List<String>	mimeTypes;
 	static
 	{
 		names = new ArrayList<String>(1);

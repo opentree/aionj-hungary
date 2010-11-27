@@ -25,13 +25,13 @@ import com.aionemu.commons.network.netty.handler.ICryptedChannelHandler;
 
 /**
  * @author lyahim
- *
+ * 
  */
 public class PacketDecoder extends OneToOneDecoder
 {
 	@Override
-    protected Object decode(ChannelHandlerContext ctx, Channel channel, Object msg) throws Exception
-    {
+	protected Object decode(ChannelHandlerContext ctx, Channel channel, Object msg) throws Exception
+	{
 		Object object = ctx.getPipeline().get("handler");
 		ChannelBuffer buf = (ChannelBuffer) msg;
 		if(buf != null && object != null && object instanceof ICryptedChannelHandler)
@@ -41,5 +41,5 @@ public class PacketDecoder extends OneToOneDecoder
 			return buf;
 		}
 		throw new Exception("Mistake in decode!");
-    }
+	}
 }

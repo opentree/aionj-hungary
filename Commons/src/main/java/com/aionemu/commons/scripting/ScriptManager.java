@@ -15,8 +15,8 @@
 package com.aionemu.commons.scripting;
 
 /**
- *
- * @author  KenM
+ * 
+ * @author KenM
  */
 public abstract class ScriptManager<S extends ManagedScript>
 {

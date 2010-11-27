@@ -47,90 +47,96 @@ import org.eclipse.jdt.internal.compiler.tool.EclipseCompiler;
  */
 public class JavaCompiler
 {
-	private javax.tools.JavaCompiler tool;
-	
+	private javax.tools.JavaCompiler	tool;
+
 	public JavaCompiler()
 	{
 		tool = new EclipseCompiler();
 	}
-	
+
 	public Map<String, byte[]> compile(String source, String fileName)
 	{
 		PrintWriter err = new PrintWriter(System.err);
 		return compile(source, fileName, err, null, null);
 	}
-	
+
 	public Map<String, byte[]> compile(String fileName, String source, Writer err)
 	{
 		return compile(fileName, source, err, null, null);
 	}
-	
+
 	public Map<String, byte[]> compile(String fileName, String source, Writer err, String sourcePath)
 	{
 		return compile(fileName, source, err, sourcePath, null);
 	}
-	
+
 	/**
 	 * compile given String source and return bytecodes as a Map.
 	 * 
-	 * @param fileName source fileName to be used for error messages etc.
-	 * @param source Java source as String
-	 * @param err error writer where diagnostic messages are written
-	 * @param sourcePath location of additional .java source files
-	 * @param classPath location of additional .class files
+	 * @param fileName
+	 *            source fileName to be used for error messages etc.
+	 * @param source
+	 *            Java source as String
+	 * @param err
+	 *            error writer where diagnostic messages are written
+	 * @param sourcePath
+	 *            location of additional .java source files
+	 * @param classPath
+	 *            location of additional .class files
 	 */
 	public Map<String, byte[]> compile(String fileName, String source, Writer err, String sourcePath, String classPath)
 	{
 		// to collect errors, warnings etc.
 		DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
-		
+
 		// create a new memory JavaFileManager
 		MemoryJavaFileManager manager = new MemoryJavaFileManager();
-		
+
 		// prepare the compilation unit
 		List<JavaFileObject> compUnits = new ArrayList<JavaFileObject>(1);
 		compUnits.add(MemoryJavaFileManager.makeStringSource(fileName, source));
-		
+
 		// javac options
 		List<String> options = new ArrayList<String>();
 		options.add("-Xlint:all");
 		options.add("-g");
 		options.add("-deprecation");
-		if (sourcePath != null)
+		if(sourcePath != null)
 		{
 			options.add("-sourcepath");
 			options.add(sourcePath);
 		}
-		
-		if (classPath != null)
+
+		if(classPath != null)
 		{
 			options.add("-classpath");
 			options.add(classPath);
 		}
-		
+
 		// create a compilation task
 		javax.tools.JavaCompiler.CompilationTask task = tool.getTask(err, manager, diagnostics, options, null,
 			compUnits);
-		
-		if (task.call() == false)
+
+		if(task.call() == false)
 		{
 			PrintWriter perr = new PrintWriter(err);
-			for (Diagnostic<? extends JavaFileObject> diagnostic : diagnostics.getDiagnostics())
+			for(Diagnostic<? extends JavaFileObject> diagnostic : diagnostics.getDiagnostics())
 			{
 				perr.println(diagnostic.getMessage(null));
 			}
 			perr.flush();
 			return null;
 		}
-		
+
 		Map<String, byte[]> classBytes = manager.getClassBytes();
 		try
-		{			manager.close();
+		{
+			manager.close();
 		}
-		catch (IOException exp)
+		catch(IOException exp)
 		{
 		}
-		
+
 		return classBytes;
 	}
 }

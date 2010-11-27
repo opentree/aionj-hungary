@@ -35,93 +35,94 @@ import com.aionemu.commons.network.netty.packet.AbstractServerPacket;
 
 /**
  * @author lyahim
- *
+ * 
  */
 public abstract class AbstractChannelHandler extends SimpleChannelUpstreamHandler
 {
-    private static final Logger log = Logger.getLogger(AbstractChannelHandler.class);
+	private static final Logger												log	= Logger
+																					.getLogger(AbstractChannelHandler.class);
 
-    protected State state;
-    protected InetAddress inetAddress;
-    protected Channel channel;
-    private AbstractPacketHandlerFactory<? extends AbstractChannelHandler> abstractPacketHandlerFactory;
-    
-    public AbstractChannelHandler(AbstractPacketHandlerFactory<? extends AbstractChannelHandler> aphf)
-    {
-    	super();
-    	abstractPacketHandlerFactory = aphf;
-    }
-    
-    
-    @Override
+	protected State															state;
+	protected InetAddress													inetAddress;
+	protected Channel														channel;
+	private AbstractPacketHandlerFactory<? extends AbstractChannelHandler>	abstractPacketHandlerFactory;
+
+	public AbstractChannelHandler(AbstractPacketHandlerFactory<? extends AbstractChannelHandler> aphf)
+	{
+		super();
+		abstractPacketHandlerFactory = aphf;
+	}
+
+	@Override
 	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception
 	{
 		super.channelConnected(ctx, e);
 		state = State.CONNECTED;
 		channel = ctx.getChannel();
-		inetAddress = ((InetSocketAddress) e.getChannel().getRemoteAddress()).getAddress();		
+		inetAddress = ((InetSocketAddress) e.getChannel().getRemoteAddress()).getAddress();
 	}
-        
-    @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception
-    {
-        if(e.getCause().getClass().equals(IOException.class)) //server force close
-        {
-    		e.getChannel().close();       	
-        }
-        else if(e.getCause().getClass().equals(NullPointerException.class))
-        {
-        	log.error("NETTY: Exception caught: ", e.getCause());        	
-        }
-        else
-        {
-        	log.error("NETTY: Exception caught: ", e.getCause());        	
-    		e.getChannel().close();      	
-        }
-    }
 
-    public void close()
-    {
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception
+	{
+		if(e.getCause().getClass().equals(IOException.class)) // server force close
+		{
+			e.getChannel().close();
+		}
+		else if(e.getCause().getClass().equals(NullPointerException.class))
+		{
+			log.error("NETTY: Exception caught: ", e.getCause());
+		}
+		else
+		{
+			log.error("NETTY: Exception caught: ", e.getCause());
+			e.getChannel().close();
+		}
+	}
+
+	public void close()
+	{
 		channel.close();
-    }
+	}
 
-    public void close(AbstractServerPacket<? extends AbstractChannelHandler> lastpacket)
-    {
-        sendPacket(lastpacket);
-        close();
-    }
+	public void close(AbstractServerPacket<? extends AbstractChannelHandler> lastpacket)
+	{
+		sendPacket(lastpacket);
+		close();
+	}
 
-    public String getIP()
-    {
-        return inetAddress.getHostAddress();
-    }
-    
-    public byte[] getByteIP()
-    {
-        return inetAddress.getAddress();
-    }
-    
-    public State getState()
-    {
-        return state;
-    }
+	public String getIP()
+	{
+		return inetAddress.getHostAddress();
+	}
 
-    public void setState(State state)
-    {
-        this.state = state;
-    }
+	public byte[] getByteIP()
+	{
+		return inetAddress.getAddress();
+	}
+
+	public State getState()
+	{
+		return state;
+	}
+
+	public void setState(State state)
+	{
+		this.state = state;
+	}
 
 	@SuppressWarnings("unchecked")
 	public void sendPacket(AbstractServerPacket<? extends AbstractChannelHandler> abstractserverpacket)
-    {
-    	AbstractServerPacket<AbstractChannelHandler> spacket = (AbstractServerPacket<AbstractChannelHandler>) abstractserverpacket;
-    	
-    	spacket.setOpCode(abstractPacketHandlerFactory.getServerPacketopCode((Class<? extends AbstractServerPacket<AbstractChannelHandler>>) spacket.getClass()));
-    	spacket.write(this);
+	{
+		AbstractServerPacket<AbstractChannelHandler> spacket = (AbstractServerPacket<AbstractChannelHandler>) abstractserverpacket;
+
+		spacket.setOpCode(abstractPacketHandlerFactory
+			.getServerPacketopCode((Class<? extends AbstractServerPacket<AbstractChannelHandler>>) spacket.getClass()));
+		spacket.write(this);
 		channel.write(spacket.getBuf());
 		log.debug("Sent packet: " + spacket.getClass().getSimpleName());
-    }
-    
+	}
+
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception
 	{
@@ -129,8 +130,9 @@ public abstract class AbstractChannelHandler extends SimpleChannelUpstreamHandle
 		/**
 		 * Packet is frame decoded and decrypted at this stage Here packet will be read and submitted to execution
 		 */
-		AbstractClientPacket<? extends AbstractChannelHandler> packet = abstractPacketHandlerFactory.handleClientPacket((ChannelBuffer) e.getMessage(), this);
-		if (packet != null && packet.read())
+		AbstractClientPacket<? extends AbstractChannelHandler> packet = abstractPacketHandlerFactory
+			.handleClientPacket((ChannelBuffer) e.getMessage(), this);
+		if(packet != null && packet.read())
 		{
 			packet.run();
 			log.debug("Received packet: " + packet.getClass().getSimpleName());

@@ -77,7 +77,6 @@ public class ConfigurableProcessor
 	 *            Properties with keys\values
 	 */
 
-
 	@SuppressWarnings("rawtypes")
 	private static void process(Class clazz, Object obj, Properties[] props)
 	{

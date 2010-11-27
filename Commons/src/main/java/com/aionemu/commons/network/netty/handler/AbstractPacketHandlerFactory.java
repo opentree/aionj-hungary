@@ -24,26 +24,26 @@ import com.aionemu.commons.network.netty.packet.AbstractServerPacket;
 
 /**
  * @author lyahim
- *
+ * 
  */
 public class AbstractPacketHandlerFactory<T extends AbstractChannelHandler>
 {
-	private ClientPacketHandler<T> cHandler;
-	private ServerPacketHandler<T> sHandler;
+	private ClientPacketHandler<T>	cHandler;
+	private ServerPacketHandler<T>	sHandler;
 
-    protected AbstractPacketHandlerFactory(ServerPacketHandler<T> sph, ClientPacketHandler<T> cph)
-    {
-    	if(sph == null)
-    		sHandler = new ServerPacketHandler<T>();
-    	else
-    		sHandler = sph;
-    	
-    	if(cph == null)
-    		cHandler = new ClientPacketHandler<T>();
-    	else
-    		cHandler = cph;
-    }
-    
+	protected AbstractPacketHandlerFactory(ServerPacketHandler<T> sph, ClientPacketHandler<T> cph)
+	{
+		if(sph == null)
+			sHandler = new ServerPacketHandler<T>();
+		else
+			sHandler = sph;
+
+		if(cph == null)
+			cHandler = new ClientPacketHandler<T>();
+		else
+			cHandler = cph;
+	}
+
 	public void addPacket(Class<? extends AbstractServerPacket<T>> packetClass, int opcode)
 	{
 		sHandler.addPacketOpcode(packetClass, opcode);
@@ -62,7 +62,7 @@ public class AbstractPacketHandlerFactory<T extends AbstractChannelHandler>
 	@SuppressWarnings("unchecked")
 	public AbstractClientPacket<T> handleClientPacket(ChannelBuffer data, AbstractChannelHandler ch)
 	{
-		return cHandler.handle(data, (T)ch);
+		return cHandler.handle(data, (T) ch);
 	}
 
 }

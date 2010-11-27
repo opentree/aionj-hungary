@@ -43,39 +43,39 @@ import java.util.StringTokenizer;
  */
 public final class MemoryClassLoader extends URLClassLoader
 {
-	private Map<String, byte[]> classBytes;
-	
+	private Map<String, byte[]>	classBytes;
+
 	public MemoryClassLoader(Map<String, byte[]> classBytes, String classPath, ClassLoader parent)
 	{
 		super(toURLs(classPath), parent);
 		this.classBytes = classBytes;
 	}
-	
+
 	public MemoryClassLoader(Map<String, byte[]> classBytes, String classPath)
 	{
 		this(classBytes, classPath, null);
 	}
-	
+
 	public Class<?> load(String className) throws ClassNotFoundException
 	{
 		return loadClass(className);
 	}
-	
+
 	public Iterable<Class<?>> loadAll() throws ClassNotFoundException
 	{
 		List<Class<?>> classes = new ArrayList<Class<?>>(classBytes.size());
-		for (String name : classBytes.keySet())
+		for(String name : classBytes.keySet())
 		{
 			classes.add(loadClass(name));
 		}
 		return classes;
 	}
-	
+
 	@Override
 	protected Class<?> findClass(String className) throws ClassNotFoundException
 	{
 		byte[] buf = classBytes.get(className);
-		if (buf != null)
+		if(buf != null)
 		{
 			// clear the bytes in map -- we don't need it anymore
 			classBytes.put(className, null);
@@ -86,27 +86,27 @@ public final class MemoryClassLoader extends URLClassLoader
 			return super.findClass(className);
 		}
 	}
-	
+
 	private static URL[] toURLs(String classPath)
 	{
-		if (classPath == null)
+		if(classPath == null)
 		{
 			return new URL[0];
 		}
-		
+
 		List<URL> list = new ArrayList<URL>();
 		StringTokenizer st = new StringTokenizer(classPath, File.pathSeparator);
-		while (st.hasMoreTokens())
+		while(st.hasMoreTokens())
 		{
 			String token = st.nextToken();
 			File file = new File(token);
-			if (file.exists())
+			if(file.exists())
 			{
 				try
 				{
 					list.add(file.toURI().toURL());
 				}
-				catch (MalformedURLException mue)
+				catch(MalformedURLException mue)
 				{
 				}
 			}
@@ -116,7 +116,7 @@ public final class MemoryClassLoader extends URLClassLoader
 				{
 					list.add(new URL(token));
 				}
-				catch (MalformedURLException mue)
+				catch(MalformedURLException mue)
 				{
 				}
 			}

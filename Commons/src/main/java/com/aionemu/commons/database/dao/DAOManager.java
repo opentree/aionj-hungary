@@ -44,7 +44,6 @@ public class DAOManager
 	 */
 	private static final Map<String, DAO>	daoMap	= new HashMap<String, DAO>();
 
-
 	public static final DAOManager getInstance()
 	{
 		return SingletonHolder.instance;
@@ -166,7 +165,7 @@ public class DAOManager
 	{
 		// empty
 	}
-	
+
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{

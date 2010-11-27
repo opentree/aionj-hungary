@@ -24,72 +24,73 @@ import com.aionemu.commons.network.netty.handler.AbstractChannelHandler;
 
 /**
  * @author lyahim
- *
+ * 
  */
 public abstract class AbstractServerPacket<T extends AbstractChannelHandler> extends AbstractPacket
 {
 
-    public AbstractServerPacket()
-    {
+	public AbstractServerPacket()
+	{
 		this.setBuf(ChannelBuffers.buffer(ByteOrder.LITTLE_ENDIAN, 2 * 8192));
-    }
+	}
 
-    protected final void writeD(int value)
-    {
-        buf.writeInt(value);
-    }
+	protected final void writeD(int value)
+	{
+		buf.writeInt(value);
+	}
 
-    protected final void writeH(int value)
-    {
-        buf.writeShort((short)value);
-    }
+	protected final void writeH(int value)
+	{
+		buf.writeShort((short) value);
+	}
 
-    protected final void writeC(int value)
-    {
-        buf.writeByte((byte)value);
-    }
+	protected final void writeC(int value)
+	{
+		buf.writeByte((byte) value);
+	}
 
-    protected final void writeDF(double value)
-    {
-        buf.writeDouble(value);
-    }
+	protected final void writeDF(double value)
+	{
+		buf.writeDouble(value);
+	}
 
-    protected final void writeF(float value)
-    {
-        buf.writeFloat(value);
-    }
+	protected final void writeF(float value)
+	{
+		buf.writeFloat(value);
+	}
 
-    protected final void writeB(byte data[])
-    {
-        buf.writeBytes(data);
-    }
+	protected final void writeB(byte data[])
+	{
+		buf.writeBytes(data);
+	}
 
-    protected final void writeS(String text)
-    {
-        if(text == null)
-        {
-            buf.writeChar(0);
-        } else
-        {
-            int len = text.length();
-            for(int i = 0; i < len; i++)
-                buf.writeChar(text.charAt(i));
+	protected final void writeS(String text)
+	{
+		if(text == null)
+		{
+			buf.writeChar(0);
+		}
+		else
+		{
+			int len = text.length();
+			for(int i = 0; i < len; i++)
+				buf.writeChar(text.charAt(i));
 
-            buf.writeChar(0);
-        }
-    }
+			buf.writeChar(0);
+		}
+	}
 
-    protected final void writeQ(long data)
-    {
-        buf.writeLong(data);
-    }
+	protected final void writeQ(long data)
+	{
+		buf.writeLong(data);
+	}
 
-    public void write(T channelhandler)
-    {
+	public void write(T channelhandler)
+	{
 		writeH((short) 0);
 		writeC(getOpCode());
-        writeImpl(channelhandler);
-    }
+		writeImpl(channelhandler);
+	}
 
-    protected abstract void writeImpl(T channelhandler);
+	protected abstract void writeImpl(T channelhandler);
 }

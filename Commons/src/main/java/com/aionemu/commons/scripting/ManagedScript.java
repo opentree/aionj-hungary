@@ -22,13 +22,13 @@ import javax.script.ScriptException;
 /**
  * Abstract class for classes that are meant to be implemented by scripts.<BR>
  * 
- * @author  KenM
+ * @author KenM
  */
 public abstract class ManagedScript
 {
 	private final File	_scriptFile;
-	private long	_lastLoadTime;
-	private boolean	_isActive;
+	private long		_lastLoadTime;
+	private boolean		_isActive;
 
 	public ManagedScript()
 	{
@@ -49,11 +49,11 @@ public abstract class ManagedScript
 			AionScriptEngineManager.getInstance().executeScript(getScriptFile());
 			return true;
 		}
-		catch (FileNotFoundException e)
+		catch(FileNotFoundException e)
 		{
 			return false;
 		}
-		catch (ScriptException e)
+		catch(ScriptException e)
 		{
 			return false;
 		}
@@ -80,7 +80,8 @@ public abstract class ManagedScript
 	}
 
 	/**
-	 * @param lastLoadTime The lastLoadTime to set.
+	 * @param lastLoadTime
+	 *            The lastLoadTime to set.
 	 */
 	protected void setLastLoadTime(long lastLoadTime)
 	{

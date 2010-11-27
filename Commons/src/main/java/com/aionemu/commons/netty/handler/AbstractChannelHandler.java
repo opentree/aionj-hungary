@@ -50,7 +50,7 @@ public abstract class AbstractChannelHandler extends SimpleChannelUpstreamHandle
 	/**
 	 * Current state of this connection
 	 */
-	protected State			state;
+	protected State				state;
 
 	/**
 	 * Creates a new instance.
@@ -139,7 +139,7 @@ public abstract class AbstractChannelHandler extends SimpleChannelUpstreamHandle
 		super.handleUpstream(ctx, e);
 
 	}
-	
+
 	/**
 	 * 
 	 * @param packet

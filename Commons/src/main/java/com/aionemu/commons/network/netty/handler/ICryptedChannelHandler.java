@@ -20,11 +20,12 @@ import org.jboss.netty.buffer.ChannelBuffer;
 
 /**
  * @author lyahim
- *
+ * 
  */
 public interface ICryptedChannelHandler
 {
-	
+
 	public void encrypt(ChannelBuffer buf);
-    public void decrypt(ChannelBuffer buf);   
+
+	public void decrypt(ChannelBuffer buf);
 }

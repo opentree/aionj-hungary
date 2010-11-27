@@ -33,37 +33,43 @@ import com.aionemu.commons.utils.ThreadPoolManager;
 
 /**
  * @author lyahim
- *
+ * 
  */
 
 public abstract class AbstractNettyServer
 {
 	/**
 	 * Base method for initialize Client ChannelFactorys
+	 * 
 	 * @return NioServerSocketChannelFactory
 	 */
 	protected NioClientSocketChannelFactory initClientChannelFactory()
 	{
-		return new NioClientSocketChannelFactory(ThreadPoolManager.getInstance(),ThreadPoolManager.getInstance(),Runtime.getRuntime().availableProcessors());
+		return new NioClientSocketChannelFactory(ThreadPoolManager.getInstance(), ThreadPoolManager.getInstance(),
+			Runtime.getRuntime().availableProcessors());
 	}
-	
+
 	/**
 	 * Base method for initialize Server ChannelFactorys
+	 * 
 	 * @return NioServerSocketChannelFactory
 	 */
 	protected NioServerSocketChannelFactory initServerChannelFactory()
 	{
-		return new NioServerSocketChannelFactory(ThreadPoolManager.getInstance(),ThreadPoolManager.getInstance(),Runtime.getRuntime().availableProcessors());
+		return new NioServerSocketChannelFactory(ThreadPoolManager.getInstance(), ThreadPoolManager.getInstance(),
+			Runtime.getRuntime().availableProcessors());
 	}
+
 	/**
 	 * Base shutdown process for server
 	 */
-    public void shutDown()
-    {
-    	ThreadPoolManager.getInstance().shutdown();
-    }
-    
-	protected Channel initServerChannel(ChannelFactory channelFactory, InetSocketAddress address, ChannelPipelineFactory channelPipelineFactory)
+	public void shutDown()
+	{
+		ThreadPoolManager.getInstance().shutdown();
+	}
+
+	protected Channel initServerChannel(ChannelFactory channelFactory, InetSocketAddress address,
+		ChannelPipelineFactory channelPipelineFactory)
 	{
 		ServerBootstrap bootstrap = new ServerBootstrap(channelFactory);
 		bootstrap.setPipelineFactory(channelPipelineFactory);
@@ -76,8 +82,9 @@ public abstract class AbstractNettyServer
 
 		return bootstrap.bind(address);
 	}
-	
-	protected ChannelFuture initClientChannel(ChannelFactory channelFactory, InetSocketAddress address, ChannelPipelineFactory channelPipelineFactory)
+
+	protected ChannelFuture initClientChannel(ChannelFactory channelFactory, InetSocketAddress address,
+		ChannelPipelineFactory channelPipelineFactory)
 	{
 		ClientBootstrap bootstrap = new ClientBootstrap(channelFactory);
 		bootstrap.setPipelineFactory(channelPipelineFactory);
@@ -87,9 +94,9 @@ public abstract class AbstractNettyServer
 		return bootstrap.connect(address);
 	}
 
-    /**
-     * Initialize NettyServer
-     */
-    public abstract void initialize();
-    
+	/**
+	 * Initialize NettyServer
+	 */
+	public abstract void initialize();
+
 }

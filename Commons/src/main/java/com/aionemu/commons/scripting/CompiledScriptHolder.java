@@ -20,20 +20,20 @@ import java.io.Serializable;
 import javax.script.CompiledScript;
 
 /**
- *
- * @author  KenM
+ * 
+ * @author KenM
  */
 public class CompiledScriptHolder implements Serializable
 {
 	/**
 	 * Version 1
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long	serialVersionUID	= 1L;
 
-	private long _lastModified;
-	private long _size;
-	private CompiledScript _compiledScript;
-	
+	private long				_lastModified;
+	private long				_size;
+	private CompiledScript		_compiledScript;
+
 	/**
 	 * @param compiledScript
 	 * @param lastModified
@@ -45,7 +45,7 @@ public class CompiledScriptHolder implements Serializable
 		_lastModified = lastModified;
 		_size = size;
 	}
-	
+
 	public CompiledScriptHolder(CompiledScript compiledScript, File scriptFile)
 	{
 		this(compiledScript, scriptFile.lastModified(), scriptFile.length());
@@ -60,7 +60,8 @@ public class CompiledScriptHolder implements Serializable
 	}
 
 	/**
-	 * @param lastModified The lastModified to set.
+	 * @param lastModified
+	 *            The lastModified to set.
 	 */
 	public void setLastModified(long lastModified)
 	{
@@ -76,7 +77,8 @@ public class CompiledScriptHolder implements Serializable
 	}
 
 	/**
-	 * @param size The size to set.
+	 * @param size
+	 *            The size to set.
 	 */
 	public void setSize(long size)
 	{
@@ -92,13 +94,14 @@ public class CompiledScriptHolder implements Serializable
 	}
 
 	/**
-	 * @param compiledScript The compiledScript to set.
+	 * @param compiledScript
+	 *            The compiledScript to set.
 	 */
 	public void setCompiledScript(CompiledScript compiledScript)
 	{
 		_compiledScript = compiledScript;
 	}
-	
+
 	public boolean matches(File f)
 	{
 		return f.lastModified() == getLastModified() && f.length() == getSize();

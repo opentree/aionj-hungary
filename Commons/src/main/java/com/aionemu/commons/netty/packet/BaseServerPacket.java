@@ -139,7 +139,7 @@ public abstract class BaseServerPacket extends AbstractPacket
 	{
 		buf.writeLong(data);
 	}
-	
+
 	/**
 	 * 
 	 * @param client
@@ -147,5 +147,5 @@ public abstract class BaseServerPacket extends AbstractPacket
 	public void write(AbstractChannelHandler client)
 	{
 	}
-	
+
 }

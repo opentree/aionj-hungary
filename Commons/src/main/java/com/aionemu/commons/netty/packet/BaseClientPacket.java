@@ -299,7 +299,7 @@ public abstract class BaseClientPacket<T extends AbstractChannelHandler> extends
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Send new AionServerPacket to connection that is owner of this packet. This method is equvalent to:
 	 * client.sendPacket(msg);

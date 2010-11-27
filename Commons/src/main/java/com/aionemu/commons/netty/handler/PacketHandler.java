@@ -28,13 +28,14 @@ import com.aionemu.commons.netty.packet.BaseClientPacket;
 /**
  * @author Mr.Poke
  */
-public class PacketHandler <T  extends AbstractChannelHandler>
+public class PacketHandler<T extends AbstractChannelHandler>
 {
 
 	/**
 	 * logger for this class
 	 */
-	private static final Logger							log					= Logger.getLogger(PacketHandler.class);
+	private static final Logger										log					= Logger
+																							.getLogger(PacketHandler.class);
 
 	private FastMap<State, FastMap<Integer, BaseClientPacket<T>>>	packetsPrototypes	= new FastMap<State, FastMap<Integer, BaseClientPacket<T>>>();
 
@@ -83,7 +84,7 @@ public class PacketHandler <T  extends AbstractChannelHandler>
 			return null;
 		}
 
-		BaseClientPacket<T> res =  (BaseClientPacket<T>) prototype.clonePacket();
+		BaseClientPacket<T> res = (BaseClientPacket<T>) prototype.clonePacket();
 		res.setBuf(buf);
 		res.setConnection((T) con);
 

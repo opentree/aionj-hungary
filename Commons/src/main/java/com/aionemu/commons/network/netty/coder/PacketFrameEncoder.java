@@ -23,7 +23,7 @@ import org.jboss.netty.handler.codec.oneone.OneToOneEncoder;
 
 /**
  * @author lyahim
- *
+ * 
  */
 public class PacketFrameEncoder extends OneToOneEncoder
 {
@@ -34,6 +34,7 @@ public class PacketFrameEncoder extends OneToOneEncoder
 		super();
 		LENGTH = length;
 	}
+
 	@Override
 	protected Object encode(ChannelHandlerContext ctx, Channel channel, Object msg) throws Exception
 	{

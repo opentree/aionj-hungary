@@ -47,17 +47,17 @@ import org.apache.log4j.Logger;
 
 /**
  * Caches script engines and provides funcionality for executing and managing scripts.<BR>
- *
- * @author  KenM
+ * 
+ * @author KenM
  */
 public final class AionScriptEngineManager
 {
 	/**
 	 * Logger
 	 */
-	private static final Logger					log					= Logger.getLogger(ScriptEngineManager.class);
+	private static final Logger	log	= Logger.getLogger(ScriptEngineManager.class);
 
-	public final static File					SCRIPT_FOLDER;
+	public final static File	SCRIPT_FOLDER;
 
 	static
 	{
@@ -73,7 +73,7 @@ public final class AionScriptEngineManager
 	private final Map<String, ScriptEngine>	_extEngines			= new FastMap<String, ScriptEngine>();
 	private final List<ScriptManager<?>>	_scriptManagers		= new LinkedList<ScriptManager<?>>();
 
-	private final CompiledScriptCache _cache;
+	private final CompiledScriptCache		_cache;
 
 	private File							_currentLoadingScript;
 
@@ -91,10 +91,10 @@ public final class AionScriptEngineManager
 	private final boolean					ATTEMPT_COMPILATION	= true;
 
 	/**
-	* Use Compiled Scripts Cache.<BR>
-	* Only works if ATTEMPT_COMPILATION is true.<BR>
-	* DISABLED DUE ISSUES (if a superclass file changes subclasses are not recompiled where they should)
-	*/
+	 * Use Compiled Scripts Cache.<BR>
+	 * Only works if ATTEMPT_COMPILATION is true.<BR>
+	 * DISABLED DUE ISSUES (if a superclass file changes subclasses are not recompiled where they should)
+	 */
 	private final boolean					USE_COMPILED_CACHE	= false;
 
 	/**
@@ -107,7 +107,7 @@ public final class AionScriptEngineManager
 	{
 		ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
 		List<ScriptEngineFactory> factories = scriptEngineManager.getEngineFactories();
-		if (USE_COMPILED_CACHE)
+		if(USE_COMPILED_CACHE)
 		{
 			_cache = loadCompiledScriptCache();
 		}
@@ -117,32 +117,32 @@ public final class AionScriptEngineManager
 		}
 		log.info("Initializing Script Engine Manager");
 
-		for (ScriptEngineFactory factory : factories)
+		for(ScriptEngineFactory factory : factories)
 		{
 			try
 			{
 				log.info("Script Engine: " + factory.getEngineName() + " " + factory.getEngineVersion()
 					+ " - Language: " + factory.getLanguageName() + " " + factory.getLanguageVersion());
-				
+
 				ScriptEngine engine = factory.getScriptEngine();
-				
-				for (String name : factory.getNames())
+
+				for(String name : factory.getNames())
 				{
-					if (_nameEngines.containsKey(name))
+					if(_nameEngines.containsKey(name))
 						throw new IllegalStateException("Multiple script engines for the same name!");
-					
+
 					_nameEngines.put(name, engine);
 				}
-				
-				for (String ext : factory.getExtensions())
+
+				for(String ext : factory.getExtensions())
 				{
-					if (_extEngines.containsKey(ext))
+					if(_extEngines.containsKey(ext))
 						throw new IllegalStateException("Multiple script engines for the same extension!");
-					
+
 					_extEngines.put(ext, engine);
 				}
 			}
-			catch (Exception e)
+			catch(Exception e)
 			{
 				log.warn("Failed initializing factory.", e);
 			}
@@ -161,54 +161,54 @@ public final class AionScriptEngineManager
 
 	public void executeScriptList(File list) throws IOException
 	{
-		if (list.isFile())
+		if(list.isFile())
 		{
 			LineNumberReader lnr = new LineNumberReader(new FileReader(list));
 			String line;
 			File file;
 
-			while ((line = lnr.readLine()) != null)
+			while((line = lnr.readLine()) != null)
 			{
 				String[] parts = line.trim().split("#");
 
-				if (parts.length > 0 && !parts[0].startsWith("#") && parts[0].length() > 0)
+				if(parts.length > 0 && !parts[0].startsWith("#") && parts[0].length() > 0)
 				{
 					line = parts[0];
 
-					if (line.endsWith("/**"))
+					if(line.endsWith("/**"))
 					{
 						line = line.substring(0, line.length() - 3);
 					}
-					else if (line.endsWith("/*"))
+					else if(line.endsWith("/*"))
 					{
 						line = line.substring(0, line.length() - 2);
 					}
 
 					file = new File(SCRIPT_FOLDER, line);
 
-					if (file.isDirectory() && parts[0].endsWith("/**"))
+					if(file.isDirectory() && parts[0].endsWith("/**"))
 					{
 						this.executeAllScriptsInDirectory(file, true, 32);
 					}
-					else if (file.isDirectory() && parts[0].endsWith("/*"))
+					else if(file.isDirectory() && parts[0].endsWith("/*"))
 					{
 						this.executeAllScriptsInDirectory(file);
 					}
-					else if (file.isFile())
+					else if(file.isFile())
 					{
 						try
 						{
 							this.executeScript(file);
 						}
-						catch (ScriptException e)
+						catch(ScriptException e)
 						{
 							reportScriptFileError(file, e);
 						}
 					}
 					else
 					{
-						log.warn("Failed loading: (" + file.getCanonicalPath() + ") @ " + list.getName() + ":" + lnr.getLineNumber()
-								+ " - Reason: doesnt exists or is not a file.");
+						log.warn("Failed loading: (" + file.getCanonicalPath() + ") @ " + list.getName() + ":"
+							+ lnr.getLineNumber() + " - Reason: doesnt exists or is not a file.");
 					}
 				}
 			}
@@ -232,44 +232,44 @@ public final class AionScriptEngineManager
 
 	private void executeAllScriptsInDirectory(File dir, boolean recurseDown, int maxDepth, int currentDepth)
 	{
-		if (dir.isDirectory())
+		if(dir.isDirectory())
 		{
-			for (File file : dir.listFiles())
+			for(File file : dir.listFiles())
 			{
-				if (file.isDirectory() && recurseDown && maxDepth > currentDepth)
+				if(file.isDirectory() && recurseDown && maxDepth > currentDepth)
 				{
-					if (VERBOSE_LOADING)
+					if(VERBOSE_LOADING)
 					{
 						log.info("Entering folder: " + file.getName());
 					}
 					this.executeAllScriptsInDirectory(file, recurseDown, maxDepth, currentDepth + 1);
 				}
-				else if (file.isFile())
+				else if(file.isFile())
 				{
 					try
 					{
 						String name = file.getName();
 						int lastIndex = name.lastIndexOf('.');
 						String extension;
-						if (lastIndex != -1)
+						if(lastIndex != -1)
 						{
 							extension = name.substring(lastIndex + 1);
 							ScriptEngine engine = getEngineByExtension(extension);
-							if (engine != null)
+							if(engine != null)
 							{
 								this.executeScript(engine, file);
 							}
 						}
 					}
-					catch (FileNotFoundException e)
+					catch(FileNotFoundException e)
 					{
 						// should never happen
 						log.error(e.getMessage(), e);
 					}
-					catch (ScriptException e)
+					catch(ScriptException e)
 					{
 						reportScriptFileError(file, e);
-						//_log.error(e.getMessage(),e);
+						// _log.error(e.getMessage(),e);
 					}
 				}
 			}
@@ -287,10 +287,10 @@ public final class AionScriptEngineManager
 
 	public CompiledScriptCache loadCompiledScriptCache()
 	{
-		if (USE_COMPILED_CACHE)
+		if(USE_COMPILED_CACHE)
 		{
 			File file = new File(SCRIPT_FOLDER, "CompiledScripts.cache");
-			if (file.isFile())
+			if(file.isFile())
 			{
 				ObjectInputStream ois = null;
 				try
@@ -299,15 +299,15 @@ public final class AionScriptEngineManager
 					CompiledScriptCache cache = (CompiledScriptCache) ois.readObject();
 					return cache;
 				}
-				catch (InvalidClassException e)
+				catch(InvalidClassException e)
 				{
 					log.error("Failed loading Compiled Scripts Cache, invalid class (Possibly outdated).", e);
 				}
-				catch (IOException e)
+				catch(IOException e)
 				{
 					log.error("Failed loading Compiled Scripts Cache from file.", e);
 				}
-				catch (ClassNotFoundException e)
+				catch(ClassNotFoundException e)
 				{
 					log.error("Failed loading Compiled Scripts Cache, class not found.", e);
 				}
@@ -320,7 +320,7 @@ public final class AionScriptEngineManager
 
 			return new CompiledScriptCache();
 		}
-		
+
 		return null;
 	}
 
@@ -329,17 +329,18 @@ public final class AionScriptEngineManager
 		String name = file.getName();
 		int lastIndex = name.lastIndexOf('.');
 		String extension;
-		if (lastIndex != -1)
+		if(lastIndex != -1)
 		{
 			extension = name.substring(lastIndex + 1);
 		}
 		else
 		{
-			throw new ScriptException("Script file (" + name + ") doesnt has an extension that identifies the ScriptEngine to be used.");
+			throw new ScriptException("Script file (" + name
+				+ ") doesnt has an extension that identifies the ScriptEngine to be used.");
 		}
 
 		ScriptEngine engine = getEngineByExtension(extension);
-		if (engine == null)
+		if(engine == null)
 			throw new ScriptException("No engine registered for extension (" + extension + ")");
 
 		this.executeScript(engine, file);
@@ -348,7 +349,7 @@ public final class AionScriptEngineManager
 	public void executeScript(String engineName, File file) throws FileNotFoundException, ScriptException
 	{
 		ScriptEngine engine = getEngineByName(engineName);
-		if (engine == null)
+		if(engine == null)
 			throw new ScriptException("No engine registered with name (" + engineName + ")");
 
 		this.executeScript(engine, file);
@@ -358,25 +359,26 @@ public final class AionScriptEngineManager
 	{
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 
-		if (VERBOSE_LOADING)
+		if(VERBOSE_LOADING)
 		{
 			log.info("Loading Script: " + file.getAbsolutePath());
 		}
 
-		if (PURGE_ERROR_LOG)
+		if(PURGE_ERROR_LOG)
 		{
 			String name = file.getAbsolutePath() + ".error.log";
 			File errorLog = new File(name);
-			if (errorLog.isFile())
+			if(errorLog.isFile())
 			{
 				errorLog.delete();
 			}
 		}
 
-		if (engine instanceof Compilable && ATTEMPT_COMPILATION)
+		if(engine instanceof Compilable && ATTEMPT_COMPILATION)
 		{
 			ScriptContext context = new SimpleScriptContext();
-			context.setAttribute("mainClass", getClassForFile(file).replace('/', '.').replace('\\', '.'), ScriptContext.ENGINE_SCOPE);
+			context.setAttribute("mainClass", getClassForFile(file).replace('/', '.').replace('\\', '.'),
+				ScriptContext.ENGINE_SCOPE);
 			context.setAttribute(ScriptEngine.FILENAME, file.getName(), ScriptContext.ENGINE_SCOPE);
 			context.setAttribute("classpath", SCRIPT_FOLDER.getAbsolutePath(), ScriptContext.ENGINE_SCOPE);
 			context.setAttribute("sourcepath", SCRIPT_FOLDER.getAbsolutePath(), ScriptContext.ENGINE_SCOPE);
@@ -387,7 +389,7 @@ public final class AionScriptEngineManager
 			try
 			{
 				engine.setContext(context);
-				if (USE_COMPILED_CACHE)
+				if(USE_COMPILED_CACHE)
 				{
 					CompiledScript cs = _cache.loadCompiledScript(engine, file);
 					cs.eval(context);
@@ -411,7 +413,8 @@ public final class AionScriptEngineManager
 		else
 		{
 			ScriptContext context = new SimpleScriptContext();
-			context.setAttribute("mainClass", getClassForFile(file).replace('/', '.').replace('\\', '.'), ScriptContext.ENGINE_SCOPE);
+			context.setAttribute("mainClass", getClassForFile(file).replace('/', '.').replace('\\', '.'),
+				ScriptContext.ENGINE_SCOPE);
 			context.setAttribute(ScriptEngine.FILENAME, file.getName(), ScriptContext.ENGINE_SCOPE);
 			context.setAttribute("classpath", SCRIPT_FOLDER.getAbsolutePath(), ScriptContext.ENGINE_SCOPE);
 			context.setAttribute("sourcepath", SCRIPT_FOLDER.getAbsolutePath(), ScriptContext.ENGINE_SCOPE);
@@ -436,7 +439,7 @@ public final class AionScriptEngineManager
 	{
 		String path = script.getAbsolutePath();
 		String scpPath = SCRIPT_FOLDER.getAbsolutePath();
-		if (path.startsWith(scpPath))
+		if(path.startsWith(scpPath))
 		{
 			int idx = path.lastIndexOf('.');
 			return path.substring(scpPath.length() + 1, idx);
@@ -452,7 +455,7 @@ public final class AionScriptEngineManager
 	public ScriptContext getScriptContext(String engineName)
 	{
 		ScriptEngine engine = getEngineByName(engineName);
-		if (engine == null)
+		if(engine == null)
 			throw new IllegalStateException("No engine registered with name (" + engineName + ")");
 
 		return this.getScriptContext(engine);
@@ -460,7 +463,7 @@ public final class AionScriptEngineManager
 
 	public Object eval(ScriptEngine engine, String script, ScriptContext context) throws ScriptException
 	{
-		if (engine instanceof Compilable && ATTEMPT_COMPILATION)
+		if(engine instanceof Compilable && ATTEMPT_COMPILATION)
 		{
 			Compilable eng = (Compilable) engine;
 			CompiledScript cs = eng.compile(script);
@@ -478,7 +481,7 @@ public final class AionScriptEngineManager
 	public Object eval(String engineName, String script, ScriptContext context) throws ScriptException
 	{
 		ScriptEngine engine = getEngineByName(engineName);
-		if (engine == null)
+		if(engine == null)
 			throw new ScriptException("No engine registered with name (" + engineName + ")");
 
 		return this.eval(engine, script, context);
@@ -492,7 +495,7 @@ public final class AionScriptEngineManager
 	public void reportScriptFileError(File script, ScriptException e)
 	{
 		log.warn("Failed executing script: " + script.getPath() + ".");
-		
+
 		final StringWriter sw = new StringWriter();
 		final PrintWriter pw = new PrintWriter(sw);
 		pw.println("Error on: " + script.getAbsolutePath());
@@ -500,20 +503,20 @@ public final class AionScriptEngineManager
 		pw.println();
 		e.printStackTrace(pw);
 		pw.close();
-		
+
 		final String report = sw.toString();
-		
+
 		FileOutputStream fos = null;
 		try
 		{
 			String fileName = script.getName() + ".error.log";
-			
+
 			fos = new FileOutputStream(new File(script.getParent(), fileName));
 			fos.write(report.getBytes());
-			
+
 			log.warn("See " + fileName + " for details.");
 		}
-		catch (IOException ioe)
+		catch(IOException ioe)
 		{
 			log.warn("Additionally failed when trying to write an error report on script directory.", ioe);
 			log.info(report);
@@ -541,7 +544,8 @@ public final class AionScriptEngineManager
 	}
 
 	/**
-	 * @param currentLoadingScript The currentLoadingScript to set.
+	 * @param currentLoadingScript
+	 *            The currentLoadingScript to set.
 	 */
 	protected void setCurrentLoadingScript(File currentLoadingScript)
 	{
@@ -559,6 +563,6 @@ public final class AionScriptEngineManager
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
-		protected static final AionScriptEngineManager _instance = new AionScriptEngineManager();
+		protected static final AionScriptEngineManager	_instance	= new AionScriptEngineManager();
 	}
 }

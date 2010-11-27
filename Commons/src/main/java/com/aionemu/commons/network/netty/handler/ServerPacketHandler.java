@@ -20,15 +20,14 @@ import com.aionemu.commons.network.netty.packet.AbstractServerPacket;
 
 import javolution.util.FastMap;
 
-
 /**
  * @author lyahim
- *
+ * 
  */
 public class ServerPacketHandler<T extends AbstractChannelHandler>
 {
 	private FastMap<Class<? extends AbstractServerPacket<T>>, Integer>	opcodes	= new FastMap<Class<? extends AbstractServerPacket<T>>, Integer>();
-	
+
 	public int getOpCode(Class<? extends AbstractServerPacket<AbstractChannelHandler>> packetClass)
 	{
 		Integer opcode = opcodes.get(packetClass);
@@ -37,15 +36,16 @@ public class ServerPacketHandler<T extends AbstractChannelHandler>
 
 		return opcode;
 	}
-	
+
 	public void addPacketOpcode(Class<? extends AbstractServerPacket<T>> packetClass, int opcode)
 	{
 		if(opcode < 0)
 			return;
-		
+
 		if(opcodes.values().contains(opcode))
-			throw new IllegalArgumentException(String.format("There already exists another packet with id 0x%02X", opcode));
-		
+			throw new IllegalArgumentException(String.format("There already exists another packet with id 0x%02X",
+				opcode));
+
 		opcodes.put(packetClass, opcode);
 	}
 }

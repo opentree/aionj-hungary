@@ -53,7 +53,8 @@ public abstract class AbstractPacket
 	}
 
 	/**
-	 * @param buf the buf to set
+	 * @param buf
+	 *            the buf to set
 	 */
 	public void setBuf(ChannelBuffer buf)
 	{

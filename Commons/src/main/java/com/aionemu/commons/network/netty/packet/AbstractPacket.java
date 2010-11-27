@@ -20,39 +20,39 @@ import org.jboss.netty.buffer.ChannelBuffer;
 
 /**
  * @author lyahim
- *
+ * 
  */
 public abstract class AbstractPacket
 {
-    protected int opCode;
-    protected ChannelBuffer buf;
+	protected int			opCode;
+	protected ChannelBuffer	buf;
 
-    public AbstractPacket(int opCode)
-    {
-        this.opCode = opCode;
-    }
-    
-    public AbstractPacket()
-    {
-    }
+	public AbstractPacket(int opCode)
+	{
+		this.opCode = opCode;
+	}
 
-    public int getOpCode()
-    {
-        return opCode;
-    }
+	public AbstractPacket()
+	{
+	}
 
-    public ChannelBuffer getBuf()
-    {
-        return buf;
-    }
+	public int getOpCode()
+	{
+		return opCode;
+	}
 
-    public void setBuf(ChannelBuffer buf)
-    {
-        this.buf = buf;
-    }
-    
-    public void setOpCode(int opCode)
-    {
-    	this.opCode = opCode;
-    }
+	public ChannelBuffer getBuf()
+	{
+		return buf;
+	}
+
+	public void setBuf(ChannelBuffer buf)
+	{
+		this.buf = buf;
+	}
+
+	public void setOpCode(int opCode)
+	{
+		this.opCode = opCode;
+	}
 }

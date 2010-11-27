@@ -72,7 +72,7 @@ public class ThreadPoolManager implements Executor
 	private ThreadPoolManager()
 	{
 		new DeadLockDetector(60, DeadLockDetector.RESTART).start();
-		
+
 		scheduledThreadPool = new ScheduledThreadPoolExecutor(4, new PriorityThreadFactory("ScheduledThreadPool",
 			Thread.NORM_PRIORITY));
 

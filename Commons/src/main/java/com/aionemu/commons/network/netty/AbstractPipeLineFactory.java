@@ -24,14 +24,14 @@ import com.aionemu.commons.utils.ThreadPoolManager;
 
 /**
  * @author lyahim
- *
+ * 
  */
 public abstract class AbstractPipeLineFactory implements ChannelPipelineFactory
 {
-	protected Executor pipelineExecutor;
+	protected Executor	pipelineExecutor;
 
 	public AbstractPipeLineFactory()
 	{
-	    pipelineExecutor =  ThreadPoolManager.getInstance();
-	}	
+		pipelineExecutor = ThreadPoolManager.getInstance();
+	}
 }

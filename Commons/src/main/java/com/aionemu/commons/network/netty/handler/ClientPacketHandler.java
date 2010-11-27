@@ -26,16 +26,17 @@ import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 
 /**
  * @author lyahim
- *
+ * 
  */
 public class ClientPacketHandler<T extends AbstractChannelHandler>
 {
-    private static final Logger log = Logger.getLogger(ClientPacketHandler.class);
-    
-    private FastMap<State, FastMap<Integer, AbstractClientPacket<T>>> packetsPrototypes = new FastMap<State, FastMap<Integer, AbstractClientPacket<T>>>();
+	private static final Logger											log					= Logger
+																								.getLogger(ClientPacketHandler.class);
 
-    public void addPacketPrototype(AbstractClientPacket<T> packetPrototype, State... states)
-    {
+	private FastMap<State, FastMap<Integer, AbstractClientPacket<T>>>	packetsPrototypes	= new FastMap<State, FastMap<Integer, AbstractClientPacket<T>>>();
+
+	public void addPacketPrototype(AbstractClientPacket<T> packetPrototype, State... states)
+	{
 		for(State state : states)
 		{
 			FastMap<Integer, AbstractClientPacket<T>> pm = packetsPrototypes.get(state);
@@ -46,40 +47,40 @@ public class ClientPacketHandler<T extends AbstractChannelHandler>
 			}
 			pm.put(packetPrototype.getOpCode(), packetPrototype);
 		}
-    }
+	}
 
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	protected AbstractClientPacket<T> getPacket(int id, ChannelBuffer buf, AbstractChannelHandler ch)
-    {
-        AbstractClientPacket<T> prototype = null;
-        
-        FastMap<Integer, AbstractClientPacket<T>> pm = packetsPrototypes.get(ch.getState());
-        
-        if(pm != null)
-            prototype = pm.get(Integer.valueOf(id));
-        
-        if(prototype == null)
-        {
-            unknownPacket(ch.getState(), id);
-            return null;
-        } 
-        else
-        {
-			AbstractClientPacket<T> res = (AbstractClientPacket<T>) prototype.clonePacket();
-            res.setBuf(buf);
-            res.setChannelHandler((T) ch);
-            return res;
-        }
-    }
+	{
+		AbstractClientPacket<T> prototype = null;
 
-    public AbstractClientPacket<T> handle(ChannelBuffer data, T ch)
-    {
-        int id = data.readByte() & 0xff;
-        return getPacket(id, data, ch);
-    }
-    
-    protected static void unknownPacket(State state, int id)
-    {
+		FastMap<Integer, AbstractClientPacket<T>> pm = packetsPrototypes.get(ch.getState());
+
+		if(pm != null)
+			prototype = pm.get(Integer.valueOf(id));
+
+		if(prototype == null)
+		{
+			unknownPacket(ch.getState(), id);
+			return null;
+		}
+		else
+		{
+			AbstractClientPacket<T> res = (AbstractClientPacket<T>) prototype.clonePacket();
+			res.setBuf(buf);
+			res.setChannelHandler((T) ch);
+			return res;
+		}
+	}
+
+	public AbstractClientPacket<T> handle(ChannelBuffer data, T ch)
+	{
+		int id = data.readByte() & 0xff;
+		return getPacket(id, data, ch);
+	}
+
+	protected static void unknownPacket(State state, int id)
+	{
 		log.warn(String.format("[UNKNOWN PACKET] : received 0x%02X, state=%s %n", id, state.toString()));
-    }
+	}
 }

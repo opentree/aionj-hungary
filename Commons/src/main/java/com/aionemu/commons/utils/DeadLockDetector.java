@@ -70,28 +70,28 @@ public class DeadLockDetector extends Thread
 	public final void run()
 	{
 		boolean deadlock = false;
-		while (!deadlock)
+		while(!deadlock)
 		{
 			try
 			{
 				long[] ids = tmx.findDeadlockedThreads();
 
-				if (ids != null)
+				if(ids != null)
 				{
 					/** deadlock found :/ */
 					deadlock = true;
 					ThreadInfo[] tis = tmx.getThreadInfo(ids, true, true);
 					String info = "DeadLock Found!\n";
-					for (ThreadInfo ti : tis)
+					for(ThreadInfo ti : tis)
 					{
 						info += ti.toString();
 					}
 
-					for (ThreadInfo ti : tis)
+					for(ThreadInfo ti : tis)
 					{
 						LockInfo[] locks = ti.getLockedSynchronizers();
 						MonitorInfo[] monitors = ti.getLockedMonitors();
-						if (locks.length == 0 && monitors.length == 0)
+						if(locks.length == 0 && monitors.length == 0)
 						{
 							/** this thread is deadlocked but its not guilty */
 							continue;
@@ -101,8 +101,8 @@ public class DeadLockDetector extends Thread
 						info += "Java-level deadlock:\n";
 						info += "\t" + dl.getThreadName() + " is waiting to lock " + dl.getLockInfo().toString()
 							+ " which is held by " + dl.getLockOwnerName() + "\n";
-						while ((dl = tmx.getThreadInfo(new long[] { dl.getLockOwnerId() }, true, true)[0])
-							.getThreadId() != ti.getThreadId())
+						while((dl = tmx.getThreadInfo(new long[] { dl.getLockOwnerId() }, true, true)[0]).getThreadId() != ti
+							.getThreadId())
 						{
 							info += "\t" + dl.getThreadName() + " is waiting to lock " + dl.getLockInfo().toString()
 								+ " which is held by " + dl.getLockOwnerName() + "\n";
@@ -110,14 +110,14 @@ public class DeadLockDetector extends Thread
 					}
 					log.warn(info);
 
-					if (doWhenDL == RESTART)
+					if(doWhenDL == RESTART)
 					{
 						System.exit(ExitCode.CODE_RESTART);
 					}
 				}
 				Thread.sleep(sleepTime);
 			}
-			catch (Exception e)
+			catch(Exception e)
 			{
 				log.warn("DeadLockDetector: " + e, e);
 			}

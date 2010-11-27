@@ -18,7 +18,7 @@ package com.aionemu.commons.netty;
 
 /**
  * @author Mr. Poke
- *
+ * 
  */
 public enum State
 {

@@ -25,13 +25,13 @@ import com.aionemu.commons.network.netty.handler.ICryptedChannelHandler;
 
 /**
  * @author lyahim
- *
+ * 
  */
 public class PacketEncoder extends OneToOneEncoder
 {
 	@Override
-    protected Object encode(ChannelHandlerContext ctx, Channel channel, Object msg) throws Exception
-    {
+	protected Object encode(ChannelHandlerContext ctx, Channel channel, Object msg) throws Exception
+	{
 		Object object = ctx.getPipeline().get("handler");
 		ChannelBuffer buf = (ChannelBuffer) msg;
 		if(buf != null && object != null && object instanceof ICryptedChannelHandler)
@@ -41,5 +41,5 @@ public class PacketEncoder extends OneToOneEncoder
 			return buf;
 		}
 		throw new Exception("Mistake in encode!");
-    }
+	}
 }

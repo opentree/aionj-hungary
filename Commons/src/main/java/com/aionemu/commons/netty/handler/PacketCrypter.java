@@ -20,7 +20,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 
 /**
  * @author Mr. Poke
- *
+ * 
  */
 public interface PacketCrypter
 {
