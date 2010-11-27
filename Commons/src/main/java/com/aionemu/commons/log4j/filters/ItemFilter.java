@@ -34,7 +34,7 @@ public final class ItemFilter extends Filter
 	{
 		Object message = loggingEvent.getMessage();
 
-		if(((String) message).startsWith("[ITEM]"))
+		if (((String) message).startsWith("[ITEM]"))
 		{
 			return ACCEPT;
 		}

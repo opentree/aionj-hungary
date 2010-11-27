@@ -48,7 +48,7 @@ public class LengthFieldBasedFrameEncoder extends OneToOneEncoder
 	protected Object encode(ChannelHandlerContext ctx, Channel channel, Object msg) throws Exception
 	{
 		ChannelBuffer buf = (ChannelBuffer) msg;
-		switch(LENGTH)
+		switch (LENGTH)
 		{
 			case 1:
 				buf.setByte(0, buf.readableBytes());

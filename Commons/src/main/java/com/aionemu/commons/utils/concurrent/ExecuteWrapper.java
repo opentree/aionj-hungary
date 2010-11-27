@@ -60,7 +60,7 @@ public class ExecuteWrapper implements Runnable
 		{
 			runnable.run();
 		}
-		catch(RuntimeException e)
+		catch (RuntimeException e)
 		{
 			log.warn("Exception in a Runnable execution:", e);
 		}
@@ -73,7 +73,7 @@ public class ExecuteWrapper implements Runnable
 
 			long runtimeInMillisec = TimeUnit.NANOSECONDS.toMillis(runtimeInNanosec);
 
-			if(runtimeInMillisec > maximumRuntimeInMillisecWithoutWarning)
+			if (runtimeInMillisec > maximumRuntimeInMillisecWithoutWarning)
 			{
 				TextBuilder tb = TextBuilder.newInstance();
 

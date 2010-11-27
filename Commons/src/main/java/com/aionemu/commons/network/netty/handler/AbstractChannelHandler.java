@@ -39,8 +39,7 @@ import com.aionemu.commons.network.netty.packet.AbstractServerPacket;
  */
 public abstract class AbstractChannelHandler extends SimpleChannelUpstreamHandler
 {
-	private static final Logger												log	= Logger
-																					.getLogger(AbstractChannelHandler.class);
+	private static final Logger												log	= Logger.getLogger(AbstractChannelHandler.class);
 
 	protected State															state;
 	protected InetAddress													inetAddress;
@@ -65,11 +64,11 @@ public abstract class AbstractChannelHandler extends SimpleChannelUpstreamHandle
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception
 	{
-		if(e.getCause().getClass().equals(IOException.class)) // server force close
+		if (e.getCause().getClass().equals(IOException.class)) // server force close
 		{
 			e.getChannel().close();
 		}
-		else if(e.getCause().getClass().equals(NullPointerException.class))
+		else if (e.getCause().getClass().equals(NullPointerException.class))
 		{
 			log.error("NETTY: Exception caught: ", e.getCause());
 		}
@@ -116,8 +115,7 @@ public abstract class AbstractChannelHandler extends SimpleChannelUpstreamHandle
 	{
 		AbstractServerPacket<AbstractChannelHandler> spacket = (AbstractServerPacket<AbstractChannelHandler>) abstractserverpacket;
 
-		spacket.setOpCode(abstractPacketHandlerFactory
-			.getServerPacketopCode((Class<? extends AbstractServerPacket<AbstractChannelHandler>>) spacket.getClass()));
+		spacket.setOpCode(abstractPacketHandlerFactory.getServerPacketopCode((Class<? extends AbstractServerPacket<AbstractChannelHandler>>) spacket.getClass()));
 		spacket.write(this);
 		channel.write(spacket.getBuf());
 		log.debug("Sent packet: " + spacket.getClass().getSimpleName());
@@ -130,9 +128,8 @@ public abstract class AbstractChannelHandler extends SimpleChannelUpstreamHandle
 		/**
 		 * Packet is frame decoded and decrypted at this stage Here packet will be read and submitted to execution
 		 */
-		AbstractClientPacket<? extends AbstractChannelHandler> packet = abstractPacketHandlerFactory
-			.handleClientPacket((ChannelBuffer) e.getMessage(), this);
-		if(packet != null && packet.read())
+		AbstractClientPacket<? extends AbstractChannelHandler> packet = abstractPacketHandlerFactory.handleClientPacket((ChannelBuffer) e.getMessage(), this);
+		if (packet != null && packet.read())
 		{
 			packet.run();
 			log.debug("Received packet: " + packet.getClass().getSimpleName());

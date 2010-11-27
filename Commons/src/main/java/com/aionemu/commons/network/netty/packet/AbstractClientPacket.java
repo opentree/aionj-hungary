@@ -24,8 +24,7 @@ import com.aionemu.commons.network.netty.handler.AbstractChannelHandler;
  * @author lyahim
  * 
  */
-public abstract class AbstractClientPacket<T extends AbstractChannelHandler> extends AbstractPacket implements
-	Runnable, Cloneable
+public abstract class AbstractClientPacket<T extends AbstractChannelHandler> extends AbstractPacket implements Runnable, Cloneable
 {
 	private static final Logger	log	= Logger.getLogger(AbstractClientPacket.class);
 
@@ -46,11 +45,11 @@ public abstract class AbstractClientPacket<T extends AbstractChannelHandler> ext
 		try
 		{
 			readImpl();
-			if(getRemainingBytes() > 0)
+			if (getRemainingBytes() > 0)
 				log.debug((new StringBuilder()).append("Packet ").append(this).append(" not fully readed!").toString());
 			return true;
 		}
-		catch(Exception ex)
+		catch (Exception ex)
 		{
 			log.error((new StringBuilder()).append("Reading failed for packet ").append(this).toString(), ex);
 		}
@@ -63,7 +62,7 @@ public abstract class AbstractClientPacket<T extends AbstractChannelHandler> ext
 		{
 			runImpl();
 		}
-		catch(Exception ex)
+		catch (Exception ex)
 		{
 			log.error((new StringBuilder()).append("Running failed for packet ").append(this).toString(), ex);
 		}
@@ -79,7 +78,7 @@ public abstract class AbstractClientPacket<T extends AbstractChannelHandler> ext
 		{
 			return buf.readInt();
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			log.error((new StringBuilder()).append("Missing D for: ").append(this).toString());
 		}
@@ -92,7 +91,7 @@ public abstract class AbstractClientPacket<T extends AbstractChannelHandler> ext
 		{
 			return buf.readByte() & 0xff;
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			log.error((new StringBuilder()).append("Missing C for: ").append(this).toString());
 		}
@@ -105,7 +104,7 @@ public abstract class AbstractClientPacket<T extends AbstractChannelHandler> ext
 		{
 			return buf.readShort() & 0xffff;
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			log.error((new StringBuilder()).append("Missing H for: ").append(this).toString());
 		}
@@ -118,7 +117,7 @@ public abstract class AbstractClientPacket<T extends AbstractChannelHandler> ext
 		{
 			return buf.readDouble();
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			log.error((new StringBuilder()).append("Missing DF for: ").append(this).toString());
 		}
@@ -131,7 +130,7 @@ public abstract class AbstractClientPacket<T extends AbstractChannelHandler> ext
 		{
 			return buf.readFloat();
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			log.error((new StringBuilder()).append("Missing F for: ").append(this).toString());
 		}
@@ -144,7 +143,7 @@ public abstract class AbstractClientPacket<T extends AbstractChannelHandler> ext
 		{
 			return buf.readLong();
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			log.error((new StringBuilder()).append("Missing Q for: ").append(this).toString());
 		}
@@ -157,10 +156,10 @@ public abstract class AbstractClientPacket<T extends AbstractChannelHandler> ext
 		char ch;
 		try
 		{
-			while((ch = buf.readChar()) != 0)
+			while ((ch = buf.readChar()) != 0)
 				sb.append(ch);
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			log.error((new StringBuilder()).append("Missing S for: ").append(this).toString());
 		}
@@ -174,7 +173,7 @@ public abstract class AbstractClientPacket<T extends AbstractChannelHandler> ext
 		{
 			buf.readBytes(result);
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			log.error((new StringBuilder()).append("Missing byte[] for: ").append(this).toString());
 		}
@@ -199,7 +198,7 @@ public abstract class AbstractClientPacket<T extends AbstractChannelHandler> ext
 		{
 			return (AbstractClientPacket<T>) super.clone();
 		}
-		catch(CloneNotSupportedException e)
+		catch (CloneNotSupportedException e)
 		{
 			return null;
 		}

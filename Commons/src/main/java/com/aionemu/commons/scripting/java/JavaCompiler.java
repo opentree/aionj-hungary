@@ -101,26 +101,25 @@ public class JavaCompiler
 		options.add("-Xlint:all");
 		options.add("-g");
 		options.add("-deprecation");
-		if(sourcePath != null)
+		if (sourcePath != null)
 		{
 			options.add("-sourcepath");
 			options.add(sourcePath);
 		}
 
-		if(classPath != null)
+		if (classPath != null)
 		{
 			options.add("-classpath");
 			options.add(classPath);
 		}
 
 		// create a compilation task
-		javax.tools.JavaCompiler.CompilationTask task = tool.getTask(err, manager, diagnostics, options, null,
-			compUnits);
+		javax.tools.JavaCompiler.CompilationTask task = tool.getTask(err, manager, diagnostics, options, null, compUnits);
 
-		if(task.call() == false)
+		if (task.call() == false)
 		{
 			PrintWriter perr = new PrintWriter(err);
-			for(Diagnostic<? extends JavaFileObject> diagnostic : diagnostics.getDiagnostics())
+			for (Diagnostic<? extends JavaFileObject> diagnostic : diagnostics.getDiagnostics())
 			{
 				perr.println(diagnostic.getMessage(null));
 			}
@@ -133,7 +132,7 @@ public class JavaCompiler
 		{
 			manager.close();
 		}
-		catch(IOException exp)
+		catch (IOException exp)
 		{
 		}
 

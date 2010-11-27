@@ -86,22 +86,22 @@ public class ResourceBundleControl extends ResourceBundle.Control
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ResourceBundle newBundle(String baseName, Locale locale, String format, ClassLoader loader, boolean reload)
-		throws IllegalAccessException, InstantiationException, IOException
+	public ResourceBundle newBundle(String baseName, Locale locale, String format, ClassLoader loader, boolean reload) throws IllegalAccessException,
+			InstantiationException, IOException
 	{
 		String bundleName = toBundleName(baseName, locale);
 		ResourceBundle bundle = null;
-		if(format.equals("java.class"))
+		if (format.equals("java.class"))
 		{
 			try
 			{
-				@SuppressWarnings({ "unchecked" })
-				Class<? extends ResourceBundle> bundleClass = (Class<? extends ResourceBundle>) loader
-					.loadClass(bundleName);
+				@SuppressWarnings(
+				{ "unchecked" })
+				Class<? extends ResourceBundle> bundleClass = (Class<? extends ResourceBundle>) loader.loadClass(bundleName);
 
 				// If the class isn't a ResourceBundle subclass, throw a
 				// ClassCastException.
-				if(ResourceBundle.class.isAssignableFrom(bundleClass))
+				if (ResourceBundle.class.isAssignableFrom(bundleClass))
 				{
 					bundle = bundleClass.newInstance();
 				}
@@ -110,11 +110,11 @@ public class ResourceBundleControl extends ResourceBundle.Control
 					throw new ClassCastException(bundleClass.getName() + " cannot be cast to ResourceBundle");
 				}
 			}
-			catch(ClassNotFoundException ignored)
+			catch (ClassNotFoundException ignored)
 			{
 			}
 		}
-		else if(format.equals("java.properties"))
+		else if (format.equals("java.properties"))
 		{
 			final String resourceName = toResourceName(bundleName, "properties");
 			final ClassLoader classLoader = loader;
@@ -123,18 +123,19 @@ public class ResourceBundleControl extends ResourceBundle.Control
 			InputStream stream;
 			try
 			{
-				stream = AccessController.doPrivileged(new PrivilegedExceptionAction<InputStream>(){
+				stream = AccessController.doPrivileged(new PrivilegedExceptionAction<InputStream>()
+				{
 					@Override
 					public InputStream run() throws IOException
 					{
 						InputStream is = null;
-						if(reloadFlag)
+						if (reloadFlag)
 						{
 							URL url = classLoader.getResource(resourceName);
-							if(url != null)
+							if (url != null)
 							{
 								URLConnection connection = url.openConnection();
-								if(connection != null)
+								if (connection != null)
 								{
 									// Disable caches to get fresh data for
 									// reloading.
@@ -150,16 +151,16 @@ public class ResourceBundleControl extends ResourceBundle.Control
 						return is;
 					}
 				});
-				if(stream != null)
+				if (stream != null)
 				{
 					isr = new InputStreamReader(stream, encoding);
 				}
 			}
-			catch(PrivilegedActionException e)
+			catch (PrivilegedActionException e)
 			{
 				throw (IOException) e.getException();
 			}
-			if(isr != null)
+			if (isr != null)
 			{
 				try
 				{

@@ -40,7 +40,7 @@ public class PacketEncrypter extends OneToOneEncoder
 	{
 		Object object = ctx.getPipeline().get("handler");
 		ChannelBuffer buf = (ChannelBuffer) msg;
-		if(object instanceof PacketCrypter)
+		if (object instanceof PacketCrypter)
 		{
 			PacketCrypter handler = (PacketCrypter) object;
 			handler.encrypt(buf);

@@ -60,8 +60,10 @@ public final class RunnableStatsManager
 			className = clazz.getName().replace("com.aionemu.gameserver.", "");
 			runnableStat = new MethodStat(className, "run()");
 
-			methodNames = new String[] { "run()" };
-			methodStats = new MethodStat[] { runnableStat };
+			methodNames = new String[]
+			{ "run()" };
+			methodStats = new MethodStat[]
+			{ runnableStat };
 
 			classStats.put(clazz, this);
 		}
@@ -74,16 +76,16 @@ public final class RunnableStatsManager
 		private MethodStat getMethodStat(String methodName, boolean synchronizedAlready)
 		{
 			// method names will be interned automatically because of compiling, so this gonna work
-			if(methodName == "run()")
+			if (methodName == "run()")
 				return runnableStat;
 
-			for(int i = 0; i < methodNames.length; i++)
-				if(methodNames[i].equals(methodName))
+			for (int i = 0; i < methodNames.length; i++)
+				if (methodNames[i].equals(methodName))
 					return methodStats[i];
 
-			if(!synchronizedAlready)
+			if (!synchronizedAlready)
 			{
-				synchronized(this)
+				synchronized (this)
 				{
 					return getMethodStat(methodName, true);
 				}
@@ -139,12 +141,12 @@ public final class RunnableStatsManager
 	{
 		ClassStat classStat = classStats.get(clazz);
 
-		if(classStat != null)
+		if (classStat != null)
 			return classStat;
 
-		if(!synchronizedAlready)
+		if (!synchronizedAlready)
 		{
-			synchronized(RunnableStatsManager.class)
+			synchronized (RunnableStatsManager.class)
 			{
 				return getClassStat(clazz, true);
 			}
@@ -165,13 +167,7 @@ public final class RunnableStatsManager
 
 	public static enum SortBy
 	{
-		AVG("average"),
-		COUNT("count"),
-		TOTAL("total"),
-		NAME("class"),
-		METHOD("method"),
-		MIN("min"),
-		MAX("max"), ;
+		AVG("average"), COUNT("count"), TOTAL("total"), NAME("class"), METHOD("method"), MIN("min"), MAX("max"), ;
 
 		private final String	xmlAttributeName;
 
@@ -180,7 +176,8 @@ public final class RunnableStatsManager
 			this.xmlAttributeName = xmlAttributeName;
 		}
 
-		private final Comparator<MethodStat>	comparator	= new Comparator<MethodStat>(){
+		private final Comparator<MethodStat>	comparator	= new Comparator<MethodStat>()
+															{
 																@SuppressWarnings("rawtypes")
 																@Override
 																public int compare(MethodStat o1, MethodStat o2)
@@ -188,7 +185,7 @@ public final class RunnableStatsManager
 																	final Comparable c1 = getComparableValueOf(o1);
 																	final Comparable c2 = getComparableValueOf(o2);
 
-																	if(c1 instanceof Number)
+																	if (c1 instanceof Number)
 																		return c2.compareTo(c1);
 
 																	final String s1 = (String) c1;
@@ -198,15 +195,14 @@ public final class RunnableStatsManager
 																	final int len2 = s2.length();
 																	final int n = Math.min(len1, len2);
 
-																	for(int k = 0; k < n; k++)
+																	for (int k = 0; k < n; k++)
 																	{
 																		char ch1 = s1.charAt(k);
 																		char ch2 = s2.charAt(k);
 
-																		if(ch1 != ch2)
+																		if (ch1 != ch2)
 																		{
-																			if(Character.isUpperCase(ch1) != Character
-																				.isUpperCase(ch2))
+																			if (Character.isUpperCase(ch1) != Character.isUpperCase(ch2))
 																				return ch2 - ch1;
 																			else
 																				return ch1 - ch2;
@@ -215,10 +211,10 @@ public final class RunnableStatsManager
 
 																	final int result = len1 - len2;
 
-																	if(result != 0)
+																	if (result != 0)
 																		return result;
 
-																	switch(SortBy.this)
+																	switch (SortBy.this)
 																	{
 																		case METHOD:
 																			return NAME.comparator.compare(o1, o2);
@@ -231,7 +227,7 @@ public final class RunnableStatsManager
 		@SuppressWarnings("rawtypes")
 		private Comparable getComparableValueOf(MethodStat stat)
 		{
-			switch(this)
+			switch (this)
 			{
 				case AVG:
 					return stat.total / stat.count;
@@ -265,15 +261,15 @@ public final class RunnableStatsManager
 	{
 		final List<MethodStat> methodStats = new ArrayList<MethodStat>();
 
-		synchronized(RunnableStatsManager.class)
+		synchronized (RunnableStatsManager.class)
 		{
-			for(ClassStat classStat : classStats.values())
-				for(MethodStat methodStat : classStat.methodStats)
-					if(methodStat.count > 0)
+			for (ClassStat classStat : classStats.values())
+				for (MethodStat methodStat : classStat.methodStats)
+					if (methodStat.count > 0)
 						methodStats.add(methodStat);
 		}
 
-		if(sortBy != null)
+		if (sortBy != null)
 			Collections.sort(methodStats, sortBy.comparator);
 
 		final List<String> lines = new ArrayList<String>();
@@ -286,17 +282,17 @@ public final class RunnableStatsManager
 		final String[][] values = new String[SortBy.VALUES.length][methodStats.size()];
 		final int[] maxLength = new int[SortBy.VALUES.length];
 
-		for(int i = 0; i < SortBy.VALUES.length; i++)
+		for (int i = 0; i < SortBy.VALUES.length; i++)
 		{
 			final SortBy sort = SortBy.VALUES[i];
 
-			for(int k = 0; k < methodStats.size(); k++)
+			for (int k = 0; k < methodStats.size(); k++)
 			{
 				final Comparable c = sort.getComparableValueOf(methodStats.get(k));
 
 				final String value;
 
-				if(c instanceof Number)
+				if (c instanceof Number)
 					value = NumberFormat.getInstance(Locale.ENGLISH).format(((Number) c).longValue());
 				else
 					value = String.valueOf(c);
@@ -307,25 +303,23 @@ public final class RunnableStatsManager
 			}
 		}
 
-		for(int k = 0; k < methodStats.size(); k++)
+		for (int k = 0; k < methodStats.size(); k++)
 		{
 			TextBuilder tb = TextBuilder.newInstance();
 			tb.append("\t<entry ");
 
 			EnumSet<SortBy> set = EnumSet.allOf(SortBy.class);
 
-			if(sortBy != null)
+			if (sortBy != null)
 			{
-				switch(sortBy)
+				switch (sortBy)
 				{
 					case NAME:
 					case METHOD:
-						appendAttribute(tb, SortBy.NAME, values[SortBy.NAME.ordinal()][k],
-							maxLength[SortBy.NAME.ordinal()]);
+						appendAttribute(tb, SortBy.NAME, values[SortBy.NAME.ordinal()][k], maxLength[SortBy.NAME.ordinal()]);
 						set.remove(SortBy.NAME);
 
-						appendAttribute(tb, SortBy.METHOD, values[SortBy.METHOD.ordinal()][k],
-							maxLength[SortBy.METHOD.ordinal()]);
+						appendAttribute(tb, SortBy.METHOD, values[SortBy.METHOD.ordinal()][k], maxLength[SortBy.METHOD.ordinal()]);
 						set.remove(SortBy.METHOD);
 						break;
 					default:
@@ -335,8 +329,8 @@ public final class RunnableStatsManager
 				}
 			}
 
-			for(SortBy sort : SortBy.VALUES)
-				if(set.contains(sort))
+			for (SortBy sort : SortBy.VALUES)
+				if (set.contains(sort))
 					appendAttribute(tb, sort, values[sort.ordinal()][k], maxLength[sort.ordinal()]);
 
 			tb.append("/>");
@@ -352,10 +346,10 @@ public final class RunnableStatsManager
 		{
 			ps = new PrintStream("log/MethodStats-" + System.currentTimeMillis() + ".log");
 
-			for(String line : lines)
+			for (String line : lines)
 				ps.println(line);
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			log.warn("", e);
 		}
@@ -370,16 +364,16 @@ public final class RunnableStatsManager
 		tb.append(sortBy.xmlAttributeName);
 		tb.append("=");
 
-		if(sortBy != SortBy.NAME && sortBy != SortBy.METHOD)
-			for(int i = value.length(); i < fillTo; i++)
+		if (sortBy != SortBy.NAME && sortBy != SortBy.METHOD)
+			for (int i = value.length(); i < fillTo; i++)
 				tb.append(" ");
 
 		tb.append("\"");
 		tb.append(value);
 		tb.append("\" ");
 
-		if(sortBy == SortBy.NAME || sortBy == SortBy.METHOD)
-			for(int i = value.length(); i < fillTo; i++)
+		if (sortBy == SortBy.NAME || sortBy == SortBy.METHOD)
+			for (int i = value.length(); i < fillTo; i++)
 				tb.append(" ");
 	}
 }

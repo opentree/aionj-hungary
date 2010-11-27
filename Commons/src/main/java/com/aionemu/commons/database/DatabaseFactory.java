@@ -83,7 +83,7 @@ public class DatabaseFactory
 	 */
 	public synchronized static void init()
 	{
-		if(dataSource != null)
+		if (dataSource != null)
 		{
 			return;
 		}
@@ -92,7 +92,7 @@ public class DatabaseFactory
 		{
 			DatabaseConfig.DATABASE_DRIVER.newInstance();
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			log.fatal("Error obtaining DB driver", e);
 			throw new Error("DB Driver doesnt exist!");
@@ -100,7 +100,7 @@ public class DatabaseFactory
 
 		connectionPool = new GenericObjectPool();
 
-		if(DatabaseConfig.DATABASE_CONNECTIONS_MIN > DatabaseConfig.DATABASE_CONNECTIONS_MAX)
+		if (DatabaseConfig.DATABASE_CONNECTIONS_MIN > DatabaseConfig.DATABASE_CONNECTIONS_MAX)
 		{
 			log.error("Please check your database configuration. Minimum amount of connections is > maximum");
 			DatabaseConfig.DATABASE_CONNECTIONS_MAX = DatabaseConfig.DATABASE_CONNECTIONS_MIN;
@@ -121,7 +121,7 @@ public class DatabaseFactory
 			databaseMinorVersion = dmd.getDatabaseMinorVersion();
 			c.close();
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			log.fatal("Error with connection string: " + DatabaseConfig.DATABASE_URL, e);
 			throw new Error("DatabaseFactory not initialized!");
@@ -140,8 +140,8 @@ public class DatabaseFactory
 	private static DataSource setupDataSource() throws Exception
 	{
 		// Create Connection Factory
-		ConnectionFactory conFactory = new DriverManagerConnectionFactory(DatabaseConfig.DATABASE_URL,
-			DatabaseConfig.DATABASE_USER, DatabaseConfig.DATABASE_PASSWORD);
+		ConnectionFactory conFactory = new DriverManagerConnectionFactory(DatabaseConfig.DATABASE_URL, DatabaseConfig.DATABASE_USER,
+				DatabaseConfig.DATABASE_PASSWORD);
 
 		// Makes Connection Factory Pool-able (Wrapper for two objects)
 		// We are using our own implementation of PoolableConnectionFactory that use 1.6 Connection.isValid(timeout) for
@@ -198,7 +198,7 @@ public class DatabaseFactory
 		{
 			connectionPool.close();
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			log.warn("Failed to shutdown DatabaseFactory", e);
 		}
@@ -209,14 +209,14 @@ public class DatabaseFactory
 
 	public static void close(Connection con)
 	{
-		if(con == null)
+		if (con == null)
 			return;
 
 		try
 		{
 			con.close();
 		}
-		catch(SQLException e)
+		catch (SQLException e)
 		{
 			log.warn("DatabaseFactory: Failed to close database connection!", e);
 		}

@@ -61,9 +61,8 @@ public class PoolableConnectionFactoryAE extends PoolableConnectionFactory
 	 * @param defaultAutoCommit
 	 *            the default "auto commit" setting for returned {@link Connection}s
 	 */
-	public PoolableConnectionFactoryAE(ConnectionFactory connFactory, ObjectPool pool,
-		KeyedObjectPoolFactory stmtPoolFactory, int validationTimeout, boolean defaultReadOnly,
-		boolean defaultAutoCommit)
+	public PoolableConnectionFactoryAE(ConnectionFactory connFactory, ObjectPool pool, KeyedObjectPoolFactory stmtPoolFactory, int validationTimeout,
+			boolean defaultReadOnly, boolean defaultAutoCommit)
 	{
 		super(connFactory, pool, stmtPoolFactory, null, defaultReadOnly, defaultAutoCommit);
 		this.validationTimeout = validationTimeout;
@@ -76,9 +75,9 @@ public class PoolableConnectionFactoryAE extends PoolableConnectionFactory
 	@Override
 	public void validateConnection(Connection conn) throws SQLException
 	{
-		if(conn.isClosed())
+		if (conn.isClosed())
 			throw new SQLException("validateConnection: connection closed");
-		if(validationTimeout >= 0 && !conn.isValid(validationTimeout))
+		if (validationTimeout >= 0 && !conn.isValid(validationTimeout))
 			throw new SQLException("validateConnection: connection invalid");
 	}
 }

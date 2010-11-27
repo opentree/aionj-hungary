@@ -1,7 +1,7 @@
-#Sat Nov 27 16:04:14 CET 2010
+#Sat Nov 27 16:16:08 CET 2010
 eclipse.preferences.version=1
 editor_save_participant_org.eclipse.jdt.ui.postsavelistener.cleanup=true
-formatter_profile=_aion
+formatter_profile=_aionj-hungary
 formatter_settings_version=11
 org.eclipse.jdt.ui.exception.name=e
 org.eclipse.jdt.ui.gettersetter.use.is=true

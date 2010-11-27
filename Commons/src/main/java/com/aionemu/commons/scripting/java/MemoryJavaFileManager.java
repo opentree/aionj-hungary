@@ -122,7 +122,8 @@ public final class MemoryJavaFileManager extends EclipseFileManager
 		@Override
 		public OutputStream openOutputStream()
 		{
-			return new FilterOutputStream(new ByteArrayOutputStream()){
+			return new FilterOutputStream(new ByteArrayOutputStream())
+			{
 				@Override
 				public void close() throws IOException
 				{
@@ -135,10 +136,9 @@ public final class MemoryJavaFileManager extends EclipseFileManager
 	}
 
 	@Override
-	public JavaFileObject getJavaFileForOutput(JavaFileManager.Location location, String className, Kind kind,
-		FileObject sibling) throws IOException
+	public JavaFileObject getJavaFileForOutput(JavaFileManager.Location location, String className, Kind kind, FileObject sibling) throws IOException
 	{
-		if(kind == Kind.CLASS)
+		if (kind == Kind.CLASS)
 		{
 			return new ClassOutputBuffer(className.replace('/', '.'));
 		}
@@ -156,7 +156,7 @@ public final class MemoryJavaFileManager extends EclipseFileManager
 	static URI toURI(String name)
 	{
 		File file = new File(name);
-		if(file.exists())
+		if (file.exists())
 		{
 			return file.toURI();
 		}
@@ -167,11 +167,11 @@ public final class MemoryJavaFileManager extends EclipseFileManager
 				final StringBuilder newUri = new StringBuilder();
 				newUri.append("file:///");
 				newUri.append(name.replace('.', '/'));
-				if(name.endsWith(EXT))
+				if (name.endsWith(EXT))
 					newUri.replace(newUri.length() - EXT.length(), newUri.length(), EXT);
 				return URI.create(newUri.toString());
 			}
-			catch(Exception exp)
+			catch (Exception exp)
 			{
 				return URI.create("file:///com/sun/script/java/java_source");
 			}

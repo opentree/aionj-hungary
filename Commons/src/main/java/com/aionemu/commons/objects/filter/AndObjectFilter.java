@@ -45,9 +45,9 @@ public class AndObjectFilter<T> implements ObjectFilter<T>
 	@Override
 	public boolean acceptObject(T object)
 	{
-		for(ObjectFilter<? super T> filter : filters)
+		for (ObjectFilter<? super T> filter : filters)
 		{
-			if(filter != null && !filter.acceptObject(object))
+			if (filter != null && !filter.acceptObject(object))
 				return false;
 		}
 		return true;

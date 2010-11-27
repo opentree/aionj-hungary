@@ -34,7 +34,7 @@ public class PacketDecoder extends OneToOneDecoder
 	{
 		Object object = ctx.getPipeline().get("handler");
 		ChannelBuffer buf = (ChannelBuffer) msg;
-		if(buf != null && object != null && object instanceof ICryptedChannelHandler)
+		if (buf != null && object != null && object instanceof ICryptedChannelHandler)
 		{
 			ICryptedChannelHandler handler = (ICryptedChannelHandler) object;
 			handler.decrypt(buf);

@@ -73,11 +73,9 @@ public class ThreadPoolManager implements Executor
 	{
 		new DeadLockDetector(60, DeadLockDetector.RESTART).start();
 
-		scheduledThreadPool = new ScheduledThreadPoolExecutor(4, new PriorityThreadFactory("ScheduledThreadPool",
-			Thread.NORM_PRIORITY));
+		scheduledThreadPool = new ScheduledThreadPoolExecutor(4, new PriorityThreadFactory("ScheduledThreadPool", Thread.NORM_PRIORITY));
 
-		generalPacketsThreadPool = new ThreadPoolExecutor(1, Integer.MAX_VALUE, 60L, TimeUnit.SECONDS,
-			new SynchronousQueue<Runnable>());
+		generalPacketsThreadPool = new ThreadPoolExecutor(1, Integer.MAX_VALUE, 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
 
 	}
 
@@ -95,11 +93,11 @@ public class ThreadPoolManager implements Executor
 	{
 		try
 		{
-			if(delay < 0)
+			if (delay < 0)
 				delay = 0;
 			return (ScheduledFuture<T>) scheduledThreadPool.schedule(r, delay, TimeUnit.MILLISECONDS);
 		}
-		catch(RejectedExecutionException e)
+		catch (RejectedExecutionException e)
 		{
 			return null; /* shutdown, ignore */
 		}
@@ -119,14 +117,13 @@ public class ThreadPoolManager implements Executor
 	{
 		try
 		{
-			if(delay < 0)
+			if (delay < 0)
 				delay = 0;
-			if(initial < 0)
+			if (initial < 0)
 				initial = 0;
-			return (ScheduledFuture<T>) scheduledThreadPool.scheduleAtFixedRate(r, initial, delay,
-				TimeUnit.MILLISECONDS);
+			return (ScheduledFuture<T>) scheduledThreadPool.scheduleAtFixedRate(r, initial, delay, TimeUnit.MILLISECONDS);
 		}
-		catch(RejectedExecutionException e)
+		catch (RejectedExecutionException e)
 		{
 			return null;
 		}
@@ -205,7 +202,7 @@ public class ThreadPoolManager implements Executor
 			generalPacketsThreadPool.awaitTermination(2, TimeUnit.SECONDS);
 			log.info("All ThreadPools are now stopped.");
 		}
-		catch(InterruptedException e)
+		catch (InterruptedException e)
 		{
 			log.error("Can't shutdown ThreadPoolManager", e);
 		}

@@ -53,7 +53,7 @@ public class PatternTransformer implements PropertyTransformer
 		{
 			return Pattern.compile(value);
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			throw new TransformationException("Not valid RegExp: " + value, e);
 		}

@@ -39,7 +39,7 @@ public final class AuditFilter extends Filter
 	{
 		Object message = loggingEvent.getMessage();
 
-		if(((String) message).startsWith("[AUDIT]"))
+		if (((String) message).startsWith("[AUDIT]"))
 		{
 			return ACCEPT;
 		}

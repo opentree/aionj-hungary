@@ -65,7 +65,8 @@ public class MTRandom extends Random
 	private final static int	LOWER_MASK			= 0x7fffffff;
 	private final static int	N					= 624;
 	private final static int	M					= 397;
-	private final static int[]	MAGIC				= { 0x0, 0x9908b0df };
+	private final static int[]	MAGIC				=
+													{ 0x0, 0x9908b0df };
 	private final static int	MAGIC_FACTOR1		= 1812433253;
 	private final static int	MAGIC_FACTOR2		= 1664525;
 	private final static int	MAGIC_FACTOR3		= 1566083941;
@@ -175,12 +176,12 @@ public class MTRandom extends Random
 		// This is unavoidable because no fields in our instance will
 		// have been initialised at this point, not even if the code
 		// were placed at the declaration of the member variable.
-		if(mt == null)
+		if (mt == null)
 			mt = new int[N];
 
 		// ---- Begin Mersenne Twister Algorithm ----
 		mt[0] = seed;
-		for(mti = 1; mti < N; mti++)
+		for (mti = 1; mti < N; mti++)
 		{
 			mt[mti] = (MAGIC_FACTOR1 * (mt[mti - 1] ^ (mt[mti - 1] >>> 30)) + mti);
 		}
@@ -202,7 +203,7 @@ public class MTRandom extends Random
 	@Override
 	public final synchronized void setSeed(long seed)
 	{
-		if(compat)
+		if (compat)
 		{
 			setSeed((int) seed);
 		}
@@ -214,7 +215,7 @@ public class MTRandom extends Random
 			// This is unavoidable because no fields in our instance will
 			// have been initialised at this point, not even if the code
 			// were placed at the declaration of the member variable.
-			if(ibuf == null)
+			if (ibuf == null)
 				ibuf = new int[2];
 
 			ibuf[0] = (int) seed;
@@ -257,29 +258,29 @@ public class MTRandom extends Random
 	public final synchronized void setSeed(int[] buf)
 	{
 		int length = buf.length;
-		if(length == 0)
+		if (length == 0)
 			throw new IllegalArgumentException("Seed buffer may not be empty");
 		// ---- Begin Mersenne Twister Algorithm ----
 		int i = 1, j = 0, k = (N > length ? N : length);
 		setSeed(MAGIC_SEED);
-		for(; k > 0; k--)
+		for (; k > 0; k--)
 		{
 			mt[i] = (mt[i] ^ ((mt[i - 1] ^ (mt[i - 1] >>> 30)) * MAGIC_FACTOR2)) + buf[j] + j;
 			i++;
 			j++;
-			if(i >= N)
+			if (i >= N)
 			{
 				mt[0] = mt[N - 1];
 				i = 1;
 			}
-			if(j >= length)
+			if (j >= length)
 				j = 0;
 		}
-		for(k = N - 1; k > 0; k--)
+		for (k = N - 1; k > 0; k--)
 		{
 			mt[i] = (mt[i] ^ ((mt[i - 1] ^ (mt[i - 1] >>> 30)) * MAGIC_FACTOR3)) - i;
 			i++;
-			if(i >= N)
+			if (i >= N)
 			{
 				mt[0] = mt[N - 1];
 				i = 1;
@@ -322,7 +323,7 @@ public class MTRandom extends Random
 	{
 		// ---- Begin Mersenne Twister Algorithm ----
 		int y, kk;
-		if(mti >= N)
+		if (mti >= N)
 		{ // generate N words at one time
 
 			// In the original C implementation, mti is checked here
@@ -333,12 +334,12 @@ public class MTRandom extends Random
 			// Use the constructor MTRandom(true) to enable backwards
 			// compatible behaviour.
 
-			for(kk = 0; kk < N - M; kk++)
+			for (kk = 0; kk < N - M; kk++)
 			{
 				y = (mt[kk] & UPPER_MASK) | (mt[kk + 1] & LOWER_MASK);
 				mt[kk] = mt[kk + M] ^ (y >>> 1) ^ MAGIC[y & 0x1];
 			}
-			for(; kk < N - 1; kk++)
+			for (; kk < N - 1; kk++)
 			{
 				y = (mt[kk] & UPPER_MASK) | (mt[kk + 1] & LOWER_MASK);
 				mt[kk] = mt[kk + (M - N)] ^ (y >>> 1) ^ MAGIC[y & 0x1];
@@ -399,12 +400,12 @@ public class MTRandom extends Random
 	{
 		int k, blen = buf.length, ilen = ((buf.length + 3) >>> 2);
 		int[] ibuf = new int[ilen];
-		for(int n = 0; n < ilen; n++)
+		for (int n = 0; n < ilen; n++)
 		{
 			int m = (n + 1) << 2;
-			if(m > blen)
+			if (m > blen)
 				m = blen;
-			for(k = buf[--m] & 0xff; (m & 0x3) != 0; k = (k << 8) | buf[--m] & 0xff)
+			for (k = buf[--m] & 0xff; (m & 0x3) != 0; k = (k << 8) | buf[--m] & 0xff)
 				;
 			ibuf[n] = k;
 		}

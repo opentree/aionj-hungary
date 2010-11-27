@@ -51,7 +51,7 @@ public class IntegerTransformer implements PropertyTransformer<Integer>
 		{
 			return Integer.decode(value);
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			throw new TransformationException(e);
 		}

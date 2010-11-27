@@ -45,8 +45,7 @@ public abstract class AbstractNettyServer
 	 */
 	protected NioClientSocketChannelFactory initClientChannelFactory()
 	{
-		return new NioClientSocketChannelFactory(ThreadPoolManager.getInstance(), ThreadPoolManager.getInstance(),
-			Runtime.getRuntime().availableProcessors());
+		return new NioClientSocketChannelFactory(ThreadPoolManager.getInstance(), ThreadPoolManager.getInstance(), Runtime.getRuntime().availableProcessors());
 	}
 
 	/**
@@ -56,8 +55,7 @@ public abstract class AbstractNettyServer
 	 */
 	protected NioServerSocketChannelFactory initServerChannelFactory()
 	{
-		return new NioServerSocketChannelFactory(ThreadPoolManager.getInstance(), ThreadPoolManager.getInstance(),
-			Runtime.getRuntime().availableProcessors());
+		return new NioServerSocketChannelFactory(ThreadPoolManager.getInstance(), ThreadPoolManager.getInstance(), Runtime.getRuntime().availableProcessors());
 	}
 
 	/**
@@ -68,8 +66,7 @@ public abstract class AbstractNettyServer
 		ThreadPoolManager.getInstance().shutdown();
 	}
 
-	protected Channel initServerChannel(ChannelFactory channelFactory, InetSocketAddress address,
-		ChannelPipelineFactory channelPipelineFactory)
+	protected Channel initServerChannel(ChannelFactory channelFactory, InetSocketAddress address, ChannelPipelineFactory channelPipelineFactory)
 	{
 		ServerBootstrap bootstrap = new ServerBootstrap(channelFactory);
 		bootstrap.setPipelineFactory(channelPipelineFactory);
@@ -83,8 +80,7 @@ public abstract class AbstractNettyServer
 		return bootstrap.bind(address);
 	}
 
-	protected ChannelFuture initClientChannel(ChannelFactory channelFactory, InetSocketAddress address,
-		ChannelPipelineFactory channelPipelineFactory)
+	protected ChannelFuture initClientChannel(ChannelFactory channelFactory, InetSocketAddress address, ChannelPipelineFactory channelPipelineFactory)
 	{
 		ClientBootstrap bootstrap = new ClientBootstrap(channelFactory);
 		bootstrap.setPipelineFactory(channelPipelineFactory);

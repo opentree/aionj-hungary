@@ -78,7 +78,7 @@ public class DAOManager
 
 		DAO result = daoMap.get(clazz.getName());
 
-		if(result == null)
+		if (result == null)
 		{
 			String s = "DAO for class " + clazz.getName() + " not implemented";
 			log.error(s);
@@ -108,15 +108,15 @@ public class DAOManager
 	public void registerDAO(DAO dao)
 	{
 
-		if(!dao.supports(getDatabaseName(), getDatabaseMajorVersion(), getDatabaseMinorVersion()))
+		if (!dao.supports(getDatabaseName(), getDatabaseMajorVersion(), getDatabaseMinorVersion()))
 		{
 			return;
 		}
 
-		synchronized(DAOManager.class)
+		synchronized (DAOManager.class)
 		{
 			DAO oldDao = daoMap.get(dao.getClassName());
-			if(oldDao != null)
+			if (oldDao != null)
 			{
 				TextBuilder sb = TextBuilder.newInstance();
 				sb.append("DAO with className ").append(dao.getClassName()).append(" is used by ");
@@ -132,7 +132,7 @@ public class DAOManager
 			}
 		}
 
-		if(log.isDebugEnabled())
+		if (log.isDebugEnabled())
 			log.debug("DAO " + dao.getClassName() + " was successfuly registered.");
 	}
 
@@ -144,15 +144,15 @@ public class DAOManager
 	 */
 	public static void unregisterDAO(DAO daoClass)
 	{
-		synchronized(DAOManager.class)
+		synchronized (DAOManager.class)
 		{
-			for(DAO dao : daoMap.values())
+			for (DAO dao : daoMap.values())
 			{
-				if(dao == daoClass)
+				if (dao == daoClass)
 				{
 					daoMap.remove(dao.getClassName());
 
-					if(log.isDebugEnabled())
+					if (log.isDebugEnabled())
 						log.debug("DAO " + dao.getClassName() + " was successfuly unregistered.");
 
 					break;

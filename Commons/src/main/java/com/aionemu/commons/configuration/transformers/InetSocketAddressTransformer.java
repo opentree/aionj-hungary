@@ -55,14 +55,14 @@ public class InetSocketAddressTransformer implements PropertyTransformer<InetSoc
 	{
 		String[] parts = value.split(":");
 
-		if(parts.length != 2)
+		if (parts.length != 2)
 		{
 			throw new TransformationException("Can't transform property, must be in format \"address:port\"");
 		}
 
 		try
 		{
-			if("*".equals(parts[0]))
+			if ("*".equals(parts[0]))
 			{
 				return new InetSocketAddress(Integer.parseInt(parts[1]));
 			}
@@ -73,7 +73,7 @@ public class InetSocketAddressTransformer implements PropertyTransformer<InetSoc
 				return new InetSocketAddress(address, port);
 			}
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			throw new TransformationException(e);
 		}

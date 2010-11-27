@@ -80,7 +80,7 @@ public class PropertiesUtils
 	public static Properties[] load(String... files) throws IOException
 	{
 		Properties[] result = new Properties[files.length];
-		for(int i = 0; i < result.length; i++)
+		for (int i = 0; i < result.length; i++)
 		{
 			result[i] = load(files[i]);
 		}
@@ -99,7 +99,7 @@ public class PropertiesUtils
 	public static Properties[] load(File... files) throws IOException
 	{
 		Properties[] result = new Properties[files.length];
-		for(int i = 0; i < result.length; i++)
+		for (int i = 0; i < result.length; i++)
 		{
 			result[i] = load(files[i]);
 		}
@@ -164,7 +164,8 @@ public class PropertiesUtils
 	@SuppressWarnings("unchecked")
 	public static Properties[] loadAllFromDirectory(File dir, boolean recursive) throws IOException
 	{
-		Collection<File> files = FileUtils.listFiles(dir, new String[] { "properties" }, recursive);
+		Collection<File> files = FileUtils.listFiles(dir, new String[]
+		{ "properties" }, recursive);
 		return load(files.toArray(new File[files.size()]));
 	}
 }

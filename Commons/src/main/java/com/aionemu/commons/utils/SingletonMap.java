@@ -35,11 +35,11 @@ public final class SingletonMap<K, V> implements Map<K, V>
 	@SuppressWarnings("deprecation")
 	private void init()
 	{
-		if(!initialized)
+		if (!initialized)
 		{
-			synchronized(this)
+			synchronized (this)
 			{
-				if(!initialized)
+				if (!initialized)
 				{
 					map = new FastMap<K, V>().setShared(shared);
 					initialized = true;
@@ -53,9 +53,9 @@ public final class SingletonMap<K, V> implements Map<K, V>
 	{
 		shared = true;
 
-		synchronized(this)
+		synchronized (this)
 		{
-			if(initialized)
+			if (initialized)
 			{
 				((FastMap<K, V>) map).setShared(true);
 			}

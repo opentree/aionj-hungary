@@ -42,7 +42,7 @@ public class ThrowablePresentFilter extends Filter
 	{
 		Object message = loggingEvent.getMessage();
 
-		if(message instanceof Throwable)
+		if (message instanceof Throwable)
 		{
 			return ACCEPT;
 		}
@@ -50,7 +50,7 @@ public class ThrowablePresentFilter extends Filter
 		ThrowableInformation information = loggingEvent.getThrowableInformation();
 
 		// noinspection ThrowableResultOfMethodCallIgnored
-		if(information != null && information.getThrowable() != null)
+		if (information != null && information.getThrowable() != null)
 		{
 			return ACCEPT;
 		}

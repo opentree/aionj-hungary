@@ -32,12 +32,12 @@ public final class AionRejectedExecutionHandler implements RejectedExecutionHand
 	@Override
 	public void rejectedExecution(Runnable r, ThreadPoolExecutor executor)
 	{
-		if(executor.isShutdown())
+		if (executor.isShutdown())
 			return;
 
 		log.warn(r + " from " + executor, new RejectedExecutionException());
 
-		if(Thread.currentThread().getPriority() > Thread.NORM_PRIORITY)
+		if (Thread.currentThread().getPriority() > Thread.NORM_PRIORITY)
 			new Thread(r).start();
 		else
 			r.run();

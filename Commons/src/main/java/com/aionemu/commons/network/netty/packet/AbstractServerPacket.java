@@ -66,14 +66,14 @@ public abstract class AbstractServerPacket<T extends AbstractChannelHandler> ext
 
 	protected final void writeS(String text)
 	{
-		if(text == null)
+		if (text == null)
 		{
 			buf.writeChar(0);
 		}
 		else
 		{
 			int len = text.length();
-			for(int i = 0; i < len; i++)
+			for (int i = 0; i < len; i++)
 				buf.writeChar(text.charAt(i));
 
 			buf.writeChar(0);

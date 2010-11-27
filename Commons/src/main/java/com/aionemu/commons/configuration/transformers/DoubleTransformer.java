@@ -51,7 +51,7 @@ public class DoubleTransformer implements PropertyTransformer<Double>
 		{
 			return Double.parseDouble(value);
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			throw new TransformationException(e);
 		}

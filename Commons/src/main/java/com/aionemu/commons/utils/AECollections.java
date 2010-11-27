@@ -168,7 +168,7 @@ public class AECollections
 		@Override
 		public <T> T[] toArray(T[] a)
 		{
-			if(a.length != 0)
+			if (a.length != 0)
 				a = (T[]) Array.newInstance(a.getClass().getComponentType(), 0);
 
 			return a;

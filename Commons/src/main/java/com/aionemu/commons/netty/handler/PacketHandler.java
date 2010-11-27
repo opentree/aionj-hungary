@@ -34,8 +34,7 @@ public class PacketHandler<T extends AbstractChannelHandler>
 	/**
 	 * logger for this class
 	 */
-	private static final Logger										log					= Logger
-																							.getLogger(PacketHandler.class);
+	private static final Logger										log					= Logger.getLogger(PacketHandler.class);
 
 	private FastMap<State, FastMap<Integer, BaseClientPacket<T>>>	packetsPrototypes	= new FastMap<State, FastMap<Integer, BaseClientPacket<T>>>();
 
@@ -55,10 +54,10 @@ public class PacketHandler<T extends AbstractChannelHandler>
 
 	public void addPacketPrototype(BaseClientPacket<T> packetPrototype, State... states)
 	{
-		for(State state : states)
+		for (State state : states)
 		{
 			FastMap<Integer, BaseClientPacket<T>> pm = packetsPrototypes.get(state);
-			if(pm == null)
+			if (pm == null)
 			{
 				pm = new FastMap<Integer, BaseClientPacket<T>>();
 				packetsPrototypes.put(state, pm);
@@ -73,12 +72,12 @@ public class PacketHandler<T extends AbstractChannelHandler>
 		BaseClientPacket<T> prototype = null;
 
 		FastMap<Integer, BaseClientPacket<T>> pm = packetsPrototypes.get(state);
-		if(pm != null)
+		if (pm != null)
 		{
 			prototype = pm.get(id);
 		}
 
-		if(prototype == null)
+		if (prototype == null)
 		{
 			unknownPacket(state, id);
 			return null;

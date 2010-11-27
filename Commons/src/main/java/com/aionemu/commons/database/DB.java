@@ -185,14 +185,14 @@ public final class DB
 		{
 			con = DatabaseFactory.getConnection();
 			stmt = con.prepareStatement(query);
-			if(reader instanceof ParamReadStH)
+			if (reader instanceof ParamReadStH)
 				((ParamReadStH) reader).setParams(stmt);
 			rset = stmt.executeQuery();
 			reader.handleRead(rset);
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
-			if(errMsg == null)
+			if (errMsg == null)
 				log.warn("Error executing select query " + e, e);
 			else
 				log.warn(errMsg + " " + e, e);
@@ -202,12 +202,12 @@ public final class DB
 		{
 			try
 			{
-				if(con != null)
+				if (con != null)
 					con.close();
-				if(stmt != null)
+				if (stmt != null)
 					stmt.close();
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				log.warn("Failed to close DB connection " + e, e);
 			}
@@ -245,14 +245,14 @@ public final class DB
 		{
 			con = DatabaseFactory.getConnection();
 			stmt = con.prepareCall(query);
-			if(reader instanceof CallReadStH)
+			if (reader instanceof CallReadStH)
 				((CallReadStH) reader).setParams(stmt);
 			rset = stmt.executeQuery();
 			reader.handleRead(rset);
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
-			if(errMsg == null)
+			if (errMsg == null)
 				log.warn("Error calling stored procedure " + e, e);
 			else
 				log.warn(errMsg + " " + e, e);
@@ -262,12 +262,12 @@ public final class DB
 		{
 			try
 			{
-				if(con != null)
+				if (con != null)
 					con.close();
-				if(stmt != null)
+				if (stmt != null)
 					stmt.close();
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				log.warn("Failed to close DB connection " + e, e);
 			}
@@ -332,15 +332,15 @@ public final class DB
 		{
 			con = DatabaseFactory.getConnection();
 			stmt = con.prepareStatement(query);
-			if(batch != null)
+			if (batch != null)
 				batch.handleInsertUpdate(stmt);
 			else
 				stmt.executeUpdate();
 
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
-			if(errMsg == null)
+			if (errMsg == null)
 				log.warn("Failed to execute IU query " + e, e);
 			else
 				log.warn(errMsg + " " + e, e);
@@ -351,12 +351,12 @@ public final class DB
 		{
 			try
 			{
-				if(con != null)
+				if (con != null)
 					con.close();
-				if(stmt != null)
+				if (stmt != null)
 					stmt.close();
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				log.warn("Failed to close DB connection " + e, e);
 			}
@@ -416,16 +416,16 @@ public final class DB
 			c = DatabaseFactory.getConnection();
 			ps = c.prepareStatement(sql, resultSetType, resultSetConcurrency);
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			log.error("Can't create PreparedStatement for querry: " + sql, e);
-			if(c != null)
+			if (c != null)
 			{
 				try
 				{
 					c.close();
 				}
-				catch(SQLException e1)
+				catch (SQLException e1)
 				{
 					log.error("Can't close connection after exception", e1);
 				}
@@ -448,7 +448,7 @@ public final class DB
 		{
 			return statement.executeUpdate();
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			log.error("Can't execute update for PreparedStatement", e);
 		}
@@ -482,7 +482,7 @@ public final class DB
 		{
 			rs = statement.executeQuery();
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			log.error("Error while executing querry", e);
 		}
@@ -500,7 +500,7 @@ public final class DB
 
 		try
 		{
-			if(statement.isClosed())
+			if (statement.isClosed())
 			{
 				// noinspection ThrowableInstanceNeverThrown
 				log.warn("Attempt to close PreparedStatement that is closes already", new Exception());
@@ -511,7 +511,7 @@ public final class DB
 			statement.close();
 			c.close();
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			log.error("Error while closing PreparedStatement", e);
 		}

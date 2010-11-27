@@ -63,11 +63,9 @@ public class Version
 
 			setDate(attrs);
 		}
-		catch(IOException e)
+		catch (IOException e)
 		{
-			log.error(
-				"Unable to get Soft information\nFile name '" + (jarName == null ? "null" : jarName.getAbsolutePath())
-					+ "' isn't a valid jar", e);
+			log.error("Unable to get Soft information\nFile name '" + (jarName == null ? "null" : jarName.getAbsolutePath()) + "' isn't a valid jar", e);
 		}
 
 	}
@@ -76,7 +74,7 @@ public class Version
 	{
 		try
 		{
-			if(!fileToWrite.exists())
+			if (!fileToWrite.exists())
 			{
 				log.error("Unable to Find File :" + fileToWrite.getName() + " Please Update your " + type);
 				return;
@@ -90,7 +88,7 @@ public class Version
 			manifest.write(fos);
 			fos.close();
 		}
-		catch(IOException e)
+		catch (IOException e)
 		{
 			log.error("Error, " + e);
 		}
@@ -100,7 +98,7 @@ public class Version
 	{
 		String version = attrs.getValue("Implementation-Version");
 
-		if(version != null)
+		if (version != null)
 			this.version = version;
 		else
 			this.version = "-1";
@@ -115,7 +113,7 @@ public class Version
 	{
 		String revision = attrs.getValue("Implementation-Build");
 
-		if(revision != null)
+		if (revision != null)
 			this.revision = revision;
 		else
 			this.revision = "-1";
@@ -130,7 +128,7 @@ public class Version
 	{
 		String buildTime = attrs.getValue("Implementation-Time");
 
-		if(buildTime != null)
+		if (buildTime != null)
 			this.date = Long.parseLong(buildTime);
 		else
 			this.date = -1;

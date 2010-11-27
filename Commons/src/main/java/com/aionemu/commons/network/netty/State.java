@@ -23,8 +23,5 @@ package com.aionemu.commons.network.netty;
 
 public enum State
 {
-	CONNECTED,
-	AUTHED_GG,
-	AUTHED,
-	ENTERED;
+	CONNECTED, AUTHED_GG, AUTHED, ENTERED;
 }

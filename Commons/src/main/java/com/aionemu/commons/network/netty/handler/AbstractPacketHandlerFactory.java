@@ -33,12 +33,12 @@ public class AbstractPacketHandlerFactory<T extends AbstractChannelHandler>
 
 	protected AbstractPacketHandlerFactory(ServerPacketHandler<T> sph, ClientPacketHandler<T> cph)
 	{
-		if(sph == null)
+		if (sph == null)
 			sHandler = new ServerPacketHandler<T>();
 		else
 			sHandler = sph;
 
-		if(cph == null)
+		if (cph == null)
 			cHandler = new ClientPacketHandler<T>();
 		else
 			cHandler = cph;

@@ -30,17 +30,16 @@ import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
  */
 public class ClientPacketHandler<T extends AbstractChannelHandler>
 {
-	private static final Logger											log					= Logger
-																								.getLogger(ClientPacketHandler.class);
+	private static final Logger											log					= Logger.getLogger(ClientPacketHandler.class);
 
 	private FastMap<State, FastMap<Integer, AbstractClientPacket<T>>>	packetsPrototypes	= new FastMap<State, FastMap<Integer, AbstractClientPacket<T>>>();
 
 	public void addPacketPrototype(AbstractClientPacket<T> packetPrototype, State... states)
 	{
-		for(State state : states)
+		for (State state : states)
 		{
 			FastMap<Integer, AbstractClientPacket<T>> pm = packetsPrototypes.get(state);
-			if(pm == null)
+			if (pm == null)
 			{
 				pm = new FastMap<Integer, AbstractClientPacket<T>>();
 				packetsPrototypes.put(state, pm);
@@ -56,10 +55,10 @@ public class ClientPacketHandler<T extends AbstractChannelHandler>
 
 		FastMap<Integer, AbstractClientPacket<T>> pm = packetsPrototypes.get(ch.getState());
 
-		if(pm != null)
+		if (pm != null)
 			prototype = pm.get(Integer.valueOf(id));
 
-		if(prototype == null)
+		if (prototype == null)
 		{
 			unknownPacket(ch.getState(), id);
 			return null;

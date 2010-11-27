@@ -48,14 +48,14 @@ public class CharTransformer implements PropertyTransformer<Character>
 		try
 		{
 			char[] chars = value.toCharArray();
-			if(chars.length > 1)
+			if (chars.length > 1)
 			{
 				throw new TransformationException("To many characters in the value");
 			}
 
 			return chars[0];
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			throw new TransformationException(e);
 		}

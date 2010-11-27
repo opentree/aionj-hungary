@@ -46,36 +46,34 @@ public class CompiledScriptCache implements Serializable
 	 */
 	private static final long						serialVersionUID		= 1L;
 
-	private static final Logger						log						= Logger
-																				.getLogger(CompiledScriptCache.class);
+	private static final Logger						log						= Logger.getLogger(CompiledScriptCache.class);
 
 	private final Map<String, CompiledScriptHolder>	_compiledScriptCache	= new FastMap<String, CompiledScriptHolder>();
 	private transient boolean						_modified				= false;
 
-	public CompiledScript loadCompiledScript(ScriptEngine engine, File file) throws FileNotFoundException,
-		ScriptException
+	public CompiledScript loadCompiledScript(ScriptEngine engine, File file) throws FileNotFoundException, ScriptException
 	{
 		int len = AionScriptEngineManager.SCRIPT_FOLDER.getPath().length() + 1;
 		String relativeName = file.getPath().substring(len);
 
 		CompiledScriptHolder csh = _compiledScriptCache.get(relativeName);
-		if(csh != null && csh.matches(file))
+		if (csh != null && csh.matches(file))
 		{
-			if(log.isDebugEnabled())
+			if (log.isDebugEnabled())
 				log.info("Reusing cached compiled script: " + file);
 			return csh.getCompiledScript();
 		}
 
-		if(log.isDebugEnabled())
+		if (log.isDebugEnabled())
 			log.info("Compiling script: " + file);
 		Compilable eng = (Compilable) engine;
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 
 		// TODO lock file
 		CompiledScript cs = eng.compile(reader);
-		if(cs instanceof Serializable)
+		if (cs instanceof Serializable)
 		{
-			synchronized(_compiledScriptCache)
+			synchronized (_compiledScriptCache)
 			{
 				_compiledScriptCache.put(relativeName, new CompiledScriptHolder(cs, file));
 				_modified = true;
@@ -91,12 +89,12 @@ public class CompiledScriptCache implements Serializable
 
 	public void purge()
 	{
-		synchronized(_compiledScriptCache)
+		synchronized (_compiledScriptCache)
 		{
-			for(String path : _compiledScriptCache.keySet())
+			for (String path : _compiledScriptCache.keySet())
 			{
 				File file = new File(AionScriptEngineManager.SCRIPT_FOLDER, path);
-				if(!file.isFile())
+				if (!file.isFile())
 				{
 					_compiledScriptCache.remove(path);
 					_modified = true;
@@ -107,10 +105,9 @@ public class CompiledScriptCache implements Serializable
 
 	public void save() throws IOException
 	{
-		synchronized(_compiledScriptCache)
+		synchronized (_compiledScriptCache)
 		{
-			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(
-				AionScriptEngineManager.SCRIPT_FOLDER, "CompiledScripts.cache")));
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(AionScriptEngineManager.SCRIPT_FOLDER, "CompiledScripts.cache")));
 			oos.writeObject(this);
 			_modified = false;
 		}

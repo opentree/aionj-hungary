@@ -51,7 +51,7 @@ public class FloatTransformer implements PropertyTransformer<Float>
 		{
 			return Float.parseFloat(value);
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			throw new TransformationException(e);
 		}

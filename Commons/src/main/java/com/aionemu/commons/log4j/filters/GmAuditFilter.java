@@ -41,7 +41,7 @@ public final class GmAuditFilter extends Filter
 	{
 		Object message = loggingEvent.getMessage();
 
-		if(((String) message).startsWith("[ADMIN COMMAND]"))
+		if (((String) message).startsWith("[ADMIN COMMAND]"))
 		{
 			return ACCEPT;
 		}

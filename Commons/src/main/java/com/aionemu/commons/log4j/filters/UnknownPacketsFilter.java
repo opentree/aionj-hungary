@@ -34,7 +34,7 @@ public final class UnknownPacketsFilter extends Filter
 	{
 		Object message = loggingEvent.getMessage();
 
-		if(((String) message).startsWith("[UNKNOWN PACKET]"))
+		if (((String) message).startsWith("[UNKNOWN PACKET]"))
 		{
 			return ACCEPT;
 		}

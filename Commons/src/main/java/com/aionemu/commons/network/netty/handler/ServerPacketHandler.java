@@ -31,7 +31,7 @@ public class ServerPacketHandler<T extends AbstractChannelHandler>
 	public int getOpCode(Class<? extends AbstractServerPacket<AbstractChannelHandler>> packetClass)
 	{
 		Integer opcode = opcodes.get(packetClass);
-		if(opcode == null)
+		if (opcode == null)
 			throw new IllegalArgumentException("There is no opcode for " + packetClass + " defined.");
 
 		return opcode;
@@ -39,12 +39,11 @@ public class ServerPacketHandler<T extends AbstractChannelHandler>
 
 	public void addPacketOpcode(Class<? extends AbstractServerPacket<T>> packetClass, int opcode)
 	{
-		if(opcode < 0)
+		if (opcode < 0)
 			return;
 
-		if(opcodes.values().contains(opcode))
-			throw new IllegalArgumentException(String.format("There already exists another packet with id 0x%02X",
-				opcode));
+		if (opcodes.values().contains(opcode))
+			throw new IllegalArgumentException(String.format("There already exists another packet with id 0x%02X", opcode));
 
 		opcodes.put(packetClass, opcode);
 	}

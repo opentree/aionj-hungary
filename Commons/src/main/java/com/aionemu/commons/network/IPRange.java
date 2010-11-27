@@ -164,7 +164,7 @@ public class IPRange
 	{
 		byte[] result = new byte[4];
 		String[] strings = address.split("\\.");
-		for(int i = 0, n = strings.length; i < n; i++)
+		for (int i = 0, n = strings.length; i < n; i++)
 		{
 			result[i] = (byte) Integer.parseInt(strings[i]);
 		}
@@ -182,9 +182,9 @@ public class IPRange
 	@Override
 	public boolean equals(Object o)
 	{
-		if(this == o)
+		if (this == o)
 			return true;
-		if(!(o instanceof IPRange))
+		if (!(o instanceof IPRange))
 			return false;
 
 		IPRange ipRange = (IPRange) o;

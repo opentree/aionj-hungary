@@ -56,7 +56,7 @@ public class JuliToLog4JHandler extends Handler
 	public void publish(LogRecord record)
 	{
 		String loggerName = record.getLoggerName();
-		if(loggerName == null)
+		if (loggerName == null)
 		{
 			loggerName = "";
 		}
@@ -77,31 +77,31 @@ public class JuliToLog4JHandler extends Handler
 	 */
 	protected org.apache.log4j.Level toLog4jLevel(Level juliLevel)
 	{
-		if(Level.OFF.equals(juliLevel))
+		if (Level.OFF.equals(juliLevel))
 		{
 			return org.apache.log4j.Level.OFF;
 		}
-		else if(Level.SEVERE.equals(juliLevel))
+		else if (Level.SEVERE.equals(juliLevel))
 		{
 			return org.apache.log4j.Level.ERROR;
 		}
-		else if(Level.WARNING.equals(juliLevel))
+		else if (Level.WARNING.equals(juliLevel))
 		{
 			return org.apache.log4j.Level.WARN;
 		}
-		else if(Level.INFO.equals(juliLevel))
+		else if (Level.INFO.equals(juliLevel))
 		{
 			return org.apache.log4j.Level.INFO;
 		}
-		else if(Level.CONFIG.equals(juliLevel) || Level.FINE.equals(juliLevel))
+		else if (Level.CONFIG.equals(juliLevel) || Level.FINE.equals(juliLevel))
 		{
 			return org.apache.log4j.Level.DEBUG;
 		}
-		else if(Level.FINER.equals(juliLevel) || Level.FINEST.equals(juliLevel))
+		else if (Level.FINER.equals(juliLevel) || Level.FINEST.equals(juliLevel))
 		{
 			return org.apache.log4j.Level.TRACE;
 		}
-		else if(Level.ALL.equals(juliLevel))
+		else if (Level.ALL.equals(juliLevel))
 		{
 			return org.apache.log4j.Level.ALL;
 		}

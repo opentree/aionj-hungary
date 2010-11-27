@@ -49,11 +49,11 @@ public abstract class ManagedScript
 			AionScriptEngineManager.getInstance().executeScript(getScriptFile());
 			return true;
 		}
-		catch(FileNotFoundException e)
+		catch (FileNotFoundException e)
 		{
 			return false;
 		}
-		catch(ScriptException e)
+		catch (ScriptException e)
 		{
 			return false;
 		}

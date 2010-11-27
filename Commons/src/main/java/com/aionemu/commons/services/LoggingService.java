@@ -70,7 +70,7 @@ public class LoggingService
 	{
 		File f = new File(LOGGER_CONFIG_FILE);
 
-		if(!f.exists())
+		if (!f.exists())
 		{
 			throw new Log4jInitializationError("Missing file " + f.getPath());
 		}
@@ -79,7 +79,7 @@ public class LoggingService
 		{
 			init(f.toURI().toURL());
 		}
-		catch(MalformedURLException e)
+		catch (MalformedURLException e)
 		{
 			throw new Log4jInitializationError("Can't initalize logging", e);
 		}
@@ -95,9 +95,9 @@ public class LoggingService
 	 */
 	public static void init(URL url) throws Log4jInitializationError
 	{
-		synchronized(LoggingService.class)
+		synchronized (LoggingService.class)
 		{
-			if(initialized)
+			if (initialized)
 			{
 				return;
 			}
@@ -111,7 +111,7 @@ public class LoggingService
 		{
 			DOMConfigurator.configure(url);
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			throw new Log4jInitializationError("Can't initialize logging", e);
 		}
@@ -120,7 +120,7 @@ public class LoggingService
 
 		// Initialize JULI to Log4J bridge
 		Logger logger = LogManager.getLogManager().getLogger("");
-		for(Handler h : logger.getHandlers())
+		for (Handler h : logger.getHandlers())
 		{
 			logger.removeHandler(h);
 		}
@@ -146,27 +146,26 @@ public class LoggingService
 		{
 			Field field = lr.getClass().getDeclaredField("defaultFactory");
 			field.setAccessible(true);
-			String cn = System.getProperty(LOGGER_FACTORY_CLASS_PROPERTY,
-				ThrowableAsMessageAwareFactory.class.getName());
+			String cn = System.getProperty(LOGGER_FACTORY_CLASS_PROPERTY, ThrowableAsMessageAwareFactory.class.getName());
 			Class<?> c = Class.forName(cn);
 			field.set(lr, c.newInstance());
 			field.setAccessible(false);
 		}
-		catch(NoSuchFieldException e)
+		catch (NoSuchFieldException e)
 		{
 			// never thrown
 			e.printStackTrace();
 		}
-		catch(IllegalAccessException e)
+		catch (IllegalAccessException e)
 		{
 			// never thrown
 			e.printStackTrace();
 		}
-		catch(ClassNotFoundException e)
+		catch (ClassNotFoundException e)
 		{
 			throw new Log4jInitializationError("Can't found log4j logger factory class", e);
 		}
-		catch(InstantiationException e)
+		catch (InstantiationException e)
 		{
 			throw new Log4jInitializationError("Can't instantiate log4j logger factory", e);
 		}

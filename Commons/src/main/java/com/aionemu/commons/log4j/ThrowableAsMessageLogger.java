@@ -62,7 +62,7 @@ public class ThrowableAsMessageLogger extends Logger
 	protected void forcedLog(String fqcn, Priority level, Object message, Throwable t)
 	{
 
-		if(message instanceof Throwable && t == null)
+		if (message instanceof Throwable && t == null)
 		{
 			t = (Throwable) message;
 			message = t.getLocalizedMessage();

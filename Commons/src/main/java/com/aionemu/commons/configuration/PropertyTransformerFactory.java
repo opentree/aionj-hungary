@@ -58,66 +58,65 @@ public class PropertyTransformerFactory
 	 */
 
 	@SuppressWarnings("rawtypes")
-	public static PropertyTransformer newTransformer(Class clazzToTransform, Class<? extends PropertyTransformer> tc)
-		throws TransformationException
+	public static PropertyTransformer newTransformer(Class clazzToTransform, Class<? extends PropertyTransformer> tc) throws TransformationException
 	{
 
 		// Just a hack, we can't set null to annotation value
-		if(tc == PropertyTransformer.class)
+		if (tc == PropertyTransformer.class)
 		{
 			tc = null;
 		}
 
-		if(tc != null)
+		if (tc != null)
 		{
 			try
 			{
 				return tc.newInstance();
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				throw new TransformationException("Can't instantiate property transfromer", e);
 			}
 		}
 		else
 		{
-			if(clazzToTransform == Boolean.class || clazzToTransform == Boolean.TYPE)
+			if (clazzToTransform == Boolean.class || clazzToTransform == Boolean.TYPE)
 			{
 				return BooleanTransformer.SHARED_INSTANCE;
 			}
-			else if(clazzToTransform == Byte.class || clazzToTransform == Byte.TYPE)
+			else if (clazzToTransform == Byte.class || clazzToTransform == Byte.TYPE)
 			{
 				return ByteTransformer.SHARED_INSTANCE;
 			}
-			else if(clazzToTransform == Character.class || clazzToTransform == Character.TYPE)
+			else if (clazzToTransform == Character.class || clazzToTransform == Character.TYPE)
 			{
 				return CharTransformer.SHARED_INSTANCE;
 			}
-			else if(clazzToTransform == Double.class || clazzToTransform == Double.TYPE)
+			else if (clazzToTransform == Double.class || clazzToTransform == Double.TYPE)
 			{
 				return DoubleTransformer.SHARED_INSTANCE;
 			}
-			else if(clazzToTransform == Float.class || clazzToTransform == Float.TYPE)
+			else if (clazzToTransform == Float.class || clazzToTransform == Float.TYPE)
 			{
 				return FloatTransformer.SHARED_INSTANCE;
 			}
-			else if(clazzToTransform == Integer.class || clazzToTransform == Integer.TYPE)
+			else if (clazzToTransform == Integer.class || clazzToTransform == Integer.TYPE)
 			{
 				return IntegerTransformer.SHARED_INSTANCE;
 			}
-			else if(clazzToTransform == Long.class || clazzToTransform == Long.TYPE)
+			else if (clazzToTransform == Long.class || clazzToTransform == Long.TYPE)
 			{
 				return LongTransformer.SHARED_INSTANCE;
 			}
-			else if(clazzToTransform == Short.class || clazzToTransform == Short.TYPE)
+			else if (clazzToTransform == Short.class || clazzToTransform == Short.TYPE)
 			{
 				return ShortTransformer.SHARED_INSTANCE;
 			}
-			else if(clazzToTransform == String.class)
+			else if (clazzToTransform == String.class)
 			{
 				return StringTransformer.SHARED_INSTANCE;
 			}
-			else if(clazzToTransform.isEnum())
+			else if (clazzToTransform.isEnum())
 			{
 				return EnumTransformer.SHARED_INSTANCE;
 				// TODO: Implement
@@ -127,19 +126,19 @@ public class PropertyTransformerFactory
 				// } else if (clazzToTransform.isArray()) {
 				// return new ArrayTransformer();
 			}
-			else if(clazzToTransform == File.class)
+			else if (clazzToTransform == File.class)
 			{
 				return FileTransformer.SHARED_INSTANCE;
 			}
-			else if(ClassUtils.isSubclass(clazzToTransform, InetSocketAddress.class))
+			else if (ClassUtils.isSubclass(clazzToTransform, InetSocketAddress.class))
 			{
 				return InetSocketAddressTransformer.SHARED_INSTANCE;
 			}
-			else if(clazzToTransform == Pattern.class)
+			else if (clazzToTransform == Pattern.class)
 			{
 				return PatternTransformer.SHARED_INSTANCE;
 			}
-			else if(clazzToTransform == Class.class)
+			else if (clazzToTransform == Class.class)
 			{
 				return ClassTransformer.SHARED_INSTANCE;
 			}

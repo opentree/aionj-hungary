@@ -36,7 +36,7 @@ public final class ChatLogFilter extends Filter
 	{
 		Object message = loggingEvent.getMessage();
 
-		if(((String) message).startsWith("[MESSAGE]"))
+		if (((String) message).startsWith("[MESSAGE]"))
 		{
 			return ACCEPT;
 		}

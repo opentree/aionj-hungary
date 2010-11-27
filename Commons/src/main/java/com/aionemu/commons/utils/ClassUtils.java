@@ -39,26 +39,26 @@ public class ClassUtils
 		// We rely on the fact that for any given java class or
 		// primtitive type there is a unqiue Class object, so
 		// we can use object equivalence in the comparisons.
-		if(a == b)
+		if (a == b)
 		{
 			return true;
 		}
-		if(a == null || b == null)
+		if (a == null || b == null)
 		{
 			return false;
 		}
-		for(Class x = a; x != null; x = x.getSuperclass())
+		for (Class x = a; x != null; x = x.getSuperclass())
 		{
-			if(x == b)
+			if (x == b)
 			{
 				return true;
 			}
-			if(b.isInterface())
+			if (b.isInterface())
 			{
 				Class[] interfaces = x.getInterfaces();
-				for(Class anInterface : interfaces)
+				for (Class anInterface : interfaces)
 				{
-					if(isSubclass(anInterface, b))
+					if (isSubclass(anInterface, b))
 					{
 						return true;
 					}
@@ -93,7 +93,7 @@ public class ClassUtils
 	 */
 	public static boolean isPackageMember(String className, String packageName)
 	{
-		if(!className.contains("."))
+		if (!className.contains("."))
 		{
 			return packageName == null || packageName.isEmpty();
 		}

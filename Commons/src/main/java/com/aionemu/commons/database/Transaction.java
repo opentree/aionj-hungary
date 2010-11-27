@@ -86,7 +86,7 @@ public class Transaction
 	public void insertUpdate(String sql, IUStH iusth) throws SQLException
 	{
 		PreparedStatement statement = connection.prepareStatement(sql);
-		if(iusth != null)
+		if (iusth != null)
 		{
 			iusth.handleInsertUpdate(statement);
 		}
@@ -149,13 +149,13 @@ public class Transaction
 		{
 			connection.commit();
 		}
-		catch(SQLException e)
+		catch (SQLException e)
 		{
 			log.warn("Error while commiting transaction", e);
 
 			try
 			{
-				if(rollBackToOnError != null)
+				if (rollBackToOnError != null)
 				{
 					connection.rollback(rollBackToOnError);
 				}
@@ -164,7 +164,7 @@ public class Transaction
 					connection.rollback();
 				}
 			}
-			catch(SQLException e1)
+			catch (SQLException e1)
 			{
 				log.error("Can't rollback transaction", e1);
 			}
