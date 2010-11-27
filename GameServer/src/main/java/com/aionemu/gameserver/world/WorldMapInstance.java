@@ -110,13 +110,46 @@ public class WorldMapInstance
 	{
 		this.regions = new MapRegion[parent.getWorldSize()/regionSize+1][parent.getWorldSize()/regionSize+1];
 		int size = parent.getWorldSize()/regionSize;
-		for (int x=0; x < size ; x++)
+		//Create all mapRegion
+		for (int x=0; x <= size ; x++)
 		{
-			for (int y=0; y < size ; y++)
+			for (int y=0; y <= size ; y++)
 			{
-				createMapRegion(x, y, 0);
+				regions[x][y] = new MapRegion(this, false);
 			}
 		}
+		
+		
+		// Add Neighbour
+		for (int x=0; x <= size ; x++)
+		{
+			for (int y=0; y <= size ; y++)
+			{
+				MapRegion mapRegion = regions[x][y];
+				for(int x2 = x - 1; x2 <= x + 1; x2++)
+				{
+					for(int y2 = y - 1; y2 <= y + 1; y2++)
+					{
+						if((x2 == x && y2 == y) || x2 == -1 || y2 == -1)
+							continue;
+						try
+						{
+							MapRegion neighbour = regions[x2][y2];
+							mapRegion.addNeighbourRegion(neighbour);
+						}
+						catch (ArrayIndexOutOfBoundsException e)
+						{
+							continue;
+						}
+						catch (NullPointerException e)
+						{
+							continue;
+						}
+					}
+				}
+			}
+		}
+		
 		log.debug(this.getMapId()+" Created map regions: "+ regions.length);
 	}
 
@@ -165,35 +198,6 @@ public class WorldMapInstance
 			log.warn("MAP REGION: Not found!!! x: "+x+" y: "+y+" z: "+z);
 		}
 		return region;
-	}
-
-	/**
-	 * Create new MapRegion and add link to neighbours.
-	 *
-	 * @param regionId
-	 * @return newly created map region
-	 */
-	protected MapRegion createMapRegion(int x, int y, int z)
-	{
-		MapRegion r = new MapRegion(this, false);
-
-		regions[x][y] = r;
-		for(int x2 = x - 1; x2 <= x + 1; x2++)
-		{
-			for(int y2 = y - 1; y2 <= y + 1; y2++)
-			{
-				if((x2 == x && y2 == y) || x2 == -1 || y2 == -1)
-					continue;
-
-				MapRegion neighbour = regions[x2][y2];
-				if(neighbour != null)
-				{
-					r.addNeighbourRegion(neighbour);
-					neighbour.addNeighbourRegion(r);
-				}
-			}
-		}
-		return r;
 	}
 
 	/**

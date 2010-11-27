@@ -43,52 +43,54 @@ public class WorldMapInstance3D extends WorldMapInstance
 	protected void initMapRegions()
 	{
 		regions = new MapRegion[getParent().getWorldSize()/regionSize+1][getParent().getWorldSize()/regionSize+1][5000/regionSize+1];
-		int size = this.getParent().getWorldSize()/regionSize;
+		int size = getParent().getWorldSize()/regionSize;
 		int zSize = 5000/regionSize; 
 		
-		for (int x=0; x < size ; x++)
+		for (int x=0; x <= size ; x++)
 		{
-			for (int y=0; y < size ; y++)
+			for (int y=0; y <= size ; y++)
 			{
-				for (int z=0; z < zSize ; z++)
+				for (int z=0; z <= zSize ; z++)
 				{
-					createMapRegion(x,y,z);
+					regions[x][y][z] = new MapRegion(this, true);
 				}
 			}
 		}
-	}
-
-	/**
-	 * Create new MapRegion and add link to neighbours.
-	 * 
-	 * @param regionId
-	 * @return newly created map region
-	 */
-	@Override
-	protected MapRegion createMapRegion(int x, int y, int z)
-	{
-		MapRegion r = new MapRegion(this, true);
-		regions[x][y][z] = r;
-
-		for(int x2 = x - 1; x2 <= x + 1; x2++)
+		
+		for (int x=0; x <= size ; x++)
 		{
-			for(int y2 = y - 1; y2 <= y + 1; y2++)
+			for (int y=0; y <= size ; y++)
 			{
-				for(int z2 = z - 1; z2 <= z + 1; z2++)
+				for (int z=0; z <= zSize ; z++)
 				{
-					if((x2 == x && y2 == y && z2 == z) || x2 == -1 || y2 == -1 || z2 == -1)
-						continue;
-
-					MapRegion neighbour = regions[x2][y2][z2];
-					if(neighbour != null)
+					MapRegion mapRegion = regions[x][y][z];
+					for(int x2 = x - 1; x2 <= x + 1; x2++)
 					{
-						r.addNeighbourRegion(neighbour);
-						neighbour.addNeighbourRegion(r);
+						for(int y2 = y - 1; y2 <= y + 1; y2++)
+						{
+							for(int z2 = z - 1; z2 <= z + 1; z2++)
+							{
+								if((x2 == x && y2 == y && z2 == z) || x2 == -1 || y2 == -1 || z2 == -1)
+									continue;
+								try
+								{
+									MapRegion neighbour = regions[x2][y2][z2];
+									mapRegion.addNeighbourRegion(neighbour);
+								}
+								catch (ArrayIndexOutOfBoundsException e)
+								{
+									continue;
+								}
+								catch (NullPointerException e)
+								{
+									continue;
+								}
+							}
+						}
 					}
 				}
 			}
 		}
-		return r;
 	}
 
 	/**

@@ -118,7 +118,7 @@ public class WorldMap
 	 */
 	public Integer getWorldSize()
 	{
-		return worldMapTemplate.getWorldSize();
+		return worldMapTemplate.getWorldSize()-1;
 	}
 
 	/**
