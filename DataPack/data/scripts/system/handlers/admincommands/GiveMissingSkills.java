@@ -27,25 +27,28 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
  * @author ATracer
  * 
  */
-public class GiveMissingSkills extends AdminCommand {
+public class GiveMissingSkills extends AdminCommand
+{
 
-	public GiveMissingSkills() {
+	public GiveMissingSkills()
+	{
 		super("givemissingskills");
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params) {
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_GIVEMISSINGSKILLS) {
-			PacketSendUtility.sendMessage(admin,
-					"You dont have enough rights to execute this command");
+	public void executeCommand(Player admin, String[] params)
+	{
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_GIVEMISSINGSKILLS)
+		{
+			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
 			return;
 		}
 
 		SkillLearnService.addMissingSkills(admin);
 	}
 
-	public static void main(String[] args) {
-		AdminCommandChatHandler.getInstance().registerAdminCommand(
-				new GiveMissingSkills());
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new GiveMissingSkills());
 	}
 }

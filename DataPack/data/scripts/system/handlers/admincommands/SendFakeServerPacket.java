@@ -48,8 +48,10 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
  * 
  */
 
-public class SendFakeServerPacket extends AdminCommand {
-	public SendFakeServerPacket() {
+public class SendFakeServerPacket extends AdminCommand
+{
+	public SendFakeServerPacket()
+	{
 		super("fsc");
 	}
 
@@ -58,16 +60,17 @@ public class SendFakeServerPacket extends AdminCommand {
 	 */
 
 	@Override
-	public void executeCommand(Player admin, String[] params) {
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_SENDFAKESERVERPACKET) {
-			PacketSendUtility.sendMessage(admin,
-					"You dont have enough rights to execute this command");
+	public void executeCommand(Player admin, String[] params)
+	{
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_SENDFAKESERVERPACKET)
+		{
+			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
 			return;
 		}
 
-		if (params.length < 3) {
-			PacketSendUtility.sendMessage(admin,
-					"Incorrent number of params in //fsc command");
+		if (params.length < 3)
+		{
+			PacketSendUtility.sendMessage(admin, "Incorrent number of params in //fsc command");
 			return;
 		}
 
@@ -80,15 +83,16 @@ public class SendFakeServerPacket extends AdminCommand {
 		SM_CUSTOM_PACKET packet = new SM_CUSTOM_PACKET(id);
 
 		int i = 0;
-		for (char c : format.toCharArray()) {
+		for (char c : format.toCharArray())
+		{
 			packet.addElement(PacketElementType.getByCode(c), params[i + 2]);
 			i++;
 		}
 		PacketSendUtility.sendPacket(admin, packet);
 	}
 
-	public static void main(String[] args) {
-		AdminCommandChatHandler.getInstance().registerAdminCommand(
-				new SendFakeServerPacket());
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new SendFakeServerPacket());
 	}
 }

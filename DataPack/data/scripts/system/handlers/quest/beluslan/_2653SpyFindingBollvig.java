@@ -29,22 +29,26 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  * @author heldl
  * 
  */
-public class _2653SpyFindingBollvig extends QuestHandler {
-	private final static int questId = 2653;
+public class _2653SpyFindingBollvig extends QuestHandler
+{
+	private final static int	questId	= 2653;
 
-	public _2653SpyFindingBollvig() {
+	public _2653SpyFindingBollvig()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.setNpcQuestData(204650).addOnQuestStart(questId);
 		qe.setNpcQuestData(204650).addOnTalkEvent(questId);
 		qe.setNpcQuestData(204655).addOnTalkEvent(questId);
 		qe.setNpcQuestData(204775).addOnTalkEvent(questId);
 	}
 
-	public boolean onLvlUpEvent(QuestEnv env) {
+	public boolean onLvlUpEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
 		final QuestState qs2 = player.getQuestStateList().getQuestState(2652);
@@ -56,48 +60,57 @@ public class _2653SpyFindingBollvig extends QuestHandler {
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		int targetId = 0;
 		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if (targetId == 204650) {
-			if (qs == null) {
+		if (targetId == 204650)
+		{
+			if (qs == null)
+			{
 				if (env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1011);
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
 				else
 					return defaultQuestStartDialog(env);
 			}
-		} else if (targetId == 204655) {
-			if (qs != null && qs.getStatus() == QuestStatus.START
-					&& qs.getQuestVarById(0) == 0) {
-				if (env.getDialogId() == -1) {
+		}
+		else if (targetId == 204655)
+		{
+			if (qs != null && qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 0)
+			{
+				if (env.getDialogId() == -1)
+				{
 					PacketSendUtility.sendMessage(player, "25");
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1352);
-				} else if (env.getDialogId() == 10000) {
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
+				}
+				else if (env.getDialogId() == 10000)
+				{
 					qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
 					updateQuestStatus(player, qs);
-					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
-							env.getVisibleObject().getObjectId(), 10));
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
 					return true;
-				} else
+				}
+				else
 					return defaultQuestStartDialog(env);
 			}
-		} else if (targetId == 204775) {
-			if (qs != null) {
-				if (env.getDialogId() == 25
-						&& qs.getStatus() == QuestStatus.START)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 2375);
-				else if (env.getDialogId() == 1009) {
+		}
+		else if (targetId == 204775)
+		{
+			if (qs != null)
+			{
+				if (env.getDialogId() == 25 && qs.getStatus() == QuestStatus.START)
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375);
+				else if (env.getDialogId() == 1009)
+				{
 					qs.setQuestVar(3);
 					qs.setStatus(QuestStatus.REWARD);
 					updateQuestStatus(player, qs);
 					return defaultQuestEndDialog(env);
-				} else
+				}
+				else
 					return defaultQuestEndDialog(env);
 			}
 		}

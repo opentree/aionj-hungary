@@ -35,27 +35,31 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
  * @author ATracer
  * 
  */
-public class AddDrop extends AdminCommand {
+public class AddDrop extends AdminCommand
+{
 
-	public AddDrop() {
+	public AddDrop()
+	{
 		super("adddrop");
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params) {
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_ADDDROP) {
-			PacketSendUtility.sendMessage(admin,
-					"You dont have enough rights to execute this command");
+	public void executeCommand(Player admin, String[] params)
+	{
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_ADDDROP)
+		{
+			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
 			return;
 		}
 
-		if (params.length != 5) {
-			PacketSendUtility.sendMessage(admin,
-					"syntax //adddrop <mobid> <itemid> <min> <max> <chance>");
+		if (params.length != 5)
+		{
+			PacketSendUtility.sendMessage(admin, "syntax //adddrop <mobid> <itemid> <min> <max> <chance>");
 			return;
 		}
 
-		try {
+		try
+		{
 			final int mobId = Integer.parseInt(params[0]);
 			final int itemId = Integer.parseInt(params[1]);
 			final int min = Integer.parseInt(params[2]);
@@ -64,16 +68,14 @@ public class AddDrop extends AdminCommand {
 
 			DropList dropList = DropService.getInstance().getDropList();
 
-			DropTemplate dropTemplate = new DropTemplate(mobId, itemId, min,
-					max, chance);
+			DropTemplate dropTemplate = new DropTemplate(mobId, itemId, min, max, chance);
 			dropList.addDropTemplate(mobId, dropTemplate);
 
-			DB.insertUpdate("INSERT INTO droplist ("
-					+ "`mobId`, `itemId`, `min`, `max`, `chance`)" + " VALUES "
-					+ "(?, ?, ?, ?, ?)", new IUStH() {
+			DB.insertUpdate("INSERT INTO droplist (" + "`mobId`, `itemId`, `min`, `max`, `chance`)" + " VALUES " + "(?, ?, ?, ?, ?)", new IUStH()
+			{
 				@Override
-				public void handleInsertUpdate(PreparedStatement ps)
-						throws SQLException {
+				public void handleInsertUpdate(PreparedStatement ps) throws SQLException
+				{
 					ps.setInt(1, mobId);
 					ps.setInt(2, itemId);
 					ps.setInt(3, min);
@@ -82,15 +84,17 @@ public class AddDrop extends AdminCommand {
 					ps.execute();
 				}
 			});
-		} catch (Exception ex) {
+		}
+		catch (Exception ex)
+		{
 			PacketSendUtility.sendMessage(admin, "Only numbers are allowed");
 			return;
 		}
 	}
 
-	public static void main(String[] args) {
-		AdminCommandChatHandler.getInstance().registerAdminCommand(
-				new AddDrop());
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new AddDrop());
 	}
 
 }

@@ -32,13 +32,15 @@ import com.aionemu.gameserver.world.World;
  * @author Tanelorn
  */
 
-public class MovePlayerToPlayer extends AdminCommand {
+public class MovePlayerToPlayer extends AdminCommand
+{
 
 	/**
 	 * Constructor.
 	 */
 
-	public MovePlayerToPlayer() {
+	public MovePlayerToPlayer()
+	{
 		super("moveplayertoplayer");
 	}
 
@@ -47,57 +49,49 @@ public class MovePlayerToPlayer extends AdminCommand {
 	 */
 
 	@Override
-	public void executeCommand(Player admin, String[] params) {
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_MOVEPLAYERTOPLAYER) {
-			PacketSendUtility.sendMessage(admin,
-					"You dont have enough rights to execute this command");
+	public void executeCommand(Player admin, String[] params)
+	{
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_MOVEPLAYERTOPLAYER)
+		{
+			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
 			return;
 		}
 
-		if (params == null || params.length < 2) {
-			PacketSendUtility
-					.sendMessage(admin,
-							"syntax //moveplayertoplayer <characterNameToMove> <characterNameDestination>");
+		if (params == null || params.length < 2)
+		{
+			PacketSendUtility.sendMessage(admin, "syntax //moveplayertoplayer <characterNameToMove> <characterNameDestination>");
 			return;
 		}
 
-		Player playerToMove = World.getInstance().findPlayer(
-				Util.convertName(params[0]));
-		if (playerToMove == null) {
-			PacketSendUtility.sendMessage(admin,
-					"The specified player is not online.");
+		Player playerToMove = World.getInstance().findPlayer(Util.convertName(params[0]));
+		if (playerToMove == null)
+		{
+			PacketSendUtility.sendMessage(admin, "The specified player is not online.");
 			return;
 		}
 
-		Player playerDestination = World.getInstance().findPlayer(
-				Util.convertName(params[1]));
-		if (playerDestination == null) {
-			PacketSendUtility.sendMessage(admin,
-					"The destination player is not online.");
+		Player playerDestination = World.getInstance().findPlayer(Util.convertName(params[1]));
+		if (playerDestination == null)
+		{
+			PacketSendUtility.sendMessage(admin, "The destination player is not online.");
 			return;
 		}
 
-		if (playerToMove == playerDestination) {
-			PacketSendUtility.sendMessage(admin,
-					"Cannot move the specified player to their own position.");
+		if (playerToMove == playerDestination)
+		{
+			PacketSendUtility.sendMessage(admin, "Cannot move the specified player to their own position.");
 			return;
 		}
 
-		TeleportService.teleportTo(playerToMove,
-				playerDestination.getWorldId(),
-				playerDestination.getInstanceId(), playerDestination.getX(),
-				playerDestination.getY(), playerDestination.getZ(),
-				playerDestination.getHeading(), 0);
+		TeleportService.teleportTo(playerToMove, playerDestination.getWorldId(), playerDestination.getInstanceId(), playerDestination.getX(),
+				playerDestination.getY(), playerDestination.getZ(), playerDestination.getHeading(), 0);
 
-		PacketSendUtility.sendMessage(admin, "Teleported player "
-				+ playerToMove.getName() + " to the location of player "
-				+ playerDestination.getName() + ".");
-		PacketSendUtility.sendMessage(playerToMove,
-				"You have been teleported by an administrator.");
+		PacketSendUtility.sendMessage(admin, "Teleported player " + playerToMove.getName() + " to the location of player " + playerDestination.getName() + ".");
+		PacketSendUtility.sendMessage(playerToMove, "You have been teleported by an administrator.");
 	}
 
-	public static void main(String[] args) {
-		AdminCommandChatHandler.getInstance().registerAdminCommand(
-				new MovePlayerToPlayer());
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new MovePlayerToPlayer());
 	}
 }

@@ -33,20 +33,25 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 /**
  * @author Rhys2002 edited by xaerolt
  */
-public class _1042KeeperoftheKaidanKey extends QuestHandler {
-	private final static int questId = 1042;
-	private final static int[] npc_ids = { 203989, 203901 };
-	private final static int[] mob_ids = { 212029, 212033 }; // Kaidan Blocker
-																// Boss, Crack
-																// Kaidan
-																// Captain //
+public class _1042KeeperoftheKaidanKey extends QuestHandler
+{
+	private final static int	questId	= 1042;
+	private final static int[]	npc_ids	=
+										{ 203989, 203901 };
+	private final static int[]	mob_ids	=
+										{ 212029, 212033 }; // Kaidan Blocker
+															// Boss, Crack
+															// Kaidan
+															// Captain //
 
-	public _1042KeeperoftheKaidanKey() {
+	public _1042KeeperoftheKaidanKey()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.addQuestLvlUp(questId);
 		for (int npc_id : npc_ids)
 			qe.setNpcQuestData(npc_id).addOnTalkEvent(questId);
@@ -59,11 +64,11 @@ public class _1042KeeperoftheKaidanKey extends QuestHandler {
 	}
 
 	@Override
-	public boolean onLvlUpEvent(QuestEnv env) {
+	public boolean onLvlUpEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
-		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player
-				.getCommonData().getLevel());
+		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player.getCommonData().getLevel());
 		if (qs == null || qs.getStatus() != QuestStatus.LOCKED || !lvlCheck)
 			return false;
 		QuestState qs2 = player.getQuestStateList().getQuestState(1040);
@@ -75,7 +80,8 @@ public class _1042KeeperoftheKaidanKey extends QuestHandler {
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
 		if (qs == null)
@@ -85,55 +91,60 @@ public class _1042KeeperoftheKaidanKey extends QuestHandler {
 		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
-		if (qs.getStatus() == QuestStatus.REWARD) {
-			if (targetId == 203901) {
+		if (qs.getStatus() == QuestStatus.REWARD)
+		{
+			if (targetId == 203901)
+			{
 				if (env.getDialogId() == -1)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 10002);
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10002);
 				else if (env.getDialogId() == 1009)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 5);
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
 				else
 					return defaultQuestEndDialog(env);
 			}
 			return false;
-		} else if (qs.getStatus() != QuestStatus.START) {
+		}
+		else if (qs.getStatus() != QuestStatus.START)
+		{
 			return false;
 		}
-		if (targetId == 203989) {
-			switch (env.getDialogId()) {
-			case 25:
-				if (var == 0)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1011);
-			case 1012:
-				PacketSendUtility.sendPacket(player, new SM_PLAY_MOVIE(0, 185));
-				break;
-			case 10000:
-				if (var == 0) {
-					qs.setQuestVarById(0, var + 1);
-					updateQuestStatus(player, qs);
-					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
-							env.getVisibleObject().getObjectId(), 10));
-					return true;
-				}
+		if (targetId == 203989)
+		{
+			switch (env.getDialogId())
+			{
+				case 25:
+					if (var == 0)
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+				case 1012:
+					PacketSendUtility.sendPacket(player, new SM_PLAY_MOVIE(0, 185));
+					break;
+				case 10000:
+					if (var == 0)
+					{
+						qs.setQuestVarById(0, var + 1);
+						updateQuestStatus(player, qs);
+						PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+						return true;
+					}
 			}
-		} else if (targetId == 203901) {
-			switch (env.getDialogId()) {
-			case 25:
-				if (var == 2)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1352);
-			case 33:
-				if (QuestService.collectItemCheck(env, true)) {
-					ItemService.decreaseItemCountByItemId(player, 182201018, 1);
-					qs.setStatus(QuestStatus.REWARD);
-					updateQuestStatus(player, qs);
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 5);
-				} else
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1438);
+		}
+		else if (targetId == 203901)
+		{
+			switch (env.getDialogId())
+			{
+				case 25:
+					if (var == 2)
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
+				case 33:
+					if (QuestService.collectItemCheck(env, true))
+					{
+						ItemService.decreaseItemCountByItemId(player, 182201018, 1);
+						qs.setStatus(QuestStatus.REWARD);
+						updateQuestStatus(player, qs);
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
+					}
+					else
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1438);
 			}
 		}
 		return false;
@@ -154,8 +165,7 @@ public class _1042KeeperoftheKaidanKey extends QuestHandler {
 								// without the required item ////
 			return false;
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
-		PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(
-				player.getObjectId(), itemObjId, id, 20, 1, 0), true);
+		PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id, 20, 1, 0), true);
 		SetQuestStatus2(player, env, qs);
 		return true;
 	}
@@ -173,25 +183,31 @@ public class _1042KeeperoftheKaidanKey extends QuestHandler {
 		int targetId = 0;
 		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
-		switch (targetId) {
-		case 212029: {
-			if (var < 2) {
-				SetQuestStatus2(player, env, qs);
-				return true;
+		switch (targetId)
+		{
+			case 212029:
+			{
+				if (var < 2)
+				{
+					SetQuestStatus2(player, env, qs);
+					return true;
+				}
 			}
-		}
-			break;
-		case 212033: {
-			if (var < 2) {
-				SetQuestStatus2(player, env, qs);
-				return true;
+				break;
+			case 212033:
+			{
+				if (var < 2)
+				{
+					SetQuestStatus2(player, env, qs);
+					return true;
+				}
 			}
-		}
 		}
 		return false;
 	}
 
-	private void SetQuestStatus2(Player player, QuestEnv env, QuestState qs) {
+	private void SetQuestStatus2(Player player, QuestEnv env, QuestState qs)
+	{
 		qs.setQuestVarById(0, 2);
 		updateQuestStatus(player, qs);
 	}

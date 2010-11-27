@@ -33,16 +33,19 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
  * @author Rhys2002
  * 
  */
-public class _1156StolenVillageSeal extends QuestHandler {
+public class _1156StolenVillageSeal extends QuestHandler
+{
 
-	private final static int questId = 1156;
+	private final static int	questId	= 1156;
 
-	public _1156StolenVillageSeal() {
+	public _1156StolenVillageSeal()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.setNpcQuestData(203128).addOnQuestStart(questId);
 		qe.setNpcQuestData(203128).addOnTalkEvent(questId);
 		qe.setNpcQuestData(700003).addOnTalkEvent(questId);
@@ -50,18 +53,20 @@ public class _1156StolenVillageSeal extends QuestHandler {
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		int targetId = 0;
 		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
 
-		if (qs == null || qs.getStatus() == QuestStatus.NONE) {
-			if (targetId == 203128) {
+		if (qs == null || qs.getStatus() == QuestStatus.NONE)
+		{
+			if (targetId == 203128)
+			{
 				if (env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1011);
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
 				else
 					return defaultQuestStartDialog(env);
 			}
@@ -72,57 +77,54 @@ public class _1156StolenVillageSeal extends QuestHandler {
 
 		int var = qs.getQuestVarById(0);
 
-		if (qs.getStatus() == QuestStatus.REWARD) {
-			if (targetId == 798003) {
+		if (qs.getStatus() == QuestStatus.REWARD)
+		{
+			if (targetId == 798003)
+			{
 				if (env.getDialogId() == -1)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 2375);
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375);
 				else if (env.getDialogId() == 1009)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 5);
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
 				else
 					return defaultQuestEndDialog(env);
 			}
 			return false;
-		} else if (qs.getStatus() == QuestStatus.START) {
-			switch (targetId) {
-			case 700003: {
-				if (var == 0 && env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1352);
-				else if (env.getDialogId() == 10000) {
-					qs.setQuestVarById(0, 1);
-					qs.setStatus(QuestStatus.REWARD);
-					updateQuestStatus(player, qs);
-					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
-							env.getVisibleObject().getObjectId(), 10));
-					return true;
-				} else if (env.getDialogId() == 1353) {
-					final int targetObjectId = env.getVisibleObject()
-							.getObjectId();
-					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
-							0, 0));
-					PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(
-							player.getObjectId(), targetObjectId, 3000, 1));
-					PacketSendUtility.broadcastPacket(player,
-							new SM_EMOTION(player, EmotionType.NEUTRALMODE2, 0,
-									targetObjectId), true);
-					ThreadPoolManager.getInstance().schedule(new Runnable() {
-						@Override
-						public void run() {
-							PacketSendUtility.sendPacket(player,
-									new SM_USE_OBJECT(player.getObjectId(),
-											targetObjectId, 3000, 0));
-							PacketSendUtility.broadcastPacket(player,
-									new SM_EMOTION(player,
-											EmotionType.START_LOOT, 0,
-											targetObjectId), true);
-							sendQuestDialog(player, targetObjectId, 1353);
-							return;
-						}
-					}, 3000);
+		}
+		else if (qs.getStatus() == QuestStatus.START)
+		{
+			switch (targetId)
+			{
+				case 700003:
+				{
+					if (var == 0 && env.getDialogId() == 25)
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
+					else if (env.getDialogId() == 10000)
+					{
+						qs.setQuestVarById(0, 1);
+						qs.setStatus(QuestStatus.REWARD);
+						updateQuestStatus(player, qs);
+						PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+						return true;
+					}
+					else if (env.getDialogId() == 1353)
+					{
+						final int targetObjectId = env.getVisibleObject().getObjectId();
+						PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(0, 0));
+						PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(player.getObjectId(), targetObjectId, 3000, 1));
+						PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.NEUTRALMODE2, 0, targetObjectId), true);
+						ThreadPoolManager.getInstance().schedule(new Runnable()
+						{
+							@Override
+							public void run()
+							{
+								PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(player.getObjectId(), targetObjectId, 3000, 0));
+								PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.START_LOOT, 0, targetObjectId), true);
+								sendQuestDialog(player, targetObjectId, 1353);
+								return;
+							}
+						}, 3000);
+					}
 				}
-			}
 			}
 		}
 		return false;

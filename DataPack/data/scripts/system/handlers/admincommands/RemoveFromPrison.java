@@ -32,43 +32,51 @@ import com.aionemu.gameserver.world.World;
  *         from prison.
  * 
  */
-public class RemoveFromPrison extends AdminCommand {
+public class RemoveFromPrison extends AdminCommand
+{
 
-	public RemoveFromPrison() {
+	public RemoveFromPrison()
+	{
 		super("rprison");
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params) {
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_PRISON) {
-			PacketSendUtility.sendMessage(admin,
-					"You dont have enough rights to execute this command!");
+	public void executeCommand(Player admin, String[] params)
+	{
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_PRISON)
+		{
+			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command!");
 			return;
 		}
 
-		if (params.length == 0 || params.length > 2) {
+		if (params.length == 0 || params.length > 2)
+		{
 			PacketSendUtility.sendMessage(admin, "syntax //rprison <player>");
 			return;
 		}
 
-		try {
-			Player playerFromPrison = World.getInstance().findPlayer(
-					Util.convertName(params[0]));
+		try
+		{
+			Player playerFromPrison = World.getInstance().findPlayer(Util.convertName(params[0]));
 
-			if (playerFromPrison != null) {
+			if (playerFromPrison != null)
+			{
 				PunishmentService.setIsInPrison(playerFromPrison, false, 0);
-				PacketSendUtility.sendMessage(admin, "Player "
-						+ playerFromPrison.getName() + " removed from prison.");
+				PacketSendUtility.sendMessage(admin, "Player " + playerFromPrison.getName() + " removed from prison.");
 			}
-		} catch (NoSuchElementException nsee) {
+		}
+		catch (NoSuchElementException nsee)
+		{
 			PacketSendUtility.sendMessage(admin, "Usage: //rprison <player>");
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			PacketSendUtility.sendMessage(admin, "Usage: //rprison <player>");
 		}
 	}
 
-	public static void main(String[] args) {
-		AdminCommandChatHandler.getInstance().registerAdminCommand(
-				new RemoveFromPrison());
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new RemoveFromPrison());
 	}
 }

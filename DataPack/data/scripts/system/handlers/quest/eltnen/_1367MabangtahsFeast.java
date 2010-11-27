@@ -28,92 +28,104 @@ import com.aionemu.gameserver.questEngine.model.QuestStatus;
  * 
  */
 
-public class _1367MabangtahsFeast extends QuestHandler {
+public class _1367MabangtahsFeast extends QuestHandler
+{
 
-	private final static int questId = 1367;
+	private final static int	questId	= 1367;
 
-	public _1367MabangtahsFeast() {
+	public _1367MabangtahsFeast()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.setNpcQuestData(204023).addOnQuestStart(questId);
 		qe.setNpcQuestData(204023).addOnTalkEvent(questId);
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		int targetId = 0;
 		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if (targetId == 204023) {
-			if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+		if (targetId == 204023)
+		{
+			if (qs == null || qs.getStatus() == QuestStatus.NONE)
+			{
 				if (env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1011);
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
 				else
 					return defaultQuestStartDialog(env);
-			} else if (qs.getStatus() == QuestStatus.START) {
+			}
+			else if (qs.getStatus() == QuestStatus.START)
+			{
 				long itemCount;
 				long itemCount1;
 				long itemCount2;
-				if (env.getDialogId() == 25 && qs.getQuestVarById(0) == 0) {
-					itemCount = player.getInventory().getItemCountByItemId(
-							182201333); // 2
-					itemCount1 = player.getInventory().getItemCountByItemId(
-							182201332); // 5
-					itemCount2 = player.getInventory().getItemCountByItemId(
-							182201331); // 1
-					if (itemCount > 1 || itemCount1 > 5 || itemCount2 > 0) {
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1352);
-					} else {
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1693);
+				if (env.getDialogId() == 25 && qs.getQuestVarById(0) == 0)
+				{
+					itemCount = player.getInventory().getItemCountByItemId(182201333); // 2
+					itemCount1 = player.getInventory().getItemCountByItemId(182201332); // 5
+					itemCount2 = player.getInventory().getItemCountByItemId(182201331); // 1
+					if (itemCount > 1 || itemCount1 > 5 || itemCount2 > 0)
+					{
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
 					}
-				} else if (env.getDialogId() == 10000) {
-					itemCount2 = player.getInventory().getItemCountByItemId(
-							182201331); // 1
-					if (itemCount2 > 0) {
+					else
+					{
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
+					}
+				}
+				else if (env.getDialogId() == 10000)
+				{
+					itemCount2 = player.getInventory().getItemCountByItemId(182201331); // 1
+					if (itemCount2 > 0)
+					{
 						qs.setStatus(QuestStatus.REWARD);
 						updateQuestStatus(player, qs);
 						qs.setQuestVarById(0, 1);
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 5);
-					} else
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1352);
-				} else if (env.getDialogId() == 10001) {
-					itemCount1 = player.getInventory().getItemCountByItemId(
-							182201332); // 5
-					if (itemCount1 > 4) {
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
+					}
+					else
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
+				}
+				else if (env.getDialogId() == 10001)
+				{
+					itemCount1 = player.getInventory().getItemCountByItemId(182201332); // 5
+					if (itemCount1 > 4)
+					{
 						qs.setStatus(QuestStatus.REWARD);
 						updateQuestStatus(player, qs);
 						qs.setQuestVarById(0, 2);
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 6);
-					} else
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1352);
-				} else if (env.getDialogId() == 10002) {
-					itemCount = player.getInventory().getItemCountByItemId(
-							182201333); // 2
-					if (itemCount > 1) {
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 6);
+					}
+					else
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
+				}
+				else if (env.getDialogId() == 10002)
+				{
+					itemCount = player.getInventory().getItemCountByItemId(182201333); // 2
+					if (itemCount > 1)
+					{
 						qs.setStatus(QuestStatus.REWARD);
 						updateQuestStatus(player, qs);
 						qs.setQuestVarById(0, 3);
 						updateQuestStatus(player, qs);
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 7);
-					} else
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1352);
-				} else
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 7);
+					}
+					else
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
+				}
+				else
 					return defaultQuestStartDialog(env);
-			} else if (qs.getStatus() == QuestStatus.REWARD) {
+			}
+			else if (qs.getStatus() == QuestStatus.REWARD)
+			{
 				return defaultQuestEndDialog(env);
 			}
 		}

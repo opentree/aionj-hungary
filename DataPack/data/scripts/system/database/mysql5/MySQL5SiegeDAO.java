@@ -34,26 +34,29 @@ import com.aionemu.gameserver.model.siege.SiegeRace;
 /**
  * @author Sarynth
  */
-public class MySQL5SiegeDAO extends SiegeDAO {
-	public static final String SELECT_QUERY = "SELECT `id`, `race`, `legion_id` FROM `siege_locations`";
-	public static final String INSERT_QUERY = "INSERT INTO `siege_locations` (`id`, `race`, `legion_id`) VALUES(?, ?, ?)";
-	public static final String UPDATE_QUERY = "UPDATE `siege_locations` SET  `race` = ?, `legion_id` = ? WHERE `id` = ?";
+public class MySQL5SiegeDAO extends SiegeDAO
+{
+	public static final String	SELECT_QUERY	= "SELECT `id`, `race`, `legion_id` FROM `siege_locations`";
+	public static final String	INSERT_QUERY	= "INSERT INTO `siege_locations` (`id`, `race`, `legion_id`) VALUES(?, ?, ?)";
+	public static final String	UPDATE_QUERY	= "UPDATE `siege_locations` SET  `race` = ?, `legion_id` = ? WHERE `id` = ?";
 
 	/** Logger */
-	private static final Logger log = Logger.getLogger(MySQL5SiegeDAO.class);
+	private static final Logger	log				= Logger.getLogger(MySQL5SiegeDAO.class);
 
 	@Override
-	public boolean loadSiegeLocations(
-			final FastMap<Integer, SiegeLocation> locations) {
+	public boolean loadSiegeLocations(final FastMap<Integer, SiegeLocation> locations)
+	{
 		boolean success = true;
 		Connection con = null;
 		List<Integer> loaded = new ArrayList<Integer>();
 
-		try {
+		try
+		{
 			con = DatabaseFactory.getConnection();
 			PreparedStatement stmt = con.prepareStatement(SELECT_QUERY);
 			ResultSet resultSet = stmt.executeQuery();
-			while (resultSet.next()) {
+			while (resultSet.next())
+			{
 				SiegeLocation loc = locations.get(resultSet.getInt("id"));
 				loc.setRace(SiegeRace.valueOf(resultSet.getString("race")));
 				loc.setLegionId(resultSet.getInt("legion_id"));
@@ -61,20 +64,23 @@ public class MySQL5SiegeDAO extends SiegeDAO {
 			}
 			resultSet.close();
 			stmt.close();
-		} catch (Exception e) {
-			log.warn(
-					"Error loading Siege informaiton from database: "
-							+ e.getMessage(), e);
+		}
+		catch (Exception e)
+		{
+			log.warn("Error loading Siege informaiton from database: " + e.getMessage(), e);
 			success = false;
-		} finally {
+		}
+		finally
+		{
 			DatabaseFactory.close(con);
 		}
 
 		// Insert locations that are not entered to DB yet.
-		for (FastMap.Entry<Integer, SiegeLocation> e = locations.head(), end = locations
-				.tail(); (e = e.getNext()) != end;) {
+		for (FastMap.Entry<Integer, SiegeLocation> e = locations.head(), end = locations.tail(); (e = e.getNext()) != end;)
+		{
 			SiegeLocation sLoc = e.getValue();
-			if (!loaded.contains(Integer.valueOf(sLoc.getLocationId()))) {
+			if (!loaded.contains(Integer.valueOf(sLoc.getLocationId())))
+			{
 				insertSiegeLocation(sLoc);
 			}
 		}
@@ -86,9 +92,11 @@ public class MySQL5SiegeDAO extends SiegeDAO {
 	 * @param siegeLocation
 	 * @return success
 	 */
-	public boolean updateSiegeLocation(final SiegeLocation siegeLocation) {
+	public boolean updateSiegeLocation(final SiegeLocation siegeLocation)
+	{
 		Connection con = null;
-		try {
+		try
+		{
 			con = DatabaseFactory.getConnection();
 			PreparedStatement stmt = con.prepareStatement(UPDATE_QUERY);
 			stmt.setString(1, siegeLocation.getRace().toString());
@@ -96,13 +104,14 @@ public class MySQL5SiegeDAO extends SiegeDAO {
 			stmt.setInt(3, siegeLocation.getLocationId());
 			stmt.execute();
 			stmt.close();
-		} catch (Exception e) {
-			log.error(
-					"Error update Siege Location: "
-							+ siegeLocation.getLocationId() + " to race: "
-							+ siegeLocation.getRace().toString(), e);
+		}
+		catch (Exception e)
+		{
+			log.error("Error update Siege Location: " + siegeLocation.getLocationId() + " to race: " + siegeLocation.getRace().toString(), e);
 			return false;
-		} finally {
+		}
+		finally
+		{
 			DatabaseFactory.close(con);
 		}
 		return true;
@@ -112,9 +121,11 @@ public class MySQL5SiegeDAO extends SiegeDAO {
 	 * @param siegeLocation
 	 * @return success
 	 */
-	private boolean insertSiegeLocation(final SiegeLocation siegeLocation) {
+	private boolean insertSiegeLocation(final SiegeLocation siegeLocation)
+	{
 		Connection con = null;
-		try {
+		try
+		{
 			con = DatabaseFactory.getConnection();
 			PreparedStatement stmt = con.prepareStatement(INSERT_QUERY);
 			stmt.setInt(1, siegeLocation.getLocationId());
@@ -122,12 +133,14 @@ public class MySQL5SiegeDAO extends SiegeDAO {
 			stmt.setInt(3, siegeLocation.getLegionId());
 			stmt.execute();
 			stmt.close();
-		} catch (Exception e) {
-			log.error(
-					"Error insert Siege Location: "
-							+ siegeLocation.getLocationId(), e);
+		}
+		catch (Exception e)
+		{
+			log.error("Error insert Siege Location: " + siegeLocation.getLocationId(), e);
 			return false;
-		} finally {
+		}
+		finally
+		{
 			DatabaseFactory.close(con);
 
 		}
@@ -138,10 +151,9 @@ public class MySQL5SiegeDAO extends SiegeDAO {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean supports(String databaseName, int majorVersion,
-			int minorVersion) {
-		return MySQL5DAOUtils
-				.supports(databaseName, majorVersion, minorVersion);
+	public boolean supports(String databaseName, int majorVersion, int minorVersion)
+	{
+		return MySQL5DAOUtils.supports(databaseName, majorVersion, minorVersion);
 	}
 
 }

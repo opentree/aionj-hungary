@@ -30,37 +30,40 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
  * 
  */
 
-public class Invis extends AdminCommand {
-	public Invis() {
+public class Invis extends AdminCommand
+{
+	public Invis()
+	{
 		super("invis");
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params) {
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_INVIS) {
-			PacketSendUtility.sendMessage(admin,
-					"You don't have enough rights to execute this command.");
+	public void executeCommand(Player admin, String[] params)
+	{
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_INVIS)
+		{
+			PacketSendUtility.sendMessage(admin, "You don't have enough rights to execute this command.");
 			return;
 		}
 
-		if (admin.getVisualState() < 3) {
-			admin.getEffectController().setAbnormal(
-					EffectId.INVISIBLE_RELATED.getEffectId());
+		if (admin.getVisualState() < 3)
+		{
+			admin.getEffectController().setAbnormal(EffectId.INVISIBLE_RELATED.getEffectId());
 			admin.setVisualState(CreatureVisualState.HIDE3);
-			PacketSendUtility.broadcastPacket(admin,
-					new SM_PLAYER_STATE(admin), true);
+			PacketSendUtility.broadcastPacket(admin, new SM_PLAYER_STATE(admin), true);
 			PacketSendUtility.sendMessage(admin, "You are invisible.");
-		} else {
-			admin.getEffectController().unsetAbnormal(
-					EffectId.INVISIBLE_RELATED.getEffectId());
+		}
+		else
+		{
+			admin.getEffectController().unsetAbnormal(EffectId.INVISIBLE_RELATED.getEffectId());
 			admin.unsetVisualState(CreatureVisualState.HIDE3);
-			PacketSendUtility.broadcastPacket(admin,
-					new SM_PLAYER_STATE(admin), true);
+			PacketSendUtility.broadcastPacket(admin, new SM_PLAYER_STATE(admin), true);
 			PacketSendUtility.sendMessage(admin, "You are visible.");
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		AdminCommandChatHandler.getInstance().registerAdminCommand(new Invis());
 	}
 }

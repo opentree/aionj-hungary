@@ -40,16 +40,19 @@ import com.aionemu.gameserver.world.zone.ZoneName;
  * @author Xitanium
  * 
  */
-public class _1361FindingDrinkingWater extends QuestHandler {
+public class _1361FindingDrinkingWater extends QuestHandler
+{
 
-	private final static int questId = 1361;
+	private final static int	questId	= 1361;
 
-	public _1361FindingDrinkingWater() {
+	public _1361FindingDrinkingWater()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.setQuestItemIds(182201326).add(questId); // Empty Bucket
 		qe.setNpcQuestData(203943).addOnQuestStart(questId); // Turiel start
 		qe.setNpcQuestData(203943).addOnTalkEvent(questId); // Turiel talk
@@ -57,30 +60,28 @@ public class _1361FindingDrinkingWater extends QuestHandler {
 	}
 
 	@Override
-	public boolean onItemUseEvent(QuestEnv env, final Item item) {
+	public boolean onItemUseEvent(QuestEnv env, final Item item)
+	{
 		final Player player = env.getPlayer();
 		final int id = item.getItemTemplate().getTemplateId();
 		final int itemObjId = item.getObjectId();
 
 		if (id != 182201326) // Empty Bucket
 			return false;
-		if (!ZoneService.getInstance().isInsideZone(player,
-				ZoneName.MYSTIC_SPRING_OF_ANATHE))
+		if (!ZoneService.getInstance().isInsideZone(player, ZoneName.MYSTIC_SPRING_OF_ANATHE))
 			return false;
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
 		if (qs == null)
 			return false;
-		PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(
-				player.getObjectId(), itemObjId, id, 3000, 0, 0), true);
-		ThreadPoolManager.getInstance().schedule(new Runnable() {
+		PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id, 3000, 0, 0), true);
+		ThreadPoolManager.getInstance().schedule(new Runnable()
+		{
 			@Override
-			public void run() {
-				PacketSendUtility.broadcastPacket(player,
-						new SM_ITEM_USAGE_ANIMATION(player.getObjectId(),
-								itemObjId, id, 0, 1, 0), true);
+			public void run()
+			{
+				PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id, 0, 1, 0), true);
 				ItemService.removeItemFromInventory(player, item);
-				ItemService.addItems(player,
-						Collections.singletonList(new QuestItems(182201327, 1)));
+				ItemService.addItems(player, Collections.singletonList(new QuestItems(182201327, 1)));
 				qs.setQuestVar(1);
 				updateQuestStatus(player, qs);
 			}
@@ -89,78 +90,74 @@ public class _1361FindingDrinkingWater extends QuestHandler {
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		int targetId = 0;
 		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+		if (qs == null || qs.getStatus() == QuestStatus.NONE)
+		{
 			if (targetId == 203943) // Turiel
 			{
 				if (env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1011);
-				else if (env.getDialogId() == 1002) {
-					if (ItemService.addItems(player, Collections
-							.singletonList(new QuestItems(182201326, 1))))
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+				else if (env.getDialogId() == 1002)
+				{
+					if (ItemService.addItems(player, Collections.singletonList(new QuestItems(182201326, 1))))
 						return defaultQuestStartDialog(env);
 					else
 						return true;
-				} else
+				}
+				else
 					return defaultQuestStartDialog(env);
 			}
-		} else if (qs != null && qs.getStatus() == QuestStatus.REWARD) // Reward
+		}
+		else if (qs != null && qs.getStatus() == QuestStatus.REWARD) // Reward
 		{
 			if (env.getDialogId() == 25)
-				return sendQuestDialog(player, env.getVisibleObject()
-						.getObjectId(), 2375);
-			else if (env.getDialogId() == 1009) {
+				return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375);
+			else if (env.getDialogId() == 1009)
+			{
 				qs.setQuestVar(2);
 				qs.setStatus(QuestStatus.REWARD);
 				updateQuestStatus(player, qs);
 				return defaultQuestEndDialog(env);
-			} else
+			}
+			else
 				return defaultQuestEndDialog(env);
 		}
 
-		else if (qs != null && qs.getStatus() == QuestStatus.START
-				&& qs.getQuestVarById(0) == 1) {
-			switch (targetId) {
-			case 700173: // Water Tank
+		else if (qs != null && qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 1)
+		{
+			switch (targetId)
 			{
-				if (qs.getQuestVarById(0) == 1 && env.getDialogId() == -1) {
+				case 700173: // Water Tank
+				{
+					if (qs.getQuestVarById(0) == 1 && env.getDialogId() == -1)
+					{
 
-					final int targetObjectId = env.getVisibleObject()
-							.getObjectId();
-					PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(
-							player.getObjectId(), targetObjectId, 3000, 1));
-					PacketSendUtility.broadcastPacket(player,
-							new SM_EMOTION(player, EmotionType.NEUTRALMODE2, 0,
-									targetObjectId), true);
-					ThreadPoolManager.getInstance().schedule(new Runnable() {
-						@Override
-						public void run() {
-							if (player.getTarget() == null
-									|| player.getTarget().getObjectId() != targetObjectId)
-								return;
-							final QuestState qs = player.getQuestStateList()
-									.getQuestState(questId);
-							qs.setStatus(QuestStatus.REWARD);
-							updateQuestStatus(player, qs);
-							ItemService.removeItemFromInventoryByItemId(player,
-									182201327);
-							PacketSendUtility.sendPacket(player,
-									new SM_USE_OBJECT(player.getObjectId(),
-											targetObjectId, 3000, 0));
-							PacketSendUtility.broadcastPacket(player,
-									new SM_EMOTION(player,
-											EmotionType.START_LOOT, 0,
-											targetObjectId), true);
-						}
-					}, 3000);
+						final int targetObjectId = env.getVisibleObject().getObjectId();
+						PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(player.getObjectId(), targetObjectId, 3000, 1));
+						PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.NEUTRALMODE2, 0, targetObjectId), true);
+						ThreadPoolManager.getInstance().schedule(new Runnable()
+						{
+							@Override
+							public void run()
+							{
+								if (player.getTarget() == null || player.getTarget().getObjectId() != targetObjectId)
+									return;
+								final QuestState qs = player.getQuestStateList().getQuestState(questId);
+								qs.setStatus(QuestStatus.REWARD);
+								updateQuestStatus(player, qs);
+								ItemService.removeItemFromInventoryByItemId(player, 182201327);
+								PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(player.getObjectId(), targetObjectId, 3000, 0));
+								PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.START_LOOT, 0, targetObjectId), true);
+							}
+						}, 3000);
+					}
 				}
-			}
 			}
 		}
 		return false;

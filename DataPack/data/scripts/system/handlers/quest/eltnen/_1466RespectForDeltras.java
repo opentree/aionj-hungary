@@ -37,15 +37,18 @@ import com.aionemu.gameserver.world.zone.ZoneName;
  * @author Nephis and AU quest helper Team
  * 
  */
-public class _1466RespectForDeltras extends QuestHandler {
-	private final static int questId = 1466;
+public class _1466RespectForDeltras extends QuestHandler
+{
+	private final static int	questId	= 1466;
 
-	public _1466RespectForDeltras() {
+	public _1466RespectForDeltras()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.setQuestItemIds(182201385).add(questId);
 		qe.setNpcQuestData(212649).addOnQuestStart(questId);
 		qe.setNpcQuestData(212649).addOnTalkEvent(questId);
@@ -53,7 +56,8 @@ public class _1466RespectForDeltras extends QuestHandler {
 	}
 
 	@Override
-	public boolean onItemUseEvent(QuestEnv env, final Item item) {
+	public boolean onItemUseEvent(QuestEnv env, final Item item)
+	{
 		final Player player = env.getPlayer();
 		final int id = item.getItemTemplate().getTemplateId();
 		final int itemObjId = item.getObjectId();
@@ -65,14 +69,13 @@ public class _1466RespectForDeltras extends QuestHandler {
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
 		if (qs == null)
 			return false;
-		PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(
-				player.getObjectId(), itemObjId, id, 3000, 0, 0), true);
-		ThreadPoolManager.getInstance().schedule(new Runnable() {
+		PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id, 3000, 0, 0), true);
+		ThreadPoolManager.getInstance().schedule(new Runnable()
+		{
 			@Override
-			public void run() {
-				PacketSendUtility.broadcastPacket(player,
-						new SM_ITEM_USAGE_ANIMATION(player.getObjectId(),
-								itemObjId, id, 0, 1, 0), true);
+			public void run()
+			{
+				PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id, 0, 1, 0), true);
 				ItemService.removeItemFromInventory(player, item);
 				qs.setStatus(QuestStatus.REWARD);
 				updateQuestStatus(player, qs);
@@ -82,40 +85,45 @@ public class _1466RespectForDeltras extends QuestHandler {
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		int targetId = 0;
 		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if (targetId == 212649) {
-			if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+		if (targetId == 212649)
+		{
+			if (qs == null || qs.getStatus() == QuestStatus.NONE)
+			{
 				if (env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 4762);
-				else if (env.getDialogId() == 1002) {
-					if (ItemService.addItems(player, Collections
-							.singletonList(new QuestItems(182201385, 1))))
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 4762);
+				else if (env.getDialogId() == 1002)
+				{
+					if (ItemService.addItems(player, Collections.singletonList(new QuestItems(182201385, 1))))
 						return defaultQuestStartDialog(env);
 					else
 						return true;
-				} else
+				}
+				else
 					return defaultQuestStartDialog(env);
 			}
 		}
 
-		else if (targetId == 203903) {
-			if (qs != null) {
-				if (env.getDialogId() == 25
-						&& qs.getStatus() == QuestStatus.START)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 2375);
-				else if (env.getDialogId() == 1009) {
+		else if (targetId == 203903)
+		{
+			if (qs != null)
+			{
+				if (env.getDialogId() == 25 && qs.getStatus() == QuestStatus.START)
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375);
+				else if (env.getDialogId() == 1009)
+				{
 					qs.setQuestVar(2);
 					qs.setStatus(QuestStatus.REWARD);
 					updateQuestStatus(player, qs);
 					return defaultQuestEndDialog(env);
-				} else
+				}
+				else
 					return defaultQuestEndDialog(env);
 			}
 		}

@@ -33,16 +33,19 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
  * @author Nephis and quest helper team
  * 
  */
-public class _1371FlowersForIsson extends QuestHandler {
+public class _1371FlowersForIsson extends QuestHandler
+{
 
-	private final static int questId = 1371;
+	private final static int	questId	= 1371;
 
-	public _1371FlowersForIsson() {
+	public _1371FlowersForIsson()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 
 		qe.setNpcQuestData(203949).addOnQuestStart(questId);
 		qe.setNpcQuestData(203949).addOnTalkEvent(questId);
@@ -50,84 +53,83 @@ public class _1371FlowersForIsson extends QuestHandler {
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		int targetId = 0;
 		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
 		long itemCount = 0;
-		if (targetId == 203949) {
-			if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+		if (targetId == 203949)
+		{
+			if (qs == null || qs.getStatus() == QuestStatus.NONE)
+			{
 				if (env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1011);
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
 				else
 					return defaultQuestStartDialog(env);
 			}
 
-			else if (qs.getStatus() == QuestStatus.START) {
+			else if (qs.getStatus() == QuestStatus.START)
+			{
 				int var = qs.getQuestVarById(0);
-				switch (env.getDialogId()) {
-				case 25:
-					if (var == 0) {
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1352);
-					}
+				switch (env.getDialogId())
+				{
+					case 25:
+						if (var == 0)
+						{
+							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
+						}
 
-				case 33:
-					if (var == 0)
-						itemCount = player.getInventory().getItemCountByItemId(
-								152000601);
-					if (itemCount > 4) {
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1353);
-					} else {
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1438);
-					}
-				case 10000:
-					ItemService.removeItemFromInventoryByItemId(player,
-							152000601);
-					qs.setQuestVar(2);
-					updateQuestStatus(player, qs);
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 0);
+					case 33:
+						if (var == 0)
+							itemCount = player.getInventory().getItemCountByItemId(152000601);
+						if (itemCount > 4)
+						{
+							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1353);
+						}
+						else
+						{
+							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1438);
+						}
+					case 10000:
+						ItemService.removeItemFromInventoryByItemId(player, 152000601);
+						qs.setQuestVar(2);
+						updateQuestStatus(player, qs);
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 0);
 
 				}
 				return false;
 			}
 
-			else if (qs != null && qs.getStatus() == QuestStatus.REWARD) {
+			else if (qs != null && qs.getStatus() == QuestStatus.REWARD)
+			{
 				return defaultQuestEndDialog(env);
 			}
 		}
 
-		else if (targetId == 730039) {
+		else if (targetId == 730039)
+		{
 			int var = qs.getQuestVarById(0);
-			if (qs.getStatus() == QuestStatus.START && var == 2) {
+			if (qs.getStatus() == QuestStatus.START && var == 2)
+			{
 
 				final int targetObjectId = env.getVisibleObject().getObjectId();
 				qs.setStatus(QuestStatus.REWARD);
 				updateQuestStatus(player, qs);
 
-				PacketSendUtility.sendPacket(player,
-						new SM_USE_OBJECT(player.getObjectId(), targetObjectId,
-								3000, 1));
-				PacketSendUtility.broadcastPacket(player, new SM_EMOTION(
-						player, EmotionType.NEUTRALMODE2, 0, targetObjectId),
-						true);
-				ThreadPoolManager.getInstance().schedule(new Runnable() {
+				PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(player.getObjectId(), targetObjectId, 3000, 1));
+				PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.NEUTRALMODE2, 0, targetObjectId), true);
+				ThreadPoolManager.getInstance().schedule(new Runnable()
+				{
 					@Override
-					public void run() {
-						if (player.getTarget() == null
-								|| player.getTarget().getObjectId() != targetObjectId)
+					public void run()
+					{
+						if (player.getTarget() == null || player.getTarget().getObjectId() != targetObjectId)
 							return;
-						PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(
-								player.getObjectId(), targetObjectId, 3000, 0));
-						PacketSendUtility.broadcastPacket(player,
-								new SM_EMOTION(player, EmotionType.START_LOOT,
-										0, targetObjectId), true);
+						PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(player.getObjectId(), targetObjectId, 3000, 0));
+						PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.START_LOOT, 0, targetObjectId), true);
 
 					}
 				}, 3000);

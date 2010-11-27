@@ -59,13 +59,13 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
  * @author Aquanox
  */
 
-public class AdvSendFakeServerPacket extends AdminCommand {
-	private static final Logger logger = Logger
-			.getLogger(AdvSendFakeServerPacket.class);
+public class AdvSendFakeServerPacket extends AdminCommand
+{
+	private static final Logger	logger	= Logger.getLogger(AdvSendFakeServerPacket.class);
 
-	private static final File FOLDER = new File("./data/packets");
+	private static final File	FOLDER	= new File("./data/packets");
 
-	private Unmarshaller unmarshaller;
+	private Unmarshaller		unmarshaller;
 
 	/**
 	 * Create an instance of admin command.
@@ -74,13 +74,16 @@ public class AdvSendFakeServerPacket extends AdminCommand {
 	 *             on initialization error
 	 */
 
-	public AdvSendFakeServerPacket() {
+	public AdvSendFakeServerPacket()
+	{
 		super("send");
 		// init unmrshaller once.
-		try {
-			unmarshaller = JAXBContext.newInstance(Packets.class, Packet.class,
-					Part.class).createUnmarshaller();
-		} catch (Exception e) {
+		try
+		{
+			unmarshaller = JAXBContext.newInstance(Packets.class, Packet.class, Part.class).createUnmarshaller();
+		}
+		catch (Exception e)
+		{
 			throw new GameServerError("Failed to initialize unmarshaller.", e);
 		}
 	}
@@ -88,14 +91,16 @@ public class AdvSendFakeServerPacket extends AdminCommand {
 	/** {@inheritDoc} */
 
 	@Override
-	public void executeCommand(final Player admin, String[] params) {
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_ADVSENDFAKESERVERPACKET) {
-			PacketSendUtility.sendMessage(admin,
-					"You dont have enough rights to execute this command");
+	public void executeCommand(final Player admin, String[] params)
+	{
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_ADVSENDFAKESERVERPACKET)
+		{
+			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
 			return;
 		}
 
-		if (params.length != 1) {
+		if (params.length != 1)
+		{
 			PacketSendUtility.sendMessage(admin, "Example: //send [file] ");
 			return;
 		}
@@ -108,22 +113,26 @@ public class AdvSendFakeServerPacket extends AdminCommand {
 
 		File packetsData = new File(FOLDER, mappingName + ".xml");
 
-		if (!packetsData.exists()) {
-			PacketSendUtility.sendMessage(admin, "Mapping with name "
-					+ mappingName + " not found");
+		if (!packetsData.exists())
+		{
+			PacketSendUtility.sendMessage(admin, "Mapping with name " + mappingName + " not found");
 			return;
 		}
 
 		final Packets packetsTemplate;
 
-		try {
+		try
+		{
 			packetsTemplate = (Packets) unmarshaller.unmarshal(packetsData);
-		} catch (JAXBException e) {
+		}
+		catch (JAXBException e)
+		{
 			logger.error("Unmarshalling error", e);
 			return;
 		}
 
-		if (packetsTemplate.getPackets().isEmpty()) {
+		if (packetsTemplate.getPackets().isEmpty())
+		{
 			PacketSendUtility.sendMessage(admin, "No packets to send.");
 			return;
 		}
@@ -131,20 +140,21 @@ public class AdvSendFakeServerPacket extends AdminCommand {
 		send(admin, target, packetsTemplate);
 	}
 
-	private void send(Player sender, final Player target, Packets packets) {
+	private void send(Player sender, final Player target, Packets packets)
+	{
 		final String senderObjectId = String.valueOf(sender.getObjectId());
 		final String targetObjectId = String.valueOf(target.getObjectId());
 
 		int packetIndex = 0;// first packet should be sent immediately.
-		for (final Packet packetTemplate : packets) {
+		for (final Packet packetTemplate : packets)
+		{
 			// logger.debug("Processing: " + packetTemplate);
 
-			final SM_CUSTOM_PACKET packet = new SM_CUSTOM_PACKET(
-					packetTemplate.getOpcode());
+			final SM_CUSTOM_PACKET packet = new SM_CUSTOM_PACKET(packetTemplate.getOpcode());
 
-			for (Part part : packetTemplate.getParts()) {
-				PacketElementType byCode = PacketElementType.getByCode(part
-						.getType());
+			for (Part part : packetTemplate.getParts())
+			{
+				PacketElementType byCode = PacketElementType.getByCode(part.getType());
 
 				String value = part.getValue();
 
@@ -158,15 +168,19 @@ public class AdvSendFakeServerPacket extends AdminCommand {
 				if (part.getRepeatCount() == 1) // skip loop
 				{
 					packet.addElement(byCode, value);
-				} else {
+				}
+				else
+				{
 					for (int i = 0; i < part.getRepeatCount(); i++)
 						packet.addElement(byCode, value);
 				}
 			}
 
-			ThreadPoolManager.getInstance().schedule(new Runnable() {
+			ThreadPoolManager.getInstance().schedule(new Runnable()
+			{
 				@Override
-				public void run() {
+				public void run()
+				{
 					// logger.debug("Sending: " + packetTemplate);
 					PacketSendUtility.sendPacket(target, packet);
 				}
@@ -177,7 +191,8 @@ public class AdvSendFakeServerPacket extends AdminCommand {
 		}
 	}
 
-	private Player getTargetPlayer(Player admin) {
+	private Player getTargetPlayer(Player admin)
+	{
 		if (admin.getTarget() instanceof Player)
 			return (Player) admin.getTarget();
 		else
@@ -186,33 +201,39 @@ public class AdvSendFakeServerPacket extends AdminCommand {
 
 	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlRootElement(name = "packets")
-	private static class Packets implements Iterable<Packet> {
+	private static class Packets implements Iterable<Packet>
+	{
 		@XmlElement(name = "packet")
-		private List<Packet> packets = new ArrayList<Packet>();
+		private List<Packet>	packets	= new ArrayList<Packet>();
 
 		@XmlAttribute(name = "delay")
-		private long delay = -1;
+		private long			delay	= -1;
 
-		public long getDelay() {
+		public long getDelay()
+		{
 			return delay;
 		}
 
-		public List<Packet> getPackets() {
+		public List<Packet> getPackets()
+		{
 			return packets;
 		}
 
 		@SuppressWarnings("unused")
-		public boolean add(Packet packet) {
+		public boolean add(Packet packet)
+		{
 			return packets.add(packet);
 		}
 
 		@Override
-		public Iterator<Packet> iterator() {
+		public Iterator<Packet> iterator()
+		{
 			return packets.iterator();
 		}
 
 		@Override
-		public String toString() {
+		public String toString()
+		{
 			final StringBuilder sb = new StringBuilder();
 			sb.append("Packets");
 			sb.append("{delay=").append(delay);
@@ -224,23 +245,27 @@ public class AdvSendFakeServerPacket extends AdminCommand {
 
 	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlRootElement(name = "packet")
-	private static class Packet {
+	private static class Packet
+	{
 		@XmlElement(name = "part")
-		private Collection<Part> parts = new ArrayList<Part>();
+		private Collection<Part>	parts	= new ArrayList<Part>();
 
 		@XmlAttribute(name = "opcode")
-		private String opcode = "-1";
+		private String				opcode	= "-1";
 
-		public int getOpcode() {
+		public int getOpcode()
+		{
 			return Integer.decode(opcode);
 		}
 
-		public Collection<Part> getParts() {
+		public Collection<Part> getParts()
+		{
 			return parts;
 		}
 
 		@Override
-		public String toString() {
+		public String toString()
+		{
 			final StringBuilder sb = new StringBuilder();
 			sb.append("Packet");
 			sb.append("{opcode=").append(opcode);
@@ -252,30 +277,35 @@ public class AdvSendFakeServerPacket extends AdminCommand {
 
 	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlRootElement(name = "part")
-	private static class Part {
+	private static class Part
+	{
 		@XmlAttribute(name = "type", required = true)
-		private String type = null;
+		private String	type		= null;
 
 		@XmlAttribute(name = "value", required = true)
-		private String value = null;
+		private String	value		= null;
 
 		@XmlAttribute(name = "repeat", required = true)
-		private int repeatCount = 1;
+		private int		repeatCount	= 1;
 
-		public char getType() {
+		public char getType()
+		{
 			return type.charAt(0);
 		}
 
-		public String getValue() {
+		public String getValue()
+		{
 			return value;
 		}
 
-		public int getRepeatCount() {
+		public int getRepeatCount()
+		{
 			return repeatCount;
 		}
 
 		@Override
-		public String toString() {
+		public String toString()
+		{
 			final StringBuilder sb = new StringBuilder();
 			sb.append("Part");
 			sb.append("{type='").append(type).append('\'');
@@ -286,8 +316,8 @@ public class AdvSendFakeServerPacket extends AdminCommand {
 		}
 	}
 
-	public static void main(String[] args) {
-		AdminCommandChatHandler.getInstance().registerAdminCommand(
-				new AdvSendFakeServerPacket());
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new AdvSendFakeServerPacket());
 	}
 }

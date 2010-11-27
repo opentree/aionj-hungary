@@ -27,9 +27,11 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
  * @author MrPoke and lord_rex
  * 
  */
-public class MoveToNpc extends AdminCommand {
+public class MoveToNpc extends AdminCommand
+{
 
-	public MoveToNpc() {
+	public MoveToNpc()
+	{
 		super("movetonpc");
 	}
 
@@ -42,25 +44,31 @@ public class MoveToNpc extends AdminCommand {
 	 * java.lang.String[])
 	 */
 	@Override
-	public void executeCommand(Player admin, String[] params) {
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_MOVETONPC) {
-			PacketSendUtility.sendMessage(admin,
-					"You don't have enough privileges to use that command!");
+	public void executeCommand(Player admin, String[] params)
+	{
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_MOVETONPC)
+		{
+			PacketSendUtility.sendMessage(admin, "You don't have enough privileges to use that command!");
 			return;
 		}
 		int npcId = 0;
-		try {
+		try
+		{
 			npcId = Integer.valueOf(params[0]);
 			TeleportService.teleportToNpc(admin, npcId);
-		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		catch (ArrayIndexOutOfBoundsException e)
+		{
 			PacketSendUtility.sendMessage(admin, "syntax //movetonpc <npc_id>");
-		} catch (NumberFormatException e) {
+		}
+		catch (NumberFormatException e)
+		{
 			PacketSendUtility.sendMessage(admin, "Numbers only!");
 		}
 	}
 
-	public static void main(String[] args) {
-		AdminCommandChatHandler.getInstance().registerAdminCommand(
-				new MoveToNpc());
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new MoveToNpc());
 	}
 }

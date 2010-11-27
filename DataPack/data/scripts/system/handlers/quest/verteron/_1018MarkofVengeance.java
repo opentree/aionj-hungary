@@ -28,25 +28,28 @@ import com.aionemu.gameserver.services.QuestService;
  * @author Rhys2002 + MrPoke for Original code i massacred..
  * 
  */
-public class _1018MarkofVengeance extends QuestHandler {
-	private final static int questId = 1018;
+public class _1018MarkofVengeance extends QuestHandler
+{
+	private final static int	questId	= 1018;
 
-	public _1018MarkofVengeance() {
+	public _1018MarkofVengeance()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.addQuestLvlUp(questId);
 		qe.setNpcQuestData(203098).addOnTalkEvent(questId);
 	}
 
 	@Override
-	public boolean onLvlUpEvent(QuestEnv env) {
+	public boolean onLvlUpEvent(QuestEnv env)
+	{
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player
-				.getCommonData().getLevel());
+		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player.getCommonData().getLevel());
 		if (qs == null || !lvlCheck || qs.getStatus() != QuestStatus.LOCKED)
 			return false;
 		qs.setStatus(QuestStatus.START);
@@ -55,7 +58,8 @@ public class _1018MarkofVengeance extends QuestHandler {
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
 		if (qs == null)
@@ -66,24 +70,27 @@ public class _1018MarkofVengeance extends QuestHandler {
 		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
-		if (targetId == 203098 && qs.getStatus() == QuestStatus.START) {
-			switch (env.getDialogId()) {
-			case 25:
-				if (var == 0)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1011);
-			case 33:
-				if (QuestService.collectItemCheck(env, true)) {
-					qs.setQuestVarById(0, var + 1);
-					qs.setStatus(QuestStatus.REWARD);
-					updateQuestStatus(player, qs);
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 5);
-				} else
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1097);
+		if (targetId == 203098 && qs.getStatus() == QuestStatus.START)
+		{
+			switch (env.getDialogId())
+			{
+				case 25:
+					if (var == 0)
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+				case 33:
+					if (QuestService.collectItemCheck(env, true))
+					{
+						qs.setQuestVarById(0, var + 1);
+						qs.setStatus(QuestStatus.REWARD);
+						updateQuestStatus(player, qs);
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
+					}
+					else
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1097);
 			}
-		} else if (qs.getStatus() == QuestStatus.REWARD) {
+		}
+		else if (qs.getStatus() == QuestStatus.REWARD)
+		{
 			if (targetId == 203098)
 				return defaultQuestEndDialog(env);
 		}

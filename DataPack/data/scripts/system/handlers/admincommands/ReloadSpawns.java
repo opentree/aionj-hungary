@@ -34,27 +34,31 @@ import com.aionemu.gameserver.world.World;
  * 
  */
 
-public class ReloadSpawns extends AdminCommand {
+public class ReloadSpawns extends AdminCommand
+{
 
 	/**
 	 * The constructor of Reload Spawns Command
 	 */
-	public ReloadSpawns() {
+	public ReloadSpawns()
+	{
 		super("reload_spawn");
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params) {
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_RELOADSPAWNS) {
-			PacketSendUtility.sendMessage(admin,
-					"You dont have enough rights to execute this command");
+	public void executeCommand(Player admin, String[] params)
+	{
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_RELOADSPAWNS)
+		{
+			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
 			return;
 		}
 
 		// despawn all
-		for (AionObject obj : World.getInstance().getAllObjects()) {
-			if (obj instanceof Npc || obj instanceof Gatherable
-					|| obj instanceof SpawnedItem) {
+		for (AionObject obj : World.getInstance().getAllObjects())
+		{
+			if (obj instanceof Npc || obj instanceof Gatherable || obj instanceof SpawnedItem)
+			{
 				((VisibleObject) obj).delete();
 			}
 		}
@@ -63,8 +67,8 @@ public class ReloadSpawns extends AdminCommand {
 		SpawnEngine.getInstance().spawnAll();
 	}
 
-	public static void main(String[] args) {
-		AdminCommandChatHandler.getInstance().registerAdminCommand(
-				new ReloadSpawns());
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new ReloadSpawns());
 	}
 }

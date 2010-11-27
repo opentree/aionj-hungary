@@ -33,22 +33,26 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  * @author Rolandas
  * 
  */
-public class _3969SexiestManAlive extends QuestHandler {
-	private final static int questId = 3969;
+public class _3969SexiestManAlive extends QuestHandler
+{
+	private final static int	questId	= 3969;
 
-	public _3969SexiestManAlive() {
+	public _3969SexiestManAlive()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.setNpcQuestData(798390).addOnQuestStart(questId); // Palentine
 		qe.setNpcQuestData(798391).addOnTalkEvent(questId); // Andu
 		qe.setNpcQuestData(798390).addOnTalkEvent(questId); // Palentine
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		int targetId = 0;
 
@@ -62,17 +66,19 @@ public class _3969SexiestManAlive extends QuestHandler {
 
 		if (targetId == 798390) // Palentine
 		{
-			if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+			if (qs == null || qs.getStatus() == QuestStatus.NONE)
+			{
 				if (env.getDialogId() == -1)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1011);
-				else if (env.getDialogId() == 1002) {
-					if (ItemService.addItems(player, Collections
-							.singletonList(new QuestItems(182206126, 1)))) {
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+				else if (env.getDialogId() == 1002)
+				{
+					if (ItemService.addItems(player, Collections.singletonList(new QuestItems(182206126, 1))))
+					{
 						return defaultQuestStartDialog(env);
 					}
 					return true;
-				} else
+				}
+				else
 					return defaultQuestStartDialog(env);
 			}
 		}
@@ -84,30 +90,31 @@ public class _3969SexiestManAlive extends QuestHandler {
 
 		if (targetId == 798391) // Andu
 		{
-			if (qs.getStatus() == QuestStatus.START && var == 0) {
+			if (qs.getStatus() == QuestStatus.START && var == 0)
+			{
 				if (env.getDialogId() == -1)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1352);
-				else if (env.getDialogId() == 10000) {
-					if (ItemService.removeItemFromInventoryByItemId(player,
-							182206126)) {
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
+				else if (env.getDialogId() == 10000)
+				{
+					if (ItemService.removeItemFromInventoryByItemId(player, 182206126))
+					{
 						qs.setQuestVar(1);
 						qs.setStatus(QuestStatus.REWARD);
 						updateQuestStatus(player, qs);
-						PacketSendUtility.sendPacket(player,
-								new SM_DIALOG_WINDOW(env.getVisibleObject()
-										.getObjectId(), 10));
+						PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
 					}
 					return true;
-				} else
+				}
+				else
 					return defaultQuestStartDialog(env);
 			}
-		} else if (targetId == 798390) // Palentine
+		}
+		else if (targetId == 798390) // Palentine
 		{
-			if (qs.getStatus() == QuestStatus.REWARD) {
+			if (qs.getStatus() == QuestStatus.REWARD)
+			{
 				if (env.getDialogId() == -1)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 2375);
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375);
 				return defaultQuestEndDialog(env);
 			}
 		}

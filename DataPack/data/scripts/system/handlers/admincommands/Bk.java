@@ -47,14 +47,16 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
  * coordinates world_id - world_id for teleport
  * 
  */
-class Bookmark {
-	private String name;
-	private float x;
-	private float y;
-	private float z;
-	private int world_id;
+class Bookmark
+{
+	private String	name;
+	private float	x;
+	private float	y;
+	private float	z;
+	private int		world_id;
 
-	public Bookmark(float x, float y, float z, int world_id, String name) {
+	public Bookmark(float x, float y, float z, int world_id, String name)
+	{
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -65,75 +67,85 @@ class Bookmark {
 	/**
 	 * @return the name
 	 */
-	public String getName() {
+	public String getName()
+	{
 		return name;
 	}
 
 	/**
 	 * @return the x
 	 */
-	public float getX() {
+	public float getX()
+	{
 		return x;
 	}
 
 	/**
 	 * @return the y
 	 */
-	public float getY() {
+	public float getY()
+	{
 		return y;
 	}
 
 	/**
 	 * @return the z
 	 */
-	public float getZ() {
+	public float getZ()
+	{
 		return z;
 	}
 
 	/**
 	 * @return the world_id
 	 */
-	public int getWorld_id() {
+	public int getWorld_id()
+	{
 		return world_id;
 	}
 
 }
 
-public class Bk extends AdminCommand {
-	ArrayList<Bookmark> bookmarks = new ArrayList<Bookmark>();
-	private static final Logger log = Logger.getLogger(ShutdownHook.class);
-	private String bookmark_name = "";
+public class Bk extends AdminCommand
+{
+	ArrayList<Bookmark>			bookmarks		= new ArrayList<Bookmark>();
+	private static final Logger	log				= Logger.getLogger(ShutdownHook.class);
+	private String				bookmark_name	= "";
 
-	Player admin;
+	Player						admin;
 
-	public Bk() {
+	public Bk()
+	{
 		super("bk");
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params) {
+	public void executeCommand(Player admin, String[] params)
+	{
 
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_BK) {
-			PacketSendUtility.sendMessage(admin,
-					"You dont have enough rights to execute this command");
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_BK)
+		{
+			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
 			return;
 		}
 
-		if (params == null || params.length < 1) {
-			PacketSendUtility.sendMessage(admin,
-					"syntax //bk <add|del|tele|list>");
+		if (params == null || params.length < 1)
+		{
+			PacketSendUtility.sendMessage(admin, "syntax //bk <add|del|tele|list>");
 			return;
 		}
 
 		// set local class admin
 		this.admin = admin;
 
-		if (params[0].equals("add")) {
-			try {
+		if (params[0].equals("add"))
+		{
+			try
+			{
 				bookmark_name = params[1].toLowerCase();
-				if (isBookmarkExists(bookmark_name)) {
-					PacketSendUtility.sendMessage(admin, "Bookmark "
-							+ bookmark_name + " already exists !");
+				if (isBookmarkExists(bookmark_name))
+				{
+					PacketSendUtility.sendMessage(admin, "Bookmark " + bookmark_name + " already exists !");
 					return;
 				}
 
@@ -143,12 +155,11 @@ public class Bk extends AdminCommand {
 				final int char_id = admin.getObjectId();
 				final int world_id = admin.getWorldId();
 
-				DB.insertUpdate("INSERT INTO bookmark ("
-						+ "`name`,`char_id`, `x`, `y`, `z`,`world_id` )"
-						+ " VALUES " + "(?, ?, ?, ?, ?, ?)", new IUStH() {
+				DB.insertUpdate("INSERT INTO bookmark (" + "`name`,`char_id`, `x`, `y`, `z`,`world_id` )" + " VALUES " + "(?, ?, ?, ?, ?, ?)", new IUStH()
+				{
 					@Override
-					public void handleInsertUpdate(PreparedStatement ps)
-							throws SQLException {
+					public void handleInsertUpdate(PreparedStatement ps) throws SQLException
+					{
 						ps.setString(1, bookmark_name);
 						ps.setInt(2, char_id);
 						ps.setFloat(3, x);
@@ -159,45 +170,50 @@ public class Bk extends AdminCommand {
 					}
 				});
 
-				PacketSendUtility.sendMessage(admin, "Bookmark "
-						+ bookmark_name
-						+ " sucessfully added to your bookmark list!");
+				PacketSendUtility.sendMessage(admin, "Bookmark " + bookmark_name + " sucessfully added to your bookmark list!");
 
 				updateInfo();
-			} catch (Exception e) {
-				PacketSendUtility.sendMessage(admin,
-						"syntax //bk <add|del|tele> <bookmark name>");
+			}
+			catch (Exception e)
+			{
+				PacketSendUtility.sendMessage(admin, "syntax //bk <add|del|tele> <bookmark name>");
 				return;
 			}
 
-		} else if (params[0].equals("del")) {
+		}
+		else if (params[0].equals("del"))
+		{
 			Connection con = null;
-			try {
+			try
+			{
 				bookmark_name = params[1].toLowerCase();
 				con = DatabaseFactory.getConnection();
 
-				PreparedStatement statement = con
-						.prepareStatement("DELETE FROM bookmark WHERE name = ?");
+				PreparedStatement statement = con.prepareStatement("DELETE FROM bookmark WHERE name = ?");
 				statement.setString(1, bookmark_name);
 				statement.executeUpdate();
 				statement.close();
-			} catch (Exception e) {
-				PacketSendUtility.sendMessage(admin,
-						"syntax //bk <add|del|tele> <bookmark name>");
+			}
+			catch (Exception e)
+			{
+				PacketSendUtility.sendMessage(admin, "syntax //bk <add|del|tele> <bookmark name>");
 				return;
-			} finally {
+			}
+			finally
+			{
 				DatabaseFactory.close(con);
-				PacketSendUtility.sendMessage(admin, "Bookmark "
-						+ bookmark_name
-						+ " sucessfully removed from your bookmark list!");
+				PacketSendUtility.sendMessage(admin, "Bookmark " + bookmark_name + " sucessfully removed from your bookmark list!");
 				updateInfo();
 			}
-		} else if (params[0].equals("tele")) {
-			try {
+		}
+		else if (params[0].equals("tele"))
+		{
+			try
+			{
 
-				if (params[1].equals("") || params[1] == null) {
-					PacketSendUtility.sendMessage(admin,
-							"syntax //bk <add|del|tele> <bookmark name>");
+				if (params[1].equals("") || params[1] == null)
+				{
+					PacketSendUtility.sendMessage(admin, "syntax //bk <add|del|tele> <bookmark name>");
 					return;
 				}
 
@@ -205,37 +221,36 @@ public class Bk extends AdminCommand {
 
 				bookmark_name = params[1].toLowerCase();
 				Bookmark tele_bk = null;
-				try {
+				try
+				{
 					tele_bk = selectByName(bookmark_name);
-				} finally {
-					if (tele_bk != null) {
-						TeleportService.teleportTo(admin,
-								tele_bk.getWorld_id(), tele_bk.getX(),
-								tele_bk.getY(), tele_bk.getZ(), 0);
-						PacketSendUtility.sendMessage(admin,
-								"Teleported to bookmark " + tele_bk.getName()
-										+ " location");
+				}
+				finally
+				{
+					if (tele_bk != null)
+					{
+						TeleportService.teleportTo(admin, tele_bk.getWorld_id(), tele_bk.getX(), tele_bk.getY(), tele_bk.getZ(), 0);
+						PacketSendUtility.sendMessage(admin, "Teleported to bookmark " + tele_bk.getName() + " location");
 					}
 				}
 
-			} catch (Exception e) {
-				PacketSendUtility.sendMessage(admin,
-						"syntax //bk <add|del|tele> <bookmark name>");
+			}
+			catch (Exception e)
+			{
+				PacketSendUtility.sendMessage(admin, "syntax //bk <add|del|tele> <bookmark name>");
 				return;
 			}
 
-		} else if (params[0].equals("list")) {
+		}
+		else if (params[0].equals("list"))
+		{
 			updateInfo();
-			PacketSendUtility.sendMessage(admin,
-					"=====Bookmark list begin=====");
-			for (Bookmark b : bookmarks) {
-				PacketSendUtility.sendMessage(
-						admin,
-						" = " + b.getName() + " =  -  ( " + b.getX() + " ,"
-								+ b.getY() + " ," + b.getZ() + " )");
+			PacketSendUtility.sendMessage(admin, "=====Bookmark list begin=====");
+			for (Bookmark b : bookmarks)
+			{
+				PacketSendUtility.sendMessage(admin, " = " + b.getName() + " =  -  ( " + b.getX() + " ," + b.getY() + " ," + b.getZ() + " )");
 			}
-			PacketSendUtility.sendMessage(admin,
-					"=====Bookmark list end=======");
+			PacketSendUtility.sendMessage(admin, "=====Bookmark list end=======");
 
 		}
 
@@ -244,31 +259,33 @@ public class Bk extends AdminCommand {
 	/**
 	 * Reload bookmark list from db
 	 */
-	public void updateInfo() {
+	public void updateInfo()
+	{
 		bookmarks.clear();
 
-		DB.select("SELECT * FROM `bookmark` where char_id= ?",
-				new ParamReadStH() {
-					@Override
-					public void setParams(PreparedStatement stmt)
-							throws SQLException {
-						stmt.setInt(1, admin.getObjectId());
-					}
+		DB.select("SELECT * FROM `bookmark` where char_id= ?", new ParamReadStH()
+		{
+			@Override
+			public void setParams(PreparedStatement stmt) throws SQLException
+			{
+				stmt.setInt(1, admin.getObjectId());
+			}
 
-					@Override
-					public void handleRead(ResultSet rset) throws SQLException {
-						while (rset.next()) {
-							String name = rset.getString("name");
-							float x = rset.getFloat("x");
-							float y = rset.getFloat("y");
-							float z = rset.getFloat("z");
-							int world_id = rset.getInt("world_id");
-							bookmarks
-									.add(new Bookmark(x, y, z, world_id, name));
+			@Override
+			public void handleRead(ResultSet rset) throws SQLException
+			{
+				while (rset.next())
+				{
+					String name = rset.getString("name");
+					float x = rset.getFloat("x");
+					float y = rset.getFloat("y");
+					float z = rset.getFloat("z");
+					int world_id = rset.getInt("world_id");
+					bookmarks.add(new Bookmark(x, y, z, world_id, name));
 
-						}
-					}
-				});
+				}
+			}
+		});
 
 	}
 
@@ -277,9 +294,12 @@ public class Bk extends AdminCommand {
 	 *            - bookmark name
 	 * @return Bookmark from bookmark name
 	 */
-	public Bookmark selectByName(String bk_name) {
-		for (Bookmark b : bookmarks) {
-			if (b.getName().equals(bk_name)) {
+	public Bookmark selectByName(String bk_name)
+	{
+		for (Bookmark b : bookmarks)
+		{
+			if (b.getName().equals(bk_name))
+			{
 				return b;
 			}
 		}
@@ -291,13 +311,14 @@ public class Bk extends AdminCommand {
 	 *            - bookmark name
 	 * @return true if bookmark exists
 	 */
-	public boolean isBookmarkExists(final String bk_name) {
+	public boolean isBookmarkExists(final String bk_name)
+	{
 		Connection con = null;
 		int bkcount = 0;
-		try {
+		try
+		{
 			con = DatabaseFactory.getConnection();
-			PreparedStatement statement = con
-					.prepareStatement("SELECT count(id) as bkcount FROM bookmark WHERE ? = name AND char_id = ?");
+			PreparedStatement statement = con.prepareStatement("SELECT count(id) as bkcount FROM bookmark WHERE ? = name AND char_id = ?");
 			statement.setString(1, bk_name);
 			statement.setInt(2, admin.getObjectId());
 			ResultSet rset = statement.executeQuery();
@@ -305,15 +326,20 @@ public class Bk extends AdminCommand {
 				bkcount = rset.getInt("bkcount");
 			rset.close();
 			statement.close();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			log.error("Error in reading db", e);
-		} finally {
+		}
+		finally
+		{
 			DatabaseFactory.close(con);
 		}
 		return bkcount > 0;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		AdminCommandChatHandler.getInstance().registerAdminCommand(new Bk());
 	}
 }

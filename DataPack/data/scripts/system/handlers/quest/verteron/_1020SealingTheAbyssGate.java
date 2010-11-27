@@ -38,17 +38,21 @@ import com.aionemu.gameserver.world.WorldMapType;
  * @author Atomics
  * 
  */
-public class _1020SealingTheAbyssGate extends QuestHandler {
+public class _1020SealingTheAbyssGate extends QuestHandler
+{
 
-	private final static int questId = 1020;
-	private final static int[] npcIds = { 203098, 700141, 700142, 700551 };
+	private final static int	questId	= 1020;
+	private final static int[]	npcIds	=
+										{ 203098, 700141, 700142, 700551 };
 
-	public _1020SealingTheAbyssGate() {
+	public _1020SealingTheAbyssGate()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.addOnEnterWorld(questId);
 		qe.addQuestLvlUp(questId);
 		qe.addOnDie(questId);
@@ -57,16 +61,17 @@ public class _1020SealingTheAbyssGate extends QuestHandler {
 	}
 
 	@Override
-	public boolean onLvlUpEvent(QuestEnv env) {
+	public boolean onLvlUpEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
-		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player
-				.getCommonData().getLevel());
+		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player.getCommonData().getLevel());
 		if (qs == null || qs.getStatus() != QuestStatus.LOCKED || !lvlCheck)
 			return false;
-		int[] quests = { 1130, 1023, 1022, 1021, 1019, 1018, 1017, 1016, 1015,
-				1014, 1013, 1012, 1011 };
-		for (int id : quests) {
+		int[] quests =
+		{ 1130, 1023, 1022, 1021, 1019, 1018, 1017, 1016, 1015, 1014, 1013, 1012, 1011 };
+		for (int id : quests)
+		{
 			QuestState qs2 = player.getQuestStateList().getQuestState(id);
 			if (qs2 == null || qs2.getStatus() != QuestStatus.COMPLETE)
 				return false;
@@ -78,7 +83,8 @@ public class _1020SealingTheAbyssGate extends QuestHandler {
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
 		if (qs == null)
@@ -90,133 +96,130 @@ public class _1020SealingTheAbyssGate extends QuestHandler {
 		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
-		if (qs.getStatus() == QuestStatus.REWARD) {
-			if (targetId == 203098) {
+		if (qs.getStatus() == QuestStatus.REWARD)
+		{
+			if (targetId == 203098)
+			{
 				if (env.getDialogId() == -1)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1352);
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
 				return defaultQuestEndDialog(env);
 			}
-		} else if (qs.getStatus() != QuestStatus.START)
+		}
+		else if (qs.getStatus() != QuestStatus.START)
 			return false;
-		switch (targetId) {
-		case 203098:
-			switch (env.getDialogId()) {
-			case 25:
-				if (var == 0)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1011);
-			case 10000:
-				if (var == 0) {
-					qs.setQuestVarById(0, var + 1);
-					updateQuestStatus(player, qs);
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 0);
+		switch (targetId)
+		{
+			case 203098:
+				switch (env.getDialogId())
+				{
+					case 25:
+						if (var == 0)
+							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+					case 10000:
+						if (var == 0)
+						{
+							qs.setQuestVarById(0, var + 1);
+							updateQuestStatus(player, qs);
+							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 0);
+						}
+					default:
+						return false;
+				}
+			case 700141:
+				if (var == 1)
+				{
+					final int targetObjectId = env.getVisibleObject().getObjectId();
+					PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.NEUTRALMODE2, 0, targetObjectId), true);
+					ThreadPoolManager.getInstance().schedule(new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							qs.setQuestVarById(0, var + 1);
+							updateQuestStatus(player, qs);
+							WorldMapInstance newInstance = InstanceService.getNextAvailableInstance(310030000);
+							InstanceService.registerPlayerWithInstance(newInstance, player);
+							TeleportService.teleportTo(player, 310030000, newInstance.getInstanceId(), (float) 270.5, (float) 174.3, (float) 204.3, 0);
+						}
+					}, 3000);
+					return true;
+				}
+				else if (var == 3)
+				{
+					itemCount = player.getInventory().getItemCountByItemId(182200024);
+					if (itemCount >= 1)
+					{
+						final int targetObjectId = env.getVisibleObject().getObjectId();
+						PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.NEUTRALMODE2, 0, targetObjectId), true);
+						ThreadPoolManager.getInstance().schedule(new Runnable()
+						{
+							@Override
+							public void run()
+							{
+								ItemService.removeItemFromInventoryByItemId(player, 182200024);
+								qs.setStatus(QuestStatus.REWARD);
+								updateQuestStatus(player, qs);
+								TeleportService.teleportTo(player, WorldMapType.VERTERON.getId(), 2684.308f, 1068.7382f, 199.375f, 0);
+							}
+						}, 3000);
+						return true;
+					}
+				}
+				return false;
+			case 700551:
+				if (var == 2)
+				{
+					itemCount = player.getInventory().getItemCountByItemId(182200024);
+					if (itemCount >= 1)
+					{
+						final int targetObjectId = env.getVisibleObject().getObjectId();
+						PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.NEUTRALMODE2, 0, targetObjectId), true);
+						ThreadPoolManager.getInstance().schedule(new Runnable()
+						{
+							@Override
+							public void run()
+							{
+								qs.setQuestVarById(0, var + 1);
+								updateQuestStatus(player, qs);
+								PacketSendUtility.sendPacket(player, new SM_PLAY_MOVIE(0, 153));
+							}
+						}, 3000);
+						return true;
+					}
+				}
+			case 700142:
+				if (var == 2)
+				{
+
+					final int targetObjectId = env.getVisibleObject().getObjectId();
+					PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.NEUTRALMODE2, 0, targetObjectId), true);
+					ThreadPoolManager.getInstance().schedule(new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.START_LOOT, 0, targetObjectId), true);
+							QuestService.addNewSpawn(310030000, instanceId, 210753, (float) 258.89917, (float) 237.20166, (float) 217.06035, (byte) 0, true);
+						}
+					}, 3000);
+					return true;
+
 				}
 			default:
 				return false;
-			}
-		case 700141:
-			if (var == 1) {
-				final int targetObjectId = env.getVisibleObject().getObjectId();
-				PacketSendUtility.broadcastPacket(player, new SM_EMOTION(
-						player, EmotionType.NEUTRALMODE2, 0, targetObjectId),
-						true);
-				ThreadPoolManager.getInstance().schedule(new Runnable() {
-					@Override
-					public void run() {
-						qs.setQuestVarById(0, var + 1);
-						updateQuestStatus(player, qs);
-						WorldMapInstance newInstance = InstanceService.getNextAvailableInstance(310030000);
-						InstanceService.registerPlayerWithInstance(newInstance,
-								player);
-						TeleportService.teleportTo(player, 310030000,
-								newInstance.getInstanceId(), (float) 270.5,
-								(float) 174.3, (float) 204.3, 0);
-					}
-				}, 3000);
-				return true;
-			} else if (var == 3) {
-				itemCount = player.getInventory().getItemCountByItemId(
-						182200024);
-				if (itemCount >= 1) {
-					final int targetObjectId = env.getVisibleObject()
-							.getObjectId();
-					PacketSendUtility.broadcastPacket(player,
-							new SM_EMOTION(player, EmotionType.NEUTRALMODE2, 0,
-									targetObjectId), true);
-					ThreadPoolManager.getInstance().schedule(new Runnable() {
-						@Override
-						public void run() {
-							ItemService.removeItemFromInventoryByItemId(player,
-									182200024);
-							qs.setStatus(QuestStatus.REWARD);
-							updateQuestStatus(player, qs);
-							TeleportService.teleportTo(player,
-									WorldMapType.VERTERON.getId(), 2684.308f,
-									1068.7382f, 199.375f, 0);
-						}
-					}, 3000);
-					return true;
-				}
-			}
-			return false;
-		case 700551:
-			if (var == 2) {
-				itemCount = player.getInventory().getItemCountByItemId(
-						182200024);
-				if (itemCount >= 1) {
-					final int targetObjectId = env.getVisibleObject()
-							.getObjectId();
-					PacketSendUtility.broadcastPacket(player,
-							new SM_EMOTION(player, EmotionType.NEUTRALMODE2, 0,
-									targetObjectId), true);
-					ThreadPoolManager.getInstance().schedule(new Runnable() {
-						@Override
-						public void run() {
-							qs.setQuestVarById(0, var + 1);
-							updateQuestStatus(player, qs);
-							PacketSendUtility.sendPacket(player,
-									new SM_PLAY_MOVIE(0, 153));
-						}
-					}, 3000);
-					return true;
-				}
-			}
-		case 700142:
-			if (var == 2) {
-
-				final int targetObjectId = env.getVisibleObject().getObjectId();
-				PacketSendUtility.broadcastPacket(player, new SM_EMOTION(
-						player, EmotionType.NEUTRALMODE2, 0, targetObjectId),
-						true);
-				ThreadPoolManager.getInstance().schedule(new Runnable() {
-					@Override
-					public void run() {
-						PacketSendUtility.broadcastPacket(player,
-								new SM_EMOTION(player, EmotionType.START_LOOT,
-										0, targetObjectId), true);
-						QuestService.addNewSpawn(310030000, instanceId, 210753,
-								(float) 258.89917, (float) 237.20166,
-								(float) 217.06035, (byte) 0, true);
-					}
-				}, 3000);
-				return true;
-
-			}
-		default:
-			return false;
 		}
 	}
 
 	@Override
-	public boolean onDieEvent(QuestEnv env) {
+	public boolean onDieEvent(QuestEnv env)
+	{
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
 		if (qs == null || qs.getStatus() != QuestStatus.START)
 			return false;
 		int var = qs.getQuestVars().getQuestVars();
-		if (var == 2 || var == 3) {
+		if (var == 2 || var == 3)
+		{
 			qs.setQuestVar(1);
 			ItemService.decreaseItemCountByItemId(player, 182200024, 1);
 			updateQuestStatus(player, qs);
@@ -226,26 +229,32 @@ public class _1020SealingTheAbyssGate extends QuestHandler {
 	}
 
 	@Override
-	public boolean onEnterWorldEvent(QuestEnv env) {
+	public boolean onEnterWorldEvent(QuestEnv env)
+	{
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
 		if (qs == null)
 			return false;
 
-		if (qs.getStatus() == QuestStatus.START) {
+		if (qs.getStatus() == QuestStatus.START)
+		{
 			int var = qs.getQuestVars().getQuestVars();
-			if (var == 2 || var == 3) {
-				if (player.getWorldId() != 310030000) {
+			if (var == 2 || var == 3)
+			{
+				if (player.getWorldId() != 310030000)
+				{
 					qs.setQuestVar(1);
 					ItemService.decreaseItemCountByItemId(player, 182200024, 1);
 					updateQuestStatus(player, qs);
 				}
 			}
-		} else if (qs.getStatus() == QuestStatus.LOCKED
-				&& player.getCommonData().getLevel() > 15) {
-			int[] quests = { 1130, 1023, 1022, 1021, 1019, 1018, 1017, 1016,
-					1015, 1014, 1013, 1012, 1011 };
-			for (int id : quests) {
+		}
+		else if (qs.getStatus() == QuestStatus.LOCKED && player.getCommonData().getLevel() > 15)
+		{
+			int[] quests =
+			{ 1130, 1023, 1022, 1021, 1019, 1018, 1017, 1016, 1015, 1014, 1013, 1012, 1011 };
+			for (int id : quests)
+			{
 				QuestState qs2 = player.getQuestStateList().getQuestState(id);
 				if (qs2 == null || qs2.getStatus() != QuestStatus.COMPLETE)
 					return false;

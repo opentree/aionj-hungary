@@ -37,15 +37,18 @@ import com.aionemu.gameserver.world.zone.ZoneName;
  * @author Mcrizza
  * 
  */
-public class _2031PetrifyingElim extends QuestHandler {
-	private final static int questId = 2031;
+public class _2031PetrifyingElim extends QuestHandler
+{
+	private final static int	questId	= 2031;
 
-	public _2031PetrifyingElim() {
+	public _2031PetrifyingElim()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.setQuestItemIds(182204001).add(questId);
 		qe.setNpcQuestData(204304).addOnTalkEvent(questId); // Vili
 		qe.setNpcQuestData(730038).addOnTalkEvent(questId); // Nabaru
@@ -53,7 +56,8 @@ public class _2031PetrifyingElim extends QuestHandler {
 	}
 
 	@Override
-	public boolean onItemUseEvent(QuestEnv env, Item item) {
+	public boolean onItemUseEvent(QuestEnv env, Item item)
+	{
 		final Player player = env.getPlayer();
 		final int id = item.getItemTemplate().getTemplateId();
 		final int itemObjId = item.getObjectId();
@@ -61,20 +65,18 @@ public class _2031PetrifyingElim extends QuestHandler {
 		if (id != 182204001)
 			return false;
 
-		if (!ZoneService.getInstance().isInsideZone(player,
-				ZoneName.HILL_OF_BELEMU_220020000))
+		if (!ZoneService.getInstance().isInsideZone(player, ZoneName.HILL_OF_BELEMU_220020000))
 			return false;
 
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
 
-		PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(
-				player.getObjectId(), itemObjId, id, 3000, 0, 0), true);
-		ThreadPoolManager.getInstance().schedule(new Runnable() {
+		PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id, 3000, 0, 0), true);
+		ThreadPoolManager.getInstance().schedule(new Runnable()
+		{
 			@Override
-			public void run() {
-				PacketSendUtility.broadcastPacket(player,
-						new SM_ITEM_USAGE_ANIMATION(player.getObjectId(),
-								itemObjId, id, 0, 1, 0), true);
+			public void run()
+			{
+				PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id, 0, 1, 0), true);
 				PacketSendUtility.sendPacket(player, new SM_PLAY_MOVIE(0, 72));
 				ItemService.removeItemFromInventoryByItemId(player, 182204001);
 				qs.setStatus(QuestStatus.REWARD);
@@ -86,12 +88,12 @@ public class _2031PetrifyingElim extends QuestHandler {
 	}
 
 	@Override
-	public boolean onLvlUpEvent(QuestEnv env) {
+	public boolean onLvlUpEvent(QuestEnv env)
+	{
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
 
-		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player
-				.getCommonData().getLevel());
+		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player.getCommonData().getLevel());
 		if (qs == null || !lvlCheck || qs.getStatus() != QuestStatus.LOCKED)
 			return false;
 
@@ -102,7 +104,8 @@ public class _2031PetrifyingElim extends QuestHandler {
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		int targetId = 0;
 
@@ -116,74 +119,75 @@ public class _2031PetrifyingElim extends QuestHandler {
 
 		if (targetId == 204304) // Vili
 		{
-			if (qs.getStatus() == QuestStatus.START
-					&& qs.getQuestVarById(0) == 0) {
+			if (qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 0)
+			{
 				if (env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1011);
-				else if (env.getDialogId() == 10000) {
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+				else if (env.getDialogId() == 10000)
+				{
 					qs.setQuestVar(1);
 					updateQuestStatus(player, qs);
-					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
-							env.getVisibleObject().getObjectId(), 10));
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
 					return true;
-				} else
+				}
+				else
 					return defaultQuestStartDialog(env);
 			}
-		} else if (targetId == 730038) // Nabaru
+		}
+		else if (targetId == 730038) // Nabaru
 		{
-			if (qs.getStatus() == QuestStatus.START
-					&& qs.getQuestVarById(0) == 1) {
+			if (qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 1)
+			{
 				if (env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1352);
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
 				else if (env.getDialogId() == 1353)
-					PacketSendUtility.sendPacket(player, new SM_PLAY_MOVIE(0,
-							71));
-				else if (env.getDialogId() == 10001) {
+					PacketSendUtility.sendPacket(player, new SM_PLAY_MOVIE(0, 71));
+				else if (env.getDialogId() == 10001)
+				{
 					qs.setQuestVar(2);
 					updateQuestStatus(player, qs);
-					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
-							env.getVisibleObject().getObjectId(), 10));
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
 					return true;
-				} else
+				}
+				else
 					return defaultQuestStartDialog(env);
 			}
 
-			if (qs.getStatus() == QuestStatus.START
-					&& qs.getQuestVarById(0) == 2) {
+			if (qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 2)
+			{
 				if (env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1693);
-				else if (env.getDialogId() == 33) {
-					if (player.getInventory().getItemCountByItemId(182204001) > 0) {
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
+				else if (env.getDialogId() == 33)
+				{
+					if (player.getInventory().getItemCountByItemId(182204001) > 0)
+					{
 						qs.setQuestVar(3);
 						updateQuestStatus(player, qs);
-						PacketSendUtility.sendPacket(player,
-								new SM_DIALOG_WINDOW(env.getVisibleObject()
-										.getObjectId(), 10));
+						PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
 						return true;
-					} else
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 10001);
-				} else
+					}
+					else
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10001);
+				}
+				else
 					return defaultQuestStartDialog(env);
 			}
 
-			if (qs.getStatus() == QuestStatus.START
-					&& qs.getQuestVarById(0) == 3) {
+			if (qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 3)
+			{
 				if (env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 2034);
-				else if (env.getDialogId() == 10003) {
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2034);
+				else if (env.getDialogId() == 10003)
+				{
 					qs.setQuestVar(4);
 					updateQuestStatus(player, qs);
-					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
-							env.getVisibleObject().getObjectId(), 10));
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
 					return true;
-				} else
+				}
+				else
 					return defaultQuestStartDialog(env);
-			} else if (qs.getStatus() == QuestStatus.REWARD)
+			}
+			else if (qs.getStatus() == QuestStatus.REWARD)
 				return defaultQuestEndDialog(env);
 		}
 

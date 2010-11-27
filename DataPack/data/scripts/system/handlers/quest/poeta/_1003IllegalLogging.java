@@ -30,18 +30,21 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  * @author MrPoke
  * 
  */
-public class _1003IllegalLogging extends QuestHandler {
+public class _1003IllegalLogging extends QuestHandler
+{
 
-	private final static int questId = 1003;
-	private final static int[] mob_ids = { 210096, 210149, 210145, 210146,
-			210150, 210151, 210092, 210160, 210154 };
+	private final static int	questId	= 1003;
+	private final static int[]	mob_ids	=
+										{ 210096, 210149, 210145, 210146, 210150, 210151, 210092, 210160, 210154 };
 
-	public _1003IllegalLogging() {
+	public _1003IllegalLogging()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.setNpcQuestData(203081).addOnTalkEvent(questId);
 		qe.addQuestLvlUp(questId);
 		for (int mob_id : mob_ids)
@@ -49,11 +52,11 @@ public class _1003IllegalLogging extends QuestHandler {
 	}
 
 	@Override
-	public boolean onLvlUpEvent(QuestEnv env) {
+	public boolean onLvlUpEvent(QuestEnv env)
+	{
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player
-				.getCommonData().getLevel());
+		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player.getCommonData().getLevel());
 		if (qs == null || !lvlCheck || qs.getStatus() != QuestStatus.LOCKED)
 			return false;
 		qs.setStatus(QuestStatus.START);
@@ -62,7 +65,8 @@ public class _1003IllegalLogging extends QuestHandler {
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
 		if (qs == null)
@@ -73,37 +77,40 @@ public class _1003IllegalLogging extends QuestHandler {
 		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
-		if (qs.getStatus() == QuestStatus.START) {
-			if (targetId == 203081) {
-				switch (env.getDialogId()) {
-				case 25:
-					if (var == 0)
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1011);
-					else if (var == 13)
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1352);
+		if (qs.getStatus() == QuestStatus.START)
+		{
+			if (targetId == 203081)
+			{
+				switch (env.getDialogId())
+				{
+					case 25:
+						if (var == 0)
+							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+						else if (var == 13)
+							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
 
-				case 10000:
-				case 10001:
-					if (var == 0 || var == 13) {
-						qs.setQuestVarById(0, var + 1);
-						updateQuestStatus(player, qs);
-						PacketSendUtility.sendPacket(player,
-								new SM_DIALOG_WINDOW(env.getVisibleObject()
-										.getObjectId(), 10));
-						return true;
-					}
+					case 10000:
+					case 10001:
+						if (var == 0 || var == 13)
+						{
+							qs.setQuestVarById(0, var + 1);
+							updateQuestStatus(player, qs);
+							PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+							return true;
+						}
 				}
 			}
-		} else if (qs.getStatus() == QuestStatus.REWARD) {
+		}
+		else if (qs.getStatus() == QuestStatus.REWARD)
+		{
 			return defaultQuestEndDialog(env);
 		}
 		return false;
 	}
 
 	@Override
-	public boolean onKillEvent(QuestEnv env) {
+	public boolean onKillEvent(QuestEnv env)
+	{
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
 		if (qs == null)
@@ -116,31 +123,36 @@ public class _1003IllegalLogging extends QuestHandler {
 
 		if (qs.getStatus() != QuestStatus.START)
 			return false;
-		switch (targetId) {
-		case 210096:
-		case 210149:
-		case 210145:
-		case 210146:
-		case 210150:
-		case 210151:
-		case 210092:
-		case 210154:
-			if (var >= 1 && var <= 12) {
-				qs.setQuestVarById(0, var + 1);
-				updateQuestStatus(player, qs);
-				return true;
-			}
-			break;
-		case 210160:
-			if (var >= 14 && var <= 15) {
-				qs.setQuestVarById(0, var + 1);
-				updateQuestStatus(player, qs);
-				return true;
-			} else if (var == 16) {
-				qs.setStatus(QuestStatus.REWARD);
-				updateQuestStatus(player, qs);
-				return true;
-			}
+		switch (targetId)
+		{
+			case 210096:
+			case 210149:
+			case 210145:
+			case 210146:
+			case 210150:
+			case 210151:
+			case 210092:
+			case 210154:
+				if (var >= 1 && var <= 12)
+				{
+					qs.setQuestVarById(0, var + 1);
+					updateQuestStatus(player, qs);
+					return true;
+				}
+				break;
+			case 210160:
+				if (var >= 14 && var <= 15)
+				{
+					qs.setQuestVarById(0, var + 1);
+					updateQuestStatus(player, qs);
+					return true;
+				}
+				else if (var == 16)
+				{
+					qs.setStatus(QuestStatus.REWARD);
+					updateQuestStatus(player, qs);
+					return true;
+				}
 		}
 		return false;
 	}

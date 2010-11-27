@@ -33,70 +33,78 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  * @author MrPoke, modified by Hellboy
  * 
  */
-public class _2107ReturntoSender extends QuestHandler {
+public class _2107ReturntoSender extends QuestHandler
+{
 
-	private final static int questId = 2107;
+	private final static int	questId	= 2107;
 
-	public _2107ReturntoSender() {
+	public _2107ReturntoSender()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.setNpcQuestData(203516).addOnTalkEvent(questId);
 		qe.setNpcQuestData(203512).addOnTalkEvent(questId);
 		qe.setQuestItemIds(182203107).add(questId);
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
 
 		int targetId = 0;
 		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
-		if (targetId == 0) {
-			switch (env.getDialogId()) {
-			case 1002:
-				QuestService.startQuest(env, QuestStatus.START);
-				PacketSendUtility
-						.sendPacket(player, new SM_DIALOG_WINDOW(0, 0));
-				return true;
-			case 1003:
-				PacketSendUtility
-						.sendPacket(player, new SM_DIALOG_WINDOW(0, 0));
-				return true;
+		if (targetId == 0)
+		{
+			switch (env.getDialogId())
+			{
+				case 1002:
+					QuestService.startQuest(env, QuestStatus.START);
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(0, 0));
+					return true;
+				case 1003:
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(0, 0));
+					return true;
 			}
-		} else if (targetId == 203516) {
-			if (qs != null && qs.getStatus() == QuestStatus.START
-					&& qs.getQuestVarById(0) == 0) {
+		}
+		else if (targetId == 203516)
+		{
+			if (qs != null && qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 0)
+			{
 				if (env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1352);
-				else if (env.getDialogId() == 10000) {
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
+				else if (env.getDialogId() == 10000)
+				{
 					qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
 					updateQuestStatus(player, qs);
-					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
-							env.getVisibleObject().getObjectId(), 10));
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
 					return true;
-				} else
+				}
+				else
 					return defaultQuestStartDialog(env);
 			}
-		} else if (targetId == 203512) {
-			if (qs != null) {
-				if (env.getDialogId() == 25
-						&& qs.getStatus() == QuestStatus.START)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 2375);
-				else if (env.getDialogId() == 1009) {
+		}
+		else if (targetId == 203512)
+		{
+			if (qs != null)
+			{
+				if (env.getDialogId() == 25 && qs.getStatus() == QuestStatus.START)
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375);
+				else if (env.getDialogId() == 1009)
+				{
 					qs.setQuestVar(2);
 					qs.setStatus(QuestStatus.REWARD);
-					ItemService.removeItemFromInventoryByItemId(player,
-							182203107);
+					ItemService.removeItemFromInventoryByItemId(player, 182203107);
 					updateQuestStatus(player, qs);
 					return defaultQuestEndDialog(env);
-				} else
+				}
+				else
 					return defaultQuestEndDialog(env);
 			}
 		}
@@ -104,7 +112,8 @@ public class _2107ReturntoSender extends QuestHandler {
 	}
 
 	@Override
-	public boolean onItemUseEvent(QuestEnv env, Item item) {
+	public boolean onItemUseEvent(QuestEnv env, Item item)
+	{
 		final Player player = env.getPlayer();
 		final int id = item.getItemTemplate().getTemplateId();
 		final int itemObjId = item.getObjectId();
@@ -112,8 +121,7 @@ public class _2107ReturntoSender extends QuestHandler {
 
 		if (id != 182203107)
 			return false;
-		PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(
-				player.getObjectId(), itemObjId, id, 20, 1, 0), true);
+		PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id, 20, 1, 0), true);
 		if (qs == null || qs.getStatus() == QuestStatus.NONE)
 			sendQuestDialog(player, 0, 4);
 		return true;

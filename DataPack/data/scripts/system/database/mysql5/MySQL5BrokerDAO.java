@@ -33,38 +33,41 @@ import com.aionemu.gameserver.model.gameobjects.BrokerItem;
 import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.gameobjects.PersistentState;
 
-public class MySQL5BrokerDAO extends BrokerDAO {
-	private static final Logger log = Logger.getLogger(MySQL5BrokerDAO.class);
+public class MySQL5BrokerDAO extends BrokerDAO
+{
+	private static final Logger	log				= Logger.getLogger(MySQL5BrokerDAO.class);
 
-	private static final String SELECT_QUERY = "SELECT * FROM broker";
-	private static final String SELECT_QUERY2 = "SELECT * FROM inventory WHERE `itemLocation` = 126";
-	private static final String SELECT_QUERY3 = "SELECT id FROM players";
-	private static final String INSERT_QUERY = "INSERT INTO `broker` (`itemPointer`, `itemId`, `itemCount`,`seller`, `price`, `brokerRace`, `expireTime`, `sellerId`, `isSold`, `isSettled`) VALUES (?,?,?,?,?,?,?,?,?,?)";
-	private static final String DELETE_QUERY = "DELETE FROM `broker` WHERE `itemPointer` = ? AND `sellerId` = ? AND `expireTime` = ?";
-	private static final String UPDATE_QUERY = "UPDATE broker SET `isSold` = ?, `isSettled` = 1, `settleTime` = ? WHERE `itemPointer` = ? AND `expireTime` = ? AND `sellerId` = ? AND `isSettled` = 0";
+	private static final String	SELECT_QUERY	= "SELECT * FROM broker";
+	private static final String	SELECT_QUERY2	= "SELECT * FROM inventory WHERE `itemLocation` = 126";
+	private static final String	SELECT_QUERY3	= "SELECT id FROM players";
+	private static final String	INSERT_QUERY	= "INSERT INTO `broker` (`itemPointer`, `itemId`, `itemCount`,`seller`, `price`, `brokerRace`, `expireTime`, `sellerId`, `isSold`, `isSettled`) VALUES (?,?,?,?,?,?,?,?,?,?)";
+	private static final String	DELETE_QUERY	= "DELETE FROM `broker` WHERE `itemPointer` = ? AND `sellerId` = ? AND `expireTime` = ?";
+	private static final String	UPDATE_QUERY	= "UPDATE broker SET `isSold` = ?, `isSettled` = 1, `settleTime` = ? WHERE `itemPointer` = ? AND `expireTime` = ? AND `sellerId` = ? AND `isSettled` = 0";
 
 	@Override
-	public List<BrokerItem> loadBroker() {
+	public List<BrokerItem> loadBroker()
+	{
 		final List<BrokerItem> brokerItems = new ArrayList<BrokerItem>();
 
 		final List<Item> items = getBrokerItems();
 
 		Connection con = null;
 
-		try {
+		try
+		{
 			con = DatabaseFactory.getConnection();
 			PreparedStatement stmt = con.prepareStatement(SELECT_QUERY);
 			ResultSet rset = stmt.executeQuery();
 
-			while (rset.next()) {
+			while (rset.next())
+			{
 				int itemPointer = rset.getInt("itemPointer");
 				int itemId = rset.getInt("itemId");
 				long itemCount = rset.getLong("itemCount");
 				String seller = rset.getString("seller");
 				int sellerId = rset.getInt("sellerId");
 				long price = rset.getLong("price");
-				BrokerRace itemBrokerRace = BrokerRace.valueOf(rset
-						.getString("brokerRace"));
+				BrokerRace itemBrokerRace = BrokerRace.valueOf(rset.getString("brokerRace"));
 				Timestamp expireTime = rset.getTimestamp("expireTime");
 				Timestamp settleTime = rset.getTimestamp("settleTime");
 				int sold = rset.getInt("isSold");
@@ -74,41 +77,50 @@ public class MySQL5BrokerDAO extends BrokerDAO {
 				boolean isSettled = settled == 1;
 
 				Item item = null;
-				if (!isSold) {
-					for (Item brItem : items) {
-						if (itemPointer == brItem.getObjectId()) {
+				if (!isSold)
+				{
+					for (Item brItem : items)
+					{
+						if (itemPointer == brItem.getObjectId())
+						{
 							item = brItem;
 							break;
 						}
 					}
 				}
 
-				brokerItems.add(new BrokerItem(item, itemId, itemPointer,
-						itemCount, price, seller, sellerId, itemBrokerRace,
-						isSold, isSettled, expireTime, settleTime));
+				brokerItems.add(new BrokerItem(item, itemId, itemPointer, itemCount, price, seller, sellerId, itemBrokerRace, isSold, isSettled, expireTime,
+						settleTime));
 			}
 			rset.close();
 			stmt.close();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e)
+		{
 			log.error(e);
-		} finally {
+		}
+		finally
+		{
 			DatabaseFactory.close(con);
 		}
 
 		return brokerItems;
 	}
 
-	private List<Item> getBrokerItems() {
+	private List<Item> getBrokerItems()
+	{
 		final List<Item> brokerItems = new ArrayList<Item>();
 
 		Connection con = null;
 
-		try {
+		try
+		{
 			con = DatabaseFactory.getConnection();
 			PreparedStatement stmt = con.prepareStatement(SELECT_QUERY2);
 			ResultSet rset = stmt.executeQuery();
 
-			while (rset.next()) {
+			while (rset.next())
+			{
 				int itemUniqueId = rset.getInt("itemUniqueId");
 				int itemOwner = rset.getInt("itemOwner");
 				int itemId = rset.getInt("itemId");
@@ -119,15 +131,17 @@ public class MySQL5BrokerDAO extends BrokerDAO {
 				int enchant = rset.getInt("enchant");
 				int itemSkin = rset.getInt("itemSkin");
 				int fusionedItem = rset.getInt("fusionedItem");
-				brokerItems.add(new Item(itemOwner, itemUniqueId, itemId,
-						itemCount, itemColor, false, false, slot, location,
-						enchant, itemSkin, fusionedItem));
+				brokerItems.add(new Item(itemOwner, itemUniqueId, itemId, itemCount, itemColor, false, false, slot, location, enchant, itemSkin, fusionedItem));
 			}
 			rset.close();
 			stmt.close();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e)
+		{
 			log.error(e);
-		} finally {
+		}
+		finally
+		{
 			DatabaseFactory.close(con);
 		}
 
@@ -135,26 +149,29 @@ public class MySQL5BrokerDAO extends BrokerDAO {
 	}
 
 	@Override
-	public boolean store(BrokerItem item) {
+	public boolean store(BrokerItem item)
+	{
 		boolean result = false;
 
-		if (item == null) {
+		if (item == null)
+		{
 			log.warn("Null broker item on save");
 			return result;
 		}
 
-		switch (item.getPersistentState()) {
-		case NEW:
-			result = insertBrokerItem(item);
-			break;
+		switch (item.getPersistentState())
+		{
+			case NEW:
+				result = insertBrokerItem(item);
+				break;
 
-		case DELETED:
-			result = deleteBrokerItem(item);
-			break;
+			case DELETED:
+				result = deleteBrokerItem(item);
+				break;
 
-		case UPDATE_REQUIRED:
-			result = updateBrokerItem(item);
-			break;
+			case UPDATE_REQUIRED:
+				result = updateBrokerItem(item);
+				break;
 		}
 
 		if (result)
@@ -163,10 +180,12 @@ public class MySQL5BrokerDAO extends BrokerDAO {
 		return result;
 	}
 
-	private boolean insertBrokerItem(final BrokerItem item) {
+	private boolean insertBrokerItem(final BrokerItem item)
+	{
 		Connection con = null;
 
-		try {
+		try
+		{
 			con = DatabaseFactory.getConnection();
 			PreparedStatement stmt = con.prepareStatement(INSERT_QUERY);
 
@@ -182,19 +201,25 @@ public class MySQL5BrokerDAO extends BrokerDAO {
 			stmt.setBoolean(10, item.isSettled());
 
 			stmt.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e)
+		{
 			log.error(e);
-		} finally {
+		}
+		finally
+		{
 			DatabaseFactory.close(con);
 		}
 
 		return true;
 	}
 
-	private boolean deleteBrokerItem(final BrokerItem item) {
+	private boolean deleteBrokerItem(final BrokerItem item)
+	{
 		Connection con = null;
 
-		try {
+		try
+		{
 			con = DatabaseFactory.getConnection();
 			PreparedStatement stmt = con.prepareStatement(DELETE_QUERY);
 
@@ -203,19 +228,25 @@ public class MySQL5BrokerDAO extends BrokerDAO {
 			stmt.setTimestamp(3, item.getExpireTime());
 
 			stmt.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e)
+		{
 			log.error(e);
-		} finally {
+		}
+		finally
+		{
 			DatabaseFactory.close(con);
 		}
 
 		return true;
 	}
 
-	private boolean updateBrokerItem(final BrokerItem item) {
+	private boolean updateBrokerItem(final BrokerItem item)
+	{
 		Connection con = null;
 
-		try {
+		try
+		{
 			con = DatabaseFactory.getConnection();
 			PreparedStatement stmt = con.prepareStatement(UPDATE_QUERY);
 
@@ -226,9 +257,13 @@ public class MySQL5BrokerDAO extends BrokerDAO {
 			stmt.setInt(5, item.getSellerId());
 
 			stmt.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e)
+		{
 			log.error(e);
-		} finally {
+		}
+		finally
+		{
 			DatabaseFactory.close(con);
 		}
 
@@ -236,21 +271,22 @@ public class MySQL5BrokerDAO extends BrokerDAO {
 	}
 
 	@Override
-	public int[] getUsedIDs() {
+	public int[] getUsedIDs()
+	{
 		Connection con = null;
 
-		try {
+		try
+		{
 			con = DatabaseFactory.getConnection();
-			PreparedStatement stmt = con.prepareStatement(SELECT_QUERY3,
-					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
+			PreparedStatement stmt = con.prepareStatement(SELECT_QUERY3, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 			ResultSet rset = stmt.executeQuery();
 			rset.last();
 			int count = rset.getRow();
 			rset.beforeFirst();
 			int[] ids = new int[count];
-			for (int i = 0; i < count; i++) {
+			for (int i = 0; i < count; i++)
+			{
 				rset.next();
 				ids[i] = rset.getInt("id");
 			}
@@ -259,16 +295,21 @@ public class MySQL5BrokerDAO extends BrokerDAO {
 			stmt.close();
 
 			return ids;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e)
+		{
 			log.error("Can't get list of id's from players table", e);
-		} finally {
+		}
+		finally
+		{
 			DatabaseFactory.close(con);
 		}
 
 		return new int[0];
 	}
 
-	public boolean supports(String s, int i, int i1) {
+	public boolean supports(String s, int i, int i1)
+	{
 		return MySQL5DAOUtils.supports(s, i, i1);
 	}
 }

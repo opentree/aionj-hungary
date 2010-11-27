@@ -39,18 +39,21 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
  * @author Rhys2002
  * 
  */
-public class _1057CreatingaMonster extends QuestHandler {
+public class _1057CreatingaMonster extends QuestHandler
+{
 
-	private final static int questId = 1057;
-	private final static int[] npc_ids = { 204502, 204619, 700218, 700279,
-			204500 };
+	private final static int	questId	= 1057;
+	private final static int[]	npc_ids	=
+										{ 204502, 204619, 700218, 700279, 204500 };
 
-	public _1057CreatingaMonster() {
+	public _1057CreatingaMonster()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.addQuestLvlUp(questId);
 		qe.addOnEnterWorld(questId);
 		qe.setNpcQuestData(700219).addOnKillEvent(questId);
@@ -60,11 +63,11 @@ public class _1057CreatingaMonster extends QuestHandler {
 	}
 
 	@Override
-	public boolean onLvlUpEvent(QuestEnv env) {
+	public boolean onLvlUpEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
-		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player
-				.getCommonData().getLevel());
+		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player.getCommonData().getLevel());
 		if (qs == null || qs.getStatus() != QuestStatus.LOCKED || !lvlCheck)
 			return false;
 
@@ -77,7 +80,8 @@ public class _1057CreatingaMonster extends QuestHandler {
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
 		if (qs == null)
@@ -88,116 +92,114 @@ public class _1057CreatingaMonster extends QuestHandler {
 		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
-		if (qs.getStatus() == QuestStatus.REWARD) {
-			if (targetId == 204500) {
+		if (qs.getStatus() == QuestStatus.REWARD)
+		{
+			if (targetId == 204500)
+			{
 				if (env.getDialogId() == -1)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 10002);
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10002);
 				else if (env.getDialogId() == 1009)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 5);
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
 				else
 					return defaultQuestEndDialog(env);
 			}
 			return false;
-		} else if (qs.getStatus() != QuestStatus.START) {
+		}
+		else if (qs.getStatus() != QuestStatus.START)
+		{
 			return false;
 		}
-		if (targetId == 204502) {
-			switch (env.getDialogId()) {
-			case 25:
-				if (var == 0)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1011);
-				else if (var == 3)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 2034);
-			case 2036:
-				if (var == 3)
-					PacketSendUtility.sendPacket(player, new SM_PLAY_MOVIE(0,
-							190));
-				return false;
-			case 10000:
-				if (var == 0) {
-					qs.setQuestVarById(0, var + 1);
-					updateQuestStatus(player, qs);
-					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
-							env.getVisibleObject().getObjectId(), 10));
-					return true;
-				}
-			case 10003:
-				if (var == 3) {
-					qs.setQuestVarById(0, var + 1);
-					updateQuestStatus(player, qs);
-					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
-							env.getVisibleObject().getObjectId(), 10));
-					return true;
-				}
-				return false;
+		if (targetId == 204502)
+		{
+			switch (env.getDialogId())
+			{
+				case 25:
+					if (var == 0)
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+					else if (var == 3)
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2034);
+				case 2036:
+					if (var == 3)
+						PacketSendUtility.sendPacket(player, new SM_PLAY_MOVIE(0, 190));
+					return false;
+				case 10000:
+					if (var == 0)
+					{
+						qs.setQuestVarById(0, var + 1);
+						updateQuestStatus(player, qs);
+						PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+						return true;
+					}
+				case 10003:
+					if (var == 3)
+					{
+						qs.setQuestVarById(0, var + 1);
+						updateQuestStatus(player, qs);
+						PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+						return true;
+					}
+					return false;
 			}
-		} else if (targetId == 204619) {
-			switch (env.getDialogId()) {
-			case 25:
-				if (var == 1)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1352);
-			case 10001:
-				if (var == 1) {
-					qs.setQuestVarById(0, var + 1);
-					updateQuestStatus(player, qs);
-					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
-							env.getVisibleObject().getObjectId(), 10));
-					return true;
-				}
-				return false;
+		}
+		else if (targetId == 204619)
+		{
+			switch (env.getDialogId())
+			{
+				case 25:
+					if (var == 1)
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
+				case 10001:
+					if (var == 1)
+					{
+						qs.setQuestVarById(0, var + 1);
+						updateQuestStatus(player, qs);
+						PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+						return true;
+					}
+					return false;
 			}
-		} else if (targetId == 700218 && qs.getQuestVarById(0) == 2) {
-			if (env.getDialogId() == -1) {
+		}
+		else if (targetId == 700218 && qs.getQuestVarById(0) == 2)
+		{
+			if (env.getDialogId() == -1)
+			{
 				final int targetObjectId = env.getVisibleObject().getObjectId();
-				PacketSendUtility.sendPacket(player,
-						new SM_USE_OBJECT(player.getObjectId(), targetObjectId,
-								3000, 1));
-				PacketSendUtility.broadcastPacket(player, new SM_EMOTION(
-						player, EmotionType.NEUTRALMODE2, 0, targetObjectId),
-						true);
-				ThreadPoolManager.getInstance().schedule(new Runnable() {
+				PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(player.getObjectId(), targetObjectId, 3000, 1));
+				PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.NEUTRALMODE2, 0, targetObjectId), true);
+				ThreadPoolManager.getInstance().schedule(new Runnable()
+				{
 					@Override
-					public void run() {
-						PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(
-								player.getObjectId(), targetObjectId, 3000, 0));
-						PacketSendUtility.broadcastPacket(player,
-								new SM_EMOTION(player, EmotionType.START_LOOT,
-										0, targetObjectId), true);
+					public void run()
+					{
+						PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(player.getObjectId(), targetObjectId, 3000, 0));
+						PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.START_LOOT, 0, targetObjectId), true);
 						sendQuestDialog(player, targetObjectId, 1693);
 					}
 				}, 3000);
-			} else if (qs.getQuestVarById(0) == 2 && env.getDialogId() == 10002) {
-				PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env
-						.getVisibleObject().getObjectId(), 0));
-				ItemService
-						.addItems(player, Collections
-								.singletonList(new QuestItems(182201616, 1)));
+			}
+			else if (qs.getQuestVarById(0) == 2 && env.getDialogId() == 10002)
+			{
+				PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 0));
+				ItemService.addItems(player, Collections.singletonList(new QuestItems(182201616, 1)));
 				qs.setQuestVarById(0, 3);
 				updateQuestStatus(player, qs);
 				return true;
 			}
-		} else if (targetId == 700279 && qs.getQuestVarById(0) == 9) {
-			if (env.getDialogId() == -1) {
+		}
+		else if (targetId == 700279 && qs.getQuestVarById(0) == 9)
+		{
+			if (env.getDialogId() == -1)
+			{
 				final int targetObjectId = env.getVisibleObject().getObjectId();
-				PacketSendUtility.sendPacket(player,
-						new SM_USE_OBJECT(player.getObjectId(), targetObjectId,
-								3000, 1));
-				PacketSendUtility.broadcastPacket(player, new SM_EMOTION(
-						player, EmotionType.NEUTRALMODE2, 0, targetObjectId),
-						true);
-				ThreadPoolManager.getInstance().schedule(new Runnable() {
+				PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(player.getObjectId(), targetObjectId, 3000, 1));
+				PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.NEUTRALMODE2, 0, targetObjectId), true);
+				ThreadPoolManager.getInstance().schedule(new Runnable()
+				{
 					@Override
-					public void run() {
-						PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(
-								player.getObjectId(), targetObjectId, 3000, 0));
-						PacketSendUtility.broadcastPacket(player,
-								new SM_EMOTION(player, EmotionType.START_LOOT,
-										0, targetObjectId), true);
+					public void run()
+					{
+						PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(player.getObjectId(), targetObjectId, 3000, 0));
+						PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.START_LOOT, 0, targetObjectId), true);
 						qs.setStatus(QuestStatus.REWARD);
 						updateQuestStatus(player, qs);
 					}
@@ -208,11 +210,14 @@ public class _1057CreatingaMonster extends QuestHandler {
 	}
 
 	@Override
-	public boolean onEnterWorldEvent(QuestEnv env) {
+	public boolean onEnterWorldEvent(QuestEnv env)
+	{
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if (qs != null && qs.getStatus() == QuestStatus.START) {
-			if (player.getWorldId() == 310050000 && qs.getQuestVarById(0) == 4) {
+		if (qs != null && qs.getStatus() == QuestStatus.START)
+		{
+			if (player.getWorldId() == 310050000 && qs.getQuestVarById(0) == 4)
+			{
 				qs.setQuestVar(5);
 				updateQuestStatus(player, qs);
 			}
@@ -221,7 +226,8 @@ public class _1057CreatingaMonster extends QuestHandler {
 	}
 
 	@Override
-	public boolean onKillEvent(QuestEnv env) {
+	public boolean onKillEvent(QuestEnv env)
+	{
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
 		if (qs == null || qs.getStatus() != QuestStatus.START)
@@ -231,10 +237,13 @@ public class _1057CreatingaMonster extends QuestHandler {
 		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
-		if (targetId == 700219 && qs.getQuestVarById(0) < 8) {
+		if (targetId == 700219 && qs.getQuestVarById(0) < 8)
+		{
 			qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
 			updateQuestStatus(player, qs);
-		} else if (targetId == 212211 && qs.getQuestVarById(0) == 8) {
+		}
+		else if (targetId == 212211 && qs.getQuestVarById(0) == 8)
+		{
 			qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
 			updateQuestStatus(player, qs);
 		}

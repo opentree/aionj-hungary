@@ -31,17 +31,21 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  * @author MrPoke
  * 
  */
-public class _1013HuntingLepharistRevolutionaries extends QuestHandler {
+public class _1013HuntingLepharistRevolutionaries extends QuestHandler
+{
 
-	private final static int questId = 1013;
-	private final static int[] mob_ids = { 210688, 210316 };
+	private final static int	questId	= 1013;
+	private final static int[]	mob_ids	=
+										{ 210688, 210316 };
 
-	public _1013HuntingLepharistRevolutionaries() {
+	public _1013HuntingLepharistRevolutionaries()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.setNpcQuestData(203126).addOnTalkEvent(questId);
 		qe.addQuestLvlUp(questId);
 		for (int mob_id : mob_ids)
@@ -49,11 +53,11 @@ public class _1013HuntingLepharistRevolutionaries extends QuestHandler {
 	}
 
 	@Override
-	public boolean onLvlUpEvent(QuestEnv env) {
+	public boolean onLvlUpEvent(QuestEnv env)
+	{
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player
-				.getCommonData().getLevel());
+		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player.getCommonData().getLevel());
 		if (qs == null || !lvlCheck || qs.getStatus() != QuestStatus.LOCKED)
 			return false;
 		qs.setStatus(QuestStatus.START);
@@ -62,7 +66,8 @@ public class _1013HuntingLepharistRevolutionaries extends QuestHandler {
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
 		if (qs == null)
@@ -73,40 +78,40 @@ public class _1013HuntingLepharistRevolutionaries extends QuestHandler {
 		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
-		if (qs.getStatus() == QuestStatus.START) {
-			if (targetId == 203126) {
-				switch (env.getDialogId()) {
-				case 25:
-					if (var == 0)
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1011);
-					else if (var == 11)
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1352);
-					else if (var >= 12) {
-						qs.setStatus(QuestStatus.REWARD);
-						updateQuestStatus(player, qs);
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 2375);
-					}
-				case 1012:
-					PacketSendUtility.sendPacket(player, new SM_PLAY_MOVIE(0,
-							25));
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1012);
-				case 10000:
-				case 10001:
-					if (var == 0 || var == 11) {
-						qs.setQuestVarById(0, var + 1);
-						updateQuestStatus(player, qs);
-						PacketSendUtility.sendPacket(player,
-								new SM_DIALOG_WINDOW(env.getVisibleObject()
-										.getObjectId(), 10));
-						return true;
-					}
+		if (qs.getStatus() == QuestStatus.START)
+		{
+			if (targetId == 203126)
+			{
+				switch (env.getDialogId())
+				{
+					case 25:
+						if (var == 0)
+							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+						else if (var == 11)
+							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
+						else if (var >= 12)
+						{
+							qs.setStatus(QuestStatus.REWARD);
+							updateQuestStatus(player, qs);
+							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375);
+						}
+					case 1012:
+						PacketSendUtility.sendPacket(player, new SM_PLAY_MOVIE(0, 25));
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1012);
+					case 10000:
+					case 10001:
+						if (var == 0 || var == 11)
+						{
+							qs.setQuestVarById(0, var + 1);
+							updateQuestStatus(player, qs);
+							PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+							return true;
+						}
 				}
 			}
-		} else if (qs.getStatus() == QuestStatus.REWARD) {
+		}
+		else if (qs.getStatus() == QuestStatus.REWARD)
+		{
 			if (targetId == 203126)
 				return defaultQuestEndDialog(env);
 		}
@@ -114,7 +119,8 @@ public class _1013HuntingLepharistRevolutionaries extends QuestHandler {
 	}
 
 	@Override
-	public boolean onKillEvent(QuestEnv env) {
+	public boolean onKillEvent(QuestEnv env)
+	{
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
 		if (qs == null)
@@ -127,21 +133,24 @@ public class _1013HuntingLepharistRevolutionaries extends QuestHandler {
 
 		if (qs.getStatus() != QuestStatus.START)
 			return false;
-		switch (targetId) {
-		case 210688:
-			if (var >= 1 && var <= 11) {
-				qs.setQuestVarById(0, var + 1);
-				updateQuestStatus(player, qs);
-				return true;
-			}
-			break;
-		case 210316:
-			if (var == 12) {
-				qs.setStatus(QuestStatus.REWARD);
-				updateQuestStatus(player, qs);
-				return true;
-			}
-			break;
+		switch (targetId)
+		{
+			case 210688:
+				if (var >= 1 && var <= 11)
+				{
+					qs.setQuestVarById(0, var + 1);
+					updateQuestStatus(player, qs);
+					return true;
+				}
+				break;
+			case 210316:
+				if (var == 12)
+				{
+					qs.setStatus(QuestStatus.REWARD);
+					updateQuestStatus(player, qs);
+					return true;
+				}
+				break;
 		}
 		return false;
 	}

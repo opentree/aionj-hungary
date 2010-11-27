@@ -31,52 +31,58 @@ import com.aionemu.gameserver.world.World;
  * @author Phantom, ATracer
  * 
  */
-public class Remove extends AdminCommand {
+public class Remove extends AdminCommand
+{
 
-	public Remove() {
+	public Remove()
+	{
 		super("remove");
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params) {
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_REMOVE) {
-			PacketSendUtility.sendMessage(admin,
-					"You dont have enough rights to execute this command.");
+	public void executeCommand(Player admin, String[] params)
+	{
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_REMOVE)
+		{
+			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command.");
 			return;
 		}
 
-		if (params.length < 2) {
-			PacketSendUtility.sendMessage(admin,
-					"syntax //remove <player> <item ID> <quantity>");
+		if (params.length < 2)
+		{
+			PacketSendUtility.sendMessage(admin, "syntax //remove <player> <item ID> <quantity>");
 			return;
 		}
 
 		int itemId = 0;
 		long itemCount = 1;
-		Player target = World.getInstance().findPlayer(
-				Util.convertName(params[0]));
-		if (target == null) {
+		Player target = World.getInstance().findPlayer(Util.convertName(params[0]));
+		if (target == null)
+		{
 			PacketSendUtility.sendMessage(admin, "Player isn't online.");
 			return;
 		}
 
-		try {
+		try
+		{
 			itemId = Integer.parseInt(params[1]);
-			if (params.length == 3) {
+			if (params.length == 3)
+			{
 				itemCount = Long.parseLong(params[2]);
 			}
-		} catch (NumberFormatException e) {
-			PacketSendUtility.sendMessage(admin,
-					"Parameters need to be an integer.");
+		}
+		catch (NumberFormatException e)
+		{
+			PacketSendUtility.sendMessage(admin, "Parameters need to be an integer.");
 			return;
 		}
 
 		Storage bag = target.getInventory();
 
 		long itemsInBag = bag.getItemCountByItemId(itemId);
-		if (itemsInBag == 0) {
-			PacketSendUtility.sendMessage(admin,
-					"Items with that id are not found in the player's bag.");
+		if (itemsInBag == 0)
+		{
+			PacketSendUtility.sendMessage(admin, "Items with that id are not found in the player's bag.");
 			return;
 		}
 
@@ -85,12 +91,11 @@ public class Remove extends AdminCommand {
 		ItemService.decreaseItemCount(target, item, (long) itemCount);
 
 		PacketSendUtility.sendMessage(admin, "Item(s) removed succesfully");
-		PacketSendUtility.sendMessage(target,
-				"Admin removed an item from your bag");
+		PacketSendUtility.sendMessage(target, "Admin removed an item from your bag");
 	}
 
-	public static void main(String[] args) {
-		AdminCommandChatHandler.getInstance()
-				.registerAdminCommand(new Remove());
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new Remove());
 	}
 }

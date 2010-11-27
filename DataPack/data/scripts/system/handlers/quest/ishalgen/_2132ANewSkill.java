@@ -29,15 +29,18 @@ import com.aionemu.gameserver.services.QuestService;
  * @author MrPoke
  * 
  */
-public class _2132ANewSkill extends QuestHandler {
-	private final static int questId = 2132;
+public class _2132ANewSkill extends QuestHandler
+{
+	private final static int	questId	= 2132;
 
-	public _2132ANewSkill() {
+	public _2132ANewSkill()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.addQuestLvlUp(questId);
 		qe.setNpcQuestData(203527).addOnTalkEvent(questId); // Warrior
 		qe.setNpcQuestData(203528).addOnTalkEvent(questId); // Scout
@@ -46,32 +49,34 @@ public class _2132ANewSkill extends QuestHandler {
 	}
 
 	@Override
-	public boolean onLvlUpEvent(QuestEnv env) {
+	public boolean onLvlUpEvent(QuestEnv env)
+	{
 		Player player = env.getPlayer();
-		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player
-				.getCommonData().getLevel());
+		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player.getCommonData().getLevel());
 		if (!lvlCheck)
 			return false;
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
 		if (qs != null)
 			return false;
 		env.setQuestId(questId);
-		if (QuestService.startQuest(env, QuestStatus.START)) {
+		if (QuestService.startQuest(env, QuestStatus.START))
+		{
 			qs = player.getQuestStateList().getQuestState(questId);
 			qs.setStatus(QuestStatus.REWARD);
-			switch (player.getCommonData().getPlayerClass()) {
-			case WARRIOR:
-				qs.setQuestVar(1);
-				break;
-			case SCOUT:
-				qs.setQuestVar(2);
-				break;
-			case MAGE:
-				qs.setQuestVar(3);
-				break;
-			case PRIEST:
-				qs.setQuestVar(4);
-				break;
+			switch (player.getCommonData().getPlayerClass())
+			{
+				case WARRIOR:
+					qs.setQuestVar(1);
+					break;
+				case SCOUT:
+					qs.setQuestVar(2);
+					break;
+				case MAGE:
+					qs.setQuestVar(3);
+					break;
+				case PRIEST:
+					qs.setQuestVar(4);
+					break;
 			}
 			updateQuestStatus(player, qs);
 		}
@@ -79,7 +84,8 @@ public class _2132ANewSkill extends QuestHandler {
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
 		if (qs == null || qs.getStatus() != QuestStatus.REWARD)
@@ -90,55 +96,52 @@ public class _2132ANewSkill extends QuestHandler {
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
 		PlayerClass playerClass = player.getCommonData().getPlayerClass();
-		switch (targetId) {
-		case 203527:
-			if (playerClass == PlayerClass.WARRIOR) {
-				if (env.getDialogId() == -1)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1011);
-				else if (env.getDialogId() == 1009)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 5);
-				else
-					return this.defaultQuestEndDialog(env);
-			}
-			return false;
-		case 203528:
-			if (playerClass == PlayerClass.SCOUT) {
-				if (env.getDialogId() == -1)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1352);
-				else if (env.getDialogId() == 1009)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 6);
-				else
-					return this.defaultQuestEndDialog(env);
-			}
-			return false;
-		case 203529:
-			if (playerClass == PlayerClass.MAGE) {
-				if (env.getDialogId() == -1)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1693);
-				else if (env.getDialogId() == 1009)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 7);
-				else
-					return this.defaultQuestEndDialog(env);
-			}
-			return false;
-		case 203530:
-			if (playerClass == PlayerClass.PRIEST) {
-				if (env.getDialogId() == -1)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 2034);
-				else if (env.getDialogId() == 1009)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 8);
-				else
-					return this.defaultQuestEndDialog(env);
-			}
-			return false;
+		switch (targetId)
+		{
+			case 203527:
+				if (playerClass == PlayerClass.WARRIOR)
+				{
+					if (env.getDialogId() == -1)
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+					else if (env.getDialogId() == 1009)
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
+					else
+						return this.defaultQuestEndDialog(env);
+				}
+				return false;
+			case 203528:
+				if (playerClass == PlayerClass.SCOUT)
+				{
+					if (env.getDialogId() == -1)
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
+					else if (env.getDialogId() == 1009)
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 6);
+					else
+						return this.defaultQuestEndDialog(env);
+				}
+				return false;
+			case 203529:
+				if (playerClass == PlayerClass.MAGE)
+				{
+					if (env.getDialogId() == -1)
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
+					else if (env.getDialogId() == 1009)
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 7);
+					else
+						return this.defaultQuestEndDialog(env);
+				}
+				return false;
+			case 203530:
+				if (playerClass == PlayerClass.PRIEST)
+				{
+					if (env.getDialogId() == -1)
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2034);
+					else if (env.getDialogId() == 1009)
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 8);
+					else
+						return this.defaultQuestEndDialog(env);
+				}
+				return false;
 		}
 		return false;
 	}

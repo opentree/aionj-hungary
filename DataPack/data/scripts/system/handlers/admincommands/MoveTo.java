@@ -31,13 +31,15 @@ import com.aionemu.gameserver.world.WorldMapType;
  * @author KID
  */
 
-public class MoveTo extends AdminCommand {
+public class MoveTo extends AdminCommand
+{
 
 	/**
 	 * Constructor.
 	 */
 
-	public MoveTo() {
+	public MoveTo()
+	{
 		super("moveto");
 	}
 
@@ -46,45 +48,49 @@ public class MoveTo extends AdminCommand {
 	 */
 
 	@Override
-	public void executeCommand(Player admin, String[] params) {
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_MOVETO) {
-			PacketSendUtility.sendMessage(admin,
-					"You dont have enough rights to execute this command");
+	public void executeCommand(Player admin, String[] params)
+	{
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_MOVETO)
+		{
+			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
 			return;
 		}
 
-		if (params == null || params.length < 4) {
-			PacketSendUtility.sendMessage(admin,
-					"syntax //moveto worldId X Y Z");
+		if (params == null || params.length < 4)
+		{
+			PacketSendUtility.sendMessage(admin, "syntax //moveto worldId X Y Z");
 			return;
 		}
 
 		int worldId;
 		float x, y, z;
 
-		try {
+		try
+		{
 			worldId = Integer.parseInt(params[0]);
 			x = Float.parseFloat(params[1]);
 			y = Float.parseFloat(params[2]);
 			z = Float.parseFloat(params[3]);
-		} catch (NumberFormatException e) {
-			PacketSendUtility.sendMessage(admin,
-					"All the parameters should be numbers");
+		}
+		catch (NumberFormatException e)
+		{
+			PacketSendUtility.sendMessage(admin, "All the parameters should be numbers");
 			return;
 		}
 
-		if (WorldMapType.getWorld(worldId) == null) {
-			PacketSendUtility.sendMessage(admin, "Illegal WorldId %d "
-					+ worldId);
-		} else {
+		if (WorldMapType.getWorld(worldId) == null)
+		{
+			PacketSendUtility.sendMessage(admin, "Illegal WorldId %d " + worldId);
+		}
+		else
+		{
 			TeleportService.teleportTo(admin, worldId, x, y, z, 0);
-			PacketSendUtility.sendMessage(admin, "Teleported to " + x + " " + y
-					+ " " + z + " [" + worldId + "]");
+			PacketSendUtility.sendMessage(admin, "Teleported to " + x + " " + y + " " + z + " [" + worldId + "]");
 		}
 	}
 
-	public static void main(String[] args) {
-		AdminCommandChatHandler.getInstance()
-				.registerAdminCommand(new MoveTo());
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new MoveTo());
 	}
 }

@@ -33,57 +33,63 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
  * @author Divinity
  * 
  */
-public class Announcements extends AdminCommand {
-	private AnnouncementService announceService;
+public class Announcements extends AdminCommand
+{
+	private AnnouncementService	announceService;
 
-	public Announcements() {
+	public Announcements()
+	{
 		super("announcements");
 		announceService = AnnouncementService.getInstance();
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params) {
+	public void executeCommand(Player admin, String[] params)
+	{
 		String syntaxCommand = "Syntax: //announcements list - Obtain all announcements in the database.\n";
 		syntaxCommand += "Syntax: //announcements add <faction: ELYOS | ASMODIANS | ALL> <type: NORMAL | ANNOUNCE | ORANGE | YELLOW | SHOUT> <delay in seconds> <message> - Add an announcements in the database.\n";
 		syntaxCommand += "Syntax: //announcements delete <id (see //announcements list to find all id> - Delete an announcements from the database.";
 
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_ANNOUNCEMENTS) {
-			PacketSendUtility.sendMessage(admin,
-					"You don't have enough rights to execute this command.");
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_ANNOUNCEMENTS)
+		{
+			PacketSendUtility.sendMessage(admin, "You don't have enough rights to execute this command.");
 			return;
 		}
 
-		if ((params.length < 1) || (params == null)) {
+		if ((params.length < 1) || (params == null))
+		{
 			PacketSendUtility.sendMessage(admin, syntaxCommand);
 			return;
 		}
 
-		if (params[0].equals("list")) {
+		if (params[0].equals("list"))
+		{
 			Set<Announcement> announces = announceService.getAnnouncements();
-			PacketSendUtility.sendMessage(admin,
-					"ID  |  FACTION  |  CHAT TYPE  |  DELAY  |  MESSAGE");
-			PacketSendUtility
-					.sendMessage(admin,
-							"-------------------------------------------------------------------");
+			PacketSendUtility.sendMessage(admin, "ID  |  FACTION  |  CHAT TYPE  |  DELAY  |  MESSAGE");
+			PacketSendUtility.sendMessage(admin, "-------------------------------------------------------------------");
 
 			for (Announcement announce : announces)
 				PacketSendUtility.sendMessage(
 						admin,
-						announce.getId() + "  |  " + announce.getFaction()
-								+ "  |  " + announce.getType() + "  |  "
-								+ announce.getDelay() + "  |  "
+						announce.getId() + "  |  " + announce.getFaction() + "  |  " + announce.getType() + "  |  " + announce.getDelay() + "  |  "
 								+ announce.getAnnounce());
-		} else if (params[0].equals("add")) {
-			if ((params.length < 5)) {
+		}
+		else if (params[0].equals("add"))
+		{
+			if ((params.length < 5))
+			{
 				PacketSendUtility.sendMessage(admin, syntaxCommand);
 				return;
 			}
 
 			int delay;
 
-			try {
+			try
+			{
 				delay = Integer.parseInt(params[3]);
-			} catch (NumberFormatException e) {
+			}
+			catch (NumberFormatException e)
+			{
 				// 15 minutes, default
 				delay = 900;
 			}
@@ -98,8 +104,7 @@ public class Announcements extends AdminCommand {
 			message += params[params.length - 1];
 
 			// Create the announce
-			Announcement announce = new Announcement(message, params[1],
-					params[2], delay);
+			Announcement announce = new Announcement(message, params[1], params[2], delay);
 
 			// Add the announce in the database
 			announceService.addAnnouncement(announce);
@@ -107,21 +112,25 @@ public class Announcements extends AdminCommand {
 			// Reload all announcements
 			announceService.reload();
 
-			PacketSendUtility.sendMessage(admin,
-					"The announcement has been created with successful !");
-		} else if (params[0].equals("delete")) {
-			if ((params.length < 2)) {
+			PacketSendUtility.sendMessage(admin, "The announcement has been created with successful !");
+		}
+		else if (params[0].equals("delete"))
+		{
+			if ((params.length < 2))
+			{
 				PacketSendUtility.sendMessage(admin, syntaxCommand);
 				return;
 			}
 
 			int id;
 
-			try {
+			try
+			{
 				id = Integer.parseInt(params[1]);
-			} catch (NumberFormatException e) {
-				PacketSendUtility.sendMessage(admin,
-						"The announcement's ID is wrong !");
+			}
+			catch (NumberFormatException e)
+			{
+				PacketSendUtility.sendMessage(admin, "The announcement's ID is wrong !");
 				PacketSendUtility.sendMessage(admin, syntaxCommand);
 				return;
 			}
@@ -132,16 +141,17 @@ public class Announcements extends AdminCommand {
 			// Reload all announcements
 			announceService.reload();
 
-			PacketSendUtility.sendMessage(admin,
-					"The announcement has been deleted with successful !");
-		} else {
+			PacketSendUtility.sendMessage(admin, "The announcement has been deleted with successful !");
+		}
+		else
+		{
 			PacketSendUtility.sendMessage(admin, syntaxCommand);
 			return;
 		}
 	}
 
-	public static void main(String[] args) {
-		AdminCommandChatHandler.getInstance().registerAdminCommand(
-				new Announcements());
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new Announcements());
 	}
 }

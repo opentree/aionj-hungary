@@ -30,43 +30,46 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
  * @author Mrakobes
  * 
  */
-public class Heal extends AdminCommand {
-	public Heal() {
+public class Heal extends AdminCommand
+{
+	public Heal()
+	{
 		super("heal");
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params) {
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_HEAL) {
-			PacketSendUtility.sendMessage(admin,
-					"You dont have enough rights to execute this command");
+	public void executeCommand(Player admin, String[] params)
+	{
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_HEAL)
+		{
+			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
 			return;
 		}
 
 		VisibleObject target = admin.getTarget();
-		if (target == null) {
+		if (target == null)
+		{
 			PacketSendUtility.sendMessage(admin, "No target selected");
 			return;
 		}
 
-		if (target instanceof Creature) {
+		if (target instanceof Creature)
+		{
 			Creature creature = (Creature) target;
-			creature.getLifeStats().increaseHp(TYPE.HP,
-					creature.getLifeStats().getMaxHp() + 1);
-			creature.getLifeStats().increaseMp(TYPE.MP,
-					creature.getLifeStats().getMaxMp() + 1);
+			creature.getLifeStats().increaseHp(TYPE.HP, creature.getLifeStats().getMaxHp() + 1);
+			creature.getLifeStats().increaseMp(TYPE.MP, creature.getLifeStats().getMaxMp() + 1);
 
-			if (target instanceof Player) {
-				((Player) creature).getCommonData().setDp(
-						creature.getGameStats().getCurrentStat(StatEnum.MAXDP));
+			if (target instanceof Player)
+			{
+				((Player) creature).getCommonData().setDp(creature.getGameStats().getCurrentStat(StatEnum.MAXDP));
 			}
 
-			PacketSendUtility.sendMessage(admin, creature.getName()
-					+ " has been refreshed !");
+			PacketSendUtility.sendMessage(admin, creature.getName() + " has been refreshed !");
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		AdminCommandChatHandler.getInstance().registerAdminCommand(new Heal());
 	}
 }

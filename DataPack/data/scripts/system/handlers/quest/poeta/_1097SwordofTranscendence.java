@@ -33,16 +33,19 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  * @author Manu72
  * 
  */
-public class _1097SwordofTranscendence extends QuestHandler {
+public class _1097SwordofTranscendence extends QuestHandler
+{
 
-	private final static int questId = 1097;
+	private final static int	questId	= 1097;
 
-	public _1097SwordofTranscendence() {
+	public _1097SwordofTranscendence()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.addQuestLvlUp(questId);
 		qe.setNpcQuestData(790001).addOnQuestStart(questId); // Pernos
 		qe.setNpcQuestData(790001).addOnTalkEvent(questId); // Pernos
@@ -51,7 +54,8 @@ public class _1097SwordofTranscendence extends QuestHandler {
 	}
 
 	@Override
-	public boolean onLvlUpEvent(QuestEnv env) {
+	public boolean onLvlUpEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
 		if (qs == null || qs.getStatus() != QuestStatus.LOCKED)
@@ -66,7 +70,8 @@ public class _1097SwordofTranscendence extends QuestHandler {
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		int targetId = 0;
 		if (env.getVisibleObject() instanceof Npc)
@@ -74,31 +79,33 @@ public class _1097SwordofTranscendence extends QuestHandler {
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
 		if (targetId == 790001) // Pernos
 		{
-			if (qs == null || qs.getStatus() == QuestStatus.START) {
+			if (qs == null || qs.getStatus() == QuestStatus.START)
+			{
 				if (env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1011);
-				else if (env.getDialogId() == 10000) {
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+				else if (env.getDialogId() == 10000)
+				{
 					qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
 					updateQuestStatus(player, qs);
-					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
-							env.getVisibleObject().getObjectId(), 10));
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
 					return true;
 				}
 
 				else
 					return defaultQuestStartDialog(env);
-			} else if (qs != null && qs.getStatus() == QuestStatus.REWARD) // Reward
+			}
+			else if (qs != null && qs.getStatus() == QuestStatus.REWARD) // Reward
 			{
 				if (env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 10002);
-				else if (env.getDialogId() == 1009) {
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10002);
+				else if (env.getDialogId() == 1009)
+				{
 					qs.setQuestVar(3);
 					qs.setStatus(QuestStatus.REWARD);
 					updateQuestStatus(player, qs);
 					return defaultQuestEndDialog(env);
-				} else
+				}
+				else
 					return defaultQuestEndDialog(env);
 			}
 		}
@@ -106,18 +113,18 @@ public class _1097SwordofTranscendence extends QuestHandler {
 		else if (targetId == 798316) // Anusis
 		{
 
-			if (qs != null && qs.getStatus() == QuestStatus.START
-					&& qs.getQuestVarById(0) == 1) {
+			if (qs != null && qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 1)
+			{
 				if (env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1352);
-				else if (env.getDialogId() == 10001) {
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
+				else if (env.getDialogId() == 10001)
+				{
 					qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
 					updateQuestStatus(player, qs);
-					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
-							env.getVisibleObject().getObjectId(), 10));
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
 					return true;
-				} else
+				}
+				else
 					return defaultQuestStartDialog(env);
 			}
 
@@ -125,21 +132,20 @@ public class _1097SwordofTranscendence extends QuestHandler {
 
 		else if (targetId == 279034) // Baoninerk
 		{
-			if (qs != null && qs.getStatus() == QuestStatus.START
-					&& qs.getQuestVarById(0) == 2) {
+			if (qs != null && qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 2)
+			{
 				if (env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1693);
-				else if (env.getDialogId() == 33) {
-					if (ItemService.addItems(player, Collections
-							.singletonList(new QuestItems(182206058, 1))))
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
+				else if (env.getDialogId() == 33)
+				{
+					if (ItemService.addItems(player, Collections.singletonList(new QuestItems(182206058, 1))))
 						;
 					qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
 					updateQuestStatus(player, qs);
-					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
-							env.getVisibleObject().getObjectId(), 10));
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
 					return true;
-				} else
+				}
+				else
 					return defaultQuestStartDialog(env);
 			}
 		}

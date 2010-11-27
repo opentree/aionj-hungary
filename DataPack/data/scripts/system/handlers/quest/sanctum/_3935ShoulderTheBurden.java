@@ -30,15 +30,18 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  * @author Nanou
  * 
  */
-public class _3935ShoulderTheBurden extends QuestHandler {
-	private final static int questId = 3935;
+public class _3935ShoulderTheBurden extends QuestHandler
+{
+	private final static int	questId	= 3935;
 
-	public _3935ShoulderTheBurden() {
+	public _3935ShoulderTheBurden()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.setNpcQuestData(203701).addOnQuestStart(questId); // Lavirintos
 		qe.setNpcQuestData(203316).addOnTalkEvent(questId); // Ettamirel
 		qe.setNpcQuestData(203702).addOnTalkEvent(questId); // Jupion
@@ -48,7 +51,8 @@ public class _3935ShoulderTheBurden extends QuestHandler {
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		// Instanceof
 		final Player player = env.getPlayer();
 		int targetId = 0;
@@ -59,13 +63,14 @@ public class _3935ShoulderTheBurden extends QuestHandler {
 		// ------------------------------------------------------------
 		// NPC Quest :
 		// 0 - Start to Lavirintos
-		if (qs == null || qs.getStatus() == QuestStatus.NONE) {
-			if (targetId == 203701) {
+		if (qs == null || qs.getStatus() == QuestStatus.NONE)
+		{
+			if (targetId == 203701)
+			{
 				// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
 				if (env.getDialogId() == 25)
 					// Send select_none to eddit-HtmlPages.xml
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 4762);
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 4762);
 				else
 					return defaultQuestStartDialog(env);
 
@@ -77,130 +82,126 @@ public class _3935ShoulderTheBurden extends QuestHandler {
 
 		int var = qs.getQuestVarById(0);
 
-		if (qs.getStatus() == QuestStatus.START) {
+		if (qs.getStatus() == QuestStatus.START)
+		{
 
-			switch (targetId) {
-			// 1 - Talk with Ettamirel
-			case 203316:
-				switch (env.getDialogId()) {
-				// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
-				case 25:
-					// Send select1 to eddit-HtmlPages.xml
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1011);
-					// Get HACTION_SETPRO1 in the eddit-HyperLinks.xml
-				case 10000:
-					qs.setQuestVarById(0, var + 1);
-					updateQuestStatus(player, qs);
-					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
-							env.getVisibleObject().getObjectId(), 10));
-					return true;
-				}
-				break;
-			// 2 - Talk with Jupion
-			case 203702:
-				if (var == 1) {
-					switch (env.getDialogId()) {
-					// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
-					case 25:
-						// Send select2 to eddit-HtmlPages.xml
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1352);
-						// Get HACTION_SETPRO2 in the eddit-HyperLinks.xml
-					case 10001:
-						qs.setQuestVarById(0, var + 1);
-						updateQuestStatus(player, qs);
-						PacketSendUtility.sendPacket(player,
-								new SM_DIALOG_WINDOW(env.getVisibleObject()
-										.getObjectId(), 10));
-						return true;
-					}
-				}
-				break;
-			// 3 - Talk with Elizar
-			case 203329:
-				if (var == 2) {
-					switch (env.getDialogId()) {
-					// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
-					case 25:
-						// Send select3 to eddit-HtmlPages.xml
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1693);
-						// Get HACTION_SETPRO3 in the eddit-HyperLinks.xml
-					case 10002:
-						qs.setQuestVarById(0, var + 1);
-						updateQuestStatus(player, qs);
-						PacketSendUtility.sendPacket(player,
-								new SM_DIALOG_WINDOW(env.getVisibleObject()
-										.getObjectId(), 10));
-						return true;
-					}
-				}
-				// 4 - Collect Holy Templar Medal and take them to Elizar
-				if (var == 3) {
-					switch (env.getDialogId()) {
-					// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
-					case 25:
-						// Send select4 to eddit-HtmlPages.xml
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 2034);
-						// Get HACTION_CHECK_USER_HAS_QUEST_ITEM in the
-						// eddit-HyperLinks.xml
-					case 33:
-						if (player.getInventory().getItemCountByItemId(
-								186000079) >= 30) {
-							ItemService.removeItemFromInventoryByItemId(player,
-									186000079);
+			switch (targetId)
+			{
+				// 1 - Talk with Ettamirel
+				case 203316:
+					switch (env.getDialogId())
+					{
+						// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
+						case 25:
+							// Send select1 to eddit-HtmlPages.xml
+							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+							// Get HACTION_SETPRO1 in the eddit-HyperLinks.xml
+						case 10000:
 							qs.setQuestVarById(0, var + 1);
 							updateQuestStatus(player, qs);
-							// Send check_user_item_ok to eddit-HtmlPages.xml
-							return sendQuestDialog(player, env
-									.getVisibleObject().getObjectId(), 10000);
-						} else
-							// Send check_user_item_fail to eddit-HtmlPages.xml
-							return sendQuestDialog(player, env
-									.getVisibleObject().getObjectId(), 10001);
+							PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+							return true;
 					}
-				}
-				break;
-			// 5 - Report the result to Jucleas with the Oath Stone
-			case 203752:
-				if (var == 4) {
-					switch (env.getDialogId()) {
-					// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
-					case 25:
-						if (player.getInventory().getItemCountByItemId(
-								186000080) >= 1)
-							// Send select5 to eddit-HtmlPages.xml
-							return sendQuestDialog(player, env
-									.getVisibleObject().getObjectId(), 2375);
-						else
-							// Send select5_2 to eddit-HtmlPages.xml
-							return sendQuestDialog(player, env
-									.getVisibleObject().getObjectId(), 2461);
-						// Get HACTION_SET_SUCCEED in the eddit-HyperLinks.xml
-					case 10255:
-						// Send select_success to eddit-HtmlPages.xml
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 10002);
-						// Get HACTION_SELECT_QUEST_REWARD in the
-						// eddit-HyperLinks.xml
-					case 1009:
-						ItemService.removeItemFromInventoryByItemId(player,
-								186000080);
-						qs.setStatus(QuestStatus.REWARD);
-						updateQuestStatus(player, qs);
-						// Send select_quest_reward1 to eddit-HtmlPages.xml
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 5);
+					break;
+				// 2 - Talk with Jupion
+				case 203702:
+					if (var == 1)
+					{
+						switch (env.getDialogId())
+						{
+							// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
+							case 25:
+								// Send select2 to eddit-HtmlPages.xml
+								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
+								// Get HACTION_SETPRO2 in the eddit-HyperLinks.xml
+							case 10001:
+								qs.setQuestVarById(0, var + 1);
+								updateQuestStatus(player, qs);
+								PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+								return true;
+						}
 					}
-				}
-				break;
-			// No match
-			default:
-				return defaultQuestStartDialog(env);
+					break;
+				// 3 - Talk with Elizar
+				case 203329:
+					if (var == 2)
+					{
+						switch (env.getDialogId())
+						{
+							// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
+							case 25:
+								// Send select3 to eddit-HtmlPages.xml
+								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
+								// Get HACTION_SETPRO3 in the eddit-HyperLinks.xml
+							case 10002:
+								qs.setQuestVarById(0, var + 1);
+								updateQuestStatus(player, qs);
+								PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+								return true;
+						}
+					}
+					// 4 - Collect Holy Templar Medal and take them to Elizar
+					if (var == 3)
+					{
+						switch (env.getDialogId())
+						{
+							// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
+							case 25:
+								// Send select4 to eddit-HtmlPages.xml
+								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2034);
+								// Get HACTION_CHECK_USER_HAS_QUEST_ITEM in the
+								// eddit-HyperLinks.xml
+							case 33:
+								if (player.getInventory().getItemCountByItemId(186000079) >= 30)
+								{
+									ItemService.removeItemFromInventoryByItemId(player, 186000079);
+									qs.setQuestVarById(0, var + 1);
+									updateQuestStatus(player, qs);
+									// Send check_user_item_ok to eddit-HtmlPages.xml
+									return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10000);
+								}
+								else
+									// Send check_user_item_fail to eddit-HtmlPages.xml
+									return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10001);
+						}
+					}
+					break;
+				// 5 - Report the result to Jucleas with the Oath Stone
+				case 203752:
+					if (var == 4)
+					{
+						switch (env.getDialogId())
+						{
+							// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
+							case 25:
+								if (player.getInventory().getItemCountByItemId(186000080) >= 1)
+									// Send select5 to eddit-HtmlPages.xml
+									return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375);
+								else
+									// Send select5_2 to eddit-HtmlPages.xml
+									return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2461);
+								// Get HACTION_SET_SUCCEED in the eddit-HyperLinks.xml
+							case 10255:
+								// Send select_success to eddit-HtmlPages.xml
+								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10002);
+								// Get HACTION_SELECT_QUEST_REWARD in the
+								// eddit-HyperLinks.xml
+							case 1009:
+								ItemService.removeItemFromInventoryByItemId(player, 186000080);
+								qs.setStatus(QuestStatus.REWARD);
+								updateQuestStatus(player, qs);
+								// Send select_quest_reward1 to eddit-HtmlPages.xml
+								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
+						}
+					}
+					break;
+				// No match
+				default:
+					return defaultQuestStartDialog(env);
 			}
-		} else if (qs.getStatus() == QuestStatus.REWARD) {
+		}
+		else if (qs.getStatus() == QuestStatus.REWARD)
+		{
 			if (targetId == 203701)
 				return defaultQuestEndDialog(env);
 		}

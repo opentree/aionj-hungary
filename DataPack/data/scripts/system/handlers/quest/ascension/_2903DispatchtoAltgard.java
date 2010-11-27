@@ -31,23 +31,27 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  * @author Mr. Poke
  * 
  */
-public class _2903DispatchtoAltgard extends QuestHandler {
+public class _2903DispatchtoAltgard extends QuestHandler
+{
 
-	private final static int questId = 2903;
+	private final static int	questId	= 2903;
 
-	public _2903DispatchtoAltgard() {
+	public _2903DispatchtoAltgard()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.addQuestLvlUp(questId);
 		qe.setNpcQuestData(204191).addOnTalkEvent(questId);
 		qe.setNpcQuestData(203559).addOnTalkEvent(questId);
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
 		if (qs == null)
@@ -57,42 +61,46 @@ public class _2903DispatchtoAltgard extends QuestHandler {
 		int targetId = 0;
 		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
-		if (qs.getStatus() == QuestStatus.START) {
-			switch (targetId) {
-			case 204191: {
-				switch (env.getDialogId()) {
-				case 25:
-					if (var == 0)
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1352);
-					break;
-				case 10000:
-					if (var == 0) {
-						qs.setQuestVarById(0, var + 1);
-						updateQuestStatus(player, qs);
-						TeleportService.teleportTo(player, 220030000,
-								player.getInstanceId(), 1748f, 1807f, 255f,
-								1000);
-						PacketSendUtility.sendPacket(player,
-								new SM_DIALOG_WINDOW(env.getVisibleObject()
-										.getObjectId(), 0));
-						return true;
+		if (qs.getStatus() == QuestStatus.START)
+		{
+			switch (targetId)
+			{
+				case 204191:
+				{
+					switch (env.getDialogId())
+					{
+						case 25:
+							if (var == 0)
+								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
+							break;
+						case 10000:
+							if (var == 0)
+							{
+								qs.setQuestVarById(0, var + 1);
+								updateQuestStatus(player, qs);
+								TeleportService.teleportTo(player, 220030000, player.getInstanceId(), 1748f, 1807f, 255f, 1000);
+								PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 0));
+								return true;
+							}
 					}
 				}
-			}
-			case 203559:
-				switch (env.getDialogId()) {
-				case 25:
-					if (var == 1) {
-						qs.setStatus(QuestStatus.REWARD);
-						updateQuestStatus(player, qs);
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 2375);
+				case 203559:
+					switch (env.getDialogId())
+					{
+						case 25:
+							if (var == 1)
+							{
+								qs.setStatus(QuestStatus.REWARD);
+								updateQuestStatus(player, qs);
+								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375);
+							}
 					}
-				}
 			}
-		} else if (qs.getStatus() == QuestStatus.REWARD) {
-			if (targetId == 203559) {
+		}
+		else if (qs.getStatus() == QuestStatus.REWARD)
+		{
+			if (targetId == 203559)
+			{
 				return defaultQuestEndDialog(env);
 			}
 		}
@@ -100,11 +108,11 @@ public class _2903DispatchtoAltgard extends QuestHandler {
 	}
 
 	@Override
-	public boolean onLvlUpEvent(QuestEnv env) {
+	public boolean onLvlUpEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
-		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player
-				.getCommonData().getLevel());
+		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player.getCommonData().getLevel());
 		if (qs != null || !lvlCheck)
 			return false;
 

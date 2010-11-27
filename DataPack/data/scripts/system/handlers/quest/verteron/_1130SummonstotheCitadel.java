@@ -29,22 +29,26 @@ import com.aionemu.gameserver.world.zone.ZoneName;
  * @author MrPoke
  * 
  */
-public class _1130SummonstotheCitadel extends QuestHandler {
+public class _1130SummonstotheCitadel extends QuestHandler
+{
 
-	private final static int questId = 1130;
+	private final static int	questId	= 1130;
 
-	public _1130SummonstotheCitadel() {
+	public _1130SummonstotheCitadel()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.setNpcQuestData(203098).addOnTalkEvent(questId);
 		qe.setQuestEnterZone(ZoneName.VERTERON_CITADEL).add(questId);
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
 		if (qs == null)
@@ -55,24 +59,27 @@ public class _1130SummonstotheCitadel extends QuestHandler {
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		if (targetId != 203098)
 			return false;
-		if (qs.getStatus() == QuestStatus.START) {
-			if (env.getDialogId() == 25) {
+		if (qs.getStatus() == QuestStatus.START)
+		{
+			if (env.getDialogId() == 25)
+			{
 				qs.setQuestVar(1);
 				qs.setStatus(QuestStatus.REWARD);
 				updateQuestStatus(player, qs);
-				return sendQuestDialog(player, env.getVisibleObject()
-						.getObjectId(), 1011);
-			} else
+				return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+			}
+			else
 				return defaultQuestStartDialog(env);
-		} else if (qs.getStatus() == QuestStatus.REWARD) {
-			if (env.getDialogId() == 17) {
-				int[] ids = { 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018,
-						1019, 1020, 1021, 1022, 1023 };
-				for (int id : ids) {
-					QuestService.startQuest(
-							new QuestEnv(env.getVisibleObject(), env
-									.getPlayer(), id, env.getDialogId()),
-							QuestStatus.LOCKED);
+		}
+		else if (qs.getStatus() == QuestStatus.REWARD)
+		{
+			if (env.getDialogId() == 17)
+			{
+				int[] ids =
+				{ 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020, 1021, 1022, 1023 };
+				for (int id : ids)
+				{
+					QuestService.startQuest(new QuestEnv(env.getVisibleObject(), env.getPlayer(), id, env.getDialogId()), QuestStatus.LOCKED);
 				}
 			}
 			return defaultQuestEndDialog(env);
@@ -81,7 +88,8 @@ public class _1130SummonstotheCitadel extends QuestHandler {
 	}
 
 	@Override
-	public boolean onEnterZoneEvent(QuestEnv env, ZoneName zoneName) {
+	public boolean onEnterZoneEvent(QuestEnv env, ZoneName zoneName)
+	{
 		if (zoneName != ZoneName.VERTERON_CITADEL)
 			return false;
 		final Player player = env.getPlayer();

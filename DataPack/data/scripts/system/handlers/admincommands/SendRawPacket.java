@@ -38,50 +38,61 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
  * @author Aquanox
  */
 
-public class SendRawPacket extends AdminCommand {
-	private static final File ROOT = new File("data/packets/");
+public class SendRawPacket extends AdminCommand
+{
+	private static final File	ROOT	= new File("data/packets/");
 
-	private static final Logger logger = Logger.getLogger(SendRawPacket.class);
+	private static final Logger	logger	= Logger.getLogger(SendRawPacket.class);
 
-	public SendRawPacket() {
+	public SendRawPacket()
+	{
 		super("raw");
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params) {
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_SENDRAWPACKET) {
-			PacketSendUtility.sendMessage(admin,
-					"You dont have enough rights to execute this command");
+	public void executeCommand(Player admin, String[] params)
+	{
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_SENDRAWPACKET)
+		{
+			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
 			return;
 		}
 
-		if (params.length != 1) {
+		if (params.length != 1)
+		{
 			PacketSendUtility.sendMessage(admin, "Usage: //raw [name]");
 			return;
 		}
 
 		File file = new File(ROOT, params[0] + ".txt");
 
-		if (!file.exists() || !file.canRead()) {
+		if (!file.exists() || !file.canRead())
+		{
 			PacketSendUtility.sendMessage(admin, "Wrong file selected.");
 			return;
 		}
 
-		try {
-			@SuppressWarnings({ "unchecked" })
+		try
+		{
+			@SuppressWarnings(
+			{ "unchecked" })
 			List<String> lines = FileUtils.readLines(file);
 
 			SM_CUSTOM_PACKET packet = null;
 
-			for (String row : lines) {
+			for (String row : lines)
+			{
 				String[] tokens = row.substring(0, 48).trim().split(" ");
 				int len = tokens.length;
 
-				for (int i = 0; i < len; i++) {
-					if (i == 0) {
-						packet = new SM_CUSTOM_PACKET(Integer.valueOf(
-								tokens[i], 16));
-					} else if (i > 2) {
+				for (int i = 0; i < len; i++)
+				{
+					if (i == 0)
+					{
+						packet = new SM_CUSTOM_PACKET(Integer.valueOf(tokens[i], 16));
+					}
+					else if (i > 2)
+					{
 						packet.addElement(PacketElementType.C, "0x" + tokens[i]);
 					}
 				}
@@ -89,14 +100,16 @@ public class SendRawPacket extends AdminCommand {
 
 			if (packet != null)
 				PacketSendUtility.sendPacket(admin, packet);
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			PacketSendUtility.sendMessage(admin, "An error has occurred.");
 			logger.warn("IO Error.", e);
 		}
 	}
 
-	public static void main(String[] args) {
-		AdminCommandChatHandler.getInstance().registerAdminCommand(
-				new SendRawPacket());
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new SendRawPacket());
 	}
 }

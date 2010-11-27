@@ -29,26 +29,29 @@ import com.aionemu.gameserver.world.zone.ZoneName;
  * @author Rhys2002
  * 
  */
-public class _2500OrdersFromNerita extends QuestHandler {
+public class _2500OrdersFromNerita extends QuestHandler
+{
 
-	private final static int questId = 2500;
+	private final static int	questId	= 2500;
 
-	public _2500OrdersFromNerita() {
+	public _2500OrdersFromNerita()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.setNpcQuestData(204702).addOnTalkEvent(questId);
 		qe.setQuestEnterZone(ZoneName.BELUSLAN_FORTRESS_220040000).add(questId);
 	}
 
 	@Override
-	public boolean onLvlUpEvent(QuestEnv env) {
+	public boolean onLvlUpEvent(QuestEnv env)
+	{
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player
-				.getCommonData().getLevel());
+		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player.getCommonData().getLevel());
 		if (qs == null || !lvlCheck || qs.getStatus() != QuestStatus.LOCKED)
 			return false;
 		qs.setStatus(QuestStatus.START);
@@ -57,7 +60,8 @@ public class _2500OrdersFromNerita extends QuestHandler {
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
 		if (qs == null)
@@ -68,27 +72,28 @@ public class _2500OrdersFromNerita extends QuestHandler {
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		if (targetId != 204702)
 			return false;
-		if (qs.getStatus() == QuestStatus.START) {
+		if (qs.getStatus() == QuestStatus.START)
+		{
 			if (env.getDialogId() == 25)
-				return sendQuestDialog(player, env.getVisibleObject()
-						.getObjectId(), 10002);
-			else if (env.getDialogId() == 1009) {
+				return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10002);
+			else if (env.getDialogId() == 1009)
+			{
 				qs.setStatus(QuestStatus.REWARD);
 				qs.setQuestVarById(0, 1);
 				updateQuestStatus(player, qs);
-				return sendQuestDialog(player, env.getVisibleObject()
-						.getObjectId(), 5);
+				return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
 			}
 			return false;
-		} else if (qs.getStatus() == QuestStatus.REWARD) {
-			if (env.getDialogId() == 17) {
-				int[] ids = { 2051, 2052, 2053, 2054, 2055, 2056, 2057, 2058,
-						2059, 2060, 2061 };
-				for (int id : ids) {
-					QuestService.startQuest(
-							new QuestEnv(env.getVisibleObject(), env
-									.getPlayer(), id, env.getDialogId()),
-							QuestStatus.LOCKED);
+		}
+		else if (qs.getStatus() == QuestStatus.REWARD)
+		{
+			if (env.getDialogId() == 17)
+			{
+				int[] ids =
+				{ 2051, 2052, 2053, 2054, 2055, 2056, 2057, 2058, 2059, 2060, 2061 };
+				for (int id : ids)
+				{
+					QuestService.startQuest(new QuestEnv(env.getVisibleObject(), env.getPlayer(), id, env.getDialogId()), QuestStatus.LOCKED);
 				}
 			}
 			return defaultQuestEndDialog(env);
@@ -97,7 +102,8 @@ public class _2500OrdersFromNerita extends QuestHandler {
 	}
 
 	@Override
-	public boolean onEnterZoneEvent(QuestEnv env, ZoneName zoneName) {
+	public boolean onEnterZoneEvent(QuestEnv env, ZoneName zoneName)
+	{
 		if (zoneName != ZoneName.BELUSLAN_FORTRESS_220040000)
 			return false;
 		final Player player = env.getPlayer();

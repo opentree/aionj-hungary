@@ -30,28 +30,33 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  * @author kecimis
  * 
  */
-public class _3932StopTheShulacks extends QuestHandler {
+public class _3932StopTheShulacks extends QuestHandler
+{
 
-	private final static int questId = 3932;
-	private final static int[] npc_ids = { 203711, 204656 };
+	private final static int	questId	= 3932;
+	private final static int[]	npc_ids	=
+										{ 203711, 204656 };
 
 	/*
 	 * 203711 - Miriya 204656 - Maloren
 	 */
 
-	public _3932StopTheShulacks() {
+	public _3932StopTheShulacks()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.setNpcQuestData(203711).addOnQuestStart(questId); // Miriya
 		for (int npc_id : npc_ids)
 			qe.setNpcQuestData(npc_id).addOnTalkEvent(questId);
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
 
@@ -59,12 +64,12 @@ public class _3932StopTheShulacks extends QuestHandler {
 		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
-		if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+		if (qs == null || qs.getStatus() == QuestStatus.NONE)
+		{
 			if (targetId == 203711)// Miriya
 			{
 				if (env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1011);
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
 				else
 					return defaultQuestStartDialog(env);
 
@@ -74,43 +79,46 @@ public class _3932StopTheShulacks extends QuestHandler {
 
 		int var = qs.getQuestVarById(0);
 
-		if (qs.getStatus() == QuestStatus.REWARD) {
+		if (qs.getStatus() == QuestStatus.REWARD)
+		{
 			if (targetId == 203711)// Miriya
 			{
 				return defaultQuestEndDialog(env);
 			}
 			return false;
-		} else if (qs.getStatus() == QuestStatus.START) {
+		}
+		else if (qs.getStatus() == QuestStatus.START)
+		{
 
 			if (targetId == 203711 && var == 1)// Miriya
 			{
-				switch (env.getDialogId()) {
-				case 25:
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 2375);
-				case 33:
-					if (QuestService.collectItemCheck(env, true)) {
-						qs.setStatus(QuestStatus.REWARD);
-						updateQuestStatus(player, qs);
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 5);
-					} else
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 2716);
+				switch (env.getDialogId())
+				{
+					case 25:
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375);
+					case 33:
+						if (QuestService.collectItemCheck(env, true))
+						{
+							qs.setStatus(QuestStatus.REWARD);
+							updateQuestStatus(player, qs);
+							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
+						}
+						else
+							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2716);
 				}
 
-			} else if (targetId == 204656 && var == 0)// Maloren
+			}
+			else if (targetId == 204656 && var == 0)// Maloren
 			{
-				switch (env.getDialogId()) {
-				case 25:
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1352);
-				case 10000:
-					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
-							env.getVisibleObject().getObjectId(), 10));
-					qs.setQuestVarById(0, var + 1);
-					updateQuestStatus(player, qs);
-					return true;
+				switch (env.getDialogId())
+				{
+					case 25:
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
+					case 10000:
+						PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+						qs.setQuestVarById(0, var + 1);
+						updateQuestStatus(player, qs);
+						return true;
 				}
 			}
 

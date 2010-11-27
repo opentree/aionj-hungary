@@ -36,15 +36,18 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
  * @author JIEgOKOJI, fixed by kecimis
  * 
  */
-public class _4934TheShulacksStigma extends QuestHandler {
-	private final static int questId = 4934;
+public class _4934TheShulacksStigma extends QuestHandler
+{
+	private final static int	questId	= 4934;
 
-	public _4934TheShulacksStigma() {
+	public _4934TheShulacksStigma()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.setNpcQuestData(204051).addOnQuestStart(questId); // Vergelmir start
 		qe.setNpcQuestData(204211).addOnTalkEvent(questId); // Moreinen
 		qe.setNpcQuestData(204285).addOnTalkEvent(questId); // Teirunerk
@@ -54,7 +57,8 @@ public class _4934TheShulacksStigma extends QuestHandler {
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		// Instanceof
 		final Player player = env.getPlayer();
 		int targetId = 0;
@@ -65,13 +69,14 @@ public class _4934TheShulacksStigma extends QuestHandler {
 		// ------------------------------------------------------------
 		// NPC Quest :
 		// 0 - Vergelmir start
-		if (qs == null || qs.getStatus() == QuestStatus.NONE) {
-			if (targetId == 204051) {
+		if (qs == null || qs.getStatus() == QuestStatus.NONE)
+		{
+			if (targetId == 204051)
+			{
 				// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
 				if (env.getDialogId() == 25)
 					// Send HTML_PAGE_SELECT_NONE to eddit-HtmlPages.xml
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 4762);
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 4762);
 				else
 					return defaultQuestStartDialog(env);
 
@@ -83,102 +88,99 @@ public class _4934TheShulacksStigma extends QuestHandler {
 
 		int var = qs.getQuestVarById(0);
 
-		if (qs.getStatus() == QuestStatus.START) {
+		if (qs.getStatus() == QuestStatus.START)
+		{
 
-			switch (targetId) {
+			switch (targetId)
+			{
 
-			// Moreinen
-			case 204211:
-				if (var == 0) {
-					switch (env.getDialogId()) {
-					// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
-					case 25:
-						// Send select1 to eddit-HtmlPages.xml
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1011);
-						// Get HACTION_SETPRO1 in the eddit-HyperLinks.xml
-					case 10000:
-						qs.setQuestVar(1);
-						updateQuestStatus(player, qs);
-						PacketSendUtility.sendPacket(player,
-								new SM_DIALOG_WINDOW(env.getVisibleObject()
-										.getObjectId(), 10));
+				// Moreinen
+				case 204211:
+					if (var == 0)
+					{
+						switch (env.getDialogId())
+						{
+							// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
+							case 25:
+								// Send select1 to eddit-HtmlPages.xml
+								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+								// Get HACTION_SETPRO1 in the eddit-HyperLinks.xml
+							case 10000:
+								qs.setQuestVar(1);
+								updateQuestStatus(player, qs);
+								PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+								return true;
+						}
+					}
+					// 2 / 4- Talk with Teirunerk
+				case 204285:
+					if (var == 1)
+					{
+						switch (env.getDialogId())
+						{
+							// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
+							case 25:
+								// Send select1 to eddit-HtmlPages.xml
+								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
+								// Get HACTION_SETPRO1 in the eddit-HyperLinks.xml
+							case 10001:
+								qs.setQuestVar(2);
+								updateQuestStatus(player, qs);
+								PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+								return true;
+						}
+					}
+					else if (var == 2)
+					{
+						switch (env.getDialogId())
+						{
+							// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
+							case 25:
+								// Send select1 to eddit-HtmlPages.xml
+								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
+								// Get HACTION_SETPRO1 in the eddit-HyperLinks.xml
+							case 33:
+								if (player.getInventory().getItemCountByItemId(182207102) < 1)
+								{
+									// player doesn't own required item
+									return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10001);
+								}
+								ItemService.removeItemFromInventoryByItemId(player, 182207102);
+								qs.setStatus(QuestStatus.REWARD);
+								updateQuestStatus(player, qs);
+								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10000);
+						}
+
+					}
+					return false;
+				case 700562:
+					if (env.getDialogId() == -1)
+					{
+						final int targetObjectId = env.getVisibleObject().getObjectId();
+						ThreadPoolManager.getInstance().schedule(new Runnable()
+						{
+							@Override
+							public void run()
+							{
+								if (!player.isTargeting(targetObjectId))
+									return;
+								PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.END_QUESTLOOT, 0, targetObjectId), true);
+								ItemService.addItems(player, Collections.singletonList(new QuestItems(182207102, 1)));
+								updateQuestStatus(player, qs);
+							}
+						}, 3000);
 						return true;
 					}
-				}
-				// 2 / 4- Talk with Teirunerk
-			case 204285:
-				if (var == 1) {
-					switch (env.getDialogId()) {
-					// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
-					case 25:
-						// Send select1 to eddit-HtmlPages.xml
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1352);
-						// Get HACTION_SETPRO1 in the eddit-HyperLinks.xml
-					case 10001:
-						qs.setQuestVar(2);
-						updateQuestStatus(player, qs);
-						PacketSendUtility.sendPacket(player,
-								new SM_DIALOG_WINDOW(env.getVisibleObject()
-										.getObjectId(), 10));
-						return true;
-					}
-				} else if (var == 2) {
-					switch (env.getDialogId()) {
-					// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
-					case 25:
-						// Send select1 to eddit-HtmlPages.xml
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1693);
-						// Get HACTION_SETPRO1 in the eddit-HyperLinks.xml
-					case 33:
-						if (player.getInventory().getItemCountByItemId(
-								182207102) < 1) {
-							// player doesn't own required item
-							return sendQuestDialog(player, env
-									.getVisibleObject().getObjectId(), 10001);
-						}
-						ItemService.removeItemFromInventoryByItemId(player,
-								182207102);
-						qs.setStatus(QuestStatus.REWARD);
-						updateQuestStatus(player, qs);
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 10000);
-					}
-
-				}
-				return false;
-			case 700562:
-				if (env.getDialogId() == -1) {
-					final int targetObjectId = env.getVisibleObject()
-							.getObjectId();
-					ThreadPoolManager.getInstance().schedule(new Runnable() {
-						@Override
-						public void run() {
-							if (!player.isTargeting(targetObjectId))
-								return;
-							PacketSendUtility.broadcastPacket(player,
-									new SM_EMOTION(player,
-											EmotionType.END_QUESTLOOT, 0,
-											targetObjectId), true);
-							ItemService.addItems(player,
-									Collections.singletonList(new QuestItems(
-											182207102, 1)));
-							updateQuestStatus(player, qs);
-						}
-					}, 3000);
-					return true;
-				}
 			}
-		} else if (qs.getStatus() == QuestStatus.REWARD) {
-			if (targetId == 204051) {
+		}
+		else if (qs.getStatus() == QuestStatus.REWARD)
+		{
+			if (targetId == 204051)
+			{
 				if (env.getDialogId() == -1)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 10002);
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10002);
 				else if (env.getDialogId() == 1009)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 5);
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
 				else
 					return defaultQuestEndDialog(env);
 			}

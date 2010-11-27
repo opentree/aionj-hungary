@@ -27,57 +27,66 @@ import com.aionemu.gameserver.services.ItemService;
 /**
  * @author Atomics
  */
-public class _1351EarningMaranasRespect extends QuestHandler {
-	private final static int questId = 1351;
+public class _1351EarningMaranasRespect extends QuestHandler
+{
+	private final static int	questId	= 1351;
 
-	public _1351EarningMaranasRespect() {
+	public _1351EarningMaranasRespect()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.setNpcQuestData(203965).addOnQuestStart(questId); // Castor
 		qe.setNpcQuestData(203965).addOnTalkEvent(questId); // Castor
 		qe.setNpcQuestData(203983).addOnTalkEvent(questId); // Marana
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		int targetId = 0;
 		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
 		long itemCount;
-		if (targetId == 203965) {
-			if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+		if (targetId == 203965)
+		{
+			if (qs == null || qs.getStatus() == QuestStatus.NONE)
+			{
 				if (env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1011);
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
 				else
 					return defaultQuestStartDialog(env);
 			}
-		} else if (targetId == 203983) {
-			if (qs != null && qs.getStatus() == QuestStatus.START) {
+		}
+		else if (targetId == 203983)
+		{
+			if (qs != null && qs.getStatus() == QuestStatus.START)
+			{
 				if (env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 2375);
-				else if (env.getDialogId() == 33) {
-					itemCount = player.getInventory().getItemCountByItemId(
-							182201321);
-					if (itemCount > 9) {
-						ItemService.removeItemFromInventoryByItemId(player,
-								182201321);
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375);
+				else if (env.getDialogId() == 33)
+				{
+					itemCount = player.getInventory().getItemCountByItemId(182201321);
+					if (itemCount > 9)
+					{
+						ItemService.removeItemFromInventoryByItemId(player, 182201321);
 						qs.setStatus(QuestStatus.REWARD);
 						updateQuestStatus(player, qs);
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 5);
-					} else
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 2716);
-				} else
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
+					}
+					else
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2716);
+				}
+				else
 					return defaultQuestStartDialog(env);
-			} else if (qs != null && qs.getStatus() == QuestStatus.REWARD) {
+			}
+			else if (qs != null && qs.getStatus() == QuestStatus.REWARD)
+			{
 				return defaultQuestEndDialog(env);
 			}
 		}

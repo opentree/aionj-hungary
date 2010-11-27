@@ -31,41 +31,47 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
  * @author Jenose Updated By Darkwolf
  */
 
-public class Notice extends AdminCommand {
-	public Notice() {
+public class Notice extends AdminCommand
+{
+	public Notice()
+	{
 		super("notice");
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params) {
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_NOTICE) {
-			PacketSendUtility.sendMessage(admin,
-					"You dont have enough rights to execute this command");
+	public void executeCommand(Player admin, String[] params)
+	{
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_NOTICE)
+		{
+			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
 			return;
 		}
 
-		if (params == null || params.length < 1) {
+		if (params == null || params.length < 1)
+		{
 			PacketSendUtility.sendMessage(admin, "syntax //notice <message>");
 			return;
 		}
 
 		String message = "";
 
-		try {
-			for (int i = 0; i < params.length; i++) {
+		try
+		{
+			for (int i = 0; i < params.length; i++)
+			{
 				message += " " + params[i];
 			}
-		} catch (NumberFormatException e) {
-			PacketSendUtility.sendMessage(admin,
-					"parameters should be text and number");
+		}
+		catch (NumberFormatException e)
+		{
+			PacketSendUtility.sendMessage(admin, "parameters should be text and number");
 			return;
 		}
-		PacketSendUtility.broadcastPacket(admin, new SM_MESSAGE(0, null,
-				"Information : " + message, ChatType.SYSTEM_NOTICE), true);
+		PacketSendUtility.broadcastPacket(admin, new SM_MESSAGE(0, null, "Information : " + message, ChatType.SYSTEM_NOTICE), true);
 	}
 
-	public static void main(String[] args) {
-		AdminCommandChatHandler.getInstance()
-				.registerAdminCommand(new Notice());
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new Notice());
 	}
 }

@@ -31,15 +31,18 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
  * @author JIEgOKOJI, fixed by kecimis
  * 
  */
-public class _3930SecretoftheShatteredStigma extends QuestHandler {
-	private final static int questId = 3930;
+public class _3930SecretoftheShatteredStigma extends QuestHandler
+{
+	private final static int	questId	= 3930;
 
-	public _3930SecretoftheShatteredStigma() {
+	public _3930SecretoftheShatteredStigma()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.setNpcQuestData(203711).addOnQuestStart(questId); // miriya start
 		qe.setNpcQuestData(203833).addOnTalkEvent(questId); // Xenophon
 		qe.setNpcQuestData(798321).addOnTalkEvent(questId); // Koruchinerk
@@ -48,7 +51,8 @@ public class _3930SecretoftheShatteredStigma extends QuestHandler {
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		// Instanceof
 		final Player player = env.getPlayer();
 		int targetId = 0;
@@ -59,14 +63,14 @@ public class _3930SecretoftheShatteredStigma extends QuestHandler {
 		// ------------------------------------------------------------
 		// NPC Quest :
 		// 0 - Vergelmir start
-		if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+		if (qs == null || qs.getStatus() == QuestStatus.NONE)
+		{
 			if (targetId == 203711)// Miriya
 			{
 				// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
 				if (env.getDialogId() == 25)
 					// Send HTML_PAGE_SELECT_NONE to eddit-HtmlPages.xml
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 4762);
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 4762);
 				else
 					return defaultQuestStartDialog(env);
 
@@ -78,93 +82,95 @@ public class _3930SecretoftheShatteredStigma extends QuestHandler {
 
 		int var = qs.getQuestVarById(0);
 
-		if (qs.getStatus() == QuestStatus.START) {
+		if (qs.getStatus() == QuestStatus.START)
+		{
 
-			switch (targetId) {
+			switch (targetId)
+			{
 
-			// Xenophon
-			case 203833:
-				if (var == 0) {
-					switch (env.getDialogId()) {
-					// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
-					case 25:
-						// Send select1 to eddit-HtmlPages.xml
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1011);
-						// Get HACTION_SETPRO1 in the eddit-HyperLinks.xml
-					case 10000:
-						qs.setQuestVar(1);
-						updateQuestStatus(player, qs);
-						PacketSendUtility.sendPacket(player,
-								new SM_DIALOG_WINDOW(env.getVisibleObject()
-										.getObjectId(), 10));
+				// Xenophon
+				case 203833:
+					if (var == 0)
+					{
+						switch (env.getDialogId())
+						{
+							// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
+							case 25:
+								// Send select1 to eddit-HtmlPages.xml
+								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+								// Get HACTION_SETPRO1 in the eddit-HyperLinks.xml
+							case 10000:
+								qs.setQuestVar(1);
+								updateQuestStatus(player, qs);
+								PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+								return true;
+						}
+					}
+					// 2 / 4- Talk with Koruchinerk
+				case 798321:
+					if (var == 1)
+					{
+						switch (env.getDialogId())
+						{
+							// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
+							case 25:
+								// Send select1 to eddit-HtmlPages.xml
+								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
+								// Get HACTION_SETPRO1 in the eddit-HyperLinks.xml
+							case 10001:
+								qs.setQuestVar(2);
+								updateQuestStatus(player, qs);
+								PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+								return true;
+						}
+					}
+					else if (var == 2)
+					{
+						switch (env.getDialogId())
+						{
+							// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
+							case 25:
+								// Send select1 to eddit-HtmlPages.xml
+								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
+								// Get HACTION_SETPRO1 in the eddit-HyperLinks.xml
+							case 33:
+								if (player.getInventory().getItemCountByItemId(182206075) < 1)
+								{
+									// player doesn't own required item
+									return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10001);
+								}
+								ItemService.removeItemFromInventoryByItemId(player, 182206075);
+								qs.setStatus(QuestStatus.REWARD);
+								updateQuestStatus(player, qs);
+								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10000);
+						}
+
+					}
+					return false;
+				case 700562:
+					if (var == 2)
+					{
+						ThreadPoolManager.getInstance().schedule(new Runnable()
+						{
+							@Override
+							public void run()
+							{
+								updateQuestStatus(player, qs);
+							}
+						}, 3000);
 						return true;
 					}
-				}
-				// 2 / 4- Talk with Koruchinerk
-			case 798321:
-				if (var == 1) {
-					switch (env.getDialogId()) {
-					// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
-					case 25:
-						// Send select1 to eddit-HtmlPages.xml
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1352);
-						// Get HACTION_SETPRO1 in the eddit-HyperLinks.xml
-					case 10001:
-						qs.setQuestVar(2);
-						updateQuestStatus(player, qs);
-						PacketSendUtility.sendPacket(player,
-								new SM_DIALOG_WINDOW(env.getVisibleObject()
-										.getObjectId(), 10));
-						return true;
-					}
-				} else if (var == 2) {
-					switch (env.getDialogId()) {
-					// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
-					case 25:
-						// Send select1 to eddit-HtmlPages.xml
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1693);
-						// Get HACTION_SETPRO1 in the eddit-HyperLinks.xml
-					case 33:
-						if (player.getInventory().getItemCountByItemId(
-								182206075) < 1) {
-							// player doesn't own required item
-							return sendQuestDialog(player, env
-									.getVisibleObject().getObjectId(), 10001);
-						}
-						ItemService.removeItemFromInventoryByItemId(player,
-								182206075);
-						qs.setStatus(QuestStatus.REWARD);
-						updateQuestStatus(player, qs);
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 10000);
-					}
-
-				}
-				return false;
-			case 700562:
-				if (var == 2) {
-					ThreadPoolManager.getInstance().schedule(new Runnable() {
-						@Override
-						public void run() {
-							updateQuestStatus(player, qs);
-						}
-					}, 3000);
-					return true;
-				}
-				break;
+					break;
 			}
-		} else if (qs.getStatus() == QuestStatus.REWARD) {
+		}
+		else if (qs.getStatus() == QuestStatus.REWARD)
+		{
 			if (targetId == 203711)// Miriya
 			{
 				if (env.getDialogId() == -1)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 10002);
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10002);
 				else if (env.getDialogId() == 1009)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 5);
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
 				else
 					return defaultQuestEndDialog(env);
 			}

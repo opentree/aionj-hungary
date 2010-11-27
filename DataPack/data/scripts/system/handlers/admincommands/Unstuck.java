@@ -27,9 +27,11 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
 /**
  * @author Nemiroff Date: 11.01.2010
  */
-public class Unstuck extends AdminCommand {
+public class Unstuck extends AdminCommand
+{
 
-	public Unstuck() {
+	public Unstuck()
+	{
 		super("unstuck");
 	}
 
@@ -43,23 +45,23 @@ public class Unstuck extends AdminCommand {
 	 *            the parameters of the command
 	 */
 	@Override
-	public void executeCommand(Player admin, String[] params) {
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_UNSTUCK) {
-			PacketSendUtility.sendMessage(admin,
-					"You dont have enough rights to execute this command");
+	public void executeCommand(Player admin, String[] params)
+	{
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_UNSTUCK)
+		{
+			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
 			return;
 		}
-		if (admin.getLifeStats().isAlreadyDead()) {
-			PacketSendUtility.sendMessage(admin,
-					"You dont have execute this command. You die");
+		if (admin.getLifeStats().isAlreadyDead())
+		{
+			PacketSendUtility.sendMessage(admin, "You dont have execute this command. You die");
 			return;
 		}
-		TeleportService.moveToBindLocation(admin, true,
-				CustomConfig.UNSTUCK_DELAY);
+		TeleportService.moveToBindLocation(admin, true, CustomConfig.UNSTUCK_DELAY);
 	}
 
-	public static void main(String[] args) {
-		AdminCommandChatHandler.getInstance().registerAdminCommand(
-				new Unstuck());
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new Unstuck());
 	}
 }

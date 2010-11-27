@@ -29,23 +29,28 @@ import com.aionemu.gameserver.world.World;
  * 
  * @author Divinity
  */
-public class AnnounceFaction extends AdminCommand {
-	public AnnounceFaction() {
+public class AnnounceFaction extends AdminCommand
+{
+	public AnnounceFaction()
+	{
 		super("announcefaction");
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params) {
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_ANNOUNCE_FACTION) {
-			PacketSendUtility.sendMessage(admin,
-					"You don't have enough rights to execute this command.");
+	public void executeCommand(Player admin, String[] params)
+	{
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_ANNOUNCE_FACTION)
+		{
+			PacketSendUtility.sendMessage(admin, "You don't have enough rights to execute this command.");
 			return;
 		}
 
-		if (params.length < 2) {
-			PacketSendUtility.sendMessage(admin,
-					"Syntax: //announcefaction <ely | asmo> <message>");
-		} else {
+		if (params.length < 2)
+		{
+			PacketSendUtility.sendMessage(admin, "Syntax: //announcefaction <ely | asmo> <message>");
+		}
+		else
+		{
 			String message = null;
 
 			if (params[0].equals("ely"))
@@ -60,19 +65,18 @@ public class AnnounceFaction extends AdminCommand {
 			// Add the last without the end space
 			message += params[params.length - 1];
 
-			for (Player player : World.getInstance().getAllPlayers()) {
-				if (player.getCommonData().getRace() == Race.ELYOS
-						&& params[0].equals("ely"))
+			for (Player player : World.getInstance().getAllPlayers())
+			{
+				if (player.getCommonData().getRace() == Race.ELYOS && params[0].equals("ely"))
 					PacketSendUtility.sendSysMessage(player, message);
-				else if (player.getCommonData().getRace() == Race.ASMODIANS
-						&& params[0].equals("asmo"))
+				else if (player.getCommonData().getRace() == Race.ASMODIANS && params[0].equals("asmo"))
 					PacketSendUtility.sendSysMessage(player, message);
 			}
 		}
 	}
 
-	public static void main(String[] args) {
-		AdminCommandChatHandler.getInstance().registerAdminCommand(
-				new AnnounceFaction());
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new AnnounceFaction());
 	}
 }

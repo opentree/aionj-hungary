@@ -32,15 +32,18 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
  * @author Atomics
  */
 
-public class _2495SpriggNightlights extends QuestHandler {
-	private final static int questId = 2495;
+public class _2495SpriggNightlights extends QuestHandler
+{
+	private final static int	questId	= 2495;
 
-	public _2495SpriggNightlights() {
+	public _2495SpriggNightlights()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.setNpcQuestData(798125).addOnQuestStart(questId);
 		qe.setNpcQuestData(798125).addOnTalkEvent(questId);
 		qe.setNpcQuestData(700317).addOnTalkEvent(questId); // jaune
@@ -49,7 +52,8 @@ public class _2495SpriggNightlights extends QuestHandler {
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
 		int targetId = 0;
@@ -57,129 +61,143 @@ public class _2495SpriggNightlights extends QuestHandler {
 			return false;
 		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
-		if (targetId == 798125) {
-			if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+		if (targetId == 798125)
+		{
+			if (qs == null || qs.getStatus() == QuestStatus.NONE)
+			{
 				{
 					if (env.getDialogId() == 25)
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1011);
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
 					else
 						return defaultQuestStartDialog(env);
 				}
-			} else if (qs.getStatus() == QuestStatus.START) {
+			}
+			else if (qs.getStatus() == QuestStatus.START)
+			{
 				long itemCount;
 				long itemCount1;
 				long itemCount2;
-				if (env.getDialogId() == 25 && qs.getQuestVarById(0) == 0) {
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 2375);
-				} else if (env.getDialogId() == 33
-						&& qs.getQuestVarById(0) == 0) {
-					itemCount = player.getInventory().getItemCountByItemId(
-							182204227);
-					itemCount1 = player.getInventory().getItemCountByItemId(
-							182204228);
-					itemCount2 = player.getInventory().getItemCountByItemId(
-							182204229);
-					if (itemCount > 4 && itemCount1 > 4 && itemCount2 > 4) {
-						ItemService.removeItemFromInventoryByItemId(player,
-								182204227);
-						ItemService.removeItemFromInventoryByItemId(player,
-								182204228);
-						ItemService.removeItemFromInventoryByItemId(player,
-								182204229);
+				if (env.getDialogId() == 25 && qs.getQuestVarById(0) == 0)
+				{
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375);
+				}
+				else if (env.getDialogId() == 33 && qs.getQuestVarById(0) == 0)
+				{
+					itemCount = player.getInventory().getItemCountByItemId(182204227);
+					itemCount1 = player.getInventory().getItemCountByItemId(182204228);
+					itemCount2 = player.getInventory().getItemCountByItemId(182204229);
+					if (itemCount > 4 && itemCount1 > 4 && itemCount2 > 4)
+					{
+						ItemService.removeItemFromInventoryByItemId(player, 182204227);
+						ItemService.removeItemFromInventoryByItemId(player, 182204228);
+						ItemService.removeItemFromInventoryByItemId(player, 182204229);
 						qs.setStatus(QuestStatus.REWARD);
 						updateQuestStatus(player, qs);
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 5);
-					} else {
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 2716);
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
 					}
-				} else
+					else
+					{
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2716);
+					}
+				}
+				else
 					return defaultQuestEndDialog(env);
-			} else if (qs.getStatus() == QuestStatus.REWARD) {
-				if (env.getDialogId() == 25 && qs.getQuestVarById(0) == 5) {
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 5);
-				} else if (env.getDialogId() == 25
-						&& qs.getQuestVarById(0) == 6) {
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 6);
-				} else if (env.getDialogId() == 25
-						&& qs.getQuestVarById(0) == 7) {
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 7);
-				} else {
+			}
+			else if (qs.getStatus() == QuestStatus.REWARD)
+			{
+				if (env.getDialogId() == 25 && qs.getQuestVarById(0) == 5)
+				{
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
+				}
+				else if (env.getDialogId() == 25 && qs.getQuestVarById(0) == 6)
+				{
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 6);
+				}
+				else if (env.getDialogId() == 25 && qs.getQuestVarById(0) == 7)
+				{
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 7);
+				}
+				else
+				{
 					return defaultQuestEndDialog(env);
 				}
-			} else {
+			}
+			else
+			{
 				return defaultQuestEndDialog(env);
 			}
-		} else if (targetId == 700317) {
+		}
+		else if (targetId == 700317)
+		{
 			long itemCount;
 			itemCount = player.getInventory().getItemCountByItemId(182204227);
-			if (qs.getStatus() == QuestStatus.START
-					&& qs.getQuestVarById(0) == 0 && itemCount < 5) {
+			if (qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 0 && itemCount < 5)
+			{
 				final int targetObjectId = env.getVisibleObject().getObjectId();
-				PacketSendUtility.broadcastPacket(player, new SM_EMOTION(
-						player, EmotionType.NEUTRALMODE2, 0, targetObjectId),
-						true);
-				ThreadPoolManager.getInstance().schedule(new Runnable() {
+				PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.NEUTRALMODE2, 0, targetObjectId), true);
+				ThreadPoolManager.getInstance().schedule(new Runnable()
+				{
 					@Override
-					public void run() {
-						PacketSendUtility.broadcastPacket(player,
-								new SM_EMOTION(player, EmotionType.START_LOOT,
-										0, targetObjectId), true);
+					public void run()
+					{
+						PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.START_LOOT, 0, targetObjectId), true);
 					}
 				}, 3000);
 				return true;
-			} else {
+			}
+			else
+			{
 				return defaultQuestEndDialog(env);
 			}
-		} else if (targetId == 700318) {
+		}
+		else if (targetId == 700318)
+		{
 			long itemCount1;
 			itemCount1 = player.getInventory().getItemCountByItemId(182204228);
-			if (qs != null && qs.getStatus() == QuestStatus.START
-					&& qs.getQuestVarById(0) == 0 && itemCount1 < 5) {
+			if (qs != null && qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 0 && itemCount1 < 5)
+			{
 				final int targetObjectId = env.getVisibleObject().getObjectId();
-				PacketSendUtility.broadcastPacket(player, new SM_EMOTION(
-						player, EmotionType.NEUTRALMODE2, 0, targetObjectId),
-						true);
-				ThreadPoolManager.getInstance().schedule(new Runnable() {
+				PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.NEUTRALMODE2, 0, targetObjectId), true);
+				ThreadPoolManager.getInstance().schedule(new Runnable()
+				{
 					@Override
-					public void run() {
-						PacketSendUtility.broadcastPacket(player,
-								new SM_EMOTION(player, EmotionType.START_LOOT,
-										0, targetObjectId), true);
+					public void run()
+					{
+						PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.START_LOOT, 0, targetObjectId), true);
 					}
 				}, 3000);
 				return true;
-			} else {
+			}
+			else
+			{
 				return defaultQuestEndDialog(env);
 			}
-		} else if (targetId == 700319) {
+		}
+		else if (targetId == 700319)
+		{
 			long itemCount2;
 			itemCount2 = player.getInventory().getItemCountByItemId(182204229);
-			if (qs.getStatus() == QuestStatus.START
-					&& qs.getQuestVarById(0) == 0 && itemCount2 < 5) {
+			if (qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 0 && itemCount2 < 5)
+			{
 				final int targetObjectId = env.getVisibleObject().getObjectId();
-				PacketSendUtility.broadcastPacket(player, new SM_EMOTION(
-						player, EmotionType.NEUTRALMODE2, 0, targetObjectId),
-						true);
-				ThreadPoolManager.getInstance().schedule(new Runnable() {
+				PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.NEUTRALMODE2, 0, targetObjectId), true);
+				ThreadPoolManager.getInstance().schedule(new Runnable()
+				{
 					@Override
-					public void run() {
-						PacketSendUtility.broadcastPacket(player,
-								new SM_EMOTION(player, EmotionType.START_LOOT,
-										0, targetObjectId), true);
+					public void run()
+					{
+						PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.START_LOOT, 0, targetObjectId), true);
 					}
 				}, 3000);
 				return true;
-			} else {
+			}
+			else
+			{
 				return defaultQuestEndDialog(env);
 			}
-		} else {
+		}
+		else
+		{
 			return defaultQuestEndDialog(env);
 		}
 	}

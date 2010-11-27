@@ -29,21 +29,25 @@ import com.aionemu.gameserver.world.zone.ZoneName;
  * @author MrPoke
  * 
  */
-public class _2100OrderoftheCaptain extends QuestHandler {
-	private final static int questId = 2100;
+public class _2100OrderoftheCaptain extends QuestHandler
+{
+	private final static int	questId	= 2100;
 
-	public _2100OrderoftheCaptain() {
+	public _2100OrderoftheCaptain()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.setNpcQuestData(203516).addOnTalkEvent(questId);
 		qe.setQuestEnterZone(ZoneName.ALDELLE_VILLAGE).add(questId);
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
 		if (qs == null)
@@ -54,23 +58,26 @@ public class _2100OrderoftheCaptain extends QuestHandler {
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		if (targetId != 203516)
 			return false;
-		if (qs.getStatus() == QuestStatus.START) {
-			if (env.getDialogId() == 25) {
+		if (qs.getStatus() == QuestStatus.START)
+		{
+			if (env.getDialogId() == 25)
+			{
 				qs.setQuestVar(1);
 				qs.setStatus(QuestStatus.REWARD);
 				updateQuestStatus(player, qs);
-				return sendQuestDialog(player, env.getVisibleObject()
-						.getObjectId(), 1011);
-			} else
+				return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+			}
+			else
 				return defaultQuestStartDialog(env);
-		} else if (qs.getStatus() == QuestStatus.REWARD) {
-			if (env.getDialogId() == 17) {
-				int[] ids = { 2001, 2002, 2003, 2004, 2005, 2006, 2007 };
+		}
+		else if (qs.getStatus() == QuestStatus.REWARD)
+		{
+			if (env.getDialogId() == 17)
+			{
+				int[] ids =
+				{ 2001, 2002, 2003, 2004, 2005, 2006, 2007 };
 				for (int id : ids)
-					QuestService.startQuest(
-							new QuestEnv(env.getVisibleObject(), env
-									.getPlayer(), id, env.getDialogId()),
-							QuestStatus.LOCKED);
+					QuestService.startQuest(new QuestEnv(env.getVisibleObject(), env.getPlayer(), id, env.getDialogId()), QuestStatus.LOCKED);
 			}
 			return defaultQuestEndDialog(env);
 		}
@@ -78,7 +85,8 @@ public class _2100OrderoftheCaptain extends QuestHandler {
 	}
 
 	@Override
-	public boolean onEnterZoneEvent(QuestEnv env, ZoneName zoneName) {
+	public boolean onEnterZoneEvent(QuestEnv env, ZoneName zoneName)
+	{
 		if (zoneName != ZoneName.ALDELLE_VILLAGE)
 			return false;
 		final Player player = env.getPlayer();

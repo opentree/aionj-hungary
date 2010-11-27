@@ -39,25 +39,30 @@ import com.aionemu.gameserver.world.zone.ZoneName;
  * @author Mr. Poke
  * 
  */
-public class _2013ADangerousCrop extends QuestHandler {
+public class _2013ADangerousCrop extends QuestHandler
+{
 
-	private final static int questId = 2013;
+	private final static int	questId	= 2013;
 
-	public _2013ADangerousCrop() {
+	public _2013ADangerousCrop()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.addQuestLvlUp(questId);
 		qe.setNpcQuestData(203605).addOnTalkEvent(questId);
 		qe.setNpcQuestData(700096).addOnTalkEvent(questId);
 		qe.setQuestEnterZone(ZoneName.MUMU_FARMLAND_220030000).add(questId);
-		deletebleItems = new int[] { 182203012 };
+		deletebleItems = new int[]
+		{ 182203012 };
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
 		if (qs == null)
@@ -68,85 +73,69 @@ public class _2013ADangerousCrop extends QuestHandler {
 		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
-		if (qs.getStatus() == QuestStatus.START) {
-			switch (targetId) {
-			case 203605:
-				switch (env.getDialogId()) {
-				case 25:
-					if (var == 0)
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1011);
-					else if (var == 2)
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1352);
-					else if (var == 8)
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1693);
-					else if (var == 9)
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 2034);
-				case 10000:
-				case 10001:
-				case 10002:
-					if (var == 0 || var == 2 || var == 8) {
-						if (var == 2)
-							if (!ItemService.addItems(player,
-									Collections.singletonList(new QuestItems(
-											182203012, 1))))
+		if (qs.getStatus() == QuestStatus.START)
+		{
+			switch (targetId)
+			{
+				case 203605:
+					switch (env.getDialogId())
+					{
+						case 25:
+							if (var == 0)
+								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+							else if (var == 2)
+								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
+							else if (var == 8)
+								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
+							else if (var == 9)
+								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2034);
+						case 10000:
+						case 10001:
+						case 10002:
+							if (var == 0 || var == 2 || var == 8)
+							{
+								if (var == 2)
+									if (!ItemService.addItems(player, Collections.singletonList(new QuestItems(182203012, 1))))
+										return true;
+								if (var == 8)
+									ItemService.removeItemFromInventoryByItemId(player, 182203012);
+								qs.setQuestVarById(0, var + 1);
+								updateQuestStatus(player, qs);
+								PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
 								return true;
-						if (var == 8)
-							ItemService.removeItemFromInventoryByItemId(player,
-									182203012);
-						qs.setQuestVarById(0, var + 1);
-						updateQuestStatus(player, qs);
-						PacketSendUtility.sendPacket(player,
-								new SM_DIALOG_WINDOW(env.getVisibleObject()
-										.getObjectId(), 10));
-						return true;
+							}
+						case 33:
+							if (var == 9)
+							{
+								if (QuestService.collectItemCheck(env, true))
+								{
+									qs.setStatus(QuestStatus.REWARD);
+									updateQuestStatus(player, qs);
+									return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
+								}
+								else
+									return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2120);
+							}
 					}
-				case 33:
-					if (var == 9) {
-						if (QuestService.collectItemCheck(env, true)) {
-							qs.setStatus(QuestStatus.REWARD);
-							updateQuestStatus(player, qs);
-							return sendQuestDialog(player, env
-									.getVisibleObject().getObjectId(), 5);
-						} else
-							return sendQuestDialog(player, env
-									.getVisibleObject().getObjectId(), 2120);
-					}
-				}
-				break;
-			case 700096:
-				switch (env.getDialogId()) {
-				case -1:
-					if (var >= 3 && var < 6) {
-						final int targetObjectId = env.getVisibleObject()
-								.getObjectId();
-						PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(
-								player.getObjectId(), targetObjectId, 3000, 1));
-						PacketSendUtility.broadcastPacket(player,
-								new SM_EMOTION(player,
-										EmotionType.NEUTRALMODE2, 0,
-										targetObjectId), true);
-						ThreadPoolManager.getInstance().schedule(
-								new Runnable() {
+					break;
+				case 700096:
+					switch (env.getDialogId())
+					{
+						case -1:
+							if (var >= 3 && var < 6)
+							{
+								final int targetObjectId = env.getVisibleObject().getObjectId();
+								PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(player.getObjectId(), targetObjectId, 3000, 1));
+								PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.NEUTRALMODE2, 0, targetObjectId), true);
+								ThreadPoolManager.getInstance().schedule(new Runnable()
+								{
 									@Override
-									public void run() {
+									public void run()
+									{
 										if (!player.isTargeting(targetObjectId))
 											return;
-										PacketSendUtility
-												.sendPacket(
-														player,
-														new SM_USE_OBJECT(
-																player.getObjectId(),
-																targetObjectId,
-																3000, 0));
-										PacketSendUtility.broadcastPacket(
-												player, new SM_EMOTION(player,
-														EmotionType.START_LOOT,
-														0, targetObjectId),
-												true);
+										PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(player.getObjectId(), targetObjectId, 3000, 0));
+										PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.START_LOOT, 0, targetObjectId), true);
 										if (var == 5)
 											qs.setQuestVarById(0, 8);
 										else
@@ -155,11 +144,13 @@ public class _2013ADangerousCrop extends QuestHandler {
 
 									}
 								}, 3000);
-						return true;
+								return true;
+							}
 					}
-				}
 			}
-		} else if (qs.getStatus() == QuestStatus.REWARD) {
+		}
+		else if (qs.getStatus() == QuestStatus.REWARD)
+		{
 			if (targetId == 203605)
 				return defaultQuestEndDialog(env);
 		}
@@ -167,14 +158,16 @@ public class _2013ADangerousCrop extends QuestHandler {
 	}
 
 	@Override
-	public boolean onEnterZoneEvent(QuestEnv env, ZoneName zoneName) {
+	public boolean onEnterZoneEvent(QuestEnv env, ZoneName zoneName)
+	{
 		if (zoneName != ZoneName.MUMU_FARMLAND_220030000)
 			return false;
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
 		if (qs == null)
 			return false;
-		if (qs.getQuestVarById(0) == 1) {
+		if (qs.getQuestVarById(0) == 1)
+		{
 			qs.setQuestVarById(0, 2);
 			updateQuestStatus(player, qs);
 			return true;
@@ -183,7 +176,8 @@ public class _2013ADangerousCrop extends QuestHandler {
 	}
 
 	@Override
-	public boolean onLvlUpEvent(QuestEnv env) {
+	public boolean onLvlUpEvent(QuestEnv env)
+	{
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
 		if (qs == null || qs.getStatus() != QuestStatus.LOCKED)

@@ -30,23 +30,26 @@ import com.aionemu.gameserver.world.World;
  * 
  */
 
-public class Add extends AdminCommand {
+public class Add extends AdminCommand
+{
 
-	public Add() {
+	public Add()
+	{
 		super("add");
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params) {
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_ADD) {
-			PacketSendUtility.sendMessage(admin,
-					"You dont have enough rights to execute this command");
+	public void executeCommand(Player admin, String[] params)
+	{
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_ADD)
+		{
+			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
 			return;
 		}
 
-		if (params.length == 0 || params.length > 3) {
-			PacketSendUtility.sendMessage(admin,
-					"syntax //add <player> <item ID> <quantity>");
+		if (params.length == 0 || params.length > 3)
+		{
+			PacketSendUtility.sendMessage(admin, "syntax //add <player> <item ID> <quantity>");
 			return;
 		}
 
@@ -54,49 +57,61 @@ public class Add extends AdminCommand {
 		long itemCount = 1;
 		Player receiver = null;
 
-		try {
+		try
+		{
 			itemId = Integer.parseInt(params[0]);
 
-			if (params.length == 2) {
+			if (params.length == 2)
+			{
 				itemCount = Long.parseLong(params[1]);
 			}
 			receiver = admin;
-		} catch (NumberFormatException e) {
-			receiver = World.getInstance().findPlayer(
-					Util.convertName(params[0]));
+		}
+		catch (NumberFormatException e)
+		{
+			receiver = World.getInstance().findPlayer(Util.convertName(params[0]));
 
-			if (receiver == null) {
-				PacketSendUtility.sendMessage(admin,
-						"Could not find a player by that name.");
+			if (receiver == null)
+			{
+				PacketSendUtility.sendMessage(admin, "Could not find a player by that name.");
 				return;
 			}
 
-			try {
+			try
+			{
 				itemId = Integer.parseInt(params[1]);
 
-				if (params.length == 3) {
+				if (params.length == 3)
+				{
 					itemCount = Long.parseLong(params[2]);
 				}
-			} catch (NumberFormatException ex) {
+			}
+			catch (NumberFormatException ex)
+			{
 
-				PacketSendUtility.sendMessage(admin,
-						"You must give number to itemid.");
+				PacketSendUtility.sendMessage(admin, "You must give number to itemid.");
 				return;
-			} catch (Exception ex2) {
+			}
+			catch (Exception ex2)
+			{
 				PacketSendUtility.sendMessage(admin, "Occurs an error.");
 				return;
 			}
 		}
 
-		if (ItemService.addItem(receiver, itemId, itemCount)) {
+		if (ItemService.addItem(receiver, itemId, itemCount))
+		{
 			PacketSendUtility.sendMessage(admin, "Item added successfully");
 			PacketSendUtility.sendMessage(receiver, "Admin gives you an item");
-		} else {
+		}
+		else
+		{
 			PacketSendUtility.sendMessage(admin, "Item couldn't be added");
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		AdminCommandChatHandler.getInstance().registerAdminCommand(new Add());
 	}
 }

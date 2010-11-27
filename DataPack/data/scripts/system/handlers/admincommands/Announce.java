@@ -32,51 +32,60 @@ import com.aionemu.gameserver.world.World;
  *         "anonymous" flag.
  * 
  */
-public class Announce extends AdminCommand {
-	public Announce() {
+public class Announce extends AdminCommand
+{
+	public Announce()
+	{
 		super("announce");
 	}
 
 	@Override
-	public int getSplitSize() {
+	public int getSplitSize()
+	{
 		return 2;
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params) {
+	public void executeCommand(Player admin, String[] params)
+	{
 
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_ANNOUNCE) {
-			PacketSendUtility.sendMessage(admin,
-					"You dont have enough rights to execute this command.");
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_ANNOUNCE)
+		{
+			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command.");
 			return;
 		}
 
-		if (params == null || params.length != 2) {
-			PacketSendUtility.sendMessage(admin,
-					"Syntax: //announce <anonymous|name> <message>");
+		if (params == null || params.length != 2)
+		{
+			PacketSendUtility.sendMessage(admin, "Syntax: //announce <anonymous|name> <message>");
 			return;
 		}
 
 		String message;
 
-		if (("anonymous").startsWith(params[0].toLowerCase())) {
+		if (("anonymous").startsWith(params[0].toLowerCase()))
+		{
 			message = "Announce: ";
-		} else if (("name").startsWith(params[0].toLowerCase())) {
+		}
+		else if (("name").startsWith(params[0].toLowerCase()))
+		{
 			message = admin.getName() + ": ";
-		} else {
-			PacketSendUtility.sendMessage(admin,
-					"Syntax: //announce <anonymous|name> <message>");
+		}
+		else
+		{
+			PacketSendUtility.sendMessage(admin, "Syntax: //announce <anonymous|name> <message>");
 			return;
 		}
 		message += params[1];
 
-		for (Player player : World.getInstance().getAllPlayers()) {
+		for (Player player : World.getInstance().getAllPlayers())
+		{
 			PacketSendUtility.sendSysMessage(player, message);
 		}
 	}
 
-	public static void main(String[] args) {
-		AdminCommandChatHandler.getInstance().registerAdminCommand(
-				new Announce());
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new Announce());
 	}
 }

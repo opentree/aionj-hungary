@@ -34,110 +34,111 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  * @author MrPoke
  * 
  */
-public class _1122DeliveringPernossRobe extends QuestHandler {
-	private final static int questId = 1122;
+public class _1122DeliveringPernossRobe extends QuestHandler
+{
+	private final static int	questId	= 1122;
 
-	public _1122DeliveringPernossRobe() {
+	public _1122DeliveringPernossRobe()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.setNpcQuestData(203060).addOnQuestStart(questId);
 		qe.setNpcQuestData(203060).addOnTalkEvent(questId);
 		qe.setNpcQuestData(790001).addOnTalkEvent(questId);
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		int targetId = 0;
 		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if (targetId == 203060) {
-			if (qs == null) {
+		if (targetId == 203060)
+		{
+			if (qs == null)
+			{
 				if (env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1011);
-				else if (env.getDialogId() == 1002) {
-					if (ItemService.addItems(player, Collections
-							.singletonList(new QuestItems(182200216, 1))))
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+				else if (env.getDialogId() == 1002)
+				{
+					if (ItemService.addItems(player, Collections.singletonList(new QuestItems(182200216, 1))))
 						return defaultQuestStartDialog(env);
 					else
 						return true;
-				} else
+				}
+				else
 					return defaultQuestStartDialog(env);
 			}
-		} else if (targetId == 790001) {
-			if (qs != null && qs.getStatus() == QuestStatus.START) {
+		}
+		else if (targetId == 790001)
+		{
+			if (qs != null && qs.getStatus() == QuestStatus.START)
+			{
 				long itemCount;
-				switch (env.getDialogId()) {
-				case 25:
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 1352);
-				case 10000:
-					itemCount = player.getInventory().getItemCountByItemId(
-							182200218);
-					if (itemCount > 0) {
-						qs.setQuestVar(1);
-						qs.setStatus(QuestStatus.REWARD);
-						updateQuestStatus(player, qs);
-						ItemService.removeItemFromInventoryByItemId(player,
-								182200218);
-						ItemService.removeItemFromInventoryByItemId(player,
-								182200216);
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1523);
-					} else
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1608);
+				switch (env.getDialogId())
+				{
+					case 25:
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
+					case 10000:
+						itemCount = player.getInventory().getItemCountByItemId(182200218);
+						if (itemCount > 0)
+						{
+							qs.setQuestVar(1);
+							qs.setStatus(QuestStatus.REWARD);
+							updateQuestStatus(player, qs);
+							ItemService.removeItemFromInventoryByItemId(player, 182200218);
+							ItemService.removeItemFromInventoryByItemId(player, 182200216);
+							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1523);
+						}
+						else
+							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1608);
 
-				case 10001:
-					itemCount = player.getInventory().getItemCountByItemId(
-							182200219);
-					if (itemCount > 0) {
-						qs.setQuestVar(2);
-						qs.setStatus(QuestStatus.REWARD);
-						updateQuestStatus(player, qs);
-						ItemService.removeItemFromInventoryByItemId(player,
-								182200219);
-						ItemService.removeItemFromInventoryByItemId(player,
-								182200216);
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1438);
-					} else
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1608);
-				case 10002:
-					itemCount = player.getInventory().getItemCountByItemId(
-							182200220);
-					if (itemCount > 0) {
-						qs.setQuestVar(3);
-						qs.setStatus(QuestStatus.REWARD);
-						updateQuestStatus(player, qs);
-						ItemService.removeItemFromInventoryByItemId(player,
-								182200220);
-						ItemService.removeItemFromInventoryByItemId(player,
-								182200216);
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1353);
-					} else
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1608);
-				default:
-					return defaultQuestStartDialog(env);
+					case 10001:
+						itemCount = player.getInventory().getItemCountByItemId(182200219);
+						if (itemCount > 0)
+						{
+							qs.setQuestVar(2);
+							qs.setStatus(QuestStatus.REWARD);
+							updateQuestStatus(player, qs);
+							ItemService.removeItemFromInventoryByItemId(player, 182200219);
+							ItemService.removeItemFromInventoryByItemId(player, 182200216);
+							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1438);
+						}
+						else
+							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1608);
+					case 10002:
+						itemCount = player.getInventory().getItemCountByItemId(182200220);
+						if (itemCount > 0)
+						{
+							qs.setQuestVar(3);
+							qs.setStatus(QuestStatus.REWARD);
+							updateQuestStatus(player, qs);
+							ItemService.removeItemFromInventoryByItemId(player, 182200220);
+							ItemService.removeItemFromInventoryByItemId(player, 182200216);
+							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1353);
+						}
+						else
+							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1608);
+					default:
+						return defaultQuestStartDialog(env);
 				}
-			} else if (qs != null && qs.getStatus() == QuestStatus.REWARD) {
-				if (env.getDialogId() == -1 || env.getDialogId() == 1009) {
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 4 + qs.getQuestVars()
-							.getQuestVars());
-				} else if (env.getDialogId() == 17) {
-					QuestService.questFinish(env, qs.getQuestVars()
-							.getQuestVars() - 1);
-					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
-							env.getVisibleObject().getObjectId(), 10));
+			}
+			else if (qs != null && qs.getStatus() == QuestStatus.REWARD)
+			{
+				if (env.getDialogId() == -1 || env.getDialogId() == 1009)
+				{
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 4 + qs.getQuestVars().getQuestVars());
+				}
+				else if (env.getDialogId() == 17)
+				{
+					QuestService.questFinish(env, qs.getQuestVars().getQuestVars() - 1);
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
 					return true;
 				}
 			}

@@ -26,12 +26,14 @@ import com.aionemu.commons.database.dao.DAOManager;
  * @author Mr. Poke
  * 
  */
-public class MySQL5Loader {
+public class MySQL5Loader
+{
 
 	/**
 	 * 
 	 */
-	public MySQL5Loader() {
+	public MySQL5Loader()
+	{
 		DAOManager.getInstance().registerDAO(new MySQL5AbyssRankDAO());
 		DAOManager.getInstance().registerDAO(new MySQL5AnnouncementsDAO());
 		DAOManager.getInstance().registerDAO(new MySQL5BlockListDAO());
@@ -66,7 +68,8 @@ public class MySQL5Loader {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		new MySQL5Loader();
 	}
 

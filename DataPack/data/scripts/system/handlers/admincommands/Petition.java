@@ -34,49 +34,49 @@ import com.aionemu.gameserver.world.World;
 /**
  * @author zdead
  */
-public class Petition extends AdminCommand {
-	public Petition() {
+public class Petition extends AdminCommand
+{
+	public Petition()
+	{
 		super("petition");
 	}
 
 	@Override
-	public int getSplitSize() {
+	public int getSplitSize()
+	{
 		return 3;
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params) {
+	public void executeCommand(Player admin, String[] params)
+	{
 
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_PETITION) {
-			PacketSendUtility.sendMessage(admin,
-					"You dont have enough rights to execute this command.");
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_PETITION)
+		{
+			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command.");
 			return;
 		}
 
 		// Send ticket general info
-		if (params == null || params.length == 0) {
-			Collection<com.aionemu.gameserver.model.Petition> petitions = PetitionService
-					.getInstance().getRegisteredPetitions();
-			com.aionemu.gameserver.model.Petition[] petitionsArray = petitions
-					.toArray(new com.aionemu.gameserver.model.Petition[0]);
-			PacketSendUtility.sendMessage(admin, petitionsArray.length
-					+ " unprocessed petitions.");
-			if (petitionsArray.length < 5) {
-				PacketSendUtility.sendMessage(admin, "== "
-						+ petitionsArray.length
-						+ " first petitions to reply ==");
-				for (int i = 0; i < petitionsArray.length; i++) {
-					PacketSendUtility.sendMessage(admin,
-							petitionsArray[i].getPetitionId() + " | "
-									+ petitionsArray[i].getTitle());
+		if (params == null || params.length == 0)
+		{
+			Collection<com.aionemu.gameserver.model.Petition> petitions = PetitionService.getInstance().getRegisteredPetitions();
+			com.aionemu.gameserver.model.Petition[] petitionsArray = petitions.toArray(new com.aionemu.gameserver.model.Petition[0]);
+			PacketSendUtility.sendMessage(admin, petitionsArray.length + " unprocessed petitions.");
+			if (petitionsArray.length < 5)
+			{
+				PacketSendUtility.sendMessage(admin, "== " + petitionsArray.length + " first petitions to reply ==");
+				for (int i = 0; i < petitionsArray.length; i++)
+				{
+					PacketSendUtility.sendMessage(admin, petitionsArray[i].getPetitionId() + " | " + petitionsArray[i].getTitle());
 				}
-			} else {
-				PacketSendUtility.sendMessage(admin,
-						"== 5 first petitions to reply ==");
-				for (int i = 0; i < 5; i++) {
-					PacketSendUtility.sendMessage(admin,
-							petitionsArray[i].getPetitionId() + " | "
-									+ petitionsArray[i].getTitle());
+			}
+			else
+			{
+				PacketSendUtility.sendMessage(admin, "== 5 first petitions to reply ==");
+				for (int i = 0; i < 5; i++)
+				{
+					PacketSendUtility.sendMessage(admin, petitionsArray[i].getPetitionId() + " | " + petitionsArray[i].getTitle());
 				}
 			}
 			return;
@@ -84,39 +84,43 @@ public class Petition extends AdminCommand {
 
 		int petitionId = 0;
 
-		try {
+		try
+		{
 			petitionId = Integer.parseInt(params[0]);
-		} catch (NumberFormatException nfe) {
+		}
+		catch (NumberFormatException nfe)
+		{
 			PacketSendUtility.sendMessage(admin, "Invalid petition id.");
 			return;
 		}
 
-		com.aionemu.gameserver.model.Petition petition = DAOManager.getDAO(
-				PetitionDAO.class).getPetitionById(petitionId);
+		com.aionemu.gameserver.model.Petition petition = DAOManager.getDAO(PetitionDAO.class).getPetitionById(petitionId);
 
-		if (petition == null) {
-			PacketSendUtility.sendMessage(admin,
-					"There is no petition with id #" + petitionId);
+		if (petition == null)
+		{
+			PacketSendUtility.sendMessage(admin, "There is no petition with id #" + petitionId);
 			return;
 		}
 
 		String petitionPlayer = "";
 		boolean isOnline;
 
-		if (World.getInstance().findPlayer(petition.getPlayerObjId()) != null) {
-			petitionPlayer = World.getInstance()
-					.findPlayer(petition.getPlayerObjId()).getName();
+		if (World.getInstance().findPlayer(petition.getPlayerObjId()) != null)
+		{
+			petitionPlayer = World.getInstance().findPlayer(petition.getPlayerObjId()).getName();
 			isOnline = true;
-		} else {
-			petitionPlayer = DAOManager.getDAO(PlayerDAO.class)
-					.getPlayerNameByObjId(petition.getPlayerObjId());
+		}
+		else
+		{
+			petitionPlayer = DAOManager.getDAO(PlayerDAO.class).getPlayerNameByObjId(petition.getPlayerObjId());
 			isOnline = false;
 		}
 
 		StringBuilder message = new StringBuilder();
 
 		// Read petition
-		if (params.length == 1) {
+		if (params.length == 1)
+		{
 			message.append("== Petition #" + petitionId + " ==\n");
 			message.append("Player: " + petitionPlayer + " (");
 			if (isOnline)
@@ -124,37 +128,32 @@ public class Petition extends AdminCommand {
 			else
 				message.append("Offline");
 			message.append(")\n");
-			message.append("Type: "
-					+ getHumanizedValue(petition.getPetitionType()) + "\n");
+			message.append("Type: " + getHumanizedValue(petition.getPetitionType()) + "\n");
 			message.append("Title: " + petition.getTitle() + "\n");
 			message.append("Text: " + petition.getContentText() + "\n");
 			message.append("= Additional Data =\n");
-			message.append(getFormattedAdditionalData(
-					petition.getPetitionType(), petition.getAdditionalData()));
+			message.append(getFormattedAdditionalData(petition.getPetitionType(), petition.getAdditionalData()));
 		}
 		// Delete
-		else if (params.length == 2 && params[1].equals("delete")) {
-			PetitionService.getInstance().deletePetition(
-					petition.getPlayerObjId());
-			PacketSendUtility.sendMessage(admin, "Petition #" + petitionId
-					+ " deleted.");
+		else if (params.length == 2 && params[1].equals("delete"))
+		{
+			PetitionService.getInstance().deletePetition(petition.getPlayerObjId());
+			PacketSendUtility.sendMessage(admin, "Petition #" + petitionId + " deleted.");
 		}
 		// Reply
-		else if (params.length == 3 && params[1].equals("reply")) {
+		else if (params.length == 3 && params[1].equals("reply"))
+		{
 			String replyMessage = params[2];
-			if (replyMessage.equals("")) {
-				PacketSendUtility.sendMessage(admin,
-						"You must specify a reply to that petition");
+			if (replyMessage.equals(""))
+			{
+				PacketSendUtility.sendMessage(admin, "You must specify a reply to that petition");
 				return;
 			}
 
-			MailService.getInstance().sendMail(admin, petitionPlayer,
-					"GM-Re:" + petition.getTitle(), replyMessage, 0, 0, 0,
-					false);
+			MailService.getInstance().sendMail(admin, petitionPlayer, "GM-Re:" + petition.getTitle(), replyMessage, 0, 0, 0, false);
 			PetitionService.getInstance().setPetitionReplied(petitionId);
 
-			PacketSendUtility.sendMessage(admin, "Your reply has been sent to "
-					+ petitionPlayer + ". Petition is now closed.");
+			PacketSendUtility.sendMessage(admin, "Your reply has been sent to " + petitionPlayer + ". Petition is now closed.");
 
 		}
 
@@ -162,76 +161,79 @@ public class Petition extends AdminCommand {
 
 	}
 
-	private String getHumanizedValue(PetitionType type) {
+	private String getHumanizedValue(PetitionType type)
+	{
 		String result = "";
-		switch (type) {
-		case CHARACTER_STUCK:
-			result = "Character Stuck";
-			break;
-		case CHARACTER_RESTORATION:
-			result = "Character Restoration";
-			break;
-		case BUG:
-			result = "Bug";
-			break;
-		case QUEST:
-			result = "Quest";
-			break;
-		case UNACCEPTABLE_BEHAVIOR:
-			result = "Unacceptable Behavior";
-			break;
-		case SUGGESTION:
-			result = "Suggestion";
-		case INQUIRY:
-			result = "Inquiry about the game";
-		default:
-			result = "Unknown";
+		switch (type)
+		{
+			case CHARACTER_STUCK:
+				result = "Character Stuck";
+				break;
+			case CHARACTER_RESTORATION:
+				result = "Character Restoration";
+				break;
+			case BUG:
+				result = "Bug";
+				break;
+			case QUEST:
+				result = "Quest";
+				break;
+			case UNACCEPTABLE_BEHAVIOR:
+				result = "Unacceptable Behavior";
+				break;
+			case SUGGESTION:
+				result = "Suggestion";
+			case INQUIRY:
+				result = "Inquiry about the game";
+			default:
+				result = "Unknown";
 		}
 		return result;
 	}
 
-	private String getFormattedAdditionalData(PetitionType type,
-			String additionalData) {
+	private String getFormattedAdditionalData(PetitionType type, String additionalData)
+	{
 		String result = "";
-		switch (type) {
-		case CHARACTER_STUCK:
-			result = "Character Location: " + additionalData;
-			break;
-		case CHARACTER_RESTORATION:
-			result = "Category: " + additionalData;
-			break;
-		case BUG:
-			String[] bugData = additionalData.split("/");
-			result = "Time Occured: " + bugData[0] + "\n";
-			result += "Zone and Coords: " + bugData[1];
-			if (bugData.length > 2)
-				result += "\nHow to Replicate: " + bugData[2];
-			break;
-		case QUEST:
-			result = "Quest Title: " + additionalData;
-			break;
-		case UNACCEPTABLE_BEHAVIOR:
-			String[] bData = additionalData.split("/");
-			result = "Time Occured: " + bData[0] + "\n";
-			result += "Character Name: " + bData[1] + "\n";
-			result += "Category: " + bData[2];
-			break;
-		case SUGGESTION:
-			//
-			result = "Category: " + additionalData;
-			break;
-		case INQUIRY:
-			//
-			result = "Petition Category: " + additionalData;
-			break;
-		default:
-			result = additionalData;
+		switch (type)
+		{
+			case CHARACTER_STUCK:
+				result = "Character Location: " + additionalData;
+				break;
+			case CHARACTER_RESTORATION:
+				result = "Category: " + additionalData;
+				break;
+			case BUG:
+				String[] bugData = additionalData.split("/");
+				result = "Time Occured: " + bugData[0] + "\n";
+				result += "Zone and Coords: " + bugData[1];
+				if (bugData.length > 2)
+					result += "\nHow to Replicate: " + bugData[2];
+				break;
+			case QUEST:
+				result = "Quest Title: " + additionalData;
+				break;
+			case UNACCEPTABLE_BEHAVIOR:
+				String[] bData = additionalData.split("/");
+				result = "Time Occured: " + bData[0] + "\n";
+				result += "Character Name: " + bData[1] + "\n";
+				result += "Category: " + bData[2];
+				break;
+			case SUGGESTION:
+				//
+				result = "Category: " + additionalData;
+				break;
+			case INQUIRY:
+				//
+				result = "Petition Category: " + additionalData;
+				break;
+			default:
+				result = additionalData;
 		}
 		return result;
 	}
 
-	public static void main(String[] args) {
-		AdminCommandChatHandler.getInstance().registerAdminCommand(
-				new Petition());
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new Petition());
 	}
 }

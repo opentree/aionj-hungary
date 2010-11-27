@@ -30,39 +30,41 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
  * @author Watson
  * 
  */
-public class Unban extends AdminCommand {
-	public Unban() {
+public class Unban extends AdminCommand
+{
+	public Unban()
+	{
 		super("unban");
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params) {
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_BAN) {
-			PacketSendUtility.sendMessage(admin,
-					"You dont have enough rights to execute this command!");
+	public void executeCommand(Player admin, String[] params)
+	{
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_BAN)
+		{
+			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command!");
 			return;
 		}
 
-		if (params == null || params.length < 1) {
-			PacketSendUtility.sendMessage(admin,
-					"Syntax: //unban <player> [account|ip|full]");
+		if (params == null || params.length < 1)
+		{
+			PacketSendUtility.sendMessage(admin, "Syntax: //unban <player> [account|ip|full]");
 			return;
 		}
 
 		// Banned player must be offline, so get his account ID from database
 		String name = Util.convertName(params[0]);
-		int accountId = DAOManager.getDAO(PlayerDAO.class).getAccountIdByName(
-				name);
-		if (accountId == 0) {
-			PacketSendUtility.sendMessage(admin, "Player " + name
-					+ " was not found!");
-			PacketSendUtility.sendMessage(admin,
-					"Syntax: //unban <player> [account|ip|full]");
+		int accountId = DAOManager.getDAO(PlayerDAO.class).getAccountIdByName(name);
+		if (accountId == 0)
+		{
+			PacketSendUtility.sendMessage(admin, "Player " + name + " was not found!");
+			PacketSendUtility.sendMessage(admin, "Syntax: //unban <player> [account|ip|full]");
 			return;
 		}
 
 		byte type = 3; // Default: full
-		if (params.length > 1) {
+		if (params.length > 1)
+		{
 			// Smart Matching
 			String stype = params[1].toLowerCase();
 			if (("account").startsWith(stype))
@@ -71,19 +73,19 @@ public class Unban extends AdminCommand {
 				type = 2;
 			else if (("full").startsWith(stype))
 				type = 3;
-			else {
-				PacketSendUtility.sendMessage(admin,
-						"Syntax: //unban <player> [account|ip|full]");
+			else
+			{
+				PacketSendUtility.sendMessage(admin, "Syntax: //unban <player> [account|ip|full]");
 				return;
 			}
 		}
 
 		// Sends time -1 to unban
-		LoginServer.getInstance().sendBanPacket(type, accountId, "", -1,
-				admin.getObjectId());
+		LoginServer.getInstance().sendBanPacket(type, accountId, "", -1, admin.getObjectId());
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		AdminCommandChatHandler.getInstance().registerAdminCommand(new Unban());
 	}
 }

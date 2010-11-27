@@ -33,77 +33,84 @@ import com.aionemu.gameserver.world.World;
  * 
  */
 
-public class AddSet extends AdminCommand {
+public class AddSet extends AdminCommand
+{
 
-	public AddSet() {
+	public AddSet()
+	{
 		super("addset");
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params) {
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_ADDSET) {
-			PacketSendUtility.sendMessage(admin,
-					"You dont have enough rights to execute this command");
+	public void executeCommand(Player admin, String[] params)
+	{
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_ADDSET)
+		{
+			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
 			return;
 		}
 
-		if (params.length == 0 || params.length > 2) {
-			PacketSendUtility.sendMessage(admin,
-					"syntax //addset <player> <itemset ID>");
-			PacketSendUtility
-					.sendMessage(admin, "syntax //addset <itemset ID>");
+		if (params.length == 0 || params.length > 2)
+		{
+			PacketSendUtility.sendMessage(admin, "syntax //addset <player> <itemset ID>");
+			PacketSendUtility.sendMessage(admin, "syntax //addset <itemset ID>");
 			return;
 		}
 
 		int itemSetId = 0;
 		Player receiver = null;
 
-		try {
+		try
+		{
 			itemSetId = Integer.parseInt(params[0]);
 
 			receiver = admin;
-		} catch (NumberFormatException e) {
-			receiver = World.getInstance().findPlayer(
-					Util.convertName(params[0]));
+		}
+		catch (NumberFormatException e)
+		{
+			receiver = World.getInstance().findPlayer(Util.convertName(params[0]));
 
-			if (receiver == null) {
-				PacketSendUtility.sendMessage(admin,
-						"Could not find a player by that name.");
+			if (receiver == null)
+			{
+				PacketSendUtility.sendMessage(admin, "Could not find a player by that name.");
 				return;
 			}
 
-			try {
+			try
+			{
 				itemSetId = Integer.parseInt(params[1]);
-			} catch (NumberFormatException ex) {
+			}
+			catch (NumberFormatException ex)
+			{
 
-				PacketSendUtility.sendMessage(admin,
-						"You must give number to itemset ID.");
+				PacketSendUtility.sendMessage(admin, "You must give number to itemset ID.");
 				return;
-			} catch (Exception ex2) {
+			}
+			catch (Exception ex2)
+			{
 				PacketSendUtility.sendMessage(admin, "Occurs an error.");
 				return;
 			}
 		}
 
-		ItemSetTemplate itemSet = DataManager.ITEM_SET_DATA
-				.getItemSetTemplate(itemSetId);
-		if (itemSet == null) {
-			PacketSendUtility.sendMessage(admin,
-					"ItemSet does not exist with id " + itemSetId);
+		ItemSetTemplate itemSet = DataManager.ITEM_SET_DATA.getItemSetTemplate(itemSetId);
+		if (itemSet == null)
+		{
+			PacketSendUtility.sendMessage(admin, "ItemSet does not exist with id " + itemSetId);
 			return;
 		}
 
-		if (receiver.getInventory().getNumberOfFreeSlots() < itemSet
-				.getItempart().size()) {
-			PacketSendUtility.sendMessage(admin, "Inventory needs at least "
-					+ itemSet.getItempart().size() + " free slots.");
+		if (receiver.getInventory().getNumberOfFreeSlots() < itemSet.getItempart().size())
+		{
+			PacketSendUtility.sendMessage(admin, "Inventory needs at least " + itemSet.getItempart().size() + " free slots.");
 			return;
 		}
 
-		for (ItemPart setPart : itemSet.getItempart()) {
-			if (!ItemService.addItem(receiver, setPart.getItemid(), 1)) {
-				PacketSendUtility.sendMessage(admin,
-						"Item " + setPart.getItemid() + " couldn't be added");
+		for (ItemPart setPart : itemSet.getItempart())
+		{
+			if (!ItemService.addItem(receiver, setPart.getItemid(), 1))
+			{
+				PacketSendUtility.sendMessage(admin, "Item " + setPart.getItemid() + " couldn't be added");
 				return;
 			}
 		}
@@ -112,8 +119,8 @@ public class AddSet extends AdminCommand {
 		PacketSendUtility.sendMessage(receiver, "Admin gives you an item set");
 	}
 
-	public static void main(String[] args) {
-		AdminCommandChatHandler.getInstance()
-				.registerAdminCommand(new AddSet());
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new AddSet());
 	}
 }

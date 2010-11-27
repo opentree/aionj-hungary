@@ -36,99 +36,111 @@ import com.aionemu.gameserver.world.WorldMapType;
  * @author xaerolt, Rolandas
  * 
  */
-public class _1926SecretLibraryAccess extends QuestHandler {
-	private final static int questId = 1926;
-	private final static int[] npc_ids = { 203894, 203098 }; // 203894 -
-																// Latri(start
-																// and finish),
-																// 203098 -
-																// Spatalos(for
-																// recomendation)
+public class _1926SecretLibraryAccess extends QuestHandler
+{
+	private final static int	questId	= 1926;
+	private final static int[]	npc_ids	=
+										{ 203894, 203098 }; // 203894 -
+															// Latri(start
+															// and finish),
+															// 203098 -
+															// Spatalos(for
+															// recomendation)
 
-	public _1926SecretLibraryAccess() {
+	public _1926SecretLibraryAccess()
+	{
 		super(questId);
 	}
 
 	@Override
-	public void register() {
+	public void register()
+	{
 		qe.setNpcQuestData(203894).addOnQuestStart(questId);
-		for (int npc_id : npc_ids) {
+		for (int npc_id : npc_ids)
+		{
 			qe.setNpcQuestData(npc_id).addOnTalkEvent(questId);
 		}
 	}
 
 	// // self explanatory
 	// ////////////////////////////////////////////////////////////////////
-	private boolean AreVerteronQuestsFinished(Player player) {
+	private boolean AreVerteronQuestsFinished(Player player)
+	{
 		QuestState qs = player.getQuestStateList().getQuestState(1020); // last
 																		// quest
 																		// in
 																		// Verteron
 																		// state
-		return ((qs == null) || (qs.getStatus() != QuestStatus.COMPLETE)) ? false
-				: true;
+		return ((qs == null) || (qs.getStatus() != QuestStatus.COMPLETE)) ? false : true;
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env) {
+	public boolean onDialogEvent(QuestEnv env)
+	{
 		final Player player = env.getPlayer();
 		int targetId = 0;
 		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
 
-		if (targetId == 203894) {
-			if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+		if (targetId == 203894)
+		{
+			if (qs == null || qs.getStatus() == QuestStatus.NONE)
+			{
 				if (env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 4762);
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 4762);
 				else
 					return defaultQuestStartDialog(env);
-			} else if (qs.getStatus() == QuestStatus.REWARD
-					&& qs.getQuestVarById(0) == 0
-					|| qs.getStatus() == QuestStatus.COMPLETE) {
-				if (env.getDialogId() == -1
-						&& qs.getStatus() == QuestStatus.REWARD)
-					return sendQuestDialog(player, env.getVisibleObject()
-							.getObjectId(), 10002);
-				else if (env.getDialogId() == 17) {
-					ItemService.removeItemFromInventoryByItemId(player,
-							182206022);
+			}
+			else if (qs.getStatus() == QuestStatus.REWARD && qs.getQuestVarById(0) == 0 || qs.getStatus() == QuestStatus.COMPLETE)
+			{
+				if (env.getDialogId() == -1 && qs.getStatus() == QuestStatus.REWARD)
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10002);
+				else if (env.getDialogId() == 17)
+				{
+					ItemService.removeItemFromInventoryByItemId(player, 182206022);
 					qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
 					updateQuestStatus(player, qs);
 					return defaultQuestEndDialog(env);
-				} else if (env.getDialogId() == 1009) {
+				}
+				else if (env.getDialogId() == 1009)
+				{
 					return defaultQuestEndDialog(env);
 				}
-				ThreadPoolManager.getInstance().schedule(new Runnable() {
+				ThreadPoolManager.getInstance().schedule(new Runnable()
+				{
 					@Override
-					public void run() {
-						TeleportService.teleportTo(player,
-								WorldMapType.SANCTUM.getId(), 2032.9f, 1473.1f,
-								592.2f, 195);
+					public void run()
+					{
+						TeleportService.teleportTo(player, WorldMapType.SANCTUM.getId(), 2032.9f, 1473.1f, 592.2f, 195);
 					}
 				}, 3000);
 			}
-		} else if (targetId == 203098) {
-			if (qs != null && qs.getStatus() == QuestStatus.START
-					&& qs.getQuestVarById(0) == 0) {
-				if (env.getDialogId() == 25) {
-					if (AreVerteronQuestsFinished(player)) {
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1011);
-					} else
-						return sendQuestDialog(player, env.getVisibleObject()
-								.getObjectId(), 1097);
-				} else if (env.getDialogId() == 10255) {
-					if (ItemService.addItems(player, Collections
-							.singletonList(new QuestItems(182206022, 1)))) {
+		}
+		else if (targetId == 203098)
+		{
+			if (qs != null && qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 0)
+			{
+				if (env.getDialogId() == 25)
+				{
+					if (AreVerteronQuestsFinished(player))
+					{
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+					}
+					else
+						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1097);
+				}
+				else if (env.getDialogId() == 10255)
+				{
+					if (ItemService.addItems(player, Collections.singletonList(new QuestItems(182206022, 1))))
+					{
 						qs.setStatus(QuestStatus.REWARD);
 						updateQuestStatus(player, qs);
 					}
-					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
-							env.getVisibleObject().getObjectId(), 0));
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 0));
 					return true;
-				} else
+				}
+				else
 					return defaultQuestStartDialog(env);
 			}
 		}

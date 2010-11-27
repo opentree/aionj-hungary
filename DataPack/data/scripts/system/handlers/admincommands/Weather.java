@@ -31,37 +31,36 @@ import com.aionemu.gameserver.world.WorldMapType;
  * 
  */
 
-public class Weather extends AdminCommand {
+public class Weather extends AdminCommand
+{
 
-	private final static String RESET = "reset";
+	private final static String	RESET	= "reset";
 
-	private final static String COMMAND = "weather";
+	private final static String	COMMAND	= "weather";
 
-	public Weather() {
+	public Weather()
+	{
 		super(COMMAND);
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params) {
+	public void executeCommand(Player admin, String[] params)
+	{
 		// Check restriction level
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_WEATHER) {
-			PacketSendUtility.sendMessage(admin,
-					"You dont have enough rights to execute this command");
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_WEATHER)
+		{
+			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
 			return;
 		}
 
-		if (params.length == 0 || params.length > 2) {
+		if (params.length == 0 || params.length > 2)
+		{
 			// Syntax :
 			// - //weather poeta 0 -> to set clear sky in this region
 			// - //weather reset -> to change randomly all weathers in the world
 
-			PacketSendUtility
-					.sendMessage(
-							admin,
-							"syntax //"
-									+ COMMAND
-									+ "<regionName(poeta, ishalgen, etc ...)> <value(0->8)> OR //"
-									+ COMMAND + " " + RESET + "");
+			PacketSendUtility.sendMessage(admin, "syntax //" + COMMAND + "<regionName(poeta, ishalgen, etc ...)> <value(0->8)> OR //" + COMMAND + " " + RESET
+					+ "");
 			return;
 		}
 
@@ -70,48 +69,56 @@ public class Weather extends AdminCommand {
 
 		regionName = new String(params[0]);
 
-		if (params.length == 2) {
-			try {
+		if (params.length == 2)
+		{
+			try
+			{
 				weatherType = Integer.parseInt(params[1]);
-			} catch (NumberFormatException e) {
-				PacketSendUtility.sendMessage(admin,
-						"weather type parameter need to be an integer [0-8].");
+			}
+			catch (NumberFormatException e)
+			{
+				PacketSendUtility.sendMessage(admin, "weather type parameter need to be an integer [0-8].");
 				return;
 			}
 		}
 
-		if (regionName.equals(RESET)) {
+		if (regionName.equals(RESET))
+		{
 			WeatherService.getInstance().resetWeather();
 			return;
 		}
 
 		// Retrieving regionId by name
 		WorldMapType region = null;
-		for (WorldMapType worldMapType : WorldMapType.values()) {
-			if (worldMapType.name().toLowerCase()
-					.equals(regionName.toLowerCase())) {
+		for (WorldMapType worldMapType : WorldMapType.values())
+		{
+			if (worldMapType.name().toLowerCase().equals(regionName.toLowerCase()))
+			{
 				region = worldMapType;
 			}
 		}
 
-		if (region != null) {
-			if (weatherType > -1 && weatherType < 9) {
-				WeatherService.getInstance().changeRegionWeather(
-						region.getId(), new Integer(weatherType));
-			} else {
-				PacketSendUtility.sendMessage(admin,
-						"Weather type must be between 0 and 8");
+		if (region != null)
+		{
+			if (weatherType > -1 && weatherType < 9)
+			{
+				WeatherService.getInstance().changeRegionWeather(region.getId(), new Integer(weatherType));
+			}
+			else
+			{
+				PacketSendUtility.sendMessage(admin, "Weather type must be between 0 and 8");
 				return;
 			}
-		} else {
-			PacketSendUtility.sendMessage(admin, "Region " + regionName
-					+ " not found");
+		}
+		else
+		{
+			PacketSendUtility.sendMessage(admin, "Region " + regionName + " not found");
 			return;
 		}
 	}
 
-	public static void main(String[] args) {
-		AdminCommandChatHandler.getInstance().registerAdminCommand(
-				new Weather());
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new Weather());
 	}
 }

@@ -33,22 +33,24 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
  * @author ATracer, Divinity
  * 
  */
-public class MySQL5AbyssRankDAO extends AbyssRankDAO {
+public class MySQL5AbyssRankDAO extends AbyssRankDAO
+{
 	/**
 	 * Logger for this class.
 	 */
-	private static final Logger log = Logger
-			.getLogger(MySQL5AbyssRankDAO.class);
+	private static final Logger	log				= Logger.getLogger(MySQL5AbyssRankDAO.class);
 
-	public static final String SELECT_QUERY = "SELECT daily_ap, weekly_ap, ap, rank, top_ranking, daily_kill, weekly_kill, all_kill, max_rank, last_kill, last_ap, last_update FROM abyss_rank WHERE player_id = ?";
-	public static final String INSERT_QUERY = "INSERT INTO abyss_rank (player_id, daily_ap, weekly_ap, ap, rank, top_ranking, daily_kill, weekly_kill, all_kill, max_rank, last_kill, last_ap, last_update) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	public static final String UPDATE_QUERY = "UPDATE abyss_rank SET  daily_ap = ?, weekly_ap = ?, ap = ?, rank = ?, top_ranking = ?, daily_kill = ?, weekly_kill = ?, all_kill = ?, max_rank = ?, last_kill = ?, last_ap = ?, last_update = ? WHERE player_id = ?";
+	public static final String	SELECT_QUERY	= "SELECT daily_ap, weekly_ap, ap, rank, top_ranking, daily_kill, weekly_kill, all_kill, max_rank, last_kill, last_ap, last_update FROM abyss_rank WHERE player_id = ?";
+	public static final String	INSERT_QUERY	= "INSERT INTO abyss_rank (player_id, daily_ap, weekly_ap, ap, rank, top_ranking, daily_kill, weekly_kill, all_kill, max_rank, last_kill, last_ap, last_update) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	public static final String	UPDATE_QUERY	= "UPDATE abyss_rank SET  daily_ap = ?, weekly_ap = ?, ap = ?, rank = ?, top_ranking = ?, daily_kill = ?, weekly_kill = ?, all_kill = ?, max_rank = ?, last_kill = ?, last_ap = ?, last_update = ? WHERE player_id = ?";
 
 	@Override
-	public void loadAbyssRank(final Player player) {
+	public void loadAbyssRank(final Player player)
+	{
 		Connection con = null;
 
-		try {
+		try
+		{
 			con = DatabaseFactory.getConnection();
 			PreparedStatement stmt = con.prepareStatement(SELECT_QUERY);
 
@@ -56,7 +58,8 @@ public class MySQL5AbyssRankDAO extends AbyssRankDAO {
 
 			ResultSet resultSet = stmt.executeQuery();
 
-			if (resultSet.next()) {
+			if (resultSet.next())
+			{
 				int daily_ap = resultSet.getInt("daily_ap");
 				int weekly_ap = resultSet.getInt("weekly_ap");
 				int ap = resultSet.getInt("ap");
@@ -70,38 +73,44 @@ public class MySQL5AbyssRankDAO extends AbyssRankDAO {
 				int last_ap = resultSet.getInt("last_ap");
 				long last_update = resultSet.getLong("last_update");
 
-				AbyssRank abyssRank = new AbyssRank(daily_ap, weekly_ap, ap,
-						rank, top_ranking, daily_kill, weekly_kill, all_kill,
-						max_rank, last_kill, last_ap, last_update);
+				AbyssRank abyssRank = new AbyssRank(daily_ap, weekly_ap, ap, rank, top_ranking, daily_kill, weekly_kill, all_kill, max_rank, last_kill,
+						last_ap, last_update);
 				abyssRank.setPersistentState(PersistentState.UPDATED);
 				player.setAbyssRank(abyssRank);
-			} else {
-				AbyssRank abyssRank = new AbyssRank(0, 0, 0, 1, 0, 0, 0, 0, 1,
-						0, 0, System.currentTimeMillis());
+			}
+			else
+			{
+				AbyssRank abyssRank = new AbyssRank(0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, System.currentTimeMillis());
 				abyssRank.setPersistentState(PersistentState.NEW);
 				player.setAbyssRank(abyssRank);
 			}
 
 			resultSet.close();
 			stmt.close();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e)
+		{
 			log.error(e);
-		} finally {
+		}
+		finally
+		{
 			DatabaseFactory.close(con);
 		}
 	}
 
 	@Override
-	public boolean storeAbyssRank(Player player) {
+	public boolean storeAbyssRank(Player player)
+	{
 		AbyssRank rank = player.getAbyssRank();
 		boolean result = false;
-		switch (rank.getPersistentState()) {
-		case NEW:
-			result = addRank(player.getObjectId(), rank);
-			break;
-		case UPDATE_REQUIRED:
-			result = updateRank(player.getObjectId(), rank);
-			break;
+		switch (rank.getPersistentState())
+		{
+			case NEW:
+				result = addRank(player.getObjectId(), rank);
+				break;
+			case UPDATE_REQUIRED:
+				result = updateRank(player.getObjectId(), rank);
+				break;
 		}
 		rank.setPersistentState(PersistentState.UPDATED);
 		return result;
@@ -112,10 +121,12 @@ public class MySQL5AbyssRankDAO extends AbyssRankDAO {
 	 * @param rank
 	 * @return
 	 */
-	private boolean addRank(final int objectId, final AbyssRank rank) {
+	private boolean addRank(final int objectId, final AbyssRank rank)
+	{
 		Connection con = null;
 
-		try {
+		try
+		{
 			con = DatabaseFactory.getConnection();
 			PreparedStatement stmt = con.prepareStatement(INSERT_QUERY);
 
@@ -135,11 +146,15 @@ public class MySQL5AbyssRankDAO extends AbyssRankDAO {
 			stmt.execute();
 
 			return true;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e)
+		{
 			log.error(e);
 
 			return false;
-		} finally {
+		}
+		finally
+		{
 			DatabaseFactory.close(con);
 		}
 	}
@@ -149,10 +164,12 @@ public class MySQL5AbyssRankDAO extends AbyssRankDAO {
 	 * @param rank
 	 * @return
 	 */
-	private boolean updateRank(final int objectId, final AbyssRank rank) {
+	private boolean updateRank(final int objectId, final AbyssRank rank)
+	{
 		Connection con = null;
 
-		try {
+		try
+		{
 			con = DatabaseFactory.getConnection();
 			PreparedStatement stmt = con.prepareStatement(UPDATE_QUERY);
 
@@ -172,19 +189,22 @@ public class MySQL5AbyssRankDAO extends AbyssRankDAO {
 			stmt.execute();
 
 			return true;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e)
+		{
 			log.error(e);
 
 			return false;
-		} finally {
+		}
+		finally
+		{
 			DatabaseFactory.close(con);
 		}
 	}
 
 	@Override
-	public boolean supports(String databaseName, int majorVersion,
-			int minorVersion) {
-		return MySQL5DAOUtils
-				.supports(databaseName, majorVersion, minorVersion);
+	public boolean supports(String databaseName, int majorVersion, int minorVersion)
+	{
+		return MySQL5DAOUtils.supports(databaseName, majorVersion, minorVersion);
 	}
 }

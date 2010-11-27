@@ -30,30 +30,36 @@ import com.aionemu.gameserver.model.drop.DropTemplate;
  * @author ATracer
  * 
  */
-public class MySQL5DropListDAO extends DropListDAO {
-	public static final String SELECT_QUERY = "SELECT * FROM `droplist`";
+public class MySQL5DropListDAO extends DropListDAO
+{
+	public static final String	SELECT_QUERY	= "SELECT * FROM `droplist`";
 
 	@Override
-	public DropList load() {
+	public DropList load()
+	{
 		final DropList dropList = new DropList();
 
-		DB.select(SELECT_QUERY, new ParamReadStH() {
+		DB.select(SELECT_QUERY, new ParamReadStH()
+		{
 			@Override
-			public void setParams(PreparedStatement stmt) throws SQLException {
+			public void setParams(PreparedStatement stmt) throws SQLException
+			{
 			}
 
 			@Override
-			public void handleRead(ResultSet rset) throws SQLException {
-				while (rset.next()) {
+			public void handleRead(ResultSet rset) throws SQLException
+			{
+				while (rset.next())
+				{
 					int mobId = rset.getInt("mobId");
 					int itemId = rset.getInt("itemId");
 					int min = rset.getInt("min");
 					int max = rset.getInt("max");
 					float chance = rset.getFloat("chance");
 
-					if (chance > 0) {
-						DropTemplate dropTemplate = new DropTemplate(mobId,
-								itemId, min, max, chance);
+					if (chance > 0)
+					{
+						DropTemplate dropTemplate = new DropTemplate(mobId, itemId, min, max, chance);
 						dropList.addDropTemplate(mobId, dropTemplate);
 					}
 				}
@@ -67,9 +73,8 @@ public class MySQL5DropListDAO extends DropListDAO {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean supports(String databaseName, int majorVersion,
-			int minorVersion) {
-		return MySQL5DAOUtils
-				.supports(databaseName, majorVersion, minorVersion);
+	public boolean supports(String databaseName, int majorVersion, int minorVersion)
+	{
+		return MySQL5DAOUtils.supports(databaseName, majorVersion, minorVersion);
 	}
 }

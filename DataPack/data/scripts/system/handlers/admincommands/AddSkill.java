@@ -27,9 +27,11 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
  * @author Phantom
  * 
  */
-public class AddSkill extends AdminCommand {
+public class AddSkill extends AdminCommand
+{
 
-	public AddSkill() {
+	public AddSkill()
+	{
 		super("addskill");
 	}
 
@@ -42,16 +44,17 @@ public class AddSkill extends AdminCommand {
 	 * java.lang.String[])
 	 */
 	@Override
-	public void executeCommand(Player admin, String[] params) {
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_ADDSKILL) {
-			PacketSendUtility.sendMessage(admin,
-					"You dont have enough rights to execute this command");
+	public void executeCommand(Player admin, String[] params)
+	{
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_ADDSKILL)
+		{
+			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
 			return;
 		}
 
-		if (params.length != 2) {
-			PacketSendUtility.sendMessage(admin,
-					"syntax //addskill <skillId> <skillLevel>");
+		if (params.length != 2)
+		{
+			PacketSendUtility.sendMessage(admin, "syntax //addskill <skillId> <skillLevel>");
 			return;
 		}
 
@@ -60,26 +63,28 @@ public class AddSkill extends AdminCommand {
 		int skillId = 0;
 		int skillLevel = 0;
 
-		try {
+		try
+		{
 			skillId = Integer.parseInt(params[0]);
 			skillLevel = Integer.parseInt(params[1]);
-		} catch (NumberFormatException e) {
-			PacketSendUtility.sendMessage(admin,
-					"Parameters need to be an integer.");
+		}
+		catch (NumberFormatException e)
+		{
+			PacketSendUtility.sendMessage(admin, "Parameters need to be an integer.");
 			return;
 		}
 
-		if (target instanceof Player) {
+		if (target instanceof Player)
+		{
 			Player player = (Player) target;
 			player.getSkillList().addSkill(player, skillId, skillLevel, true);
 			PacketSendUtility.sendMessage(admin, "You have success add skill");
-			PacketSendUtility.sendMessage(player,
-					"You have acquire a new skill");
+			PacketSendUtility.sendMessage(player, "You have acquire a new skill");
 		}
 	}
 
-	public static void main(String[] args) {
-		AdminCommandChatHandler.getInstance().registerAdminCommand(
-				new AddSkill());
+	public static void main(String[] args)
+	{
+		AdminCommandChatHandler.getInstance().registerAdminCommand(new AddSkill());
 	}
 }

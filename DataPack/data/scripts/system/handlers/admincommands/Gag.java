@@ -32,69 +32,74 @@ import com.aionemu.gameserver.world.World;
  * @author Watson
  * 
  */
-public class Gag extends AdminCommand {
-	public Gag() {
+public class Gag extends AdminCommand
+{
+	public Gag()
+	{
 		super("gag");
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params) {
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_GAG) {
-			PacketSendUtility.sendMessage(admin,
-					"You dont have enough rights to execute this command!");
+	public void executeCommand(Player admin, String[] params)
+	{
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_GAG)
+		{
+			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command!");
 			return;
 		}
 
-		if (params == null || params.length < 1) {
-			PacketSendUtility.sendMessage(admin,
-					"Syntax: //gag <player> [time in minutes]");
+		if (params == null || params.length < 1)
+		{
+			PacketSendUtility.sendMessage(admin, "Syntax: //gag <player> [time in minutes]");
 			return;
 		}
 
 		String name = Util.convertName(params[0]);
 		final Player player = World.getInstance().findPlayer(name);
-		if (player == null) {
-			PacketSendUtility.sendMessage(admin, "Player " + name
-					+ " was not found!");
-			PacketSendUtility.sendMessage(admin,
-					"Syntax: //gag <player> [time in minutes]");
+		if (player == null)
+		{
+			PacketSendUtility.sendMessage(admin, "Player " + name + " was not found!");
+			PacketSendUtility.sendMessage(admin, "Syntax: //gag <player> [time in minutes]");
 			return;
 		}
 
 		int time = 0;
-		if (params.length > 1) {
-			try {
+		if (params.length > 1)
+		{
+			try
+			{
 				time = Integer.parseInt(params[1]);
-			} catch (NumberFormatException e) {
-				PacketSendUtility.sendMessage(admin,
-						"Syntax: //gag <player> [time in minutes]");
+			}
+			catch (NumberFormatException e)
+			{
+				PacketSendUtility.sendMessage(admin, "Syntax: //gag <player> [time in minutes]");
 				return;
 			}
 		}
 
 		player.setGagged(true);
-		if (time != 0) {
+		if (time != 0)
+		{
 			Future<?> task = player.getTask(TaskId.GAG);
 			if (task != null)
 				player.cancelTask(TaskId.GAG);
-			player.addTask(TaskId.GAG, ThreadPoolManager.getInstance()
-					.schedule(new Runnable() {
-						@Override
-						public void run() {
-							player.setGagged(false);
-							PacketSendUtility.sendMessage(player,
-									"You have been ungagged");
-						}
-					}, time * 60000L));
+			player.addTask(TaskId.GAG, ThreadPoolManager.getInstance().schedule(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					player.setGagged(false);
+					PacketSendUtility.sendMessage(player, "You have been ungagged");
+				}
+			}, time * 60000L));
 		}
-		PacketSendUtility.sendMessage(player, "You have been gagged"
-				+ (time != 0 ? " for " + time + " minutes" : ""));
+		PacketSendUtility.sendMessage(player, "You have been gagged" + (time != 0 ? " for " + time + " minutes" : ""));
 
-		PacketSendUtility.sendMessage(admin, "Player " + name + " gagged"
-				+ (time != 0 ? " for " + time + " minutes" : ""));
+		PacketSendUtility.sendMessage(admin, "Player " + name + " gagged" + (time != 0 ? " for " + time + " minutes" : ""));
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		AdminCommandChatHandler.getInstance().registerAdminCommand(new Gag());
 	}
 }
