@@ -60,7 +60,7 @@ public class ChatHandlers
 	 */
 	private void createChatHandlers()
 	{
-		final AdminCommandChatHandler adminCCH = new AdminCommandChatHandler();
+		final AdminCommandChatHandler adminCCH = AdminCommandChatHandler.getInstance();
 		addChatHandler(adminCCH);
 	}
 

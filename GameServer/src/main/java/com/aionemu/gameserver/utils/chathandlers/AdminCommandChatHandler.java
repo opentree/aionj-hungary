@@ -64,6 +64,8 @@ public class AdminCommandChatHandler implements ChatHandler
 			log.warn("Overriding handler for command " + commandName + " from " + old.getClass().getName() + " to "
 				+ command.getClass().getName());
 		}
+		if(log.isDebugEnabled())
+			log.debug("AdminCommand " + commandName + " was successfuly registered.");
 	}
 
 	@Override
