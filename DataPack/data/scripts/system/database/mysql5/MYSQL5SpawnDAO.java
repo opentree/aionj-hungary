@@ -33,36 +33,39 @@ import com.aionemu.gameserver.spawnengine.SpawnEngine;
 
 /**
  * @author Mr. Poke
- *
+ * 
  */
-public class MYSQL5SpawnDAO extends SpawnDAO
-{
+public class MYSQL5SpawnDAO extends SpawnDAO {
 	private static final Logger log = Logger.getLogger(MYSQL5SpawnDAO.class);
-	
+
 	private static final String SELECT_QUERY = "SELECT `id`, `world`, `templateId`, `x`, `y`, `z`, `heading`, `staticId`,  `interval`, `nextRespawnTime`, `spawnTime` FROM `spawn`";
-	/* (non-Javadoc)
-	 * @see com.aionemu.commons.database.dao.DAO#supports(java.lang.String, int, int)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.aionemu.commons.database.dao.DAO#supports(java.lang.String, int,
+	 * int)
 	 */
 	@Override
-	public boolean supports(String databaseName, int majorVersion, int minorVersion)
-	{
-		return MySQL5DAOUtils.supports(databaseName, majorVersion, minorVersion);
+	public boolean supports(String databaseName, int majorVersion,
+			int minorVersion) {
+		return MySQL5DAOUtils
+				.supports(databaseName, majorVersion, minorVersion);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.aionemu.gameserver.dao.SpawnDAO#load()
 	 */
 	@Override
-	public void load()
-	{
+	public void load() {
 		Connection con = null;
-		try
-		{
+		try {
 			con = DatabaseFactory.getConnection();
 			PreparedStatement stmt = con.prepareStatement(SELECT_QUERY);
 			ResultSet rset = stmt.executeQuery();
-			while(rset.next())
-			{
+			while (rset.next()) {
 				int id = rset.getInt("id");
 				int mapId = rset.getInt("world");
 				int templateId = rset.getInt("templateId");
@@ -73,20 +76,20 @@ public class MYSQL5SpawnDAO extends SpawnDAO
 				int interval = rset.getInt("interval");
 				byte heading = rset.getByte("heading");
 				String nextRespawnTime = rset.getString("nextRespawnTime");
-				SpawnTime spawnTime = SpawnTime.valueOf(rset.getString("spawnTime"));
-				SpawnTemplate template = new SpawnTemplate(id, templateId, mapId, x, y, z, heading, interval, staticId, spawnTime);
+				SpawnTime spawnTime = SpawnTime.valueOf(rset
+						.getString("spawnTime"));
+				SpawnTemplate template = new SpawnTemplate(id, templateId,
+						mapId, x, y, z, heading, interval, staticId, spawnTime);
 				if (spawnTime == SpawnTime.ALL)
-					SpawnEngine.getInstance().addSpawn(template, nextRespawnTime);
+					SpawnEngine.getInstance().addSpawn(template,
+							nextRespawnTime);
 				else
-					DayNightSpawnManager.getInstance().addSpawnTemplate(template);
+					DayNightSpawnManager.getInstance().addSpawnTemplate(
+							template);
 			}
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			log.fatal("Could not restore spawn data!", e);
-		}
-		finally
-		{
+		} finally {
 			DatabaseFactory.close(con);
 		}
 	}

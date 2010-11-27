@@ -33,46 +33,41 @@ import com.aionemu.gameserver.model.gameobjects.player.RecipeList;
 
 /**
  * @author lord_rex
- *
+ * 
  */
-public class MySQL5PlayerRecipesDAO extends PlayerRecipesDAO
-{
-	private static final Logger log = Logger.getLogger(MySQL5PlayerRecipesDAO.class);
-	
+public class MySQL5PlayerRecipesDAO extends PlayerRecipesDAO {
+	private static final Logger log = Logger
+			.getLogger(MySQL5PlayerRecipesDAO.class);
+
 	private static final String SELECT_QUERY = "SELECT `recipe_id` FROM player_recipes WHERE `player_id`=?";
 	private static final String ADD_QUERY = "INSERT INTO player_recipes (`player_id`, `recipe_id`) VALUES (?, ?)";
 	private static final String DELETE_QUERY = "DELETE FROM player_recipes WHERE `player_id`=? AND `recipe_id`=?";
-	
+
 	@Override
-	public RecipeList load(final int playerId)
-	{
-		final HashSet<Integer>		recipeList = new HashSet<Integer>();
+	public RecipeList load(final int playerId) {
+		final HashSet<Integer> recipeList = new HashSet<Integer>();
 		DB.select(SELECT_QUERY, new ParamReadStH() {
 			@Override
-			public void setParams(PreparedStatement ps) throws SQLException
-			{
+			public void setParams(PreparedStatement ps) throws SQLException {
 				ps.setInt(1, playerId);
 			}
 
 			@Override
-			public void handleRead(ResultSet rs) throws SQLException
-			{
-				while(rs.next())
-				{
+			public void handleRead(ResultSet rs) throws SQLException {
+				while (rs.next()) {
 					recipeList.add(rs.getInt("recipe_id"));
 				}
 			}
 		});
 		return new RecipeList(recipeList);
 	}
-	
+
 	@Override
-	public boolean addRecipe(final int playerId, final int recipeId)
-	{
+	public boolean addRecipe(final int playerId, final int recipeId) {
 		return DB.insertUpdate(ADD_QUERY, new IUStH() {
 			@Override
-			public void handleInsertUpdate(PreparedStatement ps) throws SQLException
-			{
+			public void handleInsertUpdate(PreparedStatement ps)
+					throws SQLException {
 				ps.setInt(1, playerId);
 				ps.setInt(2, recipeId);
 				ps.execute();
@@ -80,35 +75,28 @@ public class MySQL5PlayerRecipesDAO extends PlayerRecipesDAO
 		});
 	}
 
-	public boolean deleteRecipe(final int playerId, final int recipeId)
-	{
+	public boolean deleteRecipe(final int playerId, final int recipeId) {
 
 		Connection con = null;
-		
-		try
-		{
+
+		try {
 			con = DatabaseFactory.getConnection();
 			PreparedStatement stmt = con.prepareStatement(DELETE_QUERY);
-			
+
 			stmt.setInt(1, playerId);
 			stmt.setInt(2, recipeId);
 			stmt.execute();
 			stmt.close();
-		}
-		catch(SQLException e)
-		{
+		} catch (SQLException e) {
 			log.error(e);
-		}
-		finally
-		{
+		} finally {
 			DatabaseFactory.close(con);
 		}
 		return true;
 	}
 
 	@Override
-	public boolean supports(String s, int i, int i1)
-	{
+	public boolean supports(String s, int i, int i1) {
 		return MySQL5DAOUtils.supports(s, i, i1);
 	}
 }

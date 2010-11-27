@@ -25,40 +25,41 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommand;
 import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
 
 /**
- * @author Nemiroff
- *         Date: 11.01.2010
+ * @author Nemiroff Date: 11.01.2010
  */
-public class Unstuck extends AdminCommand
-{
-	
-    public Unstuck() {
-        super("unstuck");
-    }
+public class Unstuck extends AdminCommand {
 
+	public Unstuck() {
+		super("unstuck");
+	}
 
-    /**
-     * Execute admin command represented by this class, with a given list of parametrs.
-     *
-     * @param admin the player of the admin that requests the command
-     * @param params the parameters of the command
-     */
-    @Override
-    public void executeCommand(Player admin, String[] params) 
-    {
-        if (admin.getAccessLevel() < AdminConfig.COMMAND_UNSTUCK) {
-            PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
-            return;
-        }
-        if (admin.getLifeStats().isAlreadyDead())
-        {
-            PacketSendUtility.sendMessage(admin, "You dont have execute this command. You die");
-            return;
-        }
-        TeleportService.moveToBindLocation(admin, true, CustomConfig.UNSTUCK_DELAY);
-    }
-    
-	public static void main(String[] args)
-	{
-		AdminCommandChatHandler.getInstance().registerAdminCommand(new Unstuck());
+	/**
+	 * Execute admin command represented by this class, with a given list of
+	 * parametrs.
+	 * 
+	 * @param admin
+	 *            the player of the admin that requests the command
+	 * @param params
+	 *            the parameters of the command
+	 */
+	@Override
+	public void executeCommand(Player admin, String[] params) {
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_UNSTUCK) {
+			PacketSendUtility.sendMessage(admin,
+					"You dont have enough rights to execute this command");
+			return;
+		}
+		if (admin.getLifeStats().isAlreadyDead()) {
+			PacketSendUtility.sendMessage(admin,
+					"You dont have execute this command. You die");
+			return;
+		}
+		TeleportService.moveToBindLocation(admin, true,
+				CustomConfig.UNSTUCK_DELAY);
+	}
+
+	public static void main(String[] args) {
+		AdminCommandChatHandler.getInstance().registerAdminCommand(
+				new Unstuck());
 	}
 }

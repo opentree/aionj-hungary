@@ -29,70 +29,65 @@ import com.aionemu.gameserver.world.zone.ZoneName;
  * @author Rhys2002
  * 
  */
-public class _1701GovernorsDirective extends QuestHandler
-{
+public class _1701GovernorsDirective extends QuestHandler {
 
-	private final static int	questId	= 1701;
+	private final static int questId = 1701;
 
-	public _1701GovernorsDirective()
-	{
+	public _1701GovernorsDirective() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
+	public void register() {
 		qe.setNpcQuestData(278501).addOnTalkEvent(questId);
 		qe.setQuestEnterZone(ZoneName.LATIS_PLAZA_400010000).add(questId);
 	}
 
 	@Override
-	public boolean onLvlUpEvent(QuestEnv env)
-	{
+	public boolean onLvlUpEvent(QuestEnv env) {
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player.getCommonData().getLevel());
-		if(qs == null || !lvlCheck || qs.getStatus() != QuestStatus.LOCKED)
+		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player
+				.getCommonData().getLevel());
+		if (qs == null || !lvlCheck || qs.getStatus() != QuestStatus.LOCKED)
 			return false;
 		qs.setStatus(QuestStatus.START);
 		updateQuestStatus(player, qs);
 		return true;
 	}
-	
+
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null)
+		if (qs == null)
 			return false;
 
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
-		if(targetId != 278501)
+		if (targetId != 278501)
 			return false;
-		if(qs.getStatus() == QuestStatus.START)
-		{
-			if(env.getDialogId() == 25)
-				return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10002);
-			else if(env.getDialogId() == 1009)
-			{
+		if (qs.getStatus() == QuestStatus.START) {
+			if (env.getDialogId() == 25)
+				return sendQuestDialog(player, env.getVisibleObject()
+						.getObjectId(), 10002);
+			else if (env.getDialogId() == 1009) {
 				qs.setStatus(QuestStatus.REWARD);
 				qs.setQuestVarById(0, 1);
 				updateQuestStatus(player, qs);
-				return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
+				return sendQuestDialog(player, env.getVisibleObject()
+						.getObjectId(), 5);
 			}
 			return false;
-		}
-		else if(qs.getStatus() == QuestStatus.REWARD)
-		{
-			if(env.getDialogId() == 17)
-			{
-				int[] ids = {1071, 1072, 1073, 1074, 1075, 1076, 1077};
-				for (int id : ids)
-				{
-					QuestService.startQuest(new QuestEnv(env.getVisibleObject(), env.getPlayer(), id, env.getDialogId()), QuestStatus.LOCKED);
+		} else if (qs.getStatus() == QuestStatus.REWARD) {
+			if (env.getDialogId() == 17) {
+				int[] ids = { 1071, 1072, 1073, 1074, 1075, 1076, 1077 };
+				for (int id : ids) {
+					QuestService.startQuest(
+							new QuestEnv(env.getVisibleObject(), env
+									.getPlayer(), id, env.getDialogId()),
+							QuestStatus.LOCKED);
 				}
 			}
 			return defaultQuestEndDialog(env);
@@ -101,13 +96,12 @@ public class _1701GovernorsDirective extends QuestHandler
 	}
 
 	@Override
-	public boolean onEnterZoneEvent(QuestEnv env, ZoneName zoneName)
-	{
-		if(zoneName != ZoneName.LATIS_PLAZA_400010000)
+	public boolean onEnterZoneEvent(QuestEnv env, ZoneName zoneName) {
+		if (zoneName != ZoneName.LATIS_PLAZA_400010000)
 			return false;
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs != null)
+		if (qs != null)
 			return false;
 		env.setQuestId(questId);
 		QuestService.startQuest(env, QuestStatus.START);

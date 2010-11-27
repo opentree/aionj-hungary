@@ -29,61 +29,52 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  * @author MrPoke remod By Xitanium
  * 
  */
-public class _1472GanimerksEspionage extends QuestHandler
-{
-	private final static int	questId	= 1472;
+public class _1472GanimerksEspionage extends QuestHandler {
+	private final static int questId = 1472;
 
-	public _1472GanimerksEspionage()
-	{
+	public _1472GanimerksEspionage() {
 		super(questId);
-	}
-	
-    @Override
-	public void register()
-	{
-		qe.setNpcQuestData(203903).addOnQuestStart(questId); //Valerius
-		qe.setNpcQuestData(203903).addOnTalkEvent(questId); //Valerius
-		qe.setNpcQuestData(798114).addOnTalkEvent(questId); //Ganimerk
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public void register() {
+		qe.setNpcQuestData(203903).addOnQuestStart(questId); // Valerius
+		qe.setNpcQuestData(203903).addOnTalkEvent(questId); // Valerius
+		qe.setNpcQuestData(798114).addOnTalkEvent(questId); // Ganimerk
+	}
+
+	@Override
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(targetId == 203903)
-		{
-			if(qs == null || qs.getStatus() == QuestStatus.NONE)
-			{
-				if(env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 4762);
+		if (targetId == 203903) {
+			if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+				if (env.getDialogId() == 25)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 4762);
 				else
 					return defaultQuestStartDialog(env);
 			}
 
-			else if(qs != null && qs.getStatus() == QuestStatus.REWARD)
-			{
+			else if (qs != null && qs.getStatus() == QuestStatus.REWARD) {
 				return defaultQuestEndDialog(env);
 			}
-		}
-		else if(targetId == 798114)
-		{
-			if(qs != null && qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 0)
-			{
-				if(env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
-				else if(env.getDialogId() == 10000)
-				{
+		} else if (targetId == 798114) {
+			if (qs != null && qs.getStatus() == QuestStatus.START
+					&& qs.getQuestVarById(0) == 0) {
+				if (env.getDialogId() == 25)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 1011);
+				else if (env.getDialogId() == 10000) {
 					qs.setStatus(QuestStatus.REWARD);
 					updateQuestStatus(player, qs);
-					PacketSendUtility
-						.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
+							env.getVisibleObject().getObjectId(), 10));
 					return true;
-				}
-				else
+				} else
 					return defaultQuestStartDialog(env);
 			}
 		}

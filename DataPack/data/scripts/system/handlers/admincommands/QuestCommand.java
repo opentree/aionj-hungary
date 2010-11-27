@@ -30,103 +30,87 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
 
 /**
  * @author MrPoke
- *
+ * 
  */
-public class QuestCommand extends AdminCommand
-{
-	public QuestCommand()
-	{
+public class QuestCommand extends AdminCommand {
+	public QuestCommand() {
 		super("quest");
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params)
-	{
-		if(admin.getAccessLevel() < AdminConfig.COMMAND_QUESTCOMMAND)
-		{
-			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
+	public void executeCommand(Player admin, String[] params) {
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_QUESTCOMMAND) {
+			PacketSendUtility.sendMessage(admin,
+					"You dont have enough rights to execute this command");
 			return;
 		}
-		
-		if(params == null || params.length < 1)
-		{
+
+		if (params == null || params.length < 1) {
 			PacketSendUtility.sendMessage(admin, "syntax //quest <start|set>");
 			return;
 		}
 		Player target = null;
 		VisibleObject creature = admin.getTarget();
-		if (admin.getTarget() instanceof Player)
-		{
-			target = (Player)creature;
+		if (admin.getTarget() instanceof Player) {
+			target = (Player) creature;
 		}
-			
-		if (target == null)
-		{
+
+		if (target == null) {
 			PacketSendUtility.sendMessage(admin, "Incorrect target!");
 			return;
 		}
 
-		if(params[0].equals("start"))
-		{
-			if (params.length != 2)
-			{
-				PacketSendUtility.sendMessage(admin, "syntax //quest start <questId>");
+		if (params[0].equals("start")) {
+			if (params.length != 2) {
+				PacketSendUtility.sendMessage(admin,
+						"syntax //quest start <questId>");
 				return;
 			}
 			int id;
-			try
-			{
+			try {
 				id = Integer.valueOf(params[1]);
-			}
-			catch (NumberFormatException e)
-			{
-				PacketSendUtility.sendMessage(admin, "syntax //quest start <questId>");
+			} catch (NumberFormatException e) {
+				PacketSendUtility.sendMessage(admin,
+						"syntax //quest start <questId>");
 				return;
 			}
 
 			QuestEnv env = new QuestEnv(null, target, id, 0);
 
-				if (QuestService.startQuest(env, QuestStatus.START))
-				{
-					PacketSendUtility.sendMessage(admin, "Quest started.");
-				}
-				else
-				{
-					PacketSendUtility.sendMessage(admin, "Quest not started.");
-				}
-		}
-		else if(params[0].equals("set"))
-		{
-			int questId,var;
+			if (QuestService.startQuest(env, QuestStatus.START)) {
+				PacketSendUtility.sendMessage(admin, "Quest started.");
+			} else {
+				PacketSendUtility.sendMessage(admin, "Quest not started.");
+			}
+		} else if (params[0].equals("set")) {
+			int questId, var;
 			QuestStatus questStatus;
-			try
-			{
+			try {
 				questId = Integer.valueOf(params[1]);
 				questStatus = QuestStatus.valueOf(params[2]);
 				var = Integer.valueOf(params[3]);
-			}
-			catch (NumberFormatException e)
-			{
-				PacketSendUtility.sendMessage(admin, "syntax //quest set <questId status var>");
+			} catch (NumberFormatException e) {
+				PacketSendUtility.sendMessage(admin,
+						"syntax //quest set <questId status var>");
 				return;
 			}
 			QuestState qs = target.getQuestStateList().getQuestState(questId);
-			if (qs == null)
-			{
-				PacketSendUtility.sendMessage(admin, "syntax //quest set <questId status var>");
+			if (qs == null) {
+				PacketSendUtility.sendMessage(admin,
+						"syntax //quest set <questId status var>");
 				return;
 			}
 			qs.setStatus(questStatus);
 			qs.setQuestVar(var);
-			PacketSendUtility.sendPacket(target, new SM_QUEST_ACCEPTED(questId, qs.getStatus(), qs.getQuestVars().getQuestVars()));
-		}
-		else 
+			PacketSendUtility.sendPacket(target, new SM_QUEST_ACCEPTED(questId,
+					qs.getStatus(), qs.getQuestVars().getQuestVars()));
+		} else
 			PacketSendUtility.sendMessage(admin, "syntax //quest <start|set>");
 		return;
 	}
 
-	public static void main(String[] args)
-	{
-		AdminCommandChatHandler.getInstance().registerAdminCommand(new QuestCommand());
+	public static void main(String[] args) {
+		AdminCommandChatHandler.getInstance().registerAdminCommand(
+				new QuestCommand());
 	}
 }

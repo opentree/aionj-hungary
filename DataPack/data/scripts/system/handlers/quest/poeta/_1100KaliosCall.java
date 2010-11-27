@@ -29,56 +29,49 @@ import com.aionemu.gameserver.world.zone.ZoneName;
  * @author MrPoke
  * 
  */
-public class _1100KaliosCall extends QuestHandler
-{
+public class _1100KaliosCall extends QuestHandler {
 
-	private final static int	questId	= 1100;
+	private final static int questId = 1100;
 
-	public _1100KaliosCall()
-	{
+	public _1100KaliosCall() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
+	public void register() {
 		qe.setNpcQuestData(203067).addOnTalkEvent(questId);
 		qe.setQuestEnterZone(ZoneName.AKARIOS_VILLAGE).add(questId);
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null)
+		if (qs == null)
 			return false;
 
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
-		if(targetId != 203067)
+		if (targetId != 203067)
 			return false;
-		if(qs.getStatus() == QuestStatus.START)
-		{
-			if(env.getDialogId() == 25)
-			{
+		if (qs.getStatus() == QuestStatus.START) {
+			if (env.getDialogId() == 25) {
 				qs.setQuestVar(1);
 				qs.setStatus(QuestStatus.REWARD);
 				updateQuestStatus(player, qs);
-				return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
-			}
-			else
+				return sendQuestDialog(player, env.getVisibleObject()
+						.getObjectId(), 1011);
+			} else
 				return defaultQuestStartDialog(env);
-		}
-		else if(qs.getStatus() == QuestStatus.REWARD)
-		{
-			if(env.getDialogId() == 17)
-			{
-				int[] ids = {1001, 1002, 1003, 1004, 1005};
-				for (int id : ids)
-				{
-					QuestService.startQuest(new QuestEnv(env.getVisibleObject(), env.getPlayer(), id, env.getDialogId()), QuestStatus.LOCKED);
+		} else if (qs.getStatus() == QuestStatus.REWARD) {
+			if (env.getDialogId() == 17) {
+				int[] ids = { 1001, 1002, 1003, 1004, 1005 };
+				for (int id : ids) {
+					QuestService.startQuest(
+							new QuestEnv(env.getVisibleObject(), env
+									.getPlayer(), id, env.getDialogId()),
+							QuestStatus.LOCKED);
 				}
 			}
 			return defaultQuestEndDialog(env);
@@ -87,13 +80,12 @@ public class _1100KaliosCall extends QuestHandler
 	}
 
 	@Override
-	public boolean onEnterZoneEvent(QuestEnv env, ZoneName zoneName)
-	{
-		if(zoneName != ZoneName.AKARIOS_VILLAGE)
+	public boolean onEnterZoneEvent(QuestEnv env, ZoneName zoneName) {
+		if (zoneName != ZoneName.AKARIOS_VILLAGE)
 			return false;
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs != null)
+		if (qs != null)
 			return false;
 		env.setQuestId(questId);
 		QuestService.startQuest(env, QuestStatus.START);

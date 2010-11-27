@@ -28,36 +28,30 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
  * @author Divinity - update
  */
 
-public class Invul extends AdminCommand
-{
-	public Invul()
-	{
+public class Invul extends AdminCommand {
+	public Invul() {
 		super("invul");
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params)
-	{
-		if(admin.getAccessLevel() < AdminConfig.COMMAND_INVUL)
-		{
-			PacketSendUtility.sendMessage(admin, "You do not have sufficient rights to execute this command");
+	public void executeCommand(Player admin, String[] params) {
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_INVUL) {
+			PacketSendUtility
+					.sendMessage(admin,
+							"You do not have sufficient rights to execute this command");
 			return;
 		}
 
-		if(admin.isInvul())
-		{
+		if (admin.isInvul()) {
 			admin.setInvul(false);
 			PacketSendUtility.sendMessage(admin, "You are now mortal.");
-		}
-		else
-		{
+		} else {
 			admin.setInvul(true);
 			PacketSendUtility.sendMessage(admin, "You are now immortal.");
 		}
 	}
-	
-	public static void main(String[] args)
-	{
+
+	public static void main(String[] args) {
 		AdminCommandChatHandler.getInstance().registerAdminCommand(new Invul());
 	}
 }

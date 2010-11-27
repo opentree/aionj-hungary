@@ -31,18 +31,15 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  * @author MrPoke
  * 
  */
-public class _1001TheKerubThreat extends QuestHandler
-{
-	private final static int	questId	= 1001;
+public class _1001TheKerubThreat extends QuestHandler {
+	private final static int questId = 1001;
 
-	public _1001TheKerubThreat()
-	{
+	public _1001TheKerubThreat() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
+	public void register() {
 		qe.setNpcQuestData(210670).addOnKillEvent(questId);
 		qe.setNpcQuestData(203071).addOnTalkEvent(questId);
 		qe.setNpcQuestData(203067).addOnTalkEvent(questId);
@@ -50,24 +47,21 @@ public class _1001TheKerubThreat extends QuestHandler
 	}
 
 	@Override
-	public boolean onKillEvent(QuestEnv env)
-	{
+	public boolean onKillEvent(QuestEnv env) {
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null)
+		if (qs == null)
 			return false;
 
 		int var = qs.getQuestVarById(0);
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
-		if(qs.getStatus() != QuestStatus.START)
+		if (qs.getStatus() != QuestStatus.START)
 			return false;
-		if(targetId == 210670)
-		{
-			if(var > 0 && var < 6)
-			{
+		if (targetId == 210670) {
+			if (var > 0 && var < 6) {
 				qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
 				updateQuestStatus(player, qs);
 				return true;
@@ -77,11 +71,10 @@ public class _1001TheKerubThreat extends QuestHandler
 	}
 
 	@Override
-	public boolean onLvlUpEvent(QuestEnv env)
-	{
+	public boolean onLvlUpEvent(QuestEnv env) {
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null || qs.getStatus() != QuestStatus.LOCKED)
+		if (qs == null || qs.getStatus() != QuestStatus.LOCKED)
 			return false;
 		qs.setStatus(QuestStatus.START);
 		updateQuestStatus(player, qs);
@@ -89,78 +82,77 @@ public class _1001TheKerubThreat extends QuestHandler
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null)
+		if (qs == null)
 			return false;
 
 		int var = qs.getQuestVarById(0);
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
-		if(qs.getStatus() == QuestStatus.START)
-		{
-			if(targetId == 203071)
-			{
-				switch(env.getDialogId())
-				{
-					case 1012:
-						PacketSendUtility.sendPacket(player, new SM_PLAY_MOVIE(0, 15));
-						return false;
-					case 25:
-						if(var == 0)
-							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
-						else if(var == 6)
-							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
-						else if(var == 7)
-							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
-						return false;
-					case 10002:
-					case 33:
-						if(var == 7)
-						{
-							long itemCount = player.getInventory().getItemCountByItemId(182200001);
-							if(itemCount >= 5)
-							{
-								if(env.getDialogId() == 33)
-								{
-									return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1694);
-								}
-								else
-								{
-									ItemService.removeItemFromInventoryByItemId(player, 182200001);
-									qs.setQuestVarById(0, var + 1);
-									qs.setStatus(QuestStatus.REWARD);
-									updateQuestStatus(player, qs);
-									PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
-									return true;
-								}
+		if (qs.getStatus() == QuestStatus.START) {
+			if (targetId == 203071) {
+				switch (env.getDialogId()) {
+				case 1012:
+					PacketSendUtility.sendPacket(player, new SM_PLAY_MOVIE(0,
+							15));
+					return false;
+				case 25:
+					if (var == 0)
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 1011);
+					else if (var == 6)
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 1352);
+					else if (var == 7)
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 1693);
+					return false;
+				case 10002:
+				case 33:
+					if (var == 7) {
+						long itemCount = player.getInventory()
+								.getItemCountByItemId(182200001);
+						if (itemCount >= 5) {
+							if (env.getDialogId() == 33) {
+								return sendQuestDialog(player, env
+										.getVisibleObject().getObjectId(), 1694);
+							} else {
+								ItemService.removeItemFromInventoryByItemId(
+										player, 182200001);
+								qs.setQuestVarById(0, var + 1);
+								qs.setStatus(QuestStatus.REWARD);
+								updateQuestStatus(player, qs);
+								PacketSendUtility.sendPacket(player,
+										new SM_DIALOG_WINDOW(env
+												.getVisibleObject()
+												.getObjectId(), 10));
+								return true;
 							}
-							else
-								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1779);
-						}
-						return true;
-					case 10000:
-					case 10001:
-						if(var == 0 || var == 6)
-						{
-							qs.setQuestVarById(0, var + 1);
-							updateQuestStatus(player, qs);
-							PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
-						}
-						return true;
-					default:
-						return false;
+						} else
+							return sendQuestDialog(player, env
+									.getVisibleObject().getObjectId(), 1779);
+					}
+					return true;
+				case 10000:
+				case 10001:
+					if (var == 0 || var == 6) {
+						qs.setQuestVarById(0, var + 1);
+						updateQuestStatus(player, qs);
+						PacketSendUtility.sendPacket(player,
+								new SM_DIALOG_WINDOW(env.getVisibleObject()
+										.getObjectId(), 10));
+					}
+					return true;
+				default:
+					return false;
 				}
 			}
-		}
-		else if(qs.getStatus() == QuestStatus.REWARD)
-		{
-			if(targetId == 203067)
-			{
+		} else if (qs.getStatus() == QuestStatus.REWARD) {
+			if (targetId == 203067) {
 				return defaultQuestEndDialog(env);
 			}
 		}

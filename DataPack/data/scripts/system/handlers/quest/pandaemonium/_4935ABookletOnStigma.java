@@ -34,47 +34,44 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  * @author kecimis
  * 
  */
-public class _4935ABookletOnStigma extends QuestHandler
-{
+public class _4935ABookletOnStigma extends QuestHandler {
 
-	private final static int	questId	= 4935;
-	private final static int[]	npc_ids	= { 204051, 204285, 279005 };
+	private final static int questId = 4935;
+	private final static int[] npc_ids = { 204051, 204285, 279005 };
 
 	/*
-	 * 204051 - Vergelmir 204285 - Teirunerk 279005 - Kohrunerk 182207104 - Pirates Research Log
+	 * 204051 - Vergelmir 204285 - Teirunerk 279005 - Kohrunerk 182207104 -
+	 * Pirates Research Log
 	 */
 
-	public _4935ABookletOnStigma()
-	{
+	public _4935ABookletOnStigma() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
+	public void register() {
 		qe.setNpcQuestData(204051).addOnQuestStart(questId); // Vergelmir
 		qe.setQuestItemIds(182207107).add(questId); // Teirunerks Letter
 		qe.setQuestItemIds(182207108).add(questId); // Tattered Booklet
-		for(int npc_id : npc_ids)
+		for (int npc_id : npc_ids)
 			qe.setNpcQuestData(npc_id).addOnTalkEvent(questId);
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
 
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
-		if(qs == null || qs.getStatus() == QuestStatus.NONE)
-		{
-			if(targetId == 204051)// Vergelmir
+		if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+			if (targetId == 204051)// Vergelmir
 			{
-				if(env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 4762);
+				if (env.getDialogId() == 25)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 4762);
 				else
 					return defaultQuestStartDialog(env);
 
@@ -84,70 +81,74 @@ public class _4935ABookletOnStigma extends QuestHandler
 
 		int var = qs.getQuestVarById(0);
 
-		if(qs.getStatus() == QuestStatus.REWARD)
-		{
+		if (qs.getStatus() == QuestStatus.REWARD) {
 
-			if(targetId == 204051 && player.getInventory().getItemCountByItemId(182207108) == 1)// Vergelmir
+			if (targetId == 204051
+					&& player.getInventory().getItemCountByItemId(182207108) == 1)// Vergelmir
 			{
-				if(env.getDialogId() == -1)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10002);
-				else if(env.getDialogId() == 1009)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
+				if (env.getDialogId() == -1)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 10002);
+				else if (env.getDialogId() == 1009)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 5);
 				else
 					return defaultQuestEndDialog(env);
 			}
 			return false;
-		}
-		else if(qs.getStatus() == QuestStatus.START)
-		{
-			if(targetId == 204285)// Teirunerk
+		} else if (qs.getStatus() == QuestStatus.START) {
+			if (targetId == 204285)// Teirunerk
 			{
-				switch(env.getDialogId())
-				{
-					case 25:
-						if(var == 0)
-							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
-						if(var == 1)
-							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
-					case 33:
-						if(var == 1)
-						{
-							if(QuestService.collectItemCheck(env, true))
-							{
-								qs.setQuestVarById(0, var + 1);
-								updateQuestStatus(player, qs);
-								ItemService.addItems(player, Collections.singletonList(new QuestItems(182207107, 1)));
-								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10000);
-							}
-							else
-								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10001);
-						}
-					case 10000:
-						if(var == 0)
+				switch (env.getDialogId()) {
+				case 25:
+					if (var == 0)
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 1011);
+					if (var == 1)
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 1352);
+				case 33:
+					if (var == 1) {
+						if (QuestService.collectItemCheck(env, true)) {
 							qs.setQuestVarById(0, var + 1);
-						updateQuestStatus(player, qs);
-						PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(),
-							10));
-						return true;
+							updateQuestStatus(player, qs);
+							ItemService.addItems(player,
+									Collections.singletonList(new QuestItems(
+											182207107, 1)));
+							return sendQuestDialog(player, env
+									.getVisibleObject().getObjectId(), 10000);
+						} else
+							return sendQuestDialog(player, env
+									.getVisibleObject().getObjectId(), 10001);
+					}
+				case 10000:
+					if (var == 0)
+						qs.setQuestVarById(0, var + 1);
+					updateQuestStatus(player, qs);
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
+							env.getVisibleObject().getObjectId(), 10));
+					return true;
 				}
 				return false;
-			}
-			else if(targetId == 279005 && player.getInventory().getItemCountByItemId(182207107) == 1)// Kohrunerk
+			} else if (targetId == 279005
+					&& player.getInventory().getItemCountByItemId(182207107) == 1)// Kohrunerk
 			{
-				switch(env.getDialogId())
-				{
-					case 25:
-						if(var == 2)
-							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
-					case 10255:
-						if(var == 2)
-							ItemService.removeItemFromInventoryByItemId(player, 182207107);
-						ItemService.addItems(player, Collections.singletonList(new QuestItems(182207108, 1)));
-						PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(),
-							10));
-						qs.setStatus(QuestStatus.REWARD);
-						updateQuestStatus(player, qs);
-						return true;
+				switch (env.getDialogId()) {
+				case 25:
+					if (var == 2)
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 1693);
+				case 10255:
+					if (var == 2)
+						ItemService.removeItemFromInventoryByItemId(player,
+								182207107);
+					ItemService.addItems(player, Collections
+							.singletonList(new QuestItems(182207108, 1)));
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
+							env.getVisibleObject().getObjectId(), 10));
+					qs.setStatus(QuestStatus.REWARD);
+					updateQuestStatus(player, qs);
+					return true;
 				}
 
 			}

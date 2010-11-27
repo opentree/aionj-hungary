@@ -37,119 +37,100 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
  * @author Balthazar
  */
 
-public class _1647DressingUpForBollvig extends QuestHandler
-{
-	private final static int	questId	= 1647;
+public class _1647DressingUpForBollvig extends QuestHandler {
+	private final static int questId = 1647;
 
-	public _1647DressingUpForBollvig()
-	{
+	public _1647DressingUpForBollvig() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
+	public void register() {
 		qe.setNpcQuestData(790019).addOnQuestStart(questId);
 		qe.setNpcQuestData(790019).addOnTalkEvent(questId);
 		qe.setQuestItemIds(182201783).add(questId);
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
 
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
-		if(qs == null || qs.getStatus() == QuestStatus.NONE)
-		{
-			if(targetId == 790019)
-			{
-				switch(env.getDialogId())
-				{
-					case 25:
-					{
-						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 4762);
-					}
-					case 1002:
-					{
-						if(player.getInventory().getItemCountByItemId(182201783) == 0)
-						{
-							if(!ItemService.addItems(player, Collections.singletonList(new QuestItems(182201783, 1))))
-							{
-								return true;
-							}
+		if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+			if (targetId == 790019) {
+				switch (env.getDialogId()) {
+				case 25: {
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 4762);
+				}
+				case 1002: {
+					if (player.getInventory().getItemCountByItemId(182201783) == 0) {
+						if (!ItemService.addItems(player, Collections
+								.singletonList(new QuestItems(182201783, 1)))) {
+							return true;
 						}
 					}
-					default:
-						return defaultQuestStartDialog(env);
+				}
+				default:
+					return defaultQuestStartDialog(env);
 				}
 			}
 		}
 
-		if(qs == null)
+		if (qs == null)
 			return false;
 
-		if(qs.getStatus() == QuestStatus.REWARD)
-		{
-			switch(targetId)
-			{
-				case 790019:
-				{
-					switch(env.getDialogId())
-					{
-						case 25:
-						{
-							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10002);
-						}
-						case 1009:
-						{
-							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
-						}
-						default:
-							return defaultQuestEndDialog(env);
-					}
+		if (qs.getStatus() == QuestStatus.REWARD) {
+			switch (targetId) {
+			case 790019: {
+				switch (env.getDialogId()) {
+				case 25: {
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 10002);
 				}
+				case 1009: {
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 5);
+				}
+				default:
+					return defaultQuestEndDialog(env);
+				}
+			}
 			}
 		}
 		return false;
 	}
 
 	@Override
-	public boolean onItemUseEvent(QuestEnv env, final Item item)
-	{
+	public boolean onItemUseEvent(QuestEnv env, final Item item) {
 		final Player player = env.getPlayer();
 		final int id = item.getItemTemplate().getTemplateId();
 		final int itemObjId = item.getObjectId();
 
-		if(id != 182201783)
-		{
+		if (id != 182201783) {
 			return false;
 		}
 
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null)
-		{
+		if (qs == null) {
 			return false;
 		}
 
 		int var = qs.getQuestVars().getQuestVars();
-		if(var != 0)
-		{
+		if (var != 0) {
 			return false;
 		}
 
-		if(qs.getStatus() != QuestStatus.START)
-		{
+		if (qs.getStatus() != QuestStatus.START) {
 			return false;
 		}
 
-		if(MathUtil.getDistance(1677, 2520, 100, player.getPosition().getX(), player.getPosition().getY(), player
-			.getPosition().getZ()) > 5)
-		{
+		if (MathUtil.getDistance(1677, 2520, 100, player.getPosition().getX(),
+				player.getPosition().getY(), player.getPosition().getZ()) > 5) {
 			return false;
 		}
 
@@ -158,33 +139,33 @@ public class _1647DressingUpForBollvig extends QuestHandler
 		boolean CheckitemId1 = false;
 		boolean CheckitemId2 = false;
 
-		List<Item> items1 = player.getEquipment().getEquippedItemsByItemId(itemId1);
-		for(@SuppressWarnings("unused")
-		Item ListeCheckitemId1 : items1)
-		{
+		List<Item> items1 = player.getEquipment().getEquippedItemsByItemId(
+				itemId1);
+		for (@SuppressWarnings("unused")
+		Item ListeCheckitemId1 : items1) {
 			CheckitemId1 = true;
 		}
 
-		List<Item> items2 = player.getEquipment().getEquippedItemsByItemId(itemId2);
-		for(@SuppressWarnings("unused")
-		Item ListeCheckitemId2 : items2)
-		{
+		List<Item> items2 = player.getEquipment().getEquippedItemsByItemId(
+				itemId2);
+		for (@SuppressWarnings("unused")
+		Item ListeCheckitemId2 : items2) {
 			CheckitemId2 = true;
 		}
 
-		if(!CheckitemId1 && CheckitemId2 || CheckitemId1 && !CheckitemId2 || !CheckitemId1 && !CheckitemId2)
-		{
+		if (!CheckitemId1 && CheckitemId2 || CheckitemId1 && !CheckitemId2
+				|| !CheckitemId1 && !CheckitemId2) {
 			return false;
 		}
 
-		PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id,
-			3000, 0, 0), true);
-		ThreadPoolManager.getInstance().schedule(new Runnable(){
+		PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(
+				player.getObjectId(), itemObjId, id, 3000, 0, 0), true);
+		ThreadPoolManager.getInstance().schedule(new Runnable() {
 			@Override
-			public void run()
-			{
-				PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId,
-					id, 0, 1, 0), true);
+			public void run() {
+				PacketSendUtility.broadcastPacket(player,
+						new SM_ITEM_USAGE_ANIMATION(player.getObjectId(),
+								itemObjId, id, 0, 1, 0), true);
 				ItemService.removeItemFromInventory(player, item);
 				qs.setStatus(QuestStatus.REWARD);
 				updateQuestStatus(player, qs);

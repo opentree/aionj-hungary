@@ -26,29 +26,30 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommand;
 import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
 
 /**
- * This server command is used for creating and sending custom packets from server to client. It's used in development
- * purpose.<br>
+ * This server command is used for creating and sending custom packets from
+ * server to client. It's used in development purpose.<br>
  * <b>command name: //fsc</b></br> <b>params:</b>
  * <ul>
- * <li>packet id (it's one byte) - maybe in dec format (for example 227), but may be also in hex format (for example
- * 0xE3)</li>
- * <li>package format string - string containing with letters: d (represents writeD()), h (represents writeH()), c
- * (represents writeC()), f (represents writeF()), e (represents write DF()), q (represents writeQ()), s (represents
+ * <li>packet id (it's one byte) - maybe in dec format (for example 227), but
+ * may be also in hex format (for example 0xE3)</li>
+ * <li>package format string - string containing with letters: d (represents
+ * writeD()), h (represents writeH()), c (represents writeC()), f (represents
+ * writeF()), e (represents write DF()), q (represents writeQ()), s (represents
  * writeS())</li>
- * <li>list of data - here goes all data for corresponding to proper format parts.</li>
+ * <li>list of data - here goes all data for corresponding to proper format
+ * parts.</li>
  * </ul>
  * Example:<br>
- * //fsc 0xD8 cdds 8 50 80 someText - will send packet with id 0xD8 (subids will be added automaticaly) then will be
- * sent one byte - 8, later two ints -50 and 80 and at the end a String - someText
+ * //fsc 0xD8 cdds 8 50 80 someText - will send packet with id 0xD8 (subids will
+ * be added automaticaly) then will be sent one byte - 8, later two ints -50 and
+ * 80 and at the end a String - someText
  * 
  * @author Luno
  * 
  */
 
-public class SendFakeServerPacket extends AdminCommand
-{
-	public SendFakeServerPacket()
-	{
+public class SendFakeServerPacket extends AdminCommand {
+	public SendFakeServerPacket() {
 		super("fsc");
 	}
 
@@ -57,39 +58,37 @@ public class SendFakeServerPacket extends AdminCommand
 	 */
 
 	@Override
-	public void executeCommand(Player admin, String[] params)
-	{
-		if(admin.getAccessLevel() < AdminConfig.COMMAND_SENDFAKESERVERPACKET)
-		{
-			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
+	public void executeCommand(Player admin, String[] params) {
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_SENDFAKESERVERPACKET) {
+			PacketSendUtility.sendMessage(admin,
+					"You dont have enough rights to execute this command");
 			return;
 		}
-		
-		if(params.length < 3)
-		{
-			PacketSendUtility.sendMessage(admin, "Incorrent number of params in //fsc command");
+
+		if (params.length < 3) {
+			PacketSendUtility.sendMessage(admin,
+					"Incorrent number of params in //fsc command");
 			return;
 		}
 
 		int id = Integer.decode(params[0]);
 		String format = "";
 
-		if(params.length > 1)
+		if (params.length > 1)
 			format = params[1];
 
 		SM_CUSTOM_PACKET packet = new SM_CUSTOM_PACKET(id);
 
 		int i = 0;
-		for(char c : format.toCharArray())
-		{
+		for (char c : format.toCharArray()) {
 			packet.addElement(PacketElementType.getByCode(c), params[i + 2]);
 			i++;
 		}
 		PacketSendUtility.sendPacket(admin, packet);
 	}
-	
-	public static void main(String[] args)
-	{
-		AdminCommandChatHandler.getInstance().registerAdminCommand(new SendFakeServerPacket());
+
+	public static void main(String[] args) {
+		AdminCommandChatHandler.getInstance().registerAdminCommand(
+				new SendFakeServerPacket());
 	}
 }

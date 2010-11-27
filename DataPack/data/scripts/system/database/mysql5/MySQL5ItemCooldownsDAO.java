@@ -30,38 +30,31 @@ import com.aionemu.gameserver.model.items.ItemCooldown;
 
 /**
  * @author ATracer
- *
+ * 
  */
-public class MySQL5ItemCooldownsDAO extends ItemCooldownsDAO
-{
+public class MySQL5ItemCooldownsDAO extends ItemCooldownsDAO {
 	public static final String INSERT_QUERY = "INSERT INTO `item_cooldowns` (`player_id`, `delay_id`, `use_delay`, `reuse_time`) VALUES (?,?,?,?)";
 	public static final String DELETE_QUERY = "DELETE FROM `item_cooldowns` WHERE `player_id`=?";
 	public static final String SELECT_QUERY = "SELECT `delay_id`, `use_delay`, `reuse_time` FROM `item_cooldowns` WHERE `player_id`=?";
 
-	
 	@Override
-	public void loadItemCooldowns(final Player player)
-	{
-		DB.select(SELECT_QUERY, new ParamReadStH()
-		{
+	public void loadItemCooldowns(final Player player) {
+		DB.select(SELECT_QUERY, new ParamReadStH() {
 			@Override
-			public void setParams(PreparedStatement stmt) throws SQLException
-			{
+			public void setParams(PreparedStatement stmt) throws SQLException {
 				stmt.setInt(1, player.getObjectId());
 			}
 
 			@Override
-			public void handleRead(ResultSet rset) throws SQLException
-			{
-				while(rset.next())
-				{
+			public void handleRead(ResultSet rset) throws SQLException {
+				while (rset.next()) {
 					int delayId = rset.getInt("delay_id");
 					int useDelay = rset.getInt("use_delay");
 					long reuseTime = rset.getLong("reuse_time");
-										
-					if(reuseTime > System.currentTimeMillis())
+
+					if (reuseTime > System.currentTimeMillis())
 						player.addItemCoolDown(delayId, reuseTime, useDelay);
-					
+
 				}
 			}
 		});
@@ -69,44 +62,40 @@ public class MySQL5ItemCooldownsDAO extends ItemCooldownsDAO
 	}
 
 	@Override
-	public void storeItemCooldowns(final Player player)
-	{
+	public void storeItemCooldowns(final Player player) {
 		deleteItemCooldowns(player);
-		Map<Integer, ItemCooldown> itemCoolDowns = player.getItemCoolDowns();		
-		
-		if(itemCoolDowns == null)
+		Map<Integer, ItemCooldown> itemCoolDowns = player.getItemCoolDowns();
+
+		if (itemCoolDowns == null)
 			return;
-		
-		for(Map.Entry<Integer, ItemCooldown> entry : itemCoolDowns.entrySet())
-		{
+
+		for (Map.Entry<Integer, ItemCooldown> entry : itemCoolDowns.entrySet()) {
 			final int delayId = entry.getKey();
 			final long reuseTime = entry.getValue().getReuseTime();
 			final int useDelay = entry.getValue().getUseDelay();
-			
-			if(reuseTime - System.currentTimeMillis() < 30000)
+
+			if (reuseTime - System.currentTimeMillis() < 30000)
 				continue;
-			
+
 			DB.insertUpdate(INSERT_QUERY, new IUStH() {
 				@Override
-				public void handleInsertUpdate(PreparedStatement stmt) throws SQLException
-				{
+				public void handleInsertUpdate(PreparedStatement stmt)
+						throws SQLException {
 					stmt.setInt(1, player.getObjectId());
 					stmt.setInt(2, delayId);
 					stmt.setInt(3, useDelay);
-					stmt.setLong(4, reuseTime);											
+					stmt.setLong(4, reuseTime);
 					stmt.execute();
 				}
 			});
 		}
 	}
-	
-	private void deleteItemCooldowns(final Player player)
-	{
-		DB.insertUpdate(DELETE_QUERY, new IUStH()
-		{
+
+	private void deleteItemCooldowns(final Player player) {
+		DB.insertUpdate(DELETE_QUERY, new IUStH() {
 			@Override
-			public void handleInsertUpdate(PreparedStatement stmt) throws SQLException
-			{
+			public void handleInsertUpdate(PreparedStatement stmt)
+					throws SQLException {
 				stmt.setInt(1, player.getObjectId());
 				stmt.execute();
 			}
@@ -114,8 +103,7 @@ public class MySQL5ItemCooldownsDAO extends ItemCooldownsDAO
 	}
 
 	@Override
-	public boolean supports(String arg0, int arg1, int arg2)
-	{
+	public boolean supports(String arg0, int arg1, int arg2) {
 		return MySQL5DAOUtils.supports(arg0, arg1, arg2);
 	}
 }

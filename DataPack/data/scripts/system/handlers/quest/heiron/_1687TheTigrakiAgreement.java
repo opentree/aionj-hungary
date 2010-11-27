@@ -36,247 +36,204 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  * @author Balthazar
  */
 
-public class _1687TheTigrakiAgreement extends QuestHandler
-{
-	private final static int	questId	= 1687;
-	private int					Choix;
+public class _1687TheTigrakiAgreement extends QuestHandler {
+	private final static int questId = 1687;
+	private int Choix;
 
-	private static final Logger	log		= Logger.getLogger(_1687TheTigrakiAgreement.class);
+	private static final Logger log = Logger
+			.getLogger(_1687TheTigrakiAgreement.class);
 
-	public _1687TheTigrakiAgreement()
-	{
+	public _1687TheTigrakiAgreement() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
+	public void register() {
 		qe.setNpcQuestData(204601).addOnQuestStart(questId);
 		qe.setNpcQuestData(204601).addOnTalkEvent(questId);
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
 
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
-		if(qs == null || qs.getStatus() == QuestStatus.NONE || qs.getStatus() == QuestStatus.COMPLETE)
-		{
-			if(targetId == 204601)
-			{
-				if(env.getDialogId() == 25)
-				{
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 4762);
-				}
-				else
+		if (qs == null || qs.getStatus() == QuestStatus.NONE
+				|| qs.getStatus() == QuestStatus.COMPLETE) {
+			if (targetId == 204601) {
+				if (env.getDialogId() == 25) {
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 4762);
+				} else
 					return defaultQuestStartDialog(env);
 			}
 		}
 
-		if(qs == null)
+		if (qs == null)
 			return false;
 
-		if(qs.getStatus() == QuestStatus.START)
-		{
-			switch(targetId)
-			{
-				case 204601:
-				{
-					switch(env.getDialogId())
-					{
-						case 25:
-						{
-							long itemCount1 = player.getInventory().getItemCountByItemId(186000035);
-							long itemCount2 = player.getInventory().getItemCountByItemId(186000036);
-							if(itemCount1 >= 2 && itemCount2 >= 5)
-							{
-								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
-							}
-						}
-						case 10009:
-						{
-							SetChoix(1);
-							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
-						}
-						case 10019:
-						{
-							SetChoix(2);
-							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 6);
-						}
-						case 10029:
-						{
-							SetChoix(3);
-							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 7);
-						}
-						case 8:
-						{
-							log.info("Received Choix id :" + getChoix());
-							switch(getChoix())
-							{
-								case 1:
-								{
-									if(!ItemService.addItems(player, Collections.singletonList(new QuestItems(
-										111100788, 1))))
-									{
-										return true;
-									}
-									QuestFinish(env);
-									return true;
-								}
-								case 2:
-								{
-									if(!ItemService.addItems(player, Collections.singletonList(new QuestItems(
-										112100747, 1))))
-									{
-										return true;
-									}
-									QuestFinish(env);
-									return true;
-								}
-								case 3:
-								{
-									if(!ItemService.addItems(player, Collections.singletonList(new QuestItems(
-										114100825, 1))))
-									{
-										return true;
-									}
-									QuestFinish(env);
-									return true;
-								}
-							}
-						}
-						case 9:
-						{
-							switch(getChoix())
-							{
-								case 1:
-								{
-									if(!ItemService.addItems(player, Collections.singletonList(new QuestItems(
-										111300792, 1))))
-									{
-										return true;
-									}
-									QuestFinish(env);
-									return true;
-								}
-								case 2:
-								{
-									if(!ItemService.addItems(player, Collections.singletonList(new QuestItems(
-										112300744, 1))))
-									{
-										return true;
-									}
-									QuestFinish(env);
-									return true;
-								}
-								case 3:
-								{
-									if(!ItemService.addItems(player, Collections.singletonList(new QuestItems(
-										114300851, 1))))
-									{
-										return true;
-									}
-									QuestFinish(env);
-									return true;
-								}
-							}
-						}
-						case 10:
-						{
-							switch(getChoix())
-							{
-								case 1:
-								{
-									if(!ItemService.addItems(player, Collections.singletonList(new QuestItems(
-										111500775, 1))))
-									{
-										return true;
-									}
-									QuestFinish(env);
-									return true;
-								}
-								case 2:
-								{
-									if(!ItemService.addItems(player, Collections.singletonList(new QuestItems(
-										112500732, 1))))
-									{
-										return true;
-									}
-									QuestFinish(env);
-									return true;
-								}
-								case 3:
-								{
-									if(!ItemService.addItems(player, Collections.singletonList(new QuestItems(
-										114500797, 1))))
-									{
-										return true;
-									}
-									QuestFinish(env);
-									return true;
-								}
-							}
-						}
-						case 11:
-						{
-							switch(getChoix())
-							{
-								case 1:
-								{
-									if(!ItemService.addItems(player, Collections.singletonList(new QuestItems(
-										111600767, 1))))
-									{
-										return true;
-									}
-									QuestFinish(env);
-									return true;
-								}
-								case 2:
-								{
-									if(!ItemService.addItems(player, Collections.singletonList(new QuestItems(
-										112600743, 1))))
-									{
-										return true;
-									}
-									QuestFinish(env);
-									return true;
-								}
-								case 3:
-								{
-									if(!ItemService.addItems(player, Collections.singletonList(new QuestItems(
-										114600754, 1))))
-									{
-										return true;
-									}
-									QuestFinish(env);
-									return true;
-								}
-							}
-						}
+		if (qs.getStatus() == QuestStatus.START) {
+			switch (targetId) {
+			case 204601: {
+				switch (env.getDialogId()) {
+				case 25: {
+					long itemCount1 = player.getInventory()
+							.getItemCountByItemId(186000035);
+					long itemCount2 = player.getInventory()
+							.getItemCountByItemId(186000036);
+					if (itemCount1 >= 2 && itemCount2 >= 5) {
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 1352);
 					}
 				}
+				case 10009: {
+					SetChoix(1);
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 5);
+				}
+				case 10019: {
+					SetChoix(2);
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 6);
+				}
+				case 10029: {
+					SetChoix(3);
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 7);
+				}
+				case 8: {
+					log.info("Received Choix id :" + getChoix());
+					switch (getChoix()) {
+					case 1: {
+						if (!ItemService.addItems(player, Collections
+								.singletonList(new QuestItems(111100788, 1)))) {
+							return true;
+						}
+						QuestFinish(env);
+						return true;
+					}
+					case 2: {
+						if (!ItemService.addItems(player, Collections
+								.singletonList(new QuestItems(112100747, 1)))) {
+							return true;
+						}
+						QuestFinish(env);
+						return true;
+					}
+					case 3: {
+						if (!ItemService.addItems(player, Collections
+								.singletonList(new QuestItems(114100825, 1)))) {
+							return true;
+						}
+						QuestFinish(env);
+						return true;
+					}
+					}
+				}
+				case 9: {
+					switch (getChoix()) {
+					case 1: {
+						if (!ItemService.addItems(player, Collections
+								.singletonList(new QuestItems(111300792, 1)))) {
+							return true;
+						}
+						QuestFinish(env);
+						return true;
+					}
+					case 2: {
+						if (!ItemService.addItems(player, Collections
+								.singletonList(new QuestItems(112300744, 1)))) {
+							return true;
+						}
+						QuestFinish(env);
+						return true;
+					}
+					case 3: {
+						if (!ItemService.addItems(player, Collections
+								.singletonList(new QuestItems(114300851, 1)))) {
+							return true;
+						}
+						QuestFinish(env);
+						return true;
+					}
+					}
+				}
+				case 10: {
+					switch (getChoix()) {
+					case 1: {
+						if (!ItemService.addItems(player, Collections
+								.singletonList(new QuestItems(111500775, 1)))) {
+							return true;
+						}
+						QuestFinish(env);
+						return true;
+					}
+					case 2: {
+						if (!ItemService.addItems(player, Collections
+								.singletonList(new QuestItems(112500732, 1)))) {
+							return true;
+						}
+						QuestFinish(env);
+						return true;
+					}
+					case 3: {
+						if (!ItemService.addItems(player, Collections
+								.singletonList(new QuestItems(114500797, 1)))) {
+							return true;
+						}
+						QuestFinish(env);
+						return true;
+					}
+					}
+				}
+				case 11: {
+					switch (getChoix()) {
+					case 1: {
+						if (!ItemService.addItems(player, Collections
+								.singletonList(new QuestItems(111600767, 1)))) {
+							return true;
+						}
+						QuestFinish(env);
+						return true;
+					}
+					case 2: {
+						if (!ItemService.addItems(player, Collections
+								.singletonList(new QuestItems(112600743, 1)))) {
+							return true;
+						}
+						QuestFinish(env);
+						return true;
+					}
+					case 3: {
+						if (!ItemService.addItems(player, Collections
+								.singletonList(new QuestItems(114600754, 1)))) {
+							return true;
+						}
+						QuestFinish(env);
+						return true;
+					}
+					}
+				}
+				}
+			}
 			}
 		}
 		return false;
 	}
 
-	public int getChoix()
-	{
+	public int getChoix() {
 		return Choix;
 	}
 
-	public void SetChoix(int Choix)
-	{
+	public void SetChoix(int Choix) {
 		this.Choix = Choix;
 	}
 
-	private void QuestFinish(QuestEnv env)
-	{
+	private void QuestFinish(QuestEnv env) {
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
 
@@ -288,8 +245,10 @@ public class _1687TheTigrakiAgreement extends QuestHandler
 		int rewardAbyssPoint = player.getRates().getQuestXpRate() * 200;
 		player.getCommonData().addExp(rewardExp);
 		player.getCommonData().addAp(rewardAbyssPoint);
-		PacketSendUtility.sendPacket(player, new SM_QUEST_ACCEPTED(questId, QuestStatus.COMPLETE, 2));
-		PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 0));
+		PacketSendUtility.sendPacket(player, new SM_QUEST_ACCEPTED(questId,
+				QuestStatus.COMPLETE, 2));
+		PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env
+				.getVisibleObject().getObjectId(), 0));
 		updateQuestStatus(player, qs);
 	}
 }

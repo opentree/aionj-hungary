@@ -34,128 +34,129 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  * @author kecimis
  * 
  */
-public class _3931HowToUseStigma extends QuestHandler
-{
-	
-	private final static int	questId	= 3931;
-	private final static int[]	npc_ids	= { 798321, 279005, 203711 };
-  /*
-   * 
-   * 798321 - Koruchinerk
-   * 279005 - Kohrunerk
-   * 203711 - Miriya   
-   * 
-   * 182207104 - Pirates Research Log               
-   */         
+public class _3931HowToUseStigma extends QuestHandler {
 
-  public _3931HowToUseStigma()
-	{
+	private final static int questId = 3931;
+	private final static int[] npc_ids = { 798321, 279005, 203711 };
+
+	/*
+	 * 
+	 * 798321 - Koruchinerk 279005 - Kohrunerk 203711 - Miriya
+	 * 
+	 * 182207104 - Pirates Research Log
+	 */
+
+	public _3931HowToUseStigma() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
-		qe.setNpcQuestData(203711).addOnQuestStart(questId);	//Miriya
-    qe.setQuestItemIds(182206080).add(questId); //Kohrunerks Belt
-    qe.setQuestItemIds(182206081).add(questId);	//Stigma Manual	
-		for(int npc_id : npc_ids)
-			qe.setNpcQuestData(npc_id).addOnTalkEvent(questId);	 
+	public void register() {
+		qe.setNpcQuestData(203711).addOnQuestStart(questId); // Miriya
+		qe.setQuestItemIds(182206080).add(questId); // Kohrunerks Belt
+		qe.setQuestItemIds(182206081).add(questId); // Stigma Manual
+		for (int npc_id : npc_ids)
+			qe.setNpcQuestData(npc_id).addOnTalkEvent(questId);
 	}
 
-	
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
-			
+
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
-		if(qs == null || qs.getStatus() == QuestStatus.NONE) 
-		{
-			if(targetId == 203711)//Miriya
+		if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+			if (targetId == 203711)// Miriya
 			{
-				if(env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 4762);
-				else return defaultQuestStartDialog(env);
-        
-      }  
-      return false;
-    }
-	
-    
-    int var = qs.getQuestVarById(0);
-    
-    if(qs.getStatus() == QuestStatus.REWARD)
-		{
-		 
-     if(targetId == 203711 && player.getInventory().getItemCountByItemId(182206081) == 1)//Miriya
-			{
-				if(env.getDialogId() == -1)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10002);
-				else if(env.getDialogId() == 1009)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
-		    else return defaultQuestEndDialog(env); 
-     	}
-		 return false;	
+				if (env.getDialogId() == 25)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 4762);
+				else
+					return defaultQuestStartDialog(env);
+
+			}
+			return false;
 		}
-		else if (qs.getStatus() == QuestStatus.START)
-		{
-     if(targetId == 798321)//Koruchinerk
-		{
-      switch(env.getDialogId())
-					{
-					case 25:
-					 if (var == 0)
-            return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
-           if (var == 1)
-            return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
-          case 33:
-           if (var == 1)
-            {
-             if(QuestService.collectItemCheck(env, true))				
-					   {
-						  qs.setQuestVarById(0, var + 1);					
-						  updateQuestStatus(player, qs);
-						  ItemService.addItems(player, Collections.singletonList(new QuestItems(182206080, 1)));
-						  return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10000);
-					   }
-					   else
-						  return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10001);
-            }
-          case 10000:
-				  if (var == 0)
-				  qs.setQuestVarById(0, var + 1);
-				  updateQuestStatus(player, qs);
-          PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
-          return true;
-          }
-		return false;				
-    }else if(targetId == 279005 && player.getInventory().getItemCountByItemId(182206080) == 1 )//Kohrunerk
-    {
-      switch(env.getDialogId())
-					{
-					case 25:
-					 if (var == 2)
-					  return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
-          case 10255:
-				   if (var == 2)
-				   ItemService.removeItemFromInventoryByItemId(player, 182206080);
-           ItemService.addItems(player, Collections.singletonList(new QuestItems(182206081, 1)));
-           PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
-           qs.setStatus(QuestStatus.REWARD);
-				   updateQuestStatus(player, qs);
-           return true;
-          }
-    
-    
-    }
-    return false;
-    }
-  return false;
-  }
-   
+
+		int var = qs.getQuestVarById(0);
+
+		if (qs.getStatus() == QuestStatus.REWARD) {
+
+			if (targetId == 203711
+					&& player.getInventory().getItemCountByItemId(182206081) == 1)// Miriya
+			{
+				if (env.getDialogId() == -1)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 10002);
+				else if (env.getDialogId() == 1009)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 5);
+				else
+					return defaultQuestEndDialog(env);
+			}
+			return false;
+		} else if (qs.getStatus() == QuestStatus.START) {
+			if (targetId == 798321)// Koruchinerk
+			{
+				switch (env.getDialogId()) {
+				case 25:
+					if (var == 0)
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 1011);
+					if (var == 1)
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 1352);
+				case 33:
+					if (var == 1) {
+						if (QuestService.collectItemCheck(env, true)) {
+							qs.setQuestVarById(0, var + 1);
+							updateQuestStatus(player, qs);
+							ItemService.addItems(player,
+									Collections.singletonList(new QuestItems(
+											182206080, 1)));
+							return sendQuestDialog(player, env
+									.getVisibleObject().getObjectId(), 10000);
+						} else
+							return sendQuestDialog(player, env
+									.getVisibleObject().getObjectId(), 10001);
+					}
+				case 10000:
+					if (var == 0)
+						qs.setQuestVarById(0, var + 1);
+					updateQuestStatus(player, qs);
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
+							env.getVisibleObject().getObjectId(), 10));
+					return true;
+				}
+				return false;
+			} else if (targetId == 279005
+					&& player.getInventory().getItemCountByItemId(182206080) == 1)// Kohrunerk
+			{
+				switch (env.getDialogId()) {
+				case 25:
+					if (var == 2)
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 1693);
+				case 10255:
+					if (var == 2)
+						ItemService.removeItemFromInventoryByItemId(player,
+								182206080);
+					ItemService.addItems(player, Collections
+							.singletonList(new QuestItems(182206081, 1)));
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
+							env.getVisibleObject().getObjectId(), 10));
+					qs.setStatus(QuestStatus.REWARD);
+					updateQuestStatus(player, qs);
+					return true;
+				}
+
+			}
+			return false;
+		}
+		return false;
+	}
+
 }

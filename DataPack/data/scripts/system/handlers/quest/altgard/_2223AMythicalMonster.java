@@ -31,102 +31,90 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /**
  * @author Mr. Poke
- *
+ * 
  */
-public class _2223AMythicalMonster extends QuestHandler
-{
+public class _2223AMythicalMonster extends QuestHandler {
 
-	private final static int	questId	= 2223;
+	private final static int questId = 2223;
 
-	public _2223AMythicalMonster()
-	{
+	public _2223AMythicalMonster() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
+	public void register() {
 		qe.setNpcQuestData(203616).addOnQuestStart(questId);
 		qe.setNpcQuestData(203616).addOnTalkEvent(questId);
 		qe.setNpcQuestData(211621).addOnKillEvent(questId);
-		deletebleItems = new int[]{182203217};
+		deletebleItems = new int[] { 182203217 };
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
 
-		if(qs == null || qs.getStatus() == QuestStatus.NONE)
-		{
-			if(targetId == 203616)
-			{
-				if(env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+		if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+			if (targetId == 203616) {
+				if (env.getDialogId() == 25)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 1011);
 				else
 					return defaultQuestStartDialog(env);
 			}
-		}
-		else if (qs.getStatus() == QuestStatus.START)
-		{
+		} else if (qs.getStatus() == QuestStatus.START) {
 			int var = qs.getQuestVarById(0);
-			switch (targetId)
-			{
-				case 203620:
-					switch (env.getDialogId())
-					{
-						case 25:
-							if (var == 0)
-								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
-							break;
-						case 10000:
-							if (var == 0)
-							{
-								if (!ItemService.addItems(player, Collections.singletonList(new QuestItems(182203217, 1))))
-									return true;
-								qs.setQuestVarById(0, var + 1);
-								updateQuestStatus(player, qs);
-								PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
-								return true;
-							}
+			switch (targetId) {
+			case 203620:
+				switch (env.getDialogId()) {
+				case 25:
+					if (var == 0)
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 1352);
+					break;
+				case 10000:
+					if (var == 0) {
+						if (!ItemService.addItems(player, Collections
+								.singletonList(new QuestItems(182203217, 1))))
+							return true;
+						qs.setQuestVarById(0, var + 1);
+						updateQuestStatus(player, qs);
+						PacketSendUtility.sendPacket(player,
+								new SM_DIALOG_WINDOW(env.getVisibleObject()
+										.getObjectId(), 10));
+						return true;
 					}
+				}
 			}
-		}
-		else if (qs.getStatus() == QuestStatus.REWARD)
-		{
+		} else if (qs.getStatus() == QuestStatus.REWARD) {
 			if (targetId == 203616)
-					return defaultQuestEndDialog(env);
+				return defaultQuestEndDialog(env);
 		}
 		return false;
 	}
-	
+
 	@Override
-	public boolean onKillEvent(QuestEnv env)
-	{
+	public boolean onKillEvent(QuestEnv env) {
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null || qs.getStatus() != QuestStatus.START)
+		if (qs == null || qs.getStatus() != QuestStatus.START)
 			return false;
-
 
 		int targetId = 0;
 		int var = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
-		switch(targetId)
-		{
-			case 211621:
-				var = qs.getQuestVarById(0);
-				if (var == 1)
-				{
-					qs.setStatus(QuestStatus.REWARD);
-					updateQuestStatus(player, qs);
-				}
-				break;
+		switch (targetId) {
+		case 211621:
+			var = qs.getQuestVarById(0);
+			if (var == 1) {
+				qs.setStatus(QuestStatus.REWARD);
+				updateQuestStatus(player, qs);
+			}
+			break;
 		}
 		return false;
 	}

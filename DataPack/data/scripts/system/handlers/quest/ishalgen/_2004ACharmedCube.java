@@ -33,145 +33,155 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 
 /**
  * @author Mr. Poke
- *
+ * 
  */
-public class _2004ACharmedCube extends QuestHandler
-{
-	private final static int	questId	= 2004;
+public class _2004ACharmedCube extends QuestHandler {
+	private final static int questId = 2004;
 
-	public _2004ACharmedCube()
-	{
+	public _2004ACharmedCube() {
 		super(questId);
 	}
+
 	@Override
-	public void register()
-	{
+	public void register() {
 		qe.addQuestLvlUp(questId);
 		qe.setNpcQuestData(203539).addOnTalkEvent(questId);
 		qe.setNpcQuestData(700047).addOnTalkEvent(questId);
 		qe.setNpcQuestData(203550).addOnTalkEvent(questId);
 		qe.setNpcQuestData(210402).addOnKillEvent(questId);
-        qe.setNpcQuestData(210403).addOnKillEvent(questId);
+		qe.setNpcQuestData(210403).addOnKillEvent(questId);
 	}
-	
+
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null)
+		if (qs == null)
 			return false;
 
 		int var = qs.getQuestVarById(0);
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
-		if(qs.getStatus() == QuestStatus.START)
-		{
-			switch (targetId)
-			{
-				case 203539:
-				{
-					switch(env.getDialogId())
-					{
-						case 25:
-							if(var == 0)
-								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
-							else if (var == 1)
-								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
-							break;
-						case 10000:
-						case 10001:
-							if (var == 0 || var == 1)
-							{
-								qs.setQuestVarById(0, var + 1);
-								updateQuestStatus(player, qs);
-								PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
-								return true;
-							}
-							break;
-						case 33:
-							if(var == 1)
-							{
-								if(player.getInventory().getItemCountByItemId(182203005) > 0)
-								{
-									return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1438);
-								}
-								else
-									return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1353);
-							}
-							break;
+		if (qs.getStatus() == QuestStatus.START) {
+			switch (targetId) {
+			case 203539: {
+				switch (env.getDialogId()) {
+				case 25:
+					if (var == 0)
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 1011);
+					else if (var == 1)
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 1352);
+					break;
+				case 10000:
+				case 10001:
+					if (var == 0 || var == 1) {
+						qs.setQuestVarById(0, var + 1);
+						updateQuestStatus(player, qs);
+						PacketSendUtility.sendPacket(player,
+								new SM_DIALOG_WINDOW(env.getVisibleObject()
+										.getObjectId(), 10));
+						return true;
 					}
-					return false;
-				}
-				case 700047:
-				{
-					final int targetObjectId = env.getVisibleObject().getObjectId();
-					if (env.getDialogId() == -1)
-					{ 
-						if(var == 1)
-						{
-						PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(player.getObjectId(), targetObjectId, 3000,
-							1));
-						PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.NEUTRALMODE2, 0,
-							targetObjectId), true);
-						ThreadPoolManager.getInstance().schedule(new Runnable(){
-							@Override
-							public void run()
-							{
-								Npc npc = (Npc)player.getTarget();
-								if(!player.isTargeting(targetObjectId))
-									return;
-								PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(player.getObjectId(),
-									targetObjectId, 3000, 0));
-								PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.START_LOOT, 0,
-									targetObjectId), true);
-								QuestService.addNewSpawn(player.getWorldId(), player.getInstanceId(), 211755, npc.getX(), npc.getY(), npc.getZ(), npc.getHeading(), true);
-								npc.onDie(null); //TODO check null or player
-							}
-						}, 3000);
-						}
+					break;
+				case 33:
+					if (var == 1) {
+						if (player.getInventory().getItemCountByItemId(
+								182203005) > 0) {
+							return sendQuestDialog(player, env
+									.getVisibleObject().getObjectId(), 1438);
+						} else
+							return sendQuestDialog(player, env
+									.getVisibleObject().getObjectId(), 1353);
 					}
-					return false;
+					break;
 				}
-				case 203550:
-				{
-					switch(env.getDialogId())
-					{
-						case 25:
-							if(var == 2)
-								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
-							else if(var == 6)
-								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2034);
-							break;
-						case 10002:
-							if (var == 2)
-							{
-								ItemService.removeItemFromInventoryByItemId(player, 182203005);
-								qs.setQuestVarById(0, 3);
-								updateQuestStatus(player, qs);
-								PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
-								return true;
-							}
-							break;
-						case 10003:
-							if (var == 6)
-							{
-								qs.setStatus(QuestStatus.REWARD);
-								updateQuestStatus(player, qs);
-								PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
-								return true;
-							}
+				return false;
+			}
+			case 700047: {
+				final int targetObjectId = env.getVisibleObject().getObjectId();
+				if (env.getDialogId() == -1) {
+					if (var == 1) {
+						PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(
+								player.getObjectId(), targetObjectId, 3000, 1));
+						PacketSendUtility.broadcastPacket(player,
+								new SM_EMOTION(player,
+										EmotionType.NEUTRALMODE2, 0,
+										targetObjectId), true);
+						ThreadPoolManager.getInstance().schedule(
+								new Runnable() {
+									@Override
+									public void run() {
+										Npc npc = (Npc) player.getTarget();
+										if (!player.isTargeting(targetObjectId))
+											return;
+										PacketSendUtility
+												.sendPacket(
+														player,
+														new SM_USE_OBJECT(
+																player.getObjectId(),
+																targetObjectId,
+																3000, 0));
+										PacketSendUtility.broadcastPacket(
+												player, new SM_EMOTION(player,
+														EmotionType.START_LOOT,
+														0, targetObjectId),
+												true);
+										QuestService.addNewSpawn(
+												player.getWorldId(),
+												player.getInstanceId(), 211755,
+												npc.getX(), npc.getY(),
+												npc.getZ(), npc.getHeading(),
+												true);
+										npc.onDie(null); // TODO check null or
+															// player
+									}
+								}, 3000);
+					}
+				}
+				return false;
+			}
+			case 203550: {
+				switch (env.getDialogId()) {
+				case 25:
+					if (var == 2)
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 1693);
+					else if (var == 6)
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 2034);
+					break;
+				case 10002:
+					if (var == 2) {
+						ItemService.removeItemFromInventoryByItemId(player,
+								182203005);
+						qs.setQuestVarById(0, 3);
+						updateQuestStatus(player, qs);
+						PacketSendUtility.sendPacket(player,
+								new SM_DIALOG_WINDOW(env.getVisibleObject()
+										.getObjectId(), 10));
+						return true;
+					}
+					break;
+				case 10003:
+					if (var == 6) {
+						qs.setStatus(QuestStatus.REWARD);
+						updateQuestStatus(player, qs);
+						PacketSendUtility.sendPacket(player,
+								new SM_DIALOG_WINDOW(env.getVisibleObject()
+										.getObjectId(), 10));
+						return true;
 					}
 				}
 			}
-		}
-		else if(qs.getStatus() == QuestStatus.REWARD)
-		{
-			if(targetId == 203539)
-			{
-				if(env.getDialogId() == -1)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375);
+			}
+		} else if (qs.getStatus() == QuestStatus.REWARD) {
+			if (targetId == 203539) {
+				if (env.getDialogId() == -1)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 2375);
 				else
 					return defaultQuestEndDialog(env);
 			}
@@ -180,46 +190,42 @@ public class _2004ACharmedCube extends QuestHandler
 	}
 
 	@Override
-	public boolean onKillEvent(QuestEnv env)
-	{
+	public boolean onKillEvent(QuestEnv env) {
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null)
+		if (qs == null)
 			return false;
 
 		int var = qs.getQuestVarById(0);
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
-		if(qs.getStatus() != QuestStatus.START)
+		if (qs.getStatus() != QuestStatus.START)
 			return false;
-		switch(targetId)
-		{
-			case 210402:
-                        case 210403:
-				if(var >= 3 && var < 8)
-				{
-					qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
-					updateQuestStatus(player, qs);
-					return true;
-				}
-                                else if(var == 8)
-                                {
-					qs.setStatus(QuestStatus.REWARD);
-					updateQuestStatus(player, qs);
-					return true;
-		                }
-               } 
+		switch (targetId) {
+		case 210402:
+		case 210403:
+			if (var >= 3 && var < 8) {
+				qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
+				updateQuestStatus(player, qs);
+				return true;
+			} else if (var == 8) {
+				qs.setStatus(QuestStatus.REWARD);
+				updateQuestStatus(player, qs);
+				return true;
+			}
+		}
 		return false;
 	}
+
 	@Override
-	public boolean onLvlUpEvent(QuestEnv env)
-	{
+	public boolean onLvlUpEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
-		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player.getCommonData().getLevel());
-		if(!lvlCheck || qs == null || qs.getStatus() != QuestStatus.LOCKED)
+		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player
+				.getCommonData().getLevel());
+		if (!lvlCheck || qs == null || qs.getStatus() != QuestStatus.LOCKED)
 			return false;
 		qs.setStatus(QuestStatus.START);
 		updateQuestStatus(player, qs);

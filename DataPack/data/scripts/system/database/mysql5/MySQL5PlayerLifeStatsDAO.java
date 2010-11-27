@@ -29,63 +29,62 @@ import com.aionemu.gameserver.model.gameobjects.stats.PlayerLifeStats;
 
 /**
  * @author Mr. Poke
- *
+ * 
  */
-public class MySQL5PlayerLifeStatsDAO extends PlayerLifeStatsDAO
-{
+public class MySQL5PlayerLifeStatsDAO extends PlayerLifeStatsDAO {
 
 	/** Logger */
-	private static final Logger					log					= Logger.getLogger(MySQL5PlayerLifeStatsDAO.class);
+	private static final Logger log = Logger
+			.getLogger(MySQL5PlayerLifeStatsDAO.class);
 
 	public static final String INSERT_QUERY = "INSERT INTO `player_life_stats` (`player_id`, `hp`, `mp`, `fp`) VALUES (?,?,?,?)";
 	public static final String DELETE_QUERY = "DELETE FROM `player_life_stats` WHERE `player_id`=?";
 	public static final String SELECT_QUERY = "SELECT `hp`, `mp`, `fp` FROM `player_life_stats` WHERE `player_id`=?";
 	public static final String UPDATE_QUERY = "UPDATE player_life_stats set `hp`=?, `mp`=?, `fp`=? WHERE `player_id`=?";
 
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.dao.PlayerLifeStatsDAO#loadPlayerLifeStat(com.aionemu.gameserver.model.gameobjects.player.Player)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.aionemu.gameserver.dao.PlayerLifeStatsDAO#loadPlayerLifeStat(com.
+	 * aionemu.gameserver.model.gameobjects.player.Player)
 	 */
 	@Override
-	public void loadPlayerLifeStat(final Player player)
-	{
+	public void loadPlayerLifeStat(final Player player) {
 		Connection con = null;
-		try
-		{
+		try {
 			con = DatabaseFactory.getConnection();
 			PreparedStatement stmt = con.prepareStatement(SELECT_QUERY);
 			stmt.setInt(1, player.getObjectId());
 			ResultSet rset = stmt.executeQuery();
-			if(rset.next())
-			{
+			if (rset.next()) {
 				PlayerLifeStats lifeStats = player.getLifeStats();
 				lifeStats.setCurrentHp(rset.getInt("hp"));
 				lifeStats.setCurrentMp(rset.getInt("mp"));
 				lifeStats.setCurrentFp(rset.getInt("fp"));
-			}
-			else
+			} else
 				insertPlayerLifeStat(player);
 			rset.close();
 			stmt.close();
-		}
-		catch (Exception e)
-		{
-			log.fatal("Could not restore PlayerLifeStat data for playerObjId: " + player.getObjectId() + " from DB: "+e.getMessage(), e);
-		}
-		finally
-		{
+		} catch (Exception e) {
+			log.fatal("Could not restore PlayerLifeStat data for playerObjId: "
+					+ player.getObjectId() + " from DB: " + e.getMessage(), e);
+		} finally {
 			DatabaseFactory.close(con);
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.dao.PlayerLifeStatsDAO#storePlayerLifeStat(com.aionemu.gameserver.model.gameobjects.player.Player)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.aionemu.gameserver.dao.PlayerLifeStatsDAO#storePlayerLifeStat(com
+	 * .aionemu.gameserver.model.gameobjects.player.Player)
 	 */
 	@Override
-	public void insertPlayerLifeStat(final Player player)
-	{
+	public void insertPlayerLifeStat(final Player player) {
 		Connection con = null;
-		try
-		{
+		try {
 			con = DatabaseFactory.getConnection();
 			PreparedStatement stmt = con.prepareStatement(INSERT_QUERY);
 			stmt.setInt(1, player.getObjectId());
@@ -94,52 +93,49 @@ public class MySQL5PlayerLifeStatsDAO extends PlayerLifeStatsDAO
 			stmt.setInt(4, player.getLifeStats().getCurrentFp());
 			stmt.execute();
 			stmt.close();
-		}
-		catch (Exception e)
-		{
-			log.fatal("Could not store PlayerLifeStat data for player " + player.getObjectId() + " from DB: "+e.getMessage(), e);
-		}
-		finally
-		{
+		} catch (Exception e) {
+			log.fatal("Could not store PlayerLifeStat data for player "
+					+ player.getObjectId() + " from DB: " + e.getMessage(), e);
+		} finally {
 			DatabaseFactory.close(con);
 		}
 	}
 
-
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.dao.PlayerLifeStatsDAO#deletePlayerLifeStat(com.aionemu.gameserver.model.gameobjects.player.Player)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.aionemu.gameserver.dao.PlayerLifeStatsDAO#deletePlayerLifeStat(com
+	 * .aionemu.gameserver.model.gameobjects.player.Player)
 	 */
 	@Override
-	public void deletePlayerLifeStat(final int playerId)
-	{
+	public void deletePlayerLifeStat(final int playerId) {
 		Connection con = null;
-		try
-		{
+		try {
 			con = DatabaseFactory.getConnection();
 			PreparedStatement stmt = con.prepareStatement(DELETE_QUERY);
 			stmt.setInt(1, playerId);
 			stmt.execute();
 			stmt.close();
-		}
-		catch (Exception e)
-		{
-			log.fatal("Could not delete PlayerLifeStat data for player " + playerId + " from DB: "+e.getMessage(), e);
-		}
-		finally
-		{
+		} catch (Exception e) {
+			log.fatal("Could not delete PlayerLifeStat data for player "
+					+ playerId + " from DB: " + e.getMessage(), e);
+		} finally {
 			DatabaseFactory.close(con);
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.dao.PlayerLifeStatsDAO#updatePlayerLifeStat(com.aionemu.gameserver.model.gameobjects.player.Player)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.aionemu.gameserver.dao.PlayerLifeStatsDAO#updatePlayerLifeStat(com
+	 * .aionemu.gameserver.model.gameobjects.player.Player)
 	 */
 	@Override
-	public void updatePlayerLifeStat(final Player player)
-	{
+	public void updatePlayerLifeStat(final Player player) {
 		Connection con = null;
-		try
-		{
+		try {
 			con = DatabaseFactory.getConnection();
 			PreparedStatement stmt = con.prepareStatement(UPDATE_QUERY);
 			stmt.setInt(1, player.getLifeStats().getCurrentHp());
@@ -148,23 +144,24 @@ public class MySQL5PlayerLifeStatsDAO extends PlayerLifeStatsDAO
 			stmt.setInt(4, player.getObjectId());
 			stmt.execute();
 			stmt.close();
-		}
-		catch (Exception e)
-		{
-			log.fatal("Could not update PlayerLifeStat data for player " + player.getObjectId() + " from DB: "+e.getMessage(), e);
-		}
-		finally
-		{
+		} catch (Exception e) {
+			log.fatal("Could not update PlayerLifeStat data for player "
+					+ player.getObjectId() + " from DB: " + e.getMessage(), e);
+		} finally {
 			DatabaseFactory.close(con);
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.aionemu.commons.database.dao.DAO#supports(java.lang.String, int, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.aionemu.commons.database.dao.DAO#supports(java.lang.String, int,
+	 * int)
 	 */
 	@Override
-	public boolean supports(String databaseName, int majorVersion, int minorVersion)
-	{
-		return MySQL5DAOUtils.supports(databaseName, majorVersion, minorVersion);
+	public boolean supports(String databaseName, int majorVersion,
+			int minorVersion) {
+		return MySQL5DAOUtils
+				.supports(databaseName, majorVersion, minorVersion);
 	}
 }

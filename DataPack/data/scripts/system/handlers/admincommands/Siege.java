@@ -34,110 +34,92 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
 /**
  * @author Sarynth
  * 
- * Command Syntax
- * //siege capture <location id> <race id> [legion id]
- * //siege set <location id> <current state> [next state] 
- * [not implemented] //siege timer <reset|set [time]>
- * //siege list
- * //siege help
+ *         Command Syntax //siege capture <location id> <race id> [legion id]
+ *         //siege set <location id> <current state> [next state] [not
+ *         implemented] //siege timer <reset|set [time]> //siege list //siege
+ *         help
  * 
- * TODO: use StringBuilder
+ *         TODO: use StringBuilder
  */
 
-public class Siege extends AdminCommand
-{
+public class Siege extends AdminCommand {
 	/**
 	 * Constructor
 	 */
-	public Siege()
-	{
+	public Siege() {
 		super("siege");
 	}
 
 	/**
-	 *  {@inheritDoc}
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void executeCommand(Player admin, String[] params)
-	{
-		if (SiegeConfig.SIEGE_ENABLED == false)
-		{
-			PacketSendUtility.sendMessage(admin, "Siege system is currently disabled.");
+	public void executeCommand(Player admin, String[] params) {
+		if (SiegeConfig.SIEGE_ENABLED == false) {
+			PacketSendUtility.sendMessage(admin,
+					"Siege system is currently disabled.");
 			return;
 		}
-		
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_SIEGE)
-		{
-			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command.");
+
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_SIEGE) {
+			PacketSendUtility.sendMessage(admin,
+					"You dont have enough rights to execute this command.");
 			return;
 		}
-		
-		if (params == null || params.length == 0)
-		{
-			PacketSendUtility.sendMessage(admin, "No parameters detected.\nPlease use //siege help");
+
+		if (params == null || params.length == 0) {
+			PacketSendUtility.sendMessage(admin,
+					"No parameters detected.\nPlease use //siege help");
 			return;
 		}
-		
+
 		// Determine Command
-		try
-		{
+		try {
 			String cmd = params[0].toLowerCase();
-			if (("help").startsWith(cmd))
-			{
+			if (("help").startsWith(cmd)) {
 				sendHelp(admin, params);
-			}
-			else if (("capture").startsWith(cmd))
-			{
+			} else if (("capture").startsWith(cmd)) {
 				processCapture(admin, params);
-			}
-			else if (("set").startsWith(cmd))
-			{
+			} else if (("set").startsWith(cmd)) {
 				processSet(admin, params);
-			}
-			else if (("timer").startsWith(cmd))
-			{
+			} else if (("timer").startsWith(cmd)) {
 				processTimer(admin, params);
-			}
-			else if (("list").startsWith(cmd))
-			{
+			} else if (("list").startsWith(cmd)) {
 				processList(admin, params);
+			} else {
+				PacketSendUtility.sendMessage(admin,
+						"Sub Command does not exist.\nPlease use //siege help");
 			}
-			else
-			{
-				PacketSendUtility.sendMessage(admin, "Sub Command does not exist.\nPlease use //siege help");
-			}
-		}
-		catch (Exception e)
-		{
-			PacketSendUtility.sendMessage(admin, "Error with your request.\nPlease use //siege help");
+		} catch (Exception e) {
+			PacketSendUtility.sendMessage(admin,
+					"Error with your request.\nPlease use //siege help");
 		}
 	}
-	
+
 	/**
 	 * @param admin
 	 * @param params
 	 */
-	private void processList(Player admin, String[] params)
-	{
+	private void processList(Player admin, String[] params) {
 		// TODO: Split //siege list [top|core|base] [fortresses|artifacts]
-		FastMap<Integer, SiegeLocation> locations = SiegeService.getInstance().getSiegeLocations();
+		FastMap<Integer, SiegeLocation> locations = SiegeService.getInstance()
+				.getSiegeLocations();
 		String msg = "[Siege Locations]\n";
-		for (FastMap.Entry<Integer, SiegeLocation> e = locations.head(),
-			end = locations.tail(); (e = e.getNext()) != end;)
-		{
-			// - (fortress|artifact) <location id> (faction owner) [legion id]\n");
+		for (FastMap.Entry<Integer, SiegeLocation> e = locations.head(), end = locations
+				.tail(); (e = e.getNext()) != end;) {
+			// - (fortress|artifact) <location id> (faction owner) [legion
+			// id]\n");
 			SiegeLocation sLoc = e.getValue();
-			msg += " - " +
-				(sLoc instanceof Artifact ? "Artifact" : 
-					(sLoc instanceof Fortress ? "Fortress" : "Other")) +
-				" " + sLoc.getLocationId() +
-				" (" + sLoc.getRace().toString() + ")" +
-				(sLoc.getLegionId() == 0 ? "" : " " + sLoc.getLegionId()) +
-				"\n";
-			
+			msg += " - "
+					+ (sLoc instanceof Artifact ? "Artifact"
+							: (sLoc instanceof Fortress ? "Fortress" : "Other"))
+					+ " " + sLoc.getLocationId() + " ("
+					+ sLoc.getRace().toString() + ")"
+					+ (sLoc.getLegionId() == 0 ? "" : " " + sLoc.getLegionId())
+					+ "\n";
+
 			// Gets long!
-			if (msg.length() > 500)
-			{
+			if (msg.length() > 500) {
 				PacketSendUtility.sendMessage(admin, msg);
 				msg = "";
 			}
@@ -149,206 +131,178 @@ public class Siege extends AdminCommand
 	 * @param admin
 	 * @param params
 	 */
-	private void processTimer(Player admin, String[] params)
-	{
+	private void processTimer(Player admin, String[] params) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	/**
 	 * @param admin
 	 * @param params
 	 */
-	private void processSet(Player admin, String[] params)
-	{
-		if (params.length < 3 || params.length > 4)
-		{
-			PacketSendUtility.sendMessage(admin, "Incorrect parameter count.\n" +
-				"Please use //siege help set");
+	private void processSet(Player admin, String[] params) {
+		if (params.length < 3 || params.length > 4) {
+			PacketSendUtility.sendMessage(admin, "Incorrect parameter count.\n"
+					+ "Please use //siege help set");
 			return;
 		}
-		
+
 		// Try to get Location Id
 		int locationId;
-		try
-		{
+		try {
 			locationId = Integer.parseInt(params[1]);
-		}
-		catch (NumberFormatException e)
-		{
-			// TODO: Enable set state by partial fortress location names. 
-			PacketSendUtility.sendMessage(admin, "Location ID must be an integer.");
+		} catch (NumberFormatException e) {
+			// TODO: Enable set state by partial fortress location names.
+			PacketSendUtility.sendMessage(admin,
+					"Location ID must be an integer.");
 			return;
 		}
-		
+
 		// Try to get Current State
 		int currentState;
-		try
-		{
+		try {
 			currentState = Integer.parseInt(params[2]);
-		}
-		catch (NumberFormatException e)
-		{
+		} catch (NumberFormatException e) {
 			String cmd = params[2].toLowerCase();
-			if (("invulnerable").startsWith(cmd))
-			{
+			if (("invulnerable").startsWith(cmd)) {
 				currentState = 0;
-			}
-			else if (("vulnerable").startsWith(cmd))
-			{
+			} else if (("vulnerable").startsWith(cmd)) {
 				currentState = 2;
-			}
-			else
-			{
-				PacketSendUtility.sendMessage(admin, "Current State must be an integer.");
+			} else {
+				PacketSendUtility.sendMessage(admin,
+						"Current State must be an integer.");
 				return;
 			}
 		}
-		
-		
+
 		// Try to get next state
 		int nextState = -1;
-		if (params.length == 4)
-		{
-			try
-			{
+		if (params.length == 4) {
+			try {
 				nextState = Integer.parseInt(params[3]);
-			}
-			catch (NumberFormatException e)
-			{
+			} catch (NumberFormatException e) {
 				String cmd = params[3].toLowerCase();
-				if (("invulnerable").startsWith(cmd))
-				{
+				if (("invulnerable").startsWith(cmd)) {
 					nextState = 0;
-				}
-				else if (("vulnerable").startsWith(cmd))
-				{
+				} else if (("vulnerable").startsWith(cmd)) {
 					nextState = 1;
-				}
-				else
-				{
-					PacketSendUtility.sendMessage(admin, "Next State must be an integer.");
+				} else {
+					PacketSendUtility.sendMessage(admin,
+							"Next State must be an integer.");
 					return;
 				}
 			}
 		}
-		
-		if (currentState != 0 && currentState != 2)
-		{
-			PacketSendUtility.sendMessage(admin, "Incorrect current state value.\n" +
-				"Please use //siege help set");
+
+		if (currentState != 0 && currentState != 2) {
+			PacketSendUtility.sendMessage(admin,
+					"Incorrect current state value.\n"
+							+ "Please use //siege help set");
 			return;
 		}
-		
-		if (params.length == 4 && nextState != 0 && nextState != 1)
-		{
-			PacketSendUtility.sendMessage(admin, "Incorrect next state value.\n" +
-				"Please use //siege help set");
+
+		if (params.length == 4 && nextState != 0 && nextState != 1) {
+			PacketSendUtility.sendMessage(admin,
+					"Incorrect next state value.\n"
+							+ "Please use //siege help set");
 			return;
 		}
-		
-		
-		SiegeLocation sLoc = SiegeService.getInstance().getSiegeLocation(locationId);
-		
-		if (sLoc == null)
-		{
-			PacketSendUtility.sendMessage(admin, "Location does not exist: " + locationId);
-			return;		
+
+		SiegeLocation sLoc = SiegeService.getInstance().getSiegeLocation(
+				locationId);
+
+		if (sLoc == null) {
+			PacketSendUtility.sendMessage(admin, "Location does not exist: "
+					+ locationId);
+			return;
 		}
-		
-		PacketSendUtility.sendMessage(admin, "[Admin Set State]\n - Location ID: " + locationId +
-			"\n - New Current State: " + (currentState == 2 ? "Vulnerable" : "Invulnerable") +
-			(params.length == 4 ? "\n - New Next State: " + (nextState == 1 ? "Vulnerable" : "Invulnerable") : "") +
-			"\n");
-		
-		if (sLoc.isVulnerable() != (currentState == 2))
-		{
+
+		PacketSendUtility.sendMessage(admin,
+				"[Admin Set State]\n - Location ID: "
+						+ locationId
+						+ "\n - New Current State: "
+						+ (currentState == 2 ? "Vulnerable" : "Invulnerable")
+						+ (params.length == 4 ? "\n - New Next State: "
+								+ (nextState == 1 ? "Vulnerable"
+										: "Invulnerable") : "") + "\n");
+
+		if (sLoc.isVulnerable() != (currentState == 2)) {
 			sLoc.setVulnerable(currentState == 2);
 		}
-		
-		if (params.length == 4 && sLoc.getNextState() != nextState)
-		{
+
+		if (params.length == 4 && sLoc.getNextState() != nextState) {
 			sLoc.setNextState(nextState);
 		}
-		
+
 		SiegeService.getInstance().broadcastUpdate(sLoc);
 	}
 
 	/**
 	 * //siege capture <location id> <race id> [legion id]
+	 * 
 	 * @param admin
 	 * @param params
 	 */
-	private void processCapture(Player admin, String[] params)
-	{
-		if (params.length < 3 || params.length > 4)
-		{
-			PacketSendUtility.sendMessage(admin, "Incorrect parameter count.\n" +
-				"Please use //siege help capture");
+	private void processCapture(Player admin, String[] params) {
+		if (params.length < 3 || params.length > 4) {
+			PacketSendUtility.sendMessage(admin, "Incorrect parameter count.\n"
+					+ "Please use //siege help capture");
 			return;
 		}
-		
+
 		// Try to get Location Id
 		int locationId;
-		try
-		{
+		try {
 			locationId = Integer.parseInt(params[1]);
-		}
-		catch (NumberFormatException e)
-		{
-			// TODO: Enable capture by partial fortress location names. 
-			PacketSendUtility.sendMessage(admin, "Location ID must be an integer.");
+		} catch (NumberFormatException e) {
+			// TODO: Enable capture by partial fortress location names.
+			PacketSendUtility.sendMessage(admin,
+					"Location ID must be an integer.");
 			return;
 		}
-		
+
 		// Try to get capturing race
 		SiegeRace race;
 		String raceName = params[2].toLowerCase();
-		if (("elyos").startsWith(raceName))
-		{
+		if (("elyos").startsWith(raceName)) {
 			race = SiegeRace.ELYOS;
-		}
-		else if (("asmos").startsWith(raceName))
-		{
+		} else if (("asmos").startsWith(raceName)) {
 			race = SiegeRace.ASMODIANS;
-		}
-		else if (("balaur").startsWith(raceName))
-		{
+		} else if (("balaur").startsWith(raceName)) {
 			race = SiegeRace.BALAUR;
-		}
-		else
-		{
-			PacketSendUtility.sendMessage(admin, "Race must be: Elyos, Asmos, or Balaur.\n" +
-			"Please use //siege help capture");
+		} else {
+			PacketSendUtility.sendMessage(admin,
+					"Race must be: Elyos, Asmos, or Balaur.\n"
+							+ "Please use //siege help capture");
 			return;
 		}
-		
+
 		// Try to get legion id
 		int legionId = 0;
-		if (params.length == 4)
-		{
-			try
-			{
+		if (params.length == 4) {
+			try {
 				legionId = Integer.parseInt(params[3]);
-			}
-			catch (NumberFormatException e)
-			{
-				// TODO: Enable capture by legion name as a string. 
-				PacketSendUtility.sendMessage(admin, "Legion ID must be an integer.");
+			} catch (NumberFormatException e) {
+				// TODO: Enable capture by legion name as a string.
+				PacketSendUtility.sendMessage(admin,
+						"Legion ID must be an integer.");
 				return;
 			}
 		}
-		
-		SiegeLocation sLoc = SiegeService.getInstance().getSiegeLocation(locationId);
-		
-		if (sLoc == null)
-		{
-			PacketSendUtility.sendMessage(admin, "Location does not exist: " + locationId);
-			return;		
+
+		SiegeLocation sLoc = SiegeService.getInstance().getSiegeLocation(
+				locationId);
+
+		if (sLoc == null) {
+			PacketSendUtility.sendMessage(admin, "Location does not exist: "
+					+ locationId);
+			return;
 		}
-		
-		PacketSendUtility.sendMessage(admin, "[Admin Capture]\n - Location ID: " + locationId +
-			"\n - Race: " + race.toString() + "\n - Legion ID: " + legionId + "\n");
+
+		PacketSendUtility.sendMessage(admin,
+				"[Admin Capture]\n - Location ID: " + locationId
+						+ "\n - Race: " + race.toString() + "\n - Legion ID: "
+						+ legionId + "\n");
 		SiegeService.getInstance().capture(locationId, race, legionId);
 	}
 
@@ -356,28 +310,19 @@ public class Siege extends AdminCommand
 	 * @param admin
 	 * @param params
 	 */
-	private void sendHelp(Player admin, String[] params)
-	{
-		if (params.length == 2)
-		{
+	private void sendHelp(Player admin, String[] params) {
+		if (params.length == 2) {
 			String cmd = params[1].toLowerCase();
-			if (("capture").startsWith(cmd))
-			{
+			if (("capture").startsWith(cmd)) {
 				sendHelpCapture(admin);
 				return;
-			}
-			else if (("set").startsWith(cmd))
-			{
+			} else if (("set").startsWith(cmd)) {
 				sendHelpSet(admin);
 				return;
-			}
-			else if (("timer").startsWith(cmd))
-			{
+			} else if (("timer").startsWith(cmd)) {
 				sendHelpTimer(admin, params);
 				return;
-			}
-			else if (("list").startsWith(cmd))
-			{
+			} else if (("list").startsWith(cmd)) {
 				sendHelpList(admin, params);
 				return;
 			}
@@ -389,59 +334,60 @@ public class Siege extends AdminCommand
 	 * @param admin
 	 * @param params
 	 */
-	private void sendHelpList(Player admin, String[] params)
-	{
-		PacketSendUtility.sendMessage(admin,
-			"[Help: Siege List Command]\n" +
-			"  The siege list command outputs each siege location." +
-			"  Format is: - (fortress|artifact) <location id> (faction owner) [legion id]\n");
+	private void sendHelpList(Player admin, String[] params) {
+		PacketSendUtility
+				.sendMessage(
+						admin,
+						"[Help: Siege List Command]\n"
+								+ "  The siege list command outputs each siege location."
+								+ "  Format is: - (fortress|artifact) <location id> (faction owner) [legion id]\n");
 	}
 
 	/**
 	 * @param admin
 	 */
-	private void sendHelpGeneral(Player admin)
-	{
-		PacketSendUtility.sendMessage(admin,
-			"[Help: Siege Command]\n" +
-			"  Use //siege help <capture|set|list> for more details on the command.\n" +
-			"  Notice: This command uses smart matching. You may abbreviate most commands.\n" +
-			"  For example: (//siege cap 1011 ely) will match to (//siege capture 1011 elyos)\n");
+	private void sendHelpGeneral(Player admin) {
+		PacketSendUtility
+				.sendMessage(
+						admin,
+						"[Help: Siege Command]\n"
+								+ "  Use //siege help <capture|set|list> for more details on the command.\n"
+								+ "  Notice: This command uses smart matching. You may abbreviate most commands.\n"
+								+ "  For example: (//siege cap 1011 ely) will match to (//siege capture 1011 elyos)\n");
 	}
 
 	/**
 	 * @param admin
 	 * @param params
 	 */
-	private void sendHelpTimer(Player admin, String[] params)
-	{
-		PacketSendUtility.sendMessage(admin,
-			"Timer not implemented.");
+	private void sendHelpTimer(Player admin, String[] params) {
+		PacketSendUtility.sendMessage(admin, "Timer not implemented.");
 	}
 
 	/**
 	 * @param admin
 	 */
-	private void sendHelpSet(Player admin)
-	{
-		PacketSendUtility.sendMessage(admin,
-			"Syntax: //siege set <location id> <current state> [next state]\n" +
-			"Current State Values: 0 - Invulnerable, 2 - Vulnerable\n" +
-			"Next State Values: 0 - Invulnerable, 1 - Vulnerable");
+	private void sendHelpSet(Player admin) {
+		PacketSendUtility
+				.sendMessage(
+						admin,
+						"Syntax: //siege set <location id> <current state> [next state]\n"
+								+ "Current State Values: 0 - Invulnerable, 2 - Vulnerable\n"
+								+ "Next State Values: 0 - Invulnerable, 1 - Vulnerable");
 	}
 
 	/**
 	 * @param admin
 	 */
-	private void sendHelpCapture(Player admin)
-	{
-		PacketSendUtility.sendMessage(admin,
-			"Syntax: //siege capture <location id> <race> [legion id]\n" +
-			"Race may be: Elyos, Asmos, Balaur. (Not case sensitive.)");
+	private void sendHelpCapture(Player admin) {
+		PacketSendUtility
+				.sendMessage(
+						admin,
+						"Syntax: //siege capture <location id> <race> [legion id]\n"
+								+ "Race may be: Elyos, Asmos, Balaur. (Not case sensitive.)");
 	}
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		AdminCommandChatHandler.getInstance().registerAdminCommand(new Siege());
 	}
 }

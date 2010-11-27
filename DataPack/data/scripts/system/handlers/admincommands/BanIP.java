@@ -27,49 +27,43 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
  * @author Watson
  * 
  */
-public class BanIP extends AdminCommand
-{
-	public BanIP()
-	{
+public class BanIP extends AdminCommand {
+	public BanIP() {
 		super("banip");
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params)
-	{
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_BAN)
-		{
-			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command!");
+	public void executeCommand(Player admin, String[] params) {
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_BAN) {
+			PacketSendUtility.sendMessage(admin,
+					"You dont have enough rights to execute this command!");
 			return;
 		}
-		
-		if (params == null || params.length < 1)
-		{
-			PacketSendUtility.sendMessage(admin, "Syntax: //banip <mask> [time in minutes]");
+
+		if (params == null || params.length < 1) {
+			PacketSendUtility.sendMessage(admin,
+					"Syntax: //banip <mask> [time in minutes]");
 			return;
 		}
-		
+
 		String mask = params[0];
 
 		int time = 0; // Default: infinity
-		if (params.length > 1)
-		{
-			try
-			{
+		if (params.length > 1) {
+			try {
 				time = Integer.parseInt(params[1]);
-			}
-			catch (NumberFormatException e)
-			{
-				PacketSendUtility.sendMessage(admin, "Syntax: //banip <mask> [time in minutes]");
+			} catch (NumberFormatException e) {
+				PacketSendUtility.sendMessage(admin,
+						"Syntax: //banip <mask> [time in minutes]");
 				return;
 			}
 		}
-		
-		LoginServer.getInstance().sendBanPacket((byte) 2, 0, mask, time, admin.getObjectId());
+
+		LoginServer.getInstance().sendBanPacket((byte) 2, 0, mask, time,
+				admin.getObjectId());
 	}
-	
-	public static void main(String[] args)
-	{
+
+	public static void main(String[] args) {
 		AdminCommandChatHandler.getInstance().registerAdminCommand(new BanIP());
 	}
 }

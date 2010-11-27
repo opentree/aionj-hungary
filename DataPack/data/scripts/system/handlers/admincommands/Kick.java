@@ -28,45 +28,43 @@ import com.aionemu.gameserver.world.World;
 
 /**
  * @author Elusive
- *
+ * 
  */
 
-public class Kick extends AdminCommand
-{
+public class Kick extends AdminCommand {
 	/**
 	 * Constructor of Kick
 	 */
-	public Kick()
-	{
+	public Kick() {
 		super("kick");
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params)
-	{
-		if(admin.getAccessLevel() < AdminConfig.COMMAND_KICK)
-		{
-			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
+	public void executeCommand(Player admin, String[] params) {
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_KICK) {
+			PacketSendUtility.sendMessage(admin,
+					"You dont have enough rights to execute this command");
 			return;
 		}
-		
-		if(params.length < 1)
-		{
-			PacketSendUtility.sendMessage(admin, "syntax //kick <character_name>");
+
+		if (params.length < 1) {
+			PacketSendUtility.sendMessage(admin,
+					"syntax //kick <character_name>");
 			return;
 		}
-		Player player = World.getInstance().findPlayer(Util.convertName(params[0]));
-		if (player == null)
-		{
-			PacketSendUtility.sendMessage(admin, "The specified player is not online.");
+		Player player = World.getInstance().findPlayer(
+				Util.convertName(params[0]));
+		if (player == null) {
+			PacketSendUtility.sendMessage(admin,
+					"The specified player is not online.");
 			return;
 		}
 		player.getClientConnection().close(new SM_QUIT_RESPONSE());
-		PacketSendUtility.sendMessage(admin, "Kicked player : " + player.getName());
+		PacketSendUtility.sendMessage(admin,
+				"Kicked player : " + player.getName());
 	}
-	
-	public static void main(String[] args)
-	{
+
+	public static void main(String[] args) {
 		AdminCommandChatHandler.getInstance().registerAdminCommand(new Kick());
 	}
 }

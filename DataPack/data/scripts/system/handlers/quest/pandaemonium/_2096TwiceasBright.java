@@ -27,113 +27,105 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /**
  * @author Manu72
- *
+ * 
  */
-public class _2096TwiceasBright extends QuestHandler
-{
+public class _2096TwiceasBright extends QuestHandler {
 
-	private final static int	questId	= 2096;
+	private final static int questId = 2096;
 
-	public _2096TwiceasBright()
-	{
+	public _2096TwiceasBright() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
+	public void register() {
 		qe.addQuestLvlUp(questId);
-		qe.setNpcQuestData(204206).addOnQuestStart(questId); //Cavalorn
-		qe.setNpcQuestData(204206).addOnTalkEvent(questId); //Cavalorn
-		qe.setNpcQuestData(204207).addOnTalkEvent(questId); //Kasir
-		qe.setNpcQuestData(203550).addOnTalkEvent(questId); //Munin
+		qe.setNpcQuestData(204206).addOnQuestStart(questId); // Cavalorn
+		qe.setNpcQuestData(204206).addOnTalkEvent(questId); // Cavalorn
+		qe.setNpcQuestData(204207).addOnTalkEvent(questId); // Kasir
+		qe.setNpcQuestData(203550).addOnTalkEvent(questId); // Munin
 	}
-	
+
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(targetId == 204206) //Cavalorn
+		if (targetId == 204206) // Cavalorn
 		{
-			if(qs.getStatus() == QuestStatus.START)
-			{
-				if(env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
-				else if(env.getDialogId() == 10000)
-					{
-						qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
-						updateQuestStatus(player, qs);
-						PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject()
-						.getObjectId(), 10));
-						return true;
-					}
-
-				else
-					return defaultQuestStartDialog(env);
-			}
-		}
-		
-		else if(targetId == 204207) //Munin
-		{
-
-			if(qs != null && qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 1)
-			{
-				if(env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
-				else if(env.getDialogId() == 10001)
-				{
+			if (qs.getStatus() == QuestStatus.START) {
+				if (env.getDialogId() == 25)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 1011);
+				else if (env.getDialogId() == 10000) {
 					qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
 					updateQuestStatus(player, qs);
-					PacketSendUtility
-						.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
+							env.getVisibleObject().getObjectId(), 10));
 					return true;
 				}
+
 				else
+					return defaultQuestStartDialog(env);
+			}
+		}
+
+		else if (targetId == 204207) // Munin
+		{
+
+			if (qs != null && qs.getStatus() == QuestStatus.START
+					&& qs.getQuestVarById(0) == 1) {
+				if (env.getDialogId() == 25)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 1352);
+				else if (env.getDialogId() == 10001) {
+					qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
+					updateQuestStatus(player, qs);
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
+							env.getVisibleObject().getObjectId(), 10));
+					return true;
+				} else
 					return defaultQuestStartDialog(env);
 			}
 
 		}
-		
-		else if(targetId == 203550) //Munin
+
+		else if (targetId == 203550) // Munin
 		{
-			if(qs != null && qs.getStatus() == QuestStatus.REWARD) //Reward
+			if (qs != null && qs.getStatus() == QuestStatus.REWARD) // Reward
 			{
-				if(env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
-				else if(env.getDialogId() == 1009)
-				{
+				if (env.getDialogId() == 25)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 1693);
+				else if (env.getDialogId() == 1009) {
 					qs.setQuestVar(3);
 					qs.setStatus(QuestStatus.REWARD);
 					updateQuestStatus(player, qs);
 					return defaultQuestEndDialog(env);
-				}
-				else
+				} else
 					return defaultQuestEndDialog(env);
 			}
-		}		
+		}
 		return false;
 	}
-	@Override
-        public boolean onLvlUpEvent(QuestEnv env)
-        {
-                Player player = env.getPlayer();
-                QuestState qs = player.getQuestStateList().getQuestState(questId);
-                if(qs == null || qs.getStatus() != QuestStatus.LOCKED)
-                        return false;
-                int[] quests = { 2007, 2022, 2041, 2094, 2061, 2076, 2900};
-                for (int id : quests)
-                {
-                        QuestState qs2 = player.getQuestStateList().getQuestState(id);
-                        if (qs2 == null || qs2.getStatus() != QuestStatus.COMPLETE)
-                                return false;
-                }
 
-                qs.setStatus(QuestStatus.START);
-                updateQuestStatus(player, qs);
-                return true;
-        }
+	@Override
+	public boolean onLvlUpEvent(QuestEnv env) {
+		Player player = env.getPlayer();
+		QuestState qs = player.getQuestStateList().getQuestState(questId);
+		if (qs == null || qs.getStatus() != QuestStatus.LOCKED)
+			return false;
+		int[] quests = { 2007, 2022, 2041, 2094, 2061, 2076, 2900 };
+		for (int id : quests) {
+			QuestState qs2 = player.getQuestStateList().getQuestState(id);
+			if (qs2 == null || qs2.getStatus() != QuestStatus.COMPLETE)
+				return false;
+		}
+
+		qs.setStatus(QuestStatus.START);
+		updateQuestStatus(player, qs);
+		return true;
+	}
 }

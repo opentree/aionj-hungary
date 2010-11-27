@@ -36,148 +36,120 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
 
 /**
  * @author ATracer
- *
+ * 
  */
-public class Configure extends AdminCommand
-{
-	
-	public Configure()
-	{
+public class Configure extends AdminCommand {
+
+	public Configure() {
 		super("configure");
 	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public void executeCommand(Player admin, String[] params)
-	{
-		if(admin.getAccessLevel() < AdminConfig.COMMAND_CONFIGURE)
-		{
-			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
+	public void executeCommand(Player admin, String[] params) {
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_CONFIGURE) {
+			PacketSendUtility.sendMessage(admin,
+					"You dont have enough rights to execute this command");
 			return;
 		}
-		
+
 		String command = "";
-		if(params.length == 3)
-		{
-			//show
+		if (params.length == 3) {
+			// show
 			command = params[0];
-			if(!"show".equalsIgnoreCase(command))
-			{
-				PacketSendUtility.sendMessage(admin, "syntax //configure <set|show> <configname> <property> [<newvalue>]");
+			if (!"show".equalsIgnoreCase(command)) {
+				PacketSendUtility
+						.sendMessage(admin,
+								"syntax //configure <set|show> <configname> <property> [<newvalue>]");
 				return;
 			}
-		}else if(params.length == 4)
-		{
-			//set
+		} else if (params.length == 4) {
+			// set
 			command = params[0];
-			if(!"set".equalsIgnoreCase(command))
-			{
-				PacketSendUtility.sendMessage(admin, "syntax //configure <set|show> <configname> <property> [<newvalue>]");
+			if (!"set".equalsIgnoreCase(command)) {
+				PacketSendUtility
+						.sendMessage(admin,
+								"syntax //configure <set|show> <configname> <property> [<newvalue>]");
 				return;
 			}
-		}
-		else
-		{
-			PacketSendUtility.sendMessage(admin, "syntax //configure <set|show> <configname> <property> [<newvalue>]");
+		} else {
+			PacketSendUtility
+					.sendMessage(admin,
+							"syntax //configure <set|show> <configname> <property> [<newvalue>]");
 			return;
 		}
-		
+
 		Class classToMofify = null;
 		String className = params[1];
-		
-		if("admin".equalsIgnoreCase(className))
-		{
+
+		if ("admin".equalsIgnoreCase(className)) {
 			classToMofify = AdminConfig.class;
-		}
-		else if("cache".equalsIgnoreCase(className))
-		{
+		} else if ("cache".equalsIgnoreCase(className)) {
 			classToMofify = CacheConfig.class;
-		}
-		else if("custom".equalsIgnoreCase(className))
-		{
+		} else if ("custom".equalsIgnoreCase(className)) {
 			classToMofify = CustomConfig.class;
-		}
-		else if("group".equalsIgnoreCase(className))
-		{
+		} else if ("group".equalsIgnoreCase(className)) {
 			classToMofify = GroupConfig.class;
-		}
-		else if("gs".equalsIgnoreCase(className))
-		{
+		} else if ("gs".equalsIgnoreCase(className)) {
 			classToMofify = GSConfig.class;
-		}
-		else if("legion".equalsIgnoreCase(className))
-		{
+		} else if ("legion".equalsIgnoreCase(className)) {
 			classToMofify = LegionConfig.class;
-		}
-		else if("rate".equalsIgnoreCase(className))
-		{
+		} else if ("rate".equalsIgnoreCase(className)) {
 			classToMofify = RateConfig.class;
-		}
-		else if("shutdown".equalsIgnoreCase(className))
-		{
+		} else if ("shutdown".equalsIgnoreCase(className)) {
 			classToMofify = ShutdownConfig.class;
-		}
-		else if("tm".equalsIgnoreCase(className))
-		{
+		} else if ("tm".equalsIgnoreCase(className)) {
 			classToMofify = OptionsConfig.class;
-		}
-		else if("ip".equalsIgnoreCase(className))
-		{
+		} else if ("ip".equalsIgnoreCase(className)) {
 			classToMofify = IPConfig.class;
-		}
-		else if("network".equalsIgnoreCase(className))
-		{
+		} else if ("network".equalsIgnoreCase(className)) {
 			classToMofify = NetworkConfig.class;
 		}
-		
-		if(command.equalsIgnoreCase("show"))
-		{
+
+		if (command.equalsIgnoreCase("show")) {
 			String fieldName = params[2];
 			Field someField;
-			try 
-			{
-				someField = classToMofify.getDeclaredField(fieldName.toUpperCase());
-				PacketSendUtility.sendMessage(admin, "Current value is " + someField.get(null));
+			try {
+				someField = classToMofify.getDeclaredField(fieldName
+						.toUpperCase());
+				PacketSendUtility.sendMessage(admin, "Current value is "
+						+ someField.get(null));
 			} catch (Exception e) {
-				PacketSendUtility.sendMessage(admin, "Something really bad happend :)");
+				PacketSendUtility.sendMessage(admin,
+						"Something really bad happend :)");
 				return;
 			}
-		}
-		else if(command.equalsIgnoreCase("set"))
-		{
+		} else if (command.equalsIgnoreCase("set")) {
 			String fieldName = params[2];
 			String newValue = params[3];
-			if(classToMofify != null)
-			{
+			if (classToMofify != null) {
 				Field someField;
-				try 
-				{
-					someField = classToMofify.getDeclaredField(fieldName.toUpperCase());
-					Class classType = someField.getType();		
-					if(classType == String.class)
-					{
-						someField.set(null, newValue); 
-					}
-					else if(classType == int.class || classType == Integer.class)
-					{
+				try {
+					someField = classToMofify.getDeclaredField(fieldName
+							.toUpperCase());
+					Class classType = someField.getType();
+					if (classType == String.class) {
+						someField.set(null, newValue);
+					} else if (classType == int.class
+							|| classType == Integer.class) {
 						someField.set(null, Integer.parseInt(newValue));
-					}
-					else if(classType == Boolean.class || classType == boolean.class)
-					{
+					} else if (classType == Boolean.class
+							|| classType == boolean.class) {
 						someField.set(null, Boolean.valueOf(newValue));
 					}
-					
+
 				} catch (Exception e) {
-					PacketSendUtility.sendMessage(admin, "Something really bad happend :)");
+					PacketSendUtility.sendMessage(admin,
+							"Something really bad happend :)");
 					return;
 				}
 			}
 			PacketSendUtility.sendMessage(admin, "Property changed");
 		}
 	}
-	
-	public static void main(String[] args)
-	{
-		AdminCommandChatHandler.getInstance().registerAdminCommand(new Configure());
+
+	public static void main(String[] args) {
+		AdminCommandChatHandler.getInstance().registerAdminCommand(
+				new Configure());
 	}
 }

@@ -27,58 +27,49 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /**
  * @author Mr. Poke + Dune11
- *
+ * 
  */
-public class _1141BelbuasTreasure extends QuestHandler
-{
-	private final static int	questId	= 1141;
+public class _1141BelbuasTreasure extends QuestHandler {
+	private final static int questId = 1141;
 
-	public _1141BelbuasTreasure()
-	{
+	public _1141BelbuasTreasure() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
+	public void register() {
 		qe.setNpcQuestData(730001).addOnQuestStart(questId);
 		qe.setNpcQuestData(730001).addOnTalkEvent(questId);
 		qe.setNpcQuestData(700122).addOnTalkEvent(questId);
 	}
-	
+
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null)
-		{
-			if(targetId == 730001)
-			{
-				if(env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+		if (qs == null) {
+			if (targetId == 730001) {
+				if (env.getDialogId() == 25)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 1011);
 				else
 					return defaultQuestStartDialog(env);
 			}
-		}
-		else if(targetId == 700122)
-		{
-			if(qs != null)
-			{
-				if ((qs.getQuestVarById(0) == 0 || qs.getQuestVarById(0) == 0) && env.getDialogId() == -1)
-				{
+		} else if (targetId == 700122) {
+			if (qs != null) {
+				if ((qs.getQuestVarById(0) == 0 || qs.getQuestVarById(0) == 0)
+						&& env.getDialogId() == -1) {
 					qs.setQuestVar(2);
 					qs.setStatus(QuestStatus.REWARD);
 					updateQuestStatus(player, qs);
 					return defaultQuestEndDialog(env);
-				}
-				else
-					PacketSendUtility
-						.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
-					return defaultQuestEndDialog(env);
+				} else
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
+							env.getVisibleObject().getObjectId(), 10));
+				return defaultQuestEndDialog(env);
 			}
 		}
 		return false;

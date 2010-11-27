@@ -27,117 +27,104 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /**
  * @author Mr. Poke
- *
+ * 
  */
-public class _2209TheScribbler extends QuestHandler
-{
-	private final static int	questId	= 2209;
-	
-	public _2209TheScribbler()
-	{
+public class _2209TheScribbler extends QuestHandler {
+	private final static int questId = 2209;
+
+	public _2209TheScribbler() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
+	public void register() {
 		qe.setNpcQuestData(203555).addOnQuestStart(questId);
 		qe.setNpcQuestData(203555).addOnTalkEvent(questId);
 		qe.setNpcQuestData(203562).addOnTalkEvent(questId);
 		qe.setNpcQuestData(203592).addOnTalkEvent(questId);
 	}
-	
+
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null)
-		{
-			if(targetId == 203555)
-			{
-				if(env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+		if (qs == null) {
+			if (targetId == 203555) {
+				if (env.getDialogId() == 25)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 1011);
 				else
 					return defaultQuestStartDialog(env);
 			}
-		}
-		else if (qs.getStatus() == QuestStatus.START)
-		{
-			switch(targetId)
-			{
-				case 203562:
-				{
-					if (qs.getQuestVarById(0) == 0)
-					{
-						if(env.getDialogId() == 25)
-							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
-						else if(env.getDialogId() == 10000)
-						{
-							qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
-							updateQuestStatus(player, qs);
-							PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
-							return true;
-						}
-					}
-				}
-				break;
-				case 203572:
-				{
-					if (qs.getQuestVarById(0) == 1)
-					{
-						if(env.getDialogId() == 25)
-							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
-						else if(env.getDialogId() == 10001)
-						{
-							qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
-							updateQuestStatus(player, qs);
-							PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
-							return true;
-						}
-					}
-				}
-				break;
-				case 203592:
-				{
-					if (qs.getQuestVarById(0) == 2)
-					{
-						if(env.getDialogId() == 25)
-							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2034);
-						else if(env.getDialogId() == 10002)
-						{
-							qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
-							updateQuestStatus(player, qs);
-							PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
-							return true;
-						}
-					}
-				}
-				break;
-				case 203555:
-				{
-					if (qs.getQuestVarById(0) == 3)
-					{
-						if(env.getDialogId() == 25)
-							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375);
-						else if(env.getDialogId() == 1009)
-							{
-								qs.setStatus(QuestStatus.REWARD);
-								updateQuestStatus(player, qs);
-								return defaultQuestEndDialog(env);
-							}
-							else
-								return defaultQuestEndDialog(env);
+		} else if (qs.getStatus() == QuestStatus.START) {
+			switch (targetId) {
+			case 203562: {
+				if (qs.getQuestVarById(0) == 0) {
+					if (env.getDialogId() == 25)
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 1352);
+					else if (env.getDialogId() == 10000) {
+						qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
+						updateQuestStatus(player, qs);
+						PacketSendUtility.sendPacket(player,
+								new SM_DIALOG_WINDOW(env.getVisibleObject()
+										.getObjectId(), 10));
+						return true;
 					}
 				}
 			}
-		}
-		else if (qs.getStatus() == QuestStatus.REWARD)
-		{
-			if(targetId == 203555)
+				break;
+			case 203572: {
+				if (qs.getQuestVarById(0) == 1) {
+					if (env.getDialogId() == 25)
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 1693);
+					else if (env.getDialogId() == 10001) {
+						qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
+						updateQuestStatus(player, qs);
+						PacketSendUtility.sendPacket(player,
+								new SM_DIALOG_WINDOW(env.getVisibleObject()
+										.getObjectId(), 10));
+						return true;
+					}
+				}
+			}
+				break;
+			case 203592: {
+				if (qs.getQuestVarById(0) == 2) {
+					if (env.getDialogId() == 25)
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 2034);
+					else if (env.getDialogId() == 10002) {
+						qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
+						updateQuestStatus(player, qs);
+						PacketSendUtility.sendPacket(player,
+								new SM_DIALOG_WINDOW(env.getVisibleObject()
+										.getObjectId(), 10));
+						return true;
+					}
+				}
+			}
+				break;
+			case 203555: {
+				if (qs.getQuestVarById(0) == 3) {
+					if (env.getDialogId() == 25)
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 2375);
+					else if (env.getDialogId() == 1009) {
+						qs.setStatus(QuestStatus.REWARD);
+						updateQuestStatus(player, qs);
+						return defaultQuestEndDialog(env);
+					} else
+						return defaultQuestEndDialog(env);
+				}
+			}
+			}
+		} else if (qs.getStatus() == QuestStatus.REWARD) {
+			if (targetId == 203555)
 				return defaultQuestEndDialog(env);
 		}
 		return false;

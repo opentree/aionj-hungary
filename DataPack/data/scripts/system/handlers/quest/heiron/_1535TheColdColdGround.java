@@ -33,132 +33,124 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  * @author Rolandas
  * 
  */
-public class _1535TheColdColdGround extends QuestHandler
-{
+public class _1535TheColdColdGround extends QuestHandler {
 
-	private final static int	questId	= 1535;
+	private final static int questId = 1535;
 
-	public _1535TheColdColdGround()
-	{
+	public _1535TheColdColdGround() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
+	public void register() {
 		qe.setNpcQuestData(204580).addOnQuestStart(questId);
 		qe.setNpcQuestData(204580).addOnTalkEvent(questId);
 	}
 
 	@Override
-	public boolean onLvlUpEvent(QuestEnv env)
-	{
+	public boolean onLvlUpEvent(QuestEnv env) {
 		return true;
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
-		if(targetId != 204580)
+		if (targetId != 204580)
 			return false;
 
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null || qs.getStatus() == QuestStatus.NONE)
-		{
-			if(env.getDialogId() == 25)
-				return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 4762);
+		if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+			if (env.getDialogId() == 25)
+				return sendQuestDialog(player, env.getVisibleObject()
+						.getObjectId(), 4762);
 			else
 				return defaultQuestStartDialog(env);
 		}
 
-		if(qs.getStatus() == QuestStatus.START)
-		{
-			boolean abexSkins = player.getInventory().getItemCountByItemId(182201818) > 4;
-			boolean worgSkins = player.getInventory().getItemCountByItemId(182201819) > 2;
-			boolean karnifSkins = player.getInventory().getItemCountByItemId(182201820) > 0;
+		if (qs.getStatus() == QuestStatus.START) {
+			boolean abexSkins = player.getInventory().getItemCountByItemId(
+					182201818) > 4;
+			boolean worgSkins = player.getInventory().getItemCountByItemId(
+					182201819) > 2;
+			boolean karnifSkins = player.getInventory().getItemCountByItemId(
+					182201820) > 0;
 
-			switch(env.getDialogId())
-			{
-				case -1:
-				case 25:
-					if(abexSkins || worgSkins || karnifSkins)
-						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
-				case 10000:
-					if(abexSkins)
-					{
-						qs.setQuestVarById(0, 1);
-						qs.setStatus(QuestStatus.REWARD);
-						updateQuestStatus(player, qs);
-						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
-					}
-					break;
-				case 10001:
-					if(worgSkins)
-					{
-						qs.setQuestVarById(0, 2);
-						qs.setStatus(QuestStatus.REWARD);
-						updateQuestStatus(player, qs);
-						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 6);
-					}
-					break;
-				case 10002:
-					if(karnifSkins)
-					{
-						qs.setQuestVarById(0, 3);
-						qs.setStatus(QuestStatus.REWARD);
-						updateQuestStatus(player, qs);
-						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 7);
-					}
-					break;
+			switch (env.getDialogId()) {
+			case -1:
+			case 25:
+				if (abexSkins || worgSkins || karnifSkins)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 1352);
+			case 10000:
+				if (abexSkins) {
+					qs.setQuestVarById(0, 1);
+					qs.setStatus(QuestStatus.REWARD);
+					updateQuestStatus(player, qs);
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 5);
+				}
+				break;
+			case 10001:
+				if (worgSkins) {
+					qs.setQuestVarById(0, 2);
+					qs.setStatus(QuestStatus.REWARD);
+					updateQuestStatus(player, qs);
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 6);
+				}
+				break;
+			case 10002:
+				if (karnifSkins) {
+					qs.setQuestVarById(0, 3);
+					qs.setStatus(QuestStatus.REWARD);
+					updateQuestStatus(player, qs);
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 7);
+				}
+				break;
 			}
-			return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
-		}
-		else if(qs.getStatus() == QuestStatus.REWARD)
-		{
+			return sendQuestDialog(player,
+					env.getVisibleObject().getObjectId(), 1693);
+		} else if (qs.getStatus() == QuestStatus.REWARD) {
 			int var = qs.getQuestVarById(0);
-			if(var == 1)
-			{
+			if (var == 1) {
 				ItemService.removeItemFromInventoryByItemId(player, 182201818);
 				return defaultQuestEndDialog(env);
-			}
-			else if(var == 2)
-			{
+			} else if (var == 2) {
 				// add Greater Mana Potion x 5
-				if(!ItemService.addItems(player, Collections.singletonList(new QuestItems(162000010, 5))))
-				{
+				if (!ItemService
+						.addItems(player, Collections
+								.singletonList(new QuestItems(162000010, 5)))) {
 					// check later
 					qs.setStatus(QuestStatus.START);
 					updateQuestStatus(player, qs);
-				}
-				else
-				{
-					ItemService.removeItemFromInventoryByItemId(player, 182201819);
+				} else {
+					ItemService.removeItemFromInventoryByItemId(player,
+							182201819);
 				}
 				defaultQuestEndDialog(env);
 				return true;
-			}
-			else if(var == 3)
-			{
+			} else if (var == 3) {
 				// add Greater Life Serum x 5
-				if(!ItemService.addItems(player, Collections.singletonList(new QuestItems(162000015, 5))))
-				{
+				if (!ItemService
+						.addItems(player, Collections
+								.singletonList(new QuestItems(162000015, 5)))) {
 					// check later
 					qs.setStatus(QuestStatus.START);
 					updateQuestStatus(player, qs);
-				}
-				else
-				{
-					ItemService.removeItemFromInventoryByItemId(player, 182201820);
+				} else {
+					ItemService.removeItemFromInventoryByItemId(player,
+							182201820);
 				}
 				defaultQuestEndDialog(env);
 				return true;
 			}
-			PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+			PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env
+					.getVisibleObject().getObjectId(), 10));
 		}
 		return false;
 	}

@@ -31,18 +31,15 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /* @author edynamic90 */
 
-public class _1901KrallicPotion extends QuestHandler
-{
-	private final static int	questId	= 1901;
+public class _1901KrallicPotion extends QuestHandler {
+	private final static int questId = 1901;
 
-	public _1901KrallicPotion()
-	{
+	public _1901KrallicPotion() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
+	public void register() {
 		qe.setNpcQuestData(203830).addOnQuestStart(questId);
 		qe.setNpcQuestData(203830).addOnTalkEvent(questId);
 		qe.setNpcQuestData(798026).addOnTalkEvent(questId);
@@ -54,138 +51,143 @@ public class _1901KrallicPotion extends QuestHandler
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(targetId == 203830) // marmeia
+		if (targetId == 203830) // marmeia
 		{
-			if(env.getDialogId() == 25)
-				return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+			if (env.getDialogId() == 25)
+				return sendQuestDialog(player, env.getVisibleObject()
+						.getObjectId(), 1011);
 			else
 				return defaultQuestStartDialog(env);
-		}
-		else
-		{
-			if(targetId == 203864)
-			{
-				if(env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375);
-				else if(env.getDialogId() == 1009)
-				{
+		} else {
+			if (targetId == 203864) {
+				if (env.getDialogId() == 25)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 2375);
+				else if (env.getDialogId() == 1009) {
 					qs.setQuestVar(7);
 					updateQuestStatus(player, qs);
 					qs.setStatus(QuestStatus.REWARD);
 					return defaultQuestEndDialog(env);
-				}
-				else if(qs != null && qs.getStatus() == QuestStatus.REWARD)
-				{
-					if(env.getDialogId() == -1)
-						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 3398);
+				} else if (qs != null && qs.getStatus() == QuestStatus.REWARD) {
+					if (env.getDialogId() == -1)
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 3398);
 					return defaultQuestEndDialog(env);
 				}
-			}
-			else if(qs != null)
-			{
-				if(qs.getStatus() == QuestStatus.START)
-				{
+			} else if (qs != null) {
+				if (qs.getStatus() == QuestStatus.START) {
 					int var = qs.getQuestVarById(0);
-					switch(targetId)
-					{
-						case 798026:// kunberunerk
-							switch(env.getDialogId())
-							{
-								case 25:
-									if(var == 0)
-										return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
-									else if(var == 5)
-										return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 3057);
-								case 1438:
-									if(ItemService.decreaseKinah(player, 10000))
-									{
-										qs.setQuestVarById(0, var + 1);
-										updateQuestStatus(player, qs);
-										PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env
-											.getVisibleObject().getObjectId(), 10));
-										return true;
-									}
-									else
-										return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1523);
-								case 10000:// oui 10000
-									qs.setQuestVarById(0, var + 1);// var==1
-									updateQuestStatus(player, qs);
-									PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject()
-										.getObjectId(), 10));
+					switch (targetId) {
+					case 798026:// kunberunerk
+						switch (env.getDialogId()) {
+						case 25:
+							if (var == 0)
+								return sendQuestDialog(player, env
+										.getVisibleObject().getObjectId(), 1352);
+							else if (var == 5)
+								return sendQuestDialog(player, env
+										.getVisibleObject().getObjectId(), 3057);
+						case 1438:
+							if (ItemService.decreaseKinah(player, 10000)) {
+								qs.setQuestVarById(0, var + 1);
+								updateQuestStatus(player, qs);
+								PacketSendUtility.sendPacket(player,
+										new SM_DIALOG_WINDOW(env
+												.getVisibleObject()
+												.getObjectId(), 10));
+								return true;
+							} else
+								return sendQuestDialog(player, env
+										.getVisibleObject().getObjectId(), 1523);
+						case 10000:// oui 10000
+							qs.setQuestVarById(0, var + 1);// var==1
+							updateQuestStatus(player, qs);
+							PacketSendUtility.sendPacket(player,
+									new SM_DIALOG_WINDOW(env.getVisibleObject()
+											.getObjectId(), 10));
+							return true;
+						case 10001:// non
+							qs.setQuestVarById(0, var + 1);// var==1
+							updateQuestStatus(player, qs);
+							PacketSendUtility.sendPacket(player,
+									new SM_DIALOG_WINDOW(env.getVisibleObject()
+											.getObjectId(), 10));
+							return true;
+						case 10006:
+							qs.setQuestVarById(0, var + 1);// var==5
+							qs.setStatus(QuestStatus.REWARD);
+							updateQuestStatus(player, qs);
+							PacketSendUtility.sendPacket(player,
+									new SM_DIALOG_WINDOW(env.getVisibleObject()
+											.getObjectId(), 10));
+							return true;
+						default:
+							return defaultQuestStartDialog(env);
+						}
+					case 798025:// mapireck
+						switch (env.getDialogId()) {
+						case 25:
+							if (var == 1)
+								return sendQuestDialog(player, env
+										.getVisibleObject().getObjectId(), 1693);
+							else if (var == 4)
+								return sendQuestDialog(player, env
+										.getVisibleObject().getObjectId(), 2716);
+						case 10002:
+							qs.setQuestVarById(0, var + 1);// var==2
+							updateQuestStatus(player, qs);
+							PacketSendUtility.sendPacket(player,
+									new SM_DIALOG_WINDOW(env.getVisibleObject()
+											.getObjectId(), 10));
+							return true;
+						case 10005:
+							ItemService.removeItemFromInventoryByItemId(player,
+									182206000);
+							qs.setQuestVarById(0, var + 1);// var==5
+							updateQuestStatus(player, qs);
+							PacketSendUtility.sendPacket(player,
+									new SM_DIALOG_WINDOW(env.getVisibleObject()
+											.getObjectId(), 10));
+							return true;
+						}
+					case 203131:// maniparas
+						switch (env.getDialogId()) {
+						case 25:
+							return sendQuestDialog(player, env
+									.getVisibleObject().getObjectId(), 2034);
+						case 10003:
+							qs.setQuestVarById(0, var + 1);// var==3
+							updateQuestStatus(player, qs);
+							PacketSendUtility.sendPacket(player,
+									new SM_DIALOG_WINDOW(env.getVisibleObject()
+											.getObjectId(), 10));
+							return true;
+						}
+					case 798003:// gaphyrk
+						switch (env.getDialogId()) {
+						case 25:
+							return sendQuestDialog(player, env
+									.getVisibleObject().getObjectId(), 2375);
+						case 10004:
+							if (player.getInventory().getItemCountByItemId(
+									182206000) == 0)
+								if (!ItemService.addItems(player, Collections
+										.singletonList(new QuestItems(
+												182206000, 1))))
 									return true;
-								case 10001:// non
-									qs.setQuestVarById(0, var + 1);// var==1
-									updateQuestStatus(player, qs);
-									PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject()
-										.getObjectId(), 10));
-									return true;
-								case 10006:
-									qs.setQuestVarById(0, var + 1);// var==5
-									qs.setStatus(QuestStatus.REWARD);
-									updateQuestStatus(player, qs);
-									PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject()
-										.getObjectId(), 10));
-									return true;
-								default:
-									return defaultQuestStartDialog(env);
-							}
-						case 798025:// mapireck
-							switch(env.getDialogId())
-							{
-								case 25:
-									if(var == 1)
-										return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
-									else if(var == 4)
-										return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2716);
-								case 10002:
-									qs.setQuestVarById(0, var + 1);// var==2
-									updateQuestStatus(player, qs);
-									PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject()
-										.getObjectId(), 10));
-									return true;
-								case 10005:
-									ItemService.removeItemFromInventoryByItemId(player, 182206000);
-									qs.setQuestVarById(0, var + 1);// var==5
-									updateQuestStatus(player, qs);
-									PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject()
-										.getObjectId(), 10));
-									return true;
-							}
-						case 203131:// maniparas
-							switch(env.getDialogId())
-							{
-								case 25:
-									return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2034);
-								case 10003:
-									qs.setQuestVarById(0, var + 1);// var==3
-									updateQuestStatus(player, qs);
-									PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject()
-										.getObjectId(), 10));
-									return true;
-							}
-						case 798003:// gaphyrk
-							switch(env.getDialogId())
-							{
-								case 25:
-									return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375);
-								case 10004:
-									if(player.getInventory().getItemCountByItemId(182206000) == 0)
-										if(!ItemService.addItems(player, Collections.singletonList(new QuestItems(
-											182206000, 1))))
-											return true;
-									qs.setQuestVarById(0, var + 1);// var==4
-									updateQuestStatus(player, qs);
-									PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject()
-										.getObjectId(), 10));
-									return true;
-							}
+							qs.setQuestVarById(0, var + 1);// var==4
+							updateQuestStatus(player, qs);
+							PacketSendUtility.sendPacket(player,
+									new SM_DIALOG_WINDOW(env.getVisibleObject()
+											.getObjectId(), 10));
+							return true;
+						}
 					}
 				}
 			}

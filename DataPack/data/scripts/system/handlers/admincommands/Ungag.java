@@ -31,48 +31,43 @@ import com.aionemu.gameserver.world.World;
  * @author Watson
  * 
  */
-public class Ungag extends AdminCommand
-{
-	public Ungag()
-	{
+public class Ungag extends AdminCommand {
+	public Ungag() {
 		super("ungag");
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params)
-	{
-		if (admin.getAccessLevel() < AdminConfig.COMMAND_GAG)
-		{
-			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command!");
+	public void executeCommand(Player admin, String[] params) {
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_GAG) {
+			PacketSendUtility.sendMessage(admin,
+					"You dont have enough rights to execute this command!");
 			return;
 		}
-		
-		if (params == null || params.length < 1)
-		{
+
+		if (params == null || params.length < 1) {
 			PacketSendUtility.sendMessage(admin, "Syntax: //ungag <player>");
 			return;
 		}
-		
+
 		String name = Util.convertName(params[0]);
 		Player player = World.getInstance().findPlayer(name);
-		if (player == null)
-		{
-			PacketSendUtility.sendMessage(admin, "Player " + name + " was not found!");
+		if (player == null) {
+			PacketSendUtility.sendMessage(admin, "Player " + name
+					+ " was not found!");
 			PacketSendUtility.sendMessage(admin, "Syntax: //ungag <player>");
 			return;
 		}
-		
+
 		player.setGagged(false);
 		Future<?> task = player.getTask(TaskId.GAG);
-		if(task != null)
+		if (task != null)
 			player.cancelTask(TaskId.GAG);
 		PacketSendUtility.sendMessage(player, "You have been ungagged");
-		
+
 		PacketSendUtility.sendMessage(admin, "Player " + name + " ungagged");
 	}
-	
-	public static void main(String[] args)
-	{
+
+	public static void main(String[] args) {
 		AdminCommandChatHandler.getInstance().registerAdminCommand(new Ungag());
 	}
 }

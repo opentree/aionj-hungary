@@ -31,18 +31,15 @@ import com.aionemu.gameserver.world.WorldMapType;
  * @author Balthazar
  */
 
-public class _1043BalaurConspiracy extends QuestHandler
-{
-	private final static int	questId	= 1043;
+public class _1043BalaurConspiracy extends QuestHandler {
+	private final static int questId = 1043;
 
-	public _1043BalaurConspiracy()
-	{
+	public _1043BalaurConspiracy() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
+	public void register() {
 		qe.addQuestLvlUp(questId);
 		qe.setNpcQuestData(203901).addOnTalkEvent(questId);
 		qe.setNpcQuestData(204020).addOnTalkEvent(questId);
@@ -51,119 +48,99 @@ public class _1043BalaurConspiracy extends QuestHandler
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
 
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
-		if(qs == null)
+		if (qs == null)
 			return false;
 
-		if(qs.getStatus() == QuestStatus.START)
-		{
-			switch(targetId)
-			{
-				case 203901:
-				{
-					switch(env.getDialogId())
-					{
-						case 25:
-						{
-							if(qs.getQuestVarById(0) == 0)
-							{
-								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
-							}
-						}
-						case 10000:
-						{
-							qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
-							updateQuestStatus(player, qs);
-							PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject()
-								.getObjectId(), 10));
-							return true;
-						}
+		if (qs.getStatus() == QuestStatus.START) {
+			switch (targetId) {
+			case 203901: {
+				switch (env.getDialogId()) {
+				case 25: {
+					if (qs.getQuestVarById(0) == 0) {
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 1011);
 					}
 				}
-				case 204020:
-				{
-					switch(env.getDialogId())
-					{
-						case 25:
-						{
-							if(qs.getQuestVarById(0) == 1)
-							{
-								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
-							}
-						}
-						case 10001:
-						{
-							qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
-							updateQuestStatus(player, qs);
-							PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject()
-								.getObjectId(), 10));
-							return true;
-						}
-					}
+				case 10000: {
+					qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
+					updateQuestStatus(player, qs);
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
+							env.getVisibleObject().getObjectId(), 10));
+					return true;
 				}
-				case 204044:
-				{
-					switch(env.getDialogId())
-					{
-						case 25:
-						{
-							switch(qs.getQuestVarById(0))
-							{
-								case 2:
-								{
-									return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
-								}
-								case 4:
-								{
-									return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2034);
-								}
-							}
-						}
-						case 10002:
-						{
-							qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
-							updateQuestStatus(player, qs);
-							PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject()
-								.getObjectId(), 10));
-							return true;
-						}
-						case 10003:
-						{
-							qs.setQuestVar(4);
-							qs.setStatus(QuestStatus.REWARD);
-							updateQuestStatus(player, qs);
-							TeleportService.teleportTo(player, WorldMapType.ELTNEN.getId(), 2502.1948f, 782.9152f,
-								408.97723f, 0);
-							return true;
-						}
-					}
 				}
 			}
-		}
-		else if(qs.getStatus() == QuestStatus.REWARD)
-		{
-			if(targetId == 203901)
-			{
-				switch(env.getDialogId())
-				{
-					case 25:
-					{
-						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375);
+			case 204020: {
+				switch (env.getDialogId()) {
+				case 25: {
+					if (qs.getQuestVarById(0) == 1) {
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 1352);
 					}
-					case 1009:
-					{
-						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
+				}
+				case 10001: {
+					qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
+					updateQuestStatus(player, qs);
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
+							env.getVisibleObject().getObjectId(), 10));
+					return true;
+				}
+				}
+			}
+			case 204044: {
+				switch (env.getDialogId()) {
+				case 25: {
+					switch (qs.getQuestVarById(0)) {
+					case 2: {
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 1693);
 					}
-					default:
-						return defaultQuestEndDialog(env);
+					case 4: {
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 2034);
+					}
+					}
+				}
+				case 10002: {
+					qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
+					updateQuestStatus(player, qs);
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
+							env.getVisibleObject().getObjectId(), 10));
+					return true;
+				}
+				case 10003: {
+					qs.setQuestVar(4);
+					qs.setStatus(QuestStatus.REWARD);
+					updateQuestStatus(player, qs);
+					TeleportService.teleportTo(player,
+							WorldMapType.ELTNEN.getId(), 2502.1948f, 782.9152f,
+							408.97723f, 0);
+					return true;
+				}
+				}
+			}
+			}
+		} else if (qs.getStatus() == QuestStatus.REWARD) {
+			if (targetId == 203901) {
+				switch (env.getDialogId()) {
+				case 25: {
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 2375);
+				}
+				case 1009: {
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 5);
+				}
+				default:
+					return defaultQuestEndDialog(env);
 				}
 			}
 		}
@@ -171,21 +148,19 @@ public class _1043BalaurConspiracy extends QuestHandler
 	}
 
 	@Override
-	public boolean onLvlUpEvent(QuestEnv env)
-	{
+	public boolean onLvlUpEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
 
-		if(qs == null || qs.getStatus() != QuestStatus.LOCKED)
-		{
+		if (qs == null || qs.getStatus() != QuestStatus.LOCKED) {
 			return false;
 		}
 
-		int[] quests = { 1300, 1031, 1032, 1033, 1034, 1036, 1037, 1035, 1038, 1039, 1040, 1041, 1042 };
-		for(int id : quests)
-		{
+		int[] quests = { 1300, 1031, 1032, 1033, 1034, 1036, 1037, 1035, 1038,
+				1039, 1040, 1041, 1042 };
+		for (int id : quests) {
 			QuestState qs2 = player.getQuestStateList().getQuestState(id);
-			if(qs2 == null || qs2.getStatus() != QuestStatus.COMPLETE)
+			if (qs2 == null || qs2.getStatus() != QuestStatus.COMPLETE)
 				return false;
 		}
 
@@ -195,22 +170,20 @@ public class _1043BalaurConspiracy extends QuestHandler
 	}
 
 	@Override
-	public boolean onKillEvent(QuestEnv env)
-	{
+	public boolean onKillEvent(QuestEnv env) {
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
 
-		if(qs == null || qs.getStatus() != QuestStatus.START || qs.getQuestVarById(0) != 3)
-		{
+		if (qs == null || qs.getStatus() != QuestStatus.START
+				|| qs.getQuestVarById(0) != 3) {
 			return false;
 		}
 
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
-		if(targetId == 211629)
-		{
+		if (targetId == 211629) {
 			qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
 			updateQuestStatus(player, qs);
 			return true;

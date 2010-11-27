@@ -27,18 +27,15 @@ import com.aionemu.gameserver.questEngine.model.QuestStatus;
  * @author Balthazar
  */
 
-public class _3326TheShugoMenace extends QuestHandler
-{
-	private final static int	questId	= 3326;
+public class _3326TheShugoMenace extends QuestHandler {
+	private final static int questId = 3326;
 
-	public _3326TheShugoMenace()
-	{
+	public _3326TheShugoMenace() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
+	public void register() {
 		qe.setNpcQuestData(798053).addOnQuestStart(questId);
 		qe.setNpcQuestData(798053).addOnTalkEvent(questId);
 		qe.setNpcQuestData(210897).addOnKillEvent(questId);
@@ -49,57 +46,48 @@ public class _3326TheShugoMenace extends QuestHandler
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
 
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
-		if(qs == null || qs.getStatus() == QuestStatus.NONE || qs.getStatus() == QuestStatus.COMPLETE)
-		{
-			if(targetId == 798053)
-			{
-				if(env.getDialogId() == 25)
-				{
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 4);
-				}
-				else
+		if (qs == null || qs.getStatus() == QuestStatus.NONE
+				|| qs.getStatus() == QuestStatus.COMPLETE) {
+			if (targetId == 798053) {
+				if (env.getDialogId() == 25) {
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 4);
+				} else
 					return defaultQuestStartDialog(env);
 			}
 		}
 
-		if(qs == null)
+		if (qs == null)
 			return false;
 
-		if(qs.getStatus() == QuestStatus.START)
-		{
-			if(targetId == 798053)
-			{
-				switch(env.getDialogId())
-				{
-					case 25:
-					{
-						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10002);
-					}
-					case 1009:
-					{
-						qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
-						qs.setStatus(QuestStatus.REWARD);
-						updateQuestStatus(player, qs);
-						return defaultQuestEndDialog(env);
-					}
+		if (qs.getStatus() == QuestStatus.START) {
+			if (targetId == 798053) {
+				switch (env.getDialogId()) {
+				case 25: {
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 10002);
+				}
+				case 1009: {
+					qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
+					qs.setStatus(QuestStatus.REWARD);
+					updateQuestStatus(player, qs);
+					return defaultQuestEndDialog(env);
+				}
 				}
 			}
-		}
-		else if(qs.getStatus() == QuestStatus.REWARD)
-		{
-			if(targetId == 798053)
-			{
-				if(env.getDialogId() == 1009)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
+		} else if (qs.getStatus() == QuestStatus.REWARD) {
+			if (targetId == 798053) {
+				if (env.getDialogId() == 1009)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 5);
 				else
 					return defaultQuestEndDialog(env);
 			}
@@ -108,22 +96,20 @@ public class _3326TheShugoMenace extends QuestHandler
 	}
 
 	@Override
-	public boolean onKillEvent(QuestEnv env)
-	{
+	public boolean onKillEvent(QuestEnv env) {
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null || qs.getStatus() != QuestStatus.START)
+		if (qs == null || qs.getStatus() != QuestStatus.START)
 			return false;
 
 		int var = qs.getQuestVarById(0);
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
-		if(targetId == 210897 || targetId == 210939 || targetId == 210873 || targetId == 210919 || targetId == 211754)
-		{
-			if(var >= 0 && var < 20)
-			{
+		if (targetId == 210897 || targetId == 210939 || targetId == 210873
+				|| targetId == 210919 || targetId == 211754) {
+			if (var >= 0 && var < 20) {
 				qs.setQuestVarById(0, var + 1);
 				updateQuestStatus(player, qs);
 				return true;

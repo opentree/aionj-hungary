@@ -27,21 +27,18 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /**
  * @author Atomics
- *
+ * 
  */
-public class _2288PutYourMoneyWhereYourMouthIs extends QuestHandler
-{
+public class _2288PutYourMoneyWhereYourMouthIs extends QuestHandler {
 
-	private final static int	questId	= 2288;
+	private final static int questId = 2288;
 
-	public _2288PutYourMoneyWhereYourMouthIs()
-	{
+	public _2288PutYourMoneyWhereYourMouthIs() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
+	public void register() {
 		qe.setNpcQuestData(203621).addOnQuestStart(questId);
 		qe.setNpcQuestData(203621).addOnTalkEvent(questId);
 		qe.setNpcQuestData(210564).addOnKillEvent(questId);
@@ -52,75 +49,66 @@ public class _2288PutYourMoneyWhereYourMouthIs extends QuestHandler
 		qe.setNpcQuestData(210437).addOnKillEvent(questId);
 		qe.setNpcQuestData(210440).addOnKillEvent(questId);
 	}
-	
+
 	@Override
-	public boolean onKillEvent(QuestEnv env)
-	{
+	public boolean onKillEvent(QuestEnv env) {
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null)
+		if (qs == null)
 			return false;
 
 		int var = qs.getQuestVarById(0);
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
-		if(qs.getStatus() != QuestStatus.START)
+		if (qs.getStatus() != QuestStatus.START)
 			return false;
-		if(targetId == 210564 || targetId == 210584 || targetId == 210581 || targetId == 210436 || targetId == 201047 || targetId == 210437 || targetId == 210440)
-		{
-			if(var > 0 && var < 4)
-			{
+		if (targetId == 210564 || targetId == 210584 || targetId == 210581
+				|| targetId == 210436 || targetId == 201047
+				|| targetId == 210437 || targetId == 210440) {
+			if (var > 0 && var < 4) {
 				qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
 				updateQuestStatus(player, qs);
 				return true;
-			}
-			else if(var == 6)
-			{
+			} else if (var == 6) {
 				qs.setStatus(QuestStatus.REWARD);
 				updateQuestStatus(player, qs);
-				PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+				PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env
+						.getVisibleObject().getObjectId(), 10));
 				return true;
 			}
 		}
 		return false;
 	}
+
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(targetId == 203621)
-		{
-			if(qs == null || qs.getStatus() == QuestStatus.NONE)
-			{
-				if(env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+		if (targetId == 203621) {
+			if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+				if (env.getDialogId() == 25)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 1011);
 				else
 					return defaultQuestStartDialog(env);
-			}
-			else if(qs.getStatus() == QuestStatus.START)
-			{
-				if(env.getDialogId() == 25 && qs.getQuestVarById(0) == 4)
-				{
+			} else if (qs.getStatus() == QuestStatus.START) {
+				if (env.getDialogId() == 25 && qs.getQuestVarById(0) == 4) {
 					qs.setStatus(QuestStatus.REWARD);
 					updateQuestStatus(player, qs);
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
-				}
-				else if(env.getDialogId() == 10000)
-				{
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 1352);
+				} else if (env.getDialogId() == 10000) {
 					qs.setQuestVarById(0, 1);
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 0);
-				}
-				else
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 0);
+				} else
 					return defaultQuestStartDialog(env);
-			}
-			else if(qs.getStatus() == QuestStatus.REWARD)
-			{
+			} else if (qs.getStatus() == QuestStatus.REWARD) {
 				return defaultQuestEndDialog(env);
 			}
 		}

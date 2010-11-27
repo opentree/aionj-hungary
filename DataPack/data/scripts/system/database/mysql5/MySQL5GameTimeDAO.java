@@ -29,29 +29,23 @@ import com.aionemu.gameserver.dao.GameTimeDAO;
  * @author Ben
  * 
  */
-public class MySQL5GameTimeDAO extends GameTimeDAO
-{
+public class MySQL5GameTimeDAO extends GameTimeDAO {
 	private static Logger log = Logger.getLogger(MySQL5GameTimeDAO.class);
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int load()
-	{
-		PreparedStatement ps = DB.prepareStatement("SELECT `value` FROM `server_variables` WHERE `key`='time'");
-		try
-		{
+	public int load() {
+		PreparedStatement ps = DB
+				.prepareStatement("SELECT `value` FROM `server_variables` WHERE `key`='time'");
+		try {
 			ResultSet rs = ps.executeQuery();
-			if(rs.next())
+			if (rs.next())
 				return Integer.parseInt(rs.getString("value"));
-		}
-		catch(SQLException e)
-		{
+		} catch (SQLException e) {
 			log.error("Error loading last saved server time", e);
-		}
-		finally
-		{
+		} finally {
 			DB.close(ps);
 		}
 
@@ -62,22 +56,17 @@ public class MySQL5GameTimeDAO extends GameTimeDAO
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean store(int time)
-	{
+	public boolean store(int time) {
 		boolean success = false;
-		PreparedStatement ps = DB.prepareStatement("REPLACE INTO `server_variables` (`key`,`value`) VALUES (?,?)");
-		try
-		{
+		PreparedStatement ps = DB
+				.prepareStatement("REPLACE INTO `server_variables` (`key`,`value`) VALUES (?,?)");
+		try {
 			ps.setString(1, "time");
 			ps.setString(2, String.valueOf(time));
 			success = ps.executeUpdate() > 0;
-		}
-		catch(SQLException e)
-		{
+		} catch (SQLException e) {
 			log.error("Error storing server time", e);
-		}
-		finally
-		{
+		} finally {
 			DB.close(ps);
 		}
 
@@ -88,8 +77,9 @@ public class MySQL5GameTimeDAO extends GameTimeDAO
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean supports(String databaseName, int majorVersion, int minorVersion)
-	{
-		return MySQL5DAOUtils.supports(databaseName, majorVersion, minorVersion);
+	public boolean supports(String databaseName, int majorVersion,
+			int minorVersion) {
+		return MySQL5DAOUtils
+				.supports(databaseName, majorVersion, minorVersion);
 	}
 }

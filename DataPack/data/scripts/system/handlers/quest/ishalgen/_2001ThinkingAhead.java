@@ -28,19 +28,16 @@ import com.aionemu.gameserver.questEngine.model.QuestStatus;
 import com.aionemu.gameserver.services.QuestService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
-public class _2001ThinkingAhead extends QuestHandler
-{
+public class _2001ThinkingAhead extends QuestHandler {
 
-	private final static int	questId	= 2001;
+	private final static int questId = 2001;
 
-	public _2001ThinkingAhead()
-	{
+	public _2001ThinkingAhead() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
+	public void register() {
 		qe.addQuestLvlUp(questId);
 		qe.setNpcQuestData(203518).addOnTalkEvent(questId);
 		qe.setNpcQuestData(700093).addOnTalkEvent(questId);
@@ -49,11 +46,10 @@ public class _2001ThinkingAhead extends QuestHandler
 	}
 
 	@Override
-	public boolean onLvlUpEvent(QuestEnv env)
-	{
+	public boolean onLvlUpEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null || qs.getStatus() != QuestStatus.LOCKED)
+		if (qs == null || qs.getStatus() != QuestStatus.LOCKED)
 			return false;
 
 		qs.setStatus(QuestStatus.START);
@@ -62,69 +58,65 @@ public class _2001ThinkingAhead extends QuestHandler
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null)
+		if (qs == null)
 			return false;
 
 		int var = qs.getQuestVarById(0);
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
-		if(qs.getStatus() == QuestStatus.START)
-		{
-			if(targetId == 203518)
-			{
-				switch(env.getDialogId())
-				{
-					case 25:
-						if(var == 0)
-							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);					
-						else if(var == 1)
-							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
-						else if(var == 2)
-							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1694);
-						return false;
-					case 1012:
-							PacketSendUtility.sendPacket(player, new SM_PLAY_MOVIE(0, 51));
-						break;	
-					case 10000:
-					case 10002:
-						if(var == 0 || var == 2)
-						{
+		if (qs.getStatus() == QuestStatus.START) {
+			if (targetId == 203518) {
+				switch (env.getDialogId()) {
+				case 25:
+					if (var == 0)
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 1011);
+					else if (var == 1)
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 1352);
+					else if (var == 2)
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 1694);
+					return false;
+				case 1012:
+					PacketSendUtility.sendPacket(player, new SM_PLAY_MOVIE(0,
+							51));
+					break;
+				case 10000:
+				case 10002:
+					if (var == 0 || var == 2) {
+						qs.setQuestVarById(0, var + 1);
+						updateQuestStatus(player, qs);
+						PacketSendUtility.sendPacket(player,
+								new SM_DIALOG_WINDOW(env.getVisibleObject()
+										.getObjectId(), 10));
+						return true;
+					}
+				case 33:
+					if (var == 1) {
+						if (QuestService.collectItemCheck(env, true)) {
 							qs.setQuestVarById(0, var + 1);
 							updateQuestStatus(player, qs);
-							PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
-							return true;
-						}
-					case 33:
-						if(var == 1)
-						{
-							if(QuestService.collectItemCheck(env, true))
-							{
-								qs.setQuestVarById(0, var + 1);
-								updateQuestStatus(player, qs);
-								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1694);
-							}
-							else
-								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
-						}
+							return sendQuestDialog(player, env
+									.getVisibleObject().getObjectId(), 1694);
+						} else
+							return sendQuestDialog(player, env
+									.getVisibleObject().getObjectId(), 1693);
+					}
 				}
-			}
-			else if(targetId == 700093)
-			{
-				if(var == 1 && env.getDialogId() == -1)
+			} else if (targetId == 700093) {
+				if (var == 1 && env.getDialogId() == -1)
 					return true;
 			}
-		}
-		else if(qs.getStatus() == QuestStatus.REWARD)
-		{
-			if(targetId == 203518)
-			{
-				if(env.getDialogId() == -1)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2034);
+		} else if (qs.getStatus() == QuestStatus.REWARD) {
+			if (targetId == 203518) {
+				if (env.getDialogId() == -1)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 2034);
 				else
 					return defaultQuestEndDialog(env);
 			}
@@ -133,36 +125,31 @@ public class _2001ThinkingAhead extends QuestHandler
 	}
 
 	@Override
-	public boolean onKillEvent(QuestEnv env)
-	{
+	public boolean onKillEvent(QuestEnv env) {
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null)
+		if (qs == null)
 			return false;
 
 		int var = qs.getQuestVarById(0);
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
-		if(qs.getStatus() != QuestStatus.START)
+		if (qs.getStatus() != QuestStatus.START)
 			return false;
-		switch(targetId)
-		{
-			case 210368:
-			case 210369:
-				if(var >= 3 && var < 8)
-				{
-					qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
-					updateQuestStatus(player, qs);
-					return true;
-				}
-				else if(var == 8)
-				{
-					qs.setStatus(QuestStatus.REWARD);
-					updateQuestStatus(player, qs);
-					return true;
-				}
+		switch (targetId) {
+		case 210368:
+		case 210369:
+			if (var >= 3 && var < 8) {
+				qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
+				updateQuestStatus(player, qs);
+				return true;
+			} else if (var == 8) {
+				qs.setStatus(QuestStatus.REWARD);
+				updateQuestStatus(player, qs);
+				return true;
+			}
 		}
 		return false;
 	}

@@ -26,74 +26,69 @@ import com.aionemu.gameserver.services.TeleportService;
 
 /**
  * @author Xitanium
- *
+ * 
  */
-public class _1430ATeleportationExperiment extends QuestHandler 
-{
+public class _1430ATeleportationExperiment extends QuestHandler {
 
-	private final static int	questId	= 1430;
+	private final static int questId = 1430;
 
-	public _1430ATeleportationExperiment()
-	{
+	public _1430ATeleportationExperiment() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
-		qe.setNpcQuestData(203919).addOnQuestStart(questId); //Onesimus
-		qe.setNpcQuestData(203919).addOnTalkEvent(questId); //Onesimus
-		qe.setNpcQuestData(203337).addOnTalkEvent(questId); //Sonirim
+	public void register() {
+		qe.setNpcQuestData(203919).addOnQuestStart(questId); // Onesimus
+		qe.setNpcQuestData(203919).addOnTalkEvent(questId); // Onesimus
+		qe.setNpcQuestData(203337).addOnTalkEvent(questId); // Sonirim
 	}
-	
+
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null || qs.getStatus() == QuestStatus.NONE)
-		{
-			if(targetId == 203919) //Onesimus
+		if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+			if (targetId == 203919) // Onesimus
 			{
-				if(env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 4762);
+				if (env.getDialogId() == 25)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 4762);
 				else
 					return defaultQuestStartDialog(env);
 			}
 		}
-		
-		else if(targetId == 203337) //Sonirim
+
+		else if (targetId == 203337) // Sonirim
 		{
 
-			if(qs != null && qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 0)
-			{
-				if(env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
-				else if(env.getDialogId() == 10000)
-				{
+			if (qs != null && qs.getStatus() == QuestStatus.START
+					&& qs.getQuestVarById(0) == 0) {
+				if (env.getDialogId() == 25)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 1011);
+				else if (env.getDialogId() == 10000) {
 					qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
 					updateQuestStatus(player, qs);
 					qs.setStatus(QuestStatus.REWARD);
-					TeleportService.teleportTo(player, 220020000, 1, 638, 2337, 425, (byte) 20, 0);
-				}
-				else
+					TeleportService.teleportTo(player, 220020000, 1, 638, 2337,
+							425, (byte) 20, 0);
+				} else
 					return defaultQuestStartDialog(env);
 			}
-			
-			else if(qs != null && qs.getStatus() == QuestStatus.REWARD) //Reward
+
+			else if (qs != null && qs.getStatus() == QuestStatus.REWARD) // Reward
 			{
-				if(env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 4080);
-				else if(env.getDialogId() == 1009)
-				{
+				if (env.getDialogId() == 25)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 4080);
+				else if (env.getDialogId() == 1009) {
 					qs.setQuestVar(2);
 					updateQuestStatus(player, qs);
 					return defaultQuestEndDialog(env);
-				}
-				else
+				} else
 					return defaultQuestEndDialog(env);
 			}
 

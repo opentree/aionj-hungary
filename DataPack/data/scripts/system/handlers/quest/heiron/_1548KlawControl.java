@@ -26,78 +26,67 @@ import com.aionemu.gameserver.questEngine.model.QuestStatus;
 /**
  * @author Atomics
  */
-public class _1548KlawControl extends QuestHandler
-{
+public class _1548KlawControl extends QuestHandler {
 
-	private final static int	questId	= 1548;
+	private final static int questId = 1548;
 
-	public _1548KlawControl()
-	{
+	public _1548KlawControl() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
-		qe.setNpcQuestData(204583).addOnQuestStart(questId); //Senea
-		qe.setNpcQuestData(204583).addOnTalkEvent(questId); //Senea
-		qe.setNpcQuestData(700169).addOnKillEvent(questId); //Klaw Spawner
+	public void register() {
+		qe.setNpcQuestData(204583).addOnQuestStart(questId); // Senea
+		qe.setNpcQuestData(204583).addOnTalkEvent(questId); // Senea
+		qe.setNpcQuestData(700169).addOnKillEvent(questId); // Klaw Spawner
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		int targetId = 0;
-		
-		if(env.getVisibleObject() instanceof Npc)
+
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(targetId == 204583)
-		{
-			if(qs == null || qs.getStatus() == QuestStatus.NONE)
-			{
-				if(env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+		if (targetId == 204583) {
+			if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+				if (env.getDialogId() == 25)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 1011);
 				else
 					return defaultQuestStartDialog(env);
-			}
-			else if(qs.getStatus() == QuestStatus.REWARD)
-			{
+			} else if (qs.getStatus() == QuestStatus.REWARD) {
 				return defaultQuestEndDialog(env);
 			}
 		}
 		return false;
 	}
+
 	@Override
-	public boolean onKillEvent(QuestEnv env)
-	{
+	public boolean onKillEvent(QuestEnv env) {
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null || qs.getStatus() != QuestStatus.START)
+		if (qs == null || qs.getStatus() != QuestStatus.START)
 			return false;
 
 		int var = qs.getQuestVarById(0);
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
-		switch(targetId)
-		{
-			case 700169:
-				if(var >= 0 && var < 4)
-				{
-					qs.setQuestVarById(0, var + 1);
-					updateQuestStatus(player, qs);
-					return true;
-				}
-				else if(var == 4)
-				{
-					qs.setQuestVarById(0, var + 1);
-					updateQuestStatus(player, qs);
-					qs.setStatus(QuestStatus.REWARD);
-					updateQuestStatus(player, qs);
-					return true;
-				}
+		switch (targetId) {
+		case 700169:
+			if (var >= 0 && var < 4) {
+				qs.setQuestVarById(0, var + 1);
+				updateQuestStatus(player, qs);
+				return true;
+			} else if (var == 4) {
+				qs.setQuestVarById(0, var + 1);
+				updateQuestStatus(player, qs);
+				qs.setStatus(QuestStatus.REWARD);
+				updateQuestStatus(player, qs);
+				return true;
+			}
 		}
 		return false;
 	}

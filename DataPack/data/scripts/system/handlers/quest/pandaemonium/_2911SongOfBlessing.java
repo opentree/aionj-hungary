@@ -27,62 +27,54 @@ import com.aionemu.gameserver.questEngine.model.QuestStatus;
  * @author Nephis and AU team helper
  * 
  */
-public class _2911SongOfBlessing extends QuestHandler
-{
-	private final static int	questId	= 2911;
+public class _2911SongOfBlessing extends QuestHandler {
+	private final static int questId = 2911;
 
-	public _2911SongOfBlessing()
-	{
+	public _2911SongOfBlessing() {
 		super(questId);
 	}
-	
-    @Override
-	public void register()
-	{
+
+	@Override
+	public void register() {
 		qe.setNpcQuestData(204079).addOnQuestStart(questId);
 		qe.setNpcQuestData(204079).addOnTalkEvent(questId);
 		qe.setNpcQuestData(204193).addOnTalkEvent(questId);
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(targetId == 204079)
-		{
-			if(qs == null || qs.getStatus() == QuestStatus.NONE)
-			{
-				if(env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+		if (targetId == 204079) {
+			if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+				if (env.getDialogId() == 25)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 1011);
 				else
 					return defaultQuestStartDialog(env);
 			}
-		}
-		else if(targetId == 204193)
-		{
-			if(qs != null)
-			{
-				if(env.getDialogId() == 25 && qs.getStatus() == QuestStatus.START)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
-				else if(env.getDialogId() == 10000)
-				{
+		} else if (targetId == 204193) {
+			if (qs != null) {
+				if (env.getDialogId() == 25
+						&& qs.getStatus() == QuestStatus.START)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 1352);
+				else if (env.getDialogId() == 10000) {
 					qs.setQuestVar(2);
 					qs.setStatus(QuestStatus.REWARD);
 					updateQuestStatus(player, qs);
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
-				}
-				else if(env.getDialogId() == 10001)
-				{
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 5);
+				} else if (env.getDialogId() == 10001) {
 					qs.setQuestVar(3);
 					qs.setStatus(QuestStatus.REWARD);
 					updateQuestStatus(player, qs);
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 6);
-				}
-				else
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 6);
+				} else
 					return defaultQuestEndDialog(env);
 			}
 		}

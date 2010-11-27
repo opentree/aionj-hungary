@@ -27,69 +27,61 @@ import com.aionemu.gameserver.questEngine.model.QuestStatus;
  * @author Atomics
  * 
  */
-public class _1470HannetsVengeance extends QuestHandler
-{
+public class _1470HannetsVengeance extends QuestHandler {
 
-	private final static int	questId	= 1470;
+	private final static int questId = 1470;
 
-	public _1470HannetsVengeance()
-	{
+	public _1470HannetsVengeance() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
-		qe.setNpcQuestData(790004).addOnQuestStart(questId); //Hannet
-		qe.setNpcQuestData(790004).addOnTalkEvent(questId); //Hannet
+	public void register() {
+		qe.setNpcQuestData(790004).addOnQuestStart(questId); // Hannet
+		qe.setNpcQuestData(790004).addOnTalkEvent(questId); // Hannet
 		qe.setNpcQuestData(212846).addOnKillEvent(questId); // Kromede
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		int targetId = 0;
-		
-		if(env.getVisibleObject() instanceof Npc)
+
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(targetId == 790004)
-		{
-			if(qs == null || qs.getStatus() == QuestStatus.NONE)
-			{
-				if(env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+		if (targetId == 790004) {
+			if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+				if (env.getDialogId() == 25)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 1011);
 				else
 					return defaultQuestStartDialog(env);
-			}
-			else if(qs.getStatus() == QuestStatus.REWARD)
-			{
+			} else if (qs.getStatus() == QuestStatus.REWARD) {
 				return defaultQuestEndDialog(env);
 			}
 		}
 		return false;
 	}
+
 	@Override
-	public boolean onKillEvent(QuestEnv env)
-	{
+	public boolean onKillEvent(QuestEnv env) {
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null || qs.getStatus() != QuestStatus.START)
+		if (qs == null || qs.getStatus() != QuestStatus.START)
 			return false;
 
 		int var = qs.getQuestVarById(0);
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
-		switch(targetId)
-		{
-			case 212846:
-					qs.setQuestVarById(0, var + 1);
-					updateQuestStatus(player, qs);
-					qs.setStatus(QuestStatus.REWARD);
-					updateQuestStatus(player, qs);
-					return true;
+		switch (targetId) {
+		case 212846:
+			qs.setQuestVarById(0, var + 1);
+			updateQuestStatus(player, qs);
+			qs.setStatus(QuestStatus.REWARD);
+			updateQuestStatus(player, qs);
+			return true;
 		}
 		return false;
 	}

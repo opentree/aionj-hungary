@@ -58,35 +58,30 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
  * @author MrPoke
  * 
  */
-public class Reload extends AdminCommand
-{
-	private static final Logger	log	= Logger.getLogger(Reload.class);
+public class Reload extends AdminCommand {
+	private static final Logger log = Logger.getLogger(Reload.class);
 
-	public Reload()
-	{
+	public Reload() {
 		super("reload");
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params)
-	{
-		if(admin.getAccessLevel() < AdminConfig.COMMAND_RELOAD)
-		{
-			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
+	public void executeCommand(Player admin, String[] params) {
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_RELOAD) {
+			PacketSendUtility.sendMessage(admin,
+					"You dont have enough rights to execute this command");
 			return;
 		}
 
-		if(params == null || params.length != 1)
-		{
-			PacketSendUtility.sendMessage(admin, "syntax //reload <quest | skill | portal | spawn>");
+		if (params == null || params.length != 1) {
+			PacketSendUtility.sendMessage(admin,
+					"syntax //reload <quest | skill | portal | spawn>");
 			return;
 		}
-		if(params[0].equals("quest"))
-		{
+		if (params[0].equals("quest")) {
 			File xml = new File("./data/static_data/quest_data/quest_data.xml");
 			File dir = new File("./data/static_data/quest_script_data");
-			try
-			{
+			try {
 				QuestEngine.getInstance().shutdown();
 				JAXBContext jc = JAXBContext.newInstance(StaticData.class);
 				Unmarshaller un = jc.createUnmarshaller();
@@ -96,95 +91,72 @@ public class Reload extends AdminCommand
 				questsData.setQuestsData(newQuestData.getQuestsData());
 				QuestScriptsData questScriptsData = DataManager.QUEST_SCRIPTS_DATA;
 				questScriptsData.getData().clear();
-				for(File file : listFiles(dir, true))
-				{
-					QuestScriptsData data = ((QuestScriptsData)un.unmarshal(file));
+				for (File file : listFiles(dir, true)) {
+					QuestScriptsData data = ((QuestScriptsData) un
+							.unmarshal(file));
 					if (data != null)
 						if (data.getData() != null)
 							questScriptsData.getData().addAll(data.getData());
 				}
 				QuestEngine.getInstance().load();
-			}
-			catch(Exception e)
-			{
+			} catch (Exception e) {
 				PacketSendUtility.sendMessage(admin, "Quest reload failed!");
 				log.error(e);
-			}
-			finally
-			{
+			} finally {
 				PacketSendUtility.sendMessage(admin, "Quest reload Success!");
 			}
-		}
-		else if(params[0].equals("skill"))
-		{
+		} else if (params[0].equals("skill")) {
 			File dir = new File("./data/static_data/skills");
-			try
-			{
+			try {
 				JAXBContext jc = JAXBContext.newInstance(StaticData.class);
 				Unmarshaller un = jc.createUnmarshaller();
 				un.setSchema(getSchema("./data/static_data/static_data.xsd"));
 				List<SkillTemplate> newTemplates = new ArrayList<SkillTemplate>();
-				for(File file : listFiles(dir, true))
-				{
-					SkillData data = (SkillData)un.unmarshal(file);
-					if(data != null)
+				for (File file : listFiles(dir, true)) {
+					SkillData data = (SkillData) un.unmarshal(file);
+					if (data != null)
 						newTemplates.addAll(data.getSkillTemplates());
 				}
 				DataManager.SKILL_DATA.setSkillTemplates(newTemplates);
-			}
-			catch(Exception e)
-			{
+			} catch (Exception e) {
 				PacketSendUtility.sendMessage(admin, "Skill reload failed!");
 				log.error(e);
-			}
-			finally
-			{
+			} finally {
 				PacketSendUtility.sendMessage(admin, "Skill reload Success!");
 			}
-		}
-		else if(params[0].equals("portal"))
-		{
+		} else if (params[0].equals("portal")) {
 			File dir = new File("./data/static_data/portals");
-			try
-			{
+			try {
 				JAXBContext jc = JAXBContext.newInstance(StaticData.class);
 				Unmarshaller un = jc.createUnmarshaller();
 				un.setSchema(getSchema("./data/static_data/static_data.xsd"));
 				List<PortalTemplate> newTemplates = new ArrayList<PortalTemplate>();
-				for(File file : listFiles(dir, true))
-				{
-					PortalData data = (PortalData)un.unmarshal(file);
-					if(data != null && data.getPortals() != null)
+				for (File file : listFiles(dir, true)) {
+					PortalData data = (PortalData) un.unmarshal(file);
+					if (data != null && data.getPortals() != null)
 						newTemplates.addAll(data.getPortals());
 				}
 				DataManager.PORTAL_DATA.setPortals(newTemplates);
-			}
-			catch(Exception e)
-			{
+			} catch (Exception e) {
 				PacketSendUtility.sendMessage(admin, "Portal reload failed!");
 				log.error(e);
-			}
-			finally
-			{
+			} finally {
 				PacketSendUtility.sendMessage(admin, "Portal reload Success!");
 			}
-		}
-		else
-			PacketSendUtility.sendMessage(admin, "syntax //reload <quest | skill | portal | spawn>");
+		} else
+			PacketSendUtility.sendMessage(admin,
+					"syntax //reload <quest | skill | portal | spawn>");
 
 	}
 
-	private Schema getSchema(String xml_schema)
-	{
+	private Schema getSchema(String xml_schema) {
 		Schema schema = null;
-		SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+		SchemaFactory sf = SchemaFactory
+				.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
-		try
-		{
+		try {
 			schema = sf.newSchema(new File(xml_schema));
-		}
-		catch(SAXException saxe)
-		{
+		} catch (SAXException saxe) {
 			throw new Error("Error while getting schema", saxe);
 		}
 
@@ -192,16 +164,20 @@ public class Reload extends AdminCommand
 	}
 
 	@SuppressWarnings("unchecked")
-	private Collection<File> listFiles(File root, boolean recursive)
-	{
-		IOFileFilter dirFilter = recursive ? makeSVNAware(HiddenFileFilter.VISIBLE) : null;
+	private Collection<File> listFiles(File root, boolean recursive) {
+		IOFileFilter dirFilter = recursive ? makeSVNAware(HiddenFileFilter.VISIBLE)
+				: null;
 
-		return FileUtils.listFiles(root, andFileFilter(andFileFilter(notFileFilter(prefixFileFilter("new")),
-			suffixFileFilter(".xml")), HiddenFileFilter.VISIBLE), dirFilter);
+		return FileUtils.listFiles(
+				root,
+				andFileFilter(
+						andFileFilter(notFileFilter(prefixFileFilter("new")),
+								suffixFileFilter(".xml")),
+						HiddenFileFilter.VISIBLE), dirFilter);
 	}
-	
-	public static void main(String[] args)
-	{
-		AdminCommandChatHandler.getInstance().registerAdminCommand(new Reload());
+
+	public static void main(String[] args) {
+		AdminCommandChatHandler.getInstance()
+				.registerAdminCommand(new Reload());
 	}
 }

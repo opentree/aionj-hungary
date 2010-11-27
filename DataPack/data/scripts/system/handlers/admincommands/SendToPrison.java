@@ -28,58 +28,52 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
 import com.aionemu.gameserver.world.World;
 
 /**
- * @author lord_rex
- * Command: //sprison <player> <delay>(minutes)
- * This command is sending player to prison.
+ * @author lord_rex Command: //sprison <player> <delay>(minutes) This command is
+ *         sending player to prison.
  * 
  */
-public class SendToPrison extends AdminCommand
-{
+public class SendToPrison extends AdminCommand {
 
-	public SendToPrison()
-	{
+	public SendToPrison() {
 		super("sprison");
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params)
-	{
-		if(admin.getAccessLevel() < AdminConfig.COMMAND_PRISON)
-		{
-			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command!");
+	public void executeCommand(Player admin, String[] params) {
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_PRISON) {
+			PacketSendUtility.sendMessage(admin,
+					"You dont have enough rights to execute this command!");
 			return;
 		}
 
-		if(params.length == 0 || params.length > 2)
-		{
-			PacketSendUtility.sendMessage(admin, "syntax //sprison <player> <delay>");
+		if (params.length == 0 || params.length > 2) {
+			PacketSendUtility.sendMessage(admin,
+					"syntax //sprison <player> <delay>");
 			return;
 		}
 
-		try
-		{
-			Player playerToPrison = World.getInstance().findPlayer(Util.convertName(params[0]));
+		try {
+			Player playerToPrison = World.getInstance().findPlayer(
+					Util.convertName(params[0]));
 			int delay = Integer.parseInt(params[1]);
 
-			if(playerToPrison != null)
-			{
+			if (playerToPrison != null) {
 				PunishmentService.setIsInPrison(playerToPrison, true, delay);
-				PacketSendUtility.sendMessage(admin, "Player " + playerToPrison.getName() + " sent to prison for "
-					+ delay + ".");
+				PacketSendUtility.sendMessage(admin,
+						"Player " + playerToPrison.getName()
+								+ " sent to prison for " + delay + ".");
 			}
-		}
-		catch(NoSuchElementException nsee)
-		{
-			PacketSendUtility.sendMessage(admin, "Usage: //sprison <player> <delay>");
-		}
-		catch(Exception e)
-		{
-			PacketSendUtility.sendMessage(admin, "Usage: //sprison <player> <delay>");
+		} catch (NoSuchElementException nsee) {
+			PacketSendUtility.sendMessage(admin,
+					"Usage: //sprison <player> <delay>");
+		} catch (Exception e) {
+			PacketSendUtility.sendMessage(admin,
+					"Usage: //sprison <player> <delay>");
 		}
 	}
-	
-	public static void main(String[] args)
-	{
-		AdminCommandChatHandler.getInstance().registerAdminCommand(new SendToPrison());
+
+	public static void main(String[] args) {
+		AdminCommandChatHandler.getInstance().registerAdminCommand(
+				new SendToPrison());
 	}
 }

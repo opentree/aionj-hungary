@@ -28,106 +28,105 @@ import com.aionemu.gameserver.services.ItemService;
  * @author Nanou
  * 
  */
-public class _3936DecorationsOfSanctum extends QuestHandler
-{
-	private final static int	questId	= 3936;
+public class _3936DecorationsOfSanctum extends QuestHandler {
+	private final static int questId = 3936;
 
-	public _3936DecorationsOfSanctum()
-	{
+	public _3936DecorationsOfSanctum() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
-		qe.setNpcQuestData(203710).addOnQuestStart(questId);	//Dairos
-		qe.setNpcQuestData(203710).addOnTalkEvent(questId);		//Dairos
+	public void register() {
+		qe.setNpcQuestData(203710).addOnQuestStart(questId); // Dairos
+		qe.setNpcQuestData(203710).addOnTalkEvent(questId); // Dairos
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		// Instanceof
 		final Player player = env.getPlayer();
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		
+
 		// ------------------------------------------------------------
 		// NPC Quest :
 		// Start to Dairos
-		if(qs == null || qs.getStatus() == QuestStatus.NONE) 
-		{
-			if(targetId == 203710)
-			{
+		if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+			if (targetId == 203710) {
 				// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
-				if(env.getDialogId() == 25)
+				if (env.getDialogId() == 25)
 					// Send select_none to eddit-HtmlPages.xml
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 4762);
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 4762);
 				else
 					return defaultQuestStartDialog(env);
 
 			}
 		}
-		
-		if(qs == null)
+
+		if (qs == null)
 			return false;
-		
-		if(qs.getStatus() == QuestStatus.START)
-		{
-			
-			switch(targetId)
-			{
-				// 1 - Report the result to Dairos.
-				case 203710 :
-					switch(env.getDialogId())
-					{
-						// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
-						case 25 :
-							// Send select1 to eddit-HtmlPages.xml
-							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
-						// Get HACTION_SETPRO1 in the eddit-HyperLinks.xml
-						case 10000:
-							// Send select2 to eddit-HtmlPages.xml
-							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
-						// Get HACTION_CHECK_USER_HAS_QUEST_ITEM in the eddit-HyperLinks.xml
-						case 33 :
-							// Collect Bloodwing Wings (10)
-							// Collect Sylphen Saliva (10)
-							// Collect Hornskull's Tongue (10)
-							// Collect Abex Horn (10)
-							if(	player.getInventory().getItemCountByItemId(182206091) >= 10 && 
-								player.getInventory().getItemCountByItemId(182206092) >= 10 &&
-								player.getInventory().getItemCountByItemId(182206093) >= 10 &&
-								player.getInventory().getItemCountByItemId(182206094) >= 10 )
-							{
-								ItemService.removeItemFromInventoryByItemId(player, 182206091);
-								ItemService.removeItemFromInventoryByItemId(player, 182206092);
-								ItemService.removeItemFromInventoryByItemId(player, 182206093);
-								ItemService.removeItemFromInventoryByItemId(player, 182206094);
-								qs.setStatus(QuestStatus.REWARD);
-								updateQuestStatus(player, qs);
-								// Send select_quest_reward1 to eddit-HtmlPages.xml
-								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
-							}
-							else
-							{
-								// Send check_user_item_fail to eddit-HtmlPages.xml
-								return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10001);	
-							}
+
+		if (qs.getStatus() == QuestStatus.START) {
+
+			switch (targetId) {
+			// 1 - Report the result to Dairos.
+			case 203710:
+				switch (env.getDialogId()) {
+				// Get HACTION_QUEST_SELECT in the eddit-HyperLinks.xml
+				case 25:
+					// Send select1 to eddit-HtmlPages.xml
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 1011);
+					// Get HACTION_SETPRO1 in the eddit-HyperLinks.xml
+				case 10000:
+					// Send select2 to eddit-HtmlPages.xml
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 1352);
+					// Get HACTION_CHECK_USER_HAS_QUEST_ITEM in the
+					// eddit-HyperLinks.xml
+				case 33:
+					// Collect Bloodwing Wings (10)
+					// Collect Sylphen Saliva (10)
+					// Collect Hornskull's Tongue (10)
+					// Collect Abex Horn (10)
+					if (player.getInventory().getItemCountByItemId(182206091) >= 10
+							&& player.getInventory().getItemCountByItemId(
+									182206092) >= 10
+							&& player.getInventory().getItemCountByItemId(
+									182206093) >= 10
+							&& player.getInventory().getItemCountByItemId(
+									182206094) >= 10) {
+						ItemService.removeItemFromInventoryByItemId(player,
+								182206091);
+						ItemService.removeItemFromInventoryByItemId(player,
+								182206092);
+						ItemService.removeItemFromInventoryByItemId(player,
+								182206093);
+						ItemService.removeItemFromInventoryByItemId(player,
+								182206094);
+						qs.setStatus(QuestStatus.REWARD);
+						updateQuestStatus(player, qs);
+						// Send select_quest_reward1 to eddit-HtmlPages.xml
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 5);
+					} else {
+						// Send check_user_item_fail to eddit-HtmlPages.xml
+						return sendQuestDialog(player, env.getVisibleObject()
+								.getObjectId(), 10001);
 					}
-					break;
-				// No match 
-				default : 
-					return defaultQuestStartDialog(env);
+				}
+				break;
+			// No match
+			default:
+				return defaultQuestStartDialog(env);
 			}
-		}
-		else if(qs.getStatus() == QuestStatus.REWARD)
-		{
-			if(targetId == 203710)
+		} else if (qs.getStatus() == QuestStatus.REWARD) {
+			if (targetId == 203710)
 				return defaultQuestEndDialog(env);
 		}
-	return false;
+		return false;
 	}
 }

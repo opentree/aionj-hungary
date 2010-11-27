@@ -30,37 +30,31 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  * @author MrPoke
  * 
  */
-public class _2000Prologue extends QuestHandler
-{
-	private final static int	questId	= 2000;
+public class _2000Prologue extends QuestHandler {
+	private final static int questId = 2000;
 
-	public _2000Prologue()
-	{
+	public _2000Prologue() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
+	public void register() {
 		qe.addOnEnterWorld(questId);
 		qe.setQuestMovieEndIds(2).add(questId);
 	}
 
 	@Override
-	public boolean onEnterWorldEvent(QuestEnv env)
-	{
+	public boolean onEnterWorldEvent(QuestEnv env) {
 		Player player = env.getPlayer();
-		if(player.getCommonData().getRace() != Race.ASMODIANS)
+		if (player.getCommonData().getRace() != Race.ASMODIANS)
 			return false;
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null)
-		{
+		if (qs == null) {
 			env.setQuestId(questId);
 			QuestService.startQuest(env, QuestStatus.START);
 		}
 		qs = player.getQuestStateList().getQuestState(questId);
-		if(qs.getStatus() == QuestStatus.START)
-		{
+		if (qs.getStatus() == QuestStatus.START) {
 			PacketSendUtility.sendPacket(player, new SM_PLAY_MOVIE(1, 2));
 			return true;
 		}
@@ -68,15 +62,14 @@ public class _2000Prologue extends QuestHandler
 	}
 
 	@Override
-	public boolean onMovieEndEvent(QuestEnv env, int movieId)
-	{
-		if(movieId != 2)
+	public boolean onMovieEndEvent(QuestEnv env, int movieId) {
+		if (movieId != 2)
 			return false;
 		Player player = env.getPlayer();
-		if(player.getCommonData().getRace() != Race.ASMODIANS)
+		if (player.getCommonData().getRace() != Race.ASMODIANS)
 			return false;
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null || qs.getStatus() != QuestStatus.START)
+		if (qs == null || qs.getStatus() != QuestStatus.START)
 			return false;
 		qs.setStatus(QuestStatus.REWARD);
 		QuestService.questFinish(env);

@@ -24,42 +24,35 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.chathandlers.AdminCommand;
 import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
 
-
 /**
  * @author ATracer
- *
+ * 
  */
-public class Kill extends AdminCommand
-{
-	public Kill()
-	{
+public class Kill extends AdminCommand {
+	public Kill() {
 		super("kill");
 	}
-	
+
 	@Override
-	public void executeCommand(Player admin, String[] params)
-	{
-		if(admin.getAccessLevel() < AdminConfig.COMMAND_KILL)
-		{
-			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
+	public void executeCommand(Player admin, String[] params) {
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_KILL) {
+			PacketSendUtility.sendMessage(admin,
+					"You dont have enough rights to execute this command");
 			return;
 		}
-		
+
 		VisibleObject target = admin.getTarget();
-		if(target == null)
-		{
+		if (target == null) {
 			PacketSendUtility.sendMessage(admin, "No target selected");
 			return;
 		}
-		if(target instanceof Creature)
-		{
+		if (target instanceof Creature) {
 			Creature creature = (Creature) target;
 			creature.onAttack(admin, creature.getLifeStats().getMaxHp() + 1);
-		}		
+		}
 	}
-	
-	public static void main(String[] args)
-	{
+
+	public static void main(String[] args) {
 		AdminCommandChatHandler.getInstance().registerAdminCommand(new Kill());
 	}
 }

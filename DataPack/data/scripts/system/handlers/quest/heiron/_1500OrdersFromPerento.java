@@ -29,30 +29,27 @@ import com.aionemu.gameserver.world.zone.ZoneName;
  * @author MrPoke + Dune11
  * 
  */
-public class _1500OrdersFromPerento extends QuestHandler
-{
+public class _1500OrdersFromPerento extends QuestHandler {
 
-	private final static int	questId	= 1500;
+	private final static int questId = 1500;
 
-	public _1500OrdersFromPerento()
-	{
+	public _1500OrdersFromPerento() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
+	public void register() {
 		qe.setNpcQuestData(204500).addOnTalkEvent(questId);
 		qe.setQuestEnterZone(ZoneName.NEW_HEIRON_GATE).add(questId);
 	}
 
 	@Override
-	public boolean onLvlUpEvent(QuestEnv env)
-	{
+	public boolean onLvlUpEvent(QuestEnv env) {
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player.getCommonData().getLevel());
-		if(qs == null || !lvlCheck || qs.getStatus() != QuestStatus.LOCKED)
+		boolean lvlCheck = QuestService.checkLevelRequirement(questId, player
+				.getCommonData().getLevel());
+		if (qs == null || !lvlCheck || qs.getStatus() != QuestStatus.LOCKED)
 			return false;
 		qs.setStatus(QuestStatus.START);
 		updateQuestStatus(player, qs);
@@ -60,39 +57,38 @@ public class _1500OrdersFromPerento extends QuestHandler
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null)
+		if (qs == null)
 			return false;
 
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
-		if(targetId != 204500)
+		if (targetId != 204500)
 			return false;
-		if(qs.getStatus() == QuestStatus.START)
-		{
-			if(env.getDialogId() == 25)
-				return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10002);
-			else if(env.getDialogId() == 1009)
-			{
+		if (qs.getStatus() == QuestStatus.START) {
+			if (env.getDialogId() == 25)
+				return sendQuestDialog(player, env.getVisibleObject()
+						.getObjectId(), 10002);
+			else if (env.getDialogId() == 1009) {
 				qs.setStatus(QuestStatus.REWARD);
 				qs.setQuestVarById(0, 1);
 				updateQuestStatus(player, qs);
-				return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
+				return sendQuestDialog(player, env.getVisibleObject()
+						.getObjectId(), 5);
 			}
 			return false;
-		}
-		else if(qs.getStatus() == QuestStatus.REWARD)
-		{
-			if(env.getDialogId() == 17)
-			{
-				int[] ids = {1051, 1052, 1053, 1054, 1055, 1056, 1057, 1058, 1059, 1062, 1063};
-				for (int id : ids)
-				{
-					QuestService.startQuest(new QuestEnv(env.getVisibleObject(), env.getPlayer(), id, env.getDialogId()), QuestStatus.LOCKED);
+		} else if (qs.getStatus() == QuestStatus.REWARD) {
+			if (env.getDialogId() == 17) {
+				int[] ids = { 1051, 1052, 1053, 1054, 1055, 1056, 1057, 1058,
+						1059, 1062, 1063 };
+				for (int id : ids) {
+					QuestService.startQuest(
+							new QuestEnv(env.getVisibleObject(), env
+									.getPlayer(), id, env.getDialogId()),
+							QuestStatus.LOCKED);
 				}
 			}
 			return defaultQuestEndDialog(env);
@@ -101,13 +97,12 @@ public class _1500OrdersFromPerento extends QuestHandler
 	}
 
 	@Override
-	public boolean onEnterZoneEvent(QuestEnv env, ZoneName zoneName)
-	{
-		if(zoneName != ZoneName.NEW_HEIRON_GATE)
+	public boolean onEnterZoneEvent(QuestEnv env, ZoneName zoneName) {
+		if (zoneName != ZoneName.NEW_HEIRON_GATE)
 			return false;
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs != null)
+		if (qs != null)
 			return false;
 		env.setQuestId(questId);
 		QuestService.startQuest(env, QuestStatus.START);

@@ -28,60 +28,53 @@ import com.aionemu.gameserver.world.zone.ZoneName;
 
 /**
  * @author MrPoke
- *
+ * 
  */
-public class _1123WheresTutty extends QuestHandler
-{
-	private final static int	questId	= 1123;
-	
-	public _1123WheresTutty()
-	{
+public class _1123WheresTutty extends QuestHandler {
+	private final static int questId = 1123;
+
+	public _1123WheresTutty() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
+	public void register() {
 		qe.setNpcQuestData(790001).addOnTalkEvent(questId);
 		qe.setNpcQuestData(790001).addOnQuestStart(questId);
 		qe.setQuestEnterZone(ZoneName.Q1123).add(questId);
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(targetId == 790001)
-		{
-			if(qs == null || qs.getStatus() == QuestStatus.NONE)
-			{
-				if(env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+		if (targetId == 790001) {
+			if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+				if (env.getDialogId() == 25)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 1011);
 				else
 					return defaultQuestStartDialog(env);
-			}
-			else if (qs.getStatus() == QuestStatus.REWARD)
-			{
-				if(env.getDialogId() == -1)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
+			} else if (qs.getStatus() == QuestStatus.REWARD) {
+				if (env.getDialogId() == -1)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 1352);
 				return defaultQuestEndDialog(env);
 			}
 		}
 		return false;
 	}
-	
+
 	@Override
-	public boolean onEnterZoneEvent(QuestEnv env, ZoneName zoneName)
-	{
-		if(zoneName != ZoneName.Q1123)
+	public boolean onEnterZoneEvent(QuestEnv env, ZoneName zoneName) {
+		if (zoneName != ZoneName.Q1123)
 			return false;
 		final Player player = env.getPlayer();
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null || qs.getStatus() != QuestStatus.START)
+		if (qs == null || qs.getStatus() != QuestStatus.START)
 			return false;
 		env.setQuestId(questId);
 		PacketSendUtility.sendPacket(player, new SM_PLAY_MOVIE(0, 11));

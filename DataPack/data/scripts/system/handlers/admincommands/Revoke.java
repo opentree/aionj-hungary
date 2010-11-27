@@ -28,68 +28,65 @@ import com.aionemu.gameserver.world.World;
 
 /**
  * Admin revoke command.
- *
+ * 
  * @author Cyrakuse
  * @modified By Aionchs-Wylovech
  */
 
-public class Revoke extends AdminCommand
-{
+public class Revoke extends AdminCommand {
 
 	/**
 	 * Constructor.
 	 */
 
-	public Revoke()
-	{
+	public Revoke() {
 		super("revoke");
 	}
 
 	/**
-	 *  {@inheritDoc}
+	 * {@inheritDoc}
 	 */
 
 	@Override
-	public void executeCommand(Player admin, String[] params)
-	{
-		if(admin.getAccessLevel() < AdminConfig.COMMAND_REVOKE)
-		{
-			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
+	public void executeCommand(Player admin, String[] params) {
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_REVOKE) {
+			PacketSendUtility.sendMessage(admin,
+					"You dont have enough rights to execute this command");
 			return;
 		}
-		
-		if (params.length != 2)
-		{
-			PacketSendUtility.sendMessage(admin, "syntax //revoke <characterName> <acceslevel | membership>");
+
+		if (params.length != 2) {
+			PacketSendUtility
+					.sendMessage(admin,
+							"syntax //revoke <characterName> <acceslevel | membership>");
 			return;
 		}
 
 		int type = 0;
-		if(params[1].toLowerCase().equals("acceslevel"))
-		{
+		if (params[1].toLowerCase().equals("acceslevel")) {
 			type = 1;
-		}
-		else if(params[1].toLowerCase().equals("membership"))
-		{
+		} else if (params[1].toLowerCase().equals("membership")) {
 			type = 2;
-		}
-		else
-		{
-			PacketSendUtility.sendMessage(admin, "syntax //revoke <characterName> <acceslevel | membership>");
+		} else {
+			PacketSendUtility
+					.sendMessage(admin,
+							"syntax //revoke <characterName> <acceslevel | membership>");
 			return;
 		}
 
-		Player player = World.getInstance().findPlayer(Util.convertName(params[0]));
-		if (player == null)
-		{
-			PacketSendUtility.sendMessage(admin, "The specified player is not online.");
+		Player player = World.getInstance().findPlayer(
+				Util.convertName(params[0]));
+		if (player == null) {
+			PacketSendUtility.sendMessage(admin,
+					"The specified player is not online.");
 			return;
 		}
-		LoginServer.getInstance().sendLsControlPacket(admin.getAcountName(), player.getName(), admin.getName(), 0, type);
+		LoginServer.getInstance().sendLsControlPacket(admin.getAcountName(),
+				player.getName(), admin.getName(), 0, type);
 	}
-	
-	public static void main(String[] args)
-	{
-		AdminCommandChatHandler.getInstance().registerAdminCommand(new Revoke());
+
+	public static void main(String[] args) {
+		AdminCommandChatHandler.getInstance()
+				.registerAdminCommand(new Revoke());
 	}
 }

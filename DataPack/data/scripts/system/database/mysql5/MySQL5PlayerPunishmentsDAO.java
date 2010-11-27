@@ -30,31 +30,26 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
  * @author lord_rex
  * 
  */
-public class MySQL5PlayerPunishmentsDAO extends PlayerPunishmentsDAO
-{
-	public static final String	SELECT_QUERY	= "SELECT `player_id`, `punishment_status`, `punishment_timer` FROM `player_punishments` WHERE `player_id`=?";
-	public static final String	UPDATE_QUERY	= "UPDATE `player_punishments` SET `punishment_status`=?, `punishment_timer`=? WHERE `player_id`=?";
-	public static final String	REPLACE_QUERY	= "REPLACE INTO `player_punishments` VALUES (?,?,?)";
-	public static final String	DELETE_QUERY	= "DELETE FROM `player_punishments` WHERE `player_id`=?";
+public class MySQL5PlayerPunishmentsDAO extends PlayerPunishmentsDAO {
+	public static final String SELECT_QUERY = "SELECT `player_id`, `punishment_status`, `punishment_timer` FROM `player_punishments` WHERE `player_id`=?";
+	public static final String UPDATE_QUERY = "UPDATE `player_punishments` SET `punishment_status`=?, `punishment_timer`=? WHERE `player_id`=?";
+	public static final String REPLACE_QUERY = "REPLACE INTO `player_punishments` VALUES (?,?,?)";
+	public static final String DELETE_QUERY = "DELETE FROM `player_punishments` WHERE `player_id`=?";
 
 	@Override
-	public void loadPlayerPunishments(final Player player)
-	{
-		DB.select(SELECT_QUERY, new ParamReadStH(){
+	public void loadPlayerPunishments(final Player player) {
+		DB.select(SELECT_QUERY, new ParamReadStH() {
 			@Override
-			public void setParams(PreparedStatement ps) throws SQLException
-			{
+			public void setParams(PreparedStatement ps) throws SQLException {
 				ps.setInt(1, player.getObjectId());
 			}
 
 			@Override
-			public void handleRead(ResultSet rs) throws SQLException
-			{
-				while(rs.next())
-				{
+			public void handleRead(ResultSet rs) throws SQLException {
+				while (rs.next()) {
 					player.setPrisonTimer(rs.getLong("punishment_timer"));
 
-					if(player.isInPrison())
+					if (player.isInPrison())
 						player.setPrisonTimer(rs.getLong("punishment_timer"));
 					else
 						player.setPrisonTimer(0);
@@ -64,12 +59,11 @@ public class MySQL5PlayerPunishmentsDAO extends PlayerPunishmentsDAO
 	}
 
 	@Override
-	public void storePlayerPunishments(final Player player)
-	{
-		DB.insertUpdate(UPDATE_QUERY, new IUStH(){
+	public void storePlayerPunishments(final Player player) {
+		DB.insertUpdate(UPDATE_QUERY, new IUStH() {
 			@Override
-			public void handleInsertUpdate(PreparedStatement ps) throws SQLException
-			{
+			public void handleInsertUpdate(PreparedStatement ps)
+					throws SQLException {
 				ps.setInt(1, player.isInPrison() ? 1 : 0);
 				ps.setLong(2, player.getPrisonTimer());
 				ps.setInt(3, player.getObjectId());
@@ -79,12 +73,11 @@ public class MySQL5PlayerPunishmentsDAO extends PlayerPunishmentsDAO
 	}
 
 	@Override
-	public void punishPlayer(final Player player, final int mode)
-	{
-		DB.insertUpdate(REPLACE_QUERY, new IUStH(){
+	public void punishPlayer(final Player player, final int mode) {
+		DB.insertUpdate(REPLACE_QUERY, new IUStH() {
 			@Override
-			public void handleInsertUpdate(PreparedStatement ps) throws SQLException
-			{
+			public void handleInsertUpdate(PreparedStatement ps)
+					throws SQLException {
 				ps.setInt(1, player.getObjectId());
 				ps.setInt(2, mode);
 				ps.setLong(3, player.getPrisonTimer());
@@ -94,12 +87,11 @@ public class MySQL5PlayerPunishmentsDAO extends PlayerPunishmentsDAO
 	}
 
 	@Override
-	public void unpunishPlayer(final Player player)
-	{
-		DB.insertUpdate(DELETE_QUERY, new IUStH(){
+	public void unpunishPlayer(final Player player) {
+		DB.insertUpdate(DELETE_QUERY, new IUStH() {
 			@Override
-			public void handleInsertUpdate(PreparedStatement ps) throws SQLException
-			{
+			public void handleInsertUpdate(PreparedStatement ps)
+					throws SQLException {
 				ps.setInt(1, player.getObjectId());
 				ps.execute();
 			}
@@ -107,8 +99,7 @@ public class MySQL5PlayerPunishmentsDAO extends PlayerPunishmentsDAO
 	}
 
 	@Override
-	public boolean supports(String s, int i, int i1)
-	{
+	public boolean supports(String s, int i, int i1) {
 		return MySQL5DAOUtils.supports(s, i, i1);
 	}
 }

@@ -27,96 +27,84 @@ import com.aionemu.gameserver.questEngine.model.QuestStatus;
  * @author Atomics
  * 
  */
-public class _1376AMountaineOfTrouble extends QuestHandler
-{
+public class _1376AMountaineOfTrouble extends QuestHandler {
 
-	private final static int	questId	= 1376;
+	private final static int questId = 1376;
 
-	public _1376AMountaineOfTrouble()
-	{
+	public _1376AMountaineOfTrouble() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
-		qe.setNpcQuestData(203947).addOnQuestStart(questId); //Beramones
-		qe.setNpcQuestData(203947).addOnTalkEvent(questId); //Beramones
-		qe.setNpcQuestData(203964).addOnTalkEvent(questId); //Agrips
+	public void register() {
+		qe.setNpcQuestData(203947).addOnQuestStart(questId); // Beramones
+		qe.setNpcQuestData(203947).addOnTalkEvent(questId); // Beramones
+		qe.setNpcQuestData(203964).addOnTalkEvent(questId); // Agrips
 		qe.setNpcQuestData(210976).addOnKillEvent(questId); // Kerubien Hunter
 		qe.setNpcQuestData(210986).addOnKillEvent(questId); // Kerubien Hunter
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		int targetId = 0;
-		
-		if(env.getVisibleObject() instanceof Npc)
+
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null || qs.getStatus() == QuestStatus.NONE)
-		{
-			if(targetId == 203947) //Beramones
+		if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+			if (targetId == 203947) // Beramones
 			{
-				if(env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+				if (env.getDialogId() == 25)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 1011);
 				else
 					return defaultQuestStartDialog(env);
 			}
-		}
-		else if(qs.getStatus() == QuestStatus.REWARD)
-		{
-			if(targetId == 203964) //Agrips
+		} else if (qs.getStatus() == QuestStatus.REWARD) {
+			if (targetId == 203964) // Agrips
 			{
-			    if (env.getDialogId() == -1)
-			    	return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
-			    return defaultQuestEndDialog(env);
+				if (env.getDialogId() == -1)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 1352);
+				return defaultQuestEndDialog(env);
 			}
 		}
 		return false;
 	}
+
 	@Override
-	public boolean onKillEvent(QuestEnv env)
-	{
+	public boolean onKillEvent(QuestEnv env) {
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null || qs.getStatus() != QuestStatus.START)
+		if (qs == null || qs.getStatus() != QuestStatus.START)
 			return false;
 
 		int var = qs.getQuestVarById(0);
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
-		switch(targetId)
-		{
-			case 210976:
-				if(var >= 0 && var < 6)
-				{
-					qs.setQuestVarById(0, var + 1);
-					updateQuestStatus(player, qs);
-					return true;
-				}
-				else if(var == 6)
-				{
-					qs.setStatus(QuestStatus.REWARD);
-					updateQuestStatus(player, qs);
-					return true;
-				}
-			case 210986:
-				if(var >= 0 && var < 6)
-				{
-					qs.setQuestVarById(0, var + 1);
-					updateQuestStatus(player, qs);
-					return true;
-				}
-				else if(var == 6)
-				{
-					qs.setStatus(QuestStatus.REWARD);
-					updateQuestStatus(player, qs);
-					return true;
-				}
+		switch (targetId) {
+		case 210976:
+			if (var >= 0 && var < 6) {
+				qs.setQuestVarById(0, var + 1);
+				updateQuestStatus(player, qs);
+				return true;
+			} else if (var == 6) {
+				qs.setStatus(QuestStatus.REWARD);
+				updateQuestStatus(player, qs);
+				return true;
+			}
+		case 210986:
+			if (var >= 0 && var < 6) {
+				qs.setQuestVarById(0, var + 1);
+				updateQuestStatus(player, qs);
+				return true;
+			} else if (var == 6) {
+				qs.setStatus(QuestStatus.REWARD);
+				updateQuestStatus(player, qs);
+				return true;
+			}
 		}
 		return false;
 	}

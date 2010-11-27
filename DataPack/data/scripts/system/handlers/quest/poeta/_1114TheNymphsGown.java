@@ -41,194 +41,207 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
  * @author Rhys2002
  * 
  */
-public class _1114TheNymphsGown extends QuestHandler
-{
-	private final static int	questId	= 1114;
-	private final static int[]	npc_ids	= { 203075, 203058, 700008 };
+public class _1114TheNymphsGown extends QuestHandler {
+	private final static int questId = 1114;
+	private final static int[] npc_ids = { 203075, 203058, 700008 };
 
-	public _1114TheNymphsGown()
-	{
+	public _1114TheNymphsGown() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
+	public void register() {
 		qe.setQuestItemIds(182200214).add(questId);
-		for(int npc_id : npc_ids)
-			qe.setNpcQuestData(npc_id).addOnTalkEvent(questId);	
+		for (int npc_id : npc_ids)
+			qe.setNpcQuestData(npc_id).addOnTalkEvent(questId);
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		int targetId = 0;
 		final QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
-			
-		if(targetId == 0)
-		{
-			if(qs == null || qs.getStatus() == QuestStatus.NONE)
-			{
-				if(env.getDialogId() == 1002)
-				{
-					if(!ItemService.addItems(player, Collections.singletonList(new QuestItems(182200226, 1))));
+
+		if (targetId == 0) {
+			if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+				if (env.getDialogId() == 1002) {
+					if (!ItemService.addItems(player, Collections
+							.singletonList(new QuestItems(182200226, 1))))
+						;
 					{
 						QuestService.startQuest(env, QuestStatus.START);
-						ItemService.removeItemFromInventoryByItemId(player, 182200214); // Namus's Diary with double-click to start the quest
-						PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(0, 0));
+						ItemService.removeItemFromInventoryByItemId(player,
+								182200214); // Namus's Diary with double-click
+											// to start the quest
+						PacketSendUtility.sendPacket(player,
+								new SM_DIALOG_WINDOW(0, 0));
 					}
 					return true;
-				}
-				else
-				PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(0, 0));
+				} else
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
+							0, 0));
 			}
 		}
 
-		if(qs == null)
+		if (qs == null)
 			return false;
 
 		int var = qs.getQuestVarById(0);
-		
-		if(qs.getStatus() == QuestStatus.REWARD)
-		{
-			if(targetId == 203075 && var == 4) // Namus
+
+		if (qs.getStatus() == QuestStatus.REWARD) {
+			if (targetId == 203075 && var == 4) // Namus
 			{
-				if(env.getDialogId() == -1)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375);
-				else if(env.getDialogId() == 1009)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 6);
-				else return defaultQuestEndDialog(env);
-			}
-			else if(targetId == 203058 && var == 3) // Asteros
+				if (env.getDialogId() == -1)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 2375);
+				else if (env.getDialogId() == 1009)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 6);
+				else
+					return defaultQuestEndDialog(env);
+			} else if (targetId == 203058 && var == 3) // Asteros
 				return defaultQuestEndDialog(env);
-		}
-		else if(qs.getStatus() != QuestStatus.START)
+		} else if (qs.getStatus() != QuestStatus.START)
 			return false;
 
-		if(targetId == 203075) // Namus
+		if (targetId == 203075) // Namus
 		{
-			switch(env.getDialogId())
-			{
-				case 25:
-					if(var == 0)
-						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
-					else if(var == 2)
-						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
-					else if(var == 3)
-						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375);
+			switch (env.getDialogId()) {
+			case 25:
+				if (var == 0)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 1011);
+				else if (var == 2)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 1693);
+				else if (var == 3)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 2375);
 
-				case 1009:
-					if(var == 2)
-					{
-						qs.setQuestVarById(0, var + 2);
-						qs.setStatus(QuestStatus.REWARD);						
-						updateQuestStatus(player, qs);
-						ItemService.removeItemFromInventoryByItemId(player, 182200217);
-						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 6);
-					}
-					if(var == 3)
-					{
-						qs.setQuestVarById(0, var + 1);
-						qs.setStatus(QuestStatus.REWARD);
-						updateQuestStatus(player, qs);
-						ItemService.removeItemFromInventoryByItemId(player, 182200217);
-						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 6);
-					}
-				case 10000:
-					if(var == 0)
-					{
-						qs.setQuestVarById(0, var + 1);
-						updateQuestStatus(player, qs);
-						ItemService.removeItemFromInventoryByItemId(player, 182200226);
-						PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
-						return true;
-					}
-				case 10001:
-					if(var == 2)
-					{
-						qs.setQuestVarById(0, var + 1);
-						updateQuestStatus(player, qs);
-						PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
-						return true;
-					}					
+			case 1009:
+				if (var == 2) {
+					qs.setQuestVarById(0, var + 2);
+					qs.setStatus(QuestStatus.REWARD);
+					updateQuestStatus(player, qs);
+					ItemService.removeItemFromInventoryByItemId(player,
+							182200217);
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 6);
+				}
+				if (var == 3) {
+					qs.setQuestVarById(0, var + 1);
+					qs.setStatus(QuestStatus.REWARD);
+					updateQuestStatus(player, qs);
+					ItemService.removeItemFromInventoryByItemId(player,
+							182200217);
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 6);
+				}
+			case 10000:
+				if (var == 0) {
+					qs.setQuestVarById(0, var + 1);
+					updateQuestStatus(player, qs);
+					ItemService.removeItemFromInventoryByItemId(player,
+							182200226);
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
+							env.getVisibleObject().getObjectId(), 10));
+					return true;
+				}
+			case 10001:
+				if (var == 2) {
+					qs.setQuestVarById(0, var + 1);
+					updateQuestStatus(player, qs);
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
+							env.getVisibleObject().getObjectId(), 10));
+					return true;
+				}
 			}
-		}
-		else if(targetId == 700008) // Seirenia's clothes
+		} else if (targetId == 700008) // Seirenia's clothes
 		{
-			switch(env.getDialogId())
-			{
-				case -1:
-					if(var == 1)
-					{
-						final int targetObjectId = env.getVisibleObject().getObjectId();
-						PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(player.getObjectId(), targetObjectId, 3000, 1));
-						PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.NEUTRALMODE2, 0, targetObjectId), true);
-						ThreadPoolManager.getInstance().schedule(new Runnable(){
-							@Override
-								public void run()
-							{
-								PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(player.getObjectId(), targetObjectId, 3000, 0));
-								PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.START_LOOT, 0, targetObjectId), true);
-								for (VisibleObject obj : player.getKnownList().getKnownObjects().values())
-								{
-									if (!(obj instanceof Npc))
-										continue;
-									if (((Npc)obj).getNpcId() != 203175) // Seirenia
-										continue;
-									((Npc)obj).getAggroList().addDamage(player, 50);
-								}
-								// Nymph's Dress
-								if(!ItemService.addItems(player, Collections.singletonList(new QuestItems(182200217, 1))));								
-								qs.setQuestVarById(0, 2);
-								updateQuestStatus(player, qs);
+			switch (env.getDialogId()) {
+			case -1:
+				if (var == 1) {
+					final int targetObjectId = env.getVisibleObject()
+							.getObjectId();
+					PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(
+							player.getObjectId(), targetObjectId, 3000, 1));
+					PacketSendUtility.broadcastPacket(player,
+							new SM_EMOTION(player, EmotionType.NEUTRALMODE2, 0,
+									targetObjectId), true);
+					ThreadPoolManager.getInstance().schedule(new Runnable() {
+						@Override
+						public void run() {
+							PacketSendUtility.sendPacket(player,
+									new SM_USE_OBJECT(player.getObjectId(),
+											targetObjectId, 3000, 0));
+							PacketSendUtility.broadcastPacket(player,
+									new SM_EMOTION(player,
+											EmotionType.START_LOOT, 0,
+											targetObjectId), true);
+							for (VisibleObject obj : player.getKnownList()
+									.getKnownObjects().values()) {
+								if (!(obj instanceof Npc))
+									continue;
+								if (((Npc) obj).getNpcId() != 203175) // Seirenia
+									continue;
+								((Npc) obj).getAggroList()
+										.addDamage(player, 50);
 							}
-						}, 3000);
-					}	
+							// Nymph's Dress
+							if (!ItemService.addItems(player,
+									Collections.singletonList(new QuestItems(
+											182200217, 1))))
+								;
+							qs.setQuestVarById(0, 2);
+							updateQuestStatus(player, qs);
+						}
+					}, 3000);
+				}
 				return true;
 			}
 		}
-		if(targetId == 203058) // Asteros
+		if (targetId == 203058) // Asteros
 		{
-			switch(env.getDialogId())
-			{
-				case 25:
-					if(var == 3)
-						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2034);
-				case 10002:
-					if(var == 3)
-					{
-						qs.setStatus(QuestStatus.REWARD);
-						updateQuestStatus(player, qs);
-						ItemService.removeItemFromInventoryByItemId(player, 182200217);
-						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
-					}
-				case 10001:
-					if(var == 3)
-					{
-						PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
-						return true;
-					}					
+			switch (env.getDialogId()) {
+			case 25:
+				if (var == 3)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 2034);
+			case 10002:
+				if (var == 3) {
+					qs.setStatus(QuestStatus.REWARD);
+					updateQuestStatus(player, qs);
+					ItemService.removeItemFromInventoryByItemId(player,
+							182200217);
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 5);
+				}
+			case 10001:
+				if (var == 3) {
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
+							env.getVisibleObject().getObjectId(), 10));
+					return true;
+				}
 			}
-		}		
+		}
 		return false;
 	}
-	
+
 	@Override
-	public boolean onItemUseEvent(QuestEnv env, Item item)
-	{
+	public boolean onItemUseEvent(QuestEnv env, Item item) {
 		final Player player = env.getPlayer();
 		final int id = item.getItemTemplate().getTemplateId();
 		final int itemObjId = item.getObjectId();
-		QuestState qs = player.getQuestStateList().getQuestState(questId);		
+		QuestState qs = player.getQuestStateList().getQuestState(questId);
 
-		if(id != 182200214)
+		if (id != 182200214)
 			return false;
-			PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id, 20, 1, 0), true);
-			if(qs == null || qs.getStatus() == QuestStatus.NONE)
-				sendQuestDialog(player, 0, 4);
-				return true;	
+		PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(
+				player.getObjectId(), itemObjId, id, 20, 1, 0), true);
+		if (qs == null || qs.getStatus() == QuestStatus.NONE)
+			sendQuestDialog(player, 0, 4);
+		return true;
 	}
 }

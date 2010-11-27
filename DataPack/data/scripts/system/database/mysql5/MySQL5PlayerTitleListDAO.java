@@ -30,66 +30,55 @@ import com.aionemu.gameserver.model.gameobjects.player.TitleList;
 
 /**
  * @author xavier
- *
+ * 
  */
-public class MySQL5PlayerTitleListDAO extends PlayerTitleListDAO
-{
+public class MySQL5PlayerTitleListDAO extends PlayerTitleListDAO {
 	private static final String LOAD_QUERY = "SELECT `title_id` FROM `player_titles` WHERE `player_id`=?";
 	private static final String INSERT_QUERY = "INSERT INTO `player_titles`(`player_id`,`title_id`) VALUES (?,?)";
 	private static final String CHECK_QUERY = "SELECT `title_id` FROM `player_titles` WHERE `player_id`=? AND `title_id`=?";
 
 	@Override
-	public TitleList loadTitleList(final int playerId)
-	{
-		final TitleList tl = new TitleList ();
-		
-		DB.select(LOAD_QUERY, new ParamReadStH()
-		{
+	public TitleList loadTitleList(final int playerId) {
+		final TitleList tl = new TitleList();
+
+		DB.select(LOAD_QUERY, new ParamReadStH() {
 			@Override
-			public void setParams(PreparedStatement stmt) throws SQLException
-			{
+			public void setParams(PreparedStatement stmt) throws SQLException {
 				stmt.setInt(1, playerId);
 			}
 
 			@Override
-			public void handleRead(ResultSet rset) throws SQLException
-			{
-				while(rset.next())
-				{
+			public void handleRead(ResultSet rset) throws SQLException {
+				while (rset.next()) {
 					int id = rset.getInt("title_id");
 					tl.addTitle(id);
 				}
 			}
 		});
-		
+
 		return tl;
 	}
 
 	@Override
-	public boolean storeTitles(Player player)
-	{
+	public boolean storeTitles(Player player) {
 		final int playerId = player.getObjectId();
-		
-		for (final Title t : player.getTitleList().getTitles())
-		{
-			DB.select(CHECK_QUERY, new ParamReadStH()
-			{
+
+		for (final Title t : player.getTitleList().getTitles()) {
+			DB.select(CHECK_QUERY, new ParamReadStH() {
 				@Override
-				public void setParams(PreparedStatement stmt) throws SQLException
-				{
+				public void setParams(PreparedStatement stmt)
+						throws SQLException {
 					stmt.setInt(1, playerId);
 					stmt.setInt(2, t.getTemplate().getTitleId());
 				}
 
 				@Override
-				public void handleRead(ResultSet rset) throws SQLException
-				{
-					if (!rset.next())
-					{
+				public void handleRead(ResultSet rset) throws SQLException {
+					if (!rset.next()) {
 						DB.insertUpdate(INSERT_QUERY, new IUStH() {
 							@Override
-							public void handleInsertUpdate(PreparedStatement stmt) throws SQLException
-							{
+							public void handleInsertUpdate(
+									PreparedStatement stmt) throws SQLException {
 								stmt.setInt(1, playerId);
 								stmt.setInt(2, t.getTemplate().getTitleId());
 								stmt.execute();
@@ -104,9 +93,10 @@ public class MySQL5PlayerTitleListDAO extends PlayerTitleListDAO
 	}
 
 	@Override
-	public boolean supports(String databaseName, int majorVersion, int minorVersion)
-	{
-		return MySQL5DAOUtils.supports(databaseName, majorVersion, minorVersion);
+	public boolean supports(String databaseName, int majorVersion,
+			int minorVersion) {
+		return MySQL5DAOUtils
+				.supports(databaseName, majorVersion, minorVersion);
 	}
 
 }

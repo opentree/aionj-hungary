@@ -33,31 +33,34 @@ import com.aionemu.gameserver.model.gameobjects.player.MacroList;
 
 /**
  * Created on: 13.07.2009 19:33:07
- *
+ * 
  * @author Aquanox
  */
-public class MySQL5PlayerMacrossesDAO extends PlayerMacrossesDAO
-{
-	private static Logger log = Logger.getLogger(MySQL5PlayerMacrossesDAO.class);
-	
+public class MySQL5PlayerMacrossesDAO extends PlayerMacrossesDAO {
+	private static Logger log = Logger
+			.getLogger(MySQL5PlayerMacrossesDAO.class);
+
 	public static final String INSERT_QUERY = "INSERT INTO `player_macrosses` (`player_id`, `order`, `macro`) VALUES (?,?,?)";
 	public static final String DELETE_QUERY = "DELETE FROM `player_macrosses` WHERE `player_id`=? AND `order`=?";
 	public static final String SELECT_QUERY = "SELECT `order`, `macro` FROM `player_macrosses` WHERE `player_id`=?";
 
 	/**
 	 * Add a macro information into database
-	 *
-	 * @param playerId player object id
-	 * @param macro    macro contents.
+	 * 
+	 * @param playerId
+	 *            player object id
+	 * @param macro
+	 *            macro contents.
 	 */
 	@Override
-	public void addMacro(final int playerId, final int macroPosition, final String macro)
-	{
+	public void addMacro(final int playerId, final int macroPosition,
+			final String macro) {
 		DB.insertUpdate(INSERT_QUERY, new IUStH() {
 			@Override
-			public void handleInsertUpdate(PreparedStatement stmt) throws SQLException
-			{
-				log.debug("[DAO: MySQL5PlayerMacrossesDAO] storing macro "+playerId+" "+macroPosition);
+			public void handleInsertUpdate(PreparedStatement stmt)
+					throws SQLException {
+				log.debug("[DAO: MySQL5PlayerMacrossesDAO] storing macro "
+						+ playerId + " " + macroPosition);
 				stmt.setInt(1, playerId);
 				stmt.setInt(2, macroPosition);
 				stmt.setString(3, macro);
@@ -68,14 +71,13 @@ public class MySQL5PlayerMacrossesDAO extends PlayerMacrossesDAO
 
 	/** {@inheritDoc} */
 	@Override
-	public void deleteMacro(final int playerId, final int macroPosition)
-	{
-		DB.insertUpdate(DELETE_QUERY, new IUStH()
-		{
+	public void deleteMacro(final int playerId, final int macroPosition) {
+		DB.insertUpdate(DELETE_QUERY, new IUStH() {
 			@Override
-			public void handleInsertUpdate(PreparedStatement stmt) throws SQLException
-			{
-				log.debug("[DAO: MySQL5PlayerMacrossesDAO] removing macro "+playerId+" "+macroPosition);
+			public void handleInsertUpdate(PreparedStatement stmt)
+					throws SQLException {
+				log.debug("[DAO: MySQL5PlayerMacrossesDAO] removing macro "
+						+ playerId + " " + macroPosition);
 				stmt.setInt(1, playerId);
 				stmt.setInt(2, macroPosition);
 				stmt.execute();
@@ -85,32 +87,27 @@ public class MySQL5PlayerMacrossesDAO extends PlayerMacrossesDAO
 
 	/** {@inheritDoc} */
 	@Override
-	public MacroList restoreMacrosses(final int playerId)
-	{
+	public MacroList restoreMacrosses(final int playerId) {
 		final Map<Integer, String> macrosses = new HashMap<Integer, String>();
 		Connection con = null;
-		try
-		{
+		try {
 			con = DatabaseFactory.getConnection();
 			PreparedStatement stmt = con.prepareStatement(SELECT_QUERY);
 			stmt.setInt(1, playerId);
 			ResultSet rset = stmt.executeQuery();
-			log.debug("[DAO: MySQL5PlayerMacrossesDAO] loading macroses for playerId: "+playerId);
-			while(rset.next())
-			{
+			log.debug("[DAO: MySQL5PlayerMacrossesDAO] loading macroses for playerId: "
+					+ playerId);
+			while (rset.next()) {
 				int order = rset.getInt("order");
 				String text = rset.getString("macro");
 				macrosses.put(order, text);
 			}
 			rset.close();
 			stmt.close();
-		}
-		catch (Exception e)
-		{
-			log.fatal("Could not restore MacroList data for player " + playerId + " from DB: "+e.getMessage(), e);
-		}
-		finally
-		{
+		} catch (Exception e) {
+			log.fatal("Could not restore MacroList data for player " + playerId
+					+ " from DB: " + e.getMessage(), e);
+		} finally {
 			DatabaseFactory.close(con);
 		}
 		return new MacroList(macrosses);
@@ -118,8 +115,9 @@ public class MySQL5PlayerMacrossesDAO extends PlayerMacrossesDAO
 
 	/** {@inheritDoc} */
 	@Override
-	public boolean supports(String databaseName, int majorVersion, int minorVersion)
-	{
-		return MySQL5DAOUtils.supports(databaseName, majorVersion, minorVersion);
+	public boolean supports(String databaseName, int majorVersion,
+			int minorVersion) {
+		return MySQL5DAOUtils
+				.supports(databaseName, majorVersion, minorVersion);
 	}
 }

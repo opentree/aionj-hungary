@@ -31,59 +31,58 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
 
 /**
  * @author Mr. Poke
- *
+ * 
  */
-public class ScriptLoad extends AdminCommand
-{
+public class ScriptLoad extends AdminCommand {
 
-	public ScriptLoad()
-	{
+	public ScriptLoad() {
 		super("script_load");
 	}
 
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.utils.chathandlers.AdminCommand#executeCommand(com.aionemu.gameserver.model.gameobjects.player.Player, java.lang.String[])
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.aionemu.gameserver.utils.chathandlers.AdminCommand#executeCommand
+	 * (com.aionemu.gameserver.model.gameobjects.player.Player,
+	 * java.lang.String[])
 	 */
 	@Override
-	public void executeCommand(Player admin, String[] params)
-	{
-		if(admin.getAccessLevel() < AdminConfig.COMMAND_SCRIPT_LOAD)
-		{
-			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command!");
+	public void executeCommand(Player admin, String[] params) {
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_SCRIPT_LOAD) {
+			PacketSendUtility.sendMessage(admin,
+					"You dont have enough rights to execute this command!");
 			return;
 		}
-		if(params.length != 1)
-		{
-			PacketSendUtility.sendMessage(admin, "Example: //script_load system/handlers/quest/ascension/_1006Ascension.java");
+		if (params.length != 1) {
+			PacketSendUtility
+					.sendMessage(admin,
+							"Example: //script_load system/handlers/quest/ascension/_1006Ascension.java");
 			return;
 		}
-		
+
 		File file = new File(AionScriptEngineManager.SCRIPT_FOLDER, params[0]);
-		if (file.isFile())
-		{
-			try
-			{
+		if (file.isFile()) {
+			try {
 				AionScriptEngineManager.getInstance().executeScript(file);
+			} catch (ScriptException e) {
+				PacketSendUtility.sendMessage(admin, "Failed loading: "
+						+ params[0]);
+				AionScriptEngineManager.getInstance().reportScriptFileError(
+						file, e);
+			} catch (Exception e) {
+				PacketSendUtility.sendMessage(admin, "Failed loading: "
+						+ params[0]);
 			}
-			catch (ScriptException e)
-			{
-				PacketSendUtility.sendMessage(admin, "Failed loading: " + params[0]);
-				AionScriptEngineManager.getInstance().reportScriptFileError(file, e);
-			}
-			catch (Exception e)
-			{
-				PacketSendUtility.sendMessage(admin, "Failed loading: " + params[0]);
-			}
-		}
-		else
-		{
-			PacketSendUtility.sendMessage(admin, "File Not Found: " + params[0]);
+		} else {
+			PacketSendUtility
+					.sendMessage(admin, "File Not Found: " + params[0]);
 		}
 
 	}
 
-	public static void main(String[] args)
-	{
-		AdminCommandChatHandler.getInstance().registerAdminCommand(new ScriptLoad());
+	public static void main(String[] args) {
+		AdminCommandChatHandler.getInstance().registerAdminCommand(
+				new ScriptLoad());
 	}
 }

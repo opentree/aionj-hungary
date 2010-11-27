@@ -29,18 +29,15 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  * @author Balthazar
  */
 
-public class _1163ArachnaAntidote extends QuestHandler
-{
-	private final static int	questId	= 1163;
+public class _1163ArachnaAntidote extends QuestHandler {
+	private final static int questId = 1163;
 
-	public _1163ArachnaAntidote()
-	{
+	public _1163ArachnaAntidote() {
 		super(questId);
 	}
 
 	@Override
-	public void register()
-	{
+	public void register() {
 		qe.setNpcQuestData(203096).addOnQuestStart(questId);
 		qe.setNpcQuestData(203096).addOnTalkEvent(questId);
 		qe.setNpcQuestData(203151).addOnTalkEvent(questId);
@@ -48,85 +45,71 @@ public class _1163ArachnaAntidote extends QuestHandler
 	}
 
 	@Override
-	public boolean onDialogEvent(QuestEnv env)
-	{
+	public boolean onDialogEvent(QuestEnv env) {
 		final Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
 
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
-		if(qs == null || qs.getStatus() == QuestStatus.NONE)
-		{
-			if(targetId == 203096)
-			{
-				if(env.getDialogId() == 25)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+		if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+			if (targetId == 203096) {
+				if (env.getDialogId() == 25)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 1011);
 				else
 					return defaultQuestStartDialog(env);
 			}
 		}
 
-		if(qs == null)
+		if (qs == null)
 			return false;
 
-		if(qs.getStatus() == QuestStatus.START)
-		{
-			switch(targetId)
-			{
-				case 203151:
-				{
-					switch(env.getDialogId())
-					{
-						case 25:
-						{
-							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
-						}
-						case 10000:
-						{
-							qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
-							updateQuestStatus(player, qs);
-							PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject()
-								.getObjectId(), 10));
-							return true;
-						}
-						default:
-						{
-							return defaultQuestEndDialog(env);
-						}
-					}
+		if (qs.getStatus() == QuestStatus.START) {
+			switch (targetId) {
+			case 203151: {
+				switch (env.getDialogId()) {
+				case 25: {
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 1352);
 				}
-				case 203155:
-				{
-					switch(env.getDialogId())
-					{
-						case 25:
-						{
-							return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375);
-						}
-						case 1009:
-						{
-							qs.setStatus(QuestStatus.REWARD);
-							updateQuestStatus(player, qs);
-							PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject()
-								.getObjectId(), 10));
-							return true;
-						}
-						default:
-						{
-							return defaultQuestEndDialog(env);
-						}
-					}
+				case 10000: {
+					qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
+					updateQuestStatus(player, qs);
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
+							env.getVisibleObject().getObjectId(), 10));
+					return true;
+				}
+				default: {
+					return defaultQuestEndDialog(env);
+				}
 				}
 			}
-		}
-		else if(qs.getStatus() == QuestStatus.REWARD)
-		{
-			if(targetId == 203155)
-			{
-				if(env.getDialogId() == 1009)
-					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
+			case 203155: {
+				switch (env.getDialogId()) {
+				case 25: {
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 2375);
+				}
+				case 1009: {
+					qs.setStatus(QuestStatus.REWARD);
+					updateQuestStatus(player, qs);
+					PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(
+							env.getVisibleObject().getObjectId(), 10));
+					return true;
+				}
+				default: {
+					return defaultQuestEndDialog(env);
+				}
+				}
+			}
+			}
+		} else if (qs.getStatus() == QuestStatus.REWARD) {
+			if (targetId == 203155) {
+				if (env.getDialogId() == 1009)
+					return sendQuestDialog(player, env.getVisibleObject()
+							.getObjectId(), 5);
 				else
 					return defaultQuestEndDialog(env);
 			}

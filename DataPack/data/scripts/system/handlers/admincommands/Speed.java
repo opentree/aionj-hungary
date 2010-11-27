@@ -28,58 +28,53 @@ import com.aionemu.gameserver.utils.chathandlers.AdminCommandChatHandler;
 /**
  * 
  * @author ATracer
- *
+ * 
  */
 
-public class Speed extends AdminCommand
-{
-	public Speed()
-	{
+public class Speed extends AdminCommand {
+	public Speed() {
 		super("speed");
 	}
 
 	@Override
-	public void executeCommand(Player admin, String[] params)
-	{
-		if(admin.getAccessLevel() < AdminConfig.COMMAND_SPEED)
-		{
-			PacketSendUtility.sendMessage(admin, "You dont have enough rights to execute this command");
+	public void executeCommand(Player admin, String[] params) {
+		if (admin.getAccessLevel() < AdminConfig.COMMAND_SPEED) {
+			PacketSendUtility.sendMessage(admin,
+					"You dont have enough rights to execute this command");
 			return;
 		}
-		
-		if(params == null || params.length < 1)
-		{
+
+		if (params == null || params.length < 1) {
 			PacketSendUtility.sendMessage(admin, "Syntax //speed <percent>");
 			return;
 		}
 
 		int parameter = 0;
-		try
-		{
+		try {
 			parameter = Integer.parseInt(params[0]);
-		}
-		catch (NumberFormatException e)
-		{
+		} catch (NumberFormatException e) {
 			PacketSendUtility.sendMessage(admin, "Parameter should number");
 			return;
 		}
-		
-		if(parameter < 0 || parameter > 200)
-		{
-			PacketSendUtility.sendMessage(admin, "Valid values are in 0-200 range");
+
+		if (parameter < 0 || parameter > 200) {
+			PacketSendUtility.sendMessage(admin,
+					"Valid values are in 0-200 range");
 			return;
 		}
 
 		int speed = 6000;
 		int flyspeed = 9000;
 
-		admin.getGameStats().setStat(StatEnum.SPEED, (speed + (speed * parameter) / 100));
-		admin.getGameStats().setStat(StatEnum.FLY_SPEED, (flyspeed + (flyspeed * parameter) / 100));
-		PacketSendUtility.broadcastPacket(admin, new SM_EMOTION(admin, EmotionType.START_EMOTE2, 0, 0), true);
+		admin.getGameStats().setStat(StatEnum.SPEED,
+				(speed + (speed * parameter) / 100));
+		admin.getGameStats().setStat(StatEnum.FLY_SPEED,
+				(flyspeed + (flyspeed * parameter) / 100));
+		PacketSendUtility.broadcastPacket(admin, new SM_EMOTION(admin,
+				EmotionType.START_EMOTE2, 0, 0), true);
 	}
-	
-	public static void main(String[] args)
-	{
+
+	public static void main(String[] args) {
 		AdminCommandChatHandler.getInstance().registerAdminCommand(new Speed());
 	}
 }

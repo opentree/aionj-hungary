@@ -39,138 +39,127 @@ import com.aionemu.gameserver.model.items.ItemStone.ItemStoneType;
 
 /**
  * @author ATracer
- *
+ * 
  */
-public class MySQL5ItemStoneListDAO extends ItemStoneListDAO
-{
-	private static final Logger	log	= Logger.getLogger(MySQL5ItemStoneListDAO.class);
+public class MySQL5ItemStoneListDAO extends ItemStoneListDAO {
+	private static final Logger log = Logger
+			.getLogger(MySQL5ItemStoneListDAO.class);
 
 	public static final String INSERT_QUERY = "INSERT INTO `item_stones` (`itemUniqueId`, `itemId`, `slot`, `category`) VALUES (?,?,?, ?)";
 	public static final String UPDATE_QUERY = "UPDATE `item_stones` SET `itemId`=? where `itemUniqueId`=? AND `category`=?";
 	public static final String DELETE_QUERY = "DELETE FROM `item_stones` WHERE `itemUniqueId`=? AND slot=? AND category=?";
 	public static final String SELECT_QUERY = "SELECT `itemId`, `slot`, `category` FROM `item_stones` WHERE `itemUniqueId`=?";
-	
 
 	@Override
-	public void load(final List<Item> items)
-	{
+	public void load(final List<Item> items) {
 		Connection con = null;
-		try
-		{
+		try {
 			con = DatabaseFactory.getConnection();
 			PreparedStatement stmt = con.prepareStatement(SELECT_QUERY);
-			for (Item item : items)
-			{
-				if(item.getItemTemplate().isArmor() || item.getItemTemplate().isWeapon())
-				{
+			for (Item item : items) {
+				if (item.getItemTemplate().isArmor()
+						|| item.getItemTemplate().isWeapon()) {
 					stmt.setInt(1, item.getObjectId());
 					ResultSet rset = stmt.executeQuery();
-					while(rset.next())
-					{
+					while (rset.next()) {
 						int itemId = rset.getInt("itemId");
 						int slot = rset.getInt("slot");
 						int stoneType = rset.getInt("category");
 						if (stoneType == 0)
-							item.getItemStones().add(new ManaStone(item.getObjectId(), itemId, slot, PersistentState.UPDATED));
+							item.getItemStones().add(
+									new ManaStone(item.getObjectId(), itemId,
+											slot, PersistentState.UPDATED));
 						else
-							item.setGoodStone(new GodStone(item.getObjectId(), itemId, PersistentState.UPDATED));
+							item.setGoodStone(new GodStone(item.getObjectId(),
+									itemId, PersistentState.UPDATED));
 					}
 					rset.close();
 				}
 			}
 			stmt.close();
-		}
-		catch (Exception e)
-		{
-			log.fatal("Could not restore ItemStoneList data from DB: "+e.getMessage(), e);
-		}
-		finally
-		{
+		} catch (Exception e) {
+			log.fatal(
+					"Could not restore ItemStoneList data from DB: "
+							+ e.getMessage(), e);
+		} finally {
 			DatabaseFactory.close(con);
 		}
 	}
-	
+
 	@Override
-	public void save(Player player)
-	{
+	public void save(Player player) {
 		List<Item> allPlayerItems = player.getAllItems();
-		
-		for(Item item : allPlayerItems)
-		{
-			if(item.hasManaStones())
+
+		for (Item item : allPlayerItems) {
+			if (item.hasManaStones())
 				store(item.getItemStones());
-			
+
 			GodStone godStone = item.getGodStone();
 			store(godStone);
-		}	
+		}
 	}
 
 	@Override
-	public void store(final Set<ManaStone> manaStones)
-	{
-		if(manaStones == null)
+	public void store(final Set<ManaStone> manaStones) {
+		if (manaStones == null)
 			return;
-		
+
 		Iterator<ManaStone> iterator = manaStones.iterator();
-		while(iterator.hasNext())
-		{
+		while (iterator.hasNext()) {
 			ManaStone manaStone = iterator.next();
-			switch(manaStone.getPersistentState())
-			{
-				case NEW:
-					addItemStone(manaStone.getItemObjId(), manaStone.getItemId(),
+			switch (manaStone.getPersistentState()) {
+			case NEW:
+				addItemStone(manaStone.getItemObjId(), manaStone.getItemId(),
 						manaStone.getSlot());
-					break;
-				case DELETED:
-					deleteItemStone(manaStone.getItemObjId(), manaStone.getSlot());
-					break;
-				
+				break;
+			case DELETED:
+				deleteItemStone(manaStone.getItemObjId(), manaStone.getSlot());
+				break;
+
 			}
 			manaStone.setPersistentState(PersistentState.UPDATED);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param godstone
 	 */
 	@Override
-	public void store(GodStone godstone)
-	{
-		if(godstone == null)
+	public void store(GodStone godstone) {
+		if (godstone == null)
 			return;
-		
-		switch(godstone.getPersistentState())
-		{
-			case NEW:
-				addGodStone(godstone.getItemObjId(), godstone.getItemId(),
+
+		switch (godstone.getPersistentState()) {
+		case NEW:
+			addGodStone(godstone.getItemObjId(), godstone.getItemId(),
 					godstone.getSlot());
-				break;
-			case UPDATE_REQUIRED:
-				updateGodStone(godstone.getItemObjId(), godstone.getItemId());
-				break;
-			case DELETED:
-				deleteGodStone(godstone.getItemObjId(), godstone.getSlot());
-				break;
+			break;
+		case UPDATE_REQUIRED:
+			updateGodStone(godstone.getItemObjId(), godstone.getItemId());
+			break;
+		case DELETED:
+			deleteGodStone(godstone.getItemObjId(), godstone.getSlot());
+			break;
 		}
 		godstone.setPersistentState(PersistentState.UPDATED);
 	}
 
 	/**
-	 *  Adds new item stone to item
-	 *  
+	 * Adds new item stone to item
+	 * 
 	 * @param itemObjId
 	 * @param itemId
 	 * @param statEnum
 	 * @param statValue
 	 * @param slot
 	 */
-	private void addItemStone(final int itemObjId, final int itemId, final int slot)
-	{
+	private void addItemStone(final int itemObjId, final int itemId,
+			final int slot) {
 		DB.insertUpdate(INSERT_QUERY, new IUStH() {
 			@Override
-			public void handleInsertUpdate(PreparedStatement stmt) throws SQLException
-			{
+			public void handleInsertUpdate(PreparedStatement stmt)
+					throws SQLException {
 				stmt.setInt(1, itemObjId);
 				stmt.setInt(2, itemId);
 				stmt.setInt(3, slot);
@@ -179,19 +168,19 @@ public class MySQL5ItemStoneListDAO extends ItemStoneListDAO
 			}
 		});
 	}
-	
+
 	/**
 	 * 
 	 * @param itemObjId
 	 * @param itemId
 	 * @param slot
 	 */
-	private void addGodStone(final int itemObjId, final int itemId, final int slot)
-	{
+	private void addGodStone(final int itemObjId, final int itemId,
+			final int slot) {
 		DB.insertUpdate(INSERT_QUERY, new IUStH() {
 			@Override
-			public void handleInsertUpdate(PreparedStatement stmt) throws SQLException
-			{
+			public void handleInsertUpdate(PreparedStatement stmt)
+					throws SQLException {
 				stmt.setInt(1, itemObjId);
 				stmt.setInt(2, itemId);
 				stmt.setInt(3, slot);
@@ -200,18 +189,17 @@ public class MySQL5ItemStoneListDAO extends ItemStoneListDAO
 			}
 		});
 	}
-	
+
 	/**
 	 * 
 	 * @param itemObjId
 	 * @param itemId
 	 */
-	private void updateGodStone(final int itemObjId, final int itemId)
-	{
+	private void updateGodStone(final int itemObjId, final int itemId) {
 		DB.insertUpdate(UPDATE_QUERY, new IUStH() {
 			@Override
-			public void handleInsertUpdate(PreparedStatement stmt) throws SQLException
-			{
+			public void handleInsertUpdate(PreparedStatement stmt)
+					throws SQLException {
 				stmt.setInt(1, itemId);
 				stmt.setInt(2, itemObjId);
 				stmt.setInt(3, ItemStoneType.GODSTONE.ordinal());
@@ -221,18 +209,16 @@ public class MySQL5ItemStoneListDAO extends ItemStoneListDAO
 	}
 
 	/**
-	 *  Deleted item stone from selected item
-	 *  
+	 * Deleted item stone from selected item
+	 * 
 	 * @param itemObjId
 	 * @param slot
 	 */
-	private void deleteItemStone(final int itemObjId, final int slot)
-	{		
-		DB.insertUpdate(DELETE_QUERY, new IUStH()
-		{
+	private void deleteItemStone(final int itemObjId, final int slot) {
+		DB.insertUpdate(DELETE_QUERY, new IUStH() {
 			@Override
-			public void handleInsertUpdate(PreparedStatement stmt) throws SQLException
-			{
+			public void handleInsertUpdate(PreparedStatement stmt)
+					throws SQLException {
 				stmt.setInt(1, itemObjId);
 				stmt.setInt(2, slot);
 				stmt.setInt(3, ItemStoneType.MANASTONE.ordinal());
@@ -240,19 +226,17 @@ public class MySQL5ItemStoneListDAO extends ItemStoneListDAO
 			}
 		});
 	}
-	
+
 	/**
 	 * 
 	 * @param itemObjId
 	 * @param slot
 	 */
-	private void deleteGodStone(final int itemObjId, final int slot)
-	{		
-		DB.insertUpdate(DELETE_QUERY, new IUStH()
-		{
+	private void deleteGodStone(final int itemObjId, final int slot) {
+		DB.insertUpdate(DELETE_QUERY, new IUStH() {
 			@Override
-			public void handleInsertUpdate(PreparedStatement stmt) throws SQLException
-			{
+			public void handleInsertUpdate(PreparedStatement stmt)
+					throws SQLException {
 				stmt.setInt(1, itemObjId);
 				stmt.setInt(2, slot);
 				stmt.setInt(3, ItemStoneType.GODSTONE.ordinal());
@@ -261,10 +245,9 @@ public class MySQL5ItemStoneListDAO extends ItemStoneListDAO
 		});
 	}
 
-    @Override
-    public boolean supports(String s, int i, int i1)
-    {
-        return MySQL5DAOUtils.supports(s, i, i1);
-    }
+	@Override
+	public boolean supports(String s, int i, int i1) {
+		return MySQL5DAOUtils.supports(s, i, i1);
+	}
 
 }
