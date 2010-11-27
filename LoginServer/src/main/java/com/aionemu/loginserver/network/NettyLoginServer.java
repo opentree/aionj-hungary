@@ -29,57 +29,55 @@ import com.aionemu.loginserver.network.gameserver.GameServerPipeLineFactory;
 
 /**
  * @author lyahim
- *
+ * 
  */
-public class NettyLoginServer extends AbstractNettyServer
-{
-	private static final Logger				logger			= Logger.getLogger(NettyLoginServer.class);
+public class NettyLoginServer extends AbstractNettyServer {
+	private static final Logger logger = Logger
+			.getLogger(NettyLoginServer.class);
 
-	private final ChannelGroup				channelGroup	= new DefaultChannelGroup(NettyLoginServer.class.getName());
-	
-	private final AionPipeLineFactory		loginToClientPipeLineFactory;
-	private final GameServerPipeLineFactory	loginToGamePipelineFactory;
-	
-	private ChannelFactory					loginToClientChannelFactory;
-	private ChannelFactory					loginToGameChannelFactory;
+	private final ChannelGroup channelGroup = new DefaultChannelGroup(
+			NettyLoginServer.class.getName());
 
-	public static final NettyLoginServer getInstance()
-	{
+	private final AionPipeLineFactory loginToClientPipeLineFactory;
+	private final GameServerPipeLineFactory loginToGamePipelineFactory;
+
+	private ChannelFactory loginToClientChannelFactory;
+	private ChannelFactory loginToGameChannelFactory;
+
+	public static final NettyLoginServer getInstance() {
 		return SingletonHolder.instance;
 	}
-	
-	public NettyLoginServer()
-	{
+
+	public NettyLoginServer() {
 		this.loginToClientPipeLineFactory = new AionPipeLineFactory();
 		this.loginToGamePipelineFactory = new GameServerPipeLineFactory();
-		initialize();		
+		initialize();
 	}
 
 	@Override
-	public void initialize()
-	{
+	public void initialize() {
 		loginToClientChannelFactory = initServerChannelFactory();
 		loginToGameChannelFactory = initServerChannelFactory();
-		
-		channelGroup.add(initServerChannel(loginToClientChannelFactory,Config.CLIENT_ADDRESS, loginToClientPipeLineFactory));
-		channelGroup.add(initServerChannel(loginToGameChannelFactory,Config.GAMESERVER_ADDRESS, loginToGamePipelineFactory));
-		
+
+		channelGroup.add(initServerChannel(loginToClientChannelFactory,
+				Config.CLIENT_ADDRESS, loginToClientPipeLineFactory));
+		channelGroup.add(initServerChannel(loginToGameChannelFactory,
+				Config.GAMESERVER_ADDRESS, loginToGamePipelineFactory));
+
 		logger.info("Login Server started");
 	}
-	
+
 	@Override
-	public void shutDown()
-	{
+	public void shutDown() {
 		ChannelGroupFuture future = channelGroup.close();
 		future.awaitUninterruptibly();
 		loginToClientChannelFactory.releaseExternalResources();
 		loginToGameChannelFactory.releaseExternalResources();
 		super.shutDown();
 	}
-	
+
 	@SuppressWarnings("synthetic-access")
-	private static class SingletonHolder
-	{
+	private static class SingletonHolder {
 		protected static final NettyLoginServer instance = new NettyLoginServer();
 	}
 }

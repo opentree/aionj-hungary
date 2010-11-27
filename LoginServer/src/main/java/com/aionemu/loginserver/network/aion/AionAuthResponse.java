@@ -17,14 +17,15 @@
 package com.aionemu.loginserver.network.aion;
 
 /**
- * This class contains possible response that LoginServer may send to client if login fail etc.
+ * This class contains possible response that LoginServer may send to client if
+ * login fail etc.
  * 
  * @author KID
  */
-public enum AionAuthResponse
-{
+public enum AionAuthResponse {
 	/**
-	 * that one is not being sent to client, it's only for internal use. Everything is OK
+	 * that one is not being sent to client, it's only for internal use.
+	 * Everything is OK
 	 */
 	AUTHED(0),
 	/**
@@ -68,7 +69,8 @@ public enum AionAuthResponse
 	 */
 	NO_SUCH_ACCOUNT(10),
 	/**
-	 * You have been disconnected from the server. Please try connecting again later.
+	 * You have been disconnected from the server. Please try connecting again
+	 * later.
 	 */
 	DISCONNECTED(11),
 	/**
@@ -84,7 +86,8 @@ public enum AionAuthResponse
 	 */
 	ALREADY_LOGGED_IN3(14),
 	/**
-	 * You cannot connect to the server because there are too many users right now.
+	 * You cannot connect to the server because there are too many users right
+	 * now.
 	 */
 	SERVER_FULL(15),
 	/**
@@ -100,7 +103,8 @@ public enum AionAuthResponse
 	 */
 	TIME_EXPIRED(18),
 	/**
-	 * You have used up your allocated time and there is no time left on this account.
+	 * You have used up your allocated time and there is no time left on this
+	 * account.
 	 */
 	TIME_EXPIRED2(19),
 	/**
@@ -119,7 +123,7 @@ public enum AionAuthResponse
 	/**
 	 * id of this enum that may be sent to client
 	 */
-	private int	messageId;
+	private int messageId;
 
 	/**
 	 * Constructor.
@@ -127,8 +131,7 @@ public enum AionAuthResponse
 	 * @param msgId
 	 *            id of the message
 	 */
-	private AionAuthResponse(int msgId)
-	{
+	private AionAuthResponse(int msgId) {
 		messageId = msgId;
 	}
 
@@ -137,8 +140,7 @@ public enum AionAuthResponse
 	 * 
 	 * @return message id
 	 */
-	public int getMessageId()
-	{
+	public int getMessageId() {
 		return messageId;
 	}
 }

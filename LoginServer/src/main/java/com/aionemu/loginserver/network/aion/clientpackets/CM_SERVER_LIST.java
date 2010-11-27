@@ -26,16 +26,15 @@ import com.aionemu.loginserver.network.aion.serverpackets.SM_SERVER_LIST;
 /**
  * @author -Nemesiss-, Lyahim
  */
-public class CM_SERVER_LIST extends AbstractClientPacket<AionChannelHandler>
-{
+public class CM_SERVER_LIST extends AbstractClientPacket<AionChannelHandler> {
 	/**
 	 * accountId is part of session key - its used for security purposes
 	 */
-	private int	accountId;
+	private int accountId;
 	/**
 	 * loginOk is part of session key - its used for security purposes
 	 */
-	private int	loginOk;
+	private int loginOk;
 
 	/**
 	 * Constructs new instance of <tt>CM_SERVER_LIST </tt> packet.
@@ -43,8 +42,7 @@ public class CM_SERVER_LIST extends AbstractClientPacket<AionChannelHandler>
 	 * @param buf
 	 * @param client
 	 */
-	public CM_SERVER_LIST(int opcode)
-	{
+	public CM_SERVER_LIST(int opcode) {
 		super(opcode);
 	}
 
@@ -52,8 +50,7 @@ public class CM_SERVER_LIST extends AbstractClientPacket<AionChannelHandler>
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void readImpl()
-	{
+	protected void readImpl() {
 		accountId = readD();
 		loginOk = readD();
 		readD();// unk
@@ -63,20 +60,17 @@ public class CM_SERVER_LIST extends AbstractClientPacket<AionChannelHandler>
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void runImpl()
-	{
+	protected void runImpl() {
 		AionChannelHandler con = getChannelHandler();
-		if(con.getSessionKey().checkLogin(accountId, loginOk))
-		{
-			if(GameServerTable.getGameServers().size() == 0)
+		if (con.getSessionKey().checkLogin(accountId, loginOk)) {
+			if (GameServerTable.getGameServers().size() == 0)
 				con.close(new SM_LOGIN_FAIL(AionAuthResponse.NO_GS_REGISTERED));
 			else
 				sendPacket(new SM_SERVER_LIST());
-		}
-		else
-		{
+		} else {
 			/**
-			 * Session key is not ok - inform client that smth went wrong - dc client
+			 * Session key is not ok - inform client that smth went wrong - dc
+			 * client
 			 */
 			con.close(new SM_LOGIN_FAIL(AionAuthResponse.SYSTEM_ERROR));
 		}

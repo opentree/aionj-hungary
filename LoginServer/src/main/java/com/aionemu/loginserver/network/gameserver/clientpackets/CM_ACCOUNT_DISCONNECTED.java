@@ -23,17 +23,18 @@ import com.aionemu.loginserver.model.Account;
 import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
 
 /**
- * In this packet GameServer is informing LoginServer that some account is no longer on GameServer [ie was disconencted]
+ * In this packet GameServer is informing LoginServer that some account is no
+ * longer on GameServer [ie was disconencted]
  * 
  * @author -Nemesiss-
  * 
  */
-public class CM_ACCOUNT_DISCONNECTED extends AbstractClientPacket<GameServerChannelHandler>
-{
+public class CM_ACCOUNT_DISCONNECTED extends
+		AbstractClientPacket<GameServerChannelHandler> {
 	/**
 	 * AccountId of account that was disconnected form GameServer.
 	 */
-	private int	accountId;
+	private int accountId;
 
 	/**
 	 * Constructor.
@@ -41,8 +42,7 @@ public class CM_ACCOUNT_DISCONNECTED extends AbstractClientPacket<GameServerChan
 	 * @param buf
 	 * @param client
 	 */
-	public CM_ACCOUNT_DISCONNECTED(int opcode)
-	{
+	public CM_ACCOUNT_DISCONNECTED(int opcode) {
 		super(opcode);
 	}
 
@@ -50,8 +50,7 @@ public class CM_ACCOUNT_DISCONNECTED extends AbstractClientPacket<GameServerChan
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void readImpl()
-	{
+	protected void readImpl() {
 		accountId = readD();
 	}
 
@@ -59,15 +58,15 @@ public class CM_ACCOUNT_DISCONNECTED extends AbstractClientPacket<GameServerChan
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void runImpl()
-	{
-		Account account = getChannelHandler().getGameServerInfo().removeAccountFromGameServer(accountId);
+	protected void runImpl() {
+		Account account = getChannelHandler().getGameServerInfo()
+				.removeAccountFromGameServer(accountId);
 
 		/**
-		 * account can be null if a player logged out from gs {@link CM_ACCOUNT_RECONNECT_KEY 
+		 * account can be null if a player logged out from gs
+		 * {@link CM_ACCOUNT_RECONNECT_KEY 
 		 */
-		if(account != null)
-		{
+		if (account != null) {
 			AccountTimeController.updateOnLogout(account);
 		}
 	}

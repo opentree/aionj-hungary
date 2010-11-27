@@ -26,57 +26,58 @@ import com.aionemu.loginserver.model.Account;
 import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
 
 /**
- * This class represents GameServer at LoginServer side. It contain info about id, ip etc.
+ * This class represents GameServer at LoginServer side. It contain info about
+ * id, ip etc.
  * 
  * @author -Nemesiss-
  * 
  */
-public class GameServerInfo
-{
+public class GameServerInfo {
 	/**
 	 * Id of this GameServer
 	 */
-	private final byte					id;
+	private final byte id;
 
 	/**
-	 * Allowed IP for this GameServer if gs will connect from another ip wont be registered.
+	 * Allowed IP for this GameServer if gs will connect from another ip wont be
+	 * registered.
 	 */
-	private final String				ip;
+	private final String ip;
 
 	/**
 	 * Password
 	 */
-	private final String				password;
+	private final String password;
 
 	/**
 	 * Default server address, usually internet address
 	 */
-	private byte[]						defaultAddress;
+	private byte[] defaultAddress;
 
 	/**
 	 * Mapping of ip ranges, usually used for local area connections
 	 */
-	private List<IPRange>				ipRanges;
+	private List<IPRange> ipRanges;
 
 	/**
 	 * Port on with this GameServer is accepting clients.
 	 */
-	private int							port;
+	private int port;
 
 	/**
 	 * gsConnection - if GameServer is connected to LoginServer.
 	 */
-	private GameServerChannelHandler	gscHandler;
+	private GameServerChannelHandler gscHandler;
 
 	/**
 	 * Max players count that may play on this GameServer.
 	 */
-	private int							maxPlayers;
+	private int maxPlayers;
 
 	/**
 	 * Map<AccId,Account> of accounts logged in on this GameServer.
 	 */
-	private final Map<Integer, Account>	accountsOnGameServer	= new HashMap<Integer, Account>();
+	private final Map<Integer, Account> accountsOnGameServer = new HashMap<Integer, Account>();
 
 	/**
 	 * Constructor.
@@ -85,8 +86,7 @@ public class GameServerInfo
 	 * @param ip
 	 * @param password
 	 */
-	public GameServerInfo(byte id, String ip, String password)
-	{
+	public GameServerInfo(byte id, String ip, String password) {
 		this.id = id;
 		this.ip = ip;
 		this.password = password;
@@ -97,8 +97,7 @@ public class GameServerInfo
 	 * 
 	 * @return byte id
 	 */
-	public byte getId()
-	{
+	public byte getId() {
 		return id;
 	}
 
@@ -107,8 +106,7 @@ public class GameServerInfo
 	 * 
 	 * @return String password
 	 */
-	public String getPassword()
-	{
+	public String getPassword() {
 		return password;
 	}
 
@@ -117,8 +115,7 @@ public class GameServerInfo
 	 * 
 	 * @return String ip
 	 */
-	public String getIp()
-	{
+	public String getIp() {
 		return ip;
 	}
 
@@ -127,8 +124,7 @@ public class GameServerInfo
 	 * 
 	 * @return in port
 	 */
-	public int getPort()
-	{
+	public int getPort() {
 		return port;
 	}
 
@@ -137,8 +133,7 @@ public class GameServerInfo
 	 * 
 	 * @param port
 	 */
-	public void setPort(int port)
-	{
+	public void setPort(int port) {
 		this.port = port;
 	}
 
@@ -147,8 +142,7 @@ public class GameServerInfo
 	 * 
 	 * @return default server address
 	 */
-	public byte[] getDefaultAddress()
-	{
+	public byte[] getDefaultAddress() {
 		return defaultAddress;
 	}
 
@@ -158,8 +152,7 @@ public class GameServerInfo
 	 * @param defaultAddress
 	 *            default server address
 	 */
-	public void setDefaultAddress(byte[] defaultAddress)
-	{
+	public void setDefaultAddress(byte[] defaultAddress) {
 		this.defaultAddress = defaultAddress;
 	}
 
@@ -168,8 +161,7 @@ public class GameServerInfo
 	 * 
 	 * @return IPRange mappings
 	 */
-	public List<IPRange> getIpRanges()
-	{
+	public List<IPRange> getIpRanges() {
 		return ipRanges;
 	}
 
@@ -179,18 +171,17 @@ public class GameServerInfo
 	 * @param ipRanges
 	 *            ipRangeMappings
 	 */
-	public void setIpRanges(List<IPRange> ipRanges)
-	{
+	public void setIpRanges(List<IPRange> ipRanges) {
 		this.ipRanges = ipRanges;
 	}
 
 	/**
-	 * Returns active GsConnection for this GameServer or null if this GameServer is down.
+	 * Returns active GsConnection for this GameServer or null if this
+	 * GameServer is down.
 	 * 
 	 * @return GsConnection
 	 */
-	public final GameServerChannelHandler getGschannelHandler()
-	{
+	public final GameServerChannelHandler getGschannelHandler() {
 		return gscHandler;
 	}
 
@@ -199,8 +190,7 @@ public class GameServerInfo
 	 * 
 	 * @param gsConnection
 	 */
-	public final void setGscHandler(GameServerChannelHandler gscHandler)
-	{
+	public final void setGscHandler(GameServerChannelHandler gscHandler) {
 		this.gscHandler = gscHandler;
 	}
 
@@ -209,8 +199,7 @@ public class GameServerInfo
 	 * 
 	 * @return int maxPlayers
 	 */
-	public final int getMaxPlayers()
-	{
+	public final int getMaxPlayers() {
 		return maxPlayers;
 	}
 
@@ -219,8 +208,7 @@ public class GameServerInfo
 	 * 
 	 * @param maxPlayers
 	 */
-	public final void setMaxPlayers(int maxPlayers)
-	{
+	public final void setMaxPlayers(int maxPlayers) {
 		this.maxPlayers = maxPlayers;
 	}
 
@@ -229,8 +217,7 @@ public class GameServerInfo
 	 * 
 	 * @return true if GameServer is Online.
 	 */
-	public final boolean isOnline()
-	{
+	public final boolean isOnline() {
 		return gscHandler != null && gscHandler.getState() == State.AUTHED;
 	}
 
@@ -240,8 +227,7 @@ public class GameServerInfo
 	 * @param accountId
 	 * @return true if account is on this GameServer
 	 */
-	public final boolean isAccountOnGameServer(int accountId)
-	{
+	public final boolean isAccountOnGameServer(int accountId) {
 		return accountsOnGameServer.containsKey(accountId);
 	}
 
@@ -251,8 +237,7 @@ public class GameServerInfo
 	 * @param accountId
 	 * @return removed account.
 	 */
-	public final Account removeAccountFromGameServer(int accountId)
-	{
+	public final Account removeAccountFromGameServer(int accountId) {
 		return accountsOnGameServer.remove(accountId);
 	}
 
@@ -261,8 +246,7 @@ public class GameServerInfo
 	 * 
 	 * @param acc
 	 */
-	public final void addAccountToGameServer(Account acc)
-	{
+	public final void addAccountToGameServer(Account acc) {
 		accountsOnGameServer.put(acc.getId(), acc);
 	}
 
@@ -272,16 +256,14 @@ public class GameServerInfo
 	 * @param accountId
 	 * @return Account object if account is on this game server or null.
 	 */
-	public final Account getAccountFromGameServer(int accountId)
-	{
+	public final Account getAccountFromGameServer(int accountId) {
 		return accountsOnGameServer.get(accountId);
 	}
 
 	/**
 	 * Clears all accounts on this gameServer
 	 */
-	public void clearAccountsOnGameServer()
-	{
+	public void clearAccountsOnGameServer() {
 		accountsOnGameServer.clear();
 	}
 
@@ -290,8 +272,7 @@ public class GameServerInfo
 	 * 
 	 * @return number of online players
 	 */
-	public int getCurrentPlayers()
-	{
+	public int getCurrentPlayers() {
 		return accountsOnGameServer.size();
 	}
 
@@ -300,31 +281,27 @@ public class GameServerInfo
 	 * 
 	 * @return true if full.
 	 */
-	public boolean isFull()
-	{
+	public boolean isFull() {
 		return getCurrentPlayers() >= getMaxPlayers();
 	}
 
 	/**
 	 * Returns ip address that will be used as server ip for specific player.<br>
-	 * The problem is that players can access server from various subnetworks so we need to send different ip adresses.<br>
+	 * The problem is that players can access server from various subnetworks so
+	 * we need to send different ip adresses.<br>
 	 * If gameserver is not online - it returns 127.0.0.1 as server address.
 	 * 
 	 * @param playerIp
 	 *            Player address
 	 * @return ip address that is valid for player
 	 */
-	public byte[] getIPAddressForPlayer(String playerIp)
-	{
-		if(!isOnline())
-		{
+	public byte[] getIPAddressForPlayer(String playerIp) {
+		if (!isOnline()) {
 			return new byte[] { 127, 0, 0, 1 };
 		}
 
-		for(IPRange ipr : ipRanges)
-		{
-			if(ipr.isInRange(playerIp))
-			{
+		for (IPRange ipr : ipRanges) {
+			if (ipr.isInRange(playerIp)) {
 				return ipr.getAddress();
 			}
 		}

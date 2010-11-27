@@ -28,22 +28,21 @@ import com.aionemu.loginserver.network.gameserver.serverpackets.SM_LS_CONTROL_RE
  * @author Aionchs-Wylovech, Lyahim
  * 
  */
-public class CM_LS_CONTROL extends AbstractClientPacket<GameServerChannelHandler>
-{
-	private String	accountName;
+public class CM_LS_CONTROL extends
+		AbstractClientPacket<GameServerChannelHandler> {
+	private String accountName;
 
-	private int		param;
+	private int param;
 
-	private int		type;
+	private int type;
 
-	private String	playerName;
+	private String playerName;
 
-	private String	adminName;
+	private String adminName;
 
-	private boolean	result;
+	private boolean result;
 
-	public CM_LS_CONTROL(int opcode)
-	{
+	public CM_LS_CONTROL(int opcode) {
 		super(opcode);
 	}
 
@@ -51,8 +50,7 @@ public class CM_LS_CONTROL extends AbstractClientPacket<GameServerChannelHandler
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void readImpl()
-	{
+	protected void readImpl() {
 
 		type = readC();
 		adminName = readS();
@@ -65,20 +63,20 @@ public class CM_LS_CONTROL extends AbstractClientPacket<GameServerChannelHandler
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void runImpl()
-	{
+	protected void runImpl() {
 
-		Account account = DAOManager.getDAO(AccountDAO.class).getAccount(accountName);
-		switch(type)
-		{
-			case 1:
-				account.setAccessLevel((byte) param);
-				break;
-			case 2:
-				account.setMembership((byte) param);
-				break;
+		Account account = DAOManager.getDAO(AccountDAO.class).getAccount(
+				accountName);
+		switch (type) {
+		case 1:
+			account.setAccessLevel((byte) param);
+			break;
+		case 2:
+			account.setMembership((byte) param);
+			break;
 		}
 		result = DAOManager.getDAO(AccountDAO.class).updateAccount(account);
-		sendPacket(new SM_LS_CONTROL_RESPONSE(type, result, playerName, account.getId(), param, adminName));
+		sendPacket(new SM_LS_CONTROL_RESPONSE(type, result, playerName,
+				account.getId(), param, adminName));
 	}
 }

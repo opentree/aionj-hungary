@@ -36,14 +36,12 @@ import com.aionemu.loginserver.model.BannedIP;
  * 
  * @author SoulKeeper
  */
-public class MySQL5BannedIpDAO extends BannedIpDAO
-{
+public class MySQL5BannedIpDAO extends BannedIpDAO {
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public BannedIP insert(String mask)
-	{
+	public BannedIP insert(String mask) {
 		return insert(mask, null);
 	}
 
@@ -51,8 +49,7 @@ public class MySQL5BannedIpDAO extends BannedIpDAO
 	 * {@inheritDoc}
 	 */
 	@Override
-	public BannedIP insert(final String mask, final Timestamp expireTime)
-	{
+	public BannedIP insert(final String mask, final Timestamp expireTime) {
 		BannedIP result = new BannedIP();
 		result.setMask(mask);
 		result.setTimeEnd(expireTime);
@@ -67,21 +64,24 @@ public class MySQL5BannedIpDAO extends BannedIpDAO
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean insert(final BannedIP bannedIP)
-	{
-		boolean insert = DB.insertUpdate("INSERT INTO banned_ip(mask, time_end) VALUES (?, ?)", new IUStH() {
+	public boolean insert(final BannedIP bannedIP) {
+		boolean insert = DB.insertUpdate(
+				"INSERT INTO banned_ip(mask, time_end) VALUES (?, ?)",
+				new IUStH() {
 
-			@Override
-			public void handleInsertUpdate(PreparedStatement preparedStatement) throws SQLException
-			{
-				preparedStatement.setString(1, bannedIP.getMask());
-				if (bannedIP.getTimeEnd() == null)
-					preparedStatement.setNull(2, Types.TIMESTAMP);
-				else
-					preparedStatement.setTimestamp(2, bannedIP.getTimeEnd());
-				preparedStatement.execute();
-			}
-		});
+					@Override
+					public void handleInsertUpdate(
+							PreparedStatement preparedStatement)
+							throws SQLException {
+						preparedStatement.setString(1, bannedIP.getMask());
+						if (bannedIP.getTimeEnd() == null)
+							preparedStatement.setNull(2, Types.TIMESTAMP);
+						else
+							preparedStatement.setTimestamp(2,
+									bannedIP.getTimeEnd());
+						preparedStatement.execute();
+					}
+				});
 
 		if (!insert)
 			return false;
@@ -90,14 +90,13 @@ public class MySQL5BannedIpDAO extends BannedIpDAO
 		DB.select("SELECT * FROM banned_ip WHERE mask = ?", new ParamReadStH() {
 
 			@Override
-			public void setParams(PreparedStatement preparedStatement) throws SQLException
-			{
+			public void setParams(PreparedStatement preparedStatement)
+					throws SQLException {
 				preparedStatement.setString(1, bannedIP.getMask());
 			}
 
 			@Override
-			public void handleRead(ResultSet resultSet) throws SQLException
-			{
+			public void handleRead(ResultSet resultSet) throws SQLException {
 				resultSet.next(); // mask is unique, only one result allowed
 				result.setId(resultSet.getInt("id"));
 				result.setMask(resultSet.getString("mask"));
@@ -111,71 +110,74 @@ public class MySQL5BannedIpDAO extends BannedIpDAO
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean update(final BannedIP bannedIP)
-	{
-		return DB.insertUpdate("UPDATE banned_ip SET mask = ?, time_end = ? WHERE id = ?", new IUStH() {
-			@Override
-			public void handleInsertUpdate(PreparedStatement preparedStatement) throws SQLException
-			{
-				preparedStatement.setString(1, bannedIP.getMask());
-				if (bannedIP.getTimeEnd() == null)
-					preparedStatement.setNull(2, Types.TIMESTAMP);
-				else
-					preparedStatement.setTimestamp(2, bannedIP.getTimeEnd());
-				preparedStatement.setInt(3, bannedIP.getId());
-				preparedStatement.execute();
-			}
-		});
+	public boolean update(final BannedIP bannedIP) {
+		return DB.insertUpdate(
+				"UPDATE banned_ip SET mask = ?, time_end = ? WHERE id = ?",
+				new IUStH() {
+					@Override
+					public void handleInsertUpdate(
+							PreparedStatement preparedStatement)
+							throws SQLException {
+						preparedStatement.setString(1, bannedIP.getMask());
+						if (bannedIP.getTimeEnd() == null)
+							preparedStatement.setNull(2, Types.TIMESTAMP);
+						else
+							preparedStatement.setTimestamp(2,
+									bannedIP.getTimeEnd());
+						preparedStatement.setInt(3, bannedIP.getId());
+						preparedStatement.execute();
+					}
+				});
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean remove(final String mask)
-	{
-		return DB.insertUpdate("DELETE FROM banned_ip WHERE mask = ?", new IUStH() {
-			@Override
-			public void handleInsertUpdate(PreparedStatement preparedStatement) throws SQLException
-			{
-				preparedStatement.setString(1, mask);
-				preparedStatement.execute();
-			}
-		});
+	public boolean remove(final String mask) {
+		return DB.insertUpdate("DELETE FROM banned_ip WHERE mask = ?",
+				new IUStH() {
+					@Override
+					public void handleInsertUpdate(
+							PreparedStatement preparedStatement)
+							throws SQLException {
+						preparedStatement.setString(1, mask);
+						preparedStatement.execute();
+					}
+				});
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean remove(final BannedIP bannedIP)
-	{
-		return DB.insertUpdate("DELETE FROM banned_ip WHERE mask = ?", new IUStH() {
+	public boolean remove(final BannedIP bannedIP) {
+		return DB.insertUpdate("DELETE FROM banned_ip WHERE mask = ?",
+				new IUStH() {
 
-			@Override
-			public void handleInsertUpdate(PreparedStatement preparedStatement) throws SQLException
-			{
-				// Changed from id to mask because we don't get id of last inserted ban
-				preparedStatement.setString(1, bannedIP.getMask());
-				preparedStatement.execute();
-			}
-		});
+					@Override
+					public void handleInsertUpdate(
+							PreparedStatement preparedStatement)
+							throws SQLException {
+						// Changed from id to mask because we don't get id of
+						// last inserted ban
+						preparedStatement.setString(1, bannedIP.getMask());
+						preparedStatement.execute();
+					}
+				});
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Set<BannedIP> getAllBans()
-	{
+	public Set<BannedIP> getAllBans() {
 
 		final Set<BannedIP> result = new HashSet<BannedIP>();
 		DB.select("SELECT * FROM banned_ip", new ReadStH() {
 			@Override
-			public void handleRead(ResultSet resultSet) throws SQLException
-			{
-				while (resultSet.next())
-				{
+			public void handleRead(ResultSet resultSet) throws SQLException {
+				while (resultSet.next()) {
 					BannedIP ip = new BannedIP();
 					ip.setId(resultSet.getInt("id"));
 					ip.setMask(resultSet.getString("mask"));
@@ -191,8 +193,7 @@ public class MySQL5BannedIpDAO extends BannedIpDAO
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean supports(String s, int i, int i1)
-	{
+	public boolean supports(String s, int i, int i1) {
 		return MySQL5DAOUtils.supports(s, i, i1);
 	}
 }

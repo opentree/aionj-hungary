@@ -22,38 +22,39 @@ import com.aionemu.loginserver.model.AccountTime;
 import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
 
 /**
- * In this packet LoginServer is answering on GameServer request about valid authentication data and also sends account
- * name of user that is authenticating on GameServer.
+ * In this packet LoginServer is answering on GameServer request about valid
+ * authentication data and also sends account name of user that is
+ * authenticating on GameServer.
  * 
  * @author -Nemesiss-, Lyahim
  * 
  */
-public class SM_ACCOUNT_AUTH_RESPONSE extends AbstractServerPacket<GameServerChannelHandler>
-{
+public class SM_ACCOUNT_AUTH_RESPONSE extends
+		AbstractServerPacket<GameServerChannelHandler> {
 	/**
 	 * Account id
 	 */
-	private final int		accountId;
+	private final int accountId;
 
 	/**
 	 * True if account is authenticated.
 	 */
-	private final boolean	ok;
+	private final boolean ok;
 
 	/**
 	 * account name
 	 */
-	private final String	accountName;
+	private final String accountName;
 
 	/**
 	 * Access level
 	 */
-	private final byte		accessLevel;
+	private final byte accessLevel;
 
 	/**
 	 * Membership
 	 */
-	private final byte		membership;
+	private final byte membership;
 
 	/**
 	 * Constructor.
@@ -64,8 +65,8 @@ public class SM_ACCOUNT_AUTH_RESPONSE extends AbstractServerPacket<GameServerCha
 	 * @param accessLevel
 	 * @param membership
 	 */
-	public SM_ACCOUNT_AUTH_RESPONSE(int accountId, boolean ok, String accountName, byte accessLevel, byte membership)
-	{
+	public SM_ACCOUNT_AUTH_RESPONSE(int accountId, boolean ok,
+			String accountName, byte accessLevel, byte membership) {
 		this.accountId = accountId;
 		this.ok = ok;
 		this.accountName = accountName;
@@ -77,16 +78,15 @@ public class SM_ACCOUNT_AUTH_RESPONSE extends AbstractServerPacket<GameServerCha
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(GameServerChannelHandler cHandler)
-	{
+	protected void writeImpl(GameServerChannelHandler cHandler) {
 		writeD(accountId);
 		writeC(ok ? 1 : 0);
 
-		if(ok)
-		{
+		if (ok) {
 			writeS(accountName);
 
-			AccountTime accountTime = cHandler.getGameServerInfo().getAccountFromGameServer(accountId).getAccountTime();
+			AccountTime accountTime = cHandler.getGameServerInfo()
+					.getAccountFromGameServer(accountId).getAccountTime();
 
 			writeQ(accountTime.getAccumulatedOnlineTime());
 			writeQ(accountTime.getAccumulatedRestTime());

@@ -34,14 +34,13 @@ import com.aionemu.loginserver.network.gameserver.serverpackets.SM_REQUEST_KICK_
 
 /**
  * @author lyahim
- *
+ * 
  */
-public class GameServerPacketHandlerFactory extends AbstractPacketHandlerFactory<GameServerChannelHandler>
-{
-	public GameServerPacketHandlerFactory()
-	{
+public class GameServerPacketHandlerFactory extends
+		AbstractPacketHandlerFactory<GameServerChannelHandler> {
+	public GameServerPacketHandlerFactory() {
 		super(null, null);
-		//Client Packets
+		// Client Packets
 		addPacket(new CM_GS_AUTH(0x00), State.CONNECTED);
 		addPacket(new CM_ACCOUNT_AUTH(0x01), State.AUTHED);
 		addPacket(new CM_ACCOUNT_RECONNECT_KEY(0x02), State.AUTHED);
@@ -49,8 +48,8 @@ public class GameServerPacketHandlerFactory extends AbstractPacketHandlerFactory
 		addPacket(new CM_ACCOUNT_LIST(0x04), State.AUTHED);
 		addPacket(new CM_LS_CONTROL(0x05), State.AUTHED);
 		addPacket(new CM_BAN(0x06), State.AUTHED);
-		
-		//Server Packets
+
+		// Server Packets
 		addPacket(SM_GS_AUTH_RESPONSE.class, 0x00);
 		addPacket(SM_ACCOUNT_AUTH_RESPONSE.class, 0x01);
 		addPacket(SM_REQUEST_KICK_ACCOUNT.class, 0x02);

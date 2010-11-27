@@ -21,24 +21,24 @@ import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
 import com.aionemu.loginserver.network.gameserver.GsAuthResponse;
 
 /**
- * This packet is response for CM_GS_AUTH its notify Gameserver if registration was ok or what was wrong.
+ * This packet is response for CM_GS_AUTH its notify Gameserver if registration
+ * was ok or what was wrong.
  * 
  * @author -Nemesiss-, Lyahim
  */
-public class SM_GS_AUTH_RESPONSE extends AbstractServerPacket<GameServerChannelHandler>
-{
+public class SM_GS_AUTH_RESPONSE extends
+		AbstractServerPacket<GameServerChannelHandler> {
 	/**
 	 * Response for Gameserver authentication
 	 */
-	private final GsAuthResponse	response;
+	private final GsAuthResponse response;
 
 	/**
 	 * Constructor.
 	 * 
 	 * @param response
 	 */
-	public SM_GS_AUTH_RESPONSE(GsAuthResponse response)
-	{
+	public SM_GS_AUTH_RESPONSE(GsAuthResponse response) {
 		this.response = response;
 	}
 
@@ -46,8 +46,7 @@ public class SM_GS_AUTH_RESPONSE extends AbstractServerPacket<GameServerChannelH
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(GameServerChannelHandler cHandler)
-	{
+	protected void writeImpl(GameServerChannelHandler cHandler) {
 		writeC(response.getResponseId());
 	}
 }

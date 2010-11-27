@@ -28,39 +28,37 @@ import javolution.util.FastMap;
 
 /**
  * @author Mr. Poke
- *
+ * 
  */
-public class FloodProtector
-{
+public class FloodProtector {
 	/**
 	 * Logger for this class.
 	 */
-	private static final Logger	log	= Logger.getLogger(CM_LOGIN.class);
+	private static final Logger log = Logger.getLogger(CM_LOGIN.class);
 
 	private FastMap<String, Long> flood = new FastMap<String, Long>();
-	
-	public static final FloodProtector getInstance()
-	{
+
+	public static final FloodProtector getInstance() {
 		return SingletonHolder.instance;
 	}
-	
-	public boolean addIp(String ip)
-	{
+
+	public boolean addIp(String ip) {
 		Long time = flood.get(ip);
-		if (time == null || System.currentTimeMillis()-time > Config.FAST_RECONNECTION_TIME)
-		{
+		if (time == null
+				|| System.currentTimeMillis() - time > Config.FAST_RECONNECTION_TIME) {
 			flood.put(ip, System.currentTimeMillis());
 			return false;
 		}
-		Timestamp newTime = new Timestamp(System.currentTimeMillis() + Config.WRONG_LOGIN_BAN_TIME * 60000);
+		Timestamp newTime = new Timestamp(System.currentTimeMillis()
+				+ Config.WRONG_LOGIN_BAN_TIME * 60000);
 		BannedIpController.banIp(ip, newTime);
-		log.info("[AUDIT]FloodProtector:"+ip+" IP banned for "+Config.WRONG_LOGIN_BAN_TIME+" min");
+		log.info("[AUDIT]FloodProtector:" + ip + " IP banned for "
+				+ Config.WRONG_LOGIN_BAN_TIME + " min");
 		return true;
 	}
-	
+
 	@SuppressWarnings("synthetic-access")
-	private static class SingletonHolder
-	{
+	private static class SingletonHolder {
 		protected static final FloodProtector instance = new FloodProtector();
 	}
 }

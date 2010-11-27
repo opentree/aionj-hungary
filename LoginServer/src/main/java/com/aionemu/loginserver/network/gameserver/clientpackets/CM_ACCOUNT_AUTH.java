@@ -22,18 +22,20 @@ import com.aionemu.loginserver.network.aion.SessionKey;
 import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
 
 /**
- * In this packet Gameserver is asking if given account sessionKey is valid at Loginserver side. [if user that is
- * authenticating on Gameserver is already authenticated on Loginserver]
+ * In this packet Gameserver is asking if given account sessionKey is valid at
+ * Loginserver side. [if user that is authenticating on Gameserver is already
+ * authenticated on Loginserver]
  * 
  * @author -Nemesiss-, Lyahim
  * 
  */
-public class CM_ACCOUNT_AUTH extends AbstractClientPacket<GameServerChannelHandler>
-{
+public class CM_ACCOUNT_AUTH extends
+		AbstractClientPacket<GameServerChannelHandler> {
 	/**
-	 * SessionKey that GameServer needs to check if is valid at Loginserver side.
+	 * SessionKey that GameServer needs to check if is valid at Loginserver
+	 * side.
 	 */
-	private SessionKey	sessionKey;
+	private SessionKey sessionKey;
 
 	/**
 	 * Constructor.
@@ -41,8 +43,7 @@ public class CM_ACCOUNT_AUTH extends AbstractClientPacket<GameServerChannelHandl
 	 * @param buf
 	 * @param client
 	 */
-	public CM_ACCOUNT_AUTH(int opcode)
-	{
+	public CM_ACCOUNT_AUTH(int opcode) {
 		super(opcode);
 
 	}
@@ -51,8 +52,7 @@ public class CM_ACCOUNT_AUTH extends AbstractClientPacket<GameServerChannelHandl
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void readImpl()
-	{
+	protected void readImpl() {
 		int accountId = readD();
 		int loginOk = readD();
 		int playOk1 = readD();
@@ -65,8 +65,8 @@ public class CM_ACCOUNT_AUTH extends AbstractClientPacket<GameServerChannelHandl
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void runImpl()
-	{
-		AccountController.getInstance().checkAuth(sessionKey, getChannelHandler());
+	protected void runImpl() {
+		AccountController.getInstance().checkAuth(sessionKey,
+				getChannelHandler());
 	}
 }

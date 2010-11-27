@@ -28,41 +28,41 @@ import com.aionemu.loginserver.network.gameserver.GsAuthResponse;
 import com.aionemu.loginserver.network.gameserver.serverpackets.SM_GS_AUTH_RESPONSE;
 
 /**
- * This is authentication packet that gs will send to login server for registration.
+ * This is authentication packet that gs will send to login server for
+ * registration.
  * 
  * @author -Nemesiss-, Lyahim
  */
-public class CM_GS_AUTH extends AbstractClientPacket<GameServerChannelHandler>
-{
+public class CM_GS_AUTH extends AbstractClientPacket<GameServerChannelHandler> {
 	/**
 	 * Password for authentication
 	 */
-	private String			password;
+	private String password;
 
 	/**
 	 * Id of GameServer
 	 */
-	private byte			gameServerId;
+	private byte gameServerId;
 
 	/**
 	 * Maximum number of players that this Gameserver can accept.
 	 */
-	private int				maxPlayers;
+	private int maxPlayers;
 
 	/**
 	 * Port of this Gameserver.
 	 */
-	private int				port;
+	private int port;
 
 	/**
 	 * Default address for server
 	 */
-	private byte[]			defaultAddress;
+	private byte[] defaultAddress;
 
 	/**
 	 * List of IPRanges for this gameServer
 	 */
-	private List<IPRange>	ipRanges;
+	private List<IPRange> ipRanges;
 
 	/**
 	 * Constructor.
@@ -70,8 +70,7 @@ public class CM_GS_AUTH extends AbstractClientPacket<GameServerChannelHandler>
 	 * @param buf
 	 * @param client
 	 */
-	public CM_GS_AUTH(int opcode)
-	{
+	public CM_GS_AUTH(int opcode) {
 		super(opcode);
 	}
 
@@ -79,16 +78,15 @@ public class CM_GS_AUTH extends AbstractClientPacket<GameServerChannelHandler>
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void readImpl()
-	{
+	protected void readImpl() {
 		gameServerId = (byte) readC();
 
 		defaultAddress = readB(readC());
 		int size = readD();
 		ipRanges = new ArrayList<IPRange>(size);
-		for(int i = 0; i < size; i++)
-		{
-			ipRanges.add(new IPRange(readB(readC()), readB(readC()), readB(readC())));
+		for (int i = 0; i < size; i++) {
+			ipRanges.add(new IPRange(readB(readC()), readB(readC()),
+					readB(readC())));
 		}
 
 		port = readH();
@@ -100,22 +98,21 @@ public class CM_GS_AUTH extends AbstractClientPacket<GameServerChannelHandler>
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void runImpl()
-	{
+	protected void runImpl() {
 		GameServerChannelHandler client = getChannelHandler();
 
-		GsAuthResponse resp = GameServerTable.registerGameServer(client, gameServerId, defaultAddress, ipRanges, port,
-			maxPlayers, password);
+		GsAuthResponse resp = GameServerTable.registerGameServer(client,
+				gameServerId, defaultAddress, ipRanges, port, maxPlayers,
+				password);
 
-		switch(resp)
-		{
-			case AUTHED:
-				client.setState(State.AUTHED);
-				sendPacket(new SM_GS_AUTH_RESPONSE(resp));
-				break;
+		switch (resp) {
+		case AUTHED:
+			client.setState(State.AUTHED);
+			sendPacket(new SM_GS_AUTH_RESPONSE(resp));
+			break;
 
-			default:
-				client.close(new SM_GS_AUTH_RESPONSE(resp));
+		default:
+			client.close(new SM_GS_AUTH_RESPONSE(resp));
 		}
 	}
 }

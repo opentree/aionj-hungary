@@ -27,10 +27,10 @@ import com.aionemu.loginserver.model.BannedIP;
  * 
  * @author SoulKeeper
  */
-public abstract class BannedIpDAO implements DAO
-{
+public abstract class BannedIpDAO implements DAO {
 	/**
-	 * Inserts ip mask to database, returns BannedIP object that represents inserted mask or null if error.<br>
+	 * Inserts ip mask to database, returns BannedIP object that represents
+	 * inserted mask or null if error.<br>
 	 * Expire time is null so ban never expires.<br>
 	 * 
 	 * @param mask
@@ -55,7 +55,8 @@ public abstract class BannedIpDAO implements DAO
 	/**
 	 * Inserts BannedIP object to database.<br>
 	 * ID of object must be NULL.<br>
-	 * If insert was successfull - sets the assigned id to BannedIP object and returns true.<br>
+	 * If insert was successfull - sets the assigned id to BannedIP object and
+	 * returns true.<br>
 	 * In case of error returns false without modification of bannedIP object.<br>
 	 * 
 	 * @param bannedIP
@@ -104,13 +105,13 @@ public abstract class BannedIpDAO implements DAO
 	public abstract Set<BannedIP> getAllBans();
 
 	/**
-	 * Returns class name that will be uses as unique identifier for all DAO classes
+	 * Returns class name that will be uses as unique identifier for all DAO
+	 * classes
 	 * 
 	 * @return class name
 	 */
 	@Override
-	public final String getClassName()
-	{
+	public final String getClassName() {
 		return BannedIpDAO.class.getName();
 	}
 }

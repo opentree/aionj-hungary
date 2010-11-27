@@ -34,25 +34,24 @@ import com.aionemu.loginserver.network.aion.serverpackets.SM_UPDATE_SESSION;
 
 /**
  * @author lyahim
- *
+ * 
  */
-public class AionPacketHandlerFactory extends AbstractPacketHandlerFactory<AionChannelHandler>
-{
-	
+public class AionPacketHandlerFactory extends
+		AbstractPacketHandlerFactory<AionChannelHandler> {
+
 	/**
 	 * Creates new instance of <tt>AionPacketHandlerFactory</tt><br>
 	 */
-	public AionPacketHandlerFactory()
-	{
+	public AionPacketHandlerFactory() {
 		super(null, null);
-		//Client Packets
+		// Client Packets
 		addPacket(new CM_PLAY(0x02), State.AUTHED);
 		addPacket(new CM_SERVER_LIST(0x05), State.AUTHED);
 		addPacket(new CM_LOGIN(0x0B), State.AUTHED_GG);
 		addPacket(new CM_AUTH_GG(0x07), State.CONNECTED);
 		addPacket(new CM_UPDATE_SESSION(0x08), State.CONNECTED);
-		
-		//Server Packets
+
+		// Server Packets
 		addPacket(SM_INIT.class, 0x00);
 		addPacket(SM_LOGIN_FAIL.class, 0x01);
 		addPacket(SM_LOGIN_OK.class, 0x03);
@@ -61,8 +60,7 @@ public class AionPacketHandlerFactory extends AbstractPacketHandlerFactory<AionC
 		addPacket(SM_PLAY_OK.class, 0x07);
 		addPacket(SM_AUTH_GG.class, 0x0b);
 		addPacket(SM_UPDATE_SESSION.class, 0x0c);
-		
-		
+
 	}
-	
+
 }

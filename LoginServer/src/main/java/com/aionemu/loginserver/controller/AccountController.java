@@ -44,51 +44,51 @@ import com.aionemu.loginserver.utils.AccountUtils;
  * @author KID
  * @author SoulKeeper
  */
-public class AccountController
-{
+public class AccountController {
 	/**
-	 * Map with accounts that are active on LoginServer or joined GameServer and are not authenticated yet.
+	 * Map with accounts that are active on LoginServer or joined GameServer and
+	 * are not authenticated yet.
 	 */
-	private final FastMap<Integer, AionChannelHandler>	accountsOnLS;
+	private final FastMap<Integer, AionChannelHandler> accountsOnLS;
 
 	/**
-	 * Map with accounts that are reconnecting to LoginServer ie was joined GameServer.
+	 * Map with accounts that are reconnecting to LoginServer ie was joined
+	 * GameServer.
 	 */
-	private final FastMap<Integer, ReconnectingAccount>	reconnectingAccounts;
+	private final FastMap<Integer, ReconnectingAccount> reconnectingAccounts;
 
-	public static final AccountController getInstance()
-	{
+	public static final AccountController getInstance() {
 		return SingletonHolder.instance;
 	}
 
-	private AccountController()
-	{
-		accountsOnLS	= new FastMap<Integer, AionChannelHandler>().shared();
-		reconnectingAccounts	= new FastMap<Integer, ReconnectingAccount>().shared();
+	private AccountController() {
+		accountsOnLS = new FastMap<Integer, AionChannelHandler>().shared();
+		reconnectingAccounts = new FastMap<Integer, ReconnectingAccount>()
+				.shared();
 	}
+
 	/**
 	 * Removes account from list of connections
 	 * 
 	 * @param account
 	 *            account
 	 */
-	public void removeAccountOnLS(Account account)
-	{
+	public void removeAccountOnLS(Account account) {
 		accountsOnLS.remove(account.getId());
 	}
 
 	/**
-	 * This method is for answering GameServer question about account authentication on GameServer side.
+	 * This method is for answering GameServer question about account
+	 * authentication on GameServer side.
 	 * 
 	 * @param key
 	 * @param channelHandler
 	 */
-	public void checkAuth(SessionKey key, GameServerChannelHandler channelHandler)
-	{
+	public void checkAuth(SessionKey key,
+			GameServerChannelHandler channelHandler) {
 		AionChannelHandler con = accountsOnLS.get(key.accountId);
 
-		if(con != null && con.getSessionKey().checkSessionKey(key))
-		{
+		if (con != null && con.getSessionKey().checkSessionKey(key)) {
 			/**
 			 * account is successful logged in on gs remove it from here
 			 */
@@ -98,7 +98,8 @@ public class AccountController
 			Account acc = con.getAccount();
 
 			/**
-			 * Add account to accounts on GameServer list and update accounts last server
+			 * Add account to accounts on GameServer list and update accounts
+			 * last server
 			 */
 			gsi.addAccountToGameServer(acc);
 
@@ -108,12 +109,12 @@ public class AccountController
 			/**
 			 * Send response to GameServer
 			 */
-			channelHandler.sendPacket(new SM_ACCOUNT_AUTH_RESPONSE(key.accountId, true, acc.getName(), acc
-				.getAccessLevel(), acc.getMembership()));
-		}
-		else
-		{
-			channelHandler.sendPacket(new SM_ACCOUNT_AUTH_RESPONSE(key.accountId, false, null, (byte) 0, (byte) 0));
+			channelHandler.sendPacket(new SM_ACCOUNT_AUTH_RESPONSE(
+					key.accountId, true, acc.getName(), acc.getAccessLevel(),
+					acc.getMembership()));
+		} else {
+			channelHandler.sendPacket(new SM_ACCOUNT_AUTH_RESPONSE(
+					key.accountId, false, null, (byte) 0, (byte) 0));
 		}
 	}
 
@@ -122,8 +123,7 @@ public class AccountController
 	 * 
 	 * @param acc
 	 */
-	public void addReconnectingAccount(ReconnectingAccount acc)
-	{
+	public void addReconnectingAccount(ReconnectingAccount acc) {
 		reconnectingAccounts.put(acc.getAccount().getId(), acc);
 	}
 
@@ -139,13 +139,13 @@ public class AccountController
 	 * @param client
 	 *            aion client
 	 */
-	public void authReconnectingAccount(int accountId, int loginOk, int reconnectKey,
-		AionChannelHandler client)
-	{
-		ReconnectingAccount reconnectingAccount = reconnectingAccounts.remove(accountId);
+	public void authReconnectingAccount(int accountId, int loginOk,
+			int reconnectKey, AionChannelHandler client) {
+		ReconnectingAccount reconnectingAccount = reconnectingAccounts
+				.remove(accountId);
 
-		if(reconnectingAccount != null && reconnectingAccount.getReconnectionKey() == reconnectKey)
-		{
+		if (reconnectingAccount != null
+				&& reconnectingAccount.getReconnectionKey() == reconnectKey) {
 			Account acc = reconnectingAccount.getAccount();
 
 			client.setAccount(acc);
@@ -153,18 +153,18 @@ public class AccountController
 			client.setState(State.AUTHED);
 			client.setSessionKey(new SessionKey(client.getAccount()));
 			client.sendPacket(new SM_UPDATE_SESSION(client.getSessionKey()));
-		}
-		else
-		{
+		} else {
 			client.close();
 		}
 	}
 
 	/**
 	 * Tries to authentificate account.<br>
-	 * If success returns {@link AionAuthResponse#AUTHED} and sets account object to connection.<br>
+	 * If success returns {@link AionAuthResponse#AUTHED} and sets account
+	 * object to connection.<br>
 	 * 
-	 * If {@link com.aionemu.loginserver.configs.Config#ACCOUNT_AUTO_CREATION} is enabled - creates new account.<br>
+	 * If {@link com.aionemu.loginserver.configs.Config#ACCOUNT_AUTO_CREATION}
+	 * is enabled - creates new account.<br>
 	 * 
 	 * @param name
 	 *            name of account
@@ -174,81 +174,70 @@ public class AccountController
 	 *            connection for account
 	 * @return Response with error code
 	 */
-	public AionAuthResponse login(String name, String password, AionChannelHandler channelHandler)
-	{
+	public AionAuthResponse login(String name, String password,
+			AionChannelHandler channelHandler) {
 		Account account = loadAccount(name);
 
 		// Try to create new account
-		if(account == null && Config.ACCOUNT_AUTO_CREATION)
-		{
+		if (account == null && Config.ACCOUNT_AUTO_CREATION) {
 			account = createAccount(name, password);
 		}
 
 		// If account not found and not created
-		if(account == null)
-		{
+		if (account == null) {
 			return AionAuthResponse.INVALID_PASSWORD;
 		}
 
 		// check for paswords beeing equals
-		if(!account.getPasswordHash().equals(AccountUtils.encodePassword(password)))
-		{
+		if (!account.getPasswordHash().equals(
+				AccountUtils.encodePassword(password))) {
 			return AionAuthResponse.INVALID_PASSWORD;
 		}
 
 		// check for paswords beeing equals
-		if(account.getActivated() != 1)
-		{
+		if (account.getActivated() != 1) {
 			return AionAuthResponse.INVALID_PASSWORD;
 		}
 
 		// If account expired
-		if(AccountTimeController.isAccountExpired(account))
-		{
+		if (AccountTimeController.isAccountExpired(account)) {
 			return AionAuthResponse.TIME_EXPIRED;
 		}
 
 		// if account is banned
-		if(AccountTimeController.isAccountPenaltyActive(account))
-		{
+		if (AccountTimeController.isAccountPenaltyActive(account)) {
 			return AionAuthResponse.BAN_IP;
 		}
 
 		// if account is restricted to some ip or mask
-		if(account.getIpForce() != null)
-		{
-			if(!NetworkUtils.checkIPMatching(account.getIpForce(), channelHandler.getIP()))
-			{
+		if (account.getIpForce() != null) {
+			if (!NetworkUtils.checkIPMatching(account.getIpForce(),
+					channelHandler.getIP())) {
 				return AionAuthResponse.BAN_IP;
 			}
 		}
 
 		// if ip is banned
-		if(BannedIpController.isBanned(channelHandler.getIP()))
-		{
+		if (BannedIpController.isBanned(channelHandler.getIP())) {
 			return AionAuthResponse.BAN_IP;
 		}
 
 		// Do not allow to login two times with same account
-		synchronized(AccountController.class)
-		{
-			if(GameServerTable.isAccountOnAnyGameServer(account))
-			{
+		synchronized (AccountController.class) {
+			if (GameServerTable.isAccountOnAnyGameServer(account)) {
 				GameServerTable.kickAccountFromGameServer(account);
 				return AionAuthResponse.ALREADY_LOGGED_IN;
 			}
 
 			// If someone is at loginserver, he should be disconnected
-			if(accountsOnLS.containsKey(account.getId()))
-			{
-				AionChannelHandler aioncHandler = accountsOnLS.remove(account.getId());
+			if (accountsOnLS.containsKey(account.getId())) {
+				AionChannelHandler aioncHandler = accountsOnLS.remove(account
+						.getId());
 
 				aioncHandler.close();
 
 				return AionAuthResponse.ALREADY_LOGGED_IN;
-			}
-			else
-			{
+			} else {
 				channelHandler.setAccount(account);
 				accountsOnLS.put(account.getId(), channelHandler);
 			}
@@ -268,45 +257,43 @@ public class AccountController
 	 * @param accountId
 	 *            account ID to kick
 	 */
-	public void kickAccount(int accountId)
-	{
-		synchronized(AccountController.class)
-		{
-			for(GameServerInfo gsi : GameServerTable.getGameServers())
-			{
-				if(gsi.isAccountOnGameServer(accountId))
-				{
-					gsi.getGschannelHandler().sendPacket(new SM_REQUEST_KICK_ACCOUNT(accountId));
+	public void kickAccount(int accountId) {
+		synchronized (AccountController.class) {
+			for (GameServerInfo gsi : GameServerTable.getGameServers()) {
+				if (gsi.isAccountOnGameServer(accountId)) {
+					gsi.getGschannelHandler().sendPacket(
+							new SM_REQUEST_KICK_ACCOUNT(accountId));
 					break;
 				}
 			}
-			if(accountsOnLS.containsKey(accountId))
-			{
-				AionChannelHandler aioncHandler = accountsOnLS.remove(accountId);
+			if (accountsOnLS.containsKey(accountId)) {
+				AionChannelHandler aioncHandler = accountsOnLS
+						.remove(accountId);
 				aioncHandler.close();
 			}
 		}
 	}
 
 	/**
-	 * Loads account from DB and returns it, or returns null if account was not loaded
+	 * Loads account from DB and returns it, or returns null if account was not
+	 * loaded
 	 * 
 	 * @param name
 	 *            acccount name
 	 * @return loaded account or null
 	 */
-	public Account loadAccount(String name)
-	{
+	public Account loadAccount(String name) {
 		Account account = getAccountDAO().getAccount(name);
-		if(account != null)
-		{
-			account.setAccountTime(getAccountTimeDAO().getAccountTime(account.getId()));
+		if (account != null) {
+			account.setAccountTime(getAccountTimeDAO().getAccountTime(
+					account.getId()));
 		}
 		return account;
 	}
 
 	/**
-	 * Creates new account and stores it in DB. Returns account object in case of success or null if failed
+	 * Creates new account and stores it in DB. Returns account object in case
+	 * of success or null if failed
 	 * 
 	 * @param name
 	 *            account name
@@ -314,8 +301,7 @@ public class AccountController
 	 *            account password
 	 * @return account object or null
 	 */
-	public Account createAccount(String name, String password)
-	{
+	public Account createAccount(String name, String password) {
 		String passwordHash = AccountUtils.encodePassword(password);
 		Account account = new Account();
 
@@ -325,12 +311,9 @@ public class AccountController
 		account.setMembership((byte) 0);
 		account.setActivated((byte) 1);
 
-		if(getAccountDAO().insertAccount(account))
-		{
+		if (getAccountDAO().insertAccount(account)) {
 			return account;
-		}
-		else
-		{
+		} else {
 			return null;
 		}
 	}
@@ -340,24 +323,22 @@ public class AccountController
 	 * 
 	 * @return {@link com.aionemu.loginserver.dao.AccountDAO}
 	 */
-	private AccountDAO getAccountDAO()
-	{
+	private AccountDAO getAccountDAO() {
 		return DAOManager.getDAO(AccountDAO.class);
 	}
 
 	/**
-	 * Returns {@link com.aionemu.loginserver.dao.AccountTimeDAO}, just a shortcut
+	 * Returns {@link com.aionemu.loginserver.dao.AccountTimeDAO}, just a
+	 * shortcut
 	 * 
 	 * @return {@link com.aionemu.loginserver.dao.AccountTimeDAO}
 	 */
-	private AccountTimeDAO getAccountTimeDAO()
-	{
+	private AccountTimeDAO getAccountTimeDAO() {
 		return DAOManager.getDAO(AccountTimeDAO.class);
 	}
-	
+
 	@SuppressWarnings("synthetic-access")
-	private static class SingletonHolder
-	{
-		protected static final AccountController	instance	= new AccountController();
+	private static class SingletonHolder {
+		protected static final AccountController instance = new AccountController();
 	}
 }

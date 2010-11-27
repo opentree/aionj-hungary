@@ -25,20 +25,19 @@ import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
  * @author -Nemesiss-, Lyahim
  * 
  */
-public class SM_REQUEST_KICK_ACCOUNT extends AbstractServerPacket<GameServerChannelHandler>
-{
+public class SM_REQUEST_KICK_ACCOUNT extends
+		AbstractServerPacket<GameServerChannelHandler> {
 	/**
 	 * Account that must be kicked at GameServer side.
 	 */
-	private final int	accountId;
+	private final int accountId;
 
 	/**
 	 * Constructor.
 	 * 
 	 * @param accountId
 	 */
-	public SM_REQUEST_KICK_ACCOUNT(int accountId)
-	{
+	public SM_REQUEST_KICK_ACCOUNT(int accountId) {
 		this.accountId = accountId;
 	}
 
@@ -46,8 +45,7 @@ public class SM_REQUEST_KICK_ACCOUNT extends AbstractServerPacket<GameServerChan
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(GameServerChannelHandler cHandler)
-	{
+	protected void writeImpl(GameServerChannelHandler cHandler) {
 		writeD(accountId);
 	}
 }

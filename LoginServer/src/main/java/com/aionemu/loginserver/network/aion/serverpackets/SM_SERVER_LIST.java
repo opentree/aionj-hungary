@@ -28,25 +28,22 @@ import com.aionemu.loginserver.network.aion.AionChannelHandler;
 /**
  * @author -Nemesiss-
  */
-public class SM_SERVER_LIST extends AbstractServerPacket<AionChannelHandler>
-{
+public class SM_SERVER_LIST extends AbstractServerPacket<AionChannelHandler> {
 	/**
 	 * Logger for this class.
 	 */
-	protected static Logger	log	= Logger.getLogger(SM_SERVER_LIST.class);
+	protected static Logger log = Logger.getLogger(SM_SERVER_LIST.class);
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionChannelHandler cHandler)
-	{
+	protected void writeImpl(AionChannelHandler cHandler) {
 		Collection<GameServerInfo> servers = GameServerTable.getGameServers();
 
 		writeC(servers.size());// servers
 		writeC(cHandler.getAccount().getLastServer());// last server
-		for(GameServerInfo gsi : servers)
-		{
+		for (GameServerInfo gsi : servers) {
 			writeC(gsi.getId());// server id
 			writeB(gsi.getIPAddressForPlayer(cHandler.getIP())); // server IP
 			writeD(gsi.getPort());// port

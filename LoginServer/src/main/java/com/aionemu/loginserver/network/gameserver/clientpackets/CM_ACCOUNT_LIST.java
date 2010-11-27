@@ -29,12 +29,12 @@ import com.aionemu.loginserver.network.gameserver.serverpackets.SM_REQUEST_KICK_
  * 
  * @author SoulKeeper, Lyahim
  */
-public class CM_ACCOUNT_LIST extends AbstractClientPacket<GameServerChannelHandler>
-{
+public class CM_ACCOUNT_LIST extends
+		AbstractClientPacket<GameServerChannelHandler> {
 	/**
 	 * Array with accounts that are logged in
 	 */
-	private String[]	accountNames;
+	private String[] accountNames;
 
 	/**
 	 * Creates new packet instance.
@@ -44,8 +44,7 @@ public class CM_ACCOUNT_LIST extends AbstractClientPacket<GameServerChannelHandl
 	 * @param client
 	 *            client
 	 */
-	public CM_ACCOUNT_LIST(int opcode)
-	{
+	public CM_ACCOUNT_LIST(int opcode) {
 		super(opcode);
 	}
 
@@ -53,11 +52,9 @@ public class CM_ACCOUNT_LIST extends AbstractClientPacket<GameServerChannelHandl
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void readImpl()
-	{
+	protected void readImpl() {
 		accountNames = new String[readD()];
-		for(int i = 0; i < accountNames.length; i++)
-		{
+		for (int i = 0; i < accountNames.length; i++) {
 			accountNames[i] = readS();
 		}
 	}
@@ -66,14 +63,12 @@ public class CM_ACCOUNT_LIST extends AbstractClientPacket<GameServerChannelHandl
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void runImpl()
-	{
-		for(String s : accountNames)
-		{
+	protected void runImpl() {
+		for (String s : accountNames) {
 			Account a = AccountController.getInstance().loadAccount(s);
-			if(GameServerTable.isAccountOnAnyGameServer(a))
-			{
-				getChannelHandler().sendPacket(new SM_REQUEST_KICK_ACCOUNT(a.getId()));
+			if (GameServerTable.isAccountOnAnyGameServer(a)) {
+				getChannelHandler().sendPacket(
+						new SM_REQUEST_KICK_ACCOUNT(a.getId()));
 				continue;
 			}
 			getChannelHandler().getGameServerInfo().addAccountToGameServer(a);

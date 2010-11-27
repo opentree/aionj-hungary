@@ -23,16 +23,15 @@ import com.aionemu.loginserver.network.aion.SessionKey;
 /**
  * @author -Nemesiss-, Lyahim
  */
-public class SM_LOGIN_OK extends AbstractServerPacket<AionChannelHandler>
-{
+public class SM_LOGIN_OK extends AbstractServerPacket<AionChannelHandler> {
 	/**
 	 * accountId is part of session key - its used for security purposes
 	 */
-	private final int	accountId;
+	private final int accountId;
 	/**
 	 * loginOk is part of session key - its used for security purposes
 	 */
-	private final int	loginOk;
+	private final int loginOk;
 
 	/**
 	 * Constructs new instance of <tt>SM_LOGIN_OK</tt> packet.
@@ -40,8 +39,7 @@ public class SM_LOGIN_OK extends AbstractServerPacket<AionChannelHandler>
 	 * @param key
 	 *            session key
 	 */
-	public SM_LOGIN_OK(SessionKey key)
-	{
+	public SM_LOGIN_OK(SessionKey key) {
 		this.accountId = key.accountId;
 		this.loginOk = key.loginOk;
 	}
@@ -50,8 +48,7 @@ public class SM_LOGIN_OK extends AbstractServerPacket<AionChannelHandler>
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionChannelHandler cHandler)
-	{
+	protected void writeImpl(AionChannelHandler cHandler) {
 		writeD(accountId);
 		writeD(loginOk);
 		writeD(0x00);

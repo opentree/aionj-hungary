@@ -32,26 +32,23 @@ import com.aionemu.loginserver.dao.GameServersDAO;
  * @author -Nemesiss-
  * 
  */
-public class MySQL5GameServersDAO extends GameServersDAO
-{
+public class MySQL5GameServersDAO extends GameServersDAO {
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<Byte, GameServerInfo> getAllGameServers()
-	{
+	public Map<Byte, GameServerInfo> getAllGameServers() {
 
 		final Map<Byte, GameServerInfo> result = new HashMap<Byte, GameServerInfo>();
 		DB.select("SELECT * FROM gameservers", new ReadStH() {
 			@Override
-			public void handleRead(ResultSet resultSet) throws SQLException
-			{
-				while (resultSet.next())
-				{
+			public void handleRead(ResultSet resultSet) throws SQLException {
+				while (resultSet.next()) {
 					byte id = resultSet.getByte("id");
 					String ipMask = resultSet.getString("mask");
 					String password = resultSet.getString("password");
-					GameServerInfo gsi = new GameServerInfo(id, ipMask, password);
+					GameServerInfo gsi = new GameServerInfo(id, ipMask,
+							password);
 					result.put(id, gsi);
 				}
 			}
@@ -63,8 +60,7 @@ public class MySQL5GameServersDAO extends GameServersDAO
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean supports(String s, int i, int i1)
-	{
+	public boolean supports(String s, int i, int i1) {
 		return MySQL5DAOUtils.supports(s, i, i1);
 	}
 }
