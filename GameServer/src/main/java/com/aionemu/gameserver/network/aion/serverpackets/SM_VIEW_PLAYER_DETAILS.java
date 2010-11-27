@@ -28,28 +28,27 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 public class SM_VIEW_PLAYER_DETAILS extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private List<Item> items;
-	private int size;
-	private int targetObjId;
-	
+	private List<Item>	items;
+	private int			size;
+	private int			targetObjId;
+
 	public SM_VIEW_PLAYER_DETAILS(int targetObjId, List<Item> items)
 	{
 		this.items = items;
 		this.size = items.size();
 	}
 
-
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 
 		writeD(targetObjId); // unk
-		writeC( 11); //unk
-		writeC( size); // itemCount
-		writeC( 0);
+		writeC(11); //unk
+		writeC(size); // itemCount
+		writeC(0);
 		writeD(0);
-		for(Item item : items)
-		{	
+		for (Item item : items)
+		{
 			//////general info/////////////
 			writeD(item.getItemTemplate().getTemplateId());//itemId
 			writeH(36); // 
@@ -57,17 +56,17 @@ public class SM_VIEW_PLAYER_DETAILS extends AbstractAionServerPacket<AionChannel
 			writeH(0);
 			/////who knows/////////////
 			writeH(36);
-			writeC( 4);
-			writeC( 1);
+			writeC(4);
+			writeC(1);
 			writeH(0);
 			writeH(0);
-			writeC( 0);
+			writeC(0);
 			////////////////////////
 			writeH(0);
-			writeC( 6);
+			writeC(6);
 			writeH(item.getEquipmentSlot()); // slot
 			writeH(0);
-			writeC( 0);
+			writeC(0);
 			writeH(62);
 			writeH((int) item.getItemCount()); // count
 			////////////////////////
@@ -78,8 +77,8 @@ public class SM_VIEW_PLAYER_DETAILS extends AbstractAionServerPacket<AionChannel
 			writeD(0);
 			writeD(0);
 			writeD(0);
-			writeC( 0);
+			writeC(0);
 		}
-		
+
 	}
 }

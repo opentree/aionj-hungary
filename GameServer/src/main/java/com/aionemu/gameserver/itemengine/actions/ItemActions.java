@@ -31,33 +31,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ItemActions")
-public class ItemActions {
+public class ItemActions
+{
 
-    @XmlElements({
-        @XmlElement(name = "skilllearn", type = SkillLearnAction.class),
-        @XmlElement(name = "extract", type = ExtractAction.class),
-        @XmlElement(name = "skilluse", type = SkillUseAction.class),
-        @XmlElement(name = "enchant", type = EnchantItemAction.class),
-        @XmlElement(name = "queststart", type = QuestStartAction.class),
-        @XmlElement(name = "dye", type = DyeAction.class),
-        @XmlElement(name = "craftlearn", type = CraftLearnAction.class),
-        @XmlElement(name = "toypetspawn", type = ToyPetSpawnAction.class)
-    })
-    protected List<AbstractItemAction> itemActions;
+	@XmlElements(
+	{
+			@XmlElement(name = "skilllearn", type = SkillLearnAction.class),
+			@XmlElement(name = "extract", type = ExtractAction.class),
+			@XmlElement(name = "skilluse", type = SkillUseAction.class),
+			@XmlElement(name = "enchant", type = EnchantItemAction.class),
+			@XmlElement(name = "queststart", type = QuestStartAction.class),
+			@XmlElement(name = "dye", type = DyeAction.class),
+			@XmlElement(name = "craftlearn", type = CraftLearnAction.class),
+			@XmlElement(name = "toypetspawn", type = ToyPetSpawnAction.class) })
+	protected List<AbstractItemAction>	itemActions;
 
-    /**
-     * Gets the value of the itemActions property.
-     * 
-     * Objects of the following type(s) are allowed in the list
-     * {@link SkillLearnAction }
-     * {@link SkillUseAction }
-     * 
-     */
-    public List<AbstractItemAction> getItemActions() {
-        if (itemActions == null) {
-            itemActions = new ArrayList<AbstractItemAction>();
-        }
-        return this.itemActions;
-    }
+	/**
+	 * Gets the value of the itemActions property.
+	 * 
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link SkillLearnAction }
+	 * {@link SkillUseAction }
+	 * 
+	 */
+	public List<AbstractItemAction> getItemActions()
+	{
+		if (itemActions == null)
+		{
+			itemActions = new ArrayList<AbstractItemAction>();
+		}
+		return this.itemActions;
+	}
 
 }

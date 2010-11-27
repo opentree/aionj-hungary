@@ -54,6 +54,6 @@ public class SM_NICKNAME_CHECK_RESPONSE extends AbstractAionServerPacket<AionCha
 		/**
 		 * Here is some msg: 0x00 = ok 0x0A = not ok and much more
 		 */
-		writeC( value);
+		writeC(value);
 	}
 }

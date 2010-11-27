@@ -47,48 +47,46 @@ import com.aionemu.gameserver.utils.MathUtil;
  */
 public class Skill
 {
-	private List<Creature> effectedList;
-	
-	private Creature firstTarget;
-	
-	private Creature effector;
-	
-	private int skillLevel;
-	
-	private int skillStackLvl;
-	
-	private StartMovingListener conditionChangeListener;
-	
-	private SkillTemplate skillTemplate;
+	private List<Creature>		effectedList;
 
-	private boolean	firstTargetRangeCheck = true;
-	
-	private ItemTemplate itemTemplate;
-	
-	private int	targetType;
-	
-	private boolean chainSuccess = true;
-	
-	private float x;
-	private float y;
-	private float z;
-	
-	private int changeMpConsumptionValue;
-	
-	private float firstTargetRange;
-	
+	private Creature			firstTarget;
+
+	private Creature			effector;
+
+	private int					skillLevel;
+
+	private int					skillStackLvl;
+
+	private StartMovingListener	conditionChangeListener;
+
+	private SkillTemplate		skillTemplate;
+
+	private boolean				firstTargetRangeCheck	= true;
+
+	private ItemTemplate		itemTemplate;
+
+	private int					targetType;
+
+	private boolean				chainSuccess			= true;
+
+	private float				x;
+	private float				y;
+	private float				z;
+
+	private int					changeMpConsumptionValue;
+
+	private float				firstTargetRange;
+
 	/**
 	 * Duration that depends on BOOST_CASTING_TIME
 	 */
-	private int duration;
-	
+	private int					duration;
+
 	public enum SkillType
 	{
-		CAST,
-		ITEM,
-		PASSIVE
+		CAST, ITEM, PASSIVE
 	}
-	
+
 	/**
 	 *  Each skill is a separate object upon invocation
 	 *  Skill level will be populated from player SkillList
@@ -99,9 +97,8 @@ public class Skill
 	 */
 	public Skill(SkillTemplate skillTemplate, Player effector, Creature firstTarget)
 	{
-		this(skillTemplate, effector,
-			effector.getSkillList().getSkillLevel(skillTemplate.getSkillId()), firstTarget);
-	}	
+		this(skillTemplate, effector, effector.getSkillList().getSkillLevel(skillTemplate.getSkillId()), firstTarget);
+	}
 
 	/**
 	 * 
@@ -110,7 +107,8 @@ public class Skill
 	 * @param skillLvl
 	 * @param firstTarget
 	 */
-	public Skill(SkillTemplate skillTemplate, Creature effector, int skillLvl, Creature firstTarget) {
+	public Skill(SkillTemplate skillTemplate, Creature effector, int skillLvl, Creature firstTarget)
+	{
 		this.effectedList = new ArrayList<Creature>();
 		this.conditionChangeListener = new StartMovingListener();
 		this.firstTarget = firstTarget;
@@ -127,40 +125,39 @@ public class Skill
 	 */
 	public boolean canUseSkill()
 	{
-		
-		if(!setProperties(skillTemplate.getInitproperties()))
+
+		if (!setProperties(skillTemplate.getInitproperties()))
 			return false;
-		
-		if(!preCastCheck())
+
+		if (!preCastCheck())
 			return false;
-		
-		if(!setProperties(skillTemplate.getSetproperties()))
+
+		if (!setProperties(skillTemplate.getSetproperties()))
 			return false;
-		
-		
+
 		effector.setCasting(this);
 		Iterator<Creature> effectedIter = effectedList.iterator();
-		while(effectedIter.hasNext())
+		while (effectedIter.hasNext())
 		{
 			Creature effected = effectedIter.next();
-			if(effected == null)
+			if (effected == null)
 				effected = effector;
 
-			if(effector instanceof Player)
+			if (effector instanceof Player)
 			{
-				if ( (!RestrictionsManager.canAffectBySkill((Player)effector, effected)) && (skillTemplate.getSkillId() != 1968) )
+				if ((!RestrictionsManager.canAffectBySkill((Player) effector, effected)) && (skillTemplate.getSkillId() != 1968))
 					effectedIter.remove();
 			}
 			else
 			{
-				if( (effector.getEffectController().isAbnormalState(EffectId.CANT_ATTACK_STATE)) && (skillTemplate.getSkillId() != 1968) )					
+				if ((effector.getEffectController().isAbnormalState(EffectId.CANT_ATTACK_STATE)) && (skillTemplate.getSkillId() != 1968))
 					effectedIter.remove();
 			}
 		}
 		effector.setCasting(null);
-		
+
 		// TODO: Enable non-targeted, non-point AOE skills to trigger. 
-		if(targetType == 0 && effectedList.size() == 0)
+		if (targetType == 0 && effectedList.size() == 0)
 		{
 			return false;
 		}
@@ -174,35 +171,35 @@ public class Skill
 	{
 		if (!canUseSkill())
 			return;
-		
+
 		changeMpConsumptionValue = 0;
-		
+
 		effector.getObserveController().notifySkilluseObservers(this);
-		
+
 		//start casting
 		effector.setCasting(this);
-		
+
 		checkSkillSetException();
-		
+
 		int skillDuration = skillTemplate.getDuration();
 		int currentStat = effector.getGameStats().getCurrentStat(StatEnum.BOOST_CASTING_TIME);
 		this.duration = skillDuration + Math.round(skillDuration * (100 - currentStat) / 100f);
 
 		int cooldown = skillTemplate.getCooldown();
-		if(cooldown != 0)
+		if (cooldown != 0)
 			effector.setSkillCoolDown(skillTemplate.getSkillId(), cooldown * 100 + this.duration + System.currentTimeMillis());
-		
-		if(duration < 0)
+
+		if (duration < 0)
 			duration = 0;
-		
-		if(skillTemplate.isActive() || skillTemplate.isToggle())
+
+		if (skillTemplate.isActive() || skillTemplate.isToggle())
 		{
 			startCast();
 		}
-		
+
 		effector.getObserveController().attach(conditionChangeListener);
-		
-		if(this.duration > 0)
+
+		if (this.duration > 0)
 		{
 			schedule(this.duration);
 		}
@@ -211,58 +208,46 @@ public class Skill
 			endCast();
 		}
 	}
-	
+
 	/**
 	 * Penalty success skill
 	 */
 	private void startPenaltySkill()
 	{
-		if(skillTemplate.getPenaltySkillId() == 0)
+		if (skillTemplate.getPenaltySkillId() == 0)
 			return;
-		
+
 		Skill skill = SkillEngine.getInstance().getSkill(effector, skillTemplate.getPenaltySkillId(), 1, firstTarget);
 		skill.useSkill();
 	}
-	
+
 	/**
 	 *  Start casting of skill
 	 */
 	private void startCast()
 	{
 		int targetObjId = firstTarget != null ? firstTarget.getObjectId() : 0;
-		
-		switch(targetType)
+
+		switch (targetType)
 		{
 			case 0: // PlayerObjectId as Target
-				PacketSendUtility.broadcastPacketAndReceive(effector,
-					new SM_CASTSPELL(
-						effector.getObjectId(),
-						skillTemplate.getSkillId(),
-						skillLevel,
-						targetType,
-						targetObjId,
-						this.duration));
+				PacketSendUtility.broadcastPacketAndReceive(effector, new SM_CASTSPELL(effector.getObjectId(), skillTemplate.getSkillId(), skillLevel,
+						targetType, targetObjId, this.duration));
 				break;
-				
+
 			case 1: // XYZ as Target
-				PacketSendUtility.broadcastPacketAndReceive(effector,
-					new SM_CASTSPELL(
-						effector.getObjectId(),
-						skillTemplate.getSkillId(),
-						skillLevel,
-						targetType,
-						x, y, z,
-						this.duration));
+				PacketSendUtility.broadcastPacketAndReceive(effector, new SM_CASTSPELL(effector.getObjectId(), skillTemplate.getSkillId(), skillLevel,
+						targetType, x, y, z, this.duration));
 				break;
 		}
 	}
-	
+
 	/**
 	 *  Apply effects and perform actions specified in skill template
 	 */
 	private void endCast()
 	{
-		if(!effector.isCasting())
+		if (!effector.isCasting())
 			return;
 
 		// Check if target is out of skill range
@@ -270,28 +255,28 @@ public class Skill
 		{
 			if (effector instanceof Player)
 			{
-				Player player = (Player)effector;
+				Player player = (Player) effector;
 				player.cancelCurrentSkill();
 				PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_ATTACK_TOO_FAR_FROM_TARGET());
 				return;
 			}
 		}
-		
+
 		//stop casting must be before preUsageCheck()
 		effector.setCasting(null);
-		
-		if(!preUsageCheck())
+
+		if (!preUsageCheck())
 			return;
 
 		/**
 		 * Create effects and precalculate result
 		 */
 		int spellStatus = 0;
-		
-		List<Effect> effects = new ArrayList<Effect>();		 
-		if(skillTemplate.getEffects() != null)
+
+		List<Effect> effects = new ArrayList<Effect>();
+		if (skillTemplate.getEffects() != null)
 		{
-			for(Creature effected : effectedList)
+			for (Creature effected : effectedList)
 			{
 				Effect effect = new Effect(effector, effected, skillTemplate, skillLevel, 0, itemTemplate);
 				effect.initialize();
@@ -299,7 +284,7 @@ public class Skill
 				effects.add(effect);
 			}
 		}
-		
+
 		// Check Chain Skill Result
 		int chainProb = skillTemplate.getChainSkillProb();
 		if (chainProb != 0)
@@ -309,35 +294,35 @@ public class Skill
 			else
 				this.chainSuccess = false;
 		}
-		
+
 		/**
 		 * If castspell - send SM_CASTSPELL_END packet
 		 */
-		if(skillTemplate.isActive() || skillTemplate.isToggle())
+		if (skillTemplate.isActive() || skillTemplate.isToggle())
 		{
 			sendCastspellEnd(spellStatus, effects);
 		}
-		
+
 		/**
 		 * Perform necessary actions (use mp,dp items etc)
 		 */
 		Actions skillActions = skillTemplate.getActions();
-		if(skillActions != null)
+		if (skillActions != null)
 		{
-			for(Action action : skillActions.getActions())
-			{	
+			for (Action action : skillActions.getActions())
+			{
 				action.act(this);
 			}
 		}
-		
+
 		/**
 		 * Apply effects to effected objects
 		 */
-		for(Effect effect : effects)
+		for (Effect effect : effects)
 		{
 			effect.applyEffect();
 		}
-		
+
 		/**
 		 * Use penalty skill (now 100% success)
 		 */
@@ -350,49 +335,34 @@ public class Skill
 	 */
 	private void sendCastspellEnd(int spellStatus, List<Effect> effects)
 	{
-		switch(targetType)
+		switch (targetType)
 		{
 			case 0: // PlayerObjectId as Target
-				PacketSendUtility.broadcastPacketAndReceive(effector,
-					new SM_CASTSPELL_END(
-						effector,
-						firstTarget, // Need all targets...
-						effects,
-						skillTemplate.getSkillId(),
-						skillLevel,
-						skillTemplate.getCooldown(),
-						chainSuccess,
-						spellStatus));
+				PacketSendUtility.broadcastPacketAndReceive(effector, new SM_CASTSPELL_END(effector, firstTarget, // Need all targets...
+						effects, skillTemplate.getSkillId(), skillLevel, skillTemplate.getCooldown(), chainSuccess, spellStatus));
 				break;
-				
+
 			case 1: // XYZ as Target
-				PacketSendUtility.broadcastPacketAndReceive(effector,
-					new SM_CASTSPELL_END(
-						effector,
-						firstTarget, // Need all targets...
-						effects,
-						skillTemplate.getSkillId(),
-						skillLevel,
-						skillTemplate.getCooldown(),
-						chainSuccess,
-						spellStatus, x, y, z));
+				PacketSendUtility.broadcastPacketAndReceive(effector, new SM_CASTSPELL_END(effector, firstTarget, // Need all targets...
+						effects, skillTemplate.getSkillId(), skillLevel, skillTemplate.getCooldown(), chainSuccess, spellStatus, x, y, z));
 				break;
 		}
 	}
+
 	/**
 	 *  Schedule actions/effects of skill (channeled skills)
 	 */
 	private void schedule(int delay)
 	{
-		ThreadPoolManager.getInstance().schedule(new Runnable() 
+		ThreadPoolManager.getInstance().schedule(new Runnable()
 		{
-			public void run() 
+			public void run()
 			{
 				endCast();
-			}   
+			}
 		}, delay);
 	}
-	
+
 	/**
 	 *  Check all conditions before starting cast
 	 */
@@ -401,7 +371,7 @@ public class Skill
 		Conditions skillConditions = skillTemplate.getStartconditions();
 		return checkConditions(skillConditions);
 	}
-	
+
 	/**
 	 *  Check all conditions before using skill
 	 */
@@ -410,14 +380,14 @@ public class Skill
 		Conditions skillConditions = skillTemplate.getUseconditions();
 		return checkConditions(skillConditions);
 	}
-	
+
 	private boolean checkConditions(Conditions conditions)
 	{
-		if(conditions != null)
+		if (conditions != null)
 		{
-			for(Condition condition : conditions.getConditions())
+			for (Condition condition : conditions.getConditions())
 			{
-				if(!condition.verify(this))
+				if (!condition.verify(this))
 				{
 					return false;
 				}
@@ -425,14 +395,14 @@ public class Skill
 		}
 		return true;
 	}
-	
+
 	private boolean setProperties(Properties properties)
 	{
-		if(properties != null)
+		if (properties != null)
 		{
-			for(Property property : properties.getProperties())
+			for (Property property : properties.getProperties())
 			{
-				if(!property.set(this))
+				if (!property.set(this))
 				{
 					return false;
 				}
@@ -446,14 +416,14 @@ public class Skill
 		int setNumber = skillTemplate.getSkillSetException();
 		if (effector instanceof Player)
 		{
-			Player player = (Player)effector;
+			Player player = (Player) effector;
 			if (setNumber != 0)
 				player.getEffectController().removeEffectBySetNumber(setNumber);
 			else
 				player.getEffectController().removeEffectWithSetNumberReserved();
 		}
 	}
-	
+
 	/**
 	 * @param value is the changeMpConsumptionValue to set
 	 */
@@ -461,7 +431,7 @@ public class Skill
 	{
 		changeMpConsumptionValue = value;
 	}
-	
+
 	/**
 	 * @return the changeMpConsumptionValue
 	 */
@@ -469,7 +439,7 @@ public class Skill
 	{
 		return changeMpConsumptionValue;
 	}
-	
+
 	/**
 	 * @return false if target is not in skill range anymore
 	 */
@@ -477,14 +447,14 @@ public class Skill
 	{
 		if (firstTargetRange == 0)
 			return true;
-		
+
 		if (effector == firstTarget)
 			return true;
-		if(!(MathUtil.isIn3dRange(effector, firstTarget, firstTargetRange + 4)))
+		if (!(MathUtil.isIn3dRange(effector, firstTarget, firstTargetRange + 4)))
 			return false;
 		return true;
 	}
-	
+
 	/**
 	 * @param value is the firstTargetRange value to set
 	 */
@@ -492,7 +462,7 @@ public class Skill
 	{
 		firstTargetRange = value;
 	}
-	
+
 	/**
 	 * @return the effectedList
 	 */
@@ -588,7 +558,7 @@ public class Skill
 	{
 		this.itemTemplate = itemTemplate;
 	}
-	
+
 	/**
 	 * @param targetType
 	 * @param x

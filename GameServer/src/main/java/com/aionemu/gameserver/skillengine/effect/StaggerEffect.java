@@ -45,27 +45,26 @@ public class StaggerEffect extends EffectTemplate
 	@Override
 	public void calculate(Effect effect)
 	{
-		if (calculateEffectResistRate(effect, StatEnum.STAGGER_RESISTANCE)) 
-		{ 
+		if (calculateEffectResistRate(effect, StatEnum.STAGGER_RESISTANCE))
+		{
 			effect.addSucessEffect(this);
 			effect.setSpellStatus(SpellStatus.STAGGER);
- 	    }
+		}
 	}
 
 	@Override
 	public void startEffect(Effect effect)
 	{
 		final Creature effected = effect.getEffected();
-		effected.cancelCurrentSkill(); 
+		effected.cancelCurrentSkill();
 		effect.getEffected().getEffectController().setAbnormal(EffectId.STAGGER.getEffectId());
 		PacketSendUtility.broadcastPacketAndReceive(effect.getEffected(), new SM_FORCED_MOVE(effect.getEffector(), effect.getEffected()));
 	}
-	
+
 	@Override
 	public void endEffect(Effect effect)
 	{
 		effect.getEffected().getEffectController().unsetAbnormal(EffectId.STAGGER.getEffectId());
 	}
-	
-	
+
 }

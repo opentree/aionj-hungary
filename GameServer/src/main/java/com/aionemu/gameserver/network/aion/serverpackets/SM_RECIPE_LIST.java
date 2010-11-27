@@ -27,23 +27,23 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_RECIPE_LIST extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private Integer[] recipeIds;
-	private int count;
-	
+	private Integer[]	recipeIds;
+	private int			count;
+
 	public SM_RECIPE_LIST(Set<Integer> recipeIds)
 	{
 		this.recipeIds = recipeIds.toArray(new Integer[recipeIds.size()]);
 		this.count = recipeIds.size();
 	}
-	
+
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeH(count);
-		for(int id : recipeIds)
+		for (int id : recipeIds)
 		{
 			writeD(id);
-			writeC( 0);
+			writeC(0);
 		}
 	}
 }

@@ -42,32 +42,32 @@ public class QuestVarCondition extends QuestCondition
 	/* (non-Javadoc)
 	 * @see com.aionemu.gameserver.questEngine.handlers.template.xmlQuest.condition.QuestCondition#doCheck(com.aionemu.gameserver.questEngine.model.QuestEnv)
 	 */
-    @Override
-    public boolean doCheck(QuestEnv env)
-    {
-            QuestState qs = env.getPlayer().getQuestStateList().getQuestState(env.getQuestId());
-            if (qs == null)
-            {
-                    return false;
-            }
-            int var = qs.getQuestVars().getVarById(varId);
-            switch (getOp())
-            {
-                    case EQUAL:
-                            return var == value;
-                    case GREATER:
-                            return var > value;
-                    case GREATER_EQUAL:
-                            return var >= value;
-                    case LESSER:
-                            return var < value;
-                    case LESSER_EQUAL:
-                            return var <= value;
-                    case NOT_EQUAL:
-                            return var != value;
-                    default:
-                            return false;
-            }
-    }
+	@Override
+	public boolean doCheck(QuestEnv env)
+	{
+		QuestState qs = env.getPlayer().getQuestStateList().getQuestState(env.getQuestId());
+		if (qs == null)
+		{
+			return false;
+		}
+		int var = qs.getQuestVars().getVarById(varId);
+		switch (getOp())
+		{
+			case EQUAL:
+				return var == value;
+			case GREATER:
+				return var > value;
+			case GREATER_EQUAL:
+				return var >= value;
+			case LESSER:
+				return var < value;
+			case LESSER_EQUAL:
+				return var <= value;
+			case NOT_EQUAL:
+				return var != value;
+			default:
+				return false;
+		}
+	}
 
 }

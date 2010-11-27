@@ -46,11 +46,11 @@ public class AnnouncementService
 	/**
 	 * Logger for this class.
 	 */
-	private static final Logger	log		= Logger.getLogger(AnnouncementService.class);
+	private static final Logger			log		= Logger.getLogger(AnnouncementService.class);
 
 	private Collection<Announcement>	announcements;
-	private List<Future<?>>		delays	= new ArrayList<Future<?>>();
-	
+	private List<Future<?>>				delays	= new ArrayList<Future<?>>();
+
 	private AnnouncementService()
 	{
 		this.load();
@@ -70,21 +70,21 @@ public class AnnouncementService
 		if (delays != null && delays.size() > 0)
 			for (Future<?> delay : delays)
 				delay.cancel(false);
-		
+
 		// Clear all announcements
 		announcements.clear();
-		
+
 		// And load again all announcements
 		load();
 	}
-	
+
 	/**
 	 * Load the announcements system
 	 */
 	private void load()
 	{
 		announcements = new FastSet<Announcement>(getDAO().getAnnouncements()).shared();
-		
+
 		for (final Announcement announce : announcements)
 		{
 			delays.add(ThreadPoolManager.getInstance().scheduleAtFixedRate(new Runnable()
@@ -92,36 +92,40 @@ public class AnnouncementService
 				@Override
 				public void run()
 				{
-					for(final Player player : World.getInstance().getAllPlayers())
+					for (final Player player : World.getInstance().getAllPlayers())
 					{
 						if (announce.getFaction().equalsIgnoreCase("ALL"))
 							if (announce.getChatType() == ChatType.SHOUT || announce.getChatType() == ChatType.GROUP_LEADER)
 								PacketSendUtility.sendPacket(player, new SM_MESSAGE(1, "Automatic Announce", announce.getAnnounce(), announce.getChatType()));
 							else
-								PacketSendUtility.sendPacket(player, new SM_MESSAGE(1, "Automatic Announce", "Automatic Announce: " + announce.getAnnounce(), announce.getChatType()));
+								PacketSendUtility.sendPacket(player, new SM_MESSAGE(1, "Automatic Announce", "Automatic Announce: " + announce.getAnnounce(),
+										announce.getChatType()));
 						else if (announce.getFactionEnum() == player.getCommonData().getRace())
 							if (announce.getChatType() == ChatType.SHOUT || announce.getChatType() == ChatType.GROUP_LEADER)
-								PacketSendUtility.sendPacket(player, new SM_MESSAGE(1, (announce.getFaction().equalsIgnoreCase("ELYOS") ? "Elyos" : "Asmodian") + " Automatic Announce", announce.getAnnounce(), announce.getChatType()));
+								PacketSendUtility.sendPacket(player, new SM_MESSAGE(1, (announce.getFaction().equalsIgnoreCase("ELYOS") ? "Elyos" : "Asmodian")
+										+ " Automatic Announce", announce.getAnnounce(), announce.getChatType()));
 							else
-								PacketSendUtility.sendPacket(player, new SM_MESSAGE(1, (announce.getFaction().equalsIgnoreCase("ELYOS") ? "Elyos" : "Asmodian") + " Automatic Announce", (announce.getFaction().equalsIgnoreCase("ELYOS") ? "Elyos" : "Asmodian") + " Automatic Announce: " + announce.getAnnounce(), announce.getChatType()));
+								PacketSendUtility.sendPacket(player, new SM_MESSAGE(1, (announce.getFaction().equalsIgnoreCase("ELYOS") ? "Elyos" : "Asmodian")
+										+ " Automatic Announce", (announce.getFaction().equalsIgnoreCase("ELYOS") ? "Elyos" : "Asmodian")
+										+ " Automatic Announce: " + announce.getAnnounce(), announce.getChatType()));
 					}
 				}
 			}, announce.getDelay() * 1000, announce.getDelay() * 1000));
 		}
-		
+
 		log.info("Loaded " + announcements.size() + " announcements");
 	}
-	
+
 	public void addAnnouncement(Announcement announce)
 	{
 		getDAO().addAnnouncement(announce);
 	}
-	
+
 	public boolean delAnnouncement(final int idAnnounce)
 	{
 		return getDAO().delAnnouncement(idAnnounce);
 	}
-	
+
 	public Set<Announcement> getAnnouncements()
 	{
 		return getDAO().getAnnouncements();
@@ -136,10 +140,10 @@ public class AnnouncementService
 	{
 		return DAOManager.getDAO(AnnouncementsDAO.class);
 	}
-	
+
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
-		protected static final AnnouncementService instance = new AnnouncementService();
+		protected static final AnnouncementService	instance	= new AnnouncementService();
 	}
 }

@@ -34,12 +34,13 @@ import com.aionemu.gameserver.world.World;
  */
 public class ChatService
 {
-	private static final Logger		log		= Logger.getLogger(ChatService.class);
+	private static final Logger			log		= Logger.getLogger(ChatService.class);
 
 	private static Map<Integer, Player>	players	= new HashMap<Integer, Player>();
 
-	private static byte[]					ip		= { 127, 0, 0, 1 };
-	private static int						port	= 10241;
+	private static byte[]				ip		=
+												{ 127, 0, 0, 1 };
+	private static int					port	= 10241;
 
 	/**
 	 * Send token to chat server
@@ -48,12 +49,13 @@ public class ChatService
 	 */
 	public static void onPlayerLogin(final Player player)
 	{
-		ThreadPoolManager.getInstance().schedule(new Runnable(){
+		ThreadPoolManager.getInstance().schedule(new Runnable()
+		{
 
 			@Override
 			public void run()
 			{
-				if(!isPlayerConnected(player))
+				if (!isPlayerConnected(player))
 				{
 					ChatServer.getInstance().sendPlayerLoginRequst(player);
 				}
@@ -95,13 +97,13 @@ public class ChatService
 	public static void playerAuthed(int playerId, byte[] token)
 	{
 		Player player = World.getInstance().findPlayer(playerId);
-		if(player != null)
+		if (player != null)
 		{
 			players.put(playerId, player);
 			PacketSendUtility.sendPacket(player, new SM_CHAT_INIT(token));
 		}
 	}
-	
+
 	/**
 	 * @return the ip
 	 */

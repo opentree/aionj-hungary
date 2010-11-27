@@ -27,10 +27,10 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_LEGION_EDIT extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int					type;
-	private Legion				legion;
-	private int					unixTime;
-	private String				announcement;
+	private int		type;
+	private Legion	legion;
+	private int		unixTime;
+	private String	announcement;
 
 	public SM_LEGION_EDIT(int type)
 	{
@@ -59,12 +59,12 @@ public class SM_LEGION_EDIT extends AbstractAionServerPacket<AionChannelHandler>
 	@Override
 	public void writeImpl(AionChannelHandler cHandler)
 	{
-        writeC( type);
-		switch(type)
+		writeC(type);
+		switch (type)
 		{
 			/** Change Legion Level **/
 			case 0x00:
-				writeC( legion.getLegionLevel());
+				writeC(legion.getLegionLevel());
 				break;
 			/** Change Legion Rank **/
 			case 0x01:
@@ -72,10 +72,10 @@ public class SM_LEGION_EDIT extends AbstractAionServerPacket<AionChannelHandler>
 				break;
 			/** Change Legion Permissions **/
 			case 0x02:
-				writeC( legion.getCenturionPermission1());
-				writeC( legion.getCenturionPermission2());
-				writeC( legion.getLegionarPermission1());
-				writeC( legion.getLegionarPermission2());
+				writeC(legion.getCenturionPermission1());
+				writeC(legion.getCenturionPermission2());
+				writeC(legion.getLegionarPermission1());
+				writeC(legion.getLegionarPermission2());
 				break;
 			/** Change Legion Contributions **/
 			case 0x03:

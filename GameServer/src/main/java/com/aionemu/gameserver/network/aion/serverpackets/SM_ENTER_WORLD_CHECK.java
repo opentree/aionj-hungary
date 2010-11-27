@@ -33,8 +33,8 @@ public class SM_ENTER_WORLD_CHECK extends AbstractAionServerPacket<AionChannelHa
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
-		writeC( 0x00);
-		writeC( 0x00);
-		writeC( 0x00);
+		writeC(0x00);
+		writeC(0x00);
+		writeC(0x00);
 	}
 }

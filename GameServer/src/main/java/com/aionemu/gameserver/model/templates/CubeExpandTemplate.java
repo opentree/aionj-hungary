@@ -30,32 +30,32 @@ public class CubeExpandTemplate
 	{
 		return Id;
 	}
-	
+
 	/**
 	 * Returns true if list contains level
 	 * @return true or false
 	 */
 	public boolean contains(int level)
 	{
-		for(Expand expand : cubeExpands)
+		for (Expand expand : cubeExpands)
 		{
-			if(expand.getLevel() == level)
+			if (expand.getLevel() == level)
 				return true;
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Returns true if list contains level
 	 * @return expand
 	 */
 	public Expand get(int level)
 	{
-		for(Expand expand : cubeExpands)
+		for (Expand expand : cubeExpands)
 		{
-			if(expand.getLevel() == level)
+			if (expand.getLevel() == level)
 				return expand;
 		}
 		return null;
-	}	
+	}
 }

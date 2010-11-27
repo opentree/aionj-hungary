@@ -41,7 +41,8 @@ public class ReviveController
 {
 
 	private Player	player;
-	private int rebirthResurrectPercent;
+	private int		rebirthResurrectPercent;
+
 	public ReviveController(Player player)
 	{
 		this.player = player;
@@ -58,11 +59,11 @@ public class ReviveController
 
 		PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.REVIVE);
 		PacketSendUtility.sendPacket(player, new SM_STATS_INFO(player));
-		
-		if(player.isInPrison())
+
+		if (player.isInPrison())
 			TeleportService.teleportToPrison(player);
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -78,8 +79,8 @@ public class ReviveController
 
 		PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.REVIVE);
 		PacketSendUtility.sendPacket(player, new SM_STATS_INFO(player));
-		
-		if(player.isInPrison())
+
+		if (player.isInPrison())
 			TeleportService.teleportToPrison(player);
 	}
 
@@ -95,7 +96,7 @@ public class ReviveController
 		PacketSendUtility.sendPacket(player, new SM_STATS_INFO(player));
 		PacketSendUtility.sendPacket(player, new SM_PLAYER_INFO(player, false));
 
-		if(player.isInPrison())
+		if (player.isInPrison())
 			TeleportService.teleportToPrison(player);
 		else
 			TeleportService.moveToBindLocation(player, true);
@@ -104,14 +105,14 @@ public class ReviveController
 	public void kiskRevive()
 	{
 		Kisk kisk = player.getKisk();
-		
+
 		revive(25, 25);
 		PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.REVIVE);
 
 		PacketSendUtility.sendPacket(player, new SM_STATS_INFO(player));
 		PacketSendUtility.sendPacket(player, new SM_PLAYER_INFO(player, false));
-		
-		if(player.isInPrison())
+
+		if (player.isInPrison())
 			TeleportService.teleportToPrison(player);
 		else
 		{
@@ -119,14 +120,14 @@ public class ReviveController
 			kisk.resurrectionUsed(player);
 		}
 	}
-	
+
 	private void revive(int hpPercent, int mpPercent)
 	{
 		player.getLifeStats().setCurrentHpPercent(hpPercent);
 		player.getLifeStats().setCurrentMpPercent(mpPercent);
 		player.getCommonData().setDp(0);
 		player.getLifeStats().triggerRestoreOnRevive();
-		
+
 		player.onRespawn();
 	}
 
@@ -136,7 +137,7 @@ public class ReviveController
 	public void itemSelfRevive()
 	{
 		Item item = getSelfRezStone(player);
-		if(item == null)
+		if (item == null)
 		{
 			// Fake Packet Spoof? Send SM_DIE again?
 			PacketSendUtility.sendMessage(player, "Error: Couldn't find self-rez item.");
@@ -146,8 +147,8 @@ public class ReviveController
 		// Add Cooldown and use item
 		int useDelay = item.getItemTemplate().getDelayTime();
 		player.addItemCoolDown(item.getItemTemplate().getDelayId(), System.currentTimeMillis() + useDelay, useDelay / 1000);
-		PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(),
-			item.getObjectId(), item.getItemTemplate().getTemplateId()), true);
+		PacketSendUtility.broadcastPacket(player,
+				new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), item.getObjectId(), item.getItemTemplate().getTemplateId()), true);
 		ItemService.decreaseItemCount(player, item, 1);
 
 		// Tombstone Self-Rez retail verified 15%
@@ -156,8 +157,8 @@ public class ReviveController
 
 		PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.REVIVE);
 		PacketSendUtility.sendPacket(player, new SM_STATS_INFO(player));
-		
-		if(player.isInPrison())
+
+		if (player.isInPrison())
 			TeleportService.teleportToPrison(player);
 	}
 
@@ -179,7 +180,7 @@ public class ReviveController
 			item = tryStone(161000001);
 		return item;
 	}
-	
+
 	/**
 	 * @param stoneItemId
 	 * @return stoneItem or null
@@ -211,12 +212,13 @@ public class ReviveController
 	{
 		//Store the effect info.
 		List<Effect> effects = player.getEffectController().getAbnormalEffects();
-		for(Effect effect : effects) {
-			for(EffectTemplate template : effect.getEffectTemplates())
+		for (Effect effect : effects)
+		{
+			for (EffectTemplate template : effect.getEffectTemplates())
 			{
 				if (template.getEffectid() == 160)
 				{
-					RebirthEffect rebirthEffect = (RebirthEffect)template;
+					RebirthEffect rebirthEffect = (RebirthEffect) template;
 					rebirthResurrectPercent = rebirthEffect.getResurrectPercent();
 					return true;
 				}

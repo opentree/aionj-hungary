@@ -30,18 +30,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class PlayerStatsTemplate extends StatsTemplate
 {
 	@XmlAttribute(name = "power")
-	private int power;
+	private int	power;
 	@XmlAttribute(name = "health")
-	private int health;
+	private int	health;
 	@XmlAttribute(name = "agility")
-	private int agility;
+	private int	agility;
 	@XmlAttribute(name = "accuracy")
-	private int accuracy;
+	private int	accuracy;
 	@XmlAttribute(name = "knowledge")
-	private int knowledge;
+	private int	knowledge;
 	@XmlAttribute(name = "will")
-	private int will;
-	
+	private int	will;
+
 	public int getPower()
 	{
 		return power;

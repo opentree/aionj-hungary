@@ -40,13 +40,13 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class EffectController
 {
-	private Creature owner;
+	private Creature				owner;
 
-	protected Map<String, Effect> passiveEffectMap = new FastMap<String, Effect>().shared();
-	protected Map<String, Effect> noshowEffects = new FastMap<String, Effect>().shared();
-	protected Map<String, Effect> abnormalEffectMap = new FastMap<String, Effect>().shared();
+	protected Map<String, Effect>	passiveEffectMap	= new FastMap<String, Effect>().shared();
+	protected Map<String, Effect>	noshowEffects		= new FastMap<String, Effect>().shared();
+	protected Map<String, Effect>	abnormalEffectMap	= new FastMap<String, Effect>().shared();
 
-	protected int abnormals;
+	protected int					abnormals;
 
 	public EffectController(Creature owner)
 	{
@@ -70,20 +70,19 @@ public class EffectController
 		Map<String, Effect> mapToUpdate = getMapForEffect(effect);
 
 		Effect existingEffect = mapToUpdate.get(effect.getStack());
-		if(existingEffect != null)
+		if (existingEffect != null)
 		{
 			// check stack level
-			if(existingEffect.getSkillStackLvl() > effect.getSkillStackLvl())
+			if (existingEffect.getSkillStackLvl() > effect.getSkillStackLvl())
 				return;
 			// check skill level (when stack level same)
-			if(existingEffect.getSkillStackLvl() == effect.getSkillStackLvl()
-				&& existingEffect.getSkillLevel() > effect.getSkillLevel())
+			if (existingEffect.getSkillStackLvl() == effect.getSkillStackLvl() && existingEffect.getSkillLevel() > effect.getSkillLevel())
 				return;
 
 			existingEffect.endEffect();
 		}
 
-		if(effect.isToggle() && mapToUpdate.size() >= 3)
+		if (effect.isToggle() && mapToUpdate.size() >= 3)
 		{
 			Iterator<Effect> iter = mapToUpdate.values().iterator();
 			Effect nextEffect = iter.next();
@@ -94,7 +93,7 @@ public class EffectController
 		mapToUpdate.put(effect.getStack(), effect);
 		effect.startEffect(false);
 
-		if(!effect.isPassive())
+		if (!effect.isPassive())
 		{
 			broadCastEffects();
 		}
@@ -107,10 +106,10 @@ public class EffectController
 	 */
 	private Map<String, Effect> getMapForEffect(Effect effect)
 	{
-		if(effect.isPassive())
+		if (effect.isPassive())
 			return passiveEffectMap;
 
-		if(effect.isToggle())
+		if (effect.isToggle())
 			return noshowEffects;
 
 		return abnormalEffectMap;
@@ -137,8 +136,7 @@ public class EffectController
 	public void broadCastEffectsImp()
 	{
 		List<Effect> effects = getAbnormalEffects();
-		PacketSendUtility.broadcastPacket(getOwner(),
-			new SM_ABNORMAL_EFFECT(getOwner().getObjectId(), abnormals, effects));
+		PacketSendUtility.broadcastPacket(getOwner(), new SM_ABNORMAL_EFFECT(getOwner().getObjectId(), abnormals, effects));
 	}
 
 	/**
@@ -149,8 +147,7 @@ public class EffectController
 	public void sendEffectIconsTo(Player player)
 	{
 		List<Effect> effects = getAbnormalEffects();
-		PacketSendUtility.sendPacket(player, new SM_ABNORMAL_EFFECT(getOwner().getObjectId(),
-			abnormals, effects));
+		PacketSendUtility.sendPacket(player, new SM_ABNORMAL_EFFECT(getOwner().getObjectId(), abnormals, effects));
 	}
 
 	/**
@@ -170,14 +167,16 @@ public class EffectController
 	 */
 	public void removeEffect(int skillid)
 	{
-		for(Effect effect : abnormalEffectMap.values()){
-			if(effect.getSkillId()==skillid){
+		for (Effect effect : abnormalEffectMap.values())
+		{
+			if (effect.getSkillId() == skillid)
+			{
 				effect.endEffect();
 				abnormalEffectMap.remove(effect.getStack());
 			}
 		}
 	}
-	
+
 	/**
 	 * Removes the effect by SkillSetException Number.
 	 * 
@@ -185,32 +184,32 @@ public class EffectController
 	 */
 	public void removeEffectBySetNumber(final int setNumber)
 	{
-		for(Effect effect : abnormalEffectMap.values())
+		for (Effect effect : abnormalEffectMap.values())
 		{
-			if(effect.getSkillSetException() == setNumber)
+			if (effect.getSkillSetException() == setNumber)
 			{
 				effect.endEffect();
 				abnormalEffectMap.remove(effect.getStack());
 			}
 		}
-		for(Effect effect : passiveEffectMap.values())
+		for (Effect effect : passiveEffectMap.values())
 		{
-			if(effect.getSkillSetException() == setNumber)
+			if (effect.getSkillSetException() == setNumber)
 			{
 				effect.endEffect();
 				passiveEffectMap.remove(effect.getStack());
 			}
 		}
-		for(Effect effect : noshowEffects.values())
+		for (Effect effect : noshowEffects.values())
 		{
-			if(effect.getSkillSetException() == setNumber)
+			if (effect.getSkillSetException() == setNumber)
 			{
 				effect.endEffect();
 				noshowEffects.remove(effect.getStack());
 			}
 		}
 	}
-	
+
 	/**
 	 * Removes the effect with SkillSetException Reserved Number (aka 1).
 	 * 
@@ -226,14 +225,16 @@ public class EffectController
 	 */
 	public void removeEffectByEffectId(int effectId)
 	{
-		for(Effect effect : abnormalEffectMap.values()){
-			if(effect.containsEffectId(effectId)){
+		for (Effect effect : abnormalEffectMap.values())
+		{
+			if (effect.containsEffectId(effectId))
+			{
 				effect.endEffect();
 				abnormalEffectMap.remove(effect.getStack());
 			}
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param targetSlot
@@ -241,12 +242,12 @@ public class EffectController
 	 */
 	public void removeEffectByTargetSlot(SkillTargetSlot targetSlot, int count)
 	{
-		for(Effect effect : abnormalEffectMap.values())
+		for (Effect effect : abnormalEffectMap.values())
 		{
-			if(count == 0)
+			if (count == 0)
 				break;
-			
-			if(effect.getTargetSlot() == targetSlot.ordinal())
+
+			if (effect.getTargetSlot() == targetSlot.ordinal())
 			{
 				effect.endEffect();
 				abnormalEffectMap.remove(effect.getStack());
@@ -261,12 +262,12 @@ public class EffectController
 	 */
 	public void removeEffectBySkillType(SkillType skillType, int value)
 	{
-		for(Effect effect : abnormalEffectMap.values())
+		for (Effect effect : abnormalEffectMap.values())
 		{
-			if(value == 0)
+			if (value == 0)
 				break;
 
-			if(effect.getSkillType() == skillType)
+			if (effect.getSkillType() == skillType)
 			{
 				effect.endEffect();
 				abnormalEffectMap.remove(effect.getStack());
@@ -274,7 +275,7 @@ public class EffectController
 			}
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param skillType
@@ -283,12 +284,12 @@ public class EffectController
 	 */
 	public void removeEffectBySkillTypeAndTargetSlot(SkillType skillType, SkillTargetSlot targetSlot, int value)
 	{
-		for(Effect effect : abnormalEffectMap.values())
+		for (Effect effect : abnormalEffectMap.values())
 		{
-			if(value == 0)
+			if (value == 0)
 				break;
 
-			if(effect.getSkillType() == skillType && effect.getTargetSlot() == targetSlot.ordinal())
+			if (effect.getSkillType() == skillType && effect.getTargetSlot() == targetSlot.ordinal())
 			{
 				effect.endEffect();
 				abnormalEffectMap.remove(effect.getStack());
@@ -304,8 +305,10 @@ public class EffectController
 	 */
 	public void removePassiveEffect(int skillid)
 	{
-		for(Effect effect : passiveEffectMap.values()){
-			if(effect.getSkillId()==skillid){
+		for (Effect effect : passiveEffectMap.values())
+		{
+			if (effect.getSkillId() == skillid)
+			{
 				effect.endEffect();
 				passiveEffectMap.remove(effect.getStack());
 			}
@@ -318,8 +321,10 @@ public class EffectController
 	 */
 	public void removeNoshowEffect(int skillid)
 	{
-		for(Effect effect : noshowEffects.values()){
-			if(effect.getSkillId()==skillid){
+		for (Effect effect : noshowEffects.values())
+		{
+			if (effect.getSkillId() == skillid)
+			{
 				effect.endEffect();
 				noshowEffects.remove(effect.getStack());
 			}
@@ -332,25 +337,28 @@ public class EffectController
 	 */
 	public void removeAbnormalEffectsByTargetSlot(SkillTargetSlot targetSlot)
 	{
-		for(Effect effect : abnormalEffectMap.values()){
-			if(effect.getTargetSlot() == targetSlot.ordinal()){
+		for (Effect effect : abnormalEffectMap.values())
+		{
+			if (effect.getTargetSlot() == targetSlot.ordinal())
+			{
 				effect.endEffect();
 				abnormalEffectMap.remove(effect.getStack());
 			}
 		}
 	}
+
 	/**
 	 * Removes all effects from controllers and ends them appropriately
 	 * Passive effect will not be removed
 	 */
 	public void removeAllEffects()
 	{
-		for(Effect effect : abnormalEffectMap.values())
+		for (Effect effect : abnormalEffectMap.values())
 		{
 			effect.endEffect();
 		}
 		abnormalEffectMap.clear();
-		for(Effect effect : noshowEffects.values())
+		for (Effect effect : noshowEffects.values())
 		{
 			effect.endEffect();
 		}
@@ -366,8 +374,7 @@ public class EffectController
 	{
 		List<Effect> effects = getAbnormalEffects();
 
-		PacketSendUtility.sendPacket((Player) owner,
-			new SM_ABNORMAL_STATE(effects, abnormals));
+		PacketSendUtility.sendPacket((Player) owner, new SM_ABNORMAL_STATE(effects, abnormals));
 	}
 
 	/**
@@ -377,10 +384,10 @@ public class EffectController
 	{
 		List<Effect> effects = new ArrayList<Effect>();
 		Iterator<Effect> iterator = iterator();
-		while(iterator.hasNext())
+		while (iterator.hasNext())
 		{
 			Effect effect = iterator.next();
-			if(effect != null)
+			if (effect != null)
 				effects.add(effect);
 		}
 		return effects;

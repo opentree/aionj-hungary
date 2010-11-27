@@ -28,9 +28,10 @@ public class WorldMapInstance3D extends WorldMapInstance
 	/**
 	 * Logger for this class.
 	 */
-	private static final Logger				log			= Logger.getLogger(WorldMapInstance3D.class);
+	private static final Logger	log	= Logger.getLogger(WorldMapInstance3D.class);
 
 	private MapRegion[][][]		regions;
+
 	/**
 	 * @param parent
 	 * @param instanceId
@@ -42,35 +43,35 @@ public class WorldMapInstance3D extends WorldMapInstance
 
 	protected void initMapRegions()
 	{
-		regions = new MapRegion[getParent().getWorldSize()/regionSize+1][getParent().getWorldSize()/regionSize+1][5000/regionSize+1];
-		int size = getParent().getWorldSize()/regionSize;
-		int zSize = 5000/regionSize; 
-		
-		for (int x=0; x <= size ; x++)
+		regions = new MapRegion[getParent().getWorldSize() / regionSize + 1][getParent().getWorldSize() / regionSize + 1][5000 / regionSize + 1];
+		int size = getParent().getWorldSize() / regionSize;
+		int zSize = 5000 / regionSize;
+
+		for (int x = 0; x <= size; x++)
 		{
-			for (int y=0; y <= size ; y++)
+			for (int y = 0; y <= size; y++)
 			{
-				for (int z=0; z <= zSize ; z++)
+				for (int z = 0; z <= zSize; z++)
 				{
 					regions[x][y][z] = new MapRegion(this, true);
 				}
 			}
 		}
-		
-		for (int x=0; x <= size ; x++)
+
+		for (int x = 0; x <= size; x++)
 		{
-			for (int y=0; y <= size ; y++)
+			for (int y = 0; y <= size; y++)
 			{
-				for (int z=0; z <= zSize ; z++)
+				for (int z = 0; z <= zSize; z++)
 				{
 					MapRegion mapRegion = regions[x][y][z];
-					for(int x2 = x - 1; x2 <= x + 1; x2++)
+					for (int x2 = x - 1; x2 <= x + 1; x2++)
 					{
-						for(int y2 = y - 1; y2 <= y + 1; y2++)
+						for (int y2 = y - 1; y2 <= y + 1; y2++)
 						{
-							for(int z2 = z - 1; z2 <= z + 1; z2++)
+							for (int z2 = z - 1; z2 <= z + 1; z2++)
 							{
-								if((x2 == x && y2 == y && z2 == z) || x2 == -1 || y2 == -1 || z2 == -1)
+								if ((x2 == x && y2 == y && z2 == z) || x2 == -1 || y2 == -1 || z2 == -1)
 									continue;
 								try
 								{
@@ -105,16 +106,16 @@ public class WorldMapInstance3D extends WorldMapInstance
 		MapRegion region = null;
 		try
 		{
-			region = regions[(int)x/regionSize][(int)y/regionSize][((int)z+offset)/regionSize];
+			region = regions[(int) x / regionSize][(int) y / regionSize][((int) z + offset) / regionSize];
 		}
 		catch (ArrayIndexOutOfBoundsException e)
 		{
-			log.warn("MAP REGION: Cord out of world!!! x: "+x+" y: "+y+" z: "+z);
+			log.warn("MAP REGION: Cord out of world!!! x: " + x + " y: " + y + " z: " + z);
 			return null;
 		}
-		if(region == null)
+		if (region == null)
 		{
-			log.warn("MAP REGION: Not found!!! x: "+x+" y: "+y+" z: "+z);
+			log.warn("MAP REGION: Not found!!! x: " + x + " y: " + y + " z: " + z);
 		}
 		return region;
 	}

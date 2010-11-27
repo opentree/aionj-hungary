@@ -58,21 +58,21 @@ import com.aionemu.gameserver.world.World;
  */
 public abstract class Creature extends StaticNpc
 {
-	private static final Logger log = Logger.getLogger(Creature.class);
+	private static final Logger						log			= Logger.getLogger(Creature.class);
 
-	private CreatureLifeStats<? extends Creature> lifeStats;
-	private CreatureGameStats<? extends Creature> gameStats;
+	private CreatureLifeStats<? extends Creature>	lifeStats;
+	private CreatureGameStats<? extends Creature>	gameStats;
 
-	private EffectController effectController;
-	
-	private int seeState = CreatureSeeState.NORMAL.getId();
-	
-	private Skill castingSkill;
-	private Map<Integer, Long> skillCoolDowns;
-	private int transformedModelId;
-	private ObserveController 	observeController;
+	private EffectController						effectController;
 
-	private AggroList aggroList;
+	private int										seeState	= CreatureSeeState.NORMAL.getId();
+
+	private Skill									castingSkill;
+	private Map<Integer, Long>						skillCoolDowns;
+	private int										transformedModelId;
+	private ObserveController						observeController;
+
+	private AggroList								aggroList;
 
 	/**
 	 * 
@@ -86,7 +86,7 @@ public abstract class Creature extends StaticNpc
 	{
 		super(objId, spawnTemplate);
 		initializeAi();
-		
+
 		this.aggroList = new AggroList(this);
 	}
 
@@ -95,7 +95,7 @@ public abstract class Creature extends StaticNpc
 	 */
 	public CreatureLifeStats<? extends Creature> getLifeStats()
 	{
-		return  lifeStats;
+		return lifeStats;
 	}
 
 	/**
@@ -141,7 +141,7 @@ public abstract class Creature extends StaticNpc
 	{
 		this.effectController = effectController;
 	}
-	
+
 	/**
 	 *  Is creature casting some skill
 	 *  
@@ -151,7 +151,7 @@ public abstract class Creature extends StaticNpc
 	{
 		return castingSkill != null;
 	}
-	
+
 	/**
 	 *  Set current casting skill or null when skill ends
 	 *  
@@ -161,7 +161,7 @@ public abstract class Creature extends StaticNpc
 	{
 		this.castingSkill = castingSkill;
 	}
-	
+
 	/**
 	 *  Current casting skill id
 	 *  
@@ -171,7 +171,7 @@ public abstract class Creature extends StaticNpc
 	{
 		return castingSkill != null ? castingSkill.getSkillTemplate().getSkillId() : 0;
 	}
-	
+
 	/**
 	 *  Current casting skill
 	 *  
@@ -181,7 +181,7 @@ public abstract class Creature extends StaticNpc
 	{
 		return castingSkill;
 	}
-	
+
 	/**
 	 * All abnormal effects are checked that disable movements
 	 * 
@@ -191,7 +191,7 @@ public abstract class Creature extends StaticNpc
 	{
 		return !(getEffectController().isAbnormalState(EffectId.CANT_MOVE_STATE) || !isSpawned());
 	}
-	
+
 	/**
 	 * All abnormal effects are checked that disable attack
 	 * @return
@@ -226,7 +226,7 @@ public abstract class Creature extends StaticNpc
 	{
 		int isSeeState = this.seeState & seeState.getId();
 
-		if(isSeeState == seeState.getId())
+		if (isSeeState == seeState.getId())
 			return true;
 
 		return false;
@@ -247,7 +247,7 @@ public abstract class Creature extends StaticNpc
 	{
 		this.transformedModelId = transformedModelId;
 	}
-	
+
 	/**
 	 * @return the aggroList
 	 */
@@ -255,11 +255,11 @@ public abstract class Creature extends StaticNpc
 	{
 		return aggroList;
 	}
-	
+
 	/**
 	 * PacketBroadcasterMask
 	 */
-	private volatile byte packetBroadcastMask;
+	private volatile byte	packetBroadcastMask;
 
 	/**
 	 * This is adding broadcast to player.
@@ -269,10 +269,10 @@ public abstract class Creature extends StaticNpc
 		packetBroadcastMask |= mode.mask();
 
 		PacketBroadcaster.getInstance().add(this);
-		
+
 		// Debug
-		if(log.isDebugEnabled())
-			log.debug("PacketBroadcaster: Packet " + mode.name() + " added to player " + ((Player)this).getName());
+		if (log.isDebugEnabled())
+			log.debug("PacketBroadcaster: Packet " + mode.name() + " added to player " + ((Player) this).getName());
 	}
 
 	/**
@@ -281,10 +281,10 @@ public abstract class Creature extends StaticNpc
 	public final void removePacketBroadcastMask(BroadcastMode mode)
 	{
 		packetBroadcastMask &= ~mode.mask();
-		
+
 		// Debug
-		if(log.isDebugEnabled())
-			log.debug("PacketBroadcaster: Packet " + mode.name() + " removed from player " + ((Player)this).getName());
+		if (log.isDebugEnabled())
+			log.debug("PacketBroadcaster: Packet " + mode.name() + " removed from player " + ((Player) this).getName());
 	}
 
 	/**
@@ -304,7 +304,7 @@ public abstract class Creature extends StaticNpc
 			observeController = new ObserveController();
 		return observeController;
 	}
-	
+
 	/**
 	 * 
 	 * @param visibleObject
@@ -312,13 +312,13 @@ public abstract class Creature extends StaticNpc
 	 */
 	public boolean isEnemy(VisibleObject visibleObject)
 	{
-		if(visibleObject instanceof Npc)
+		if (visibleObject instanceof Npc)
 			return isEnemyNpc((Npc) visibleObject);
-		else if(visibleObject instanceof Player)
+		else if (visibleObject instanceof Player)
 			return isEnemyPlayer((Player) visibleObject);
-		else if(visibleObject instanceof Summon)
+		else if (visibleObject instanceof Summon)
 			return isEnemySummon((Summon) visibleObject);
-		
+
 		return false;
 	}
 
@@ -348,12 +348,12 @@ public abstract class Creature extends StaticNpc
 	{
 		return false;
 	}
-	
+
 	public TribeClass getTribe()
 	{
 		return TribeClass.GENERAL;
 	}
-	
+
 	/**
 	 * 
 	 * @param creature
@@ -363,7 +363,7 @@ public abstract class Creature extends StaticNpc
 	{
 		return false;
 	}
-	
+
 	/**
 	 * 
 	 * @param npc
@@ -373,7 +373,7 @@ public abstract class Creature extends StaticNpc
 	{
 		return false;
 	}
-	
+
 	/**
 	 * 
 	 * @param npc
@@ -383,12 +383,12 @@ public abstract class Creature extends StaticNpc
 	{
 		return false;
 	}
-	
-	
+
 	public boolean isSupportFrom(Npc npc)
 	{
 		return false;
 	}
+
 	/**
 	 * 
 	 * @param player
@@ -398,7 +398,7 @@ public abstract class Creature extends StaticNpc
 	{
 		return false;
 	}
-	
+
 	/**
 	 * 
 	 * @param summon
@@ -408,6 +408,7 @@ public abstract class Creature extends StaticNpc
 	{
 		return isAggroFrom(summon.getMaster());
 	}
+
 	/**
 	 * 
 	 * @param visibleObject
@@ -415,14 +416,14 @@ public abstract class Creature extends StaticNpc
 	 */
 	public boolean canSee(VisibleObject visibleObject)
 	{
-		if(visibleObject instanceof Npc)
+		if (visibleObject instanceof Npc)
 			return canSeeNpc((Npc) visibleObject);
-		else if(visibleObject instanceof Player)
+		else if (visibleObject instanceof Player)
 			return canSeePlayer((Player) visibleObject);
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * @param visibleObject
 	 * @return
@@ -440,7 +441,7 @@ public abstract class Creature extends StaticNpc
 	{
 		return true;
 	}
-	
+
 	/**
 	 * For summons it will return summon object and for <br>
 	 * servants - player object.<br>
@@ -453,7 +454,7 @@ public abstract class Creature extends StaticNpc
 	{
 		return this;
 	}
-	
+
 	/**
 	 * 
 	 * @param skillId
@@ -461,23 +462,22 @@ public abstract class Creature extends StaticNpc
 	 */
 	public boolean isSkillDisabled(int skillId)
 	{
-		if(skillCoolDowns == null)
+		if (skillCoolDowns == null)
 			return false;
-		
+
 		Long coolDown = skillCoolDowns.get(skillId);
-		if(coolDown == null)
+		if (coolDown == null)
 			return false;
-		
-		
+
 		if (coolDown < System.currentTimeMillis())
 		{
 			skillCoolDowns.remove(skillId);
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * 
 	 * @param skillId
@@ -485,12 +485,12 @@ public abstract class Creature extends StaticNpc
 	 */
 	public long getSkillCoolDown(int skillId)
 	{
-		if(skillCoolDowns == null || !skillCoolDowns.containsKey(skillId))
+		if (skillCoolDowns == null || !skillCoolDowns.containsKey(skillId))
 			return 0;
-		
+
 		return skillCoolDowns.get(skillId);
 	}
-	
+
 	/**
 	 * 
 	 * @param skillId
@@ -498,9 +498,9 @@ public abstract class Creature extends StaticNpc
 	 */
 	public void setSkillCoolDown(int skillId, long time)
 	{
-		if(skillCoolDowns == null)
+		if (skillCoolDowns == null)
 			skillCoolDowns = new FastMap<Integer, Long>().shared();
-		
+
 		skillCoolDowns.put(skillId, time);
 	}
 
@@ -511,25 +511,25 @@ public abstract class Creature extends StaticNpc
 	{
 		return skillCoolDowns;
 	}
-	
+
 	/**
 	 * 
 	 * @param skillId
 	 */
 	public void removeSkillCoolDown(int skillId)
 	{
-		if(skillCoolDowns == null)
+		if (skillCoolDowns == null)
 			return;
 		skillCoolDowns.remove(skillId);
 	}
-	
+
 	@Override
 	public void delete()
 	{
 		cancelAllTasks();
 		super.delete();
 	}
-	
+
 	/**
 	 * Perform tasks on Creature death
 	 */
@@ -539,20 +539,20 @@ public abstract class Creature extends StaticNpc
 		this.setCasting(null);
 		this.getEffectController().removeAllEffects();
 	}
-	
+
 	/**
 	 * Perform tasks when Creature was attacked //TODO may be pass only Skill object - but need to add properties in it
 	 */
 	public void onAttack(Creature creature, int skillId, TYPE type, int damage)
 	{
 		Skill skill = getCastingSkill();
-		if (skill != null && skill.getSkillTemplate().getCancelRate()>0)
+		if (skill != null && skill.getSkillTemplate().getCancelRate() > 0)
 		{
 			int cancelRate = skill.getSkillTemplate().getCancelRate();
-			int conc = getGameStats().getCurrentStat(StatEnum.CONCENTRATION)/10;
+			int conc = getGameStats().getCurrentStat(StatEnum.CONCENTRATION) / 10;
 			float maxHp = getGameStats().getCurrentStat(StatEnum.MAXHP);
-			float cancel = (cancelRate - conc)+((damage)/maxHp*50);
-			if(Rnd.get(100) < cancel)
+			float cancel = (cancelRate - conc) + ((damage) / maxHp * 50);
+			if (Rnd.get(100) < cancel)
 				cancelCurrentSkill();
 		}
 		getObserveController().notifyAttackedObservers(creature);
@@ -566,21 +566,21 @@ public abstract class Creature extends StaticNpc
 	{
 		this.onAttack(creature, 0, TYPE.REGULAR, damage);
 	}
-	
+
 	/** 
- 	* Cancel current skill and remove cooldown 
- 	*/ 
- 	public void cancelCurrentSkill() 
- 	{ 
-		Skill castingSkill = getCastingSkill(); 
-		if(castingSkill != null) 
-		{ 
-			removeSkillCoolDown(castingSkill.getSkillTemplate().getSkillId()); 
-			setCasting(null); 
-			PacketSendUtility.broadcastPacketAndReceive(this, new SM_SKILL_CANCEL(this, castingSkill.getSkillTemplate().getSkillId())); 
-		}        
- 	}
- 	
+	* Cancel current skill and remove cooldown 
+	*/
+	public void cancelCurrentSkill()
+	{
+		Skill castingSkill = getCastingSkill();
+		if (castingSkill != null)
+		{
+			removeSkillCoolDown(castingSkill.getSkillTemplate().getSkillId());
+			setCasting(null);
+			PacketSendUtility.broadcastPacketAndReceive(this, new SM_SKILL_CANCEL(this, castingSkill.getSkillTemplate().getSkillId()));
+		}
+	}
+
 	/**
 	 * 
 	 * @param target
@@ -589,8 +589,7 @@ public abstract class Creature extends StaticNpc
 	{
 		getObserveController().notifyAttackObservers(target);
 	}
-	
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -598,7 +597,7 @@ public abstract class Creature extends StaticNpc
 	public void notSee(VisibleObject object, boolean isOutOfRange)
 	{
 		super.notSee(object, isOutOfRange);
-		if(object == getTarget())
+		if (object == getTarget())
 		{
 			setTarget(null);
 			PacketSendUtility.broadcastPacket(this, new SM_LOOKATOBJECT(this));
@@ -618,7 +617,7 @@ public abstract class Creature extends StaticNpc
 	 */
 	public void onMove()
 	{
-       
+
 	}
 
 	/**
@@ -646,7 +645,7 @@ public abstract class Creature extends StaticNpc
 	 */
 	public void onRestore(HealType hopType, int value)
 	{
-		switch(hopType)
+		switch (hopType)
 		{
 			case HP:
 				getLifeStats().increaseHp(TYPE.HP, value);
@@ -671,12 +670,11 @@ public abstract class Creature extends StaticNpc
 	/**
 	    * Stops movements
 	    */
-	   public void stopMoving()
-	   {
-	      World.getInstance().updatePosition(this, getX(), getY(), getZ(), getHeading());
-	        PacketSendUtility.broadcastPacket(this, new SM_MOVE(getObjectId(), getX(), getY(), getZ(), getHeading(), MovementType.MOVEMENT_STOP));
-	    }
-
+	public void stopMoving()
+	{
+		World.getInstance().updatePosition(this, getX(), getY(), getZ(), getHeading());
+		PacketSendUtility.broadcastPacket(this, new SM_MOVE(getObjectId(), getX(), getY(), getZ(), getHeading(), MovementType.MOVEMENT_STOP));
+	}
 
 	/**
 	 * Handle Dialog_Select
@@ -697,7 +695,7 @@ public abstract class Creature extends StaticNpc
 	{
 		getLifeStats().reduceHp(getLifeStats().getCurrentHp() + 1, null);
 	}
-	
+
 	/**
 	 * 
 	 * @param skillId
@@ -705,12 +703,12 @@ public abstract class Creature extends StaticNpc
 	public void useSkill(int skillId)
 	{
 		Skill skill = SkillEngine.getInstance().getSkill(this, skillId, 1, getTarget());
-		if(skill != null)
+		if (skill != null)
 		{
 			skill.useSkill();
 		}
 	}
-	
+
 	/**
 	 *  Notify hate value to all visible creatures
 	 *  
@@ -718,28 +716,29 @@ public abstract class Creature extends StaticNpc
 	 */
 	public void broadcastHate(int value)
 	{
-		for(VisibleObject visibleObject : getKnownList().getKnownObjects().values())
+		for (VisibleObject visibleObject : getKnownList().getKnownObjects().values())
 		{
-			if(visibleObject instanceof Creature)
+			if (visibleObject instanceof Creature)
 			{
-				((Creature)visibleObject).getAggroList().notifyHate(this, value);
+				((Creature) visibleObject).getAggroList().notifyHate(this, value);
 			}
 		}
 	}
-   public void abortCast() 
+
+	public void abortCast()
 	{
-	    Skill skill = getCastingSkill(); 
-	    if (skill == null) 
-			return; 
-	    setCasting(null); 
+		Skill skill = getCastingSkill();
+		if (skill == null)
+			return;
+		setCasting(null);
 	}
-	
+
 	/**
 	 * @param npcId
 	 */
 	public void createSummon(int npcId, int skillLvl)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 }

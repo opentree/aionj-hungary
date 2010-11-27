@@ -24,13 +24,15 @@ import com.aionemu.gameserver.model.templates.TitleTemplate;
  */
 public class Title
 {
-	private TitleTemplate template;
-	
-	public Title (TitleTemplate template) {
+	private TitleTemplate	template;
+
+	public Title(TitleTemplate template)
+	{
 		this.template = template;
 	}
-	
-	public TitleTemplate getTemplate () {
+
+	public TitleTemplate getTemplate()
+	{
 		return template;
 	}
 }

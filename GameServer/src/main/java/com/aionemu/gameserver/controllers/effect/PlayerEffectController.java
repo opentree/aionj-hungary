@@ -39,42 +39,42 @@ public class PlayerEffectController extends EffectController
 	/**
 	 * weapon mastery
 	 */
-	private int weaponEffects;
-	
+	private int		weaponEffects;
+
 	/**
 	 * armor mastery
 	 */
-	private int armorEffects;
-	
+	private int		armorEffects;
+
 	/**
 	 * current food effect
 	 */
-	private Effect foodEffect;
+	private Effect	foodEffect;
 
 	public PlayerEffectController(Creature owner)
 	{
 		super(owner);
 	}
-	
+
 	@Override
 	public void addEffect(Effect effect)
 	{
-		if(effect.isFood())
+		if (effect.isFood())
 			addFoodEffect(effect);
-		
-		if(checkDuelCondition(effect))
+
+		if (checkDuelCondition(effect))
 			return;
-		
+
 		super.addEffect(effect);
 		updatePlayerIconsAndGroup(effect);
 	}
-	
+
 	@Override
 	public void clearEffect(Effect effect)
 	{
-		if(effect.isFood())
+		if (effect.isFood())
 			foodEffect = null;
-	
+
 		super.clearEffect(effect);
 		updatePlayerIconsAndGroup(effect);
 	}
@@ -90,16 +90,16 @@ public class PlayerEffectController extends EffectController
 	 */
 	private void updatePlayerIconsAndGroup(Effect effect)
 	{
-		if(!effect.isPassive())
+		if (!effect.isPassive())
 		{
-			updatePlayerEffectIcons();		
-			if(getOwner().isInGroup())
+			updatePlayerEffectIcons();
+			if (getOwner().isInGroup())
 				getOwner().getPlayerGroup().updateGroupUIToEvent(getOwner(), GroupEvent.UPDATE);
-			if(getOwner().isInAlliance())
+			if (getOwner().isInAlliance())
 				AllianceService.getInstance().updateAllianceUIToEvent(getOwner(), PlayerAllianceEvent.UPDATE);
 		}
 	}
-	
+
 	/**
 	 * Effect of DEBUFF should not be added if duel ended (friendly unit)
 	 * @param effect
@@ -108,21 +108,21 @@ public class PlayerEffectController extends EffectController
 	private boolean checkDuelCondition(Effect effect)
 	{
 		Creature creature = effect.getEffector();
-		if(creature instanceof Player)
+		if (creature instanceof Player)
 		{
-			if(getOwner().isFriend((Player) creature) && effect.getTargetSlot() == SkillTargetSlot.DEBUFF.ordinal())
+			if (getOwner().isFriend((Player) creature) && effect.getTargetSlot() == SkillTargetSlot.DEBUFF.ordinal())
 				return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * @param effect
 	 */
 	private void addFoodEffect(Effect effect)
 	{
-		if(foodEffect != null)
+		if (foodEffect != null)
 			foodEffect.endEffect();
 		foodEffect = effect;
 	}
@@ -144,12 +144,12 @@ public class PlayerEffectController extends EffectController
 	{
 		return weaponEffects;
 	}
-	
+
 	public boolean isWeaponMasterySet(int skillId)
 	{
 		return weaponEffects == skillId;
 	}
-	
+
 	/**
 	 * Armor mastery
 	 */
@@ -167,7 +167,7 @@ public class PlayerEffectController extends EffectController
 	{
 		return armorEffects;
 	}
-	
+
 	public boolean isArmorMasterySet(int skillId)
 	{
 		return armorEffects == skillId;
@@ -184,20 +184,19 @@ public class PlayerEffectController extends EffectController
 		SkillTemplate template = DataManager.SKILL_DATA.getSkillTemplate(skillId);
 		int duration = template.getEffectsDuration();
 		int remainingTime = duration - currentTime;
-		
-		if(remainingTime <= 0)
+
+		if (remainingTime <= 0)
 			return;
-		
+
 		Effect effect = new Effect(getOwner(), getOwner(), template, skillLvl, remainingTime);
-		if(effect.isFood())
+		if (effect.isFood())
 			addFoodEffect(effect);
 		abnormalEffectMap.put(effect.getStack(), effect);
 		effect.addAllEffectToSucess();
 		effect.startEffect(true);
-		
-		PacketSendUtility.sendPacket(getOwner(),
-			new SM_ABNORMAL_STATE(Collections.singletonList(effect), abnormals));
-		
+
+		PacketSendUtility.sendPacket(getOwner(), new SM_ABNORMAL_STATE(Collections.singletonList(effect), abnormals));
+
 	}
-	
+
 }

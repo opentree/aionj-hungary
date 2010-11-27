@@ -38,14 +38,14 @@ public class SummonEffect extends EffectTemplate
 	@Override
 	public void applyEffect(Effect effect)
 	{
-		Creature effected = effect.getEffected();	
+		Creature effected = effect.getEffected();
 		effected.createSummon(npcId, effect.getSkillLevel());
 	}
 
 	@Override
 	public void calculate(Effect effect)
 	{
-		if(effect.getEffected() instanceof Player)
+		if (effect.getEffected() instanceof Player)
 			effect.addSucessEffect(this);
 	}
 }

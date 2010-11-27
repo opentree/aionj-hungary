@@ -25,10 +25,10 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_CRAFT_ANIMATION extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int senderObjectId;
-	private int targetObjectId;
-	private int skillId;
-	private int action;
+	private int	senderObjectId;
+	private int	targetObjectId;
+	private int	skillId;
+	private int	action;
 
 	/**
 	 * @param senderObjectId
@@ -53,6 +53,6 @@ public class SM_CRAFT_ANIMATION extends AbstractAionServerPacket<AionChannelHand
 		writeD(senderObjectId);
 		writeD(targetObjectId);
 		writeH(skillId);
-		writeC( action);
+		writeC(action);
 	}
 }

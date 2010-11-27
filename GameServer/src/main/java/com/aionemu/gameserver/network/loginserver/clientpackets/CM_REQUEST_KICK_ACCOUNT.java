@@ -31,7 +31,7 @@ public class CM_REQUEST_KICK_ACCOUNT extends AbstractClientPacket<LoginServerCha
 	/**
 	 * account id of account that login server request to kick.
 	 */
-	private int			accountId;
+	private int	accountId;
 
 	/**
 	 * Constructs new instance of <tt>CM_REQUEST_KICK_ACCOUNT </tt> packet.

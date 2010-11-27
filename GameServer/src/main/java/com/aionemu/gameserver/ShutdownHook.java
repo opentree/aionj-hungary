@@ -42,15 +42,15 @@ public class ShutdownHook extends Thread
 	{
 		return SingletonHolder.INSTANCE;
 	}
-	
+
 	@Override
 	public void run()
 	{
-		if(ShutdownConfig.HOOK_MODE == 1)
+		if (ShutdownConfig.HOOK_MODE == 1)
 		{
 			shutdownHook(ShutdownConfig.HOOK_DELAY, ShutdownConfig.ANNOUNCE_INTERVAL, ShutdownMode.SHUTDOWN);
 		}
-		else if(ShutdownConfig.HOOK_MODE == 2)
+		else if (ShutdownConfig.HOOK_MODE == 2)
 		{
 			shutdownHook(ShutdownConfig.HOOK_DELAY, ShutdownConfig.ANNOUNCE_INTERVAL, ShutdownMode.RESTART);
 		}
@@ -58,9 +58,7 @@ public class ShutdownHook extends Thread
 
 	public static enum ShutdownMode
 	{
-		NONE("terminating"),
-		SHUTDOWN("shutting down"),
-		RESTART("restarting");
+		NONE("terminating"), SHUTDOWN("shutting down"), RESTART("restarting");
 
 		private final String	text;
 
@@ -79,13 +77,13 @@ public class ShutdownHook extends Thread
 	{
 		try
 		{
-			for(Player player : World.getInstance().getAllPlayers())
+			for (Player player : World.getInstance().getAllPlayers())
 			{
-				if(player != null && player.getClientConnection() != null)
+				if (player != null && player.getClientConnection() != null)
 					player.getClientConnection().sendPacket(SM_SYSTEM_MESSAGE.SERVER_SHUTDOWN(seconds));
 			}
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			log.error(e.getMessage());
 		}
@@ -95,13 +93,13 @@ public class ShutdownHook extends Thread
 	{
 		try
 		{
-			for(Player player : World.getInstance().getAllPlayers())
+			for (Player player : World.getInstance().getAllPlayers())
 			{
-				if(player != null && player.getClientConnection() != null)
+				if (player != null && player.getClientConnection() != null)
 					player.setInShutdownProgress(status);
 			}
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			log.error(e.getMessage());
 		}
@@ -109,21 +107,21 @@ public class ShutdownHook extends Thread
 
 	private void shutdownHook(int duration, int interval, ShutdownMode mode)
 	{
-		for(int i = duration; i >= interval; i -= interval)
+		for (int i = duration; i >= interval; i -= interval)
 		{
 			try
 			{
-				if(World.getInstance().getAllPlayers().size() == 0)
+				if (World.getInstance().getAllPlayers().size() == 0)
 				{
 					log.info("Runtime is " + mode.getText() + " now ...");
 					break; // fast exit.
 				}
-				
+
 				log.info("Runtime is " + mode.getText() + " in " + i + " seconds.");
 				sendShutdownMessage(i);
 				sendShutdownStatus(ShutdownConfig.SAFE_REBOOT);
 
-				if(i > interval)
+				if (i > interval)
 				{
 					sleep(interval * 1000);
 				}
@@ -132,7 +130,7 @@ public class ShutdownHook extends Thread
 					sleep(1000);
 				}
 			}
-			catch(InterruptedException e)
+			catch (InterruptedException e)
 			{
 				return;
 			}
@@ -142,19 +140,19 @@ public class ShutdownHook extends Thread
 		LoginServer.getInstance().gameServerDisconnected();
 
 		// Disconnect all players.
-		for(Player player : World.getInstance().getAllPlayers())
+		for (Player player : World.getInstance().getAllPlayers())
 		{
 			try
 			{
 				PlayerService.playerLoggedOut(player);
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				log.error("Error while saving player " + e.getMessage());
 			}
 		}
 		log.info("All players are disconnected...");
-		
+
 		RunnableStatsManager.dumpClassStats(SortBy.AVG);
 
 		// Save game time.
@@ -163,7 +161,7 @@ public class ShutdownHook extends Thread
 		ThreadPoolManager.getInstance().shutdown();
 
 		// Do system exit.
-		if(mode == ShutdownMode.RESTART)
+		if (mode == ShutdownMode.RESTART)
 			Runtime.getRuntime().halt(ExitCode.CODE_RESTART);
 		else
 			Runtime.getRuntime().halt(ExitCode.CODE_NORMAL);
@@ -184,6 +182,6 @@ public class ShutdownHook extends Thread
 
 	private static final class SingletonHolder
 	{
-		private static final ShutdownHook INSTANCE = new ShutdownHook();
+		private static final ShutdownHook	INSTANCE	= new ShutdownHook();
 	}
 }

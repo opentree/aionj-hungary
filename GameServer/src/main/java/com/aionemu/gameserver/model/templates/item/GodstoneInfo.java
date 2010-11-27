@@ -30,13 +30,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class GodstoneInfo
 {
 	@XmlAttribute
-	private int skillid;
+	private int	skillid;
 	@XmlAttribute
-	private int skilllvl;
+	private int	skilllvl;
 	@XmlAttribute
-	private int probability;
+	private int	probability;
 	@XmlAttribute
-	private int probabilityleft;
+	private int	probabilityleft;
+
 	/**
 	 * @return the skillid
 	 */
@@ -44,6 +45,7 @@ public class GodstoneInfo
 	{
 		return skillid;
 	}
+
 	/**
 	 * @return the skilllvl
 	 */
@@ -51,6 +53,7 @@ public class GodstoneInfo
 	{
 		return skilllvl;
 	}
+
 	/**
 	 * @return the probability
 	 */
@@ -58,6 +61,7 @@ public class GodstoneInfo
 	{
 		return probability;
 	}
+
 	/**
 	 * @return the probabilityleft
 	 */

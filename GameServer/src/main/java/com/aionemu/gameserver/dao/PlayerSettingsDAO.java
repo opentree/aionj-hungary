@@ -34,14 +34,14 @@ public abstract class PlayerSettingsDAO implements DAO
 	{
 		return PlayerSettingsDAO.class.getName();
 	}
-	
+
 	/**
 	 * 
 	 * @param playerId
 	 * @param data
 	 */
 	public abstract void saveSettings(final Player player);
-	
+
 	/**
 	 * 
 	 * @param playerId

@@ -31,14 +31,14 @@ import com.aionemu.gameserver.network.aion.serverpackets.*;
  */
 public class AionPacketHandlerFactory extends AbstractPacketHandlerFactory<AionChannelHandler>
 {
-	
+
 	/**
 	 * Creates new instance of <tt>AionPacketHandlerFactory</tt><br>
 	 */
 	public AionPacketHandlerFactory()
 	{
 		super(null, new AionClientPacketHandler<AionChannelHandler>());
-		
+
 		addPacket(new CM_CHARACTER_LIST(0x04), State.AUTHED);// 2.1
 		addPacket(new CM_CREATE_CHARACTER(0x05), State.AUTHED);// 2.1
 		addPacket(new CM_L2AUTH_LOGIN_CHECK(0x07), State.CONNECTED);// 2.1
@@ -86,7 +86,7 @@ public class AionPacketHandlerFactory extends AbstractPacketHandlerFactory<AionC
 		addPacket(new CM_ENTER_WORLD(0xFA), State.AUTHED); //2.1
 		addPacket(new CM_LEVEL_READY(0xFB), State.ENTERED);// 2.1
 		addPacket(new CM_CUSTOM_SETTINGS(0xFE), State.ENTERED);// 2.1
-		
+
 		//Client Packet's
 		addPacket(new CM_CRAFT(0x00), State.ENTERED);// 1.9
 		//addPacket(new CM_START_LOOT(0x05), State.ENTERED);// 1.9
@@ -100,7 +100,7 @@ public class AionPacketHandlerFactory extends AbstractPacketHandlerFactory<AionC
 		addPacket(new CM_DISTRIBUTION_SETTINGS(0x24), State.ENTERED);// 1.9
 		//addPacket(new CM_SHOW_BRAND(0x28), State.ENTERED);// 1.9
 		addPacket(new CM_RECONNECT_AUTH(0x2A), State.AUTHED);// 1.9
-		addPacket(new CM_GROUP_LOOT(0x2B), State.ENTERED);	
+		addPacket(new CM_GROUP_LOOT(0x2B), State.ENTERED);
 		addPacket(new CM_SUMMON_MOVE(0x34), State.ENTERED);// 1.9
 		addPacket(new CM_SUMMON_EMOTION(0x35), State.ENTERED);// 1.9
 		addPacket(new CM_SUMMON_ATTACK(0x36), State.ENTERED);// 1.9
@@ -126,7 +126,7 @@ public class AionPacketHandlerFactory extends AbstractPacketHandlerFactory<AionC
 		addPacket(new CM_BUY_BROKER_ITEM(0x71), State.ENTERED);// 1.9
 		//addPacket(new CM_REGISTER_BROKER_ITEM(0x72), State.ENTERED);// 1.9
 		addPacket(new CM_BROKER_CANCEL_REGISTERED(0x73), State.ENTERED);// 1.9
-		addPacket(new CM_DELETE_MAIL(0x74),State.ENTERED);// 1.9
+		addPacket(new CM_DELETE_MAIL(0x74), State.ENTERED);// 1.9
 		addPacket(new CM_TITLE_SET(0x76), State.ENTERED);// 1.9
 		addPacket(new CM_READ_MAIL(0x79), State.ENTERED);// 1.9
 		addPacket(new CM_GET_MAIL_ATTACHMENT(0x7B), State.ENTERED);// 1.9
@@ -306,7 +306,7 @@ public class AionPacketHandlerFactory extends AbstractPacketHandlerFactory<AionC
 		addPacket(SM_BLOCK_RESPONSE.class, 0xDF);
 		addPacket(SM_BLOCK_LIST.class, 0xE0);
 		addPacket(SM_FRIEND_NOTIFY.class, 0xE1);
-		addPacket(SM_CHANNEL_INFO.class, 0xE5);	
+		addPacket(SM_CHANNEL_INFO.class, 0xE5);
 		addPacket(SM_CHAT_INIT.class, 0xE6);
 		addPacket(SM_MACRO_LIST.class, 0xE7);
 		addPacket(SM_MACRO_RESULT.class, 0xE8);
@@ -327,8 +327,7 @@ public class AionPacketHandlerFactory extends AbstractPacketHandlerFactory<AionC
 		addPacket(SM_PRICES.class, 0xFC);
 		addPacket(SM_TRADELIST.class, 0xFD);
 		addPacket(SM_RECONNECT_KEY.class, 0xFF);
-		
-		
+
 		addPacket(SM_CUSTOM_PACKET.class, 99999); // fake packet
 
 	}

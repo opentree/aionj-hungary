@@ -52,9 +52,9 @@ public class EnchantStatEffectId extends StatEffectId
 	public int compareTo(StatEffectId o)
 	{
 		int result = super.compareTo(o);
-		if(result == 0)
+		if (result == 0)
 		{
-			if(o instanceof EnchantStatEffectId)
+			if (o instanceof EnchantStatEffectId)
 			{
 				result = slot - ((EnchantStatEffectId) o).slot;
 			}

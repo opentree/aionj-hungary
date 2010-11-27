@@ -25,23 +25,26 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  * @author Lyahim, Nemiroff
  * Date: 01.12.2009
  */
-public class SM_TITLE_UPDATE extends AbstractAionServerPacket<AionChannelHandler> {
-    private int objectId;
-    private int titleId;
+public class SM_TITLE_UPDATE extends AbstractAionServerPacket<AionChannelHandler>
+{
+	private int	objectId;
+	private int	titleId;
 
-    /**
-     * Constructs new <tt>SM_TITLE_UPDATE </tt> packet
-     * @param player
-     * @param titleId
-     */
-    public SM_TITLE_UPDATE(Player player, int titleId) {
-        this.objectId = player.getObjectId();
-        this.titleId = titleId;
-    }
+	/**
+	 * Constructs new <tt>SM_TITLE_UPDATE </tt> packet
+	 * @param player
+	 * @param titleId
+	 */
+	public SM_TITLE_UPDATE(Player player, int titleId)
+	{
+		this.objectId = player.getObjectId();
+		this.titleId = titleId;
+	}
 
-    @Override
-	protected void writeImpl(AionChannelHandler cHandler) {
-        writeD(this.objectId);
-        writeD(this.titleId);
-    }
+	@Override
+	protected void writeImpl(AionChannelHandler cHandler)
+	{
+		writeD(this.objectId);
+		writeD(this.titleId);
+	}
 }

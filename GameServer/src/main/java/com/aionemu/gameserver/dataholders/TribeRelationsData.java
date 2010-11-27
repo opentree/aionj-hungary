@@ -38,13 +38,13 @@ import com.aionemu.gameserver.model.templates.tribe.Tribe;
 public class TribeRelationsData
 {
 	@XmlElement(name = "tribe", required = true)
-	protected List<Tribe> tribeList;
+	protected List<Tribe>					tribeList;
 
-	protected THashMap<TribeClass, Tribe> tribeNameMap = new THashMap<TribeClass, Tribe>();
+	protected THashMap<TribeClass, Tribe>	tribeNameMap	= new THashMap<TribeClass, Tribe>();
 
 	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
-		for(Tribe tribe : tribeList)
+		for (Tribe tribe : tribeList)
 		{
 			tribeNameMap.put(tribe.getName(), tribe);
 		}
@@ -58,7 +58,7 @@ public class TribeRelationsData
 	{
 		return tribeNameMap.size();
 	}
-	
+
 	/**
 	 * 
 	 * @param tribeName
@@ -67,11 +67,11 @@ public class TribeRelationsData
 	public boolean hasAggressiveRelations(TribeClass tribeName)
 	{
 		Tribe tribe = tribeNameMap.get(tribeName);
-		if(tribe == null)
+		if (tribe == null)
 			return false;
 		return !tribe.getAggro().isEmpty();
 	}
-	
+
 	/**
 	 * 
 	 * @param tribeName
@@ -80,11 +80,11 @@ public class TribeRelationsData
 	public boolean hasHostileRelations(TribeClass tribeName)
 	{
 		Tribe tribe = tribeNameMap.get(tribeName);
-		if(tribe == null)
+		if (tribe == null)
 			return false;
 		return !tribe.getHostile().isEmpty();
 	}
-	
+
 	/**
 	 * 
 	 * @param tribeName1
@@ -94,12 +94,12 @@ public class TribeRelationsData
 	public boolean isAggressiveRelation(TribeClass tribeName1, TribeClass tribeName2)
 	{
 		Tribe tribe = tribeNameMap.get(tribeName1);
-		if(tribe == null)
+		if (tribe == null)
 			return false;
-		
+
 		return tribe.getAggro().contains(tribeName2);
 	}
-	
+
 	/**
 	 * 
 	 * @param tribeName1
@@ -109,12 +109,12 @@ public class TribeRelationsData
 	public boolean isSupportRelation(TribeClass tribeName1, TribeClass tribeName2)
 	{
 		Tribe tribe = tribeNameMap.get(tribeName1);
-		if(tribe == null)
+		if (tribe == null)
 			return false;
 
 		return tribe.getSupport().contains(tribeName2);
 	}
-	
+
 	/**
 	 * 
 	 * @param tribeName1
@@ -124,11 +124,11 @@ public class TribeRelationsData
 	public boolean isFriendlyRelation(TribeClass tribeName1, TribeClass tribeName2)
 	{
 		Tribe tribe = tribeNameMap.get(tribeName1);
-		if(tribe == null)
+		if (tribe == null)
 			return false;
 		return tribe.getFriend().contains(tribeName2);
 	}
-	
+
 	/**
 	 * 
 	 * @param tribeName1
@@ -138,11 +138,11 @@ public class TribeRelationsData
 	public boolean isNeutralRelation(TribeClass tribeName1, TribeClass tribeName2)
 	{
 		Tribe tribe = tribeNameMap.get(tribeName1);
-		if(tribe == null)
+		if (tribe == null)
 			return false;
 		return tribe.getNeutral().contains(tribeName2);
 	}
-	
+
 	/**
 	 * 
 	 * @param tribeName1
@@ -152,7 +152,7 @@ public class TribeRelationsData
 	public boolean isHostileRelation(TribeClass tribeName1, TribeClass tribeName2)
 	{
 		Tribe tribe = tribeNameMap.get(tribeName1);
-		if(tribe == null)
+		if (tribe == null)
 			return false;
 		return tribe.getHostile().contains(tribeName2);
 	}

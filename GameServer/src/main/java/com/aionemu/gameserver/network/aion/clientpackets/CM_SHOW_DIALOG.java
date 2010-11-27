@@ -62,16 +62,15 @@ public class CM_SHOW_DIALOG extends AbstractClientPacket<AionChannelHandler>
 		AionObject targetObject = World.getInstance().findAionObject(targetObjectId);
 		Player player = getChannelHandler().getActivePlayer();
 
-		if(targetObject == null || player == null)
+		if (targetObject == null || player == null)
 			return;
 
-		if(targetObject instanceof Npc)
+		if (targetObject instanceof Npc)
 		{
 			((Npc) targetObject).setTarget(player);
 
 			//TODO this is not needed for all dialog requests
-			PacketSendUtility.broadcastPacket((Npc) targetObject,
-				new SM_LOOKATOBJECT((Npc) targetObject));
+			PacketSendUtility.broadcastPacket((Npc) targetObject, new SM_LOOKATOBJECT((Npc) targetObject));
 
 			((Npc) targetObject).onDialogRequest(player);
 		}

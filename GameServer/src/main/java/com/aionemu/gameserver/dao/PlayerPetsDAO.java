@@ -33,13 +33,13 @@ public abstract class PlayerPetsDAO implements DAO
 	{
 		return PlayerPetsDAO.class.getName();
 	}
-	
+
 	public abstract void insertPlayerPet(Player player, int petId, int decoration, String name);
-	
+
 	public abstract void removePlayerPet(Player player, int petId);
-	
+
 	public abstract List<ToyPet> getPlayerPets(int playerId);
-	
+
 	public abstract ToyPet getPlayerPet(int playerId, int petId);
-	
+
 }

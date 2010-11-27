@@ -24,23 +24,21 @@ import javax.xml.bind.annotation.XmlType;
 import com.aionemu.gameserver.skillengine.effect.EffectId;
 import com.aionemu.gameserver.skillengine.model.Effect;
 
-
 /**
  * @author ATracer
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PoisonDamageModifier")
-public class PoisonDamageModifier
-    extends ActionModifier
+public class PoisonDamageModifier extends ActionModifier
 {
 
-    @XmlAttribute(required = true)
-    protected int delta;
-    @XmlAttribute(required = true)
-    protected int value;
-    
-    @Override
+	@XmlAttribute(required = true)
+	protected int	delta;
+	@XmlAttribute(required = true)
+	protected int	value;
+
+	@Override
 	public int analyze(Effect effect, int originalValue)
 	{
 		return originalValue + value + effect.getSkillLevel() * delta;
@@ -51,6 +49,5 @@ public class PoisonDamageModifier
 	{
 		return effect.getEffected().getEffectController().isAbnoramlSet(EffectId.POISON);
 	}
-    
-    
+
 }

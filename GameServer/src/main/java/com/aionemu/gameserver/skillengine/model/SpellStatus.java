@@ -35,19 +35,10 @@ public enum SpellStatus
 	 * 128 : dodge
 	 * 256 : resist
 	 */
-	 
-	NONE(0),
-	STUMBLE(1),
-	STAGGER(2),
-	OPENAERIAL(4), 
-	CLOSEAERIAL(8),
-	SPIN(16),
-	BLOCK(32), 
- 	PARRY(64), 
- 	DODGE(128), 
- 	RESIST(256); 
 
-	private int id;
+	NONE(0), STUMBLE(1), STAGGER(2), OPENAERIAL(4), CLOSEAERIAL(8), SPIN(16), BLOCK(32), PARRY(64), DODGE(128), RESIST(256);
+
+	private int	id;
 
 	private SpellStatus(int id)
 	{

@@ -24,9 +24,9 @@ import com.aionemu.gameserver.network.chatserver.ChatServerChannelHandler;
  */
 public class SM_CS_PLAYER_AUTH extends AbstractServerPacket<ChatServerChannelHandler>
 {
-	private int playerId;
-	private String playerLogin;
-	
+	private int		playerId;
+	private String	playerLogin;
+
 	public SM_CS_PLAYER_AUTH(int playerId, String playerLogin)
 	{
 		this.playerId = playerId;

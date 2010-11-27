@@ -47,17 +47,17 @@ public class SM_LEGION_MEMBERLIST extends AbstractAionServerPacket<AionChannelHa
 	@Override
 	public void writeImpl(AionChannelHandler cHandler)
 	{
-		writeC( 0x01);
+		writeC(0x01);
 		writeH((65536 - legionMembers.size()));
-		for(LegionMemberEx legionMember : legionMembers)
+		for (LegionMemberEx legionMember : legionMembers)
 		{
 			writeD(legionMember.getObjectId());
 			writeS(legionMember.getName());
-			writeC( legionMember.getPlayerClass().getClassId());
+			writeC(legionMember.getPlayerClass().getClassId());
 			writeD(legionMember.getLevel());
-			writeC( legionMember.getRank().getRankId());
+			writeC(legionMember.getRank().getRankId());
 			writeD(legionMember.getWorldId());
-			writeC( legionMember.isOnline() ? ONLINE : OFFLINE);
+			writeC(legionMember.isOnline() ? ONLINE : OFFLINE);
 			writeS(legionMember.getSelfIntro());
 			writeS(legionMember.getNickname());
 			writeD(legionMember.getLastOnline());

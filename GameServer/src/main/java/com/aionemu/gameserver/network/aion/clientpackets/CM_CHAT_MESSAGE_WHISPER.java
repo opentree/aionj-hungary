@@ -81,14 +81,14 @@ public class CM_CHAT_MESSAGE_WHISPER extends AbstractClientPacket<AionChannelHan
 		Player sender = getChannelHandler().getActivePlayer();
 		Player receiver = World.getInstance().findPlayer(formatname);
 
-		if(OptionsConfig.LOG_CHAT)
+		if (OptionsConfig.LOG_CHAT)
 			log.info(String.format("[MESSAGE] [%s] W: %s, Message: %s", sender.getName(), formatname, message));
 
-		if(receiver == null)
+		if (receiver == null)
 		{
 			sendPacket(SM_SYSTEM_MESSAGE.PLAYER_IS_OFFLINE(formatname));
 		}
-		else if(sender.getLevel() < CustomConfig.LEVEL_TO_WHISPER)
+		else if (sender.getLevel() < CustomConfig.LEVEL_TO_WHISPER)
 		{
 			sendPacket(SM_SYSTEM_MESSAGE.LEVEL_NOT_ENOUGH_FOR_WHISPER(String.valueOf(CustomConfig.LEVEL_TO_WHISPER)));
 		}
@@ -98,7 +98,7 @@ public class CM_CHAT_MESSAGE_WHISPER extends AbstractClientPacket<AionChannelHan
 		}
 		else
 		{
-			if(RestrictionsManager.canChat(sender))
+			if (RestrictionsManager.canChat(sender))
 				PacketSendUtility.sendPacket(receiver, new SM_MESSAGE(sender, message, ChatType.WHISPER));
 		}
 	}

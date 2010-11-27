@@ -28,25 +28,24 @@ import javax.xml.bind.annotation.XmlEnum;
 @XmlEnum
 public enum PlayerClass
 {
-	WARRIOR(0, true),
-	GLADIATOR(1), //fighter
-	TEMPLAR(2),   //knight
+	WARRIOR(0, true), GLADIATOR(1), //fighter
+	TEMPLAR(2), //knight
 	SCOUT(3, true),
 	ASSASSIN(4),
 	RANGER(5),
 	MAGE(6, true),
 	SORCERER(7), //wizard
-	SPIRIT_MASTER(8),//elementalist
+	SPIRIT_MASTER(8), //elementalist
 	PRIEST(9, true),
 	CLERIC(10),
 	CHANTER(11);
 
 	/** This id is used on client side */
 	private byte	classId;
-	
+
 	/** This is the mask for this class id, used with bitwise AND in arguments that contain more than one possible class */
 	private int		idMask;
-	
+
 	/** Tells whether player can create new character with this class */
 	private boolean	startingClass;
 
@@ -59,7 +58,7 @@ public enum PlayerClass
 	{
 		this.classId = (byte) classId;
 		this.startingClass = startingClass;
-		this.idMask = (int)Math.pow(2, classId);
+		this.idMask = (int) Math.pow(2, classId);
 	}
 
 	/**
@@ -82,9 +81,9 @@ public enum PlayerClass
 	 */
 	public static PlayerClass getPlayerClassById(byte classId)
 	{
-		for(PlayerClass pc : values())
+		for (PlayerClass pc : values())
 		{
-			if(pc.getClassId() == classId)
+			if (pc.getClassId() == classId)
 				return pc;
 		}
 
@@ -99,7 +98,7 @@ public enum PlayerClass
 	{
 		return startingClass;
 	}
-	
+
 	/**
 	 * 
 	 * @param pc
@@ -107,7 +106,7 @@ public enum PlayerClass
 	 */
 	public static PlayerClass getStartingClassFor(PlayerClass pc)
 	{
-		switch(pc)
+		switch (pc)
 		{
 			case ASSASSIN:
 			case RANGER:
@@ -125,7 +124,7 @@ public enum PlayerClass
 				throw new IllegalArgumentException("Given player class is starting class: " + pc);
 		}
 	}
-	
+
 	public int getMask()
 	{
 		return idMask;

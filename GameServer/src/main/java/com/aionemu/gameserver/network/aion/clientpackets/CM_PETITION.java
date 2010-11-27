@@ -26,57 +26,57 @@ import com.aionemu.gameserver.services.PetitionService;
 /**
  * @author Lyahim, zdead
  */
-public class CM_PETITION extends AbstractClientPacket<AionChannelHandler> 
+public class CM_PETITION extends AbstractClientPacket<AionChannelHandler>
 {
-	private int action;
-	private String title = "";
-	private String text = "";
-	private String additionalData = "";
-	
-    public CM_PETITION(int opcode) 
-    {
-        super(opcode);
-    }
+	private int		action;
+	private String	title			= "";
+	private String	text			= "";
+	private String	additionalData	= "";
 
-    @Override
-    protected void readImpl() 
-    {
-        action = readH();
-        if(action == 2)
-        {
-        	readD();
-        }
-        else
-        {
-	        String data = readS();
-	        String[] dataArr = data.split("/", 3);
-	        title = dataArr[0];
-	        text = dataArr[1];
-	        additionalData = dataArr[2];
-        }
-    }
+	public CM_PETITION(int opcode)
+	{
+		super(opcode);
+	}
 
-    @Override
-    protected void runImpl() 
-    {
-    	int playerObjId = getChannelHandler().getActivePlayer().getObjectId();
-    	if(action == 2)
-    	{
-    		if(PetitionService.getInstance().hasRegisteredPetition(playerObjId))
-    		{
-    			int petitionId = PetitionService.getInstance().getPetition(playerObjId).getPetitionId();
-    			PetitionService.getInstance().deletePetition(playerObjId);
-        		sendPacket(new SM_SYSTEM_MESSAGE(1300552, petitionId));
-        		sendPacket(new SM_SYSTEM_MESSAGE(1300553, 49));
-        		return;
-    		}
-    		
-    	}
-    		
-    	if(!PetitionService.getInstance().hasRegisteredPetition(getChannelHandler().getActivePlayer().getObjectId()))
-    	{
-    		Petition petition = PetitionService.getInstance().registerPetition(getChannelHandler().getActivePlayer(), action, title, text, additionalData);
-    		sendPacket(new SM_PETITION(petition));
-    	}    	
+	@Override
+	protected void readImpl()
+	{
+		action = readH();
+		if (action == 2)
+		{
+			readD();
+		}
+		else
+		{
+			String data = readS();
+			String[] dataArr = data.split("/", 3);
+			title = dataArr[0];
+			text = dataArr[1];
+			additionalData = dataArr[2];
+		}
+	}
+
+	@Override
+	protected void runImpl()
+	{
+		int playerObjId = getChannelHandler().getActivePlayer().getObjectId();
+		if (action == 2)
+		{
+			if (PetitionService.getInstance().hasRegisteredPetition(playerObjId))
+			{
+				int petitionId = PetitionService.getInstance().getPetition(playerObjId).getPetitionId();
+				PetitionService.getInstance().deletePetition(playerObjId);
+				sendPacket(new SM_SYSTEM_MESSAGE(1300552, petitionId));
+				sendPacket(new SM_SYSTEM_MESSAGE(1300553, 49));
+				return;
+			}
+
+		}
+
+		if (!PetitionService.getInstance().hasRegisteredPetition(getChannelHandler().getActivePlayer().getObjectId()))
+		{
+			Petition petition = PetitionService.getInstance().registerPetition(getChannelHandler().getActivePlayer(), action, title, text, additionalData);
+			sendPacket(new SM_PETITION(petition));
+		}
 	}
 }

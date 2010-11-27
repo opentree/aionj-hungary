@@ -24,20 +24,19 @@ import com.aionemu.gameserver.model.gameobjects.PersistentState;
  */
 public class ItemStone
 {
-	private int itemObjId;
-	
-	private int itemId;
-	
-	private int slot;
-	
-	private PersistentState persistentState;
-	
-	private ItemStoneType itemStoneType;
-	
+	private int				itemObjId;
+
+	private int				itemId;
+
+	private int				slot;
+
+	private PersistentState	persistentState;
+
+	private ItemStoneType	itemStoneType;
+
 	public static enum ItemStoneType
 	{
-		MANASTONE,
-		GODSTONE;
+		MANASTONE, GODSTONE;
 	}
 
 	/**
@@ -79,7 +78,7 @@ public class ItemStone
 	{
 		return slot;
 	}
-	
+
 	/**
 	 * @param slot the slot to set
 	 */
@@ -103,16 +102,16 @@ public class ItemStone
 	 */
 	public void setPersistentState(PersistentState persistentState)
 	{
-		switch(persistentState)
+		switch (persistentState)
 		{
 			case DELETED:
-				if(this.persistentState == PersistentState.NEW)
+				if (this.persistentState == PersistentState.NEW)
 					this.persistentState = PersistentState.NOACTION;
 				else
 					this.persistentState = PersistentState.DELETED;
 				break;
 			case UPDATE_REQUIRED:
-				if(this.persistentState == PersistentState.NEW)
+				if (this.persistentState == PersistentState.NEW)
 					break;
 			default:
 				this.persistentState = persistentState;

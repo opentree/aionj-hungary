@@ -36,7 +36,7 @@ import com.aionemu.gameserver.world.World;
  */
 public class CM_BUY_ITEM extends AbstractClientPacket<AionChannelHandler>
 {
-	
+
 	private int	sellerObjId;
 	private int	unk1;
 	private int	amount;
@@ -70,21 +70,21 @@ public class CM_BUY_ITEM extends AbstractClientPacket<AionChannelHandler>
 		tradeList = new TradeList();
 		tradeList.setSellerObjId(sellerObjId);
 
-		for(int i = 0; i < amount; i++)
+		for (int i = 0; i < amount; i++)
 		{
 			itemId = readD();
 			count = readD();
 			unk2 = readD();
 
 			// prevent exploit packets
-			if(count < 1)
+			if (count < 1)
 				continue;
 
-			if(unk1 == 13 || unk1 == 14)
+			if (unk1 == 13 || unk1 == 14)
 			{
 				tradeList.addBuyItem(itemId, count);
 			}
-			else if(unk1 == 0 || unk1 == 1)
+			else if (unk1 == 0 || unk1 == 1)
 			{
 				tradeList.addSellItem(itemId, count);
 			}
@@ -99,7 +99,7 @@ public class CM_BUY_ITEM extends AbstractClientPacket<AionChannelHandler>
 	{
 		Player player = getChannelHandler().getActivePlayer();
 
-		switch(unk1)
+		switch (unk1)
 		{
 			case 0:
 				Player targetPlayer = (Player) World.getInstance().findAionObject(sellerObjId);
@@ -117,7 +117,7 @@ public class CM_BUY_ITEM extends AbstractClientPacket<AionChannelHandler>
 			case 14:
 				Npc npc = (Npc) World.getInstance().findAionObject(sellerObjId);
 				TradeListTemplate tlist = DataManager.TRADE_LIST_DATA.getTradeListTemplate(npc.getNpcId());
-				if(tlist.isAbyss())
+				if (tlist.isAbyss())
 					TradeService.performBuyFromAbyssShop(player, tradeList);
 				break;
 

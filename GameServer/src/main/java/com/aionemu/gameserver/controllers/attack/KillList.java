@@ -27,9 +27,9 @@ import javolution.util.FastMap;
  */
 public class KillList
 {
-	private static final long DAY_IN_MILLISECONDS = 86400000;
-	private FastMap<Integer, List<Long>> killList;
-	
+	private static final long				DAY_IN_MILLISECONDS	= 86400000;
+	private FastMap<Integer, List<Long>>	killList;
+
 	public KillList()
 	{
 		killList = new FastMap<Integer, List<Long>>();
@@ -43,14 +43,14 @@ public class KillList
 	public int getKillsFor(int victimId)
 	{
 		List<Long> killTimes = killList.get(victimId);
-		
+
 		if (killTimes == null)
 			return 0;
-		
+
 		long now = System.currentTimeMillis();
 		int killCount = 0;
-		
-		for(Iterator<Long> i = killTimes.iterator(); i.hasNext(); )
+
+		for (Iterator<Long> i = killTimes.iterator(); i.hasNext();)
 		{
 			if (now - i.next().longValue() > DAY_IN_MILLISECONDS)
 			{
@@ -61,7 +61,7 @@ public class KillList
 				killCount++;
 			}
 		}
-		
+
 		return killCount;
 	}
 
@@ -76,8 +76,8 @@ public class KillList
 			killTimes = new ArrayList<Long>();
 			killList.put(victimId, killTimes);
 		}
-		
+
 		killTimes.add(System.currentTimeMillis());
 	}
-	
+
 }

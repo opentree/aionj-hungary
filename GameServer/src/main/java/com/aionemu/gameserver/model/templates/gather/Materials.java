@@ -23,26 +23,27 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * @author ATracer
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Materials", propOrder = {
-    "material"
-})
-public class Materials {
+@XmlType(name = "Materials", propOrder =
+{ "material" })
+public class Materials
+{
 
-    protected List<Material> material;
+	protected List<Material>	material;
 
-    /**
-     * Gets the value of the material property.
-     */
-    public List<Material> getMaterial() {
-        if (material == null) {
-            material = new ArrayList<Material>();
-        }
-        return this.material;
-    }
+	/**
+	 * Gets the value of the material property.
+	 */
+	public List<Material> getMaterial()
+	{
+		if (material == null)
+		{
+			material = new ArrayList<Material>();
+		}
+		return this.material;
+	}
 }

@@ -22,11 +22,12 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.aionemu.gameserver.world.WorldType;
+
 /**
  * @author Luno
  * 
  */
-@XmlRootElement(name="map")
+@XmlRootElement(name = "map")
 @XmlAccessorType(XmlAccessType.NONE)
 public class WorldMapTemplate
 {
@@ -34,7 +35,7 @@ public class WorldMapTemplate
 	 * Map name.
 	 */
 	@XmlAttribute(name = "name")
-	private String	name	= "";
+	private String		name		= "";
 
 	/**
 	 * Map Id.
@@ -46,49 +47,49 @@ public class WorldMapTemplate
 	 * Number of twin instances [players will be balanced so every one could exp easy]
 	 */
 	@XmlAttribute(name = "twin_count")
-	private int		twinCount;
+	private int			twinCount;
 
 	/**
 	 * Max user at twin instance.
 	 */
 	@XmlAttribute(name = "max_user")
-	private int		maxUser;
+	private int			maxUser;
 
 	/**
 	 * True if this map is a prison.
 	 */
 	@XmlAttribute(name = "prison")
-	private boolean	prison	= false;
+	private boolean		prison		= false;
 
 	/**
 	 * True if this map is a instance.
 	 */
 	@XmlAttribute(name = "instance")
-	private boolean	instance	= false;
+	private boolean		instance	= false;
 
 	/**
 	 * The minimum Z coord, under this player die immediately
 	 */
 	@XmlAttribute(name = "death_level", required = true)
-	private int	deathlevel	= 0;
+	private int			deathlevel	= 0;
 
 	/**
 	 * water level on map
 	 */
 	@XmlAttribute(name = "water_level", required = true)
-	private int	waterlevel	= 16;
-	
+	private int			waterlevel	= 16;
+
 	/**
 	 * water level on map
 	 */
 	@XmlAttribute(name = "world_size", required = true)
-	private int	worldSize	= 0;
+	private int			worldSize	= 0;
 
 	/**
 	 * world type of map
 	 */
 	@XmlAttribute(name = "world_type")
-	private WorldType worldType = WorldType.NONE;
+	private WorldType	worldType	= WorldType.NONE;
 
 	public String getName()
 	{
@@ -122,6 +123,7 @@ public class WorldMapTemplate
 	{
 		return instance;
 	}
+
 	/**
 	 * @return the waterlevel
 	 */
@@ -129,6 +131,7 @@ public class WorldMapTemplate
 	{
 		return waterlevel;
 	}
+
 	/**
 	 * @return the level of death :)
 	 */
@@ -136,7 +139,7 @@ public class WorldMapTemplate
 	{
 		return deathlevel;
 	}
-	
+
 	/**
 	 * @return the WorldType
 	 */
@@ -144,6 +147,7 @@ public class WorldMapTemplate
 	{
 		return worldType;
 	}
+
 	/**
 	 * @return the WorldType
 	 */

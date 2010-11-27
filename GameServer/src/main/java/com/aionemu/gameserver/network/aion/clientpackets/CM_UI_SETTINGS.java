@@ -25,9 +25,9 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class CM_UI_SETTINGS extends AbstractClientPacket<AionChannelHandler>
 {
-	int settingsType;
-	byte[] data;
-	int size;
+	int		settingsType;
+	byte[]	data;
+	int		size;
 
 	public CM_UI_SETTINGS(int opcode)
 	{
@@ -49,12 +49,12 @@ public class CM_UI_SETTINGS extends AbstractClientPacket<AionChannelHandler>
 	@Override
 	protected void runImpl()
 	{
-		Player player =  getChannelHandler().getActivePlayer();
-		if(player == null) //since 1.5.1 needed, investigate
+		Player player = getChannelHandler().getActivePlayer();
+		if (player == null) //since 1.5.1 needed, investigate
 			return;
-		
-		if(settingsType == 0)
-		{		
+
+		if (settingsType == 0)
+		{
 			player.getPlayerSettings().setUiSettings(data);
 		}
 		else if (settingsType == 1)

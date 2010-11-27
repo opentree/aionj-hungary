@@ -28,13 +28,13 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
 public class SM_LOOKATOBJECT extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private VisibleObject	visibleObject;
-	private int		targetObjectId;
-	private int		heading;
+	private int				targetObjectId;
+	private int				heading;
 
 	public SM_LOOKATOBJECT(VisibleObject visibleObject)
 	{
 		this.visibleObject = visibleObject;
-		if(visibleObject.getTarget() != null)
+		if (visibleObject.getTarget() != null)
 		{
 			this.targetObjectId = visibleObject.getTarget().getObjectId();
 			this.heading = Math.abs(128 - visibleObject.getTarget().getHeading());
@@ -54,6 +54,6 @@ public class SM_LOOKATOBJECT extends AbstractAionServerPacket<AionChannelHandler
 	{
 		writeD(visibleObject.getObjectId());
 		writeD(targetObjectId);
-		writeC( heading);
+		writeC(heading);
 	}
 }

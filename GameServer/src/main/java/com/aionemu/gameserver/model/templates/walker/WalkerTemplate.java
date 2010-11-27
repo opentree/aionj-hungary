@@ -26,15 +26,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author KKnD
  * 
  */
-@XmlRootElement(name="walker_template")
+@XmlRootElement(name = "walker_template")
 @XmlAccessorType(XmlAccessType.NONE)
 public class WalkerTemplate
 {
 	@XmlAttribute(name = "route_id", required = true)
-	private int routeId;
+	private int			routeId;
 
 	@XmlElement(name = "routes")
-	private RouteData routeData;
+	private RouteData	routeData;
 
 	public int getRouteId()
 	{

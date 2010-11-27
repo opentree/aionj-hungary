@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlType;
 public abstract class SimpleModifier extends StatModifier
 {
 	@XmlAttribute
-	protected int value;
+	protected int	value;
 
 	/**
 	 * @return the value
@@ -44,11 +44,11 @@ public abstract class SimpleModifier extends StatModifier
 	{
 		this.value = value;
 	}
-	
+
 	@Override
 	public String toString()
 	{
-		final String s = super.toString()+",v:"+value;
+		final String s = super.toString() + ",v:" + value;
 		return s;
 	}
 }

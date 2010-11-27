@@ -37,16 +37,16 @@ public class SM_SIEGE_LOCATION_INFO extends AbstractAionServerPacket<AionChannel
 	 *  0 - reset
 	 *  1 - change
 	 */
-	private int infoType;
-	
-	private FastMap<Integer, SiegeLocation> locations;
-	
+	private int								infoType;
+
+	private FastMap<Integer, SiegeLocation>	locations;
+
 	public SM_SIEGE_LOCATION_INFO()
 	{
 		this.infoType = 0; // Reset
 		locations = SiegeService.getInstance().getSiegeLocations();
 	}
-	
+
 	/**
 	 * @param loc
 	 */
@@ -63,35 +63,34 @@ public class SM_SIEGE_LOCATION_INFO extends AbstractAionServerPacket<AionChannel
 		if (SiegeConfig.SIEGE_ENABLED == false)
 		{
 			// Siege is Disabled
-			writeC( 0);
+			writeC(0);
 			writeH(0);
 			return;
 		}
-		
-		writeC( infoType);
+
+		writeC(infoType);
 		writeH(locations.size());
-		for(FastMap.Entry<Integer, SiegeLocation> e = locations.head(), end = locations.tail();
-			(e = e.getNext()) != end;)
+		for (FastMap.Entry<Integer, SiegeLocation> e = locations.head(), end = locations.tail(); (e = e.getNext()) != end;)
 		{
 			SiegeLocation sLoc = e.getValue();
-			
+
 			writeD(sLoc.getLocationId()); // Artifact ID
 			writeD(sLoc.getLegionId()); // Legion ID
-			
+
 			writeD(0); // unk
 			writeD(0); // unk
-			
-			writeC( sLoc.getRace().getRaceId());
-			
+
+			writeC(sLoc.getRace().getRaceId());
+
 			// is vulnerable (0 - no, 2 - yes)
-			writeC( sLoc.isVulnerable() ? 2 : 0);
-			
-			 // faction can teleport (0 - no, 1 - yes)
-			writeC( 1);
-			
+			writeC(sLoc.isVulnerable() ? 2 : 0);
+
+			// faction can teleport (0 - no, 1 - yes)
+			writeC(1);
+
 			// Next State (0 - invulnerable, 1 - vulnerable)
-			writeC( sLoc.getNextState());
-			
+			writeC(sLoc.getNextState());
+
 			writeD(0); // unk
 			writeD(0); // unk 1.9 only
 		}

@@ -45,9 +45,9 @@ import com.aionemu.gameserver.world.WorldType;
  */
 public abstract class VisibleObject extends AionObject
 {
-	protected VisibleObjectTemplate objectTemplate;
-	
-	private FastMap<Integer, Future<?>> tasks = new FastMap<Integer, Future<?>>().shared();
+	protected VisibleObjectTemplate		objectTemplate;
+
+	private FastMap<Integer, Future<?>>	tasks	= new FastMap<Integer, Future<?>>().shared();
 
 	/**
 	 * Constructor.
@@ -65,18 +65,18 @@ public abstract class VisibleObject extends AionObject
 	/**
 	 * Position of object in the world.
 	 */
-	protected WorldPosition											position;
+	protected WorldPosition	position;
 
 	/**
 	 * KnownList of this VisibleObject.
 	 */
-	private KnownList												knownlist;
-	
+	private KnownList		knownlist;
+
 	/**
 	 * Visible object's target
 	 */
 	private VisibleObject	target;
-	
+
 	/**
 	 *  Spawn template of this visibleObject. .
 	 */
@@ -91,7 +91,7 @@ public abstract class VisibleObject extends AionObject
 	{
 		return position.getMapRegion();
 	}
-	
+
 	public int getInstanceId()
 	{
 		return position.getInstanceId();
@@ -116,7 +116,7 @@ public abstract class VisibleObject extends AionObject
 	{
 		return World.getInstance().getWorldMap(getWorldId()).getWorldType();
 	}
-	
+
 	/**
 	 * Return World position x
 	 * 
@@ -176,7 +176,7 @@ public abstract class VisibleObject extends AionObject
 	{
 		return position.isSpawned();
 	}
-	
+
 	/**
 	 * 
 	 * @return 
@@ -185,7 +185,7 @@ public abstract class VisibleObject extends AionObject
 	{
 		return World.getInstance().findAionObject(getObjectId()) != null;
 	}
-	
+
 	/**
 	 * Check if map is instance
 	 * 
@@ -215,7 +215,7 @@ public abstract class VisibleObject extends AionObject
 	{
 		return knownlist;
 	}
-	
+
 	/**
 	 * 
 	 * @return VisibleObject
@@ -224,7 +224,7 @@ public abstract class VisibleObject extends AionObject
 	{
 		return target;
 	}
-	
+
 	/**
 	 * 
 	 * @param creature
@@ -233,7 +233,7 @@ public abstract class VisibleObject extends AionObject
 	{
 		target = creature;
 	}
-	
+
 	/**
 	 * 
 	 * @param objectId
@@ -241,9 +241,9 @@ public abstract class VisibleObject extends AionObject
 	 */
 	public boolean isTargeting(int objectId)
 	{
-		return target != null && target.getObjectId() == objectId; 
+		return target != null && target.getObjectId() == objectId;
 	}
-	
+
 	/**
 	 *  Return spawn template of this VisibleObject
 	 *  
@@ -277,7 +277,7 @@ public abstract class VisibleObject extends AionObject
 	{
 		this.objectTemplate = objectTemplate;
 	}
-	
+
 	/**
 	 * Called when controlled object is seeing other VisibleObject.
 	 * 
@@ -296,7 +296,7 @@ public abstract class VisibleObject extends AionObject
 	public void notSee(VisibleObject object, boolean isOutOfRange)
 	{
 		if (object instanceof Player)
-		PacketSendUtility.sendPacket((Player)object, new SM_DELETE(this, isOutOfRange ? 0 : 15));
+			PacketSendUtility.sendPacket((Player) object, new SM_DELETE(this, isOutOfRange ? 0 : 15));
 	}
 
 	/**
@@ -307,7 +307,7 @@ public abstract class VisibleObject extends AionObject
 		/**
 		 * despawn object from world.
 		 */
-		if(isSpawned())
+		if (isSpawned())
 			World.getInstance().despawn(this);
 		/**
 		 * Delete object from World.
@@ -315,26 +315,26 @@ public abstract class VisibleObject extends AionObject
 
 		World.getInstance().removeObject(this);
 	}
-	
+
 	/**
 	 *  Called when object is re-spawned
 	 */
 	public void onRespawn()
 	{
-		
+
 	}
-	
+
 	public void onDespawn(boolean forced)
 	{
-		if(forced)
+		if (forced)
 			cancelTask(TaskId.DECAY);
 
-		if(!this.isSpawned())
+		if (!this.isSpawned())
 			return;
 
 		World.getInstance().despawn(this);
 	}
-	
+
 	/**
 	 * 
 	 * @param taskId
@@ -344,7 +344,7 @@ public abstract class VisibleObject extends AionObject
 	{
 		return tasks.get(taskId.ordinal());
 	}
-	
+
 	/**
 	 * 
 	 * @param taskId
@@ -362,7 +362,7 @@ public abstract class VisibleObject extends AionObject
 	public void cancelTask(TaskId taskId)
 	{
 		Future<?> task = tasks.remove(taskId.ordinal());
-		if(task != null)
+		if (task != null)
 		{
 			task.cancel(false);
 		}
@@ -378,7 +378,7 @@ public abstract class VisibleObject extends AionObject
 		cancelTask(taskId);
 		tasks.put(taskId.ordinal(), task);
 	}
-	
+
 	/**
 	 *  If task already exist - it will not be replaced
 	 * @param taskId
@@ -395,9 +395,9 @@ public abstract class VisibleObject extends AionObject
 	 */
 	public void cancelAllTasks()
 	{
-		for(Future<?> task : tasks.values())
+		for (Future<?> task : tasks.values())
 		{
-			if(task != null)
+			if (task != null)
 			{
 				task.cancel(true);
 			}
@@ -405,13 +405,13 @@ public abstract class VisibleObject extends AionObject
 		// FIXME: This can fill error logs with NPE if left null. Should never happen...
 		tasks = new FastMap<Integer, Future<?>>().shared();
 	}
-	
+
 	/**
 	 * This method should be called to make forced despawn of NPC and delete it from the world
 	 */
 	public void onDelete()
 	{
-		if(isInWorld())
+		if (isInWorld())
 		{
 			this.onDespawn(true);
 			this.delete();

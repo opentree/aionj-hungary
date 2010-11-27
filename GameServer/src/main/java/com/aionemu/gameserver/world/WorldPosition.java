@@ -18,7 +18,6 @@ package com.aionemu.gameserver.world;
 
 import org.apache.log4j.Logger;
 
-
 /**
  * Position of object in the world.
  * 
@@ -30,37 +29,37 @@ public class WorldPosition
 	/**
 	 * Logger
 	 */
-	private static final Logger	log	= Logger.getLogger(WorldPosition.class);
+	private static final Logger	log			= Logger.getLogger(WorldPosition.class);
 
 	/**
 	 * Map id.
 	 */
-	private int mapId;
+	private int					mapId;
 	/**
 	 * Map Region.
 	 */
-	private MapRegion	mapRegion;
+	private MapRegion			mapRegion;
 	/**
 	 * World position x
 	 */
-	private float		x;
+	private float				x;
 	/**
 	 * World position y
 	 */
-	private float		y;
+	private float				y;
 	/**
 	 * World position z
 	 */
-	private float		z;
+	private float				z;
 
 	/**
 	 * Value from 0 to 120 (120==0 actually)
 	 */
-	private byte		heading;
+	private byte				heading;
 	/**
 	 * indicating if object is spawned or not.
 	 */
-	private boolean		isSpawned	= false;
+	private boolean				isSpawned	= false;
 
 	/**
 	 * Return World map id.
@@ -121,7 +120,7 @@ public class WorldPosition
 	{
 		return isSpawned ? mapRegion : null;
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -130,7 +129,7 @@ public class WorldPosition
 	{
 		return mapRegion.getParent().getInstanceId();
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -148,6 +147,7 @@ public class WorldPosition
 	{
 		return mapRegion.getParent().getParent().isInstanceType();
 	}
+
 	/**
 	 * Return heading.
 	 * 
@@ -166,6 +166,7 @@ public class WorldPosition
 	{
 		return mapRegion.getWorld();
 	}
+
 	/**
 	 * Check if object is spawned.
 	 * 
@@ -217,21 +218,20 @@ public class WorldPosition
 	@Override
 	public String toString()
 	{
-		return "WorldPosition [heading=" + heading + ", isSpawned=" + isSpawned + ", mapRegion=" + mapRegion + ", x="
-			+ x + ", y=" + y + ", z=" + z + "]";
+		return "WorldPosition [heading=" + heading + ", isSpawned=" + isSpawned + ", mapRegion=" + mapRegion + ", x=" + x + ", y=" + y + ", z=" + z + "]";
 	}
 
 	@Override
 	public boolean equals(Object o)
 	{
-		if(this == o)
+		if (this == o)
 			return true;
-		if(!(o instanceof WorldPosition))
+		if (!(o instanceof WorldPosition))
 			return false;
 
 		WorldPosition pos = (WorldPosition) o;
-		return this.x == pos.x && this.y == pos.y && this.z == pos.z && this.isSpawned == pos.isSpawned
-			&& this.heading == pos.heading && this.mapRegion == pos.mapRegion;
+		return this.x == pos.x && this.y == pos.y && this.z == pos.z && this.isSpawned == pos.isSpawned && this.heading == pos.heading
+				&& this.mapRegion == pos.mapRegion;
 	}
 
 	@Override
@@ -247,5 +247,5 @@ public class WorldPosition
 		pos.z = this.z;
 		return pos;
 	}
-	
+
 }

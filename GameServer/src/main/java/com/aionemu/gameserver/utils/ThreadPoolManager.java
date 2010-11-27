@@ -39,11 +39,11 @@ import com.aionemu.gameserver.configs.main.ThreadConfig;
  */
 public final class ThreadPoolManager implements Executor
 {
-	private static final Logger					log				= Logger.getLogger(ThreadPoolManager.class);
+	private static final Logger					log											= Logger.getLogger(ThreadPoolManager.class);
 
-	public static final long MAXIMUM_RUNTIME_IN_MILLISEC_WITHOUT_WARNING = 5000;
+	public static final long					MAXIMUM_RUNTIME_IN_MILLISEC_WITHOUT_WARNING	= 5000;
 
-	private static final long					MAX_DELAY		= TimeUnit.NANOSECONDS.toMillis(Long.MAX_VALUE - System.nanoTime()) / 2;
+	private static final long					MAX_DELAY									= TimeUnit.NANOSECONDS.toMillis(Long.MAX_VALUE - System.nanoTime()) / 2;
 
 	private final ScheduledThreadPoolExecutor	scheduledPool;
 	private final ThreadPoolExecutor			instantPool;
@@ -59,9 +59,9 @@ public final class ThreadPoolManager implements Executor
 	 */
 	private static final class SingletonHolder
 	{
-		private static final ThreadPoolManager INSTANCE = new ThreadPoolManager();
+		private static final ThreadPoolManager	INSTANCE	= new ThreadPoolManager();
 	}
-	
+
 	public static ThreadPoolManager getInstance()
 	{
 		return SingletonHolder.INSTANCE;
@@ -78,13 +78,11 @@ public final class ThreadPoolManager implements Executor
 		scheduledPool.setRejectedExecutionHandler(new AionRejectedExecutionHandler());
 		scheduledPool.prestartAllCoreThreads();
 
-		instantPool = new ThreadPoolExecutor(instantPoolSize, instantPoolSize, 0, TimeUnit.SECONDS,
-			new ArrayBlockingQueue<Runnable>(100000));
+		instantPool = new ThreadPoolExecutor(instantPoolSize, instantPoolSize, 0, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(100000));
 		instantPool.setRejectedExecutionHandler(new AionRejectedExecutionHandler());
 		instantPool.prestartAllCoreThreads();
 
-		longRunningPool = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60L, TimeUnit.SECONDS,
-			new SynchronousQueue<Runnable>());
+		longRunningPool = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
 		longRunningPool.setRejectedExecutionHandler(new AionRejectedExecutionHandler());
 		longRunningPool.prestartAllCoreThreads();
 
@@ -92,7 +90,8 @@ public final class ThreadPoolManager implements Executor
 		disconnectionScheduledThreadPool.setRejectedExecutionHandler(new AionRejectedExecutionHandler());
 		disconnectionScheduledThreadPool.prestartAllCoreThreads();
 
-		scheduleAtFixedRate(new Runnable(){
+		scheduleAtFixedRate(new Runnable()
+		{
 			@Override
 			public void run()
 			{
@@ -100,9 +99,8 @@ public final class ThreadPoolManager implements Executor
 			}
 		}, 100000, 100000);
 
-		log.info("ThreadPoolManager: Initialized with " + scheduledPool.getPoolSize() + " scheduler, "
-			+ instantPool.getPoolSize() + " instant, " + longRunningPool.getPoolSize() + " long, "
-			+ disconnectionScheduledThreadPool.getPoolSize() + " disconnection running thread(s).");
+		log.info("ThreadPoolManager: Initialized with " + scheduledPool.getPoolSize() + " scheduler, " + instantPool.getPoolSize() + " instant, "
+				+ longRunningPool.getPoolSize() + " long, " + disconnectionScheduledThreadPool.getPoolSize() + " disconnection running thread(s).");
 	}
 
 	private final long validate(long delay)
@@ -275,7 +273,7 @@ public final class ThreadPoolManager implements Executor
 
 			success |= awaitTermination(10000);
 		}
-		catch(InterruptedException e)
+		catch (InterruptedException e)
 		{
 			e.printStackTrace();
 		}
@@ -290,11 +288,11 @@ public final class ThreadPoolManager implements Executor
 	{
 		return tp.getQueue().size() + tp.getActiveCount();
 	}
-	
+
 	public List<String> getStats()
 	{
 		List<String> list = new ArrayList<String>();
-		
+
 		list.add("");
 		list.add("Scheduled pool:");
 		list.add("=================================================");
@@ -341,7 +339,7 @@ public final class ThreadPoolManager implements Executor
 		list.add("\tgetQueuedTaskCount: .. " + disconnectionScheduledThreadPool.getQueue().size());
 		list.add("\tgetTaskCount: ........ " + disconnectionScheduledThreadPool.getTaskCount());
 		list.add("");
-		
+
 		return list;
 	}
 
@@ -349,15 +347,15 @@ public final class ThreadPoolManager implements Executor
 	{
 		final long begin = System.currentTimeMillis();
 
-		while(System.currentTimeMillis() - begin < timeoutInMillisec)
+		while (System.currentTimeMillis() - begin < timeoutInMillisec)
 		{
-			if(!scheduledPool.awaitTermination(10, TimeUnit.MILLISECONDS) && scheduledPool.getActiveCount() > 0)
+			if (!scheduledPool.awaitTermination(10, TimeUnit.MILLISECONDS) && scheduledPool.getActiveCount() > 0)
 				continue;
 
-			if(!instantPool.awaitTermination(10, TimeUnit.MILLISECONDS) && instantPool.getActiveCount() > 0)
+			if (!instantPool.awaitTermination(10, TimeUnit.MILLISECONDS) && instantPool.getActiveCount() > 0)
 				continue;
 
-			if(!longRunningPool.awaitTermination(10, TimeUnit.MILLISECONDS) && longRunningPool.getActiveCount() > 0)
+			if (!longRunningPool.awaitTermination(10, TimeUnit.MILLISECONDS) && longRunningPool.getActiveCount() > 0)
 				continue;
 
 			return true;

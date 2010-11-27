@@ -80,19 +80,23 @@ abstract class DataLoader
 	@SuppressWarnings("unchecked")
 	protected void loadData()
 	{
-		if(dataFile.isDirectory())
+		if (dataFile.isDirectory())
 		{
-			Collection<?> files = FileUtils.listFiles(dataFile, FileFilterUtils.andFileFilter(FileFilterUtils
-				.andFileFilter(FileFilterUtils.notFileFilter(FileFilterUtils.nameFileFilter("new")), FileFilterUtils
-					.suffixFileFilter(".txt")), HiddenFileFilter.VISIBLE), HiddenFileFilter.VISIBLE);
-			Collections.sort((List<File>)files, new Comparator<File>(){
+			Collection<?> files = FileUtils.listFiles(
+					dataFile,
+					FileFilterUtils.andFileFilter(
+							FileFilterUtils.andFileFilter(FileFilterUtils.notFileFilter(FileFilterUtils.nameFileFilter("new")),
+									FileFilterUtils.suffixFileFilter(".txt")), HiddenFileFilter.VISIBLE), HiddenFileFilter.VISIBLE);
+			Collections.sort((List<File>) files, new Comparator<File>()
+			{
 				@Override
-				public int compare(File o1, File o2) {
+				public int compare(File o1, File o2)
+				{
 					return o1.getName().compareTo(o2.getName());
 				}
 			});
 
-			for(Object file1 : files)
+			for (Object file1 : files)
 			{
 				File f = (File) file1;
 				loadFile(f);
@@ -120,17 +124,17 @@ abstract class DataLoader
 		try
 		{
 			it = FileUtils.lineIterator(file);
-			while(it.hasNext())
+			while (it.hasNext())
 			{
-				String line = it.nextLine(); 
-				if(line.isEmpty() || line.startsWith("#"))
+				String line = it.nextLine();
+				if (line.isEmpty() || line.startsWith("#"))
 				{
 					continue;
 				}
 				parse(line);
 			}
 		}
-		catch(IOException e)
+		catch (IOException e)
 		{
 			log.error("Error while loading " + getClass().getSimpleName() + ", file: " + file.getPath(), e);
 		}
@@ -171,7 +175,7 @@ abstract class DataLoader
 
 			return true;
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			log.fatal("Error while saving " + desc, e);
 			return false;

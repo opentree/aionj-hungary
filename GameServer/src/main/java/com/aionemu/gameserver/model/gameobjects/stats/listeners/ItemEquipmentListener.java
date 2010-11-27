@@ -53,17 +53,17 @@ public class ItemEquipmentListener
 	private static void onItemEquipment(ItemTemplate itemTemplate, int slot, CreatureGameStats<?> cgs)
 	{
 		TreeSet<StatModifier> modifiers = itemTemplate.getModifiers();
-		if (modifiers==null)
+		if (modifiers == null)
 		{
 			if (cgs instanceof PlayerGameStats)
 			{
-				log.debug("No effect was found for item "+itemTemplate.getTemplateId());
+				log.debug("No effect was found for item " + itemTemplate.getTemplateId());
 			}
 		}
-		
+
 		cgs.addModifiers(ItemStatEffectId.getInstance(itemTemplate.getTemplateId(), slot), modifiers);
 	}
-	
+
 	/**
 	 * @param item
 	 * @param cgs
@@ -71,23 +71,23 @@ public class ItemEquipmentListener
 	public static void onItemEquipment(Item item, Player owner)
 	{
 		ItemTemplate itemTemplate = item.getItemTemplate();
-		onItemEquipment(itemTemplate,item.getEquipmentSlot(),owner.getGameStats());
-		
+		onItemEquipment(itemTemplate, item.getEquipmentSlot(), owner.getGameStats());
+
 		// Check if belongs to ItemSet
-		if(itemTemplate.isItemSet())
+		if (itemTemplate.isItemSet())
 			onItemSetPartEquipment(itemTemplate.getItemSet(), owner);
 
-		if(item.hasManaStones())
+		if (item.hasManaStones())
 			addStonesStats(item.getItemStones(), owner.getGameStats());
-		
+
 		addGodstoneEffect(owner, item);
-		
-		if(item.getItemTemplate().isWeapon())
+
+		if (item.getItemTemplate().isWeapon())
 			recalculateWeaponMastery(owner);
-		
-		if(item.getItemTemplate().isArmor())
+
+		if (item.getItemTemplate().isArmor())
 			recalculateArmorMastery(owner);
-		
+
 		EnchantService.onItemEquip(owner, item);
 	}
 
@@ -98,31 +98,28 @@ public class ItemEquipmentListener
 	 */
 	private static void onItemSetPartEquipment(ItemSetTemplate itemSetTemplate, Player player)
 	{
-		if(itemSetTemplate == null)
+		if (itemSetTemplate == null)
 			return;
 
 		// 1.- Check equipment for items already equip with this itemSetTemplate id
 		int itemSetPartsEquipped = player.getEquipment().itemSetPartsEquipped(itemSetTemplate.getId());
 
 		// 2.- Check Item Set Parts and add effects one by one if not done already
-		for(PartBonus itempartbonus : itemSetTemplate.getPartbonus())
+		for (PartBonus itempartbonus : itemSetTemplate.getPartbonus())
 		{
-			ItemSetStatEffectId setEffectId = ItemSetStatEffectId.getInstance(itemSetTemplate.getId(), itempartbonus
-				.getCount());
+			ItemSetStatEffectId setEffectId = ItemSetStatEffectId.getInstance(itemSetTemplate.getId(), itempartbonus.getCount());
 			// If the partbonus was not applied before, do it now
-			if(itempartbonus.getCount() <= itemSetPartsEquipped
-				&& !player.getGameStats().effectAlreadyAdded(setEffectId))
+			if (itempartbonus.getCount() <= itemSetPartsEquipped && !player.getGameStats().effectAlreadyAdded(setEffectId))
 			{
 				player.getGameStats().addModifiers(setEffectId, itempartbonus.getModifiers());
 			}
 		}
 
 		// 3.- Finally check if all items are applied and set the full bonus if not already applied
-		if(itemSetTemplate.getFullbonus() != null && itemSetPartsEquipped == itemSetTemplate.getFullbonus().getCount())
+		if (itemSetTemplate.getFullbonus() != null && itemSetPartsEquipped == itemSetTemplate.getFullbonus().getCount())
 		{
-			ItemSetStatEffectId setEffectId = ItemSetStatEffectId.getInstance(itemSetTemplate.getId(),
-				itemSetPartsEquipped + 1);
-			if(!player.getGameStats().effectAlreadyAdded(setEffectId))
+			ItemSetStatEffectId setEffectId = ItemSetStatEffectId.getInstance(itemSetTemplate.getId(), itemSetPartsEquipped + 1);
+			if (!player.getGameStats().effectAlreadyAdded(setEffectId))
 			{
 				// Add the full bonus with index = total parts + 1 to avoid confusion with part bonus equal to number of
 				// objects
@@ -137,59 +134,59 @@ public class ItemEquipmentListener
 	private static void recalculateWeaponMastery(Player owner)
 	{
 		//don't calculate for not initialized equipment
-		if(owner.getEquipment() == null)
+		if (owner.getEquipment() == null)
 			return;
-		
+
 		WeaponType weaponType = owner.getEquipment().getMainHandWeaponType();
-		int currentWeaponMasterySkill =  owner.getEffectController().getWeaponMastery();
+		int currentWeaponMasterySkill = owner.getEffectController().getWeaponMastery();
 		if (weaponType == null && currentWeaponMasterySkill != 0)
 		{
 			owner.getEffectController().removePassiveEffect(currentWeaponMasterySkill);
 			return;
 		}
-		
+
 		boolean weaponEquiped = owner.getEquipment().isWeaponEquipped(weaponType);
 		Integer skillId = owner.getSkillList().getWeaponMasterySkill(weaponType);
-		if(skillId == null)
+		if (skillId == null)
 			return;
 		boolean masterySet = owner.getEffectController().isWeaponMasterySet(skillId);
 		//remove effect if no weapon is equiped
-			
-		if(masterySet && !weaponEquiped)
+
+		if (masterySet && !weaponEquiped)
 		{
 			owner.getEffectController().removePassiveEffect(skillId);
 		}
 		//add effect if weapon is equiped
-		if(!masterySet && weaponEquiped)
+		if (!masterySet && weaponEquiped)
 		{
 			owner.useSkill(skillId);
 		}
 	}
-	
+
 	/**
 	 * @param owner
 	 */
 	private static void recalculateArmorMastery(Player owner)
 	{
 		//don't calculate for not initialized equipment
-		if(owner.getEquipment() == null)
+		if (owner.getEquipment() == null)
 			return;
-		
-		for(ArmorType armorType : ArmorType.values())
+
+		for (ArmorType armorType : ArmorType.values())
 		{
 			boolean armorEquiped = owner.getEquipment().isArmorEquipped(armorType);
 			Integer skillId = owner.getSkillList().getArmorMasterySkill(armorType);
-			if(skillId == null)
+			if (skillId == null)
 				continue;
 			boolean masterySet = owner.getEffectController().isArmorMasterySet(skillId);
 			//remove effect if no armor is equiped
-			
-			if(masterySet && !armorEquiped)
+
+			if (masterySet && !armorEquiped)
 			{
 				owner.getEffectController().removePassiveEffect(skillId);
 			}
 			//add effect if armor is equiped
-			if(!masterySet && armorEquiped)
+			if (!masterySet && armorEquiped)
 			{
 				owner.useSkill(skillId);
 			}
@@ -204,15 +201,15 @@ public class ItemEquipmentListener
 	 */
 	private static void addStonesStats(Set<ManaStone> itemStones, CreatureGameStats<?> cgs)
 	{
-		if(itemStones == null || itemStones.size() == 0)
+		if (itemStones == null || itemStones.size() == 0)
 			return;
-		
-		for(ManaStone stone : itemStones)
+
+		for (ManaStone stone : itemStones)
 		{
 			addStoneStats(stone, cgs);
 		}
 	}
-	
+
 	/**
 	 * All modifiers of stones will be removed
 	 * 
@@ -221,19 +218,19 @@ public class ItemEquipmentListener
 	 */
 	public static void removeStoneStats(Set<ManaStone> itemStones, CreatureGameStats<?> cgs)
 	{
-		if(itemStones == null || itemStones.size() == 0)
+		if (itemStones == null || itemStones.size() == 0)
 			return;
-		
-		for(ManaStone stone : itemStones)
+
+		for (ManaStone stone : itemStones)
 		{
 			TreeSet<StatModifier> modifiers = stone.getModifiers();
-			if(modifiers != null)
+			if (modifiers != null)
 			{
 				cgs.endEffect(StoneStatEffectId.getInstance(stone.getItemObjId(), stone.getSlot()));
 			}
 		}
 	}
-	
+
 	/**
 	 *  Used when socketing of equipped item
 	 *  
@@ -243,12 +240,12 @@ public class ItemEquipmentListener
 	public static void addStoneStats(ManaStone stone, CreatureGameStats<?> cgs)
 	{
 		TreeSet<StatModifier> modifiers = stone.getModifiers();
-		if(modifiers != null)
+		if (modifiers != null)
 		{
 			cgs.addModifiers(StoneStatEffectId.getInstance(stone.getItemObjId(), stone.getSlot()), modifiers);
-		}	
+		}
 	}
-	
+
 	/**
 	 * 
 	 * @param item
@@ -257,27 +254,26 @@ public class ItemEquipmentListener
 	public static void onItemUnequipment(Item item, Player owner)
 	{
 		// Check if belongs to an ItemSet
-		if(item.getItemTemplate().isItemSet())
+		if (item.getItemTemplate().isItemSet())
 			onItemSetPartUnequipment(item.getItemTemplate().getItemSet(), owner);
 
-		owner.getGameStats().endEffect(
-			ItemStatEffectId.getInstance(item.getItemTemplate().getTemplateId(), item.getEquipmentSlot()));
+		owner.getGameStats().endEffect(ItemStatEffectId.getInstance(item.getItemTemplate().getTemplateId(), item.getEquipmentSlot()));
 
-		if(item.hasManaStones())
+		if (item.hasManaStones())
 			removeStoneStats(item.getItemStones(), owner.getGameStats());
 
 		removeGodstoneEffect(owner, item);
-		
-		if(item.getItemTemplate().isWeapon())
+
+		if (item.getItemTemplate().isWeapon())
 			recalculateWeaponMastery(owner);
-		
-		if(item.getItemTemplate().isArmor())
+
+		if (item.getItemTemplate().isArmor())
 			recalculateArmorMastery(owner);
-		
+
 		EnchantService.onItemUnequip(owner, item);
-		
+
 	}
-	
+
 	/**
 	 * 
 	 * @param itemSetTemplate
@@ -285,54 +281,48 @@ public class ItemEquipmentListener
 	 */
 	private static void onItemSetPartUnequipment(ItemSetTemplate itemSetTemplate, Player player)
 	{
-		if(itemSetTemplate == null)
+		if (itemSetTemplate == null)
 			return;
 
 		// 1.- Check number of item parts equipped before the removal (i.e. current + 1)
 		int previousItemSetPartsEquipped = player.getEquipment().itemSetPartsEquipped(itemSetTemplate.getId()) + 1;
 
 		// 2.- Check if removed one item from the full set and if so remove the full bonus
-		if(itemSetTemplate.getFullbonus() != null
-			&& previousItemSetPartsEquipped == itemSetTemplate.getFullbonus().getCount())
+		if (itemSetTemplate.getFullbonus() != null && previousItemSetPartsEquipped == itemSetTemplate.getFullbonus().getCount())
 		{
 			// Full bonus was added with index = total parts + 1 to avoid confusion with part bonus equal to total
 			// number of item set parts
-			player.getGameStats()
-				.endEffect(
-					ItemSetStatEffectId.getInstance(itemSetTemplate.getId(),
-						itemSetTemplate.getFullbonus().getCount() + 1));
+			player.getGameStats().endEffect(ItemSetStatEffectId.getInstance(itemSetTemplate.getId(), itemSetTemplate.getFullbonus().getCount() + 1));
 		}
 
 		// 3.- Check Item Set Parts and remove appropriate effects
-		for(PartBonus itempartbonus : itemSetTemplate.getPartbonus())
+		for (PartBonus itempartbonus : itemSetTemplate.getPartbonus())
 		{
 			// Remove modifier if not applicable anymore
-			if(itempartbonus.getCount() == previousItemSetPartsEquipped)
+			if (itempartbonus.getCount() == previousItemSetPartsEquipped)
 			{
-				player.getGameStats().endEffect(
-					ItemSetStatEffectId.getInstance(itemSetTemplate.getId(), itempartbonus.getCount()));
+				player.getGameStats().endEffect(ItemSetStatEffectId.getInstance(itemSetTemplate.getId(), itempartbonus.getCount()));
 			}
 		}
 	}
 
-	
 	/**
 	 * @param item
 	 */
 	private static void addGodstoneEffect(Player player, Item item)
 	{
-		if(item.getGodStone() != null)
+		if (item.getGodStone() != null)
 		{
 			item.getGodStone().onEquip(player);
 		}
 	}
-	
+
 	/**
 	 * @param item
 	 */
 	private static void removeGodstoneEffect(Player player, Item item)
 	{
-		if(item.getGodStone() != null)
+		if (item.getGodStone() != null)
 		{
 			item.getGodStone().onUnEquip(player);
 		}

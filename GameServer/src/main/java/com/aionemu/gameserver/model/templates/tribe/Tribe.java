@@ -30,31 +30,27 @@ import com.aionemu.gameserver.model.TribeClass;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Tribe", propOrder ={ 
-		"aggro",
-		"hostile",
-		"friend",
-		"neutral",
-		"support" })
+@XmlType(name = "Tribe", propOrder =
+{ "aggro", "hostile", "friend", "neutral", "support" })
 public class Tribe
 {
 
-	private static List<TribeClass> EMPTY_TRIBE_LIST = new ArrayList<TribeClass>();
+	private static List<TribeClass>	EMPTY_TRIBE_LIST	= new ArrayList<TribeClass>();
 
 	@XmlList
-	protected List<TribeClass>	aggro;
+	protected List<TribeClass>		aggro;
 	@XmlList
-	protected List<TribeClass>	hostile;
+	protected List<TribeClass>		hostile;
 	@XmlList
-	protected List<TribeClass>	friend;
+	protected List<TribeClass>		friend;
 	@XmlList
-	protected List<TribeClass>	neutral;
+	protected List<TribeClass>		neutral;
 	@XmlList
-	protected List<TribeClass>	support;
+	protected List<TribeClass>		support;
 	@XmlAttribute
-	protected TribeClass		base;
+	protected TribeClass			base;
 	@XmlAttribute(required = true)
-	protected TribeClass		name;
+	protected TribeClass			name;
 
 	public List<TribeClass> getAggro()
 	{

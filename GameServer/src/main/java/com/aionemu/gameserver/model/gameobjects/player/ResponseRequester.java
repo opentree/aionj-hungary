@@ -28,10 +28,10 @@ import org.apache.log4j.Logger;
  */
 public class ResponseRequester
 {
-	private static final Logger						log		= Logger.getLogger(ResponseRequester.class);
+	private static final Logger							log	= Logger.getLogger(ResponseRequester.class);
 
-	private Player									player;
-	private HashMap<Integer,RequestResponseHandler>	map 	= new HashMap<Integer, RequestResponseHandler>();
+	private Player										player;
+	private HashMap<Integer, RequestResponseHandler>	map	= new HashMap<Integer, RequestResponseHandler>();
 
 	public ResponseRequester(Player player)
 	{

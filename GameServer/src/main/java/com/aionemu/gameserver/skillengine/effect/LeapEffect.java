@@ -37,39 +37,26 @@ import com.aionemu.gameserver.world.World;
 public class LeapEffect extends EffectTemplate
 {
 	@XmlAttribute(name = "distance")
-	private float distance;
+	private float	distance;
 	@XmlAttribute(name = "direction")
-	private float direction;
+	private float	direction;
 	@XmlAttribute(name = "up")
-	private float up;
+	private float	up;
 
-	
 	@Override
 	public void applyEffect(Effect effect)
 	{
-		final Player effector = (Player)effect.getEffector();
-		
+		final Player effector = (Player) effect.getEffector();
+
 		// Move Effector backwards direction=1 or frontwards direction=0
 		double radian = Math.toRadians(MathUtil.convertHeadingToDegree(effector.getHeading()));
-		float x1 = (float)(Math.cos(Math.PI * direction + radian) * distance);
-		float y1 = (float)(Math.sin(Math.PI * direction + radian) * distance);
-		World.getInstance().updatePosition(
-			effector,
-			effector.getX() + x1,
-			effector.getY() + y1,
-			effector.getZ() + up,
-			effector.getHeading());
-		
-		PacketSendUtility.sendPacket(effector,
-			new SM_PLAYER_MOVE(
-				effector.getX(),
-				effector.getY(),
-				effector.getZ(),
-				effector.getHeading()
-			)
-		);
-}
-	
+		float x1 = (float) (Math.cos(Math.PI * direction + radian) * distance);
+		float y1 = (float) (Math.sin(Math.PI * direction + radian) * distance);
+		World.getInstance().updatePosition(effector, effector.getX() + x1, effector.getY() + y1, effector.getZ() + up, effector.getHeading());
+
+		PacketSendUtility.sendPacket(effector, new SM_PLAYER_MOVE(effector.getX(), effector.getY(), effector.getZ(), effector.getHeading()));
+	}
+
 	@Override
 	public void calculate(Effect effect)
 	{

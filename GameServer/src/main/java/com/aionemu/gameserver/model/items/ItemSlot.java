@@ -25,70 +25,56 @@ import javolution.util.FastList;
  */
 public enum ItemSlot
 {
-	MAIN_HAND(1),
-	SUB_HAND(1<<1),
-	HELMET(1<<2),
-	TORSO(1<<3),
-	GLOVES(1<<4),
-	BOOTS(1<<5),
-	EARRINGS_LEFT(1<<6),
-	EARRINGS_RIGHT(1<<7),
-	RING_LEFT(1<<8),
-	RING_RIGHT(1<<9),
-	NECKLACE(1<<10),
-	SHOULDER(1<<11),
-	PANTS(1<<12),
-	POWER_SHARD_RIGHT(1<<13),
-	POWER_SHARD_LEFT(1<<14),
-	WINGS(1<<15),
+	MAIN_HAND(1), SUB_HAND(1 << 1), HELMET(1 << 2), TORSO(1 << 3), GLOVES(1 << 4), BOOTS(1 << 5), EARRINGS_LEFT(1 << 6), EARRINGS_RIGHT(1 << 7), RING_LEFT(
+			1 << 8), RING_RIGHT(1 << 9), NECKLACE(1 << 10), SHOULDER(1 << 11), PANTS(1 << 12), POWER_SHARD_RIGHT(1 << 13), POWER_SHARD_LEFT(1 << 14), WINGS(
+			1 << 15),
 	//non-NPC equips (slot > Short.MAX)
-	WAIST(1<<16),
-	MAIN_OFF_HAND(1<<17),
-	SUB_OFF_HAND(1<<18),
-	
+	WAIST(1 << 16),
+	MAIN_OFF_HAND(1 << 17),
+	SUB_OFF_HAND(1 << 18),
+
 	//combo
 	MAIN_OR_SUB(MAIN_HAND.slotIdMask | SUB_HAND.slotIdMask, true), // 3
 	EARRING_RIGHT_OR_LEFT(EARRINGS_LEFT.slotIdMask | EARRINGS_RIGHT.slotIdMask, true), //192
 	RING_RIGHT_OR_LEFT(RING_LEFT.slotIdMask | RING_RIGHT.slotIdMask, true), //768
 	SHARD_RIGHT_OR_LEFT(POWER_SHARD_LEFT.slotIdMask | POWER_SHARD_RIGHT.slotIdMask, true), //24576
-	TORSO_GLOVE_FOOT_SHOULDER_LEG(0, true),//TODO
-	
-	//STIGMA slots
-	STIGMA1(1<<19),
-	STIGMA2(1<<20),
-	STIGMA3(1<<21),
-	STIGMA4(1<<22),
-	STIGMA5(1<<23),
-	STIGMA6(1<<24),
-	
-	NONE(1<<25), // Unknown
-	
-	ADV_STIGMA1(1<<26),
-	ADV_STIGMA2(1<<27),
-	ADV_STIGMA3(1<<28),
-	ADV_STIGMA4(1<<29),
-	ADV_STIGMA5(1<<30)
-	;
+	TORSO_GLOVE_FOOT_SHOULDER_LEG(0, true), //TODO
 
-	private int slotIdMask;
-	private boolean combo;
-	
+	//STIGMA slots
+	STIGMA1(1 << 19),
+	STIGMA2(1 << 20),
+	STIGMA3(1 << 21),
+	STIGMA4(1 << 22),
+	STIGMA5(1 << 23),
+	STIGMA6(1 << 24),
+
+	NONE(1 << 25), // Unknown
+
+	ADV_STIGMA1(1 << 26),
+	ADV_STIGMA2(1 << 27),
+	ADV_STIGMA3(1 << 28),
+	ADV_STIGMA4(1 << 29),
+	ADV_STIGMA5(1 << 30);
+
+	private int		slotIdMask;
+	private boolean	combo;
+
 	private ItemSlot(int mask)
 	{
 		this(mask, false);
 	}
-	
+
 	private ItemSlot(int mask, boolean combo)
 	{
 		this.slotIdMask = mask;
 		this.combo = combo;
 	}
-	
+
 	public int getSlotIdMask()
 	{
 		return slotIdMask;
 	}
-	
+
 	/**
 	 * @return the combo
 	 */
@@ -100,20 +86,20 @@ public enum ItemSlot
 	public static FastList<ItemSlot> getSlotsFor(int slotIdMask)
 	{
 		FastList<ItemSlot> slots = new FastList<ItemSlot>();
-		for(ItemSlot itemSlot : values())
+		for (ItemSlot itemSlot : values())
 		{
 			int sumMask = itemSlot.slotIdMask & slotIdMask;
 			/**
 			 * possible values in this check
 			 * - one of combo slots (MAIN, RIGHT_RING etc)
 			 */
-			if(sumMask > 0 && sumMask <= slotIdMask && !itemSlot.isCombo())
-					slots.add(itemSlot);
+			if (sumMask > 0 && sumMask <= slotIdMask && !itemSlot.isCombo())
+				slots.add(itemSlot);
 		}
-		
-		if(slots.size() == 0)
-			throw new IllegalArgumentException("Invalid provided slotIdMask "+slotIdMask);
-		
+
+		if (slots.size() == 0)
+			throw new IllegalArgumentException("Invalid provided slotIdMask " + slotIdMask);
+
 		return slots;
 	}
 }

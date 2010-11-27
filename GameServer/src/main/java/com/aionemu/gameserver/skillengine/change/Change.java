@@ -31,14 +31,14 @@ import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
 public class Change
 {
 	@XmlAttribute(required = true)
-	private StatEnum stat;
+	private StatEnum	stat;
 	@XmlAttribute(required = true)
-	private Func func;
+	private Func		func;
 	@XmlAttribute(required = true)
-	private int value;	
+	private int			value;
 	@XmlAttribute
-	private int delta;
-	
+	private int			delta;
+
 	/**
 	 * @return the stat
 	 */

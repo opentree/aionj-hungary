@@ -42,8 +42,7 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
  */
 public class CreatureGameStats<T extends Creature>
 {
-	protected static final Logger							log					= Logger
-																					.getLogger(CreatureGameStats.class);
+	protected static final Logger							log					= Logger.getLogger(CreatureGameStats.class);
 
 	private static final int								ATTACK_MAX_COUNTER	= Integer.MAX_VALUE;
 
@@ -61,10 +60,10 @@ public class CreatureGameStats<T extends Creature>
 	protected CreatureGameStats(T owner)
 	{
 		this.owner = owner;
-		this.stats = new FastMap<StatEnum,Stat>();
+		this.stats = new FastMap<StatEnum, Stat>();
 		this.statsModifiers = new FastMap<StatEffectId, TreeSet<StatModifier>>().shared();
 	}
-	
+
 	/**
 	 * @return the atcount
 	 */
@@ -79,7 +78,7 @@ public class CreatureGameStats<T extends Creature>
 	 */
 	protected void setAttackCounter(int attackCounter)
 	{
-		if(attackCounter <= 0)
+		if (attackCounter <= 0)
 		{
 			this.attackCounter = 1;
 		}
@@ -88,10 +87,10 @@ public class CreatureGameStats<T extends Creature>
 			this.attackCounter = attackCounter;
 		}
 	}
-	
+
 	public void increaseAttackCounter()
 	{
-		if(attackCounter == ATTACK_MAX_COUNTER)
+		if (attackCounter == ATTACK_MAX_COUNTER)
 		{
 			this.attackCounter = 1;
 		}
@@ -100,7 +99,7 @@ public class CreatureGameStats<T extends Creature>
 			this.attackCounter++;
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param stat
@@ -111,12 +110,12 @@ public class CreatureGameStats<T extends Creature>
 		lock.writeLock().lock();
 		try
 		{
-			setStat(stat,value,false);
+			setStat(stat, value, false);
 		}
 		finally
 		{
 			lock.writeLock().unlock();
-		}		
+		}
 	}
 
 	/**
@@ -129,7 +128,7 @@ public class CreatureGameStats<T extends Creature>
 		lock.readLock().lock();
 		try
 		{
-			if(stats.containsKey(stat))
+			if (stats.containsKey(stat))
 			{
 				value = stats.get(stat).getBase();
 			}
@@ -140,7 +139,7 @@ public class CreatureGameStats<T extends Creature>
 		}
 		return value;
 	}
-	
+
 	/**
 	 * 
 	 * @param stat
@@ -163,7 +162,7 @@ public class CreatureGameStats<T extends Creature>
 		}
 		return value;
 	}
-	
+
 	/**
 	 * 
 	 * @param stat
@@ -221,16 +220,16 @@ public class CreatureGameStats<T extends Creature>
 	 */
 	public void addModifiers(StatEffectId id, TreeSet<StatModifier> modifiers)
 	{
-		if (modifiers==null)
+		if (modifiers == null)
 			return;
 
 		if (statsModifiers.containsKey(id))
-			throw new IllegalArgumentException("Effect "+id+" already active");
+			throw new IllegalArgumentException("Effect " + id + " already active");
 
 		statsModifiers.put(id, modifiers);
 		recomputeStats();
 	}
-	
+
 	/**
 	 * @return True if the StatEffectId is already added
 	 */
@@ -251,27 +250,27 @@ public class CreatureGameStats<T extends Creature>
 			resetStats();
 			FastMap<StatEnum, StatModifiers> orderedModifiers = new FastMap<StatEnum, StatModifiers>();
 
-			for(Entry<StatEffectId, TreeSet<StatModifier>> modifiers : statsModifiers.entrySet())
+			for (Entry<StatEffectId, TreeSet<StatModifier>> modifiers : statsModifiers.entrySet())
 			{
 				StatEffectId eid = modifiers.getKey();
 				int slots = 0;
-				
-				if(modifiers.getValue() == null)
+
+				if (modifiers.getValue() == null)
 					continue;
-				
-				for(StatModifier modifier : modifiers.getValue())
+
+				for (StatModifier modifier : modifiers.getValue())
 				{
-					if(eid instanceof ItemStatEffectId)
+					if (eid instanceof ItemStatEffectId)
 					{
 						slots = ((ItemStatEffectId) eid).getSlot();
 					}
 					if (slots == 0)
 						slots = ItemSlot.NONE.getSlotIdMask();
-					if(modifier.getStat().isMainOrSubHandStat() && owner instanceof Player)
+					if (modifier.getStat().isMainOrSubHandStat() && owner instanceof Player)
 					{
-						if(slots != ItemSlot.MAIN_HAND.getSlotIdMask() && slots != ItemSlot.SUB_HAND.getSlotIdMask())
+						if (slots != ItemSlot.MAIN_HAND.getSlotIdMask() && slots != ItemSlot.SUB_HAND.getSlotIdMask())
 						{
-							if(((Player) owner).getEquipment().getOffHandWeaponType() != null)
+							if (((Player) owner).getEquipment().getOffHandWeaponType() != null)
 								slots = ItemSlot.MAIN_OR_SUB.getSlotIdMask();
 							else
 							{
@@ -279,15 +278,15 @@ public class CreatureGameStats<T extends Creature>
 								setStat(StatEnum.OFF_HAND_ACCURACY, 0, false);
 							}
 						}
-						else if(slots == ItemSlot.MAIN_HAND.getSlotIdMask())
+						else if (slots == ItemSlot.MAIN_HAND.getSlotIdMask())
 							setStat(StatEnum.MAIN_HAND_POWER, 0);
 					}
 
 					List<ItemSlot> oSlots = ItemSlot.getSlotsFor(slots);
-					for(ItemSlot slot : oSlots)
+					for (ItemSlot slot : oSlots)
 					{
 						StatEnum statToModify = modifier.getStat().getMainOrSubHandStat(slot);
-						if(!orderedModifiers.containsKey(statToModify))
+						if (!orderedModifiers.containsKey(statToModify))
 						{
 							orderedModifiers.put(statToModify, new StatModifiers());
 						}
@@ -296,23 +295,22 @@ public class CreatureGameStats<T extends Creature>
 				}
 			}
 
-			for(Entry<StatEnum, StatModifiers> entry : orderedModifiers.entrySet())
+			for (Entry<StatEnum, StatModifiers> entry : orderedModifiers.entrySet())
 			{
 				applyModifiers(entry.getKey(), entry.getValue());
 			}
-			
-			setStat(StatEnum.ATTACK_SPEED, Math.round(getBaseStat(StatEnum.MAIN_HAND_ATTACK_SPEED)
-													+ getBaseStat(StatEnum.OFF_HAND_ATTACK_SPEED) * 0.25f), false);
-			
-			setStat(StatEnum.ATTACK_SPEED, getStatBonus(StatEnum.MAIN_HAND_ATTACK_SPEED) 
-										 + getStatBonus(StatEnum.OFF_HAND_ATTACK_SPEED), true);
+
+			setStat(StatEnum.ATTACK_SPEED, Math.round(getBaseStat(StatEnum.MAIN_HAND_ATTACK_SPEED) + getBaseStat(StatEnum.OFF_HAND_ATTACK_SPEED) * 0.25f),
+					false);
+
+			setStat(StatEnum.ATTACK_SPEED, getStatBonus(StatEnum.MAIN_HAND_ATTACK_SPEED) + getStatBonus(StatEnum.OFF_HAND_ATTACK_SPEED), true);
 		}
 		finally
 		{
 			lock.writeLock().unlock();
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param id
@@ -330,7 +328,7 @@ public class CreatureGameStats<T extends Creature>
 	 */
 	public int getMagicalDefenseFor(SkillElement element)
 	{
-		switch(element)
+		switch (element)
 		{
 			case EARTH:
 				return getCurrentStat(StatEnum.EARTH_RESISTANCE);
@@ -344,19 +342,19 @@ public class CreatureGameStats<T extends Creature>
 				return 0;
 		}
 	}
-	
+
 	/**
 	 *  Reset all stats
 	 *  No need to syncronized becaused guarded by recompute() write lock
 	 */
 	protected void resetStats()
 	{
-		for(Stat stat : stats.values())
+		for (Stat stat : stats.values())
 		{
 			stat.reset();
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param stat
@@ -364,16 +362,16 @@ public class CreatureGameStats<T extends Creature>
 	 */
 	protected void applyModifiers(final StatEnum stat, StatModifiers modifiers)
 	{
-		if(modifiers == null)
+		if (modifiers == null)
 			return;
 
-		if(!stats.containsKey(stat))
+		if (!stats.containsKey(stat))
 		{
 			initStat(stat, 0);
 		}
 
 		Stat oStat = stats.get(stat);
-		for(StatModifierPriority priority : StatModifierPriority.values())
+		for (StatModifierPriority priority : StatModifierPriority.values())
 		{
 			FastList<StatModifier> mod = modifiers.getModifiers(priority);
 			for (FastList.Node<StatModifier> n = mod.head(), listEnd = mod.tail(); (n = n.getNext()) != listEnd;)
@@ -384,20 +382,21 @@ public class CreatureGameStats<T extends Creature>
 			}
 		}
 
-		if(stat == StatEnum.MAXHP || stat == StatEnum.MAXMP)
+		if (stat == StatEnum.MAXHP || stat == StatEnum.MAXMP)
 		{
 			final int oldValue = getOldStat(stat);
 			final int newValue = getCurrentStat(stat);
-			if(oldValue == newValue)
+			if (oldValue == newValue)
 			{
 				return;
 			}
 			final CreatureLifeStats<? extends Creature> lifeStats = owner.getLifeStats();
-			ThreadPoolManager.getInstance().schedule(new Runnable(){
+			ThreadPoolManager.getInstance().schedule(new Runnable()
+			{
 				@Override
 				public void run()
 				{
-					switch(stat)
+					switch (stat)
 					{
 						case MAXHP:
 							int hp = lifeStats.getCurrentHp();
@@ -415,7 +414,6 @@ public class CreatureGameStats<T extends Creature>
 		}
 	}
 
-	
 	/**
 	 * 
 	 * @param stat
@@ -423,7 +421,7 @@ public class CreatureGameStats<T extends Creature>
 	 */
 	protected void initStat(StatEnum stat, int value)
 	{
-		if(!stats.containsKey(stat))
+		if (!stats.containsKey(stat))
 		{
 			stats.put(stat, new Stat(stat, value));
 		}
@@ -433,7 +431,7 @@ public class CreatureGameStats<T extends Creature>
 			stats.get(stat).set(value, false);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param stat
@@ -442,29 +440,29 @@ public class CreatureGameStats<T extends Creature>
 	 */
 	protected void setStat(StatEnum stat, int value, boolean bonus)
 	{
-		if(!stats.containsKey(stat))
+		if (!stats.containsKey(stat))
 		{
 			stats.put(stat, new Stat(stat, 0));
 		}
 		stats.get(stat).set(value, bonus);
 	}
-	
+
 	@Override
 	public String toString()
 	{
 		TextBuilder tb = TextBuilder.newInstance();
-		
+
 		tb.append('{');
 		tb.append("owner:" + owner.getObjectId());
-		for(Stat stat : stats.values())
+		for (Stat stat : stats.values())
 		{
 			tb.append(stat);
 		}
 		tb.append('}');
 		String toString = tb.toString();
-		
+
 		TextBuilder.recycle(tb);
-		
-		return toString ;
+
+		return toString;
 	}
 }

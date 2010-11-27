@@ -34,7 +34,7 @@ public abstract class DropListDAO implements DAO
 	{
 		return DropListDAO.class.getName();
 	}
-	
+
 	public abstract DropList load();
-	
+
 }

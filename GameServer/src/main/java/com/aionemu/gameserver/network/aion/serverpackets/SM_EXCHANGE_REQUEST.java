@@ -27,13 +27,11 @@ public class SM_EXCHANGE_REQUEST extends AbstractAionServerPacket<AionChannelHan
 {
 
 	private String	receiver;
-	
-	
+
 	public SM_EXCHANGE_REQUEST(String receiver)
 	{
 		this.receiver = receiver;
 	}
-
 
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)

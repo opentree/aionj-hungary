@@ -118,21 +118,21 @@ public class SM_MESSAGE extends AbstractAionServerPacket<AionChannelHandler>
 	{
 		boolean canRead = true;
 
-		if(race != null)
+		if (race != null)
 		{
 			canRead = chatType.isSysMsg() || CustomConfig.FACTIONS_SPEAKING_MODE == 1 || player.getAccessLevel() > 0
-				|| (cHandler.getActivePlayer() != null && cHandler.getActivePlayer().getAccessLevel() > 0);
+					|| (cHandler.getActivePlayer() != null && cHandler.getActivePlayer().getAccessLevel() > 0);
 		}
 
-		writeC( chatType.toInteger()); // type
+		writeC(chatType.toInteger()); // type
 
 		/*
 		 * 0 : all 1 : elyos 2 : asmodians
 		 */
-		writeC( canRead ? 0 : race.getRaceId() + 1);
+		writeC(canRead ? 0 : race.getRaceId() + 1);
 		writeD(senderObjectId); // sender object id
 
-		switch(chatType)
+		switch (chatType)
 		{
 			case NORMAL:
 			case UNKNOWN_0x18: // unknown, sent by official server

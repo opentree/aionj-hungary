@@ -46,16 +46,16 @@ public class SM_GS_AUTH extends AbstractServerPacket<LoginServerChannelHandler>
 		List<IPRange> ranges = IPConfig.getRanges();
 		int size = ranges.size();
 		writeD(size);
-		for(int i = 0; i < size; i++)
+		for (int i = 0; i < size; i++)
 		{
 			IPRange ipRange = ranges.get(i);
 			byte[] min = ipRange.getMinAsByteArray();
 			byte[] max = ipRange.getMaxAsByteArray();
-			writeC( min.length);
+			writeC(min.length);
 			writeB(min);
-			writeC( max.length);
+			writeC(max.length);
 			writeB(max);
-			writeC( ipRange.getAddress().length);
+			writeC(ipRange.getAddress().length);
 			writeB(ipRange.getAddress());
 		}
 

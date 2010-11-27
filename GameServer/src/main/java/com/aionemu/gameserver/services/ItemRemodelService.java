@@ -37,15 +37,15 @@ public class ItemRemodelService
 	 * @param keepItemObjId
 	 * @param extractItemObjId
 	 */
-	public static void remodelItem (Player player, int keepItemObjId, int extractItemObjId)
+	public static void remodelItem(Player player, int keepItemObjId, int extractItemObjId)
 	{
 		Storage inventory = player.getInventory();
 		Item keepItem = inventory.getItemByObjId(keepItemObjId);
 		Item extractItem = inventory.getItemByObjId(extractItemObjId);
-		
+
 		long remodelCost = player.getPrices().getPriceForService(1000);
-		
-		if(keepItem == null || extractItem == null)
+
+		if (keepItem == null || extractItem == null)
 		{ // NPE check.
 			return;
 		}
@@ -53,11 +53,11 @@ public class ItemRemodelService
 		// Check Player Level
 		if (player.getLevel() < 20)
 		{
-			
+
 			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_CHANGE_ITEM_SKIN_PC_LEVEL_LIMIT);
 			return;
 		}
-		
+
 		// Check for using "Pattern Reshaper" (168100000)
 		if (extractItem.getItemTemplate().getTemplateId() == 168100000)
 		{
@@ -66,84 +66,74 @@ public class ItemRemodelService
 				PacketSendUtility.sendMessage(player, "That item does not have a remodeled skin to remove.");
 				return;
 			}
-			
+
 			// Check Kinah
 			if (!ItemService.decreaseKinah(player, remodelCost))
 			{
 				PacketSendUtility.sendPacket(player,
-					SM_SYSTEM_MESSAGE.STR_CHANGE_ITEM_SKIN_NOT_ENOUGH_GOLD(new DescriptionId(keepItem.getItemTemplate().getNameId())));
+						SM_SYSTEM_MESSAGE.STR_CHANGE_ITEM_SKIN_NOT_ENOUGH_GOLD(new DescriptionId(keepItem.getItemTemplate().getNameId())));
 				return;
 			}
 
 			// Remove Pattern Reshaper
 			ItemService.decreaseItemCount(player, extractItem, 1);
-			
+
 			// Revert item to ORIGINAL SKIN
 			keepItem.setItemSkinTemplate(keepItem.getItemTemplate());
-			
+
 			// Remove dye color if item can not be dyed.
 			if (!keepItem.getItemTemplate().isItemDyePermitted())
 				keepItem.setItemColor(0);
-			
-			PacketSendUtility.sendPacket(player,
-				SM_SYSTEM_MESSAGE.STR_CHANGE_ITEM_SKIN_SUCCEED(new DescriptionId(keepItem.getItemTemplate().getNameId())));
-			
+
+			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_CHANGE_ITEM_SKIN_SUCCEED(new DescriptionId(keepItem.getItemTemplate().getNameId())));
+
 			return;
 		}
 		// Check that types match.
-		if(keepItem.getItemTemplate().getWeaponType() != extractItem.getItemSkinTemplate().getWeaponType()
-			|| (extractItem.getItemSkinTemplate().getArmorType() != ArmorType.CLOTHES
-				&& keepItem.getItemTemplate().getArmorType() != extractItem.getItemSkinTemplate().getArmorType())
-			|| keepItem.getItemTemplate().getArmorType() == ArmorType.CLOTHES
-			|| keepItem.getItemTemplate().getItemSlot() != extractItem.getItemSkinTemplate().getItemSlot())
+		if (keepItem.getItemTemplate().getWeaponType() != extractItem.getItemSkinTemplate().getWeaponType()
+				|| (extractItem.getItemSkinTemplate().getArmorType() != ArmorType.CLOTHES && keepItem.getItemTemplate().getArmorType() != extractItem
+						.getItemSkinTemplate().getArmorType()) || keepItem.getItemTemplate().getArmorType() == ArmorType.CLOTHES
+				|| keepItem.getItemTemplate().getItemSlot() != extractItem.getItemSkinTemplate().getItemSlot())
 		{
-			PacketSendUtility.sendPacket(player,
-				SM_SYSTEM_MESSAGE.STR_CHANGE_ITEM_SKIN_NOT_COMPATIBLE(
-					new DescriptionId(keepItem.getItemTemplate().getNameId()),
-					new DescriptionId(extractItem.getItemSkinTemplate().getNameId())
-			));
+			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_CHANGE_ITEM_SKIN_NOT_COMPATIBLE(
+					new DescriptionId(keepItem.getItemTemplate().getNameId()), new DescriptionId(extractItem.getItemSkinTemplate().getNameId())));
 			return;
 		}
 
 		// TODO: Find a consistent mask value to determine if item may be remodeled.
-		
+
 		// Temporary check... I *think* epic and mythic items can *never* be remodeled...
-		if (keepItem.getItemTemplate().getItemQuality() == ItemQuality.EPIC ||
-			keepItem.getItemTemplate().getItemQuality() == ItemQuality.MYTHIC)
+		if (keepItem.getItemTemplate().getItemQuality() == ItemQuality.EPIC || keepItem.getItemTemplate().getItemQuality() == ItemQuality.MYTHIC)
 		{
-			PacketSendUtility.sendPacket(player, new SM_SYSTEM_MESSAGE(1300478,
-				new DescriptionId(keepItem.getItemTemplate().getNameId())));
+			PacketSendUtility.sendPacket(player, new SM_SYSTEM_MESSAGE(1300478, new DescriptionId(keepItem.getItemTemplate().getNameId())));
 			return;
 		}
-		
+
 		// Check for hacks... I *think* epic and mythic items can *never* be remodeled...
-		if (extractItem.getItemTemplate().getItemQuality() == ItemQuality.EPIC ||
-			extractItem.getItemTemplate().getItemQuality() == ItemQuality.MYTHIC)
+		if (extractItem.getItemTemplate().getItemQuality() == ItemQuality.EPIC || extractItem.getItemTemplate().getItemQuality() == ItemQuality.MYTHIC)
 		{
-			PacketSendUtility.sendPacket(player, new SM_SYSTEM_MESSAGE(1300482,
-				new DescriptionId(extractItem.getItemTemplate().getNameId())));
+			PacketSendUtility.sendPacket(player, new SM_SYSTEM_MESSAGE(1300482, new DescriptionId(extractItem.getItemTemplate().getNameId())));
 			return;
 		}
-		
-		
+
 		// -- SUCCESS --
 		// Check Kinah
 		if (!ItemService.decreaseKinah(player, remodelCost))
 		{
 			PacketSendUtility.sendPacket(player,
-				SM_SYSTEM_MESSAGE.STR_CHANGE_ITEM_SKIN_NOT_ENOUGH_GOLD(new DescriptionId(keepItem.getItemTemplate().getNameId())));
+					SM_SYSTEM_MESSAGE.STR_CHANGE_ITEM_SKIN_NOT_ENOUGH_GOLD(new DescriptionId(keepItem.getItemTemplate().getNameId())));
 			return;
 		}
 
 		// Remove Pattern Reshaper
 		ItemService.decreaseItemCount(player, extractItem, 1);
-		
+
 		// REMODEL ITEM
 		keepItem.setItemSkinTemplate(extractItem.getItemSkinTemplate());
-		
+
 		// Transfer Dye
 		keepItem.setItemColor(extractItem.getItemColor());
-		
+
 		PacketSendUtility.sendPacket(player, new SM_SYSTEM_MESSAGE(1300483, new DescriptionId(keepItem.getItemTemplate().getNameId())));
 	}
 }

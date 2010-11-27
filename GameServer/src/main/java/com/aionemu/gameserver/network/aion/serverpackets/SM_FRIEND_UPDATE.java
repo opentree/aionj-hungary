@@ -29,14 +29,15 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_FRIEND_UPDATE extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int 			friendObjId;
-	
-	private static Logger	log = Logger.getLogger(SM_FRIEND_UPDATE.class);
+	private int				friendObjId;
+
+	private static Logger	log	= Logger.getLogger(SM_FRIEND_UPDATE.class);
+
 	public SM_FRIEND_UPDATE(int friendObjId)
 	{
 		this.friendObjId = friendObjId;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -45,7 +46,8 @@ public class SM_FRIEND_UPDATE extends AbstractAionServerPacket<AionChannelHandle
 	{
 		Friend f = cHandler.getActivePlayer().getFriendList().getFriend(friendObjId);
 		if (f == null)
-			log.debug("Attempted to update friend list status of " + friendObjId + " for " + cHandler.getActivePlayer().getName() + " - object ID not found on friend list");
+			log.debug("Attempted to update friend list status of " + friendObjId + " for " + cHandler.getActivePlayer().getName()
+					+ " - object ID not found on friend list");
 		else
 		{
 			writeS(f.getName());

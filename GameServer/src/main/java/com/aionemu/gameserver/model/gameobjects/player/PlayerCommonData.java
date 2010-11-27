@@ -47,28 +47,28 @@ import com.aionemu.gameserver.world.WorldPosition;
  */
 public class PlayerCommonData extends VisibleObjectTemplate
 {
-	private static final Logger			log	= Logger.getLogger(PlayerCommonData.class);
+	private static final Logger	log						= Logger.getLogger(PlayerCommonData.class);
 
-	private final int		playerObjId;
-	private Race			race;
-	private String			name;
-	private PlayerClass		playerClass;
+	private final int			playerObjId;
+	private Race				race;
+	private String				name;
+	private PlayerClass			playerClass;
 	/** Should be changed right after character creation **/
-	private int				level = 0;
-	private long			exp = 0;
-	private long			expRecoverable = 0;
-	private Gender			gender;
-	private Timestamp		lastOnline;
-	private boolean 		online;
-	private String 			note;
-	private WorldPosition	position;
-	private int 			cubeSize = 0;
-	private int 			warehouseSize = 0;
-	private int				advencedStigmaSlotSize = 0;
-	private int			    bindPoint;
-	private int             titleId = -1;
-	private int				dp = 0;
-	private int 			mailboxLetters;
+	private int					level					= 0;
+	private long				exp						= 0;
+	private long				expRecoverable			= 0;
+	private Gender				gender;
+	private Timestamp			lastOnline;
+	private boolean				online;
+	private String				note;
+	private WorldPosition		position;
+	private int					cubeSize				= 0;
+	private int					warehouseSize			= 0;
+	private int					advencedStigmaSlotSize	= 0;
+	private int					bindPoint;
+	private int					titleId					= -1;
+	private int					dp						= 0;
+	private int					mailboxLetters;
 
 	//TODO: Move all function to playerService or Player class.
 	public PlayerCommonData(int objId)
@@ -85,14 +85,17 @@ public class PlayerCommonData extends VisibleObjectTemplate
 	{
 		return this.exp;
 	}
+
 	public int getCubeSize()
 	{
 		return this.cubeSize;
 	}
+
 	public void setCubesize(int cubeSize)
 	{
 		this.cubeSize = cubeSize;
 	}
+
 	/**
 	 * @return the advencedStigmaSlotSize
 	 */
@@ -119,7 +122,7 @@ public class PlayerCommonData extends VisibleObjectTemplate
 		if (this.level == DataManager.PLAYER_EXPERIENCE_TABLE.getMaxLevel())
 		{
 			return 0;
-		}			
+		}
 		return DataManager.PLAYER_EXPERIENCE_TABLE.getStartExpForLevel(this.level + 1) - DataManager.PLAYER_EXPERIENCE_TABLE.getStartExpForLevel(this.level);
 	}
 
@@ -137,7 +140,7 @@ public class PlayerCommonData extends VisibleObjectTemplate
 
 		// This loops states that if the unrecoverable exp is bigger than your current exp
 		// we delete all your exp and go back to 0 pretty much.
-		if(this.getExpShown() > unrecoverable)
+		if (this.getExpShown() > unrecoverable)
 		{
 			this.exp = this.exp - unrecoverable;
 		}
@@ -145,7 +148,7 @@ public class PlayerCommonData extends VisibleObjectTemplate
 		{
 			this.exp = this.exp - this.getExpShown();
 		}
-		if(this.getExpShown() > recoverable)
+		if (this.getExpShown() > recoverable)
 		{
 			this.expRecoverable = allExpLost;
 			this.exp = this.exp - recoverable;
@@ -156,8 +159,7 @@ public class PlayerCommonData extends VisibleObjectTemplate
 			this.exp = this.exp - this.getExpShown();
 		}
 		if (this.getPlayer() != null)
-			PacketSendUtility.sendPacket(this.getPlayer(),
-				new SM_STATUPDATE_EXP(this.getExpShown(), this.getExpRecoverable(), this.getExpNeed()));
+			PacketSendUtility.sendPacket(this.getPlayer(), new SM_STATUPDATE_EXP(this.getExpShown(), this.getExpRecoverable(), this.getExpNeed()));
 	}
 
 	public void setRecoverableExp(long expRecoverable)
@@ -176,7 +178,7 @@ public class PlayerCommonData extends VisibleObjectTemplate
 	{
 		return this.expRecoverable;
 	}
-	
+
 	/**
 	 * 
 	 * @param value
@@ -184,9 +186,9 @@ public class PlayerCommonData extends VisibleObjectTemplate
 	public void addExp(long value)
 	{
 		this.setExp(this.exp + value);
-		if(this.getPlayer() != null)
+		if (this.getPlayer() != null)
 		{
-			PacketSendUtility.sendPacket(this.getPlayer(),SM_SYSTEM_MESSAGE.EXP(Long.toString(value)));
+			PacketSendUtility.sendPacket(this.getPlayer(), SM_SYSTEM_MESSAGE.EXP(Long.toString(value)));
 		}
 	}
 
@@ -221,19 +223,18 @@ public class PlayerCommonData extends VisibleObjectTemplate
 			this.level = level;
 			this.exp = exp;
 
-			if(this.getPlayer() != null)
+			if (this.getPlayer() != null)
 			{
 				upgradePlayer();
-			}	
+			}
 		}
 		else
 		{
 			this.exp = exp;
 
-			if(this.getPlayer() != null)
+			if (this.getPlayer() != null)
 			{
-				PacketSendUtility.sendPacket(this.getPlayer(),
-					new SM_STATUPDATE_EXP(this.getExpShown(), this.getExpRecoverable(), this.getExpNeed()));
+				PacketSendUtility.sendPacket(this.getPlayer(), new SM_STATUPDATE_EXP(this.getExpShown(), this.getExpRecoverable(), this.getExpNeed()));
 			}
 		}
 	}
@@ -244,7 +245,7 @@ public class PlayerCommonData extends VisibleObjectTemplate
 	public void upgradePlayer()
 	{
 		Player player = this.getPlayer();
-		if(player != null)
+		if (player != null)
 		{
 			player.upgradePlayer(level);
 		}
@@ -253,105 +254,106 @@ public class PlayerCommonData extends VisibleObjectTemplate
 	public void addAp(int value)
 	{
 		Player player = this.getPlayer();
-		
+
 		if (player == null)
 			return;
-		
+
 		// Notify player of AP gained (This should happen before setAp happens.)
 		// TODO: Find System Message for "You have lost %d Abyss Points." (Lost instead of Gained)
 		PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.EARNED_ABYSS_POINT(String.valueOf(value)));
-		
+
 		// Set the new AP value
 		this.setAp(value);
-		
+
 		// Add Abyss Points to Legion
-		if(player.isLegionMember() && value > 0)
+		if (player.isLegionMember() && value > 0)
 		{
 			player.getLegion().addContributionPoints(value);
 			PacketSendUtility.broadcastPacketToLegion(player.getLegion(), new SM_LEGION_EDIT(0x03, player.getLegion()));
 		}
 	}
-	
+
 	public void setAp(int value)
 	{
 		Player player = this.getPlayer();
-		
+
 		if (player == null)
 			return;
-		
+
 		AbyssRank rank = player.getAbyssRank();
-		
+
 		int oldAbyssRank = rank.getRank().getId();
-		
+
 		rank.addAp(value);
-		
+
 		if (rank.getRank().getId() != oldAbyssRank)
 		{
 			PacketSendUtility.broadcastPacket(player, new SM_ABYSS_RANK_UPDATE(player));
-			
+
 			// Apparently we are not in our own known list... so we must tell ourselves as well
 			PacketSendUtility.sendPacket(player, new SM_ABYSS_RANK_UPDATE(player));
 		}
-		
+
 		//if abyss rank increase give abyss skills
 		if (rank.getRank().getId() > oldAbyssRank)
 		{
-			if (this.getRace().getRaceId()==0) //ELYOS
-			{	
-					switch( rank.getRank().getId() )
-					{
-						case 14:	//
-							player.getSkillList().addSkill(player, 9737, 1, true);
-							player.getSkillList().addSkill(player, 9747, 1, true);
-							break;
-						case 15:
-							player.getSkillList().removeSkill(player, 9737);
-							player.getSkillList().removeSkill(player, 9747);
-							player.getSkillList().addSkill(player, 9738, 1, true);
-							player.getSkillList().addSkill(player, 9748, 1, true);
-							player.getSkillList().addSkill(player, 9751, 1, true);
-							break;
-						case 16:
-							player.getSkillList().removeSkill(player, 9738);
-							player.getSkillList().removeSkill(player, 9748);
-							player.getSkillList().removeSkill(player, 9751);
-							player.getSkillList().addSkill(player, 9739, 1, true);
-							player.getSkillList().addSkill(player, 9749, 1, true);
-							player.getSkillList().addSkill(player, 9751, 1, true);
-							player.getSkillList().addSkill(player, 9755, 1, true);
-							break;
-						case 17:
-							player.getSkillList().removeSkill(player, 9739);
-							player.getSkillList().removeSkill(player, 9749);
-							player.getSkillList().removeSkill(player, 9751);
-							player.getSkillList().removeSkill(player, 9755);
-							player.getSkillList().addSkill(player, 9740, 1, true);
-							player.getSkillList().addSkill(player, 9750, 1, true);
-							player.getSkillList().addSkill(player, 9752, 1, true);
-							player.getSkillList().addSkill(player, 9755, 1, true);
-							player.getSkillList().addSkill(player, 9756, 1, true);
-							break;
-						case 18:
-							player.getSkillList().removeSkill(player, 9740);
-							player.getSkillList().removeSkill(player, 9750);
-							player.getSkillList().removeSkill(player, 9752);
-							player.getSkillList().removeSkill(player, 9755);
-							player.getSkillList().removeSkill(player, 9756);
-							player.getSkillList().addSkill(player, 9741, 1, true);
-							player.getSkillList().addSkill(player, 9750, 1, true);
-							player.getSkillList().addSkill(player, 9752, 1, true);
-							player.getSkillList().addSkill(player, 9755, 1, true);
-							player.getSkillList().addSkill(player, 9756, 1, true);
-							player.getSkillList().addSkill(player, 9757, 1, true);
-							player.getSkillList().addSkill(player, 9758, 1, true);
-							break;
-					}
-			}
-			else //if race == ASMODIANS
+			if (this.getRace().getRaceId() == 0) //ELYOS
 			{
-				switch( rank.getRank().getId() )
+				switch (rank.getRank().getId())
 				{
-					case 14:	//
+					case 14: //
+						player.getSkillList().addSkill(player, 9737, 1, true);
+						player.getSkillList().addSkill(player, 9747, 1, true);
+						break;
+					case 15:
+						player.getSkillList().removeSkill(player, 9737);
+						player.getSkillList().removeSkill(player, 9747);
+						player.getSkillList().addSkill(player, 9738, 1, true);
+						player.getSkillList().addSkill(player, 9748, 1, true);
+						player.getSkillList().addSkill(player, 9751, 1, true);
+						break;
+					case 16:
+						player.getSkillList().removeSkill(player, 9738);
+						player.getSkillList().removeSkill(player, 9748);
+						player.getSkillList().removeSkill(player, 9751);
+						player.getSkillList().addSkill(player, 9739, 1, true);
+						player.getSkillList().addSkill(player, 9749, 1, true);
+						player.getSkillList().addSkill(player, 9751, 1, true);
+						player.getSkillList().addSkill(player, 9755, 1, true);
+						break;
+					case 17:
+						player.getSkillList().removeSkill(player, 9739);
+						player.getSkillList().removeSkill(player, 9749);
+						player.getSkillList().removeSkill(player, 9751);
+						player.getSkillList().removeSkill(player, 9755);
+						player.getSkillList().addSkill(player, 9740, 1, true);
+						player.getSkillList().addSkill(player, 9750, 1, true);
+						player.getSkillList().addSkill(player, 9752, 1, true);
+						player.getSkillList().addSkill(player, 9755, 1, true);
+						player.getSkillList().addSkill(player, 9756, 1, true);
+						break;
+					case 18:
+						player.getSkillList().removeSkill(player, 9740);
+						player.getSkillList().removeSkill(player, 9750);
+						player.getSkillList().removeSkill(player, 9752);
+						player.getSkillList().removeSkill(player, 9755);
+						player.getSkillList().removeSkill(player, 9756);
+						player.getSkillList().addSkill(player, 9741, 1, true);
+						player.getSkillList().addSkill(player, 9750, 1, true);
+						player.getSkillList().addSkill(player, 9752, 1, true);
+						player.getSkillList().addSkill(player, 9755, 1, true);
+						player.getSkillList().addSkill(player, 9756, 1, true);
+						player.getSkillList().addSkill(player, 9757, 1, true);
+						player.getSkillList().addSkill(player, 9758, 1, true);
+						break;
+				}
+			}
+			else
+			//if race == ASMODIANS
+			{
+				switch (rank.getRank().getId())
+				{
+					case 14: //
 						player.getSkillList().addSkill(player, 9742, 1, true);
 						player.getSkillList().addSkill(player, 9747, 1, true);
 						break;
@@ -399,11 +401,12 @@ public class PlayerCommonData extends VisibleObjectTemplate
 				}
 			}
 		}
-		else //abyss rank decrease, remove abyss skills
+		else
+		//abyss rank decrease, remove abyss skills
 		{
-			if (this.getRace().getRaceId()==0) //ELYOS
+			if (this.getRace().getRaceId() == 0) //ELYOS
 			{
-				switch( rank.getRank().getId() )
+				switch (rank.getRank().getId())
 				{
 					case 17:
 						player.getSkillList().removeSkill(player, 9741);
@@ -435,7 +438,7 @@ public class PlayerCommonData extends VisibleObjectTemplate
 						player.getSkillList().addSkill(player, 9748, 1, true);
 						player.getSkillList().addSkill(player, 9751, 1, true);
 						break;
-					case 14:	//
+					case 14: //
 						player.getSkillList().removeSkill(player, 9738);
 						player.getSkillList().removeSkill(player, 9748);
 						player.getSkillList().removeSkill(player, 9751);
@@ -448,9 +451,10 @@ public class PlayerCommonData extends VisibleObjectTemplate
 						break;
 				}
 			}
-			else //ASMODIANS
+			else
+			//ASMODIANS
 			{
-				switch( rank.getRank().getId() )
+				switch (rank.getRank().getId())
 				{
 					case 17:
 						player.getSkillList().removeSkill(player, 9745);
@@ -484,7 +488,7 @@ public class PlayerCommonData extends VisibleObjectTemplate
 						player.getSkillList().addSkill(player, 9748, 1, true);
 						player.getSkillList().addSkill(player, 9753, 1, true);
 						break;
-					case 14:	//
+					case 14: //
 						player.getSkillList().removeSkill(player, 9743);
 						player.getSkillList().removeSkill(player, 9748);
 						player.getSkillList().removeSkill(player, 9753);
@@ -498,11 +502,10 @@ public class PlayerCommonData extends VisibleObjectTemplate
 				}
 			}
 		}
-		
+
 		PacketSendUtility.sendPacket(player, new SM_ABYSS_RANK(player.getAbyssRank()));
 	}
-	
-	
+
 	public Race getRace()
 	{
 		return race;
@@ -534,10 +537,11 @@ public class PlayerCommonData extends VisibleObjectTemplate
 		this.playerClass = playerClass;
 	}
 
-	public boolean isOnline() 
+	public boolean isOnline()
 	{
 		return online;
 	}
+
 	public void setOnline(boolean online)
 	{
 		this.online = online;
@@ -617,7 +621,7 @@ public class PlayerCommonData extends VisibleObjectTemplate
 	 */
 	public void setPosition(WorldPosition position)
 	{
-		if(this.position != null)
+		if (this.position != null)
 		{
 			throw new IllegalStateException("position already set");
 		}
@@ -650,11 +654,11 @@ public class PlayerCommonData extends VisibleObjectTemplate
 	 */
 	public void setDp(int dp)
 	{
-		if(getPlayer() != null)
+		if (getPlayer() != null)
 		{
-			if(playerClass.isStartingClass())
+			if (playerClass.isStartingClass())
 				return;
-			
+
 			int maxDp = getPlayer().getGameStats().getCurrentStat(StatEnum.MAXDP);
 			this.dp = dp > maxDp ? maxDp : dp;
 
@@ -676,7 +680,7 @@ public class PlayerCommonData extends VisibleObjectTemplate
 	@Override
 	public int getTemplateId()
 	{
-		return 100000 + race.getRaceId()*2 + gender.getGenderId();
+		return 100000 + race.getRaceId() * 2 + gender.getGenderId();
 	}
 
 	@Override
@@ -700,12 +704,12 @@ public class PlayerCommonData extends VisibleObjectTemplate
 	{
 		return warehouseSize;
 	}
-	
+
 	public void setMailboxLetters(int count)
 	{
 		this.mailboxLetters = count;
 	}
-	
+
 	public int getMailboxLetters()
 	{
 		return mailboxLetters;

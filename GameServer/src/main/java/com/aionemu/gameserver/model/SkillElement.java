@@ -22,19 +22,17 @@ package com.aionemu.gameserver.model;
  */
 public enum SkillElement
 {
-	NONE(0),
-	FIRE(1),
-	WATER(2),
-	WIND(3),
-	EARTH(4);
-	
-	private int element;
-	
-	private SkillElement (int id) {
+	NONE(0), FIRE(1), WATER(2), WIND(3), EARTH(4);
+
+	private int	element;
+
+	private SkillElement(int id)
+	{
 		this.element = id;
 	}
-	
-	public int getElementId () {
+
+	public int getElementId()
+	{
 		return element;
 	}
 }

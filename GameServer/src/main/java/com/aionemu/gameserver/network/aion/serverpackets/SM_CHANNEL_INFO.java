@@ -27,8 +27,9 @@ import com.aionemu.gameserver.world.WorldPosition;
  */
 public class SM_CHANNEL_INFO extends AbstractAionServerPacket<AionChannelHandler>
 {
-	int instanceCount = 0;
-	int currentChannel = 0;
+	int	instanceCount	= 0;
+	int	currentChannel	= 0;
+
 	/**
 	 * @param position
 	 */
@@ -36,7 +37,7 @@ public class SM_CHANNEL_INFO extends AbstractAionServerPacket<AionChannelHandler
 	{
 		this.instanceCount = position.getInstanceCount();
 		this.currentChannel = position.getInstanceId() - 1;
-		
+
 	}
 
 	/**

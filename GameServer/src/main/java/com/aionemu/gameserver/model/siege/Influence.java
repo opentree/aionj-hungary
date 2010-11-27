@@ -30,20 +30,20 @@ import com.aionemu.gameserver.world.World;
  */
 public class Influence
 {
-	private float elyos = 0; 
-	private float asmos = 0; 
-	private float balaur = 0; 
-	
+	private float	elyos	= 0;
+	private float	asmos	= 0;
+	private float	balaur	= 0;
+
 	private Influence()
 	{
 		calculateInfluence();
 	}
-	
+
 	public static final Influence getInstance()
 	{
 		return SingletonHolder.instance;
 	}
-	
+
 	/**
 	 * Recalculates Influence and Broadcasts new values
 	 */
@@ -63,12 +63,12 @@ public class Influence
 		int asmos = 0;
 		int elyos = 0;
 		int balaur = 0;
-		
-		for(SiegeLocation sLoc : SiegeService.getInstance().getSiegeLocations().values())
+
+		for (SiegeLocation sLoc : SiegeService.getInstance().getSiegeLocations().values())
 		{
 			// TODO: Better formula...
 			total += sLoc.getInfluenceValue();
-			switch(sLoc.getRace())
+			switch (sLoc.getRace())
 			{
 				case BALAUR:
 					balaur += sLoc.getInfluenceValue();
@@ -82,9 +82,9 @@ public class Influence
 			}
 		}
 
-		this.balaur = (float)balaur / total;
-		this.elyos = (float)elyos / total;
-		this.asmos = (float)asmos / total;
+		this.balaur = (float) balaur / total;
+		this.elyos = (float) elyos / total;
+		this.asmos = (float) asmos / total;
 	}
 
 	/**
@@ -94,13 +94,13 @@ public class Influence
 	private void broadcastInfluencePacket()
 	{
 		SM_INFLUENCE_RATIO pkt = new SM_INFLUENCE_RATIO();
-		
-		for(Player player : World.getInstance().getAllPlayers())
+
+		for (Player player : World.getInstance().getAllPlayers())
 		{
 			PacketSendUtility.sendPacket(player, pkt);
 		}
 	}
-	
+
 	/**
 	 * @return elyos control
 	 */
@@ -124,11 +124,11 @@ public class Influence
 	{
 		return this.balaur;
 	}
-	
+
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
-		protected static final Influence instance = new Influence();
+		protected static final Influence	instance	= new Influence();
 	}
 
 }

@@ -27,7 +27,7 @@ import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
  */
 public abstract class RequestResponseHandler
 {
-	private StaticNpc requester;
+	private StaticNpc	requester;
 
 	public RequestResponseHandler(StaticNpc requester)
 	{

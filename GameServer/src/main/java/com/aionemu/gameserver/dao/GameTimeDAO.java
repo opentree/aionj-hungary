@@ -39,7 +39,7 @@ public abstract class GameTimeDAO implements DAO
 	 * @returns Time stored in database
 	 */
 	public abstract int load();
-	
+
 	/**
 	 * Stores the given time in the database as the GameTime
 	 */

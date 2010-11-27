@@ -35,9 +35,10 @@ import com.aionemu.gameserver.questEngine.model.QuestEnv;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "QuestEvent", propOrder = { "conditions", "operations" })
-@XmlSeeAlso( {  OnKillEvent.class,
-				OnTalkEvent.class })
+@XmlType(name = "QuestEvent", propOrder =
+{ "conditions", "operations" })
+@XmlSeeAlso(
+{ OnKillEvent.class, OnTalkEvent.class })
 public abstract class QuestEvent
 {
 
@@ -74,7 +75,7 @@ public abstract class QuestEvent
 	 */
 	public List<Integer> getIds()
 	{
-		if(ids == null)
+		if (ids == null)
 		{
 			ids = new ArrayList<Integer>();
 		}

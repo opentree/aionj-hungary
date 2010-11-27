@@ -74,23 +74,23 @@ public class CM_LEGION_TABS extends AbstractClientPacket<AionChannelHandler>
 		/**
 		 * Max page is 3 for legion history
 		 */
-		if(page > 3)
+		if (page > 3)
 			return;
 
 		/**
 		 * If history size is less than page*8 return
 		 */
-		if(history.size() < page * 8)
+		if (history.size() < page * 8)
 			return;
 
-		switch(tab)
+		switch (tab)
 		{
 			/**
 			 * History Tab
 			 */
 			case 0:
 				log.debug("Requested History Tab Page: " + page);
-				if(!history.isEmpty())
+				if (!history.isEmpty())
 					PacketSendUtility.sendPacket(activePlayer, new SM_LEGION_TABS(history, page));
 				break;
 			/**

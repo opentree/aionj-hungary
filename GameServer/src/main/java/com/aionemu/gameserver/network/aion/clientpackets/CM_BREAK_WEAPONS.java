@@ -19,6 +19,7 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.ArmsfusionService;
+
 /**
  * 
  * @author Lyahim, zdead
@@ -26,13 +27,13 @@ import com.aionemu.gameserver.services.ArmsfusionService;
  */
 public class CM_BREAK_WEAPONS extends AbstractClientPacket<AionChannelHandler>
 {
-	
+
 	public CM_BREAK_WEAPONS(int opcode)
 	{
 		super(opcode);
 	}
-	
-	private int weaponToBreakUniqueId;
+
+	private int	weaponToBreakUniqueId;
 
 	/**
 	 * {@inheritDoc}

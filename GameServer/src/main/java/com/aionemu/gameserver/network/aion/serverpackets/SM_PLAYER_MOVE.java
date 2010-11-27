@@ -24,11 +24,11 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_PLAYER_MOVE extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private float x;
-	private float y;
-	private float z;
-	private byte heading;
-	
+	private float	x;
+	private float	y;
+	private float	z;
+	private byte	heading;
+
 	public SM_PLAYER_MOVE(float x, float y, float z, byte heading)
 	{
 		this.x = x;
@@ -36,12 +36,13 @@ public class SM_PLAYER_MOVE extends AbstractAionServerPacket<AionChannelHandler>
 		this.z = z;
 		this.heading = heading;
 	}
-	
+
 	@Override
-	public void writeImpl (AionChannelHandler con) {
+	public void writeImpl(AionChannelHandler con)
+	{
 		writeF(x);
 		writeF(y);
 		writeF(z);
-		writeC( heading);
+		writeC(heading);
 	}
 }

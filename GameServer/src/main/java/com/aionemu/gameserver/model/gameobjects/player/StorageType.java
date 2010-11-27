@@ -22,14 +22,14 @@ public enum StorageType
 	BROKER(126),
 	MAILBOX(127);
 
-	private int id;
-	private int limit;
-	
+	private int	id;
+	private int	limit;
+
 	private StorageType(int id)
 	{
 		this.id = id;
 	}
-	
+
 	private StorageType(int id, int limit)
 	{
 		this.id = id;
@@ -40,17 +40,17 @@ public enum StorageType
 	{
 		return id;
 	}
-	
+
 	public int getLimit()
 	{
 		return limit;
 	}
-	
+
 	public static StorageType getStorageTypeById(int id)
 	{
-		for(StorageType st : values())
+		for (StorageType st : values())
 		{
-			if(st.id == id)
+			if (st.id == id)
 				return st;
 		}
 		return null;

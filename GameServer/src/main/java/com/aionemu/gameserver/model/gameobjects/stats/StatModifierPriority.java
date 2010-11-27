@@ -22,17 +22,17 @@ package com.aionemu.gameserver.model.gameobjects.stats;
  */
 public enum StatModifierPriority
 {
-	HIGH(0),
-	MEDIUM(1),
-	LOW(2);
-	
-	private int value;
-	
-	private StatModifierPriority (int value) {
+	HIGH(0), MEDIUM(1), LOW(2);
+
+	private int	value;
+
+	private StatModifierPriority(int value)
+	{
 		this.value = value;
 	}
-	
-	public int getValue () {
+
+	public int getValue()
+	{
 		return value;
 	}
 }

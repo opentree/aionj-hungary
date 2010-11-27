@@ -39,21 +39,20 @@ public class PetOrderUseUltraSkillEffect extends EffectTemplate
 	{
 		Player effector = (Player) effect.getEffector();
 		int effectorId = effector.getSummon().getObjectId();
-		
+
 		int npcId = effector.getSummon().getNpcId();
 		int orderSkillId = effect.getSkillId();
-		
+
 		int petUseSkillId = DataManager.PET_SKILL_DATA.getPetOrderSkill(orderSkillId, npcId);
 		int targetId = effect.getEffected().getObjectId();
 
-		PacketSendUtility.sendPacket(effector, new SM_SUMMON_USESKILL(effectorId, petUseSkillId,
-			1, targetId));
+		PacketSendUtility.sendPacket(effector, new SM_SUMMON_USESKILL(effectorId, petUseSkillId, 1, targetId));
 	}
 
 	@Override
 	public void calculate(Effect effect)
 	{
-		if(effect.getEffector() instanceof Player && effect.getEffected() != null)
+		if (effect.getEffector() instanceof Player && effect.getEffected() != null)
 			effect.addSucessEffect(this);
 	}
 }

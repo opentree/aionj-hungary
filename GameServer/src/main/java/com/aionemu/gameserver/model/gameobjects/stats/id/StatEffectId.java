@@ -24,60 +24,60 @@ import com.aionemu.gameserver.model.gameobjects.stats.StatEffectType;
  */
 public class StatEffectId implements Comparable<StatEffectId>
 {
-	private int id;
-	private StatEffectType type;
-	
+	private int				id;
+	private StatEffectType	type;
+
 	protected StatEffectId(int id, StatEffectType type)
 	{
 		this.id = id;
 		this.type = type;
 	}
-	
+
 	public static StatEffectId getInstance(int id, StatEffectType type)
 	{
-		return new StatEffectId(id,type);
+		return new StatEffectId(id, type);
 	}
-	
+
 	@Override
 	public int hashCode()
 	{
 		return id;
 	}
-	
+
 	@Override
 	public boolean equals(Object o)
 	{
 		boolean result = true;
-		result = (result)&&(o!=null);
-		result = (result)&&(o instanceof StatEffectId);
-		result = (result)&&(((StatEffectId)o).id==id);
-		result = (result)&&(((StatEffectId)o).type.getValue()==type.getValue());
+		result = (result) && (o != null);
+		result = (result) && (o instanceof StatEffectId);
+		result = (result) && (((StatEffectId) o).id == id);
+		result = (result) && (((StatEffectId) o).type.getValue() == type.getValue());
 		return result;
 	}
-	
+
 	@Override
 	public int compareTo(StatEffectId o)
 	{
 		int result = 0;
-		if (o==null)
+		if (o == null)
 		{
 			result = id;
 		}
 		else
 		{
 			result = type.getValue() - o.type.getValue();
-			if (result==0)
+			if (result == 0)
 			{
 				result = id - o.id;
 			}
 		}
 		return result;
 	}
-	
+
 	@Override
 	public String toString()
 	{
-		final String str = "id:"+id+",type:"+type;
+		final String str = "id:" + id + ",type:" + type;
 		return str;
 	}
 }

@@ -41,37 +41,25 @@ public class MoveBehindEffect extends DamageEffect
 	public void applyEffect(Effect effect)
 	{
 		super.applyEffect(effect);
-		final Player effector = (Player)effect.getEffector();
+		final Player effector = (Player) effect.getEffector();
 		final Creature effected = effect.getEffected();
-		
+
 		// Move Effector to Effected
 		double radian = Math.toRadians(MathUtil.convertHeadingToDegree(effected.getHeading()));
-		float x1 = (float)(Math.cos(Math.PI + radian) * 1.3F);
-		float y1 = (float)(Math.sin(Math.PI + radian) * 1.3F);
-		World.getInstance().updatePosition(
-			effector,
-			effected.getX() + x1,
-			effected.getY() + y1,
-			effected.getZ() + 0.25F,
-			effected.getHeading());
-		
-		PacketSendUtility.sendPacket(effector,
-			new SM_PLAYER_MOVE(
-				effector.getX(),
-				effector.getY(),
-				effector.getZ(),
-				effector.getHeading()
-			)
-		);
+		float x1 = (float) (Math.cos(Math.PI + radian) * 1.3F);
+		float y1 = (float) (Math.sin(Math.PI + radian) * 1.3F);
+		World.getInstance().updatePosition(effector, effected.getX() + x1, effected.getY() + y1, effected.getZ() + 0.25F, effected.getHeading());
+
+		PacketSendUtility.sendPacket(effector, new SM_PLAYER_MOVE(effector.getX(), effector.getY(), effector.getZ(), effector.getHeading()));
 	}
-	
+
 	@Override
 	public void calculate(Effect effect)
 	{
-		if(effect.getEffector() instanceof Player && effect.getEffected() != null)
+		if (effect.getEffector() instanceof Player && effect.getEffected() != null)
 		{
 			super.calculate(effect, DamageType.PHYSICAL);
 		}
 	}
-	
+
 }

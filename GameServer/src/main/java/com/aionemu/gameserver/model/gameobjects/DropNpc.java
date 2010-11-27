@@ -28,7 +28,7 @@ public class DropNpc
 {
 	private List<Integer>	allowedList			= new ArrayList<Integer>();
 	private List<Player>	inRangePlayers		= new ArrayList<Player>();
-	private List<Player>	playerStatus		= new ArrayList<Player>();	
+	private List<Player>	playerStatus		= new ArrayList<Player>();
 	private Player			lootingPlayer		= null;
 	private int				distributionType	= 0;
 	private boolean			inUse				= false;
@@ -53,7 +53,7 @@ public class DropNpc
 	 */
 	public boolean containsKey(int playerObjId)
 	{
-		if(allowedList == null)
+		if (allowedList == null)
 			return true;
 		return allowedList.contains(playerObjId);
 	}
@@ -73,8 +73,8 @@ public class DropNpc
 	public Player getBeingLooted()
 	{
 		return lootingPlayer;
-	}	
-	
+	}
+
 	/**
 	 * @return the beingLooted
 	 */
@@ -178,7 +178,7 @@ public class DropNpc
 	{
 		playerStatus.remove(player);
 	}
-	
+
 	/**
 	 * @return the playerStatus
 	 */
@@ -186,7 +186,7 @@ public class DropNpc
 	{
 		return playerStatus;
 	}
-	
+
 	/**
 	 * @return true if player is found in list
 	 */

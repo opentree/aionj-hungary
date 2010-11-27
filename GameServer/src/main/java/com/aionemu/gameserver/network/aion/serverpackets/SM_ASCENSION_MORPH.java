@@ -26,15 +26,16 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_ASCENSION_MORPH extends AbstractAionServerPacket<AionChannelHandler>
 {
-   private int inascension;   
-   public SM_ASCENSION_MORPH(int inascension)
-   {
-      this.inascension = inascension;
-   }
-   
-   @Override
-   protected void writeImpl(AionChannelHandler cHandler)
-   {
-      writeC(inascension);//if inascension =0x01 morph.   
-   }
+	private int	inascension;
+
+	public SM_ASCENSION_MORPH(int inascension)
+	{
+		this.inascension = inascension;
+	}
+
+	@Override
+	protected void writeImpl(AionChannelHandler cHandler)
+	{
+		writeC(inascension);//if inascension =0x01 morph.   
+	}
 }

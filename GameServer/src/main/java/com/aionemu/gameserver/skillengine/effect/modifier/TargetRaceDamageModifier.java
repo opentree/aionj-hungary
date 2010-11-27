@@ -36,47 +36,46 @@ import com.aionemu.gameserver.skillengine.model.SkillTargetRace;
 public class TargetRaceDamageModifier extends ActionModifier
 {
 	@XmlAttribute(name = "race")
-	private SkillTargetRace skillTargetRace;
+	private SkillTargetRace	skillTargetRace;
 	@XmlAttribute(required = true)
-	protected int delta;
+	protected int			delta;
 	@XmlAttribute(required = true)
-	protected int value;
-	
+	protected int			value;
+
 	@Override
 	public int analyze(Effect effect, int originalValue)
 	{
 		Creature effected = effect.getEffected();
-		
-		if(effected instanceof Player)
+
+		if (effected instanceof Player)
 		{
 			int newValue = originalValue + value + effect.getSkillLevel() * delta;
 			Player player = (Player) effected;
-			switch(skillTargetRace)
+			switch (skillTargetRace)
 			{
 				case ASMODIANS:
-					if(player.getCommonData().getRace() == Race.ASMODIANS)
+					if (player.getCommonData().getRace() == Race.ASMODIANS)
 						return newValue;
 					break;
 				case ELYOS:
-					if(player.getCommonData().getRace() == Race.ELYOS)
+					if (player.getCommonData().getRace() == Race.ELYOS)
 						return newValue;
 			}
 		}
 
-		return originalValue;	
+		return originalValue;
 	}
 
 	@Override
 	public boolean check(Effect effect)
 	{
 		Creature effected = effect.getEffected();
-		if(effected instanceof Player)
+		if (effected instanceof Player)
 		{
-			
+
 			Player player = (Player) effected;
-			Race race =  player.getCommonData().getRace();
-			return (race == Race.ASMODIANS && skillTargetRace == SkillTargetRace.ASMODIANS)
-				|| (race == Race.ELYOS && skillTargetRace == SkillTargetRace.ELYOS);
+			Race race = player.getCommonData().getRace();
+			return (race == Race.ASMODIANS && skillTargetRace == SkillTargetRace.ASMODIANS) || (race == Race.ELYOS && skillTargetRace == SkillTargetRace.ELYOS);
 		}
 		return false;
 	}

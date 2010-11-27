@@ -31,15 +31,15 @@ import com.aionemu.gameserver.model.templates.item.ItemTemplate;
  */
 public class TradeList
 {
-	private int sellerObjId;
-	
-	private List<TradeItem> tradeItems = new ArrayList<TradeItem>();
-	
-	private long requiredKinah;
-	
-	private int requiredAp;
-	
-	private Map<Integer, Integer> requiredItems  = new HashMap<Integer, Integer>();
+	private int						sellerObjId;
+
+	private List<TradeItem>			tradeItems		= new ArrayList<TradeItem>();
+
+	private long					requiredKinah;
+
+	private int						requiredAp;
+
+	private Map<Integer, Integer>	requiredItems	= new HashMap<Integer, Integer>();
 
 	/**
 	 * @param itemId
@@ -47,16 +47,16 @@ public class TradeList
 	 */
 	public void addBuyItem(int itemId, long count)
 	{
-		
+
 		ItemTemplate itemTemplate = DataManager.ITEM_DATA.getItemTemplate(itemId);
-		if(itemTemplate != null)
+		if (itemTemplate != null)
 		{
 			TradeItem tradeItem = new TradeItem(itemId, count);
 			tradeItem.setItemTemplate(itemTemplate);
 			tradeItems.add(tradeItem);
 		}
 	}
-	
+
 	/**
 	 * @param itemId
 	 * @param count
@@ -66,7 +66,7 @@ public class TradeList
 		TradeItem tradeItem = new TradeItem(itemId, count);
 		tradeItems.add(tradeItem);
 	}
-	
+
 	/**
 	 * @param itemObjId
 	 * @param count
@@ -76,7 +76,7 @@ public class TradeList
 		TradeItem tradeItem = new TradeItem(itemObjId, count);
 		tradeItems.add(tradeItem);
 	}
-	
+
 	/**
 	 * @return price TradeList sum price
 	 */
@@ -84,54 +84,52 @@ public class TradeList
 	{
 		long availableKinah = player.getInventory().getKinahItem().getItemCount();
 		requiredKinah = 0;
-		
-		
-		for(TradeItem tradeItem : tradeItems)
+
+		for (TradeItem tradeItem : tradeItems)
 		{
-			requiredKinah += player.getPrices().getKinahForBuy(tradeItem.getItemTemplate().getPrice()) * tradeItem.getCount()*modifier/100;
+			requiredKinah += player.getPrices().getKinahForBuy(tradeItem.getItemTemplate().getPrice()) * tradeItem.getCount() * modifier / 100;
 		}
-		
+
 		requiredKinah = player.getPrices().getKinahForBuy(requiredKinah);
 
 		return availableKinah >= requiredKinah;
 	}
-	
+
 	/**
 	 * @return true or false
 	 */
 	public boolean calculateAbyssBuyListPrice(Player player)
 	{
 		int ap = player.getAbyssRank().getAp();
-		
+
 		this.requiredAp = 0;
 		this.requiredItems.clear();
-		
-		for(TradeItem tradeItem : tradeItems)
+
+		for (TradeItem tradeItem : tradeItems)
 		{
 			requiredAp += tradeItem.getItemTemplate().getAbyssPoints() * tradeItem.getCount();
 			int itemId = tradeItem.getItemTemplate().getAbyssItem();
-			
+
 			Integer alreadyAddedCount = requiredItems.get(itemId);
-			if(alreadyAddedCount == null)
+			if (alreadyAddedCount == null)
 				requiredItems.put(itemId, tradeItem.getItemTemplate().getAbyssItemCount());
 			else
 				requiredItems.put(itemId, alreadyAddedCount + tradeItem.getItemTemplate().getAbyssItemCount());
-		}		
-		
-		if(ap < requiredAp)
+		}
+
+		if (ap < requiredAp)
 			return false;
-		
-		for(Integer itemId : requiredItems.keySet())
+
+		for (Integer itemId : requiredItems.keySet())
 		{
 			long count = player.getInventory().getItemCountByItemId(itemId);
-			if(count < requiredItems.get(itemId))
+			if (count < requiredItems.get(itemId))
 				return false;
 		}
-		
+
 		return true;
 	}
-	
-	
+
 	/**
 	 * @return the tradeItems
 	 */

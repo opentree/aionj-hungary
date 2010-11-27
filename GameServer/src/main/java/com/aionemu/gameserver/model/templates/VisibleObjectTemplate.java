@@ -28,19 +28,20 @@ public abstract class VisibleObjectTemplate
 	 * @return id of object template
 	 */
 	public abstract int getTemplateId();
+
 	/**
 	 * For Npcs it will return name from templates xml
 	 * 
 	 * @return name of object
 	 */
 	public abstract String getName();
-	
+
 	/**
 	 *  Name id of object template
 	 * @return int
 	 */
 	public abstract int getNameId();
-	
+
 	/**
 	 * @return default state
 	 */

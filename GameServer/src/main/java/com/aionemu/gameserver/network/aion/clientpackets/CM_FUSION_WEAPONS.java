@@ -19,6 +19,7 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.ArmsfusionService;
+
 /**
  * 
  * @author Lyahim, zdead
@@ -26,15 +27,15 @@ import com.aionemu.gameserver.services.ArmsfusionService;
  */
 public class CM_FUSION_WEAPONS extends AbstractClientPacket<AionChannelHandler>
 {
-	
+
 	public CM_FUSION_WEAPONS(int opcode)
 	{
 		super(opcode);
 	}
-	
-	private int firstItemId;
-	private int secondItemId;
-	private int price;
+
+	private int	firstItemId;
+	private int	secondItemId;
+	private int	price;
 
 	/**
 	 * {@inheritDoc}

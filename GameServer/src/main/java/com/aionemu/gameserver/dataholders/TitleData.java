@@ -36,21 +36,21 @@ import com.aionemu.gameserver.model.templates.TitleTemplate;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class TitleData
 {
-	@XmlElement(name="title")
-	private List<TitleTemplate> tts;
-	
-	private TIntObjectHashMap<TitleTemplate> titles;
-	
+	@XmlElement(name = "title")
+	private List<TitleTemplate>					tts;
+
+	private TIntObjectHashMap<TitleTemplate>	titles;
+
 	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
 		titles = new TIntObjectHashMap<TitleTemplate>();
-		for(TitleTemplate tt: tts)
+		for (TitleTemplate tt : tts)
 		{
 			titles.put(tt.getTitleId(), tt);
 		}
 		tts = null;
 	}
-	
+
 	public TitleTemplate getTitleTemplate(int titleId)
 	{
 		return titles.get(titleId);

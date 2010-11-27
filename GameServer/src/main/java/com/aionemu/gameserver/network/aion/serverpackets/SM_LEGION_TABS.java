@@ -27,7 +27,7 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_LEGION_TABS extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int									page;
+	private int							page;
 	private Collection<LegionHistory>	legionHistory;
 
 	public SM_LEGION_TABS(Collection<LegionHistory> legionHistory)
@@ -48,17 +48,17 @@ public class SM_LEGION_TABS extends AbstractAionServerPacket<AionChannelHandler>
 		/**
 		 * If history size is less than page*8 return
 		 */
-		if(legionHistory.size() < (page * 8))
+		if (legionHistory.size() < (page * 8))
 			return;
-		
+
 		// TODO: Formula's could use a refactor
 		int hisSize = legionHistory.size() - (page * 8);
 
-		if(page == 0 && legionHistory.size() > 8)
+		if (page == 0 && legionHistory.size() > 8)
 			hisSize = 8;
-		if(page == 1 && legionHistory.size() > 16)
+		if (page == 1 && legionHistory.size() > 16)
 			hisSize = 8;
-		if(page == 2 && legionHistory.size() > 24)
+		if (page == 2 && legionHistory.size() > 24)
 			hisSize = 8;
 
 		writeD(0x12); // Unk
@@ -66,14 +66,14 @@ public class SM_LEGION_TABS extends AbstractAionServerPacket<AionChannelHandler>
 		writeD(hisSize);
 
 		int i = 0;
-		for(LegionHistory history : legionHistory)
+		for (LegionHistory history : legionHistory)
 		{
-			if(i >= (page * 8) && i <= (8 + (page * 8)))
+			if (i >= (page * 8) && i <= (8 + (page * 8)))
 			{
 				writeD((int) (history.getTime().getTime() / 1000));
-				writeC( history.getLegionHistoryType().getHistoryId());
-				writeC( 0);
-				if(history.getName().length() > 0)
+				writeC(history.getLegionHistoryType().getHistoryId());
+				writeC(0);
+				if (history.getName().length() > 0)
 				{
 					writeS(history.getName());
 					int size = 134 - (history.getName().length() * 2 + 2);
@@ -83,7 +83,7 @@ public class SM_LEGION_TABS extends AbstractAionServerPacket<AionChannelHandler>
 					writeB(new byte[134]);
 			}
 			i++;
-			if(i >= (8 + (page * 8)))
+			if (i >= (8 + (page * 8)))
 				break;
 		}
 		writeH(0);

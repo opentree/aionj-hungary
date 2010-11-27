@@ -25,7 +25,6 @@ import com.aionemu.gameserver.model.gameobjects.stats.CreatureLifeStats;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
 import com.aionemu.gameserver.skillengine.model.Effect;
 
-
 /**
  * @author ATracer
  *
@@ -41,7 +40,7 @@ public class SwitchHpMpEffect extends EffectTemplate
 		CreatureLifeStats<? extends Creature> lifeStats = effect.getEffected().getLifeStats();
 		int currentHp = lifeStats.getCurrentHp();
 		int currentMp = lifeStats.getCurrentMp();
-		
+
 		lifeStats.increaseHp(TYPE.NATURAL_HP, currentMp - currentHp);
 		lifeStats.increaseMp(TYPE.NATURAL_MP, currentHp - currentMp);
 	}

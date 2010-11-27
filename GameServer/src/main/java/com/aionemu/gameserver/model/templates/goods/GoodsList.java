@@ -25,42 +25,42 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * 
  * @author ATracer
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "GoodsList")
-public class GoodsList {
+public class GoodsList
+{
 
-	protected List<GoodsList.Item> item;
+	protected List<GoodsList.Item>	item;
 	@XmlAttribute
-	protected int id;
+	protected int					id;
 
-	protected List<Integer> itemIdList;
+	protected List<Integer>			itemIdList;
 
 	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
 		itemIdList = new ArrayList<Integer>();
-		
-		if(item == null)
+
+		if (item == null)
 			return;
-		
-		for(Item it : item)
+
+		for (Item it : item)
 		{
 			itemIdList.add(it.getId());
 		}
 		item = null;
-	}	
+	}
 
 	/**
 	 * Gets the value of the id property.
 	 */
-	public int getId() {
+	public int getId()
+	{
 		return id;
 	}
-
 
 	/**
 	 * @return the itemIdList
@@ -69,9 +69,6 @@ public class GoodsList {
 	{
 		return itemIdList;
 	}
-
-
-
 
 	/**
 	 * <p>Java class for anonymous complex type.
@@ -92,16 +89,18 @@ public class GoodsList {
 	 */
 	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlType(name = "")
-	public static class Item {
+	public static class Item
+	{
 
 		@XmlAttribute
-		protected int id;
+		protected int	id;
 
 		/**
 		 * Gets the value of the id property.
 		 *     
 		 */
-		public int getId() {
+		public int getId()
+		{
 			return id;
 		}
 

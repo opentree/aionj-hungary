@@ -36,7 +36,7 @@ public class HTMLService
 	public static void pushSurvey(String html)
 	{
 		int messageId = IDFactory.getInstance().nextId();
-		for(Player ply : World.getInstance().getAllPlayers())
+		for (Player ply : World.getInstance().getAllPlayers())
 			sendData(ply, messageId, html);
 	}
 
@@ -48,21 +48,21 @@ public class HTMLService
 	private static void sendData(Player player, int messageId, String html)
 	{
 		byte packet_count = (byte) Math.ceil(html.length() / (Short.MAX_VALUE - 8) + 1);
-		if(packet_count < 256)
+		if (packet_count < 256)
 		{
-			for(byte i = 0; i < packet_count; i++)
+			for (byte i = 0; i < packet_count; i++)
 			{
 				try
 				{
 					int from = i * (Short.MAX_VALUE - 8), to = (i + 1) * (Short.MAX_VALUE - 8);
-					if(from < 0)
+					if (from < 0)
 						from = 0;
-					if(to > html.length())
+					if (to > html.length())
 						to = html.length();
 					String sub = html.substring(from, to);
 					player.getClientConnection().sendPacket(new SM_QUESTIONNAIRE(messageId, i, packet_count, sub));
 				}
-				catch(Exception e)
+				catch (Exception e)
 				{
 					log.error(e);
 				}

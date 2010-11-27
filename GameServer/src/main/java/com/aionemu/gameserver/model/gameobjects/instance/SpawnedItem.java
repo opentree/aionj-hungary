@@ -42,7 +42,7 @@ public class SpawnedItem extends VisibleObject
 	{
 		return objectTemplate.getName();
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see com.aionemu.gameserver.model.gameobjects.VisibleObject#see(com.aionemu.gameserver.model.gameobjects.VisibleObject)
 	 */
@@ -52,7 +52,7 @@ public class SpawnedItem extends VisibleObject
 		super.see(object);
 		if (object instanceof Player)
 		{
-			PacketSendUtility.sendPacket((Player)object, new SM_GATHERABLE_INFO(this));
+			PacketSendUtility.sendPacket((Player) object, new SM_GATHERABLE_INFO(this));
 		}
 	}
 }

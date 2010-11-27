@@ -58,7 +58,7 @@ public class StaticData
 
 	@XmlElement(name = "player_stats_templates")
 	public PlayerStatsData			playerStatsData;
-	
+
 	@XmlElement(name = "summon_stats_templates")
 	public SummonStatsData			summonStatsData;
 
@@ -70,7 +70,7 @@ public class StaticData
 
 	@XmlElement(name = "pets")
 	public PetData					petData;
-	
+
 	@XmlElement(name = "player_initial_data")
 	public PlayerInitialData		playerInitialData;
 
@@ -115,15 +115,15 @@ public class StaticData
 
 	@XmlElement(name = "npc_skill_templates")
 	public NpcSkillData				npcSkillData;
-	
+
 	@XmlElement(name = "pet_skill_templates")
 	public PetSkillData				petSkillData;
 
 	@XmlElement(name = "siege_locations")
 	public SiegeLocationData		siegeLocationData;
-	
+
 	@XmlElement(name = "object_infos")
-	public ObjectInfos		objectInfosData;
+	public ObjectInfos				objectInfosData;
 
 	// JAXB callback
 	@SuppressWarnings("unused")

@@ -26,10 +26,10 @@ import com.aionemu.gameserver.model.gameobjects.AionObject;
  */
 public class AggroInfo
 {
-	private AionObject attacker;
-	private int hate;
-	private int damage;
-	
+	private AionObject	attacker;
+	private int			hate;
+	private int			damage;
+
 	/**
 	 * @param attacker
 	 */

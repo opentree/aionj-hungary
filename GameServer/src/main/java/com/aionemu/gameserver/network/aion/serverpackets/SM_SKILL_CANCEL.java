@@ -25,8 +25,8 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_SKILL_CANCEL extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private Creature creature;
-	private int	skillId;
+	private Creature	creature;
+	private int			skillId;
 
 	public SM_SKILL_CANCEL(Creature creature, int skillId)
 	{

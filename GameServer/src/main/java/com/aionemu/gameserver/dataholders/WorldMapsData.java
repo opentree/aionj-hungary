@@ -37,18 +37,18 @@ import com.aionemu.gameserver.model.templates.WorldMapTemplate;
  * @author Luno
  * 
  */
-@XmlRootElement(name="world_maps")
+@XmlRootElement(name = "world_maps")
 @XmlAccessorType(XmlAccessType.NONE)
 public class WorldMapsData implements Iterable<WorldMapTemplate>
 {
 	@XmlElement(name = "map")
-	private List<WorldMapTemplate>	worldMaps;
-	
+	private List<WorldMapTemplate>				worldMaps;
+
 	private TIntObjectHashMap<WorldMapTemplate>	worldIdMap	= new TIntObjectHashMap<WorldMapTemplate>();
-	
+
 	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
-		for(WorldMapTemplate map : worldMaps)
+		for (WorldMapTemplate map : worldMaps)
 		{
 			worldIdMap.put(map.getMapId(), map);
 		}
@@ -72,7 +72,7 @@ public class WorldMapsData implements Iterable<WorldMapTemplate>
 	{
 		return worldMaps == null ? 0 : worldMaps.size();
 	}
-	
+
 	/**
 	 * 
 	 * @param worldId

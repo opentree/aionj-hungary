@@ -48,8 +48,8 @@ public class GodStone extends ItemStone
 		super(itemObjId, itemId, 0, ItemStoneType.GODSTONE, persistentState);
 		ItemTemplate itemTemplate = DataManager.ITEM_DATA.getItemTemplate(itemId);
 		godstoneInfo = itemTemplate.getGodstoneInfo();
-		
-		if(godstoneInfo != null)
+
+		if (godstoneInfo != null)
 		{
 			probability = godstoneInfo.getProbability();
 			probabilityLeft = godstoneInfo.getProbabilityleft();
@@ -60,7 +60,7 @@ public class GodStone extends ItemStone
 			probabilityLeft = 0;
 			log.warn("CHECKPOINT: Godstone info missing for item : " + itemId);
 		}
-		
+
 	}
 
 	/**
@@ -69,18 +69,18 @@ public class GodStone extends ItemStone
 	 */
 	public void onEquip(final Player player)
 	{
-		if(godstoneInfo == null)
+		if (godstoneInfo == null)
 			return;
 
-		actionListener = new ActionObserver(ObserverType.ATTACK){
+		actionListener = new ActionObserver(ObserverType.ATTACK)
+		{
 			@Override
 			public void attack(Creature creature)
 			{
 				int rand = Rnd.get(probability - probabilityLeft, probability);
-				if(rand > Rnd.get(0, 1000))
+				if (rand > Rnd.get(0, 1000))
 				{
-					Skill skill = SkillEngine.getInstance().getSkill(player, godstoneInfo.getSkillid(),
-						godstoneInfo.getSkilllvl(), player.getTarget());
+					Skill skill = SkillEngine.getInstance().getSkill(player, godstoneInfo.getSkillid(), godstoneInfo.getSkilllvl(), player.getTarget());
 					skill.useSkill();
 				}
 			}
@@ -95,7 +95,7 @@ public class GodStone extends ItemStone
 	 */
 	public void onUnEquip(Player player)
 	{
-		if(actionListener != null)
+		if (actionListener != null)
 			player.getObserveController().removeObserver(actionListener);
 
 	}

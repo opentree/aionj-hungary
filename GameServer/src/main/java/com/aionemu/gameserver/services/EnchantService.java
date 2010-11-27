@@ -64,7 +64,7 @@ public class EnchantService
 
 		int number = 0;
 		int level = 0;
-		switch(quality)
+		switch (quality)
 		{
 			case COMMON:
 			case JUNK:
@@ -106,14 +106,14 @@ public class EnchantService
 		int enchantStoneLevel = parentItem.getItemTemplate().getLevel();
 		int targetItemLevel = targetItem.getItemTemplate().getLevel();
 
-		if(targetItemLevel > enchantStoneLevel)
+		if (targetItemLevel > enchantStoneLevel)
 			return false;
 
 		int qualityCap = 0;
 
 		ItemQuality quality = targetItem.getItemTemplate().getItemQuality();
 
-		switch(quality)
+		switch (quality)
 		{
 			case COMMON:
 			case JUNK:
@@ -137,20 +137,20 @@ public class EnchantService
 		int levelDiff = enchantStoneLevel - targetItemLevel;
 
 		int extraSuccess = levelDiff - qualityCap;
-		if(extraSuccess > 0)
+		if (extraSuccess > 0)
 		{
 			success += extraSuccess * 5;
 		}
 
-		if(supplementItem != null)
+		if (supplementItem != null)
 		{
 			int supplementUseCount = 1;
 			int addsuccessRate = 10;
 			int supplementId = supplementItem.getItemTemplate().getTemplateId();
 			int enchantstoneLevel = parentItem.getItemTemplate().getLevel();
 			int enchantitemLevel = targetItem.getEnchantLevel() + 1;
-			
-			switch(supplementId)
+
+			switch (supplementId)
 			{
 				//lesser supplements
 				case 166100000:
@@ -158,14 +158,14 @@ public class EnchantService
 				case 166100006:
 					addsuccessRate = EnchantsConfig.LSUP;
 					break;
-				
+
 				//supplements
 				case 166100001:
 				case 166100004:
 				case 166100007:
 					addsuccessRate = EnchantsConfig.RSUP;
 					break;
-				
+
 				//greater supplements
 				case 166100002:
 				case 166100005:
@@ -174,48 +174,47 @@ public class EnchantService
 					break;
 			}
 
-			if(enchantstoneLevel > 30 && enchantstoneLevel < 41)
-				supplementUseCount = 5;			
-			
-			if(enchantstoneLevel > 40 && enchantstoneLevel < 51)
+			if (enchantstoneLevel > 30 && enchantstoneLevel < 41)
+				supplementUseCount = 5;
+
+			if (enchantstoneLevel > 40 && enchantstoneLevel < 51)
 				supplementUseCount = 10;
-			
-			if(enchantstoneLevel > 50 && enchantstoneLevel < 61)
+
+			if (enchantstoneLevel > 50 && enchantstoneLevel < 61)
 				supplementUseCount = 25;
-			
-			if(enchantstoneLevel > 60 && enchantstoneLevel < 71)
+
+			if (enchantstoneLevel > 60 && enchantstoneLevel < 71)
 				supplementUseCount = 55;
-			
-			if(enchantstoneLevel > 70 && enchantstoneLevel < 81)
+
+			if (enchantstoneLevel > 70 && enchantstoneLevel < 81)
 				supplementUseCount = 85;
-			
-			if(enchantstoneLevel > 80 && enchantstoneLevel < 91)
+
+			if (enchantstoneLevel > 80 && enchantstoneLevel < 91)
 				supplementUseCount = 115;
-			
-			if(enchantstoneLevel > 90)
+
+			if (enchantstoneLevel > 90)
 				supplementUseCount = 145;
 
-
-			if(enchantitemLevel > 10)
+			if (enchantitemLevel > 10)
 				supplementUseCount = supplementUseCount * 2;
 
 			ItemService.decreaseItemCount(player, supplementItem, supplementUseCount);
 
 			//Add successRate
-			success = success + addsuccessRate;			
+			success = success + addsuccessRate;
 		}
 
-		if(success >= 95)
+		if (success >= 95)
 			success = 95;
 
 		boolean result = false;
 
-		if(Rnd.get(0, 100) < success)
+		if (Rnd.get(0, 100) < success)
 			result = true;
 
 		int currentEnchant = targetItem.getEnchantLevel();
 
-		if(!result)
+		if (!result)
 		{
 			// Retail: http://powerwiki.na.aiononline.com/aion/Patch+Notes:+1.9.0.1
 			// When socketing fails at +11~+15, the value falls back to +10.
@@ -240,30 +239,28 @@ public class EnchantService
 			}
 		}
 
-		if(targetItem.isEquipped())
+		if (targetItem.isEquipped())
 			onItemUnequip(player, targetItem);
 
 		targetItem.setEnchantLevel(currentEnchant);
 
-		if(targetItem.isEquipped())
+		if (targetItem.isEquipped())
 			onItemEquip(player, targetItem);
 
 		PacketSendUtility.sendPacket(player, new SM_UPDATE_ITEM(targetItem));
 
-		if(targetItem.isEquipped())
+		if (targetItem.isEquipped())
 			player.getEquipment().setPersistentState(PersistentState.UPDATE_REQUIRED);
 		else
 			player.getInventory().setPersistentState(PersistentState.UPDATE_REQUIRED);
 
-		if(result)
+		if (result)
 		{
-			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_ENCHANT_ITEM_SUCCEED(new DescriptionId(Integer
-				.parseInt(targetItem.getName()))));
+			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_ENCHANT_ITEM_SUCCEED(new DescriptionId(Integer.parseInt(targetItem.getName()))));
 		}
 		else
 		{
-			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_ENCHANT_ITEM_FAILED(new DescriptionId(Integer
-				.parseInt(targetItem.getName()))));
+			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_ENCHANT_ITEM_FAILED(new DescriptionId(Integer.parseInt(targetItem.getName()))));
 		}
 		ItemService.decreaseItemCount(player, parentItem, 1);
 
@@ -281,7 +278,7 @@ public class EnchantService
 		int successRate = 76;
 
 		int stoneCount = targetItem.getItemStones().size();
-		switch(stoneCount)
+		switch (stoneCount)
 		{
 			case 1:
 				successRate = EnchantsConfig.MSPERCENT;
@@ -300,10 +297,10 @@ public class EnchantService
 				break;
 		}
 
-		if(stoneCount >= 6)
+		if (stoneCount >= 6)
 			successRate = EnchantsConfig.MSPERCENT5;
 
-		if(supplementItem != null)
+		if (supplementItem != null)
 		{
 			int supplementUseCount = 1;
 			int addsuccessRate = 10;
@@ -311,29 +308,29 @@ public class EnchantService
 			int manastoneId = parentItem.getItemTemplate().getTemplateId();
 			int manastoneLevel = parentItem.getItemTemplate().getLevel();
 			int manastoneCount = targetItem.getItemStones().size() + 1;
-			
+
 			//lesser supplements
-			if(supplementId == 166100000 || supplementId == 166100003 || supplementId == 166100006)
+			if (supplementId == 166100000 || supplementId == 166100003 || supplementId == 166100006)
 				addsuccessRate = 10;
 			//supplements
-			if(supplementId == 166100001 || supplementId == 166100004 || supplementId == 166100007)
+			if (supplementId == 166100001 || supplementId == 166100004 || supplementId == 166100007)
 				addsuccessRate = 15;
 			//greater supplements
-			if(supplementId == 166100002 || supplementId == 166100005 || supplementId == 166100008)
+			if (supplementId == 166100002 || supplementId == 166100005 || supplementId == 166100008)
 				addsuccessRate = 20;
-			
+
 			//basic formula by manastone level
-			if(manastoneLevel > 30)
+			if (manastoneLevel > 30)
 				supplementUseCount = supplementUseCount + 1;
 
-			if(manastoneLevel > 40)
+			if (manastoneLevel > 40)
 				supplementUseCount = supplementUseCount + 1;
 
-			if(manastoneLevel > 50)
+			if (manastoneLevel > 50)
 				supplementUseCount = supplementUseCount + 1;
-			
+
 			// manastone attacks and crit strike use more supplements
-			switch(manastoneId)
+			switch (manastoneId)
 			{
 				case 167000230:
 				case 167000235:
@@ -364,27 +361,26 @@ public class EnchantService
 				case 167000522:
 					supplementUseCount = 75;
 					break;
-			}			
+			}
 
 			//supplementUseCount * manastoneCount
-			if(stoneCount > 0)
+			if (stoneCount > 0)
 				supplementUseCount = supplementUseCount * manastoneCount;
 
 			if (ItemService.decreaseItemCount(player, supplementItem, supplementUseCount) != 0)
 				return false;
 
 			//Add successRate
-			successRate = successRate + addsuccessRate;			
+			successRate = successRate + addsuccessRate;
 		}
 
-		if(Rnd.get(0, 100) < successRate)
+		if (Rnd.get(0, 100) < successRate)
 			result = true;
-		if(result)
+		if (result)
 		{
-			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_GIVE_ITEM_OPTION_SUCCEED(new DescriptionId(
-				Integer.parseInt(targetItem.getName()))));
+			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_GIVE_ITEM_OPTION_SUCCEED(new DescriptionId(Integer.parseInt(targetItem.getName()))));
 			ManaStone manaStone = ItemService.addManaStone(targetItem, parentItem.getItemTemplate().getTemplateId());
-			if(targetItem.isEquipped())
+			if (targetItem.isEquipped())
 			{
 				ItemEquipmentListener.addStoneStats(manaStone, player.getGameStats());
 				PacketSendUtility.sendPacket(player, new SM_STATS_INFO(player));
@@ -392,10 +388,9 @@ public class EnchantService
 		}
 		else
 		{
-			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_GIVE_ITEM_OPTION_FAILED(new DescriptionId(
-				Integer.parseInt(targetItem.getName()))));
+			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_GIVE_ITEM_OPTION_FAILED(new DescriptionId(Integer.parseInt(targetItem.getName()))));
 			Set<ManaStone> manaStones = targetItem.getItemStones();
-			if(targetItem.isEquipped())
+			if (targetItem.isEquipped())
 			{
 				ItemEquipmentListener.removeStoneStats(manaStones, player.getGameStats());
 				PacketSendUtility.sendPacket(player, new SM_STATS_INFO(player));
@@ -419,43 +414,41 @@ public class EnchantService
 		{
 			int enchantLevel = item.getEnchantLevel();
 
-			if(enchantLevel == 0)
+			if (enchantLevel == 0)
 				return;
 
 			boolean isWeapon = item.getItemTemplate().isWeapon();
 			boolean isArmor = item.getItemTemplate().isArmor();
-			if(isWeapon)
+			if (isWeapon)
 			{
 				TreeSet<StatModifier> modifiers = getWeaponModifiers(item);
 
-				if(modifiers == null)
+				if (modifiers == null)
 					return;
 
-				EnchantStatEffectId statId = EnchantStatEffectId.getInstance(item.getObjectId(), item
-					.getEquipmentSlot());
+				EnchantStatEffectId statId = EnchantStatEffectId.getInstance(item.getObjectId(), item.getEquipmentSlot());
 
 				player.getGameStats().addModifiers(statId, modifiers);
 				return;
 			}
 
-			if(isArmor)
+			if (isArmor)
 			{
 				TreeSet<StatModifier> modifiers = getArmorModifiers(item);
 
-				if(modifiers == null)
+				if (modifiers == null)
 					return;
 
-				EnchantStatEffectId statId = EnchantStatEffectId.getInstance(item.getObjectId(), item
-					.getEquipmentSlot());
+				EnchantStatEffectId statId = EnchantStatEffectId.getInstance(item.getObjectId(), item.getEquipmentSlot());
 				player.getGameStats().addModifiers(statId, modifiers);
 			}
 		}
-		catch(Exception ex)
+		catch (Exception ex)
 		{
 			log.error(ex.getCause() != null ? ex.getCause().getMessage() : "Error on item equip.");
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param player
@@ -467,16 +460,16 @@ public class EnchantService
 		{
 			int enchantLevel = item.getEnchantLevel();
 
-			if(enchantLevel == 0)
+			if (enchantLevel == 0)
 				return;
 
 			EnchantStatEffectId statId = EnchantStatEffectId.getInstance(item.getObjectId(), item.getEquipmentSlot());
 
-			if(player.getGameStats().effectAlreadyAdded(statId))
+			if (player.getGameStats().effectAlreadyAdded(statId))
 				player.getGameStats().endEffect(statId);
 
 		}
-		catch(Exception ex)
+		catch (Exception ex)
 		{
 			log.error(ex.getCause() != null ? ex.getCause().getMessage() : null);
 		}
@@ -492,15 +485,15 @@ public class EnchantService
 		TreeSet<StatModifier> modifiers = null;
 
 		ArmorType armorType = item.getItemTemplate().getArmorType();
-		if(armorType == null)
+		if (armorType == null)
 			return null;
 
 		int enchantLevel = item.getEnchantLevel();
 
-		switch(armorType)
+		switch (armorType)
 		{
 			case ROBE:
-				switch(item.getEquipmentSlot())
+				switch (item.getEquipmentSlot())
 				{
 					case 1 << 3: // torso
 						modifiers = EnchantWeapon.DEF3.getModifiers(enchantLevel);
@@ -520,7 +513,7 @@ public class EnchantService
 				}
 				break;
 			case LEATHER:
-				switch(item.getEquipmentSlot())
+				switch (item.getEquipmentSlot())
 				{
 					case 1 << 3: // torso
 						modifiers = EnchantWeapon.DEF6.getModifiers(enchantLevel);
@@ -540,7 +533,7 @@ public class EnchantService
 				}
 				break;
 			case CHAIN:
-				switch(item.getEquipmentSlot())
+				switch (item.getEquipmentSlot())
 				{
 					case 1 << 3: // torso
 						modifiers = EnchantWeapon.DEF9.getModifiers(enchantLevel);
@@ -560,7 +553,7 @@ public class EnchantService
 				}
 				break;
 			case PLATE:
-				switch(item.getEquipmentSlot())
+				switch (item.getEquipmentSlot())
 				{
 					case 1 << 3: // torso
 						modifiers = EnchantWeapon.DEF12.getModifiers(enchantLevel);
@@ -592,13 +585,13 @@ public class EnchantService
 	{
 		WeaponType weaponType = item.getItemTemplate().getWeaponType();
 
-		if(weaponType == null)
+		if (weaponType == null)
 			return null;
 
 		int enchantLevel = item.getEnchantLevel();
 
 		TreeSet<StatModifier> modifiers = null;
-		switch(weaponType)
+		switch (weaponType)
 		{
 			case BOOK_2H:
 				modifiers = EnchantWeapon.SPELLBOOK.getModifiers(enchantLevel);
@@ -827,7 +820,7 @@ public class EnchantService
 				return mod;
 			}
 		},
-		
+
 		DEF7()
 		{
 			@Override
@@ -840,7 +833,7 @@ public class EnchantService
 				return mod;
 			}
 		},
-		
+
 		DEF8()
 		{
 			@Override
@@ -853,7 +846,7 @@ public class EnchantService
 				return mod;
 			}
 		},
-		
+
 		DEF9()
 		{
 			@Override
@@ -866,7 +859,7 @@ public class EnchantService
 				return mod;
 			}
 		},
-		
+
 		DEF10()
 		{
 			@Override
@@ -879,7 +872,7 @@ public class EnchantService
 				return mod;
 			}
 		},
-		
+
 		DEF11()
 		{
 			@Override
@@ -892,7 +885,7 @@ public class EnchantService
 				return mod;
 			}
 		},
-		
+
 		DEF12()
 		{
 			@Override

@@ -59,17 +59,17 @@ public class QuestVars
 	{
 		int var = 0;
 		var |= questVars[4];
-		for(int i = 3; i >= 0; i--)
+		for (int i = 3; i >= 0; i--)
 		{
-					var <<= 0x06;
+			var <<= 0x06;
 			var |= questVars[i];
 		}
 		return var;
 	}
-	
+
 	public void setVar(int var)
 	{
-		for(int i = 0; i < 5; i++)
+		for (int i = 0; i < 5; i++)
 		{
 			{
 				questVars[i] = (var & 0x3F);

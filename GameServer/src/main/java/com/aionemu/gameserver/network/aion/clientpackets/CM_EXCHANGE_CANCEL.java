@@ -15,7 +15,6 @@
  *  along with aion-emu.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.gameserver.model.gameobjects.player.Player;
@@ -44,7 +43,7 @@ public class CM_EXCHANGE_CANCEL extends AbstractClientPacket<AionChannelHandler>
 
 	@Override
 	protected void runImpl()
-	{	
+	{
 		final Player activePlayer = getChannelHandler().getActivePlayer();
 		ExchangeService.getInstance().cancelExchange(activePlayer);
 	}

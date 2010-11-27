@@ -35,7 +35,8 @@ import com.aionemu.commons.network.netty.coder.PacketFrameEncoder;
  */
 public class AionPipeLineFactory extends AbstractPipeLineFactory
 {
-	AionPacketHandlerFactory aionPacketHandlerFactory;
+	AionPacketHandlerFactory	aionPacketHandlerFactory;
+
 	public AionPipeLineFactory(AionPacketHandlerFactory aionPacketHandlerFactory)
 	{
 		super();
@@ -46,8 +47,8 @@ public class AionPipeLineFactory extends AbstractPipeLineFactory
 	public ChannelPipeline getPipeline() throws Exception
 	{
 		ChannelPipeline pipeline = Channels.pipeline();
-		
-//		pipeline.addLast("logger", new LoggingHandler(Logger.class, InternalLogLevel.INFO, true));
+
+		//		pipeline.addLast("logger", new LoggingHandler(Logger.class, InternalLogLevel.INFO, true));
 		pipeline.addLast("logger", new LoggingHandler(Logger.class, InternalLogLevel.DEBUG, true));
 		pipeline.addLast("framedecoder", new PacketFrameDecoder());
 		pipeline.addLast("frameencoder", new PacketFrameEncoder(2));
@@ -55,7 +56,7 @@ public class AionPipeLineFactory extends AbstractPipeLineFactory
 		pipeline.addLast("packetencoder", new PacketEncoder());
 		pipeline.addLast("executor", new ExecutionHandler(pipelineExecutor));
 		pipeline.addLast("handler", new AionChannelHandler(aionPacketHandlerFactory));
-		
+
 		return pipeline;
 	}
 

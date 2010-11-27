@@ -41,22 +41,22 @@ public class Artifact extends Npc
 		super(objId, spawnTemplate);
 	}
 
-	private int artifactId = 0;
-	private Player activePlayer;
+	private int		artifactId	= 0;
+	private Player	activePlayer;
 
 	@Override
 	public void onDialogRequest(Player player)
 	{
 		if (artifactId == 0 || activePlayer != null)
 			return;
-		
+
 		RequestResponseHandler responseHandler = new RequestResponseHandler(this)
 		{
 			@Override
 			public void acceptRequest(StaticNpc requester, Player responder)
 			{
 			}
-			
+
 			@Override
 			public void denyRequest(StaticNpc requester, Player responder)
 			{

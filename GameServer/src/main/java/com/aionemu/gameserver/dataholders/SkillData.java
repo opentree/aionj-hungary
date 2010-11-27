@@ -35,23 +35,23 @@ import com.aionemu.gameserver.skillengine.model.SkillTemplate;
 @XmlRootElement(name = "skill_data")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class SkillData
-{	
+{
 	@XmlElement(name = "skill_template")
-	private List<SkillTemplate> skillTemplates;
+	private List<SkillTemplate>					skillTemplates;
 	/**
 	 *  Map that contains skillId - SkillTemplate key-value pair
 	 */
 	private TIntObjectHashMap<SkillTemplate>	skillData	= new TIntObjectHashMap<SkillTemplate>();
-	
+
 	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
 		skillData.clear();
-		for(SkillTemplate skillTempalte: skillTemplates)
+		for (SkillTemplate skillTempalte : skillTemplates)
 		{
-			skillData.put(skillTempalte.getSkillId(), skillTempalte);	
+			skillData.put(skillTempalte.getSkillId(), skillTempalte);
 		}
 	}
-	
+
 	/** 
 	 * @param skillId
 	 * @return SkillTemplate
@@ -60,7 +60,7 @@ public class SkillData
 	{
 		return skillData.get(skillId);
 	}
-	
+
 	/**
 	 * @return skillData.size()
 	 */

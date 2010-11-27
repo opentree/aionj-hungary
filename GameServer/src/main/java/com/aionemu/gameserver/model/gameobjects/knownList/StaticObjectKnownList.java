@@ -42,28 +42,28 @@ public final class StaticObjectKnownList extends KnownList
 	@Override
 	protected final boolean addKnownObject(VisibleObject object)
 	{
-		if(object instanceof Player)
+		if (object instanceof Player)
 			return super.addKnownObject(object);
 
 		return false;
 	}
-	
+
 	/**
 	 * Find objects that are in visibility range.
 	 */
 	@Override
 	protected final void findVisibleObjects()
 	{
-		if(getOwner() == null || !getOwner().isSpawned())
+		if (getOwner() == null || !getOwner().isSpawned())
 			return;
 
-		for(MapRegion region : getOwner().getActiveRegion().getNeighbours())
+		for (MapRegion region : getOwner().getActiveRegion().getNeighbours())
 		{
-			for(VisibleObject object : region.getVisibleObjects().values())
+			for (VisibleObject object : region.getVisibleObjects().values())
 			{
-				if(!(object instanceof Player))
+				if (!(object instanceof Player))
 					continue;
-				
+
 				addKnownObject(object);
 				object.getKnownList().addKnownObject(getOwner());
 			}

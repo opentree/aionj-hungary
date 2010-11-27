@@ -29,12 +29,12 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_SET_BIND_POINT extends AbstractAionServerPacket<AionChannelHandler>
 {
-	
-	private final int		mapId;
-	private final float		x;
-	private final float		y;
-	private final float		z;
-	private final Kisk 		kisk;
+
+	private final int	mapId;
+	private final float	x;
+	private final float	y;
+	private final float	z;
+	private final Kisk	kisk;
 
 	public SM_SET_BIND_POINT(int mapId, float x, float y, float z, Player player)
 	{
@@ -42,7 +42,7 @@ public class SM_SET_BIND_POINT extends AbstractAionServerPacket<AionChannelHandl
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.kisk	= player.getKisk();
+		this.kisk = player.getKisk();
 	}
 
 	/**
@@ -52,9 +52,9 @@ public class SM_SET_BIND_POINT extends AbstractAionServerPacket<AionChannelHandl
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		// Appears 0x04 if bound to a kisk. 0x00 if not.
-		writeC( (kisk == null ? 0x00 : 0x04)); 
-		
-		writeC( 0x01);// unk
+		writeC((kisk == null ? 0x00 : 0x04));
+
+		writeC(0x01);// unk
 		writeD(mapId);// map id
 		writeF(x); // coordinate x
 		writeF(y); // coordinate y

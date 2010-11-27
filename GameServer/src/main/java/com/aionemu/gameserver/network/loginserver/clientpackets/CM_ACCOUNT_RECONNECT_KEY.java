@@ -31,11 +31,11 @@ public class CM_ACCOUNT_RECONNECT_KEY extends AbstractClientPacket<LoginServerCh
 	/**
 	 * accountId of account that will be reconnecting.
 	 */
-	private int			accountId;
+	private int	accountId;
 	/**
 	 * ReconnectKey that will be used for authentication.
 	 */
-	private int			reconnectKey;
+	private int	reconnectKey;
 
 	/**
 	 * Constructs new instance of <tt>CM_ACCOUNT_RECONNECT_KEY </tt> packet

@@ -25,34 +25,33 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author avol
  * 
  */
-@XmlRootElement(name="bind_points")
+@XmlRootElement(name = "bind_points")
 @XmlAccessorType(XmlAccessType.NONE)
-
 public class BindPointTemplate
 {
 	@XmlAttribute(name = "name", required = true)
-	private String		name;
+	private String	name;
 
 	@XmlAttribute(name = "npcid")
 	private int		npcId;
 
 	@XmlAttribute(name = "bindid")
 	private int		bindId;
-	
+
 	@XmlAttribute(name = "mapid")
-	private int	 	mapId = 0;
+	private int		mapId	= 0;
 
 	@XmlAttribute(name = "posX")
-	private float	 	x = 0;
+	private float	x		= 0;
 
 	@XmlAttribute(name = "posY")
-	private float	 	y = 0;
+	private float	y		= 0;
 
 	@XmlAttribute(name = "posZ")
-	private float	 	z = 0;
+	private float	z		= 0;
 
 	@XmlAttribute(name = "price")
-	private int	 	price = 0;
+	private int		price	= 0;
 
 	public String getName()
 	{

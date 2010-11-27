@@ -21,7 +21,6 @@ import java.util.List;
 import com.aionemu.gameserver.controllers.attack.AttackResult;
 import com.aionemu.gameserver.skillengine.model.Effect;
 
-
 /**
  * @author ATracer
  *
@@ -29,11 +28,11 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 public class AttackShieldObserver extends AttackCalcObserver
 {
 
-	private int hit;
-	private int totalHit;
-	private Effect effect;
-	private boolean percent;
-	
+	private int		hit;
+	private int		totalHit;
+	private Effect	effect;
+	private boolean	percent;
+
 	/**
 	 * @param percent 
 	 * @param value
@@ -50,28 +49,28 @@ public class AttackShieldObserver extends AttackCalcObserver
 	@Override
 	public void checkShield(List<AttackResult> attackList)
 	{
-		for(AttackResult attackResult : attackList)
+		for (AttackResult attackResult : attackList)
 		{
 			int damage = attackResult.getDamage();
-			
+
 			int absorbedDamage = 0;
-			if(percent)
+			if (percent)
 				absorbedDamage = damage * hit / 100;
 			else
 				absorbedDamage = damage >= hit ? hit : damage;
-				
+
 			absorbedDamage = absorbedDamage >= totalHit ? totalHit : absorbedDamage;
 			totalHit -= absorbedDamage;
-			
-			if(absorbedDamage > 0)
+
+			if (absorbedDamage > 0)
 				attackResult.setShieldType(2);//TODO investigate other shield types
 			attackResult.setDamage(damage - absorbedDamage);
-			
-			if(totalHit <=0)
+
+			if (totalHit <= 0)
 			{
 				effect.endEffect();
 				return;
 			}
-		}	
+		}
 	}
 }

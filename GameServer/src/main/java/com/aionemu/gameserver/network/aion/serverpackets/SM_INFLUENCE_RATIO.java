@@ -35,19 +35,19 @@ public class SM_INFLUENCE_RATIO extends AbstractAionServerPacket<AionChannelHand
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		Influence inf = Influence.getInstance();
-		
+
 		writeD(SiegeService.getInstance().getSiegeTime());
-        writeF(inf.getElyos());
-        writeF(inf.getAsmos());
-        writeF(inf.getBalaur());
-        
-        //TODO: 1.9 has writeH(3) with balauria values
-        writeH(1);
-        
-        writeD(400010000);
-        writeF(inf.getElyos());
-        writeF(inf.getAsmos());
-        writeF(inf.getBalaur());
-        
+		writeF(inf.getElyos());
+		writeF(inf.getAsmos());
+		writeF(inf.getBalaur());
+
+		//TODO: 1.9 has writeH(3) with balauria values
+		writeH(1);
+
+		writeD(400010000);
+		writeF(inf.getElyos());
+		writeF(inf.getAsmos());
+		writeF(inf.getBalaur());
+
 	}
 }

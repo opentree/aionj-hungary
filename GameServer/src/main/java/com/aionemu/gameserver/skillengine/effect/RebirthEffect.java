@@ -33,7 +33,7 @@ public class RebirthEffect extends EffectTemplate
 {
 	@XmlAttribute(name = "resurrect_percent", required = true)
 	protected int	resurrectPercent;
-	
+
 	@Override
 	public void applyEffect(Effect effect)
 	{
@@ -45,7 +45,7 @@ public class RebirthEffect extends EffectTemplate
 	{
 		effect.addSucessEffect(this);
 	}
-	
+
 	public int getResurrectPercent()
 	{
 		return resurrectPercent;

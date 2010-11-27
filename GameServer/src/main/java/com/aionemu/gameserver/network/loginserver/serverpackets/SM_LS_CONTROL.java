@@ -27,11 +27,11 @@ import com.aionemu.commons.network.netty.packet.AbstractServerPacket;
  */
 public class SM_LS_CONTROL extends AbstractServerPacket<LoginServerChannelHandler>
 {
-	private final String		accountName;
+	private final String	accountName;
 
-	private final String		adminName;
+	private final String	adminName;
 
-	private final String		playerName;
+	private final String	playerName;
 
 	private final int		param;
 
@@ -46,6 +46,7 @@ public class SM_LS_CONTROL extends AbstractServerPacket<LoginServerChannelHandle
 		this.type = type;
 
 	}
+
 	/**
 	 * {@inheritDoc}
 	 */

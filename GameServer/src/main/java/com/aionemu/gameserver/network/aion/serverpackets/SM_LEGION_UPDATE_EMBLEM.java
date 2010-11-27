@@ -27,7 +27,7 @@ public class SM_LEGION_UPDATE_EMBLEM extends AbstractAionServerPacket<AionChanne
 {
 	/** Legion emblem information **/
 	private int	legionId;
-	private int emblemId;
+	private int	emblemId;
 	private int	color_r;
 	private int	color_g;
 	private int	color_b;
@@ -51,9 +51,9 @@ public class SM_LEGION_UPDATE_EMBLEM extends AbstractAionServerPacket<AionChanne
 	{
 		writeD(legionId);
 		writeH(emblemId);
-		writeC( 0xFF);
-		writeC( color_r);
-		writeC( color_g);
-		writeC( color_b);
+		writeC(0xFF);
+		writeC(color_r);
+		writeC(color_g);
+		writeC(color_b);
 	}
 }

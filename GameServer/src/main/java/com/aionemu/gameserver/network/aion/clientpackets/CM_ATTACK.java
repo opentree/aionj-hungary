@@ -32,20 +32,20 @@ public class CM_ATTACK extends AbstractClientPacket<AionChannelHandler>
 	/**
 	 * Target object id that client wants to TALK WITH or 0 if wants to unselect
 	 */
-	private int					targetObjectId;
+	private int		targetObjectId;
 	// TODO: Question, are they really needed?
 	@SuppressWarnings("unused")
-	private int					attackno;
+	private int		attackno;
 	@SuppressWarnings("unused")
-	private int					time;
+	private int		time;
 	@SuppressWarnings("unused")
-	private int					type;
+	private int		type;
 	@SuppressWarnings("unused")
-	private long                exp;
+	private long	exp;
 	@SuppressWarnings("unused")
-	private long                maxexp;
+	private long	maxexp;
 	@SuppressWarnings("unused")
-	private int					at;
+	private int		at;
 
 	public CM_ATTACK(int opcode)
 	{
@@ -71,11 +71,11 @@ public class CM_ATTACK extends AbstractClientPacket<AionChannelHandler>
 	protected void runImpl()
 	{
 		Player player = getChannelHandler().getActivePlayer();
-		if(player != null && !player.getLifeStats().isAlreadyDead())
+		if (player != null && !player.getLifeStats().isAlreadyDead())
 		{
 			VisibleObject visibleObject = player.getKnownList().getKnownObjects().get(targetObjectId);
 			if (visibleObject instanceof Creature)
-				player.attackTarget((Creature)visibleObject);
+				player.attackTarget((Creature) visibleObject);
 		}
 	}
 }

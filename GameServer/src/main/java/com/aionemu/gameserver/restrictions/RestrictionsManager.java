@@ -74,9 +74,9 @@ public final class RestrictionsManager
 
 		private RestrictionMode()
 		{
-			for(Method method : Restrictions.class.getMethods())
+			for (Method method : Restrictions.class.getMethods())
 			{
-				if(name().equals(method.getName()))
+				if (name().equals(method.getName()))
 				{
 					METHOD = method;
 					return;
@@ -88,10 +88,10 @@ public final class RestrictionsManager
 
 		private boolean equalsMethod(Method method)
 		{
-			if(!METHOD.getName().equals(method.getName()))
+			if (!METHOD.getName().equals(method.getName()))
 				return false;
 
-			if(!METHOD.getReturnType().equals(method.getReturnType()))
+			if (!METHOD.getReturnType().equals(method.getReturnType()))
 				return false;
 
 			return Arrays.equals(METHOD.getParameterTypes(), method.getParameterTypes());
@@ -101,9 +101,9 @@ public final class RestrictionsManager
 
 		private static RestrictionMode parse(Method method)
 		{
-			for(RestrictionMode mode : VALUES)
+			for (RestrictionMode mode : VALUES)
 			{
-				if(mode.equalsMethod(method))
+				if (mode.equalsMethod(method))
 					return mode;
 			}
 
@@ -119,11 +119,11 @@ public final class RestrictionsManager
 		private double getPriority(Restrictions restriction)
 		{
 			RestrictionPriority a1 = getMatchingMethod(restriction.getClass()).getAnnotation(RestrictionPriority.class);
-			if(a1 != null)
+			if (a1 != null)
 				return a1.value();
 
 			RestrictionPriority a2 = restriction.getClass().getAnnotation(RestrictionPriority.class);
-			if(a2 != null)
+			if (a2 != null)
 				return a2.value();
 
 			return RestrictionPriority.DEFAULT_PRIORITY;
@@ -131,9 +131,9 @@ public final class RestrictionsManager
 
 		private Method getMatchingMethod(Class<? extends Restrictions> clazz)
 		{
-			for(Method method : clazz.getMethods())
+			for (Method method : clazz.getMethods())
 			{
-				if(equalsMethod(method))
+				if (equalsMethod(method))
 					return method;
 			}
 
@@ -146,19 +146,19 @@ public final class RestrictionsManager
 
 	public synchronized static void activate(Restrictions restriction)
 	{
-		for(Method method : restriction.getClass().getMethods())
+		for (Method method : restriction.getClass().getMethods())
 		{
 			RestrictionMode mode = RestrictionMode.parse(method);
 
-			if(mode == null)
+			if (mode == null)
 				continue;
 
-			if(method.getAnnotation(DisabledRestriction.class) != null)
+			if (method.getAnnotation(DisabledRestriction.class) != null)
 				continue;
 
 			Restrictions[] restrictions = RESTRICTIONS[mode.ordinal()];
 
-			if(!ArrayUtils.contains(restrictions, restriction))
+			if (!ArrayUtils.contains(restrictions, restriction))
 				restrictions = (Restrictions[]) ArrayUtils.add(restrictions, restriction);
 
 			Arrays.sort(restrictions, mode);
@@ -169,11 +169,11 @@ public final class RestrictionsManager
 
 	public synchronized static void deactivate(Restrictions restriction)
 	{
-		for(RestrictionMode mode : RestrictionMode.VALUES)
+		for (RestrictionMode mode : RestrictionMode.VALUES)
 		{
 			Restrictions[] restrictions = RESTRICTIONS[mode.ordinal()];
 
-			for(int index; (index = ArrayUtils.indexOf(restrictions, restriction)) != -1;)
+			for (int index; (index = ArrayUtils.indexOf(restrictions, restriction)) != -1;)
 				restrictions = (Restrictions[]) ArrayUtils.remove(restrictions, index);
 
 			RESTRICTIONS[mode.ordinal()] = restrictions;
@@ -189,7 +189,7 @@ public final class RestrictionsManager
 		// This is the Restrictions when player is in prison.
 		activate(new PrisonRestrictions());
 	}
-	
+
 	/**
 	 * This function can be used for activate one restriction.
 	 * Example:
@@ -204,18 +204,18 @@ public final class RestrictionsManager
 	 */
 	public static boolean isRestricted(Player player, Class<? extends Restrictions> callingRestriction)
 	{
-		if(player == null)
+		if (player == null)
 			return true;
-		
-		for(Restrictions restrictions : RESTRICTIONS[RestrictionMode.isRestricted.ordinal()])
+
+		for (Restrictions restrictions : RESTRICTIONS[RestrictionMode.isRestricted.ordinal()])
 		{
-			if(!restrictions.isRestricted(player, callingRestriction))
+			if (!restrictions.isRestricted(player, callingRestriction))
 				return false;
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * This function created for enable/disable attack.
 	 * 
@@ -224,9 +224,9 @@ public final class RestrictionsManager
 	 */
 	public static boolean canAttack(Player player, VisibleObject target)
 	{
-		for(Restrictions restrictions : RESTRICTIONS[RestrictionMode.canAttack.ordinal()])
+		for (Restrictions restrictions : RESTRICTIONS[RestrictionMode.canAttack.ordinal()])
 		{
-			if(!restrictions.canAttack(player, target))
+			if (!restrictions.canAttack(player, target))
 				return false;
 		}
 
@@ -241,15 +241,15 @@ public final class RestrictionsManager
 	 */
 	public static boolean canAffectBySkill(Player player, VisibleObject target)
 	{
-		for(Restrictions restrictions : RESTRICTIONS[RestrictionMode.canAffectBySkill.ordinal()])
+		for (Restrictions restrictions : RESTRICTIONS[RestrictionMode.canAffectBySkill.ordinal()])
 		{
-			if(!restrictions.canAffectBySkill(player, target))
+			if (!restrictions.canAffectBySkill(player, target))
 				return false;
 		}
 
 		return true;
 	}
-	
+
 	/**
 	 * Check whether player can use such skill
 	 * 
@@ -259,15 +259,15 @@ public final class RestrictionsManager
 	 */
 	public static boolean canUseSkill(Player player, Skill skill)
 	{
-		for(Restrictions restrictions : RESTRICTIONS[RestrictionMode.canUseSkill.ordinal()])
+		for (Restrictions restrictions : RESTRICTIONS[RestrictionMode.canUseSkill.ordinal()])
 		{
-			if(!restrictions.canUseSkill(player, skill))
+			if (!restrictions.canUseSkill(player, skill))
 				return false;
 		}
 
 		return true;
 	}
-	
+
 	/**
 	 * This function is created for enable/disable chat.
 	 * 
@@ -275,15 +275,15 @@ public final class RestrictionsManager
 	 */
 	public static boolean canChat(Player player)
 	{
-		for(Restrictions restrictions : RESTRICTIONS[RestrictionMode.canChat.ordinal()])
+		for (Restrictions restrictions : RESTRICTIONS[RestrictionMode.canChat.ordinal()])
 		{
-			if(!restrictions.canChat(player))
+			if (!restrictions.canChat(player))
 				return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * This function is created for enable/disable invite to group.
 	 * 
@@ -292,15 +292,15 @@ public final class RestrictionsManager
 	 */
 	public static boolean canInviteToGroup(Player player, Player target)
 	{
-		for(Restrictions restrictions : RESTRICTIONS[RestrictionMode.canInviteToGroup.ordinal()])
+		for (Restrictions restrictions : RESTRICTIONS[RestrictionMode.canInviteToGroup.ordinal()])
 		{
-			if(!restrictions.canInviteToGroup(player, target))
+			if (!restrictions.canInviteToGroup(player, target))
 				return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * This function is created for enable/disable invite to alliance.
 	 * 
@@ -309,15 +309,15 @@ public final class RestrictionsManager
 	 */
 	public static boolean canInviteToAlliance(Player player, Player target)
 	{
-		for(Restrictions restrictions : RESTRICTIONS[RestrictionMode.canInviteToAlliance.ordinal()])
+		for (Restrictions restrictions : RESTRICTIONS[RestrictionMode.canInviteToAlliance.ordinal()])
 		{
-			if(!restrictions.canInviteToAlliance(player, target))
+			if (!restrictions.canInviteToAlliance(player, target))
 				return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * This function is created for enable/disable equip change.
 	 * 
@@ -325,15 +325,15 @@ public final class RestrictionsManager
 	 */
 	public static boolean canChangeEquip(Player player)
 	{
-		for(Restrictions restrictions : RESTRICTIONS[RestrictionMode.canChangeEquip.ordinal()])
+		for (Restrictions restrictions : RESTRICTIONS[RestrictionMode.canChangeEquip.ordinal()])
 		{
-			if(!restrictions.canChangeEquip(player))
+			if (!restrictions.canChangeEquip(player))
 				return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Check whether player can perform trade
 	 * 
@@ -342,15 +342,15 @@ public final class RestrictionsManager
 	 */
 	public static boolean canTrade(Player player)
 	{
-		for(Restrictions restrictions : RESTRICTIONS[RestrictionMode.canTrade.ordinal()])
+		for (Restrictions restrictions : RESTRICTIONS[RestrictionMode.canTrade.ordinal()])
 		{
-			if(!restrictions.canTrade(player))
+			if (!restrictions.canTrade(player))
 				return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Check whether player can use warehouse
 	 * 
@@ -359,15 +359,15 @@ public final class RestrictionsManager
 	 */
 	public static boolean canUseWarehouse(Player player)
 	{
-		for(Restrictions restrictions : RESTRICTIONS[RestrictionMode.canUseWarehouse.ordinal()])
+		for (Restrictions restrictions : RESTRICTIONS[RestrictionMode.canUseWarehouse.ordinal()])
 		{
-			if(!restrictions.canUseWarehouse(player))
+			if (!restrictions.canUseWarehouse(player))
 				return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Check whether player can use an item
 	 * @param player
@@ -375,9 +375,9 @@ public final class RestrictionsManager
 	 */
 	public static boolean canUseItem(Player player)
 	{
-		for(Restrictions restrictions : RESTRICTIONS[RestrictionMode.canUseItem.ordinal()])
+		for (Restrictions restrictions : RESTRICTIONS[RestrictionMode.canUseItem.ordinal()])
 		{
-			if(!restrictions.canUseItem(player))
+			if (!restrictions.canUseItem(player))
 				return false;
 		}
 		return true;

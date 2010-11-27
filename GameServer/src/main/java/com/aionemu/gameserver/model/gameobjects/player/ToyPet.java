@@ -22,37 +22,37 @@ package com.aionemu.gameserver.model.gameobjects.player;
  */
 public class ToyPet
 {
-	private int databaseIndex;
-	private Player master;
-	private int decoration;
-	private String name;
-	private int petId;
-	
-	private float x1 = 0;
-	private float y1 = 0;
-	private float z1 = 0;
-	
-	private int h = 0;
-	
-	private float x2 = 0;
-	private float y2 = 0;
-	private float z2 = 0;
-	
+	private int		databaseIndex;
+	private Player	master;
+	private int		decoration;
+	private String	name;
+	private int		petId;
+
+	private float	x1	= 0;
+	private float	y1	= 0;
+	private float	z1	= 0;
+
+	private int		h	= 0;
+
+	private float	x2	= 0;
+	private float	y2	= 0;
+	private float	z2	= 0;
+
 	public ToyPet()
 	{
-		
+
 	}
-	
+
 	public Player getMaster()
 	{
 		return master;
 	}
-	
+
 	public void setMaster(Player player)
 	{
 		this.master = player;
 	}
-	
+
 	/**
 	 * @return the databaseIndex
 	 */

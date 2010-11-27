@@ -28,25 +28,25 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_FRIEND_LIST extends AbstractAionServerPacket<AionChannelHandler>
 {
-	
+
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		FriendList list = cHandler.getActivePlayer().getFriendList();
 
 		writeH((0 - list.getSize()));
-		writeC( 0); // Unk
+		writeC(0); // Unk
 
-        for (Friend friend : list)
-        {
-            writeS(friend.getName());
-            writeD(friend.getLevel());
-            writeD(friend.getPlayerClass().getClassId());
-            writeC( 1); // Unk
-            writeD(friend.getMapId());
-            writeD(friend.getLastOnlineTime()); // Date friend was last online as a Unix timestamp.
-            writeS(friend.getNote()); // Friend note
-            writeC( friend.getStatus().getIntValue());
-        }
+		for (Friend friend : list)
+		{
+			writeS(friend.getName());
+			writeD(friend.getLevel());
+			writeD(friend.getPlayerClass().getClassId());
+			writeC(1); // Unk
+			writeD(friend.getMapId());
+			writeD(friend.getLastOnlineTime()); // Date friend was last online as a Unix timestamp.
+			writeS(friend.getNote()); // Friend note
+			writeC(friend.getStatus().getIntValue());
+		}
 	}
 }

@@ -31,19 +31,19 @@ public class PrisonRestrictions extends AbstractRestrictions
 	@Override
 	public boolean isRestricted(Player player, Class<? extends Restrictions> callingRestriction)
 	{
-		if(isInPrison(player))
+		if (isInPrison(player))
 		{
 			PacketSendUtility.sendMessage(player, "You are in prison!");
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	@Override
 	public boolean canAttack(Player player, VisibleObject target)
 	{
-		if(isInPrison(player))
+		if (isInPrison(player))
 		{
 			PacketSendUtility.sendMessage(player, "You cannot attack in prison!");
 			return false;
@@ -55,7 +55,7 @@ public class PrisonRestrictions extends AbstractRestrictions
 	@Override
 	public boolean canUseSkill(Player player, Skill skill)
 	{
-		if(isInPrison(player))
+		if (isInPrison(player))
 		{
 			PacketSendUtility.sendMessage(player, "You cannot use skills in prison!");
 			return false;
@@ -63,8 +63,7 @@ public class PrisonRestrictions extends AbstractRestrictions
 
 		return true;
 	}
-	
-	
+
 	@Override
 	public boolean canAffectBySkill(Player player, VisibleObject target)
 	{
@@ -74,7 +73,7 @@ public class PrisonRestrictions extends AbstractRestrictions
 	@Override
 	public boolean canChat(Player player)
 	{
-		if(isInPrison(player))
+		if (isInPrison(player))
 		{
 			PacketSendUtility.sendMessage(player, "You cannot chat in prison!");
 			return false;
@@ -86,7 +85,7 @@ public class PrisonRestrictions extends AbstractRestrictions
 	@Override
 	public boolean canInviteToGroup(Player player, Player target)
 	{
-		if(isInPrison(player))
+		if (isInPrison(player))
 		{
 			PacketSendUtility.sendMessage(player, "You cannot invite members to group in prison!");
 			return false;
@@ -94,11 +93,11 @@ public class PrisonRestrictions extends AbstractRestrictions
 
 		return true;
 	}
-	
+
 	@Override
 	public boolean canInviteToAlliance(Player player, Player target)
 	{
-		if(isInPrison(player))
+		if (isInPrison(player))
 		{
 			PacketSendUtility.sendMessage(player, "You cannot invite members to alliance in prison!");
 			return false;
@@ -110,7 +109,7 @@ public class PrisonRestrictions extends AbstractRestrictions
 	@Override
 	public boolean canChangeEquip(Player player)
 	{
-		if(isInPrison(player))
+		if (isInPrison(player))
 		{
 			PacketSendUtility.sendMessage(player, "You cannot equip / unequip item in prison!");
 			return false;
@@ -118,18 +117,18 @@ public class PrisonRestrictions extends AbstractRestrictions
 
 		return true;
 	}
-	
+
 	@Override
 	public boolean canUseItem(Player player)
 	{
-		if(isInPrison(player))
+		if (isInPrison(player))
 		{
 			PacketSendUtility.sendMessage(player, "You cannot use item in prison!");
-			return false;			
+			return false;
 		}
 		return true;
 	}
-	
+
 	private boolean isInPrison(Player player)
 	{
 		return player.isInPrison() || player.getWorldId() == WorldMapType.PRISON.getId();

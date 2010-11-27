@@ -21,7 +21,6 @@ import com.aionemu.commons.database.dao.DAO;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.TitleList;
 
-
 /**
  * @author xavier
  * 
@@ -31,11 +30,11 @@ public abstract class PlayerTitleListDAO implements DAO
 	@Override
 	public final String getClassName()
 	{
-		 return PlayerTitleListDAO.class.getName();
+		return PlayerTitleListDAO.class.getName();
 	}
 
 	public abstract TitleList loadTitleList(int playerId);
-	
+
 	public abstract boolean storeTitles(Player player);
 
 }

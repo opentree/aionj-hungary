@@ -27,24 +27,23 @@ import com.aionemu.gameserver.model.templates.teleport.TeleporterTemplate;
 public class TeleporterData
 {
 	@XmlElement(name = "teleporter_template")
-	private List<TeleporterTemplate> tlist;
-	
+	private List<TeleporterTemplate>				tlist;
+
 	/** A map containing all trade list templates */
 	private TIntObjectHashMap<TeleporterTemplate>	npctlistData	= new TIntObjectHashMap<TeleporterTemplate>();
 
 	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
-		for(TeleporterTemplate npc: tlist)
+		for (TeleporterTemplate npc : tlist)
 		{
 			npctlistData.put(npc.getNpcId(), npc);
 		}
 	}
-	
+
 	public int size()
 	{
 		return npctlistData.size();
 	}
-
 
 	/**
 	 * Returns an {@link NpcTemplate} object with given id.

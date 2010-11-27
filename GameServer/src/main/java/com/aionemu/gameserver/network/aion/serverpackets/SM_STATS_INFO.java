@@ -36,11 +36,11 @@ public class SM_STATS_INFO extends AbstractAionServerPacket<AionChannelHandler>
 	/**
 	 * Player that stats info will be send
 	 */
-	private Player	player;
-	private PlayerGameStats pgs;
-	private PlayerLifeStats pls;
-	private PlayerCommonData pcd;
-	
+	private Player				player;
+	private PlayerGameStats		pgs;
+	private PlayerLifeStats		pls;
+	private PlayerCommonData	pcd;
+
 	/**
 	 * Constructs new <tt>SM_UI</tt> packet
 	 * 
@@ -102,9 +102,9 @@ public class SM_STATS_INFO extends AbstractAionServerPacket<AionChannelHandler>
 
 		writeD(pls.getCurrentFp());// [current fly time]
 
-		writeC( player.getFlyState());// [fly state]
-		writeC( 0);// [unk]
-		
+		writeC(player.getFlyState());// [fly state]
+		writeC(0);// [unk]
+
 		writeH(pgs.getCurrentStat(StatEnum.MAIN_HAND_POWER)); // [current main hand attack]
 
 		writeH(pgs.getCurrentStat(StatEnum.OFF_HAND_POWER)); // [off hand attack]
@@ -135,14 +135,14 @@ public class SM_STATS_INFO extends AbstractAionServerPacket<AionChannelHandler>
 		writeH(0);// [unk] 1.9 version
 		writeH(16256);// [unk] 1.9 version
 		writeH(40);// [unk] 1.9 version
-		writeH(pgs.getCurrentStat(StatEnum.MAGICAL_ATTACK)+pgs.getCurrentStat(StatEnum.BOOST_MAGICAL_SKILL)); // [current magic boost] 1.9 version
-		writeH(pgs.getCurrentStat(StatEnum.BOOST_HEAL)-100); // [current boost_heal]
+		writeH(pgs.getCurrentStat(StatEnum.MAGICAL_ATTACK) + pgs.getCurrentStat(StatEnum.BOOST_MAGICAL_SKILL)); // [current magic boost] 1.9 version
+		writeH(pgs.getCurrentStat(StatEnum.BOOST_HEAL) - 100); // [current boost_heal]
 		writeH(pgs.getCurrentStat(StatEnum.CRITICAL_RESIST)); // [current strike resist]
 		writeH(0);// [unk] 1.9 version
 		writeH(0);// [unk] 1.9 version
 		writeH(0);// [unk] 1.9 version
-		writeH(20511 );// [unk] 1.9 version
-		
+		writeH(20511);// [unk] 1.9 version
+
 		writeD((27 + (player.getCubeSize() * 9)));// [unk]
 
 		writeD(player.getInventory().size());// [unk]
@@ -169,7 +169,7 @@ public class SM_STATS_INFO extends AbstractAionServerPacket<AionChannelHandler>
 
 		writeH(pgs.getBaseStat(StatEnum.WATER_RESISTANCE));// [base water res]
 		writeH(pgs.getBaseStat(StatEnum.WIND_RESISTANCE));// [base water res]
-		
+
 		writeH(pgs.getBaseStat(StatEnum.EARTH_RESISTANCE));// [base earth resist]
 		writeH(pgs.getBaseStat(StatEnum.FIRE_RESISTANCE));// [base water res]
 
@@ -197,7 +197,7 @@ public class SM_STATS_INFO extends AbstractAionServerPacket<AionChannelHandler>
 		writeH(pgs.getBaseStat(StatEnum.EVASION)); // [base evasion]
 
 		writeH(pgs.getBaseStat(StatEnum.PARRY)); // [base parry]
- 
+
 		writeH(pgs.getBaseStat(StatEnum.BLOCK)); // [base block]
 
 		writeH(pgs.getBaseStat(StatEnum.MAIN_HAND_CRITICAL)); // [base main hand crit rate]
@@ -205,7 +205,7 @@ public class SM_STATS_INFO extends AbstractAionServerPacket<AionChannelHandler>
 
 		writeH(pgs.getCurrentStat(StatEnum.MAGICAL_CRITICAL)); // [base or current MAGICAL crit rate] VERSION 1.9 
 		writeH(0); // [unk] VERSION 1.9 
-		
+
 		writeH(pgs.getBaseStat(StatEnum.MAIN_HAND_ACCURACY)); // [base main hand accuracy]
 		writeH(pgs.getBaseStat(StatEnum.OFF_HAND_ACCURACY)); // [base off hand accuracy]
 
@@ -214,9 +214,9 @@ public class SM_STATS_INFO extends AbstractAionServerPacket<AionChannelHandler>
 		writeH(pgs.getBaseStat(StatEnum.MAGICAL_ACCURACY));// [base magic accuracy]
 
 		writeH(0); // [base concentration]
-		writeH(pgs.getBaseStat(StatEnum.MAGICAL_ATTACK)+pgs.getBaseStat(StatEnum.BOOST_MAGICAL_SKILL));// [base magic boost]
+		writeH(pgs.getBaseStat(StatEnum.MAGICAL_ATTACK) + pgs.getBaseStat(StatEnum.BOOST_MAGICAL_SKILL));// [base magic boost]
 
-		writeH(pgs.getBaseStat(StatEnum.BOOST_HEAL)-100); // [base boostheal]
+		writeH(pgs.getBaseStat(StatEnum.BOOST_HEAL) - 100); // [base boostheal]
 		writeH(pgs.getBaseStat(StatEnum.CRITICAL_RESIST)); // [base strike resist]
 		writeH(0); // [unk] VERSION 1.9 
 		writeH(0); // [unk] VERSION 1.9 

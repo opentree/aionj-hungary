@@ -39,11 +39,11 @@ import com.aionemu.gameserver.utils.stats.StatFunctions;
 public class BleedEffect extends EffectTemplate
 {
 	@XmlAttribute(required = true)
-	protected int checktime;	
+	protected int	checktime;
 	@XmlAttribute
-	protected int value;
+	protected int	value;
 	@XmlAttribute
-	protected int delta;
+	protected int	delta;
 
 	@Override
 	public void applyEffect(Effect effect)
@@ -54,8 +54,8 @@ public class BleedEffect extends EffectTemplate
 	@Override
 	public void calculate(Effect effect)
 	{
-		if (calculateEffectResistRate(effect, StatEnum.BLEED_RESISTANCE)) 
-			effect.addSucessEffect(this); 
+		if (calculateEffectResistRate(effect, StatEnum.BLEED_RESISTANCE))
+			effect.addSucessEffect(this);
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class BleedEffect extends EffectTemplate
 		Creature effector = effect.getEffector();
 		int valueWithDelta = value + delta * effect.getSkillLevel();
 		int damage = StatFunctions.calculateMagicDamageToTarget(effector, effected, valueWithDelta, getElement());
-		effected.onAttack(effector, effect.getSkillId(), TYPE.DAMAGE, damage);			
+		effected.onAttack(effector, effect.getSkillId(), TYPE.DAMAGE, damage);
 	}
 
 	@Override
@@ -81,8 +81,9 @@ public class BleedEffect extends EffectTemplate
 		final Creature effected = effect.getEffected();
 
 		effected.getEffectController().setAbnormal(EffectId.BLEED.getEffectId());
-		
-		Future<?> task = ThreadPoolManager.getInstance().scheduleEffectAtFixedRate(new Runnable(){
+
+		Future<?> task = ThreadPoolManager.getInstance().scheduleEffectAtFixedRate(new Runnable()
+		{
 
 			@Override
 			public void run()
@@ -90,7 +91,7 @@ public class BleedEffect extends EffectTemplate
 				onPeriodicAction(effect);
 			}
 		}, checktime, checktime);
-		effect.setPeriodicTask(task, position);	
+		effect.setPeriodicTask(task, position);
 	}
 
 }

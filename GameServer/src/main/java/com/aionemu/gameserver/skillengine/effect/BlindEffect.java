@@ -37,7 +37,7 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 public class BlindEffect extends EffectTemplate
 {
 	@XmlAttribute
-	private int value;
+	private int	value;
 
 	@Override
 	public void applyEffect(Effect effect)
@@ -48,10 +48,10 @@ public class BlindEffect extends EffectTemplate
 	@Override
 	public void calculate(Effect effect)
 	{
-		if (calculateEffectResistRate(effect, StatEnum.BLIND_RESISTANCE)) 
+		if (calculateEffectResistRate(effect, StatEnum.BLIND_RESISTANCE))
 			effect.addSucessEffect(this);
 	}
-	
+
 	@Override
 	public void startEffect(Effect effect)
 	{
@@ -63,12 +63,12 @@ public class BlindEffect extends EffectTemplate
 			{
 				return Rnd.get(0, value) <= value;
 			}
-			
+
 		};
 		effect.getEffected().getObserveController().addAttackCalcObserver(acObserver);
 		effect.setAttackStatusObserver(acObserver, position);
 	}
-	
+
 	@Override
 	public void endEffect(Effect effect)
 	{

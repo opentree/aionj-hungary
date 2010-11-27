@@ -38,31 +38,31 @@ import com.aionemu.gameserver.model.templates.petskill.PetSkillTemplate;
 public class PetSkillData
 {
 	@XmlElement(name = "pet_skill")
-	private List<PetSkillTemplate> petSkills;
-	
+	private List<PetSkillTemplate>				petSkills;
+
 	/** A map containing all npc skill templates */
 	private TIntObjectHashMap<TIntIntHashMap>	petSkillData	= new TIntObjectHashMap<TIntIntHashMap>();
 
 	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
-		for(PetSkillTemplate petSkill : petSkills)
+		for (PetSkillTemplate petSkill : petSkills)
 		{
 			TIntIntHashMap orderSkillMap = petSkillData.get(petSkill.getOrderSkill());
-			if(orderSkillMap == null)
+			if (orderSkillMap == null)
 			{
 				orderSkillMap = new TIntIntHashMap();
 				petSkillData.put(petSkill.getOrderSkill(), orderSkillMap);
 			}
-				
+
 			orderSkillMap.put(petSkill.getPetId(), petSkill.getSkillId());
-		}		
+		}
 	}
-	
+
 	public int size()
 	{
 		return petSkillData.size();
 	}
-	
+
 	public int getPetOrderSkill(int orderSkill, int petNpcId)
 	{
 		return petSkillData.get(orderSkill).get(petNpcId);

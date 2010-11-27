@@ -28,8 +28,9 @@ import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
  */
 public class SiegeNpc extends Npc
 {
-	private int siegeId;
-	SiegeRace siegeRace;
+	private int	siegeId;
+	SiegeRace	siegeRace;
+
 	/**
 	 * @param objId
 	 * @param spawnTemplate
@@ -39,12 +40,12 @@ public class SiegeNpc extends Npc
 		super(objId, spawnTemplate);
 	}
 
-	public SiegeRace getSiegeRace() 
+	public SiegeRace getSiegeRace()
 	{
 		return siegeRace;
 	}
 
-	public int getSiegeId() 
+	public int getSiegeId()
 	{
 		return siegeId;
 	}

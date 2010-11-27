@@ -27,7 +27,7 @@ public class Commander extends SiegeLocation
 	public Commander(SiegeLocationTemplate template)
 	{
 		super(template);
-		
+
 		// Commander always 0?
 		setVulnerable(false);
 		setNextState(0);

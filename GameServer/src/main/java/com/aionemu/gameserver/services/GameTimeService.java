@@ -31,38 +31,39 @@ import com.aionemu.gameserver.world.World;
 public class GameTimeService
 {
 	private static Logger	log	= Logger.getLogger(GameTimeService.class);
-	
+
 	public static final GameTimeService getInstance()
 	{
 		return SingletonHolder.instance;
 	}
 
-	private final static int GAMETIME_UPDATE = 3 * 60000;
+	private final static int	GAMETIME_UPDATE	= 3 * 60000;
 
 	private GameTimeService()
 	{
 		/**
 		 * Update players with current game time
 		 */
-		ThreadPoolManager.getInstance().scheduleAtFixedRate(new Runnable(){
+		ThreadPoolManager.getInstance().scheduleAtFixedRate(new Runnable()
+		{
 
 			@Override
 			public void run()
 			{
 				log.info("Sending current game time to all players");
-				for(Player player : World.getInstance().getAllPlayers())
+				for (Player player : World.getInstance().getAllPlayers())
 				{
 					PacketSendUtility.sendPacket(player, new SM_GAME_TIME());
 				}
 			}
 		}, GAMETIME_UPDATE, GAMETIME_UPDATE);
-		
+
 		log.info("GameTimeService started. Update interval:" + GAMETIME_UPDATE);
 	}
 
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
-		protected static final GameTimeService instance = new GameTimeService();
+		protected static final GameTimeService	instance	= new GameTimeService();
 	}
 }

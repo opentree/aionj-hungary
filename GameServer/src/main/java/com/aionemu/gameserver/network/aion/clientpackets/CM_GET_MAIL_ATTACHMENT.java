@@ -27,22 +27,22 @@ import com.aionemu.gameserver.services.MailService;
  */
 public class CM_GET_MAIL_ATTACHMENT extends AbstractClientPacket<AionChannelHandler>
 {
-	
-	private int mailObjId;
-	private int attachmentType;
-	
+
+	private int	mailObjId;
+	private int	attachmentType;
+
 	public CM_GET_MAIL_ATTACHMENT(int opcode)
 	{
 		super(opcode);
 	}
-	
+
 	@Override
 	protected void readImpl()
 	{
 		mailObjId = readD();
 		attachmentType = readC(); // 0 - item , 1 - kinah
 	}
-	
+
 	@Override
 	protected void runImpl()
 	{

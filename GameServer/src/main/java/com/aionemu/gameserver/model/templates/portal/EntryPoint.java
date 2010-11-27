@@ -41,6 +41,7 @@ public class EntryPoint
 	protected float	z;
 	@XmlAttribute(name = "race")
 	protected Race	race;
+
 	/**
 	 * @return the mapId
 	 */
@@ -48,6 +49,7 @@ public class EntryPoint
 	{
 		return mapId;
 	}
+
 	/**
 	 * @return the x
 	 */
@@ -55,6 +57,7 @@ public class EntryPoint
 	{
 		return x;
 	}
+
 	/**
 	 * @return the y
 	 */
@@ -62,6 +65,7 @@ public class EntryPoint
 	{
 		return y;
 	}
+
 	/**
 	 * @return the z
 	 */
@@ -69,6 +73,7 @@ public class EntryPoint
 	{
 		return z;
 	}
+
 	/**
 	 * @return the race
 	 */

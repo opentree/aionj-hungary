@@ -35,12 +35,11 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SetQuestStatusOperation")
-public class SetQuestStatusOperation
-    extends QuestOperation
+public class SetQuestStatusOperation extends QuestOperation
 {
 
-    @XmlAttribute(required = true)
-    protected QuestStatus status;
+	@XmlAttribute(required = true)
+	protected QuestStatus	status;
 
 	/* (non-Javadoc)
 	 * @see com.aionemu.gameserver.questEngine.handlers.models.xmlQuest.operations.QuestOperation#doOperate(com.aionemu.gameserver.questEngine.model.QuestEnv)
@@ -48,15 +47,15 @@ public class SetQuestStatusOperation
 	@Override
 	public void doOperate(QuestEnv env)
 	{
-        Player player = env.getPlayer();
-        int questId = env.getQuestId();
-        QuestState qs = player.getQuestStateList().getQuestState(questId);
-        if (qs!=null)
-        {
-        	qs.setStatus(status);
-    		PacketSendUtility.sendPacket(player, new SM_QUEST_ACCEPTED(questId, qs.getStatus(), qs.getQuestVars().getQuestVars()));
-    		if (qs.getStatus() == QuestStatus.COMPLETE)
-    			player.updateNearbyQuests();
-        }
+		Player player = env.getPlayer();
+		int questId = env.getQuestId();
+		QuestState qs = player.getQuestStateList().getQuestState(questId);
+		if (qs != null)
+		{
+			qs.setStatus(status);
+			PacketSendUtility.sendPacket(player, new SM_QUEST_ACCEPTED(questId, qs.getStatus(), qs.getQuestVars().getQuestVars()));
+			if (qs.getStatus() == QuestStatus.COMPLETE)
+				player.updateNearbyQuests();
+		}
 	}
 }

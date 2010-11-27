@@ -37,7 +37,7 @@ import com.aionemu.gameserver.world.World;
  */
 public class DuelService
 {
-	private static Logger				log		= Logger.getLogger(DuelService.class);
+	private static Logger				log	= Logger.getLogger(DuelService.class);
 
 	private FastMap<Integer, Integer>	duels;
 
@@ -46,7 +46,6 @@ public class DuelService
 		return SingletonHolder.instance;
 	}
 
-	
 	/**
 	 * @param duels
 	 */
@@ -55,7 +54,6 @@ public class DuelService
 		this.duels = new FastMap<Integer, Integer>();
 		log.info("DuelService started.");
 	}
-
 
 	/**
 	 * Send the duel request to the owner
@@ -70,10 +68,11 @@ public class DuelService
 		/**
 		 * Check if requester isn't already in a duel and responder is same race
 		 */
-		if(requester.isEnemyPlayer(responder) || isDueling(requester.getObjectId()))
+		if (requester.isEnemyPlayer(responder) || isDueling(requester.getObjectId()))
 			return;
 
-		RequestResponseHandler rrh = new RequestResponseHandler(requester){
+		RequestResponseHandler rrh = new RequestResponseHandler(requester)
+		{
 			@Override
 			public void denyRequest(StaticNpc requester, Player responder)
 			{
@@ -87,8 +86,7 @@ public class DuelService
 			}
 		};
 		responder.getResponseRequester().putRequest(SM_QUESTION_WINDOW.STR_DUEL_DO_YOU_ACCEPT_DUEL, rrh);
-		PacketSendUtility.sendPacket(responder, new SM_QUESTION_WINDOW(SM_QUESTION_WINDOW.STR_DUEL_DO_YOU_ACCEPT_DUEL,
-			0, requester.getName()));
+		PacketSendUtility.sendPacket(responder, new SM_QUESTION_WINDOW(SM_QUESTION_WINDOW.STR_DUEL_DO_YOU_ACCEPT_DUEL, 0, requester.getName()));
 		PacketSendUtility.sendPacket(responder, SM_SYSTEM_MESSAGE.DUEL_ASKED_BY(requester.getName()));
 	}
 
@@ -105,10 +103,11 @@ public class DuelService
 		/**
 		 * Check if requester isn't already in a duel and responder is same race
 		 */
-		if(requester.isEnemyPlayer(responder))
+		if (requester.isEnemyPlayer(responder))
 			return;
 
-		RequestResponseHandler rrh = new RequestResponseHandler(responder){
+		RequestResponseHandler rrh = new RequestResponseHandler(responder)
+		{
 			@Override
 			public void denyRequest(StaticNpc requester, Player responder)
 			{
@@ -122,8 +121,7 @@ public class DuelService
 			}
 		};
 		requester.getResponseRequester().putRequest(SM_QUESTION_WINDOW.STR_DUEL_DO_YOU_CONFIRM_DUEL, rrh);
-		PacketSendUtility.sendPacket(requester, new SM_QUESTION_WINDOW(SM_QUESTION_WINDOW.STR_DUEL_DO_YOU_CONFIRM_DUEL,
-			0, responder.getName()));
+		PacketSendUtility.sendPacket(requester, new SM_QUESTION_WINDOW(SM_QUESTION_WINDOW.STR_DUEL_DO_YOU_CONFIRM_DUEL, 0, responder.getName()));
 		PacketSendUtility.sendPacket(requester, SM_SYSTEM_MESSAGE.DUEL_ASKED_TO(responder.getName()));
 	}
 
@@ -178,7 +176,7 @@ public class DuelService
 	 */
 	public void loseDuel(Player player)
 	{
-		if(!isDueling(player.getObjectId()))
+		if (!isDueling(player.getObjectId()))
 			return;
 
 		/**
@@ -187,11 +185,11 @@ public class DuelService
 		 */
 		player.getEffectController().removeAbnormalEffectsByTargetSlot(SkillTargetSlot.DEBUFF);
 		player.cancelCurrentSkill();
-		
+
 		int opponnentId = duels.get(player.getObjectId());
 		Player opponent = World.getInstance().findPlayer(opponnentId);
 
-		if(opponent != null)
+		if (opponent != null)
 		{
 			/**
 			 * all debuffs are removed from winner, but buffs will remain
@@ -199,7 +197,7 @@ public class DuelService
 			 */
 			opponent.getEffectController().removeAbnormalEffectsByTargetSlot(SkillTargetSlot.DEBUFF);
 			opponent.cancelCurrentSkill();
-			
+
 			PacketSendUtility.sendPacket(opponent, SM_DUEL.SM_DUEL_RESULT(DuelResult.DUEL_WON, player.getName()));
 			PacketSendUtility.sendPacket(player, SM_DUEL.SM_DUEL_RESULT(DuelResult.DUEL_LOST, opponent.getName()));
 		}
@@ -259,10 +257,10 @@ public class DuelService
 		duels.remove(requesterObjId);
 		duels.remove(responderObjId);
 	}
-	
+
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
-		protected static final DuelService instance = new DuelService();
+		protected static final DuelService	instance	= new DuelService();
 	}
 }

@@ -36,24 +36,24 @@ import com.aionemu.gameserver.skillengine.model.SkillTemplate;
 public class CarveSignetEffect extends DamageEffect
 {
 	@XmlAttribute(required = true)
-    protected int signetlvl;
-    @XmlAttribute(required = true)
-    protected int signetid;
-    @XmlAttribute(required = true)
-    protected String signet;
-	    
+	protected int		signetlvl;
+	@XmlAttribute(required = true)
+	protected int		signetid;
+	@XmlAttribute(required = true)
+	protected String	signet;
+
 	@Override
 	public void applyEffect(Effect effect)
 	{
 		super.applyEffect(effect);
-		
+
 		Creature effected = effect.getEffected();
 		Effect placedSignet = effected.getEffectController().getAnormalEffect(signet);
 		int nextSignetlvl = 1;
-		if(placedSignet != null)
+		if (placedSignet != null)
 		{
 			nextSignetlvl = placedSignet.getSkillId() - this.signetid + 2;
-			if(nextSignetlvl > signetlvl || nextSignetlvl > 5)
+			if (nextSignetlvl > signetlvl || nextSignetlvl > 5)
 				return;
 			placedSignet.endEffect();
 		}

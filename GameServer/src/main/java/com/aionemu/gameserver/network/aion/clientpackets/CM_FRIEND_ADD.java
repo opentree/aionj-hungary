@@ -36,9 +36,10 @@ import com.aionemu.gameserver.world.World;
  */
 public class CM_FRIEND_ADD extends AbstractClientPacket<AionChannelHandler>
 {
-	private String 				targetName;
-	
-	public CM_FRIEND_ADD(int opcode) {
+	private String	targetName;
+
+	public CM_FRIEND_ADD(int opcode)
+	{
 		super(opcode);
 	}
 
@@ -58,18 +59,17 @@ public class CM_FRIEND_ADD extends AbstractClientPacket<AionChannelHandler>
 	@Override
 	protected void runImpl()
 	{
-		
+
 		final Player activePlayer = getChannelHandler().getActivePlayer();
 		final Player targetPlayer = World.getInstance().findPlayer(targetName);
-		
-	
+
 		if (targetName.equalsIgnoreCase(activePlayer.getName()))
 		{
-				//Adding self to friend list not allowed - Its blocked by the client by default, so no need to send an error
+			//Adding self to friend list not allowed - Its blocked by the client by default, so no need to send an error
 		}
 		//if offline
-		else if (targetPlayer == null) 
-		{	
+		else if (targetPlayer == null)
+		{
 			sendPacket(new SM_FRIEND_RESPONSE(targetName, SM_FRIEND_RESPONSE.TARGET_OFFLINE));
 		}
 		else if (activePlayer.getFriendList().getFriend(targetPlayer.getObjectId()) != null)
@@ -82,7 +82,7 @@ public class CM_FRIEND_ADD extends AbstractClientPacket<AionChannelHandler>
 		}
 		else if (targetPlayer.getFriendList().isFull())
 		{
-			sendPacket(new SM_FRIEND_RESPONSE(targetPlayer.getName(),SM_FRIEND_RESPONSE.TARGET_LIST_FULL));
+			sendPacket(new SM_FRIEND_RESPONSE(targetPlayer.getName(), SM_FRIEND_RESPONSE.TARGET_LIST_FULL));
 		}
 		else if (activePlayer.getBlockList().contains(targetPlayer.getObjectId()))
 		{
@@ -92,55 +92,56 @@ public class CM_FRIEND_ADD extends AbstractClientPacket<AionChannelHandler>
 		{
 			sendPacket(SM_SYSTEM_MESSAGE.YOU_ARE_BLOCKED_BY(targetName));
 		}
-		else // Send request
+		else
+		// Send request
 		{
-			RequestResponseHandler responseHandler = new RequestResponseHandler(activePlayer) {
-				
+			RequestResponseHandler responseHandler = new RequestResponseHandler(activePlayer)
+			{
+
 				@Override
 				public void acceptRequest(StaticNpc requester, Player responder)
 				{
 					if (!targetPlayer.getCommonData().isOnline())
 					{
-						sendPacket(new SM_FRIEND_RESPONSE(targetName , SM_FRIEND_RESPONSE.TARGET_OFFLINE));
+						sendPacket(new SM_FRIEND_RESPONSE(targetName, SM_FRIEND_RESPONSE.TARGET_OFFLINE));
 					}
-					else if (activePlayer.getFriendList().isFull() || 
-						responder.getFriendList().isFull())
+					else if (activePlayer.getFriendList().isFull() || responder.getFriendList().isFull())
 					{
-						return;	
+						return;
 					}
 					else
 					{
-						SocialService.makeFriends((Player)requester, responder);
+						SocialService.makeFriends((Player) requester, responder);
 					}
-					
+
 				}
 
 				@Override
 				public void denyRequest(StaticNpc requester, Player responder)
 				{
 					sendPacket(new SM_FRIEND_RESPONSE(targetName, SM_FRIEND_RESPONSE.TARGET_DENIED));
-					
+
 				}
 			};
-			
-			boolean requested = targetPlayer.getResponseRequester().putRequest(SM_QUESTION_WINDOW.STR_BUDDYLIST_ADD_BUDDY_REQUETS,responseHandler);
+
+			boolean requested = targetPlayer.getResponseRequester().putRequest(SM_QUESTION_WINDOW.STR_BUDDYLIST_ADD_BUDDY_REQUETS, responseHandler);
 			//If the player is busy and could not be asked
 			if (!requested)
 			{
 				sendPacket(SM_SYSTEM_MESSAGE.BUDDYLIST_BUSY);
 			}
-			else 
+			else
 			{
-				if(targetPlayer.getPlayerSettings().isInDeniedStatus(DeniedStatus.FRIEND))
+				if (targetPlayer.getPlayerSettings().isInDeniedStatus(DeniedStatus.FRIEND))
 				{
 					sendPacket(SM_SYSTEM_MESSAGE.STR_MSG_REJECTED_FRIEND(targetPlayer.getName()));
 					return;
 				}
 				//Send question packet to buddy
-				targetPlayer.getClientConnection()
-					.sendPacket(new SM_QUESTION_WINDOW(SM_QUESTION_WINDOW.STR_BUDDYLIST_ADD_BUDDY_REQUETS, activePlayer.getObjectId(), activePlayer.getName()));
+				targetPlayer.getClientConnection().sendPacket(
+						new SM_QUESTION_WINDOW(SM_QUESTION_WINDOW.STR_BUDDYLIST_ADD_BUDDY_REQUETS, activePlayer.getObjectId(), activePlayer.getName()));
 			}
 		}
 	}
-	
+
 }

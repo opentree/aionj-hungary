@@ -37,8 +37,8 @@ public class CM_PLAYER_STATUS_INFO extends AbstractClientPacket<AionChannelHandl
 	/**
 	 * Definitions
 	 */
-	private int				status;
-	private int				playerObjId;
+	private int	status;
+	private int	playerObjId;
 
 	public CM_PLAYER_STATUS_INFO(int opcode)
 	{
@@ -57,41 +57,41 @@ public class CM_PLAYER_STATUS_INFO extends AbstractClientPacket<AionChannelHandl
 	{
 		Player myActivePlayer = getChannelHandler().getActivePlayer();
 
-		switch(status)
-        {
+		switch (status)
+		{
 			// Note: This is currently used for PlayerGroup...
 			// but it also is sent when leaving the alliance.
-            case 9:
-                getChannelHandler().getActivePlayer().setLookingForGroup(playerObjId == 2);
-                break;
-            
-            //Alliance Statuses
-            case 12:
-            case 14:
-            case 15:
-            case 19:
-            case 23:
-            case 24:
-            	AllianceService.getInstance().playerStatusInfo(myActivePlayer, status, playerObjId);
-            	break;
-            
-            // PlayerGroup Statuses
-            case 2:
-            case 3:
-            case 6:
-                Player player = null;
+			case 9:
+				getChannelHandler().getActivePlayer().setLookingForGroup(playerObjId == 2);
+				break;
 
-                if(playerObjId == 0)
-                    player = getChannelHandler().getActivePlayer();
-                else
-                    player = World.getInstance().findPlayer(playerObjId);
+			//Alliance Statuses
+			case 12:
+			case 14:
+			case 15:
+			case 19:
+			case 23:
+			case 24:
+				AllianceService.getInstance().playerStatusInfo(myActivePlayer, status, playerObjId);
+				break;
 
-                if(player == null || player.getPlayerGroup() == null)
-                    return;
+			// PlayerGroup Statuses
+			case 2:
+			case 3:
+			case 6:
+				Player player = null;
 
-                GroupService.getInstance().playerStatusInfo(status, player);
-                break;
-                
-        }
+				if (playerObjId == 0)
+					player = getChannelHandler().getActivePlayer();
+				else
+					player = World.getInstance().findPlayer(playerObjId);
+
+				if (player == null || player.getPlayerGroup() == null)
+					return;
+
+				GroupService.getInstance().playerStatusInfo(status, player);
+				break;
+
+		}
 	}
 }

@@ -29,7 +29,7 @@ public class SM_TELEPORT_LOC extends AbstractAionServerPacket<AionChannelHandler
 {
 
 	private int	mapId;
-	private float x , y , z;
+	private float	x, y, z;
 
 	public SM_TELEPORT_LOC(int mapId, float x, float y, float z)
 	{
@@ -45,14 +45,14 @@ public class SM_TELEPORT_LOC extends AbstractAionServerPacket<AionChannelHandler
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
-		writeC( 3); //unk
-		writeC( 0x90);  //unk
-		writeC( 0x9E);  //unk
+		writeC(3); //unk
+		writeC(0x90); //unk
+		writeC(0x9E); //unk
 		writeD(mapId); //mapid
 		writeF(x); //x
 		writeF(y); //y
 		writeF(z); //z
-		writeC( 0);  //headling
+		writeC(0); //headling
 	}
 
 }

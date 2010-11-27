@@ -38,13 +38,13 @@ public class HealOverTimeEffect extends EffectTemplate
 {
 
 	@XmlAttribute(required = true)
-	protected int checktime;	
+	protected int		checktime;
 	@XmlAttribute
-	protected int value;
+	protected int		value;
 	@XmlAttribute
-	protected int delta;
+	protected int		delta;
 	@XmlAttribute
-	protected HealType type;
+	protected HealType	type;
 
 	@Override
 	public void applyEffect(Effect effect)
@@ -75,7 +75,8 @@ public class HealOverTimeEffect extends EffectTemplate
 	@Override
 	public void startEffect(final Effect effect)
 	{
-		Future<?> task = ThreadPoolManager.getInstance().scheduleEffectAtFixedRate(new Runnable(){
+		Future<?> task = ThreadPoolManager.getInstance().scheduleEffectAtFixedRate(new Runnable()
+		{
 
 			@Override
 			public void run()
@@ -83,6 +84,6 @@ public class HealOverTimeEffect extends EffectTemplate
 				onPeriodicAction(effect);
 			}
 		}, checktime, checktime);
-		effect.setPeriodicTask(task, position);	
+		effect.setPeriodicTask(task, position);
 	}
 }

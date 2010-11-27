@@ -31,21 +31,21 @@ public abstract class _MailServicePacket extends _InventoryPacket
 {
 	protected void writeLettersList(Collection<Letter> letters, Player player)
 	{
-		writeC( 2); // 2 - Mailbox letters update
+		writeC(2); // 2 - Mailbox letters update
 		writeD(player.getObjectId());
-		writeC( 0);
+		writeC(0);
 		writeH(player.getMailbox().getFreeSlots()); // mailbox free slots
-		
-		for(Letter letter : letters)
+
+		for (Letter letter : letters)
 		{
 			writeD(letter.getObjectId());
 			writeS(letter.getSenderName());
 			writeS(letter.getTitle());
-			if(letter.isUnread())
-				writeC( 0);
+			if (letter.isUnread())
+				writeC(0);
 			else
-				writeC( 1);
-			if(letter.getAttachedItem() != null)
+				writeC(1);
+			if (letter.getAttachedItem() != null)
 			{
 				writeD(letter.getAttachedItem().getObjectId());
 				writeD(letter.getAttachedItem().getItemTemplate().getTemplateId());
@@ -57,37 +57,37 @@ public abstract class _MailServicePacket extends _InventoryPacket
 			}
 			writeD((int) letter.getAttachedKinah());
 			writeD(0);
-			writeC( 0);
+			writeC(0);
 		}
 	}
 
 	protected void writeEmptyLettersList(Player player)
 	{
-		writeC( 2);
+		writeC(2);
 		writeD(player.getObjectId());
 		writeH(0);
-		writeC( 0);
+		writeC(0);
 	}
 
 	protected void writeMailMessage(int messageId)
 	{
-		writeC( 1);
-		writeC( messageId);
+		writeC(1);
+		writeC(messageId);
 	}
 
 	protected void writeMailboxState(int haveNewMail, int haveUnread)
 	{
-		writeC( 0);
-		writeC( haveNewMail);
-		writeC( 0);
-		writeC( haveUnread);
+		writeC(0);
+		writeC(haveNewMail);
+		writeC(0);
+		writeC(haveUnread);
 		writeD(0);
-		writeC( 0);
+		writeC(0);
 	}
 
 	protected void writeLetterRead(Letter letter, long time)
 	{
-		writeC( 3);
+		writeC(3);
 		writeD(letter.getRecipientId());
 		writeD(1);
 		writeD(0);
@@ -98,15 +98,15 @@ public abstract class _MailServicePacket extends _InventoryPacket
 		writeS(letter.getMessage());
 
 		Item item = letter.getAttachedItem();
-		if(item != null)
+		if (item != null)
 		{
 			ItemTemplate itemTemplate = item.getItemTemplate();
 
 			writeMailGeneralInfo(item);
 
-			if(itemTemplate.isArmor())
+			if (itemTemplate.isArmor())
 				writeArmorInfo(item, false, false, true);
-			else if(itemTemplate.isWeapon())
+			else if (itemTemplate.isWeapon())
 				writeWeaponInfo(item, false, false, false, true);
 			else
 				writeGeneralItemInfo(item, false, true);
@@ -122,22 +122,22 @@ public abstract class _MailServicePacket extends _InventoryPacket
 
 		writeD((int) letter.getAttachedKinah());
 		writeD(0); // AP reward for castle assault/defense (in future)
-		writeC( 0);
+		writeC(0);
 		writeQ(time / 1000);
-		writeC( 0);
+		writeC(0);
 	}
 
 	protected void writeLetterState(int letterId, int attachmentType)
 	{
-		writeC( 5);
+		writeC(5);
 		writeD(letterId);
-		writeC( attachmentType);
-		writeC( 1);
+		writeC(attachmentType);
+		writeC(1);
 	}
 
 	protected void writeLetterDelete(int letterId)
 	{
-		writeC( 6);
+		writeC(6);
 		writeD(0);
 		writeD(0);
 		writeD(letterId);

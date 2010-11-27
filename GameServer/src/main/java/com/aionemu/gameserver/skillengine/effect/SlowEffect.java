@@ -41,8 +41,8 @@ public class SlowEffect extends BufEffect
 	@Override
 	public void calculate(Effect effect)
 	{
-		if (calculateEffectResistRate(effect, StatEnum.SLOW_RESISTANCE)) 
-			effect.addSucessEffect(this);	
+		if (calculateEffectResistRate(effect, StatEnum.SLOW_RESISTANCE))
+			effect.addSucessEffect(this);
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class SlowEffect extends BufEffect
 		super.startEffect(effect);
 		effect.getEffected().getEffectController().setAbnormal(EffectId.SLOW.getEffectId());
 	}
-	
+
 	@Override
 	public void endEffect(Effect effect)
 	{

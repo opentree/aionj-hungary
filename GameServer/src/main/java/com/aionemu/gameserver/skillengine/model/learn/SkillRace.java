@@ -23,7 +23,5 @@ package com.aionemu.gameserver.skillengine.model.learn;
 public enum SkillRace
 {
 	/** Positioning in enum should correspond to com.aionemu.gameserver.model.Race **/
-	PC_LIGHT,
-	PC_DARK,
-	ALL
+	PC_LIGHT, PC_DARK, ALL
 }

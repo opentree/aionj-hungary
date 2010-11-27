@@ -24,16 +24,16 @@ package com.aionemu.gameserver.model.templates.spawn;
 
 public class SpawnTemplate
 {
-	private int id;
-	private int templateId;
-	private byte heading;
-	private float z;
-	private float y;
-	private float x;
-	private int interval;
-	private int mapId;
-	private int staticid;
-	private SpawnTime spawnTime;
+	private int			id;
+	private int			templateId;
+	private byte		heading;
+	private float		z;
+	private float		y;
+	private float		x;
+	private int			interval;
+	private int			mapId;
+	private int			staticid;
+	private SpawnTime	spawnTime;
 
 	/**
 	 * @param id
@@ -79,7 +79,7 @@ public class SpawnTemplate
 		this.staticid = 0;
 		this.spawnTime = SpawnTime.ALL;
 	}
-	
+
 	/**
 	 * @return Returns the id.
 	 */

@@ -25,19 +25,19 @@ import com.aionemu.gameserver.model.templates.item.ItemTemplate;
  *
  * @author Aquanox
  */
-@XmlRootElement(name="player_initial_data")
+@XmlRootElement(name = "player_initial_data")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PlayerInitialData
 {
-	@XmlElement(name="player_data")
-	private List<PlayerCreationData> dataList = new ArrayList<PlayerCreationData>();
+	@XmlElement(name = "player_data")
+	private List<PlayerCreationData>					dataList	= new ArrayList<PlayerCreationData>();
 
-	@XmlElement(name="elyos_spawn_location", required = true)
-	private LocationData elyosSpawnLocation;
-	@XmlElement(name="asmodian_spawn_location", required = true)
-	private LocationData asmodianSpawnLocation;
+	@XmlElement(name = "elyos_spawn_location", required = true)
+	private LocationData								elyosSpawnLocation;
+	@XmlElement(name = "asmodian_spawn_location", required = true)
+	private LocationData								asmodianSpawnLocation;
 
-	private THashMap<PlayerClass, PlayerCreationData> data = new THashMap<PlayerClass, PlayerCreationData>();
+	private THashMap<PlayerClass, PlayerCreationData>	data		= new THashMap<PlayerClass, PlayerCreationData>();
 
 	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
@@ -62,11 +62,11 @@ public class PlayerInitialData
 
 	public LocationData getSpawnLocation(Race race)
 	{
-		switch(race)
+		switch (race)
 		{
 			case ASMODIANS:
 				return asmodianSpawnLocation;
-			case ELYOS:     
+			case ELYOS:
 				return elyosSpawnLocation;
 			default:
 				throw new IllegalArgumentException();
@@ -78,14 +78,14 @@ public class PlayerInitialData
 	 */
 	public static class PlayerCreationData
 	{
-		@XmlAttribute(name="class")
-		private PlayerClass requiredPlayerClass;
+		@XmlAttribute(name = "class")
+		private PlayerClass	requiredPlayerClass;
 
-		@XmlElement(name="items")
-		private ItemsType itemsType;
+		@XmlElement(name = "items")
+		private ItemsType	itemsType;
 
-//		@XmlElement(name="shortcuts")
-//		private ShortcutType shortcutData;
+		//		@XmlElement(name="shortcuts")
+		//		private ShortcutType shortcutData;
 
 		PlayerClass getRequiredPlayerClass()
 		{
@@ -100,17 +100,17 @@ public class PlayerInitialData
 		static class ItemsType
 		{
 			@XmlElement(name = "item")
-			public List<ItemType> items = new ArrayList<ItemType>();
+			public List<ItemType>	items	= new ArrayList<ItemType>();
 		}
 
 		public static class ItemType
 		{
 			@XmlAttribute(name = "id")
 			@XmlIDREF
-			public ItemTemplate template;
+			public ItemTemplate	template;
 
-			@XmlAttribute(name="count")
-			public int count;
+			@XmlAttribute(name = "count")
+			public int			count;
 
 			public ItemTemplate getTemplate()
 			{
@@ -134,30 +134,30 @@ public class PlayerInitialData
 			}
 		}
 
-//		public static class ShortcutType
-//		{
-//          public 	List<Shortcut> shortcuts;
-//		}
+		//		public static class ShortcutType
+		//		{
+		//          public 	List<Shortcut> shortcuts;
+		//		}
 	}
-
 
 	/**
 	 * Location data holder.
 	 */
 	public static class LocationData
 	{
-		@XmlAttribute(name="map_id")
-		private int mapId;
-		@XmlAttribute(name="x")
-		private float x;
-		@XmlAttribute(name="y")
-		private float y;
-		@XmlAttribute(name="z")
-		private float z;
-		@XmlAttribute(name="heading")
-		private byte heading;
+		@XmlAttribute(name = "map_id")
+		private int		mapId;
+		@XmlAttribute(name = "x")
+		private float	x;
+		@XmlAttribute(name = "y")
+		private float	y;
+		@XmlAttribute(name = "z")
+		private float	z;
+		@XmlAttribute(name = "heading")
+		private byte	heading;
 
-		LocationData() {
+		LocationData()
+		{
 			//
 		}
 

@@ -21,10 +21,10 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 public class SM_EMOTION_LIST extends AbstractAionServerPacket<AionChannelHandler>
 {
-	@Override	
+	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
-		writeC( 0x00);
+		writeC(0x00);
 		writeH(57);
 		for (int i = 0; i < 57; i++) // 120 max, for the last emote
 		{
@@ -32,4 +32,4 @@ public class SM_EMOTION_LIST extends AbstractAionServerPacket<AionChannelHandler
 			writeH(0x00);
 		}
 	}
-} 
+}

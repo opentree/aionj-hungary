@@ -41,7 +41,7 @@ import com.aionemu.gameserver.world.World;
  */
 public class SystemMailService
 {
-	private static final Logger	log = Logger.getLogger(SystemMailService.class);
+	private static final Logger	log	= Logger.getLogger(SystemMailService.class);
 
 	public static final SystemMailService getInstance()
 	{
@@ -63,46 +63,48 @@ public class SystemMailService
 	 * @param attachedKinahCount
 	 * @param express
 	 */
-	public void sendMail(String sender, String recipientName, String title, String message, int attachedItemObjId, int attachedItemCount, int attachedKinahCount, boolean express)
+	public void sendMail(String sender, String recipientName, String title, String message, int attachedItemObjId, int attachedItemCount,
+			int attachedKinahCount, boolean express)
 	{
-		if(express)
+		if (express)
 			return;
 
-		if(recipientName.length() > 16)
-		    return;
-		
-		if(sender.length() > 16)
-			return;	
-		
-		if(attachedItemCount < 1)
-			return;	
+		if (recipientName.length() > 16)
+			return;
 
-		if(title.length() > 20)
+		if (sender.length() > 16)
+			return;
+
+		if (attachedItemCount < 1)
+			return;
+
+		if (title.length() > 20)
 			title = title.substring(0, 20);
 
-		if(message.length() > 1000)
+		if (message.length() > 1000)
 			message = message.substring(0, 1000);
-        PlayerCommonData recipientCommonData = DAOManager.getDAO(PlayerDAO.class).loadPlayerCommonDataByName(recipientName);
-		Player onlineRecipient; 
+		PlayerCommonData recipientCommonData = DAOManager.getDAO(PlayerDAO.class).loadPlayerCommonDataByName(recipientName);
+		Player onlineRecipient;
 
-		if(recipientCommonData == null)
+		if (recipientCommonData == null)
 		{
 			log.info("SystemMailMessage NO SUCH CHARACTER NAME");
 			return;
 		}
 
-		if(recipientCommonData.isOnline())
+		if (recipientCommonData.isOnline())
 		{
 			onlineRecipient = World.getInstance().findPlayer(recipientCommonData.getPlayerObjId());
-			if(!onlineRecipient.getMailbox().haveFreeSlots())
+			if (!onlineRecipient.getMailbox().haveFreeSlots())
 			{
-				log.info("SystemMailMessage" + onlineRecipient.getName() + "ITEM RETURN" + attachedItemObjId + "ITEM COUNT" + attachedItemCount + "KINAH COUNT" + attachedKinahCount + "MAILBOX FULL");
+				log.info("SystemMailMessage" + onlineRecipient.getName() + "ITEM RETURN" + attachedItemObjId + "ITEM COUNT" + attachedItemCount + "KINAH COUNT"
+						+ attachedKinahCount + "MAILBOX FULL");
 				return;
 			}
 		}
 		else
 		{
-			if(recipientCommonData.getMailboxLetters() >= 100)
+			if (recipientCommonData.getMailboxLetters() >= 100)
 			{
 				log.info("SystemMailMessage RECIPIENT MAILBOX FULL");
 				return;
@@ -115,11 +117,11 @@ public class SystemMailService
 		int itemId = attachedItemObjId;
 		int count = attachedItemCount;
 
-		if(attachedItemObjId != 0)
+		if (attachedItemObjId != 0)
 		{
 			Item senderItem = ItemService.newItem(itemId, count);
 
-			if(senderItem.getItemCount() == attachedItemCount)
+			if (senderItem.getItemCount() == attachedItemCount)
 			{
 				senderItem.setEquipped(false);
 				senderItem.setEquipmentSlot(0);
@@ -129,20 +131,21 @@ public class SystemMailService
 			}
 		}
 
-		if(attachedKinahCount > 0)
+		if (attachedKinahCount > 0)
 			finalAttachedKinahCount = attachedKinahCount;
-			
-        String finalSender = sender;
-		Timestamp time = new Timestamp(Calendar.getInstance().getTimeInMillis());
-		Letter newLetter = new Letter(IDFactory.getInstance().nextId(), recipientCommonData.getPlayerObjId(), attachedItem, finalAttachedKinahCount, title, message, finalSender, time, true, express);
 
-		if(!DAOManager.getDAO(MailDAO.class).storeLetter(time, newLetter))
-			return; 
+		String finalSender = sender;
+		Timestamp time = new Timestamp(Calendar.getInstance().getTimeInMillis());
+		Letter newLetter = new Letter(IDFactory.getInstance().nextId(), recipientCommonData.getPlayerObjId(), attachedItem, finalAttachedKinahCount, title,
+				message, finalSender, time, true, express);
+
+		if (!DAOManager.getDAO(MailDAO.class).storeLetter(time, newLetter))
+			return;
 
 		/**
 		 * Send mail update packets
 		 */
-		 if(onlineRecipient != null)
+		if (onlineRecipient != null)
 		{
 			Mailbox recipientMailbox = onlineRecipient.getMailbox();
 			recipientMailbox.putLetterToMailbox(newLetter);
@@ -151,11 +154,11 @@ public class SystemMailService
 			PacketSendUtility.sendPacket(onlineRecipient, new SM_MAIL_SERVICE(false, false));
 			PacketSendUtility.sendPacket(onlineRecipient, new SM_MAIL_SERVICE(true, true));
 		}
- 
+
 		/**
 		 * Update loaded common data and db if player is offline
 		 */
-		if(!recipientCommonData.isOnline())
+		if (!recipientCommonData.isOnline())
 		{
 			recipientCommonData.setMailboxLetters(recipientCommonData.getMailboxLetters() + 1);
 			DAOManager.getDAO(MailDAO.class).updateOfflineMailCounter(recipientCommonData);
@@ -165,6 +168,6 @@ public class SystemMailService
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
-		protected static final SystemMailService instance = new SystemMailService();
+		protected static final SystemMailService	instance	= new SystemMailService();
 	}
 }

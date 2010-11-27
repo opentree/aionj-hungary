@@ -48,14 +48,14 @@ public class LoginServerPacketHandlerFactory extends AbstractPacketHandlerFactor
 		addPacket(new CM_REQUEST_KICK_ACCOUNT(0x02), State.AUTHED);
 		addPacket(new CM_LS_CONTROL_RESPONSE(0x04), State.AUTHED);
 		addPacket(new CM_BAN_RESPONSE(0x05), State.AUTHED);
-		
+
 		//Server Packet's
 		addPacket(SM_GS_AUTH.class, 0x00);
 		addPacket(SM_ACCOUNT_AUTH.class, 0x01);
 		addPacket(SM_ACCOUNT_RECONNECT_KEY.class, 0x02);
 		addPacket(SM_ACCOUNT_DISCONNECTED.class, 0x03);
 		addPacket(SM_ACCOUNT_LIST.class, 0x04);
-		addPacket(SM_LS_CONTROL.class, 0x05);		
+		addPacket(SM_LS_CONTROL.class, 0x05);
 		addPacket(SM_BAN.class, 0x06);
 	}
 }

@@ -97,7 +97,7 @@ public class Config
 			ConfigurableProcessor.process(NetworkConfig.class, network);
 			ConfigurableProcessor.process(DatabaseConfig.class, network);
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			log.fatal("Can't load gameserver configuration: ", e);
 			throw new Error("Can't load gameserver configuration: ", e);

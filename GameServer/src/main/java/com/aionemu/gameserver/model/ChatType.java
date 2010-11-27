@@ -59,7 +59,7 @@ public enum ChatType
 	/**
 	 * Legion chat (green)
 	 */
-  LEGION(0x0A),
+	LEGION(0x0A),
 
 	/**
 	 * Unknown
@@ -94,7 +94,7 @@ public enum ChatType
 	/**
 	 * Check whether all races can read chat
 	 */
-	private boolean	sysMsg;
+	private boolean		sysMsg;
 
 	/**
 	 * Constructor
@@ -128,9 +128,9 @@ public enum ChatType
 	 */
 	public static ChatType getChatTypeByInt(int integerValue) throws IllegalArgumentException
 	{
-		for(ChatType ct : ChatType.values())
+		for (ChatType ct : ChatType.values())
 		{
-			if(ct.toInteger() == integerValue)
+			if (ct.toInteger() == integerValue)
 			{
 				return ct;
 			}

@@ -40,13 +40,13 @@ public class DispelEffect extends EffectTemplate
 	@Override
 	public void applyEffect(Effect effect)
 	{
-		if(effectids == null)
+		if (effectids == null)
 			return;
 
-		switch(dispeltype)
+		switch (dispeltype)
 		{
 			case EFFECTID:
-				for(Integer effectId : effectids)
+				for (Integer effectId : effectids)
 				{
 					effect.getEffected().getEffectController().removeEffectByEffectId(effectId);
 				}

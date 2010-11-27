@@ -23,28 +23,28 @@ import javolution.util.FastList;
  */
 public abstract class FIFOSimpleExecutableQueue<T> extends FIFOExecutableQueue
 {
-	private final FastList<T> queue = new FastList<T>();
-	
+	private final FastList<T>	queue	= new FastList<T>();
+
 	public final void execute(T t)
 	{
 		synchronized (queue)
 		{
 			queue.addLast(t);
 		}
-		
+
 		execute();
 	}
-	
+
 	public final void executeAll(Collection<T> c)
 	{
 		synchronized (queue)
 		{
 			queue.addAll(c);
 		}
-		
+
 		execute();
 	}
-	
+
 	public final void remove(T t)
 	{
 		synchronized (queue)
@@ -52,7 +52,7 @@ public abstract class FIFOSimpleExecutableQueue<T> extends FIFOExecutableQueue
 			queue.remove(t);
 		}
 	}
-	
+
 	@Override
 	protected final boolean isEmpty()
 	{
@@ -61,7 +61,7 @@ public abstract class FIFOSimpleExecutableQueue<T> extends FIFOExecutableQueue
 			return queue.isEmpty();
 		}
 	}
-	
+
 	protected final T removeFirst()
 	{
 		synchronized (queue)
@@ -69,7 +69,7 @@ public abstract class FIFOSimpleExecutableQueue<T> extends FIFOExecutableQueue
 			return queue.removeFirst();
 		}
 	}
-	
+
 	@Override
 	protected abstract void removeAndExecuteFirst();
 }

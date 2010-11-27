@@ -42,21 +42,21 @@ public class SpinEffect extends EffectTemplate
 	@Override
 	public void calculate(Effect effect)
 	{
-		if (calculateEffectResistRate(effect, StatEnum.SPIN_RESISTANCE)) 
-		{ 
+		if (calculateEffectResistRate(effect, StatEnum.SPIN_RESISTANCE))
+		{
 			effect.addSucessEffect(this);
-			effect.setSpellStatus(SpellStatus.SPIN);			
- 	    } 	
+			effect.setSpellStatus(SpellStatus.SPIN);
+		}
 
 	}
-	
+
 	@Override
 	public void startEffect(Effect effect)
 	{
 		final Creature effected = effect.getEffected();
 		effected.getEffectController().setAbnormal(EffectId.SPIN.getEffectId());
 	}
-	
+
 	@Override
 	public void endEffect(Effect effect)
 	{

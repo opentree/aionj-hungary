@@ -21,37 +21,38 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * @author ATracer
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Material")
-public class Material {
+public class Material
+{
 
-    @XmlAttribute
-    protected String name;
-    @XmlAttribute
-    protected Integer itemid;
-    @XmlAttribute
-    protected Integer nameid;
-    @XmlAttribute
-    protected Integer rate;
+	@XmlAttribute
+	protected String	name;
+	@XmlAttribute
+	protected Integer	itemid;
+	@XmlAttribute
+	protected Integer	nameid;
+	@XmlAttribute
+	protected Integer	rate;
 
-    /**
-     * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getName() {
-        return name;
-    }
-    
-    /**
+	/**
+	 * Gets the value of the name property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getName()
+	{
+		return name;
+	}
+
+	/**
 	 * @return the itemid
 	 */
 	public Integer getItemid()
@@ -60,26 +61,28 @@ public class Material {
 	}
 
 	/**
-     * Gets the value of the nameid property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getNameid() {
-        return nameid;
-    }
+	 * Gets the value of the nameid property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link Integer }
+	 *     
+	 */
+	public Integer getNameid()
+	{
+		return nameid;
+	}
 
-    /**
-     * Gets the value of the rate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getRate() {
-        return rate;
-    }
+	/**
+	 * Gets the value of the rate property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link Integer }
+	 *     
+	 */
+	public Integer getRate()
+	{
+		return rate;
+	}
 }

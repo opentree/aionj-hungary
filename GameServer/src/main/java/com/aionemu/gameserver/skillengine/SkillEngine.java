@@ -29,17 +29,17 @@ import com.aionemu.gameserver.skillengine.model.SkillTemplate;
  *
  */
 public class SkillEngine
-{	
-	public static final SkillEngine skillEngine = new SkillEngine();
-	
+{
+	public static final SkillEngine	skillEngine	= new SkillEngine();
+
 	/**
 	 * should not be instantiated directly
 	 */
 	private SkillEngine()
-	{	
-		
+	{
+
 	}
-	
+
 	/**
 	 *  This method is used for skills that were learned by player
 	 *  
@@ -50,25 +50,24 @@ public class SkillEngine
 	public Skill getSkillFor(Player player, int skillId, VisibleObject firstTarget)
 	{
 		SkillTemplate template = DataManager.SKILL_DATA.getSkillTemplate(skillId);
-		
-		if(template == null)
+
+		if (template == null)
 			return null;
-		
+
 		// player doesn't have such skill and ist not provoked
-		if(template.getActivationAttribute() != ActivationAttribute.PROVOKED)
+		if (template.getActivationAttribute() != ActivationAttribute.PROVOKED)
 		{
-			if(!player.getSkillList().isSkillPresent(skillId))
+			if (!player.getSkillList().isSkillPresent(skillId))
 				return null;
 		}
-		
-		
+
 		Creature target = null;
-		if(firstTarget instanceof Creature)
+		if (firstTarget instanceof Creature)
 			target = (Creature) firstTarget;
 
 		return new Skill(template, player, target);
 	}
-	
+
 	/**
 	 *  This method is used for not learned skills (item skills etc)
 	 *  
@@ -80,12 +79,12 @@ public class SkillEngine
 	public Skill getSkill(Creature creature, int skillId, int skillLevel, VisibleObject firstTarget)
 	{
 		SkillTemplate template = DataManager.SKILL_DATA.getSkillTemplate(skillId);
-		
-		if(template == null)
+
+		if (template == null)
 			return null;
-		
+
 		Creature target = null;
-		if(firstTarget instanceof Creature)
+		if (firstTarget instanceof Creature)
 			target = (Creature) firstTarget;
 		return new Skill(template, creature, skillLevel, target);
 	}

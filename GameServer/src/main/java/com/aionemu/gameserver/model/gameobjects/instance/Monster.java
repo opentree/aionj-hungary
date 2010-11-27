@@ -21,7 +21,7 @@ import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.services.DropService;
 
 public class Monster extends Npc
-{	
+{
 	/**
 	 * 
 	 * @param objId
@@ -37,10 +37,9 @@ public class Monster extends Npc
 	@Override
 	public void initializeAi()
 	{
-		
+
 	}
-	
-	
+
 	@Override
 	public void onRespawn()
 	{

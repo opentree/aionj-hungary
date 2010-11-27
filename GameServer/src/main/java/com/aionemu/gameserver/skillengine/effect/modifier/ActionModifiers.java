@@ -31,34 +31,37 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ActionModifiers")
-public class ActionModifiers {
+public class ActionModifiers
+{
 
-    @XmlElements({
-        @XmlElement(name = "stumbledamage", type = StumbleDamageModifier.class),
-        @XmlElement(name = "frontdamage", type = FrontDamageModifier.class),
-        @XmlElement(name = "backdamage", type = BackDamageModifier.class),
-        @XmlElement(name = "stundamage", type = StunDamageModifier.class),
-        @XmlElement(name = "poisondamage", type = PoisonDamageModifier.class),
-        @XmlElement(name = "targetrace", type = TargetRaceDamageModifier.class)
-    })
-    protected List<ActionModifier> actionModifiers;
+	@XmlElements(
+	{
+			@XmlElement(name = "stumbledamage", type = StumbleDamageModifier.class),
+			@XmlElement(name = "frontdamage", type = FrontDamageModifier.class),
+			@XmlElement(name = "backdamage", type = BackDamageModifier.class),
+			@XmlElement(name = "stundamage", type = StunDamageModifier.class),
+			@XmlElement(name = "poisondamage", type = PoisonDamageModifier.class),
+			@XmlElement(name = "targetrace", type = TargetRaceDamageModifier.class) })
+	protected List<ActionModifier>	actionModifiers;
 
-    /**
-     * Gets the value of the actionModifiers property.
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link StumbleDamageModifier }
-     * {@link FrontDamageModifier }
-     * {@link BackDamageModifier }
-     * {@link StunDamageModifier }
-     * {@link PoisonDamageModifier }
-     * {@link TargetRaceDamageModifier }
-     * 
-     */
-    public List<ActionModifier> getActionModifiers() {
-        if (actionModifiers == null) {
-            actionModifiers = new ArrayList<ActionModifier>();
-        }
-        return this.actionModifiers;
-    }
+	/**
+	 * Gets the value of the actionModifiers property.
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link StumbleDamageModifier }
+	 * {@link FrontDamageModifier }
+	 * {@link BackDamageModifier }
+	 * {@link StunDamageModifier }
+	 * {@link PoisonDamageModifier }
+	 * {@link TargetRaceDamageModifier }
+	 * 
+	 */
+	public List<ActionModifier> getActionModifiers()
+	{
+		if (actionModifiers == null)
+		{
+			actionModifiers = new ArrayList<ActionModifier>();
+		}
+		return this.actionModifiers;
+	}
 }

@@ -33,28 +33,28 @@ public class SM_BAN extends AbstractServerPacket<LoginServerChannelHandler>
 	 *  2 = IP
 	 *  3 = Full ban (account and IP)
 	 */
-	private	final	byte		type;
-	
+	private final byte		type;
+
 	/**
 	 * Account to ban
 	 */
-	private	final	int			accountId;
+	private final int		accountId;
 
 	/**
 	 * IP or mask to ban
 	 */
-	private	final	String		ip;
+	private final String	ip;
 
 	/**
 	 * Time in minutes. 0 = infinity;
 	 * If time < 0 then it's unban command
 	 */
-	private	final	int			time;
-	
+	private final int		time;
+
 	/**
 	 * Object ID of Admin, who request the ban
 	 */
-	private	final	int			adminObjId;
+	private final int		adminObjId;
 
 	public SM_BAN(byte type, int accountId, String ip, int time, int adminObjId)
 	{
@@ -64,6 +64,7 @@ public class SM_BAN extends AbstractServerPacket<LoginServerChannelHandler>
 		this.time = time;
 		this.adminObjId = adminObjId;
 	}
+
 	/**
 	 * {@inheritDoc}
 	 */

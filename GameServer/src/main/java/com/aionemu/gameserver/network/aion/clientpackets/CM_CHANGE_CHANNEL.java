@@ -28,13 +28,13 @@ import com.aionemu.gameserver.services.TeleportService;
 public class CM_CHANGE_CHANNEL extends AbstractClientPacket<AionChannelHandler>
 {
 
-	private int channel;
-	
+	private int	channel;
+
 	public CM_CHANGE_CHANNEL(int opcode)
 	{
 		super(opcode);
 	}
-	
+
 	@Override
 	protected void readImpl()
 	{
@@ -46,5 +46,5 @@ public class CM_CHANGE_CHANNEL extends AbstractClientPacket<AionChannelHandler>
 	{
 		Player activePlayer = getChannelHandler().getActivePlayer();
 		TeleportService.changeChannel(activePlayer, channel);
-	}	
+	}
 }

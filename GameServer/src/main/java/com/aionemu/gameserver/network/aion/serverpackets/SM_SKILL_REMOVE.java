@@ -25,7 +25,7 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
 public class SM_SKILL_REMOVE extends AbstractAionServerPacket<AionChannelHandler>
 {
 
-	private int skillId;
+	private int	skillId;
 
 	public SM_SKILL_REMOVE(int skillId)
 	{
@@ -39,7 +39,7 @@ public class SM_SKILL_REMOVE extends AbstractAionServerPacket<AionChannelHandler
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeH(skillId);
-		writeC( 1);
-		writeC( 1);
+		writeC(1);
+		writeC(1);
 	}
 }

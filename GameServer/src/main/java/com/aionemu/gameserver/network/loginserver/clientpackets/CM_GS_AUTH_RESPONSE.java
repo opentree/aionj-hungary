@@ -43,7 +43,7 @@ public class CM_GS_AUTH_RESPONSE extends AbstractClientPacket<LoginServerChannel
 	/**
 	 * Response: 0=Authed,1=NotAuthed,2=AlreadyRegistered
 	 */
-	private int						response;
+	private int					response;
 
 	/**
 	 * Constructs new instance of <tt>CM_GS_AUTH_RESPONSE </tt> packet.
@@ -72,17 +72,17 @@ public class CM_GS_AUTH_RESPONSE extends AbstractClientPacket<LoginServerChannel
 		/**
 		 * Authed
 		 */
-		if(response == 0)
+		if (response == 0)
 		{
 			getChannelHandler().setState(State.AUTHED);
 			sendPacket(new SM_ACCOUNT_LIST(LoginServer.getInstance().getLoggedInAccounts()));
-//			LoginServer.getInstance().setLoginServer(getChannelHandler());
+			//			LoginServer.getInstance().setLoginServer(getChannelHandler());
 		}
 
 		/**
 		 * NotAuthed
 		 */
-		else if(response == 1)
+		else if (response == 1)
 		{
 			log.fatal("GameServer is not authenticated at LoginServer side, shutting down!");
 			System.exit(ExitCode.CODE_ERROR);
@@ -90,13 +90,14 @@ public class CM_GS_AUTH_RESPONSE extends AbstractClientPacket<LoginServerChannel
 		/**
 		 * AlreadyRegistered
 		 */
-		else if(response == 2)
+		else if (response == 2)
 		{
 			log.info("GameServer is already registered at LoginServer side! trying again...");
 			/**
 			 * try again after 10s
 			 */
-			ThreadPoolManager.getInstance().schedule(new Runnable(){
+			ThreadPoolManager.getInstance().schedule(new Runnable()
+			{
 				@Override
 				public void run()
 				{

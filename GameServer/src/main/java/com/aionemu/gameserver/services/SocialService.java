@@ -37,7 +37,7 @@ import com.aionemu.gameserver.world.World;
  */
 public class SocialService
 {
-	
+
 	/**
 	 * Blocks the given object ID for the given player.<br />
 	 * <ul><li>Does not send packets</li></ul>
@@ -49,20 +49,18 @@ public class SocialService
 	 */
 	public static boolean addBlockedUser(Player player, Player blockedPlayer, String reason)
 	{
-		if (DAOManager.getDAO(BlockListDAO.class).addBlockedUser(player.getObjectId(),	blockedPlayer.getObjectId(), reason))
+		if (DAOManager.getDAO(BlockListDAO.class).addBlockedUser(player.getObjectId(), blockedPlayer.getObjectId(), reason))
 		{
-			player.getBlockList().add(new BlockedPlayer(blockedPlayer.getCommonData(),reason));
-			
-			player.getClientConnection()
-				.sendPacket(new SM_BLOCK_RESPONSE(SM_BLOCK_RESPONSE.BLOCK_SUCCESSFUL, blockedPlayer.getName()));
-			player.getClientConnection()
-				.sendPacket(new SM_BLOCK_LIST());
-			
+			player.getBlockList().add(new BlockedPlayer(blockedPlayer.getCommonData(), reason));
+
+			player.getClientConnection().sendPacket(new SM_BLOCK_RESPONSE(SM_BLOCK_RESPONSE.BLOCK_SUCCESSFUL, blockedPlayer.getName()));
+			player.getClientConnection().sendPacket(new SM_BLOCK_LIST());
+
 			return true;
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Unblocks the given object ID for the given player.<br />
 	 * <ul><li>Does not send packets</li></ul>
@@ -77,19 +75,16 @@ public class SocialService
 		if (DAOManager.getDAO(BlockListDAO.class).delBlockedUser(player.getObjectId(), blockedUserId))
 		{
 			player.getBlockList().remove(blockedUserId);
-			player.getClientConnection()
-				.sendPacket(new SM_BLOCK_RESPONSE(
-								SM_BLOCK_RESPONSE.UNBLOCK_SUCCESSFUL,
-								DAOManager.getDAO(PlayerDAO.class).loadPlayerCommonData(blockedUserId).getName()
-							));
-			
-			player.getClientConnection()
-				.sendPacket(new SM_BLOCK_LIST());
+			player.getClientConnection().sendPacket(
+					new SM_BLOCK_RESPONSE(SM_BLOCK_RESPONSE.UNBLOCK_SUCCESSFUL, DAOManager.getDAO(PlayerDAO.class).loadPlayerCommonData(blockedUserId)
+							.getName()));
+
+			player.getClientConnection().sendPacket(new SM_BLOCK_LIST());
 			return true;
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Sets the reason for blocking a user
 	 * @param player
@@ -102,20 +97,19 @@ public class SocialService
 	 */
 	public static boolean setBlockedReason(Player player, BlockedPlayer target, String reason)
 	{
-		
+
 		if (!target.getReason().equals(reason))
 		{
 			if (DAOManager.getDAO(BlockListDAO.class).setReason(player.getObjectId(), target.getObjId(), reason))
 			{
 				target.setReason(reason);
-				player.getClientConnection()
-				.sendPacket(new SM_BLOCK_LIST());
+				player.getClientConnection().sendPacket(new SM_BLOCK_LIST());
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Adds two players to each others friend lists, and updates the database<br />
 	 * @param friend1
@@ -125,20 +119,16 @@ public class SocialService
 	{
 		DAOManager.getDAO(FriendListDAO.class).addFriends(friend1, friend2);
 
-		friend1.getFriendList().addFriend( new Friend(friend2.getCommonData()));
-		friend2.getFriendList().addFriend( new Friend(friend1.getCommonData()));	
-		
-		friend1.getClientConnection()
-			.sendPacket(new SM_FRIEND_LIST());
-		friend2.getClientConnection()
-			.sendPacket(new SM_FRIEND_LIST());
-		
-		friend1.getClientConnection()
-			.sendPacket(new SM_FRIEND_RESPONSE(friend2.getName(), SM_FRIEND_RESPONSE.TARGET_ADDED));
-		friend2.getClientConnection()
-			.sendPacket(new SM_FRIEND_RESPONSE(friend1.getName(), SM_FRIEND_RESPONSE.TARGET_ADDED));
+		friend1.getFriendList().addFriend(new Friend(friend2.getCommonData()));
+		friend2.getFriendList().addFriend(new Friend(friend1.getCommonData()));
+
+		friend1.getClientConnection().sendPacket(new SM_FRIEND_LIST());
+		friend2.getClientConnection().sendPacket(new SM_FRIEND_LIST());
+
+		friend1.getClientConnection().sendPacket(new SM_FRIEND_RESPONSE(friend2.getName(), SM_FRIEND_RESPONSE.TARGET_ADDED));
+		friend2.getClientConnection().sendPacket(new SM_FRIEND_RESPONSE(friend1.getName(), SM_FRIEND_RESPONSE.TARGET_ADDED));
 	}
-	
+
 	/**
 	 * Deletes two players from eachother's friend lists, and updates the database
 	 * <ul><li>Note: Does not send notification packets, and does not send new list packet</ul></li>
@@ -147,7 +137,7 @@ public class SocialService
 	 */
 	public static void deleteFriend(Player deleter, int exFriend2Id)
 	{
-		
+
 		//If the DAO is successful
 		if (DAOManager.getDAO(FriendListDAO.class).delFriends(deleter.getObjectId(), exFriend2Id))
 		{
@@ -156,33 +146,27 @@ public class SocialService
 			//If the cache doesn't have this player, try to get him from the world
 			if (friend2Player == null)
 				friend2Player = World.getInstance().findPlayer(exFriend2Id);
-			
-			String friend2Name = friend2Player != null ? friend2Player.getName() : 
-				DAOManager.getDAO(PlayerDAO.class).loadPlayerCommonData(exFriend2Id).getName();
-			
+
+			String friend2Name = friend2Player != null ? friend2Player.getName() : DAOManager.getDAO(PlayerDAO.class).loadPlayerCommonData(exFriend2Id)
+					.getName();
+
 			//Delete from deleter's friend list and send packets
 			deleter.getFriendList().delFriend(exFriend2Id);
-			
-			deleter.getClientConnection()
-				.sendPacket(new SM_FRIEND_LIST());
-			deleter.getClientConnection()
-				.sendPacket(new SM_FRIEND_RESPONSE(
-								friend2Name,
-								SM_FRIEND_RESPONSE.TARGET_REMOVED));
-				
-			
+
+			deleter.getClientConnection().sendPacket(new SM_FRIEND_LIST());
+			deleter.getClientConnection().sendPacket(new SM_FRIEND_RESPONSE(friend2Name, SM_FRIEND_RESPONSE.TARGET_REMOVED));
+
 			if (friend2Player != null)
 			{
 				friend2Player.getFriendList().delFriend(deleter.getObjectId());
-				
+
 				if (friend2Player.isOnline())
 				{
-					friend2Player.getClientConnection()
-						.sendPacket(new SM_FRIEND_NOTIFY(SM_FRIEND_NOTIFY.DELETED, deleter.getName()));	
+					friend2Player.getClientConnection().sendPacket(new SM_FRIEND_NOTIFY(SM_FRIEND_NOTIFY.DELETED, deleter.getName()));
 					friend2Player.getClientConnection().sendPacket(new SM_FRIEND_LIST());
 				}
 			}
 		}
-		
+
 	}
 }

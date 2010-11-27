@@ -53,25 +53,24 @@ public class AdminCommandChatHandler implements ChatHandler
 
 	public void registerAdminCommand(AdminCommand command)
 	{
-		if(command == null)
+		if (command == null)
 			throw new NullPointerException("Command instance cannot be null");
 
 		String commandName = command.getCommandName();
 
 		AdminCommand old = commands.put(commandName, command);
-		if(old != null)
+		if (old != null)
 		{
-			log.warn("Overriding handler for command " + commandName + " from " + old.getClass().getName() + " to "
-				+ command.getClass().getName());
+			log.warn("Overriding handler for command " + commandName + " from " + old.getClass().getName() + " to " + command.getClass().getName());
 		}
-		if(log.isDebugEnabled())
+		if (log.isDebugEnabled())
 			log.debug("AdminCommand " + commandName + " was successfuly registered.");
 	}
 
 	@Override
 	public ChatHandlerResponse handleChatMessage(ChatType chatType, String message, Player sender)
 	{
-		if(!message.startsWith("//"))
+		if (!message.startsWith("//"))
 		{
 			return new ChatHandlerResponse(false, message);
 		}
@@ -81,30 +80,30 @@ public class AdminCommandChatHandler implements ChatHandler
 
 			String command = commandAndParams[0].substring(2);
 			AdminCommand admc = commands.get(command);
-			
-			if(OptionsConfig.LOG_GMAUDIT)
+
+			if (OptionsConfig.LOG_GMAUDIT)
 			{
-				if(sender.getAccessLevel() == 0)
+				if (sender.getAccessLevel() == 0)
 					log.info("[ADMIN COMMAND] > [Name: " + sender.getName() + "]: The player has tried to use the command without have the rights :");
-				
-				if(sender.getTarget() != null && sender.getTarget() instanceof Creature)
+
+				if (sender.getTarget() != null && sender.getTarget() instanceof Creature)
 				{
 					Creature target = (Creature) sender.getTarget();
-					
+
 					log.info("[ADMIN COMMAND] > [Name: " + sender.getName() + "][Target : " + target.getName() + "]: " + message);
 				}
 				else
-					log.info("[ADMIN COMMAND] > [Name: " + sender.getName() + "]: " + message);	
+					log.info("[ADMIN COMMAND] > [Name: " + sender.getName() + "]: " + message);
 			}
-			
-			if(admc == null)
+
+			if (admc == null)
 			{
 				PacketSendUtility.sendMessage(sender, "<There is no such admin command: " + command + ">");
 				return ChatHandlerResponse.BLOCKED_MESSAGE;
 			}
 
 			String[] params = new String[] {};
-			if(commandAndParams.length > 1)
+			if (commandAndParams.length > 1)
 				params = commandAndParams[1].split(" ", admc.getSplitSize());
 
 			admc.executeCommand(sender, params);
@@ -128,10 +127,10 @@ public class AdminCommandChatHandler implements ChatHandler
 	{
 		return this.commands.size();
 	}
-	
+
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
-		protected static final AdminCommandChatHandler instance = new AdminCommandChatHandler();
+		protected static final AdminCommandChatHandler	instance	= new AdminCommandChatHandler();
 	}
 }

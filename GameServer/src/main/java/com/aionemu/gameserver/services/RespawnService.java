@@ -43,9 +43,9 @@ public class RespawnService
 	{
 		int respawnInterval = npc.getSpawn().getInterval();
 		int decayInterval = Math.round(respawnInterval * 0.8f);
-		if(decayInterval > 240)
+		if (decayInterval > 240)
 			decayInterval = 240;
-		
+
 		return ThreadPoolManager.getInstance().schedule(new Runnable()
 		{
 			@Override
@@ -55,6 +55,7 @@ public class RespawnService
 			}
 		}, decayInterval * 1000);
 	}
+
 	/**
 	 * 
 	 * @param visibleObject
@@ -62,21 +63,21 @@ public class RespawnService
 	public static Future<?> scheduleRespawnTask(final VisibleObject visibleObject)
 	{
 		final World world = World.getInstance();
-		final int interval = visibleObject.getSpawn().getInterval();		
-	
+		final int interval = visibleObject.getSpawn().getInterval();
+
 		return ThreadPoolManager.getInstance().schedule(new Runnable()
 		{
 			@Override
 			public void run()
 			{
 				SpawnTime spawnTime = visibleObject.getSpawn().getSpawnTime();
-				if(spawnTime != null)
+				if (spawnTime != null)
 				{
 					DayTime dayTime = GameTimeManager.getGameTime().getDayTime();
-					if(!spawnTime.isAllowedDuring(dayTime))
+					if (!spawnTime.isAllowedDuring(dayTime))
 						return;
 				}
-				
+
 				int instanceId = visibleObject.getInstanceId();
 				int worldId = visibleObject.getSpawn().getMapId();
 				boolean instanceExists = InstanceService.isInstanceExist(worldId, instanceId);
@@ -84,24 +85,25 @@ public class RespawnService
 				//Siege respawn check
 				if (visibleObject instanceof SiegeNpc)
 				{
-					SiegeLocation loc = SiegeService.getInstance().getSiegeLocation(((SiegeNpc)visibleObject).getSiegeId());
-					if (loc.getRace() != ((SiegeNpc)visibleObject).getSiegeRace())
+					SiegeLocation loc = SiegeService.getInstance().getSiegeLocation(((SiegeNpc) visibleObject).getSiegeId());
+					if (loc.getRace() != ((SiegeNpc) visibleObject).getSiegeRace())
 						return;
 				}
 
-				if(!instanceExists)
+				if (!instanceExists)
 				{
-					visibleObject.delete();				
+					visibleObject.delete();
 				}
 				else
 				{
-					world.setPosition(visibleObject, worldId, visibleObject.getSpawn().getX(), visibleObject.getSpawn().getY(), visibleObject.getSpawn().getZ(), visibleObject.getSpawn().getHeading());
+					world.setPosition(visibleObject, worldId, visibleObject.getSpawn().getX(), visibleObject.getSpawn().getY(),
+							visibleObject.getSpawn().getZ(), visibleObject.getSpawn().getHeading());
 					//call onRespawn before actual spawning
 					visibleObject.onRespawn();
-					world.spawn(visibleObject);		
-				}				
+					world.spawn(visibleObject);
+				}
 			}
-			
+
 		}, interval * 1000);
 	}
 }

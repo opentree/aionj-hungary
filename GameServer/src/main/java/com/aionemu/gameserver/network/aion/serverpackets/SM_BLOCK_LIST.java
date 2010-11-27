@@ -33,8 +33,8 @@ public class SM_BLOCK_LIST extends AbstractAionServerPacket<AionChannelHandler>
 	{
 		BlockList list = cHandler.getActivePlayer().getBlockList();
 		writeH(list.getSize());
-		writeC( 0); //Unk
-		for(BlockedPlayer player : list.getBlockedList())
+		writeC(0); //Unk
+		for (BlockedPlayer player : list.getBlockedList())
 		{
 			writeS(player.getName());
 			writeS(player.getReason());

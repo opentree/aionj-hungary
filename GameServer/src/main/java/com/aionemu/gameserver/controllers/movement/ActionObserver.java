@@ -29,20 +29,16 @@ public class ActionObserver
 {
 	public enum ObserverType
 	{
-		MOVE,
-		ATTACK,
-		ATTACKED,
-		EQUIP,
-		SKILLUSE
+		MOVE, ATTACK, ATTACKED, EQUIP, SKILLUSE
 	}
-	
-	private ObserverType observerType;
-	
+
+	private ObserverType	observerType;
+
 	public ActionObserver(ObserverType observerType)
 	{
 		this.observerType = observerType;
 	}
-	
+
 	/**
 	 * @return the observerType
 	 */
@@ -51,10 +47,27 @@ public class ActionObserver
 		return observerType;
 	}
 
-	public void moved(){};
-	public void attacked(Creature creature){};
-	public void attack(Creature creature){};
-	public void equip(Item item, Player owner){};
-	public void unequip(Item item, Player owner){};
-	public void skilluse(Skill skill){};
+	public void moved()
+	{
+	};
+
+	public void attacked(Creature creature)
+	{
+	};
+
+	public void attack(Creature creature)
+	{
+	};
+
+	public void equip(Item item, Player owner)
+	{
+	};
+
+	public void unequip(Item item, Player owner)
+	{
+	};
+
+	public void skilluse(Skill skill)
+	{
+	};
 }

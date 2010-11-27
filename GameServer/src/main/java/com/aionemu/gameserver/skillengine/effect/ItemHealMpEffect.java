@@ -25,15 +25,13 @@ import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
 import com.aionemu.gameserver.skillengine.model.Effect;
 
-
 /**
  * @author ATracer
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ItemHealMpEffect")
-public class ItemHealMpEffect
-extends AbstractHealEffect
+public class ItemHealMpEffect extends AbstractHealEffect
 {
 
 	@Override
@@ -48,7 +46,7 @@ extends AbstractHealEffect
 		super.calculate(effect);
 		effect.addSucessEffect(this);
 	}
-	
+
 	@Override
 	protected int getCurrentStatValue(Effect effect)
 	{

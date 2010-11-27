@@ -27,8 +27,8 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class CM_REVIVE extends AbstractClientPacket<AionChannelHandler>
 {
-	private int reviveId;
-	
+	private int	reviveId;
+
 	/**
 	 * Constructs new instance of <tt>CM_REVIVE </tt> packet
 	 * @param opcode
@@ -54,10 +54,10 @@ public class CM_REVIVE extends AbstractClientPacket<AionChannelHandler>
 	protected void runImpl()
 	{
 		Player activePlayer = getChannelHandler().getActivePlayer();
-		
+
 		ReviveType reviveType = ReviveType.getReviveTypeById(reviveId);
-		
-		switch(reviveType)
+
+		switch (reviveType)
 		{
 			case BIND_REVIVE:
 				activePlayer.getReviveController().bindRevive();
@@ -77,6 +77,6 @@ public class CM_REVIVE extends AbstractClientPacket<AionChannelHandler>
 			default:
 				break;
 		}
-		
+
 	}
 }

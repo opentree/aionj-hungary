@@ -112,10 +112,8 @@ public class ActionItem extends StaticNpc
 		addTask(TaskId.DECAY, RespawnService.scheduleDecayTask(this));
 		scheduleRespawn();
 
-		PacketSendUtility.broadcastPacket(this,
-			new SM_EMOTION(this, EmotionType.DIE, 0, lastAttacker == null ? 0 : lastAttacker.getObjectId()));
-		
-		
+		PacketSendUtility.broadcastPacket(this, new SM_EMOTION(this, EmotionType.DIE, 0, lastAttacker == null ? 0 : lastAttacker.getObjectId()));
+
 		this.doReward();
 
 		// deselect target at the end

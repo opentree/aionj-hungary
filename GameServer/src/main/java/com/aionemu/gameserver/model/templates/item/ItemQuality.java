@@ -28,11 +28,12 @@ import javax.xml.bind.annotation.XmlType;
 public enum ItemQuality
 {
 	// TODO: Reorder and rename - requires ATracer parser update  (?)
-	COMMON,		// 1 Common		- White
-	RARE,		// 2 Superior	- Green
-	UNIQUE,		// 4 Fabled		- Yellow
-	LEGEND,		// 3 Heroic		- Blue
-	MYTHIC,		// 6 Test		- Purple
-	EPIC,		// 5 Eternal	- Orange
-	JUNK		// 0 Junk		- Gray
+	COMMON, // 1 Common		- White
+	RARE, // 2 Superior	- Green
+	UNIQUE, // 4 Fabled		- Yellow
+	LEGEND, // 3 Heroic		- Blue
+	MYTHIC, // 6 Test		- Purple
+	EPIC, // 5 Eternal	- Orange
+	JUNK
+	// 0 Junk		- Gray
 }

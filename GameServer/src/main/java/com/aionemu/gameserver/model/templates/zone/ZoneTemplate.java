@@ -36,31 +36,34 @@ import com.aionemu.gameserver.world.zone.ZoneName;
 public class ZoneTemplate
 {
 	@XmlElement(required = true)
-	protected Points points;
-	protected List<ZoneName> link;
+	protected Points			points;
+	protected List<ZoneName>	link;
 	@XmlAttribute
-	protected int priority;
-	@XmlAttribute(name="fly")
-	protected boolean flightAllowed;
-	@XmlAttribute(name="breath")
-	protected boolean breath;
+	protected int				priority;
+	@XmlAttribute(name = "fly")
+	protected boolean			flightAllowed;
+	@XmlAttribute(name = "breath")
+	protected boolean			breath;
 	@XmlAttribute
-	protected ZoneName name;
+	protected ZoneName			name;
 	@XmlAttribute
-	protected int mapid;
+	protected int				mapid;
 
 	/**
 	 * Gets the value of the points property.
 	 */
-	public Points getPoints() {
+	public Points getPoints()
+	{
 		return points;
 	}
 
 	/**
 	 * Gets the value of the link property.
 	 */
-	public List<ZoneName> getLink() {
-		if (link == null) {
+	public List<ZoneName> getLink()
+	{
+		if (link == null)
+		{
 			link = new ArrayList<ZoneName>();
 		}
 		return this.link;
@@ -85,14 +88,16 @@ public class ZoneTemplate
 	/**
 	 * Gets the value of the name property.   
 	 */
-	public ZoneName getName() {
+	public ZoneName getName()
+	{
 		return name;
 	}
 
 	/**
 	 * Gets the value of the mapid property.
 	 */
-	public int getMapid() {
+	public int getMapid()
+	{
 		return mapid;
 	}
 

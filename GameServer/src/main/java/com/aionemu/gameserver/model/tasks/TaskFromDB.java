@@ -24,14 +24,14 @@ import java.sql.Timestamp;
  */
 public class TaskFromDB
 {
-	private int					id;
-	private String				name;
-	private String				type;
-	private	Timestamp			lastActivation;
-	private String				startTime;
-	private int					delay;
-	private String				params[];
-	
+	private int			id;
+	private String		name;
+	private String		type;
+	private Timestamp	lastActivation;
+	private String		startTime;
+	private int			delay;
+	private String		params[];
+
 	/**
 	 * Constructor
 	 * 
@@ -45,19 +45,19 @@ public class TaskFromDB
 	 */
 	public TaskFromDB(int id, String name, String type, Timestamp lastActivation, String startTime, int delay, String param)
 	{
-		this.id				= id;
-		this.name			= name;
-		this.type			= type;
-		this.lastActivation	= lastActivation;
-		this.startTime		= startTime;
-		this.delay			= delay;
-		
+		this.id = id;
+		this.name = name;
+		this.type = type;
+		this.lastActivation = lastActivation;
+		this.startTime = startTime;
+		this.delay = delay;
+
 		if (param != null)
-			this.params		= param.split(" ");
+			this.params = param.split(" ");
 		else
-			this.params		= new String[0];
+			this.params = new String[0];
 	}
-	
+
 	/**
 	 * Task's id
 	 * 
@@ -67,7 +67,7 @@ public class TaskFromDB
 	{
 		return id;
 	}
-	
+
 	/**
 	 * Task's name
 	 * 
@@ -77,7 +77,7 @@ public class TaskFromDB
 	{
 		return name;
 	}
-	
+
 	/**
 	 * Task's type :
 	 *  - FIXED_IN_TIME (HH:MM:SS)
@@ -88,7 +88,7 @@ public class TaskFromDB
 	{
 		return type;
 	}
-	
+
 	/**
 	 * Task's last activation
 	 * 
@@ -98,7 +98,7 @@ public class TaskFromDB
 	{
 		return lastActivation;
 	}
-	
+
 	/**
 	 * Task's starting time (HH:MM:SS format)
 	 * 
@@ -108,7 +108,7 @@ public class TaskFromDB
 	{
 		return startTime;
 	}
-	
+
 	/**
 	 * Task's delay
 	 * 
@@ -118,7 +118,7 @@ public class TaskFromDB
 	{
 		return delay;
 	}
-	
+
 	/**
 	 * Task's param(s)
 	 * 

@@ -28,15 +28,15 @@ import com.aionemu.gameserver.configs.main.PricesConfig;
  */
 public class Prices
 {
-	
+
 	/**
 	 * 
 	 */
 	public Prices()
 	{
-		
+
 	}
-	
+
 	/**
 	 * Used in SM_PRICES
 	 * @return buyingPrice
@@ -63,7 +63,7 @@ public class Prices
 	{
 		return PricesConfig.DEFAULT_TAXES;
 	}
-	
+
 	/**
 	 * Used in SM_TRADELIST.
 	 * @return buyPriceModifier
@@ -80,10 +80,8 @@ public class Prices
 	 */
 	public int getVendorSellModifier()
 	{
-		return (int)((int)((int)(PricesConfig.VENDOR_SELL_MODIFIER *
-			this.getGlobalPrices() / 100F) *
-			this.getGlobalPricesModifier() / 100F) *
-			this.getTaxes() / 100F);
+		return (int) ((int) ((int) (PricesConfig.VENDOR_SELL_MODIFIER * this.getGlobalPrices() / 100F) * this.getGlobalPricesModifier() / 100F)
+				* this.getTaxes() / 100F);
 	}
 
 	/**
@@ -94,10 +92,7 @@ public class Prices
 	{
 		// Tricky. Requires multiplication by Prices, Modifier, Taxes
 		// In order, and round down each time to match client calculation.
-		return (long)((long)((long)(basePrice *
-			this.getGlobalPrices() / 100D) *
-			this.getGlobalPricesModifier() / 100D) *
-			this.getTaxes() / 100D);
+		return (long) ((long) ((long) (basePrice * this.getGlobalPrices() / 100D) * this.getGlobalPricesModifier() / 100D) * this.getTaxes() / 100D);
 	}
 
 	/**
@@ -107,11 +102,9 @@ public class Prices
 	public long getKinahForBuy(long requiredKinah)
 	{
 		// Requires double precision for 2mil+ kinah items
-		return (long)((long)((long)((long)(requiredKinah *
-			this.getVendorBuyModifier() / 100.0D) *
-			this.getGlobalPrices() / 100.0D) *
-			this.getGlobalPricesModifier() / 100.0D) *
-			this.getTaxes() / 100.0D);
+		return (long) ((long) ((long) ((long) (requiredKinah * this.getVendorBuyModifier() / 100.0D) * this.getGlobalPrices() / 100.0D)
+				* this.getGlobalPricesModifier() / 100.0D)
+				* this.getTaxes() / 100.0D);
 	}
 
 	/**
@@ -120,7 +113,7 @@ public class Prices
 	 */
 	public long getKinahForSell(long kinahReward)
 	{
-		return (long)(kinahReward * this.getVendorSellModifier() / 100D);
+		return (long) (kinahReward * this.getVendorSellModifier() / 100D);
 	}
 
 }

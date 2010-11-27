@@ -24,15 +24,13 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
 import com.aionemu.gameserver.skillengine.model.Effect;
 
-
 /**
  * @author ATracer
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "HealDpEffect")
-public class HealDpEffect
-	extends AbstractHealEffect
+public class HealDpEffect extends AbstractHealEffect
 {
 
 	@Override
@@ -47,7 +45,7 @@ public class HealDpEffect
 		super.calculate(effect);
 		effect.addSucessEffect(this);
 	}
-	
+
 	@Override
 	protected int getCurrentStatValue(Effect effect)
 	{

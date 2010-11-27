@@ -44,24 +44,24 @@ public class AionChannelHandler extends AbstractChannelHandler implements ICrypt
 	 * Crypt that will encrypt/decrypt packets.
 	 */
 	private final Crypt			crypt	= new Crypt();
-	
+
 	/**
 	 * AionClient is authenticating by passing to GameServer id of account.
 	 */
-	private Account							account;
-	
+	private Account				account;
+
 	/**
 	 * active Player that owner of this connection is playing [entered game]
 	 */
-	private Player							activePlayer;
-//	private String							lastPlayerName = "";
-	private long                     		lastPingTimeMS;
+	private Player				activePlayer;
+	//	private String							lastPlayerName = "";
+	private long				lastPingTimeMS;
 
 	public AionChannelHandler(AbstractPacketHandlerFactory<AionChannelHandler> aphf)
 	{
 		super(aphf);
 	}
-	
+
 	@Override
 	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception
 	{
@@ -82,18 +82,18 @@ public class AionChannelHandler extends AbstractChannelHandler implements ICrypt
 
 	public boolean setActivePlayer(Player player)
 	{
-		if(activePlayer != null && player != null)
+		if (activePlayer != null && player != null)
 			return false;
 		activePlayer = player;
 
-		if(activePlayer == null)
+		if (activePlayer == null)
 			state = State.AUTHED;
 		else
 			state = State.ENTERED;
-		
-/*		if(activePlayer != null)
-			lastPlayerName = player.getName();*/
-		
+
+		/*		if(activePlayer != null)
+					lastPlayerName = player.getName();*/
+
 		return true;
 	}
 
@@ -116,7 +116,7 @@ public class AionChannelHandler extends AbstractChannelHandler implements ICrypt
 	{
 		return crypt.enableKey();
 	}
-	
+
 	@Override
 	public void decrypt(ChannelBuffer buf)
 	{
@@ -128,24 +128,24 @@ public class AionChannelHandler extends AbstractChannelHandler implements ICrypt
 	{
 		crypt.encrypt(buf);
 	}
-	
+
 	@Override
 	public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception
 	{
 		super.channelDisconnected(ctx, e);
-		
+
 		/**
 		 * Client starts authentication procedure
 		 */
-		if(getAccount() != null)
+		if (getAccount() != null)
 			LoginServer.getInstance().aionClientDisconnected(getAccount().getId());
-		if(getActivePlayer() != null)
+		if (getActivePlayer() != null)
 		{
 			Player player = getActivePlayer();
-			
-			if(player.isInShutdownProgress())
+
+			if (player.isInShutdownProgress())
 				PlayerService.playerLoggedOut(player);
-			
+
 			// prevent ctrl+alt+del / close window exploit
 			else
 			{

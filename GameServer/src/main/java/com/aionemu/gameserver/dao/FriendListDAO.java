@@ -35,13 +35,14 @@ public abstract class FriendListDAO implements DAO
 	{
 		return FriendListDAO.class.getName();
 	}
+
 	/**
 	 * Loads the friend list for the given player
 	 * @param player Player to get friend list of
 	 * @return FriendList for player
 	 */
 	public abstract FriendList load(final Player player);
-	
+
 	/**
 	 * Makes the given players friends
 	 * <ul><li>Note: Adds for both players</li></ul>
@@ -58,5 +59,5 @@ public abstract class FriendListDAO implements DAO
 	 * @return Success
 	 */
 	public abstract boolean delFriends(final int playerOid, final int friendOid);
-	
+
 }

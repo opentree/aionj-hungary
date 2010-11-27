@@ -36,46 +36,49 @@ public class SM_DUEL extends AbstractAionServerPacket<AionChannelHandler>
 	{
 		this.type = type;
 	}
-	
-	public static SM_DUEL SM_DUEL_STARTED (int requesterObjId)
+
+	public static SM_DUEL SM_DUEL_STARTED(int requesterObjId)
 	{
 		SM_DUEL packet = new SM_DUEL(0x00);
 		packet.setRequesterObjId(requesterObjId);
 		return packet;
 	}
-	
-	private void setRequesterObjId (int requesterObjId) {
+
+	private void setRequesterObjId(int requesterObjId)
+	{
 		this.requesterObjId = requesterObjId;
 	}
-	
-	public static SM_DUEL SM_DUEL_RESULT (DuelResult result, String playerName)
+
+	public static SM_DUEL SM_DUEL_RESULT(DuelResult result, String playerName)
 	{
 		SM_DUEL packet = new SM_DUEL(0x01);
 		packet.setPlayerName(playerName);
 		packet.setResult(result);
 		return packet;
 	}
-	
-	private void setPlayerName (String playerName) {
+
+	private void setPlayerName(String playerName)
+	{
 		this.playerName = playerName;
 	}
 
-	private void setResult (DuelResult result) {
+	private void setResult(DuelResult result)
+	{
 		this.result = result;
 	}
-	
+
 	@Override
 	public void writeImpl(AionChannelHandler cHandler)
 	{
-		writeC( type);
+		writeC(type);
 
-		switch(type)
+		switch (type)
 		{
 			case 0x00:
 				writeD(requesterObjId);
 				break;
 			case 0x01:
-				writeC( result.getResultId()); // unknown
+				writeC(result.getResultId()); // unknown
 				writeD(result.getMsgId());
 				writeS(playerName);
 				break;

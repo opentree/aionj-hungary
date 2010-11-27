@@ -27,20 +27,20 @@ import com.aionemu.gameserver.services.MailService;
  */
 public class CM_DELETE_MAIL extends AbstractClientPacket<AionChannelHandler>
 {
-	
-	int mailObjId;
-	
+
+	int	mailObjId;
+
 	public CM_DELETE_MAIL(int opcode)
 	{
 		super(opcode);
 	}
-	
+
 	@Override
 	protected void readImpl()
 	{
 		mailObjId = readD();
 	}
-	
+
 	@Override
 	protected void runImpl()
 	{

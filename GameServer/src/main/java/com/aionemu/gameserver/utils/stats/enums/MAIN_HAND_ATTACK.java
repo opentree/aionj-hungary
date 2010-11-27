@@ -34,14 +34,14 @@ public enum MAIN_HAND_ATTACK
 	PRIEST(17),
 	CLERIC(19),
 	CHANTER(19);
-	
-	private int value;
-	
+
+	private int	value;
+
 	private MAIN_HAND_ATTACK(int value)
 	{
 		this.value = value;
 	}
-	
+
 	public int getValue()
 	{
 		return value;

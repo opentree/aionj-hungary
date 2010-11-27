@@ -38,17 +38,17 @@ import com.aionemu.gameserver.world.WorldMapInstance;
 public class Rift extends StaticNpc
 {
 
-	private boolean isMaster = false;
-	private SpawnTemplate slaveSpawnTemplate;
-	private Rift slave;
-	
-	private Integer maxEntries;
-	private Integer maxLevel;
-	
-	private int usedEntries;
-	private boolean isAccepting;
-	
-	private RiftEnum riftTemplate;
+	private boolean			isMaster	= false;
+	private SpawnTemplate	slaveSpawnTemplate;
+	private Rift			slave;
+
+	private Integer			maxEntries;
+	private Integer			maxLevel;
+
+	private int				usedEntries;
+	private boolean			isAccepting;
+
+	private RiftEnum		riftTemplate;
 
 	/**
 	 * @param objId
@@ -59,13 +59,13 @@ public class Rift extends StaticNpc
 	{
 		super(objId, spawnTemplate);
 		this.riftTemplate = riftTemplate;
-		if(slave != null)//master rift should be created
+		if (slave != null)//master rift should be created
 		{
 			this.slave = slave;
 			this.slaveSpawnTemplate = slave.getSpawn();
 			this.maxEntries = riftTemplate.getEntries();
 			this.maxLevel = riftTemplate.getMaxLevel();
-			
+
 			isMaster = true;
 			isAccepting = true;
 		}
@@ -74,37 +74,37 @@ public class Rift extends StaticNpc
 	@Override
 	public void onDialogRequest(Player player)
 	{
-		if(!isMaster && !isAccepting)
+		if (!isMaster && !isAccepting)
 			return;
-		
+
 		final Rift rift = this;
 		RequestResponseHandler responseHandler = new RequestResponseHandler(this)
 		{
 			@Override
 			public void acceptRequest(StaticNpc requester, Player responder)
 			{
-				if(!isAccepting)
+				if (!isAccepting)
 					return;
-				
+
 				int worldId = slaveSpawnTemplate.getMapId();
 				float x = slaveSpawnTemplate.getX();
 				float y = slaveSpawnTemplate.getY();
 				float z = slaveSpawnTemplate.getZ();
-				
+
 				TeleportService.teleportTo(responder, worldId, x, y, z, 0);
 				usedEntries++;
-				
-				if(usedEntries >= maxEntries)
+
+				if (usedEntries >= maxEntries)
 				{
 					isAccepting = false;
-					
+
 					RespawnService.scheduleDecayTask(rift);
 					RespawnService.scheduleDecayTask(slave);
 				}
-				PacketSendUtility.broadcastPacket(rift, 
-					new SM_RIFT_STATUS(getObjectId(), usedEntries, maxEntries, maxLevel));
-					
+				PacketSendUtility.broadcastPacket(rift, new SM_RIFT_STATUS(getObjectId(), usedEntries, maxEntries, maxLevel));
+
 			}
+
 			@Override
 			public void denyRequest(StaticNpc requester, Player responder)
 			{
@@ -123,13 +123,12 @@ public class Rift extends StaticNpc
 	public void see(VisibleObject object)
 	{
 		super.see(object);
-		if(!isMaster)
+		if (!isMaster)
 			return;
-		
-		if(object instanceof Player)
+
+		if (object instanceof Player)
 		{
-			PacketSendUtility.sendPacket((Player) object, 
-				new SM_RIFT_STATUS(getObjectId(), usedEntries, maxEntries, maxLevel));
+			PacketSendUtility.sendPacket((Player) object, new SM_RIFT_STATUS(getObjectId(), usedEntries, maxEntries, maxLevel));
 		}
 	}
 
@@ -138,7 +137,7 @@ public class Rift extends StaticNpc
 	 */
 	public void sendMessage(Player activePlayer)
 	{
-		if(isMaster && isSpawned())
+		if (isMaster && isSpawned())
 			PacketSendUtility.sendPacket(activePlayer, new SM_RIFT_ANNOUNCE(riftTemplate.getDestination()));
 	}
 
@@ -147,13 +146,13 @@ public class Rift extends StaticNpc
 	 */
 	public void sendAnnounce()
 	{
-		if(isMaster && isSpawned())
+		if (isMaster && isSpawned())
 		{
-			WorldMapInstance worldInstance = getPosition().getMapRegion().getParent();	
-			for(Player player : worldInstance.getAllWorldMapPlayers())
+			WorldMapInstance worldInstance = getPosition().getMapRegion().getParent();
+			for (Player player : worldInstance.getAllWorldMapPlayers())
 			{
-				if(player.isSpawned())				
-					sendMessage(player);						
+				if (player.isSpawned())
+					sendMessage(player);
 			}
 		}
 	}

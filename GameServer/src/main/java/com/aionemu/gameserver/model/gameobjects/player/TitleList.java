@@ -32,7 +32,7 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 public class TitleList
 {
 	private FastMap<Integer, Title>	titles;
-	private Player owner;
+	private Player					owner;
 
 	public TitleList()
 	{
@@ -44,42 +44,42 @@ public class TitleList
 	{
 		this.owner = owner;
 	}
-	
+
 	public Player getOwner()
 	{
 		return owner;
 	}
-	
+
 	public boolean addTitle(int titleId)
 	{
 		TitleTemplate tt = DataManager.TITLE_DATA.getTitleTemplate(titleId);
-		if (tt==null)
+		if (tt == null)
 		{
-			throw new IllegalArgumentException("Invalid title id "+titleId);
+			throw new IllegalArgumentException("Invalid title id " + titleId);
 		}
-		if (owner!=null)
+		if (owner != null)
 		{
-			if (owner.getCommonData().getRace().getRaceId()!=tt.getRace())
+			if (owner.getCommonData().getRace().getRaceId() != tt.getRace())
 			{
 				return false;
 			}
 		}
-		if(!titles.containsKey(titleId))
+		if (!titles.containsKey(titleId))
 		{
-			titles.put(titleId, new Title (tt));
+			titles.put(titleId, new Title(tt));
 		}
 		else
 		{
 			return false;
 		}
 
-		if (owner!=null)
+		if (owner != null)
 		{
 			PacketSendUtility.sendPacket(owner, new SM_TITLE_LIST(owner));
 		}
 		return true;
 	}
-	
+
 	public int size()
 	{
 		return titles.size();

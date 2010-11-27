@@ -35,28 +35,28 @@ public class WorldMap
 {
 	private WorldMapTemplate				worldMapTemplate;
 
-	private AtomicInteger nextInstanceId = new AtomicInteger(0);
+	private AtomicInteger					nextInstanceId	= new AtomicInteger(0);
 	/**
 	 * List of instances.
 	 */
-	private Map<Integer, WorldMapInstance>	instances	= new FastMap<Integer, WorldMapInstance>().shared();
+	private Map<Integer, WorldMapInstance>	instances		= new FastMap<Integer, WorldMapInstance>().shared();
 
 	/** World to which belongs this WorldMap */
-	private World world;
-	
+	private World							world;
+
 	public WorldMap(WorldMapTemplate worldMapTemplate, World world)
 	{
 		this.world = world;
 		this.worldMapTemplate = worldMapTemplate;
-		
-		if(worldMapTemplate.getTwinCount() != 0)
+
+		if (worldMapTemplate.getTwinCount() != 0)
 		{
-			for(int i = 1; i <= worldMapTemplate.getTwinCount(); i++)
+			for (int i = 1; i <= worldMapTemplate.getTwinCount(); i++)
 			{
 				int nextId = getNextInstanceId();
-				addInstance(nextId);	
-			}			
-		}	
+				addInstance(nextId);
+			}
+		}
 		else
 		{
 			int nextId = getNextInstanceId();
@@ -73,7 +73,7 @@ public class WorldMap
 	{
 		return worldMapTemplate.getName();
 	}
-	
+
 	/**
 	 * Returns water level on map
 	 * @return water level
@@ -82,7 +82,7 @@ public class WorldMap
 	{
 		return worldMapTemplate.getWaterLevel();
 	}
-	
+
 	/**
 	 * Returns death level on map
 	 * @return death level
@@ -91,7 +91,7 @@ public class WorldMap
 	{
 		return worldMapTemplate.getDeathLevel();
 	}
-	
+
 	/**
 	 * Returns the WorldType of the map
 	 * @return world type
@@ -110,7 +110,7 @@ public class WorldMap
 	{
 		return worldMapTemplate.getMapId();
 	}
-	
+
 	/**
 	 * Returns world size
 	 * 
@@ -118,7 +118,7 @@ public class WorldMap
 	 */
 	public Integer getWorldSize()
 	{
-		return worldMapTemplate.getWorldSize()-1;
+		return worldMapTemplate.getWorldSize() - 1;
 	}
 
 	/**
@@ -143,7 +143,7 @@ public class WorldMap
 		//TODO Balance players into instances.
 		return getWorldMapInstance(1);
 	}
-	
+
 	/**
 	 *  This method return WorldMapInstance by specified instanceId
 	 *  
@@ -152,12 +152,12 @@ public class WorldMap
 	 */
 	public WorldMapInstance getWorldMapInstanceById(int instanceId)
 	{
-		if(worldMapTemplate.getTwinCount() !=0)
+		if (worldMapTemplate.getTwinCount() != 0)
 		{
-			if(instanceId > worldMapTemplate.getTwinCount())
+			if (instanceId > worldMapTemplate.getTwinCount())
 			{
 				throw new IllegalArgumentException("WorldMapInstance " + worldMapTemplate.getMapId() + " has lower instances count than " + instanceId);
-			}		
+			}
 		}
 		return getWorldMapInstance(instanceId);
 	}
@@ -182,7 +182,7 @@ public class WorldMap
 	{
 		instances.remove(instanceId);
 	}
-	
+
 	/**
 	 *  Add instance to map and increases pointer to nextInstanceId
 	 *  
@@ -196,10 +196,11 @@ public class WorldMap
 			worldMapInstance = new WorldMapInstance3D(this, instanceId);
 		else
 			worldMapInstance = new WorldMapInstance(this, instanceId);
-		
+
 		instances.put(instanceId, worldMapInstance);
 		return worldMapInstance;
 	}
+
 	/**
 	 * Returns the World containing this WorldMap.
 	 */
@@ -225,7 +226,7 @@ public class WorldMap
 	{
 		return worldMapTemplate.isInstance();
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -233,7 +234,7 @@ public class WorldMap
 	{
 		return instances.values();
 	}
-	
+
 	public Set<Integer> getInstanceIds()
 	{
 		return instances.keySet();

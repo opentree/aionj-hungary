@@ -22,9 +22,5 @@ package com.aionemu.gameserver.model.templates.pet;
  */
 public enum PetFunctionType
 {
-	FOOD,
-	WAREHOUSE,
-	BAG,
-	ALARM,
-	WING
+	FOOD, WAREHOUSE, BAG, ALARM, WING
 }

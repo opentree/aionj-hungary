@@ -30,13 +30,13 @@ public class CM_FRIEND_STATUS extends AbstractClientPacket<AionChannelHandler>
 {
 
 	//The users new status
-	private int status;
-	
+	private int	status;
+
 	public CM_FRIEND_STATUS(int opcode)
 	{
 		super(opcode);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

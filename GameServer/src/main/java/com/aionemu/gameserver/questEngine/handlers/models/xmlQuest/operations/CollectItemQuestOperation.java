@@ -31,7 +31,8 @@ import com.aionemu.gameserver.services.QuestService;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CollectItemQuestOperation", propOrder = { "_true", "_false" })
+@XmlType(name = "CollectItemQuestOperation", propOrder =
+{ "_true", "_false" })
 public class CollectItemQuestOperation extends QuestOperation
 {
 
@@ -48,10 +49,10 @@ public class CollectItemQuestOperation extends QuestOperation
 	@Override
 	public void doOperate(QuestEnv env)
 	{
-		if(QuestService.collectItemCheck(env, removeItems == null ? true : false))
+		if (QuestService.collectItemCheck(env, removeItems == null ? true : false))
 			_true.operate(env);
 		else
 			_false.operate(env);
 	}
-	
+
 }

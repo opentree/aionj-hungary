@@ -24,9 +24,7 @@ import com.aionemu.gameserver.utils.gametime.DayTime;
  */
 public enum SpawnTime
 {
-	ALL,
-	DAY,
-	NIGHT;
+	ALL, DAY, NIGHT;
 
 	/**
 	 * @param dayTime
@@ -34,11 +32,10 @@ public enum SpawnTime
 	 */
 	public boolean isAllowedDuring(DayTime dayTime)
 	{
-		switch(this)
+		switch (this)
 		{
 			case DAY:
-				return dayTime == DayTime.AFTERNOON || dayTime == DayTime.MORNING
-					|| dayTime == DayTime.EVENING;
+				return dayTime == DayTime.AFTERNOON || dayTime == DayTime.MORNING || dayTime == DayTime.EVENING;
 			case NIGHT:
 				return dayTime == DayTime.NIGHT;
 		}

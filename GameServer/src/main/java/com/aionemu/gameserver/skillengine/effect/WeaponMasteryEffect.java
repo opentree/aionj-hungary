@@ -34,7 +34,7 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 public class WeaponMasteryEffect extends BufEffect
 {
 	@XmlAttribute(name = "weapon")
-	private WeaponType weaponType;
+	private WeaponType	weaponType;
 
 	/**
 	 * @return the weaponType
@@ -48,15 +48,15 @@ public class WeaponMasteryEffect extends BufEffect
 	public void calculate(Effect effect)
 	{
 		//right now only players are affected
-		Player player = (Player)  effect.getEffector();
+		Player player = (Player) effect.getEffector();
 		//check best mastery skill
 		Integer skillId = player.getSkillList().getWeaponMasterySkill(weaponType);
-		if(skillId != null && skillId != effect.getSkillId())
+		if (skillId != null && skillId != effect.getSkillId())
 			return;
 		//check weather already skill applied and weapon isEquipeed
 		boolean weaponMasterySet = player.getEffectController().isWeaponMasterySet(skillId);
 		boolean isWeaponEquiped = player.getEquipment().isWeaponEquipped(weaponType);
-		if(!weaponMasterySet && isWeaponEquiped)
+		if (!weaponMasterySet && isWeaponEquiped)
 			effect.addSucessEffect(this);
 	}
 
@@ -64,18 +64,17 @@ public class WeaponMasteryEffect extends BufEffect
 	public void endEffect(Effect effect)
 	{
 		super.endEffect(effect);
-		Player player = (Player)  effect.getEffector();
+		Player player = (Player) effect.getEffector();
 		player.getEffectController().unsetWeaponMastery();
 	}
 
 	@Override
 	public void startEffect(Effect effect)
 	{
-		Player player = (Player)  effect.getEffector();
+		Player player = (Player) effect.getEffector();
 		player.getEffectController().removeEffect(player.getEffectController().getWeaponMastery());
 		super.startEffect(effect);
 		player.getEffectController().setWeaponMastery(effect.getSkillId());
 	}
-	
-	
+
 }

@@ -28,8 +28,8 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_EXCHANGE_ADD_ITEM extends _InventoryPacket
 {
-	private int action;
-	private Item item;
+	private int		action;
+	private Item	item;
 
 	public SM_EXCHANGE_ADD_ITEM(int action, Item item)
 	{
@@ -41,13 +41,13 @@ public class SM_EXCHANGE_ADD_ITEM extends _InventoryPacket
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 
-		writeC( action); // 0 -self 1-other
+		writeC(action); // 0 -self 1-other
 
 		writeGeneralInfo(item);
 
 		ItemTemplate itemTemplate = item.getItemTemplate();
 
-		if(itemTemplate.getTemplateId() == ItemId.KINAH.value())
+		if (itemTemplate.getTemplateId() == ItemId.KINAH.value())
 		{
 			writeKinah(item, true);
 		}
@@ -60,15 +60,15 @@ public class SM_EXCHANGE_ADD_ITEM extends _InventoryPacket
 			writeArmorInfo(item, true, false, false);
 		}
 		else
-		{				
+		{
 			writeGeneralItemInfo(item, false, false);
-			writeC( 0);
+			writeC(0);
 		}
 	}
 
 	@Override
 	protected void writeGeneralInfo(Item item)
-	{	
+	{
 		ItemTemplate itemTemplate = item.getItemTemplate();
 		writeD(itemTemplate.getTemplateId());
 		writeD(item.getObjectId());

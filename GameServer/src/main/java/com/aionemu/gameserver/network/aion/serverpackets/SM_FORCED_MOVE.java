@@ -25,8 +25,8 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_FORCED_MOVE extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private Creature creature;
-	private Creature target;
+	private Creature	creature;
+	private Creature	target;
 
 	public SM_FORCED_MOVE(Creature creature, Creature target)
 	{
@@ -42,7 +42,7 @@ public class SM_FORCED_MOVE extends AbstractAionServerPacket<AionChannelHandler>
 	{
 		writeD(creature.getObjectId());
 		writeD(target.getObjectId());
-		writeC( 16); // unk
+		writeC(16); // unk
 		writeF(target.getX());
 		writeF(target.getY());
 		writeF(target.getZ() + 0.25f);

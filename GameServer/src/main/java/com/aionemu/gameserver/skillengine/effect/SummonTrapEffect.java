@@ -59,7 +59,8 @@ public class SummonTrapEffect extends SummonEffect
 		SpawnTemplate spawn = spawnEngine.addNewSpawn(worldId, instanceId, npcId, x, y, z, heading, 0, 0, true, true);
 		final Trap trap = spawnEngine.spawnTrap(spawn, instanceId, effector, skillId);
 
-		Future<?> task = ThreadPoolManager.getInstance().schedule(new Runnable(){
+		Future<?> task = ThreadPoolManager.getInstance().schedule(new Runnable()
+		{
 
 			@Override
 			public void run()

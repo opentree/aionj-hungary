@@ -34,13 +34,13 @@ public abstract class MailDAO implements IDFactoryAwareDAO
 	{
 		return MailDAO.class.getName();
 	}
-	
+
 	public abstract boolean storeLetter(Timestamp time, Letter letter);
-	
+
 	public abstract Mailbox loadPlayerMailbox(Player player);
-	
+
 	public abstract void storeMailbox(Player player);
-	
+
 	public abstract boolean deleteLetter(int letterId);
 
 	public abstract void updateOfflineMailCounter(PlayerCommonData recipientCommonData);

@@ -48,7 +48,8 @@ public class MpUseOverTimeEffect extends EffectTemplate
 		int maxMp = effected.getGameStats().getCurrentStat(StatEnum.MAXMP);
 		final int requiredMp = maxMp * value / 100;
 
-		Future<?> task = ThreadPoolManager.getInstance().scheduleEffectAtFixedRate(new Runnable(){
+		Future<?> task = ThreadPoolManager.getInstance().scheduleEffectAtFixedRate(new Runnable()
+		{
 
 			@Override
 			public void run()
@@ -62,7 +63,7 @@ public class MpUseOverTimeEffect extends EffectTemplate
 	public void onPeriodicAction(Effect effect, int value)
 	{
 		Creature effected = effect.getEffected();
-		if(effected.getLifeStats().getCurrentMp() < value)
+		if (effected.getLifeStats().getCurrentMp() < value)
 			effect.endEffect();
 
 		effected.getLifeStats().reduceMp(value);
@@ -74,7 +75,7 @@ public class MpUseOverTimeEffect extends EffectTemplate
 		Creature effected = effect.getEffected();
 		int maxMp = effected.getGameStats().getCurrentStat(StatEnum.MAXMP);
 		int requiredMp = maxMp * value / 100;
-		if(effected.getLifeStats().getCurrentMp() < requiredMp)
+		if (effected.getLifeStats().getCurrentMp() < requiredMp)
 			return;
 
 		effect.addSucessEffect(this);

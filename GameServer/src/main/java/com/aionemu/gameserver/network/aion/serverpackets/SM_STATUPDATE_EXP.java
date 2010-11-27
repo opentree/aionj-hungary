@@ -32,8 +32,8 @@ public class SM_STATUPDATE_EXP extends AbstractAionServerPacket<AionChannelHandl
 	private long	recoverableExp;
 	private long	maxExp;
 
-	private long	curBoostExp = 0;
-	private long	maxBoostExp = 0;
+	private long	curBoostExp	= 0;
+	private long	maxBoostExp	= 0;
 
 	/**
 	 * 

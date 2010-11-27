@@ -30,11 +30,8 @@ import com.aionemu.gameserver.questEngine.QuestEngine;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "QuestScriptData")
-@XmlSeeAlso( {  ReportToData.class,
-				MonsterHuntData.class,
-				ItemCollectingData.class,
-				WorkOrdersData.class,
-				XmlQuestData.class })
+@XmlSeeAlso(
+{ ReportToData.class, MonsterHuntData.class, ItemCollectingData.class, WorkOrdersData.class, XmlQuestData.class })
 public abstract class QuestScriptData
 {
 

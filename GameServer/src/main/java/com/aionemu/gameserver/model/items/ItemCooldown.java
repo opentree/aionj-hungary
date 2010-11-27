@@ -25,12 +25,12 @@ public class ItemCooldown
 	/**
 	 * time of next reuse
 	 */
-	private long time;
+	private long	time;
 	/**
 	 * Use delay in ms
 	 */
-	private int useDelay;
-	
+	private int		useDelay;
+
 	/**
 	 * 
 	 * @param time

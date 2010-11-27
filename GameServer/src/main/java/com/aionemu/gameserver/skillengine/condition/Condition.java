@@ -22,13 +22,12 @@ import javax.xml.bind.annotation.XmlType;
 
 import com.aionemu.gameserver.skillengine.model.Skill;
 
-
 /**
  * @author ATracer
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Condition")
-public abstract class Condition 
+public abstract class Condition
 {
 	/**
 	 *  Verify condition specified in template

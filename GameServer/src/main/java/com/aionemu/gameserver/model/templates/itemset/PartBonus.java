@@ -36,10 +36,10 @@ import com.aionemu.gameserver.model.templates.stats.ModifiersTemplate;
 public class PartBonus
 {
 	@XmlAttribute
-    protected int count;
+	protected int				count;
 	@XmlElement(name = "modifiers", required = false)
 	protected ModifiersTemplate	modifiers;
-	 
+
 	public TreeSet<StatModifier> getModifiers()
 	{
 		return modifiers != null ? modifiers.getModifiers() : null;

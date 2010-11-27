@@ -28,7 +28,8 @@ import com.aionemu.gameserver.spawnengine.SpawnEngine;
  */
 public class CM_OBJECT_SEARCH extends AbstractClientPacket<AionChannelHandler>
 {
-	private int npcId;
+	private int	npcId;
+
 	/**
 	 * Constructs new client packet instance.
 	 * @param opcode
@@ -53,7 +54,7 @@ public class CM_OBJECT_SEARCH extends AbstractClientPacket<AionChannelHandler>
 	 */
 	@Override
 	protected void runImpl()
-	{	
+	{
 		SpawnTemplate spawnTemplate;
 		try
 		{
@@ -64,8 +65,7 @@ public class CM_OBJECT_SEARCH extends AbstractClientPacket<AionChannelHandler>
 			return;
 		}
 
-		sendPacket(new SM_SHOW_NPC_ON_MAP(npcId, spawnTemplate.getMapId(), spawnTemplate.getX(), 
-				spawnTemplate.getY(), spawnTemplate.getZ()));
+		sendPacket(new SM_SHOW_NPC_ON_MAP(npcId, spawnTemplate.getMapId(), spawnTemplate.getX(), spawnTemplate.getY(), spawnTemplate.getZ()));
 
 	}
 }

@@ -41,7 +41,7 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlType(name = "BufEffect")
 public abstract class BufEffect extends EffectTemplate
 {
-	private static final Logger log = Logger.getLogger(BufEffect.class);
+	private static final Logger	log	= Logger.getLogger(BufEffect.class);
 
 	@Override
 	public void applyEffect(Effect effect)
@@ -49,13 +49,12 @@ public abstract class BufEffect extends EffectTemplate
 		effect.addToEffectedController();
 	}
 
-	
 	@Override
 	public void calculate(Effect effect)
 	{
 		effect.addSucessEffect(this);
 	}
-	
+
 	/**
 	 * Will be called from effect controller when effect ends
 	 */
@@ -66,22 +65,23 @@ public abstract class BufEffect extends EffectTemplate
 		int skillId = effect.getSkillId();
 		effected.getGameStats().endEffect(SkillEffectId.getInstance(skillId, effectid, position));
 	}
+
 	/**
 	 * Will be called from effect controller when effect starts
 	 */
 	@Override
 	public void startEffect(Effect effect)
 	{
-		if(change == null)
+		if (change == null)
 			return;
-		
-		Creature effected = effect.getEffected();		
+
+		Creature effected = effect.getEffected();
 		CreatureGameStats<? extends Creature> cgs = effected.getGameStats();
 
 		TreeSet<StatModifier> modifiers = getModifiers(effect);
 		SkillEffectId skillEffectId = getSkillEffectId(effect);
-		
-		if (modifiers.size()>0)
+
+		if (modifiers.size() > 0)
 			cgs.addModifiers(skillEffectId, modifiers);
 	}
 
@@ -95,7 +95,7 @@ public abstract class BufEffect extends EffectTemplate
 		int skillId = effect.getSkillId();
 		return SkillEffectId.getInstance(skillId, effectid, position);
 	}
-	
+
 	/**
 	 * 
 	 * @param effect
@@ -105,12 +105,12 @@ public abstract class BufEffect extends EffectTemplate
 	{
 		int skillId = effect.getSkillId();
 		int skillLvl = effect.getSkillLevel();
-		
-		TreeSet<StatModifier> modifiers = new TreeSet<StatModifier> ();
-		
-		for(Change changeItem : change)
+
+		TreeSet<StatModifier> modifiers = new TreeSet<StatModifier>();
+
+		for (Change changeItem : change)
 		{
-			if(changeItem.getStat() == null)
+			if (changeItem.getStat() == null)
 			{
 				log.warn("Skill stat has wrong name for skillid: " + skillId);
 				continue;
@@ -118,16 +118,16 @@ public abstract class BufEffect extends EffectTemplate
 
 			int valueWithDelta = changeItem.getValue() + changeItem.getDelta() * skillLvl;
 
-			switch(changeItem.getFunc())
+			switch (changeItem.getFunc())
 			{
 				case ADD:
-					modifiers.add(AddModifier.newInstance(changeItem.getStat(),valueWithDelta,true));
+					modifiers.add(AddModifier.newInstance(changeItem.getStat(), valueWithDelta, true));
 					break;
 				case PERCENT:
-					modifiers.add(RateModifier.newInstance(changeItem.getStat(),valueWithDelta,true));
+					modifiers.add(RateModifier.newInstance(changeItem.getStat(), valueWithDelta, true));
 					break;
 				case REPLACE:
-					modifiers.add(SetModifier.newInstance(changeItem.getStat(),valueWithDelta, true));
+					modifiers.add(SetModifier.newInstance(changeItem.getStat(), valueWithDelta, true));
 					break;
 			}
 		}
@@ -138,6 +138,6 @@ public abstract class BufEffect extends EffectTemplate
 	public void onPeriodicAction(Effect effect)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 }

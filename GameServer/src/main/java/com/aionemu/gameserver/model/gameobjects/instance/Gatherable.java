@@ -260,8 +260,8 @@ public class Gatherable extends VisibleObject
 		super.see(object);
 		if (object instanceof Player)
 		{
-			PacketSendUtility.sendPacket((Player)object, new SM_GATHERABLE_INFO(this));
+			PacketSendUtility.sendPacket((Player) object, new SM_GATHERABLE_INFO(this));
 		}
 	}
-	
+
 }

@@ -37,13 +37,15 @@ public class ChangeMpConsumptionEffect extends BufEffect
 	@XmlAttribute
 	protected boolean	percent;
 	@XmlAttribute
-	protected int	value;
+	protected int		value;
+
 	@Override
 	public void startEffect(final Effect effect)
 	{
 		super.startEffect(effect);
-		
-		ActionObserver observer = new ActionObserver(ObserverType.SKILLUSE){
+
+		ActionObserver observer = new ActionObserver(ObserverType.SKILLUSE)
+		{
 
 			@Override
 			public void skilluse(Skill skill)
@@ -51,11 +53,11 @@ public class ChangeMpConsumptionEffect extends BufEffect
 				skill.setChangeMpConsumption(value);
 			}
 		};
-		
+
 		effect.getEffected().getObserveController().addObserver(observer);
 		effect.setActionObserver(observer, position);
 	}
-	
+
 	@Override
 	public void endEffect(Effect effect)
 	{

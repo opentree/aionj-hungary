@@ -133,66 +133,66 @@ import com.aionemu.gameserver.world.zone.ZoneInstance;
  */
 public class Player extends Creature
 {
-	
-	private static final Logger	log	= Logger.getLogger(Player.class);
 
-	private PlayerAppearance	playerAppearance;
-	private PlayerAppearance	savedPlayerAppearance;
-	private LegionMember		legionMember;
-	private MacroList			macroList;
-	private SkillList			skillList;
-	private FriendList			friendList;
-	private BlockList			blockList;
-	private ResponseRequester	requester;
-	private boolean				lookingForGroup	= false;
-	private Storage				inventory;
-	private Storage[]			petBag = new Storage[4];
-	private Storage				regularWarehouse;
-	private Storage				accountWarehouse;
-	private Equipment			equipment;
-	private Mailbox             mailbox;
-	private PrivateStore		store;
-	private PlayerStatsTemplate	playerStatsTemplate;
-	private TitleList			titleList;
-	private PlayerSettings		playerSettings;
-	private QuestStateList		questStateList;
-	private List<Integer>		nearbyQuestList	= new ArrayList<Integer>();
-	private ZoneInstance		zoneInstance;
-	private PlayerGroup			playerGroup;
-	private AbyssRank			abyssRank;
-	private Rates				rates;
-	private RecipeList			recipeList;
-	private int					flyState		= 0;
-	private boolean				isTrading;
-	private long				prisonTimer		= 0;
-	private long				startPrison;
-	private boolean				invul;
-	private FlyController		flyController;
-	private ReviveController	reviveController;
-	private CraftingTask		craftingTask;
-	private int					flightTeleportId;
-	private int					flightDistance;
-	private Summon				summon;
-	private ToyPet				toyPet;
-	private Kisk				kisk;
-	private Prices 				prices;
-	private boolean				isGagged		= false;
-	private boolean				edit_mode 		= false;
-	private boolean			isInShutdownProgress;
+	private static final Logger			log				= Logger.getLogger(Player.class);
+
+	private PlayerAppearance			playerAppearance;
+	private PlayerAppearance			savedPlayerAppearance;
+	private LegionMember				legionMember;
+	private MacroList					macroList;
+	private SkillList					skillList;
+	private FriendList					friendList;
+	private BlockList					blockList;
+	private ResponseRequester			requester;
+	private boolean						lookingForGroup	= false;
+	private Storage						inventory;
+	private Storage[]					petBag			= new Storage[4];
+	private Storage						regularWarehouse;
+	private Storage						accountWarehouse;
+	private Equipment					equipment;
+	private Mailbox						mailbox;
+	private PrivateStore				store;
+	private PlayerStatsTemplate			playerStatsTemplate;
+	private TitleList					titleList;
+	private PlayerSettings				playerSettings;
+	private QuestStateList				questStateList;
+	private List<Integer>				nearbyQuestList	= new ArrayList<Integer>();
+	private ZoneInstance				zoneInstance;
+	private PlayerGroup					playerGroup;
+	private AbyssRank					abyssRank;
+	private Rates						rates;
+	private RecipeList					recipeList;
+	private int							flyState		= 0;
+	private boolean						isTrading;
+	private long						prisonTimer		= 0;
+	private long						startPrison;
+	private boolean						invul;
+	private FlyController				flyController;
+	private ReviveController			reviveController;
+	private CraftingTask				craftingTask;
+	private int							flightTeleportId;
+	private int							flightDistance;
+	private Summon						summon;
+	private ToyPet						toyPet;
+	private Kisk						kisk;
+	private Prices						prices;
+	private boolean						isGagged		= false;
+	private boolean						edit_mode		= false;
+	private boolean						isInShutdownProgress;
 
 	/**
 	 * Zone update mask
 	 */
-	private volatile byte	zoneUpdateMask;
+	private volatile byte				zoneUpdateMask;
 
-	private long lastAttackMilis = 0;
+	private long						lastAttackMilis	= 0;
 	private Map<Integer, ItemCooldown>	itemCoolDowns;
-	
+
 	/**
 	 * Static information for players
 	 */
-	private static final int		CUBE_SPACE				= 9;
-	private static final int		WAREHOUSE_SPACE			= 8;
+	private static final int			CUBE_SPACE		= 9;
+	private static final int			WAREHOUSE_SPACE	= 8;
 
 	/**
 	 * Connection of this Player.
@@ -213,7 +213,7 @@ public class Player extends Creature
 
 	public PlayerCommonData getCommonData()
 	{
-		return (PlayerCommonData)objectTemplate;
+		return (PlayerCommonData) objectTemplate;
 	}
 
 	/**
@@ -234,8 +234,7 @@ public class Player extends Creature
 	{
 		return playerAppearance;
 	}
-	
-	
+
 	public void setPlayerAppearance(PlayerAppearance playerAppearance)
 	{
 		this.playerAppearance = playerAppearance;
@@ -260,7 +259,7 @@ public class Player extends Creature
 	{
 		this.savedPlayerAppearance = savedPlayerAppearance;
 	}
-	
+
 	/**
 	 * Set connection of this player.
 	 * 
@@ -302,7 +301,7 @@ public class Player extends Creature
 		this.skillList = skillList;
 	}
 
-  /**
+	/**
 	 * @return the toyPet
 	 */
 	public ToyPet getToyPet()
@@ -317,7 +316,7 @@ public class Player extends Creature
 	{
 		this.toyPet = toyPet;
 	}
-	
+
 	/**
 	 * Gets this players Friend List
 	 * 
@@ -452,7 +451,7 @@ public class Player extends Creature
 
 	public void setEquipment(Equipment equipment)
 	{
-		
+
 		this.equipment = equipment;
 	}
 
@@ -529,22 +528,22 @@ public class Player extends Creature
 	 */
 	public void setStorage(Storage storage, StorageType storageType)
 	{
-		if(storageType == StorageType.CUBE)
+		if (storageType == StorageType.CUBE)
 		{
 			this.inventory = storage;
 		}
-		
-		if(storageType.getId() > 31 && storageType.getId() < 36)
+
+		if (storageType.getId() > 31 && storageType.getId() < 36)
 		{
-			this.petBag[storageType.getId()-32] = storage;
+			this.petBag[storageType.getId() - 32] = storage;
 		}
 
-		if(storageType == StorageType.REGULAR_WAREHOUSE)
+		if (storageType == StorageType.REGULAR_WAREHOUSE)
 		{
 			this.regularWarehouse = storage;
 		}
 
-		if(storageType == StorageType.ACCOUNT_WAREHOUSE)
+		if (storageType == StorageType.ACCOUNT_WAREHOUSE)
 		{
 			this.accountWarehouse = storage;
 		}
@@ -557,19 +556,19 @@ public class Player extends Creature
 	 */
 	public Storage getStorage(int storageType)
 	{
-		if(storageType == StorageType.REGULAR_WAREHOUSE.getId())
+		if (storageType == StorageType.REGULAR_WAREHOUSE.getId())
 			return regularWarehouse;
 
-		if(storageType == StorageType.ACCOUNT_WAREHOUSE.getId())
+		if (storageType == StorageType.ACCOUNT_WAREHOUSE.getId())
 			return accountWarehouse;
 
-		if(storageType == StorageType.LEGION_WAREHOUSE.getId())
+		if (storageType == StorageType.LEGION_WAREHOUSE.getId())
 			return getLegion().getLegionWarehouse();
-		
-		if(storageType > 31 && storageType < 36)
-			return petBag[storageType-32];
-		
-		if(storageType == StorageType.CUBE.getId())
+
+		if (storageType > 31 && storageType < 36)
+			return petBag[storageType - 32];
+
+		if (storageType == StorageType.CUBE.getId())
 			return inventory;
 		else
 			return null;
@@ -585,33 +584,33 @@ public class Player extends Creature
 		List<Item> dirtyItems = new ArrayList<Item>();
 
 		Storage cubeStorage = getStorage(StorageType.CUBE.getId());
-		if(cubeStorage.getPersistentState() == PersistentState.UPDATE_REQUIRED)
+		if (cubeStorage.getPersistentState() == PersistentState.UPDATE_REQUIRED)
 		{
 			dirtyItems.addAll(cubeStorage.getAllItems());
 			dirtyItems.addAll(cubeStorage.getDeletedItems());
 			cubeStorage.setPersistentState(PersistentState.UPDATED);
 		}
 
-		Storage  regularWhStorage = getStorage(StorageType.REGULAR_WAREHOUSE.getId());
-		if(regularWhStorage.getPersistentState() == PersistentState.UPDATE_REQUIRED)
+		Storage regularWhStorage = getStorage(StorageType.REGULAR_WAREHOUSE.getId());
+		if (regularWhStorage.getPersistentState() == PersistentState.UPDATE_REQUIRED)
 		{
 			dirtyItems.addAll(regularWhStorage.getAllItems());
 			dirtyItems.addAll(regularWhStorage.getDeletedItems());
 			regularWhStorage.setPersistentState(PersistentState.UPDATED);
 		}
 
-		Storage  accountWhStorage = getStorage(StorageType.ACCOUNT_WAREHOUSE.getId());
-		if(accountWhStorage.getPersistentState() == PersistentState.UPDATE_REQUIRED)
+		Storage accountWhStorage = getStorage(StorageType.ACCOUNT_WAREHOUSE.getId());
+		if (accountWhStorage.getPersistentState() == PersistentState.UPDATE_REQUIRED)
 		{
 			dirtyItems.addAll(accountWhStorage.getAllItems());
 			dirtyItems.addAll(accountWhStorage.getDeletedItems());
 			accountWhStorage.setPersistentState(PersistentState.UPDATED);
 		}
-		
+
 		for (int petBagId = 32; petBagId < 36; petBagId++)
 		{
-			Storage  petBag = getStorage(petBagId);
-			if(petBag.getPersistentState() == PersistentState.UPDATE_REQUIRED)
+			Storage petBag = getStorage(petBagId);
+			if (petBag.getPersistentState() == PersistentState.UPDATE_REQUIRED)
 			{
 				dirtyItems.addAll(petBag.getAllItems());
 				dirtyItems.addAll(petBag.getDeletedItems());
@@ -619,8 +618,8 @@ public class Player extends Creature
 			}
 		}
 
-		Equipment  equipment = getEquipment();
-		if(equipment.getPersistentState() == PersistentState.UPDATE_REQUIRED)
+		Equipment equipment = getEquipment();
+		if (equipment.getPersistentState() == PersistentState.UPDATE_REQUIRED)
 		{
 			dirtyItems.addAll(equipment.getEquippedItems());
 			equipment.setPersistentState(PersistentState.UPDATED);
@@ -628,6 +627,7 @@ public class Player extends Creature
 
 		return dirtyItems;
 	}
+
 	/**
 	 *  //TODO probably need to optimize here
 	 *  
@@ -640,10 +640,10 @@ public class Player extends Creature
 		Storage cubeStorage = getStorage(StorageType.CUBE.getId());
 		allItems.addAll(cubeStorage.getAllItems());
 
-		Storage  regularWhStorage = getStorage(StorageType.REGULAR_WAREHOUSE.getId());
+		Storage regularWhStorage = getStorage(StorageType.REGULAR_WAREHOUSE.getId());
 		allItems.addAll(regularWhStorage.getStorageItems());
 
-		Storage  accountWhStorage = getStorage(StorageType.ACCOUNT_WAREHOUSE.getId());
+		Storage accountWhStorage = getStorage(StorageType.ACCOUNT_WAREHOUSE.getId());
 		allItems.addAll(accountWhStorage.getStorageItems());
 
 		for (int petBagId = 32; petBagId < 36; petBagId++)
@@ -651,8 +651,8 @@ public class Player extends Creature
 			Storage petBag = getStorage(petBagId);
 			allItems.addAll(petBag.getAllItems());
 		}
-		
-		Equipment  equipment = getEquipment();
+
+		Equipment equipment = getEquipment();
 		allItems.addAll(equipment.getEquippedItems());
 
 		return allItems;
@@ -771,8 +771,8 @@ public class Player extends Creature
 	public void onLoggedIn()
 	{
 		addTask(TaskId.PLAYER_UPDATE,
-		ThreadPoolManager.getInstance().scheduleAtFixedRate(
-			new GeneralUpdateTask(this), OptionsConfig.PLAYER_GENERAL * 1000, OptionsConfig.PLAYER_GENERAL * 1000));
+				ThreadPoolManager.getInstance().scheduleAtFixedRate(new GeneralUpdateTask(this), OptionsConfig.PLAYER_GENERAL * 1000,
+						OptionsConfig.PLAYER_GENERAL * 1000));
 	}
 
 	/**
@@ -817,7 +817,7 @@ public class Player extends Creature
 	 */
 	public Legion getLegion()
 	{
-		if(legionMember != null)
+		if (legionMember != null)
 			return legionMember.getLegion();
 		else
 			return null;
@@ -838,7 +838,7 @@ public class Player extends Creature
 	 */
 	public boolean hasStore()
 	{
-		if(getStore() != null)
+		if (getStore() != null)
 			return true;
 		return false;
 	}
@@ -886,7 +886,7 @@ public class Player extends Creature
 	 */
 	public Rates getRates()
 	{
-		if(rates == null)
+		if (rates == null)
 			rates = new RegularRates();
 		return rates;
 	}
@@ -969,7 +969,7 @@ public class Player extends Creature
 	{
 		if (prisonTimer < 0)
 			prisonTimer = 0;
-			
+
 		this.prisonTimer = prisonTimer;
 	}
 
@@ -980,7 +980,7 @@ public class Player extends Creature
 	{
 		return prisonTimer;
 	}
-	
+
 	/**
 	 * @return the time in ms of start prison
 	 */
@@ -988,7 +988,7 @@ public class Player extends Creature
 	{
 		return startPrison;
 	}
-	
+
 	/**
 	 * @param start : The time in ms of start prison
 	 */
@@ -1065,7 +1065,7 @@ public class Player extends Creature
 	public int getLastOnline()
 	{
 		Timestamp lastOnline = getCommonData().getLastOnline();
-		if(lastOnline == null || isOnline())
+		if (lastOnline == null || isOnline())
 			return 0;
 
 		return (int) (lastOnline.getTime() / 1000);
@@ -1132,12 +1132,12 @@ public class Player extends Creature
 	{
 		return isInState(CreatureState.FLIGHT_TELEPORT) && flightTeleportId != 0;
 	}
-	
+
 	public boolean isGM()
 	{
 		return getAccessLevel() > 0;
 	}
-	
+
 	/**
 	 * Npc enemies:<br>
 	 * - monsters<br>
@@ -1150,7 +1150,7 @@ public class Player extends Creature
 	{
 		return npc instanceof Monster || npc.isAggressiveTo(this);
 	}
-	
+
 	/**
 	 * Player enemies:<br>
 	 * - different race<br>
@@ -1162,10 +1162,9 @@ public class Player extends Creature
 	@Override
 	public boolean isEnemyPlayer(Player player)
 	{
-		return player.getCommonData().getRace() != getCommonData().getRace()
-			|| isDueling(player);
+		return player.getCommonData().getRace() != getCommonData().getRace() || isDueling(player);
 	}
-	
+
 	/**
 	 * Summon enemies:<br>
 	 * - master not null and master is enemy<br>
@@ -1173,7 +1172,7 @@ public class Player extends Creature
 	@Override
 	public boolean isEnemySummon(Summon summon)
 	{
-		return  summon.getMaster() != null && isEnemyPlayer(summon.getMaster());
+		return summon.getMaster() != null && isEnemyPlayer(summon.getMaster());
 	}
 
 	/**
@@ -1192,7 +1191,7 @@ public class Player extends Creature
 	@Override
 	public TribeClass getTribe()
 	{
-		switch(getCommonData().getRace())
+		switch (getCommonData().getRace())
 		{
 			case ELYOS:
 				return TribeClass.PC;
@@ -1200,7 +1199,7 @@ public class Player extends Creature
 				return TribeClass.PC_DARK;
 		}
 	}
-	
+
 	@Override
 	public boolean isAggressiveTo(Creature creature)
 	{
@@ -1214,9 +1213,9 @@ public class Player extends Creature
 		if (npc instanceof SiegeNpc)
 			return isAggroIconTo(npc);
 		// npc's that are 10 or more levels lower don't get aggro on players
-		if(npc.getLevel() + 10 <= getLevel())
+		if (npc.getLevel() + 10 <= getLevel())
 			return false;
-		
+
 		return isAggroIconTo(npc);
 	}
 
@@ -1228,7 +1227,7 @@ public class Player extends Creature
 	 */
 	public boolean isAggroIconTo(StaticNpc npc)
 	{
-		switch(getCommonData().getRace())
+		switch (getCommonData().getRace())
 		{
 			case ELYOS:
 				if (npc.getObjectTemplate().getTribe().isGuard() && npc.getObjectTemplate().getRace() == Race.ASMODIANS)
@@ -1285,7 +1284,7 @@ public class Player extends Creature
 	{
 		return this.kisk;
 	}
-	
+
 	/**
 	 * 
 	 * @param delayId
@@ -1293,23 +1292,22 @@ public class Player extends Creature
 	 */
 	public boolean isItemUseDisabled(int delayId)
 	{
-		if(itemCoolDowns == null || !itemCoolDowns.containsKey(delayId))
+		if (itemCoolDowns == null || !itemCoolDowns.containsKey(delayId))
 			return false;
-		
+
 		Long coolDown = itemCoolDowns.get(delayId).getReuseTime();
-		if(coolDown == null)
+		if (coolDown == null)
 			return false;
-		
-		
+
 		if (coolDown < System.currentTimeMillis())
 		{
 			itemCoolDowns.remove(delayId);
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * 
 	 * @param itemMask
@@ -1317,12 +1315,12 @@ public class Player extends Creature
 	 */
 	public long getItemCoolDown(int itemMask)
 	{
-		if(itemCoolDowns == null || !itemCoolDowns.containsKey(itemMask))
+		if (itemCoolDowns == null || !itemCoolDowns.containsKey(itemMask))
 			return 0;
-		
+
 		return itemCoolDowns.get(itemMask).getReuseTime();
 	}
-	
+
 	/**
 	 * @return the itemCoolDowns
 	 */
@@ -1339,23 +1337,23 @@ public class Player extends Creature
 	 */
 	public void addItemCoolDown(int delayId, long time, int useDelay)
 	{
-		if(itemCoolDowns == null)
+		if (itemCoolDowns == null)
 			itemCoolDowns = new FastMap<Integer, ItemCooldown>().shared();
-		
+
 		itemCoolDowns.put(delayId, new ItemCooldown(time, useDelay));
 	}
-	
+
 	/**
 	 * 
 	 * @param itemMask
 	 */
 	public void removeItemCoolDown(int itemMask)
 	{
-		if(itemCoolDowns == null)
+		if (itemCoolDowns == null)
 			return;
 		itemCoolDowns.remove(itemMask);
 	}
-	
+
 	/**
 	 * @return prices
 	 */
@@ -1399,10 +1397,9 @@ public class Player extends Creature
 				DAOManager.getDAO(PlayerQuestListDAO.class).store(player);
 				DAOManager.getDAO(PlayerDAO.class).storePlayer(player);
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
-				log.error("Exception during periodic saving of player " + player.getName() + " " 
-					+ ex.getCause() != null ? ex.getCause().getMessage() : "null");
+				log.error("Exception during periodic saving of player " + player.getName() + " " + ex.getCause() != null ? ex.getCause().getMessage() : "null");
 			}
 		}
 	}
@@ -1411,7 +1408,9 @@ public class Player extends Creature
 	{
 		this.playerAlliance = playerAlliance;
 	}
-	private PlayerAlliance playerAlliance;
+
+	private PlayerAlliance	playerAlliance;
+
 	/**
 	 * @return
 	 */
@@ -1427,6 +1426,7 @@ public class Player extends Creature
 	{
 		return (this.playerAlliance != null);
 	}
+
 	/**
 	 * @author IlBuono
 	*/
@@ -1434,7 +1434,7 @@ public class Player extends Creature
 	{
 		this.edit_mode = edit_mode;
 	}
-	
+
 	/**
 	 * @author IlBuono
 	*/
@@ -1442,7 +1442,7 @@ public class Player extends Creature
 	{
 		return edit_mode;
 	}
-	
+
 	/**
 	 * Cancel current skill and remove cooldown
 	 */
@@ -1450,14 +1450,14 @@ public class Player extends Creature
 	public void cancelCurrentSkill()
 	{
 		Skill castingSkill = getCastingSkill();
-		if(castingSkill != null)
+		if (castingSkill != null)
 		{
 			int skillId = castingSkill.getSkillTemplate().getSkillId();
 			removeSkillCoolDown(skillId);
 			setCasting(null);
 			PacketSendUtility.sendPacket(this, new SM_SKILL_CANCEL(this, skillId));
 			PacketSendUtility.sendPacket(this, SM_SYSTEM_MESSAGE.STR_SKILL_CANCELED());
-		}	
+		}
 	}
 
 	/**
@@ -1465,20 +1465,20 @@ public class Player extends Creature
 	 */
 	@Override
 	public void see(VisibleObject object)
-	{   
+	{
 		super.see(object);
-		if(object instanceof Player) 
+		if (object instanceof Player)
 		{
-			Player player = (Player)object;
-			PacketSendUtility.sendPacket(this, new SM_PLAYER_INFO(player, isEnemyPlayer((Player)object)));
-			if(player.getToyPet() != null)
+			Player player = (Player) object;
+			PacketSendUtility.sendPacket(this, new SM_PLAYER_INFO(player, isEnemyPlayer((Player) object)));
+			if (player.getToyPet() != null)
 			{
-			Logger.getLogger(Player.class).debug("Player " + getName() + " sees " + object.getName() + " that has toypet");
-			PacketSendUtility.sendPacket(this, new SM_PET(3, player.getToyPet()));
-			}  
-		{  			
-			getEffectController().sendEffectIconsTo((Player) object);
-		}
+				Logger.getLogger(Player.class).debug("Player " + getName() + " sees " + object.getName() + " that has toypet");
+				PacketSendUtility.sendPacket(this, new SM_PET(3, player.getToyPet()));
+			}
+			{
+				getEffectController().sendEffectIconsTo((Player) object);
+			}
 		}
 		else if (object instanceof Kisk)
 		{
@@ -1492,30 +1492,30 @@ public class Player extends Creature
 			GroupGate groupgate = ((GroupGate) object);
 			PacketSendUtility.sendPacket(this, new SM_NPC_INFO(this, groupgate));
 		}
-		else if(object instanceof Summon)
+		else if (object instanceof Summon)
 		{
-			Summon npc = ((Summon) object);		
+			Summon npc = ((Summon) object);
 			PacketSendUtility.sendPacket(this, new SM_NPC_INFO(npc));
 		}
-		else if(object instanceof StaticNpc )
+		else if (object instanceof StaticNpc)
 		{
 			boolean update = false;
 			StaticNpc npc = ((StaticNpc) object);
 
 			PacketSendUtility.sendPacket(this, new SM_NPC_INFO(npc, this));
 
-			for(int questId : QuestEngine.getInstance().getNpcQuestData(npc.getObjectTemplate().getTemplateId()).getOnQuestStart())
+			for (int questId : QuestEngine.getInstance().getNpcQuestData(npc.getObjectTemplate().getTemplateId()).getOnQuestStart())
 			{
-				if(QuestService.checkStartCondition(new QuestEnv(object, this, questId, 0)))
+				if (QuestService.checkStartCondition(new QuestEnv(object, this, questId, 0)))
 				{
-					if(!getNearbyQuests().contains(questId))
+					if (!getNearbyQuests().contains(questId))
 					{
 						update = true;
 						getNearbyQuests().add(questId);
 					}
 				}
 			}
-			if(update)
+			if (update)
 				updateNearbyQuestList();
 		}
 	}
@@ -1527,21 +1527,21 @@ public class Player extends Creature
 	public void notSee(VisibleObject object, boolean isOutOfRange)
 	{
 		super.notSee(object, isOutOfRange);
-		if(object instanceof Npc)
+		if (object instanceof Npc)
 		{
 			boolean update = false;
-			for(int questId : QuestEngine.getInstance().getNpcQuestData(((Npc) object).getNpcId()).getOnQuestStart())
+			for (int questId : QuestEngine.getInstance().getNpcQuestData(((Npc) object).getNpcId()).getOnQuestStart())
 			{
-				if(QuestService.checkStartCondition(new QuestEnv(object, this, questId, 0)))
+				if (QuestService.checkStartCondition(new QuestEnv(object, this, questId, 0)))
 				{
-					if(getNearbyQuests().contains(questId))
+					if (getNearbyQuests().contains(questId))
 					{
 						update = true;
 						getNearbyQuests().remove(getNearbyQuests().indexOf(questId));
 					}
 				}
 			}
-			if(update)
+			if (update)
 				updateNearbyQuestList();
 		}
 	}
@@ -1549,15 +1549,15 @@ public class Player extends Creature
 	public void updateNearbyQuests()
 	{
 		getNearbyQuests().clear();
-		for(VisibleObject obj : getKnownList().getKnownObjects().values())
+		for (VisibleObject obj : getKnownList().getKnownObjects().values())
 		{
-			if(obj instanceof Npc)
+			if (obj instanceof Npc)
 			{
-				for(int questId : QuestEngine.getInstance().getNpcQuestData(((Npc) obj).getNpcId()).getOnQuestStart())
+				for (int questId : QuestEngine.getInstance().getNpcQuestData(((Npc) obj).getNpcId()).getOnQuestStart())
 				{
-					if(QuestService.checkStartCondition(new QuestEnv(obj, this, questId, 0)))
+					if (QuestService.checkStartCondition(new QuestEnv(obj, this, questId, 0)))
 					{
-						if(!getNearbyQuests().contains(questId))
+						if (!getNearbyQuests().contains(questId))
 						{
 							getNearbyQuests().add(questId);
 						}
@@ -1577,7 +1577,7 @@ public class Player extends Creature
 	{
 		QuestEngine.getInstance().onEnterZone(new QuestEnv(null, this, 0, 0), zoneInstance.getTemplate().getName());
 		WorldType worldType = World.getInstance().getWorldMap(getWorldId()).getWorldType();
-		if(worldType == WorldType.ABYSS)
+		if (worldType == WorldType.ABYSS)
 			checkEnemyAbyssBase();
 	}
 
@@ -1587,14 +1587,14 @@ public class Player extends Creature
 	 */
 	public void checkEnemyAbyssBase()
 	{
-		if(getLifeStats().isAlreadyDead() || isGM())
+		if (getLifeStats().isAlreadyDead() || isGM())
 			return;
-		if ( (getCommonData().getRace() == Race.ELYOS) && (MathUtil.isInSphere(this,878.6906f,2950.4717f,1646.4772f,290)) )
+		if ((getCommonData().getRace() == Race.ELYOS) && (MathUtil.isInSphere(this, 878.6906f, 2950.4717f, 1646.4772f, 290)))
 			die();
-		else if ( (getCommonData().getRace() == Race.ASMODIANS) && (MathUtil.isInSphere(this,2979.622f,906.5588f,1540.2731f,290)) )
+		else if ((getCommonData().getRace() == Race.ASMODIANS) && (MathUtil.isInSphere(this, 2979.622f, 906.5588f, 1540.2731f, 290)))
 			die();
 	}
-	
+
 	/**
 	 * Will be called by ZoneManager when player leaves specific zone
 	 * 
@@ -1621,68 +1621,64 @@ public class Player extends Creature
 	@Override
 	public void onDie(Creature lastAttacker)
 	{
-		
+
 		Creature master = null;
-		if(lastAttacker != null && lastAttacker instanceof ISummoned)
-			master = ((ISummoned)lastAttacker).getMaster();
-		
-		if(master instanceof Player)
+		if (lastAttacker != null && lastAttacker instanceof ISummoned)
+			master = ((ISummoned) lastAttacker).getMaster();
+
+		if (master instanceof Player)
 		{
-			if(isDueling((Player) master))
+			if (isDueling((Player) master))
 			{
 				DuelService.getInstance().onDie(this);
 				return;
 			}
 		}
-		
+
 		this.doReward();
-		
+
 		// Effects removed with super.onDie()
 		boolean hasSelfRezEffect = getReviveController().checkForSelfRezEffect(this);
-		
+
 		super.onDie(lastAttacker);
-		
-		if(master instanceof Npc || master == this)
+
+		if (master instanceof Npc || master == this)
 		{
-			if(getLevel() > 4)
+			if (getLevel() > 4)
 				getCommonData().calculateExpLoss();
 		}
-		
+
 		/**
 		 * Release summon
 		 */
 		Summon summon = getSummon();
-		if(summon != null)
+		if (summon != null)
 			summon.release(UnsummonType.UNSPECIFIED);
 
-		PacketSendUtility.broadcastPacket(this, new SM_EMOTION(this, EmotionType.DIE, 0, lastAttacker == null ? 0 :
-			lastAttacker.getObjectId()), true);
-		
+		PacketSendUtility.broadcastPacket(this, new SM_EMOTION(this, EmotionType.DIE, 0, lastAttacker == null ? 0 : lastAttacker.getObjectId()), true);
+
 		// SM_DIE Packet
 		int kiskTimeRemaining = (getKisk() != null ? getKisk().getRemainingLifetime() : 0);
 		boolean hasSelfRezItem = getReviveController().checkForSelfRezItem(this);
 		PacketSendUtility.sendPacket(this, new SM_DIE(hasSelfRezEffect, hasSelfRezItem, kiskTimeRemaining));
-		
+
 		PacketSendUtility.sendPacket(this, SM_SYSTEM_MESSAGE.DIE);
 		QuestEngine.getInstance().onDie(new QuestEnv(null, this, 0, 0));
 	}
-
-
-
 
 	@Override
 	public void doReward()
 	{
 		PvpService.getInstance().doReward(this);
-		
+
 		// DP reward 
 		// TODO: Figure out what DP reward should be for PvP
 		//int currentDp = winner.getCommonData().getDp();
 		//int dpReward = StatFunctions.calculateSoloDPReward(winner, getOwner());
 		//winner.getCommonData().setDp(dpReward + currentDp);
-		
+
 	}
-	
+
 	@Override
 	public void onRespawn()
 	{
@@ -1693,20 +1689,20 @@ public class Player extends Creature
 	@Override
 	public void attackTarget(Creature target)
 	{
-		
+
 		/**
 		 * Check all prerequisites
 		 */
-		if(target == null || !canAttack())
+		if (target == null || !canAttack())
 			return;
 
 		PlayerGameStats gameStats = getGameStats();
 
 		// check player attack Z distance
-		if(Math.abs(getZ() - target.getZ()) > 6)
+		if (Math.abs(getZ() - target.getZ()) > 6)
 			return;
 
-		if(!RestrictionsManager.canAttack(this, target))
+		if (!RestrictionsManager.canAttack(this, target))
 			return;
 
 		int attackSpeed = gameStats.getCurrentStat(StatEnum.ATTACK_SPEED);
@@ -1724,22 +1720,21 @@ public class Player extends Creature
 		 * notify attack observers
 		 */
 		super.attackTarget(target);
-		
+
 		/**
 		 * Calculate and apply damage
 		 */
 		List<AttackResult> attackResult = AttackUtil.calculateAttackResult(this, target);
 
 		int damage = 0;
-		for(AttackResult result : attackResult)
+		for (AttackResult result : attackResult)
 		{
 			damage += result.getDamage();
 		}
 
 		long time = System.currentTimeMillis();
 		int attackType = 0; // TODO investigate attack types
-		PacketSendUtility.broadcastPacket(this, new SM_ATTACK(this, target, gameStats.getAttackCounter(),
-			(int) time, attackType, attackResult), true);
+		PacketSendUtility.broadcastPacket(this, new SM_ATTACK(this, target, gameStats.getAttackCounter(), (int) time, attackType, attackResult), true);
 
 		target.onAttack(this, damage);
 
@@ -1749,18 +1744,18 @@ public class Player extends Creature
 	@Override
 	public void onAttack(Creature creature, int skillId, TYPE type, int damage)
 	{
-		if(getLifeStats().isAlreadyDead())
+		if (getLifeStats().isAlreadyDead())
 			return;
-		
+
 		// Reduce the damage to exactly what is required to ensure death.
 		// - Important that we don't include 7k worth of damage when the
 		//   creature only has 100 hp remaining. (For AggroList dmg count.)
 		if (damage > getLifeStats().getCurrentHp())
 			damage = getLifeStats().getCurrentHp() + 1;
-		
+
 		super.onAttack(creature, skillId, type, damage);
 
-		if(isInvul())
+		if (isInvul())
 			damage = 0;
 
 		getLifeStats().reduceHp(damage, creature);
@@ -1776,19 +1771,19 @@ public class Player extends Creature
 	 */
 	public void useSkill(int skillId, int targetType, float x, float y, float z)
 	{
-		
+
 		Skill skill = SkillEngine.getInstance().getSkillFor(this, skillId, getTarget());
-		
-		if(skill != null)
+
+		if (skill != null)
 		{
 			skill.setTargetType(targetType, x, y, z);
-			if(!RestrictionsManager.canUseSkill(this, skill))
+			if (!RestrictionsManager.canUseSkill(this, skill))
 				return;
 
 			skill.useSkill();
 		}
 	}
-	
+
 	@Override
 	public void onMove()
 	{
@@ -1814,10 +1809,10 @@ public class Player extends Creature
 	 */
 	public void updatePassiveStats()
 	{
-		for(SkillListEntry skillEntry : getSkillList().getAllSkills())
+		for (SkillListEntry skillEntry : getSkillList().getAllSkills())
 		{
 			Skill skill = SkillEngine.getInstance().getSkillFor(this, skillEntry.getSkillId(), getTarget());
-			if(skill != null && skill.isPassive())
+			if (skill != null && skill.isPassive())
 			{
 				skill.useSkill();
 			}
@@ -1828,16 +1823,14 @@ public class Player extends Creature
 	public void onRestore(HealType healType, int value)
 	{
 		super.onRestore(healType, value);
-		switch(healType)
+		switch (healType)
 		{
 			case DP:
 				getCommonData().addDp(value);
 				break;
 		}
 	}
-	
-	
-	
+
 	/**
 	 * 
 	 * @param player
@@ -1874,7 +1867,7 @@ public class Player extends Creature
 	@Override
 	public void onDialogSelect(int dialogId, Player player, int questId)
 	{
-		switch(dialogId)
+		switch (dialogId)
 		{
 			case 2:
 				PacketSendUtility.sendPacket(player, new SM_PRIVATE_STORE(getStore()));
@@ -1890,20 +1883,20 @@ public class Player extends Creature
 
 		PlayerStatsTemplate statsTemplate = DataManager.PLAYER_STATS_DATA.getTemplate(this);
 		setPlayerStatsTemplate(statsTemplate);
-		
+
 		// update stats after setting new template
 		getGameStats().doLevelUpgrade();
 		getLifeStats().synchronizeWithMaxStats();
 		getLifeStats().updateCurrentStats();
-		
+
 		PacketSendUtility.broadcastPacket(this, new SM_LEVEL_UPDATE(getObjectId(), 0, level), true);
 
 		QuestEngine.getInstance().onLvlUp(new QuestEnv(null, this, 0, 0));
 		updateNearbyQuests();
-		
+
 		PacketSendUtility.sendPacket(this, new SM_STATS_INFO(this));
 
-		if(level >= 10 && getSkillList().getSkillEntry(30001) != null)
+		if (level >= 10 && getSkillList().getSkillEntry(30001) != null)
 		{
 			int skillLevel = getSkillList().getSkillLevel(30001);
 			getSkillList().removeSkill(this, 30001);
@@ -1920,7 +1913,7 @@ public class Player extends Creature
 			getPlayerGroup().updateGroupUIToEvent(this, GroupEvent.UPDATE);
 		if (isInAlliance())
 			AllianceService.getInstance().updateAllianceUIToEvent(this, PlayerAllianceEvent.UPDATE);
-		if(isLegionMember())
+		if (isLegionMember())
 			LegionService.getInstance().updateMemberInfo(this);
 	}
 
@@ -1932,7 +1925,8 @@ public class Player extends Creature
 	{
 		setVisualState(CreatureVisualState.BLINKING);
 		PacketSendUtility.broadcastPacket(this, new SM_PLAYER_STATE(this), true);
-		Future<?> task = ThreadPoolManager.getInstance().schedule(new Runnable(){
+		Future<?> task = ThreadPoolManager.getInstance().schedule(new Runnable()
+		{
 
 			@Override
 			public void run()
@@ -1949,7 +1943,7 @@ public class Player extends Creature
 	public void stopProtectionActiveTask()
 	{
 		cancelTask(TaskId.PROTECTION_ACTIVE);
-		if(isSpawned())
+		if (isSpawned())
 		{
 			unsetVisualState(CreatureVisualState.BLINKING);
 			PacketSendUtility.broadcastPacket(this, new SM_PLAYER_STATE(this), true);
@@ -2012,23 +2006,23 @@ public class Player extends Creature
 	{
 		World world = World.getInstance();
 		float z = getZ();
-		
-		if(getLifeStats().isAlreadyDead())
+
+		if (getLifeStats().isAlreadyDead())
 			return;
-		
-		if(z < world.getWorldMap(getWorldId()).getDeathLevel())
+
+		if (z < world.getWorldMap(getWorldId()).getDeathLevel())
 		{
 			die();
 			return;
 		}
-		
+
 		ZoneInstance currentZone = getZoneInstance();
-		if(currentZone != null && currentZone.isBreath())
+		if (currentZone != null && currentZone.isBreath())
 			return;
-		
+
 		//TODO need fix character height
 		float playerheight = getPlayerAppearance().getHeight() * 1.6f;
-		if(z < world.getWorldMap(getWorldId()).getWaterLevel() - playerheight)
+		if (z < world.getWorldMap(getWorldId()).getWaterLevel() - playerheight)
 			ZoneService.getInstance().startDrowning(this);
 		else
 			ZoneService.getInstance().stopDrowning(this);
@@ -2043,7 +2037,7 @@ public class Player extends Creature
 		PacketSendUtility.broadcastPacket(summon, new SM_EMOTION(summon, EmotionType.START_EMOTE2));
 		PacketSendUtility.broadcastPacket(summon, new SM_SUMMON_UPDATE(summon));
 	}
-	
+
 	public boolean addItems(int itemId, int count)
 	{
 		return ItemService.addItems(this, Collections.singletonList(new QuestItems(itemId, count)));

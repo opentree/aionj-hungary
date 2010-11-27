@@ -33,17 +33,17 @@ import com.aionemu.gameserver.skillengine.model.Skill;
 public class HpUseAction extends Action
 {
 	@XmlAttribute(required = true)
-    protected int value;
-	
+	protected int	value;
+
 	@XmlAttribute
-	protected int delta;
+	protected int	delta;
 
 	@Override
 	public void act(Skill skill)
 	{
 		Creature effector = skill.getEffector();
 		int valueWithDelta = value + delta * skill.getSkillLevel();
-		
+
 		effector.getLifeStats().reduceHp(valueWithDelta, null);
 	}
 

@@ -75,7 +75,7 @@ public class CM_MACRO_CREATE extends AbstractClientPacket<AionChannelHandler>
 		log.debug(String.format("Created Macro #%d: %s", macroPosition, macroXML));
 
 		PlayerService.addMacro(getChannelHandler().getActivePlayer(), macroPosition, macroXML);
-		
+
 		sendPacket(SM_MACRO_RESULT.SM_MACRO_CREATED);
 	}
 }

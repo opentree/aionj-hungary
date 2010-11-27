@@ -33,8 +33,8 @@ import com.aionemu.gameserver.skillengine.model.SkillTargetSlot;
 public class DispelBuffEffect extends EffectTemplate
 {
 	@XmlAttribute
-	protected int count;
-	
+	protected int	count;
+
 	@Override
 	public void applyEffect(Effect effect)
 	{

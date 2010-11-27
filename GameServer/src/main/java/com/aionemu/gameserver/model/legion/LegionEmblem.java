@@ -143,15 +143,15 @@ public class LegionEmblem
 	{
 		byte[] newData = new byte[uploadedSize];
 		int i = 0;
-		if(uploadData.length > 0)
+		if (uploadData.length > 0)
 		{
-			for(byte dataByte : uploadData)
+			for (byte dataByte : uploadData)
 			{
 				newData[i] = dataByte;
 				i++;
 			}
 		}
-		for(byte dataByte : data)
+		for (byte dataByte : data)
 		{
 			newData[i] = dataByte;
 			i++;
@@ -192,17 +192,17 @@ public class LegionEmblem
 		this.isUploading = false;
 		this.uploadedSize = 0;
 	}
-	
+
 	/**
 	 * 
 	 * @param persistentState
 	 */
 	public void setPersistentState(PersistentState persistentState)
 	{
-		switch(persistentState)
+		switch (persistentState)
 		{
 			case UPDATE_REQUIRED:
-				if(this.persistentState == PersistentState.NEW)
+				if (this.persistentState == PersistentState.NEW)
 					break;
 			default:
 				this.persistentState = persistentState;
@@ -216,5 +216,5 @@ public class LegionEmblem
 	{
 		return persistentState;
 	}
-	
+
 }

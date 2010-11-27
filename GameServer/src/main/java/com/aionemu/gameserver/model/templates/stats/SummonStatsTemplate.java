@@ -30,9 +30,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class SummonStatsTemplate extends StatsTemplate
 {
 	@XmlAttribute(name = "pdefense")
-	private int pdefense;
+	private int	pdefense;
 	@XmlAttribute(name = "mresist")
-	private int mresist;
+	private int	mresist;
+
 	/**
 	 * @return the pdefense
 	 */
@@ -40,6 +41,7 @@ public class SummonStatsTemplate extends StatsTemplate
 	{
 		return pdefense;
 	}
+
 	/**
 	 * @return the mresist
 	 */
@@ -47,6 +49,5 @@ public class SummonStatsTemplate extends StatsTemplate
 	{
 		return mresist;
 	}
-	
-	
+
 }

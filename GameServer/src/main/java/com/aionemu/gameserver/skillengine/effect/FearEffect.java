@@ -46,7 +46,7 @@ public class FearEffect extends EffectTemplate
 	@Override
 	public void calculate(Effect effect)
 	{
-		if (calculateEffectResistRate(effect, StatEnum.FEAR_RESISTANCE)) 
+		if (calculateEffectResistRate(effect, StatEnum.FEAR_RESISTANCE))
 			effect.addSucessEffect(this);
 	}
 
@@ -59,7 +59,7 @@ public class FearEffect extends EffectTemplate
 		PacketSendUtility.broadcastPacketAndReceive(obj, new SM_TARGET_IMMOBILIZE(obj));
 		obj.stopMoving();
 	}
-	
+
 	@Override
 	public void endEffect(Effect effect)
 	{

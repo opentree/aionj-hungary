@@ -49,13 +49,13 @@ public class World
 	/**
 	 * Logger for this class.
 	 */
-	private static final Logger				log			= Logger.getLogger(World.class);
+	private static final Logger					log	= Logger.getLogger(World.class);
 
 	/**
 	 * Map<Name,Player>
 	 */
-	private final FastMap<String, Player>	playersByName;
-	
+	private final FastMap<String, Player>		playersByName;
+
 	/**
 	 * Container with all AionObjects in the world [ie Players, Npcs etc]
 	 */
@@ -68,23 +68,22 @@ public class World
 	/**
 	 * World maps supported by server.
 	 */
-	private final Map<Integer, WorldMap>	worldMaps;
-
+	private final Map<Integer, WorldMap>		worldMaps;
 
 	/**
 	 * Constructor.
 	 */
 	private World()
 	{
-		playersByName	= new FastMap<String, Player>(NetworkConfig.MAX_ONLINE_PLAYERS).shared();
-		allObjects	= new FastMap<Integer, AionObject>(100000).shared();
-		allSiegeNpcs= new FastMap<Integer, SiegeNpc>().shared();
-		worldMaps	= new FastMap<Integer, WorldMap>().shared();
-		for(WorldMapTemplate template : DataManager.WORLD_MAPS_DATA)
+		playersByName = new FastMap<String, Player>(NetworkConfig.MAX_ONLINE_PLAYERS).shared();
+		allObjects = new FastMap<Integer, AionObject>(100000).shared();
+		allSiegeNpcs = new FastMap<Integer, SiegeNpc>().shared();
+		worldMaps = new FastMap<Integer, WorldMap>().shared();
+		for (WorldMapTemplate template : DataManager.WORLD_MAPS_DATA)
 		{
 			worldMaps.put(template.getMapId(), new WorldMap(template, this));
 		}
-		log.info("World: "+worldMaps.size()+" worlds map created.");
+		log.info("World: " + worldMaps.size() + " worlds map created.");
 	}
 
 	public static final World getInstance()
@@ -99,13 +98,13 @@ public class World
 	 */
 	public void storeObject(AionObject object)
 	{
-		if(allObjects.put(object.getObjectId(), object) != null)
+		if (allObjects.put(object.getObjectId(), object) != null)
 			throw new DuplicateAionObjectException();
 
-		if(object instanceof Player)
-			playersByName.put(object.getName().toLowerCase(), (Player)object);
-		
-		if(object instanceof SiegeNpc)
+		if (object instanceof Player)
+			playersByName.put(object.getName().toLowerCase(), (Player) object);
+
+		if (object instanceof SiegeNpc)
 			allSiegeNpcs.put(object.getObjectId(), (SiegeNpc) object);
 	}
 
@@ -120,9 +119,9 @@ public class World
 		allObjects.remove(object.getObjectId());
 		if (object instanceof SiegeNpc)
 			allSiegeNpcs.remove(object.getObjectId());
-		if(object instanceof Player)
+		if (object instanceof Player)
 			playersByName.remove(object.getName().toLowerCase());
-		if(object instanceof Npc)
+		if (object instanceof Npc)
 			IDFactory.getInstance().releaseId(object.getObjectId());
 	}
 
@@ -135,7 +134,7 @@ public class World
 	{
 		return allObjects.values();
 	}
-	
+
 	public Collection<SiegeNpc> getSiegeNpcs()
 	{
 		return allSiegeNpcs.values();
@@ -164,7 +163,7 @@ public class World
 	{
 		AionObject object = allObjects.get(objectId);
 		if (object instanceof Player)
-			return (Player)allObjects.get(objectId);
+			return (Player) allObjects.get(objectId);
 		return null;
 	}
 
@@ -193,7 +192,7 @@ public class World
 		/**
 		 * Check if world map exist
 		 */
-		if(map == null)
+		if (map == null)
 			throw new WorldMapNotExistException("Map: " + id + " not exist!");
 		return map;
 	}
@@ -212,7 +211,7 @@ public class World
 	{
 		this.updatePosition(object, newX, newY, newZ, newHeading, true);
 	}
-	
+
 	/**
 	 *  
 	 * @param object
@@ -224,28 +223,28 @@ public class World
 	public void updatePosition(VisibleObject object, float newX, float newY, float newZ, byte newHeading, boolean updateKnownList)
 	{
 		//prevent updating object position in despawned state
-		if(!object.isSpawned())
+		if (!object.isSpawned())
 			return;
-		
+
 		object.getPosition().setXYZH(newX, newY, newZ, newHeading);
 
 		MapRegion oldRegion = object.getActiveRegion();
-		if(oldRegion == null)
+		if (oldRegion == null)
 		{
 			log.warn(String.format("CHECKPOINT: oldregion is null, object coordinates - %d %d %d", object.getX(), object.getY(), object.getY()));
 			return;
 		}
-		
+
 		MapRegion newRegion = oldRegion.getParent().getRegion(object);
 
-		if(newRegion != oldRegion)
+		if (newRegion != oldRegion)
 		{
 			oldRegion.remove(object);
 			newRegion.add(object);
 			object.getPosition().setMapRegion(newRegion);
 		}
-		
-		if(updateKnownList)
+
+		if (updateKnownList)
 		{
 			object.getKnownList().updateKnownList();
 		}
@@ -266,14 +265,14 @@ public class World
 	 */
 	public void setPosition(VisibleObject object, int mapId, float x, float y, float z, byte heading)
 	{
-		int instanceId = 1;	
-		if(object.getWorldId() == mapId)
+		int instanceId = 1;
+		if (object.getWorldId() == mapId)
 		{
 			instanceId = object.getInstanceId();
 		}
 		this.setPosition(object, mapId, instanceId, x, y, z, heading);
 	}
-	
+
 	/**
 	 * 
 	 * @param object
@@ -286,13 +285,12 @@ public class World
 	 */
 	public void setPosition(VisibleObject object, int mapId, int instance, float x, float y, float z, byte heading)
 	{
-		if(object.isSpawned())
+		if (object.isSpawned())
 			despawn(object);
 		object.getPosition().setXYZH(x, y, z, heading);
 		object.getPosition().setMapId(mapId);
 		object.getPosition().setMapRegion(getWorldMap(mapId).getWorldMapInstanceById(instance).getRegion(object));
 	}
-		
 
 	/**
 	 * Creates and return {@link WorldPosition} object, representing position with given parameters.
@@ -323,7 +321,7 @@ public class World
 	 */
 	public void spawn(VisibleObject object)
 	{
-		if(object.isSpawned())
+		if (object.isSpawned())
 			throw new AlreadySpawnedException();
 
 		object.getPosition().setIsSpawned(true);
@@ -342,19 +340,19 @@ public class World
 	 */
 	public void despawn(VisibleObject object)
 	{
-		if(object.getActiveRegion() != null)
+		if (object.getActiveRegion() != null)
 		{ // can be null if an instance gets deleted?
-			if(object.getActiveRegion().getParent() != null)
+			if (object.getActiveRegion().getParent() != null)
 				object.getActiveRegion().getParent().removeObject(object);
 			object.getActiveRegion().remove(object);
 		}
 		object.getPosition().setIsSpawned(false);
 		object.getKnownList().clearKnownList();
 	}
-	
+
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
-		protected static final World instance = new World();
+		protected static final World	instance	= new World();
 	}
 }

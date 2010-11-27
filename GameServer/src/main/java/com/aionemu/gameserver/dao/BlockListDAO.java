@@ -33,7 +33,7 @@ public abstract class BlockListDAO implements DAO
 	 * @return BlockList
 	 */
 	public abstract BlockList load(Player player);
-	
+
 	/**
 	 * Adds the given object id to the list of blocked players for the given player
 	 * @param playerObjId ID of player to edit the blocklist of
@@ -42,7 +42,6 @@ public abstract class BlockListDAO implements DAO
 	 */
 	public abstract boolean addBlockedUser(int playerObjId, int objIdToBlock, String reason);
 
-	
 	/**
 	 * Deletes the given object id from the list of blocked players for the given player
 	 * @param playerObjId ID of player to edit the blocklist of
@@ -50,7 +49,7 @@ public abstract class BlockListDAO implements DAO
 	 * @return Success
 	 */
 	public abstract boolean delBlockedUser(int playerObjId, int objIdToDelete);
-	
+
 	/**
 	 * Sets the reason for blocking a player
 	 * @param playerObjId
@@ -62,7 +61,7 @@ public abstract class BlockListDAO implements DAO
 	 * @return true or false
 	 */
 	public abstract boolean setReason(int playerObjId, int blockedObjId, String reason);
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

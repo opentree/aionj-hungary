@@ -70,15 +70,15 @@ public class CM_TARGET_SELECT extends AbstractClientPacket<AionChannelHandler>
 	protected void runImpl()
 	{
 		Player player = getChannelHandler().getActivePlayer();
-		if(player == null)
+		if (player == null)
 			return;
 
 		AionObject obj = World.getInstance().findAionObject(targetObjectId);
-		if(obj != null && obj instanceof VisibleObject)
+		if (obj != null && obj instanceof VisibleObject)
 		{
-			if(type == 1)
+			if (type == 1)
 			{
-				if(((VisibleObject) obj).getTarget() == null)
+				if (((VisibleObject) obj).getTarget() == null)
 					return;
 				player.setTarget(((VisibleObject) obj).getTarget());
 			}

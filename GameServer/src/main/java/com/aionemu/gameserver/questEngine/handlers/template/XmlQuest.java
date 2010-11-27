@@ -36,7 +36,7 @@ import com.aionemu.gameserver.questEngine.model.QuestStatus;
 public class XmlQuest extends QuestHandler
 {
 
-	private final XmlQuestData xmlQuestData;
+	private final XmlQuestData	xmlQuestData;
 
 	public XmlQuest(XmlQuestData xmlQuestData)
 	{
@@ -54,7 +54,7 @@ public class XmlQuest extends QuestHandler
 		}
 		if (xmlQuestData.getEndNpcId() != null)
 			qe.setNpcQuestData(xmlQuestData.getEndNpcId()).addOnTalkEvent(getQuestId());
-		
+
 		for (OnTalkEvent talkEvent : xmlQuestData.getOnTalkEvent())
 			for (int npcId : talkEvent.getIds())
 				qe.setNpcQuestData(npcId).addOnTalkEvent(getQuestId());
@@ -73,24 +73,25 @@ public class XmlQuest extends QuestHandler
 			if (talkEvent.operate(env))
 				return true;
 		}
-		
+
 		final Player player = env.getPlayer();
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		QuestState qs = player.getQuestStateList().getQuestState(getQuestId());
-		QuestTemplate template = DataManager.QUEST_DATA.getQuestById(getQuestId());		
-		if(qs == null || qs.getStatus() == QuestStatus.NONE || (qs.getStatus() == QuestStatus.COMPLETE && (qs.getCompliteCount() <= template.getMaxRepeatCount())))
+		QuestTemplate template = DataManager.QUEST_DATA.getQuestById(getQuestId());
+		if (qs == null || qs.getStatus() == QuestStatus.NONE
+				|| (qs.getStatus() == QuestStatus.COMPLETE && (qs.getCompliteCount() <= template.getMaxRepeatCount())))
 		{
-			if(targetId == xmlQuestData.getStartNpcId())
+			if (targetId == xmlQuestData.getStartNpcId())
 			{
-				if(env.getDialogId() == 25)
+				if (env.getDialogId() == 25)
 					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
 				else
 					return defaultQuestStartDialog(env);
 			}
 		}
-		else if(qs.getStatus() == QuestStatus.REWARD && targetId == xmlQuestData.getEndNpcId())
+		else if (qs.getStatus() == QuestStatus.REWARD && targetId == xmlQuestData.getEndNpcId())
 		{
 			return defaultQuestEndDialog(env);
 		}

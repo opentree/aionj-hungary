@@ -30,19 +30,19 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_ATTACK extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int	attackno;
-	private int	time;
-	private int	type;
-	private List<AttackResult> attackList;
-	private Creature attacker;
-	private Creature target;
+	private int					attackno;
+	private int					time;
+	private int					type;
+	private List<AttackResult>	attackList;
+	private Creature			attacker;
+	private Creature			target;
 
 	public SM_ATTACK(Creature attacker, Creature target, int attackno, int time, int type, List<AttackResult> attackList)
 	{
 		this.attacker = attacker;
 		this.target = target;
 		this.attackno = attackno;// empty
-		this.time = time ;// empty
+		this.time = time;// empty
 		this.type = type;// empty
 		this.attackList = attackList;
 	}
@@ -54,9 +54,9 @@ public class SM_ATTACK extends AbstractAionServerPacket<AionChannelHandler>
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(attacker.getObjectId());
-		writeC( attackno); // unknown
+		writeC(attackno); // unknown
 		writeH(time); // unknown
-		writeC( type); // 0, 1, 2
+		writeC(type); // 0, 1, 2
 		writeD(target.getObjectId());
 
 		int attackerMaxHp = attacker.getLifeStats().getMaxHp();
@@ -64,26 +64,27 @@ public class SM_ATTACK extends AbstractAionServerPacket<AionChannelHandler>
 		int targetMaxHp = target.getLifeStats().getMaxHp();
 		int targetCurrHp = target.getLifeStats().getCurrentHp();
 
-		writeC( 100 * targetCurrHp / targetMaxHp); // target %hp
-		writeC( 100 * attackerCurrHp / attackerMaxHp); // attacker %hp
+		writeC(100 * targetCurrHp / targetMaxHp); // target %hp
+		writeC(100 * attackerCurrHp / attackerMaxHp); // attacker %hp
 
 		// TODO refactor attack controller
-		switch(attackList.get(0).getAttackStatus().getId())    // Counter skills
+		switch (attackList.get(0).getAttackStatus().getId())
+		// Counter skills
 		{
-			case -60:  // case CRITICAL_BLOCK
-			case 4:  // case BLOCK
+			case -60: // case CRITICAL_BLOCK
+			case 4: // case BLOCK
 				writeH(32);
 				break;
-			case -62:  // case CRITICAL_PARRY
-			case 2:  // case PARRY
+			case -62: // case CRITICAL_PARRY
+			case 2: // case PARRY
 				writeH(64);
 				break;
-			case -64:  // case CRITICAL_DODGE
-			case 0:  // case DODGE
+			case -64: // case CRITICAL_DODGE
+			case 0: // case DODGE
 				writeH(128);
 				break;
-			case -58:  // case CRITICAL_RESIST
-			case 6:  // case RESIST
+			case -58: // case CRITICAL_RESIST
+			case 6: // case RESIST
 				writeH(256); // need more info becuz sometimes 0
 				break;
 			default:
@@ -91,14 +92,14 @@ public class SM_ATTACK extends AbstractAionServerPacket<AionChannelHandler>
 				break;
 		}
 
-		writeC( attackList.size());
+		writeC(attackList.size());
 		for (AttackResult attack : attackList)
 		{
 			writeD(attack.getDamage());
-			writeC( attack.getAttackStatus().getId());
-			writeC( attack.getShieldType());
+			writeC(attack.getAttackStatus().getId());
+			writeC(attack.getShieldType());
 
-			switch(attack.getShieldType())
+			switch (attack.getShieldType())
 			{
 				case 1: // reflect shield
 					writeD(0x00);
@@ -112,6 +113,6 @@ public class SM_ATTACK extends AbstractAionServerPacket<AionChannelHandler>
 					break;
 			}
 		}
-		writeC( 0);
+		writeC(0);
 	}
 }

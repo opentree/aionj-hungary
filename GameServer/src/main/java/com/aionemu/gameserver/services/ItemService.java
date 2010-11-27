@@ -68,14 +68,14 @@ public class ItemService
 	public static Item newItem(int itemId, long count)
 	{
 		ItemTemplate itemTemplate = DataManager.ITEM_DATA.getItemTemplate(itemId);
-		if(itemTemplate == null)
+		if (itemTemplate == null)
 		{
 			log.error("Item was not populated correctly. Item template is missing for item id: " + itemId);
 			return null;
 		}
 
 		int maxStackCount = itemTemplate.getMaxStackCount();
-		if(count > maxStackCount && maxStackCount != 0)
+		if (count > maxStackCount && maxStackCount != 0)
 		{
 			count = maxStackCount;
 		}
@@ -92,7 +92,7 @@ public class ItemService
 	 */
 	public static void loadItemStones(List<Item> itemList)
 	{
-		if(itemList == null)
+		if (itemList == null)
 			return;
 		DAOManager.getDAO(ItemStoneListDAO.class).load(itemList);
 	}
@@ -107,28 +107,26 @@ public class ItemService
 	 * @param sourceStorageType
 	 * @param desetinationStorageType
 	 */
-	public static void splitItem(Player player, int itemObjId, long splitAmount, int slotNum, int sourceStorageType,
-		int destinationStorageType)
+	public static void splitItem(Player player, int itemObjId, long splitAmount, int slotNum, int sourceStorageType, int destinationStorageType)
 	{
 		Storage sourceStorage = player.getStorage(sourceStorageType);
 		Storage destinationStorage = player.getStorage(destinationStorageType);
 
 		Item itemToSplit = sourceStorage.getItemByObjId(itemObjId);
-		if(itemToSplit == null)
+		if (itemToSplit == null)
 		{
 			itemToSplit = sourceStorage.getKinahItem();
-			if(itemToSplit.getObjectId() != itemObjId || itemToSplit == null)
+			if (itemToSplit.getObjectId() != itemObjId || itemToSplit == null)
 			{
-				log.warn(String.format("CHECKPOINT: attempt to split null item %d %d %d", itemObjId, splitAmount,
-					slotNum));
+				log.warn(String.format("CHECKPOINT: attempt to split null item %d %d %d", itemObjId, splitAmount, slotNum));
 				return;
 			}
 		}
 
 		// To move kinah from inventory to warehouse and vise versa client using split item packet
-		if(itemToSplit.getItemTemplate().isKinah())
+		if (itemToSplit.getItemTemplate().isKinah())
 		{
-			if(!decreaseKinah(player, sourceStorage, splitAmount))
+			if (!decreaseKinah(player, sourceStorage, splitAmount))
 				return;
 			increaseKinah(player, destinationStorage, splitAmount);
 			return;
@@ -136,13 +134,13 @@ public class ItemService
 
 		long oldItemCount = itemToSplit.getItemCount() - splitAmount;
 
-		if(itemToSplit.getItemCount() < splitAmount || oldItemCount == 0)
+		if (itemToSplit.getItemCount() < splitAmount || oldItemCount == 0)
 			return;
 
 		Item newItem = newItem(itemToSplit.getItemId(), splitAmount);
 		newItem.setEquipmentSlot(slotNum);
 
-		if(addFullItem(player, destinationStorage, newItem, false))
+		if (addFullItem(player, destinationStorage, newItem, false))
 		{
 			decreaseItemCount(player, sourceStorage, itemToSplit, splitAmount);
 		}
@@ -156,7 +154,7 @@ public class ItemService
 	public static boolean decreaseKinah(Player player, Storage storage, long amount)
 	{
 		boolean operationResult = storage.decreaseKinah(amount);
-		if(operationResult)
+		if (operationResult)
 		{
 			sendUpdateItemPacket(player, storage.getStorageType(), storage.getKinahItem());
 		}
@@ -210,16 +208,16 @@ public class ItemService
 	 */
 	public static boolean decreaseItemCountByItemId(Player player, Storage storage, int itemId, long count)
 	{
-		if(count < 1)
+		if (count < 1)
 			return false;
 
 		List<Item> items = storage.getItemsByItemId(itemId);
 
-		for(Item item : items)
+		for (Item item : items)
 		{
 			count = decreaseItemCount(player, storage, item, count);
 
-			if(count == 0)
+			if (count == 0)
 				break;
 		}
 		return count >= 0;
@@ -237,7 +235,7 @@ public class ItemService
 	public static long decreaseItemCount(Player player, Storage storage, Item item, long count)
 	{
 		long itemCount = item.getItemCount();
-		if(itemCount >= count)
+		if (itemCount >= count)
 		{
 			item.decreaseItemCount(count);
 			count = 0;
@@ -247,7 +245,7 @@ public class ItemService
 			item.decreaseItemCount(itemCount);
 			count -= itemCount;
 		}
-		if(item.getItemCount() == 0)
+		if (item.getItemCount() == 0)
 		{
 			removeItem(player, storage, item, true);
 		}
@@ -267,7 +265,7 @@ public class ItemService
 		boolean sucess = false;
 		List<Item> items = storage.getItemsByItemId(itemId);
 
-		for(Item item : items)
+		for (Item item : items)
 		{
 			sucess |= removeItem(player, player.getInventory(), item, true);
 		}
@@ -295,13 +293,13 @@ public class ItemService
 
 	public static boolean removeItem(Player player, Storage storage, Item item, boolean persist, boolean sendPacket)
 	{
-		if(item == null)
+		if (item == null)
 		{ // the item doesn't exist, return false if the count is bigger then 0.
 			log.warn("An item from player '" + player.getName() + "' that should be removed doesn't exist.");
 			return false;
 		}
 		storage.removeFromBag(item, persist);
-		if(sendPacket)
+		if (sendPacket)
 			sendDeleteItemPacket(player, storage.getStorageType(), item.getObjectId());
 		return true;
 	}
@@ -334,7 +332,7 @@ public class ItemService
 	public static boolean removeItemByObjectId(Player player, Storage storage, int itemObjId, boolean persist)
 	{
 		Item item = storage.getItemByObjId(itemObjId);
-		if(item == null)
+		if (item == null)
 		{ // the item doesn't exist, return false if the count is bigger then 0.
 			log.warn("An item from player '" + player.getName() + "' that should be removed doesn't exist.");
 			return false;
@@ -350,13 +348,12 @@ public class ItemService
 	 * @param itemAmount
 	 * @param destinationObjId
 	 */
-	public static void mergeItems(Player player, int sourceItemObjId, long itemAmount, int destinationObjId,
-		int sourceStorageType, int destinationStorageType)
+	public static void mergeItems(Player player, int sourceItemObjId, long itemAmount, int destinationObjId, int sourceStorageType, int destinationStorageType)
 	{
-		if(itemAmount == 0)
+		if (itemAmount == 0)
 			return;
 
-		if(sourceItemObjId == destinationObjId)
+		if (sourceItemObjId == destinationObjId)
 			return;
 
 		Storage sourceStorage = player.getStorage(sourceStorageType);
@@ -365,31 +362,30 @@ public class ItemService
 		Item sourceItem = sourceStorage.getItemByObjId(sourceItemObjId);
 		Item destinationItem = destinationStorage.getItemByObjId(destinationObjId);
 
-		if(sourceItem == null || destinationItem == null)
+		if (sourceItem == null || destinationItem == null)
 			return; // Invalid object id provided
 
-		if(sourceItem.getItemTemplate().getTemplateId() != destinationItem.getItemTemplate().getTemplateId())
+		if (sourceItem.getItemTemplate().getTemplateId() != destinationItem.getItemTemplate().getTemplateId())
 			return; // Invalid item type
 
-		if(sourceItem.getItemCount() < itemAmount)
+		if (sourceItem.getItemCount() < itemAmount)
 			return; // Invalid item amount
 
 		ItemService.decreaseItemCount(player, sourceStorage, sourceItem, itemAmount);
 		ItemService.increaseItemCount(player, destinationStorage, destinationItem, itemAmount);
 	}
 
-	public static void switchStoragesItems(Player player, int sourceStorageType, int sourceItemObjId,
-		int replaceStorageType, int replaceItemObjId)
+	public static void switchStoragesItems(Player player, int sourceStorageType, int sourceItemObjId, int replaceStorageType, int replaceItemObjId)
 	{
 		Storage sourceStorage = player.getStorage(sourceStorageType);
 		Storage replaceStorage = player.getStorage(replaceStorageType);
 
 		Item sourceItem = sourceStorage.getItemByObjId(sourceItemObjId);
-		if(sourceItem == null)
+		if (sourceItem == null)
 			return;
 
 		Item replaceItem = replaceStorage.getItemByObjId(replaceItemObjId);
-		if(replaceItem == null)
+		if (replaceItem == null)
 			return;
 
 		int sourceSlot = sourceItem.getEquipmentSlot();
@@ -419,15 +415,15 @@ public class ItemService
 	{
 		if (count < 1)
 			return false;
-		if(OptionsConfig.LOG_ITEM)
+		if (OptionsConfig.LOG_ITEM)
 			log.info(String.format("[ITEM] ID/Count - %d/%d to player %s.", itemId, count, player.getName()));
-		if(itemId == ItemId.KINAH.value())
+		if (itemId == ItemId.KINAH.value())
 		{
 			ItemService.increaseKinah(player, count);
 			return true;
 		}
 		Item item = ItemService.newItem(itemId, count);
-		if(item == null)
+		if (item == null)
 			return false;
 		return addFullItem(player, player.getInventory(), item, true);
 	}
@@ -456,32 +452,32 @@ public class ItemService
 	public static boolean addFullItem(Player player, Storage storage, Item item, boolean merge)
 	{
 		ItemTemplate itemTemplate = item.getItemTemplate();
-		if(itemTemplate == null)
+		if (itemTemplate == null)
 			return false;
 
 		int maxStackCount = itemTemplate.getMaxStackCount();
 		int itemId = item.getItemId();
 
-		if(itemId == ItemId.KINAH.value())
+		if (itemId == ItemId.KINAH.value())
 		{
 			ItemService.increaseKinah(player, item.getItemCount());
 			return true;
 		}
 
-		if(merge)
+		if (merge)
 		{
 			/**
 			 * Increase count of existing items
 			 */
 			List<Item> existingItems = storage.getAllItemsByItemId(itemId); // look for existing in equipment. need for
 			// power shards.
-			for(Item existingItem : existingItems)
+			for (Item existingItem : existingItems)
 			{
-				if(item.getItemCount() < 1)
+				if (item.getItemCount() < 1)
 					break;
 
 				long freeCount = maxStackCount - existingItem.getItemCount();
-				if(item.getItemCount() <= freeCount)
+				if (item.getItemCount() <= freeCount)
 				{
 					ItemService.increaseItemCount(player, storage, existingItem, item.getItemCount());
 					item.setItemCount(0);
@@ -497,10 +493,10 @@ public class ItemService
 		 * Create new stacks
 		 */
 
-		while(!storage.isFull() && item.getItemCount() > 0)
+		while (!storage.isFull() && item.getItemCount() > 0)
 		{
 			// item count still more than maxStack value
-			if(item.getItemCount() > maxStackCount)
+			if (item.getItemCount() > maxStackCount)
 			{
 				Item newItem = newItem(itemId, maxStackCount);
 				item.decreaseItemCount(maxStackCount);
@@ -515,13 +511,13 @@ public class ItemService
 			}
 		}
 
-		if(storage.isFull() && item.getItemCount() > 0)
+		if (storage.isFull() && item.getItemCount() > 0)
 		{
 			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_DICE_INVEN_ERROR);
 			return false;
 		}
 
-		if(item.getItemCount() < 1)
+		if (item.getItemCount() < 1)
 		{
 			item.setPersistentState(PersistentState.DELETED);
 			ItemUpdater.getInstance().add(item);
@@ -537,31 +533,30 @@ public class ItemService
 	 * @param destinationStorageType
 	 * @param slot
 	 */
-	public static void moveItem(Player player, int itemObjId, int sourceStorageType, int destinationStorageType,
-		int slot)
+	public static void moveItem(Player player, int itemObjId, int sourceStorageType, int destinationStorageType, int slot)
 	{
 		Storage sourceStorage = player.getStorage(sourceStorageType);
 		Item item = player.getStorage(sourceStorageType).getItemByObjId(itemObjId);
 
-		if(item == null)
+		if (item == null)
 			return;
 
 		item.setEquipmentSlot(slot);
 
-		if(sourceStorageType == destinationStorageType)
+		if (sourceStorageType == destinationStorageType)
 		{
 			sendUpdateItemPacket(player, sourceStorageType, item);
 			sourceStorage.setPersistentState(PersistentState.UPDATE_REQUIRED);
 			return;
 		}
 		Storage destinationStorage = player.getStorage(destinationStorageType);
-		if(ItemService.removeItem(player, sourceStorage, item, false))
+		if (ItemService.removeItem(player, sourceStorage, item, false))
 			ItemService.addFullItem(player, destinationStorage, item);
 	}
 
 	public static void addItemPacket(Player player, int storageType, Item item)
 	{
-		if(storageType == StorageType.CUBE.getId())
+		if (storageType == StorageType.CUBE.getId())
 			PacketSendUtility.sendPacket(player, new SM_ADD_ITEMS(Collections.singletonList(item)));
 		else
 			PacketSendUtility.sendPacket(player, new SM_WAREHOUSE_UPDATE(item, storageType));
@@ -569,7 +564,7 @@ public class ItemService
 
 	private static void sendDeleteItemPacket(Player player, int storageType, int itemObjId)
 	{
-		if(storageType == StorageType.CUBE.getId())
+		if (storageType == StorageType.CUBE.getId())
 			PacketSendUtility.sendPacket(player, new SM_DELETE_ITEM(itemObjId));
 		else
 			PacketSendUtility.sendPacket(player, new SM_DELETE_WAREHOUSE_ITEM(storageType, itemObjId));
@@ -577,7 +572,7 @@ public class ItemService
 
 	private static void sendUpdateItemPacket(Player player, int storageType, Item item)
 	{
-		if(storageType == StorageType.CUBE.getId())
+		if (storageType == StorageType.CUBE.getId())
 			PacketSendUtility.sendPacket(player, new SM_UPDATE_ITEM(item));
 		else
 			PacketSendUtility.sendPacket(player, new SM_UPDATE_WAREHOUSE_ITEM(item, storageType));
@@ -589,23 +584,23 @@ public class ItemService
 	 */
 	public static ManaStone addManaStone(Item item, int itemId)
 	{
-		if(item == null)
+		if (item == null)
 			return null;
 
 		Set<ManaStone> manaStones = item.getItemStones();
 
 		// temp fix for manastone spam till templates are updated
-		if(manaStones.size() > 6)
+		if (manaStones.size() > 6)
 			return null;
 
 		int nextSlot = 0;
 		boolean slotFound = false;
 
 		Iterator<ManaStone> iterator = manaStones.iterator();
-		while(iterator.hasNext())
+		while (iterator.hasNext())
 		{
 			ManaStone manaStone = iterator.next();
-			if(nextSlot != manaStone.getSlot())
+			if (nextSlot != manaStone.getSlot())
 			{
 				slotFound = true;
 				break;
@@ -613,7 +608,7 @@ public class ItemService
 			nextSlot++;
 		}
 
-		if(!slotFound)
+		if (!slotFound)
 			nextSlot = manaStones.size();
 
 		ManaStone stone = new ManaStone(item.getObjectId(), itemId, nextSlot, PersistentState.NEW);
@@ -631,13 +626,13 @@ public class ItemService
 	{
 		Storage inventory = player.getInventory();
 		Item item = inventory.getItemByObjId(itemObjId);
-		if(item == null)
+		if (item == null)
 		{
 			log.warn("Item not found during manastone remove");
 			return;
 		}
 
-		if(!item.hasManaStones())
+		if (!item.hasManaStones())
 		{
 			log.warn("Item stone list is empty");
 			return;
@@ -645,15 +640,15 @@ public class ItemService
 
 		Set<ManaStone> itemStones = item.getItemStones();
 
-		if(itemStones.size() <= slotNum)
+		if (itemStones.size() <= slotNum)
 			return;
 
 		int counter = 0;
 		Iterator<ManaStone> iterator = itemStones.iterator();
-		while(iterator.hasNext())
+		while (iterator.hasNext())
 		{
 			ManaStone manaStone = iterator.next();
-			if(counter == slotNum)
+			if (counter == slotNum)
 			{
 				manaStone.setPersistentState(PersistentState.DELETED);
 				iterator.remove();
@@ -671,20 +666,20 @@ public class ItemService
 	 */
 	public static void removeAllManastone(Player player, Item item)
 	{
-		if(item == null)
+		if (item == null)
 		{
 			log.warn("Item not found during manastone remove");
 			return;
 		}
 
-		if(!item.hasManaStones())
+		if (!item.hasManaStones())
 		{
 			return;
 		}
 
 		Set<ManaStone> itemStones = item.getItemStones();
 		Iterator<ManaStone> iterator = itemStones.iterator();
-		while(iterator.hasNext())
+		while (iterator.hasNext())
 		{
 			ManaStone manaStone = iterator.next();
 			manaStone.setPersistentState(PersistentState.DELETED);
@@ -705,10 +700,9 @@ public class ItemService
 		long socketPrice = player.getPrices().getPriceForService(100000);
 
 		Item weaponItem = player.getInventory().getItemByObjId(weaponId);
-		if(weaponItem == null)
+		if (weaponItem == null)
 		{
-			PacketSendUtility
-				.sendPacket(player, SM_SYSTEM_MESSAGE.STR_GIVE_ITEM_PROC_CANNOT_GIVE_PROC_TO_EQUIPPED_ITEM);
+			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_GIVE_ITEM_PROC_CANNOT_GIVE_PROC_TO_EQUIPPED_ITEM);
 			return;
 		}
 
@@ -718,18 +712,18 @@ public class ItemService
 		ItemTemplate itemTemplate = DataManager.ITEM_DATA.getItemTemplate(godStoneItemId);
 		GodstoneInfo godstoneInfo = itemTemplate.getGodstoneInfo();
 
-		if(godstoneInfo == null)
+		if (godstoneInfo == null)
 		{
 			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_GIVE_ITEM_PROC_NO_PROC_GIVE_ITEM);
 			log.warn("Godstone info missing for itemid " + godStoneItemId);
 			return;
 		}
 
-		if(!ItemService.decreaseKinah(player, socketPrice))
+		if (!ItemService.decreaseKinah(player, socketPrice))
 			return;
 		weaponItem.addGodStone(godStoneItemId);
-		PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE
-			.STR_GIVE_ITEM_PROC_ENCHANTED_TARGET_ITEM(new DescriptionId(Integer.parseInt(weaponItem.getName()))));
+		PacketSendUtility.sendPacket(player,
+				SM_SYSTEM_MESSAGE.STR_GIVE_ITEM_PROC_ENCHANTED_TARGET_ITEM(new DescriptionId(Integer.parseInt(weaponItem.getName()))));
 		ItemService.decreaseItemCount(player, godstone, 1);
 
 		PacketSendUtility.sendPacket(player, new SM_UPDATE_ITEM(weaponItem));
@@ -738,23 +732,23 @@ public class ItemService
 	public static boolean addItems(Player player, List<QuestItems> questItems)
 	{
 		int needSlot = 0;
-		for(QuestItems qi : questItems)
+		for (QuestItems qi : questItems)
 		{
-			if(qi.getItemId() != ItemId.KINAH.value() && qi.getCount() != 0)
+			if (qi.getItemId() != ItemId.KINAH.value() && qi.getCount() != 0)
 			{
 				int stackCount = DataManager.ITEM_DATA.getItemTemplate(qi.getItemId()).getMaxStackCount();
 				int count = qi.getCount() / stackCount;
-				if(qi.getCount() % stackCount != 0)
+				if (qi.getCount() % stackCount != 0)
 					count++;
 				needSlot += count;
 			}
 		}
-		if(needSlot > player.getInventory().getNumberOfFreeSlots())
+		if (needSlot > player.getInventory().getNumberOfFreeSlots())
 		{
 			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.MSG_FULL_INVENTORY);
 			return false;
 		}
-		for(QuestItems qi : questItems)
+		for (QuestItems qi : questItems)
 			addItem(player, qi.getItemId(), qi.getCount());
 		return true;
 	}
@@ -765,14 +759,14 @@ public class ItemService
 	public static void restoreKinah(Player player)
 	{
 		// if kinah was deleted by some reason it should be restored with 0 count
-		if(player.getStorage(StorageType.CUBE.getId()).getKinahItem() == null)
+		if (player.getStorage(StorageType.CUBE.getId()).getKinahItem() == null)
 		{
 			Item kinahItem = newItem(182400001, 0);
 
 			onLoadHandler(player, player.getStorage(StorageType.CUBE.getId()), kinahItem);
 		}
 
-		if(player.getStorage(StorageType.ACCOUNT_WAREHOUSE.getId()).getKinahItem() == null)
+		if (player.getStorage(StorageType.ACCOUNT_WAREHOUSE.getId()).getKinahItem() == null)
 		{
 			Item kinahItem = newItem(182400001, 0);
 			kinahItem.setItemLocation(StorageType.ACCOUNT_WAREHOUSE.getId());
@@ -790,11 +784,11 @@ public class ItemService
 	 */
 	public static void onLoadHandler(Player player, Storage storage, Item item)
 	{
-		if(player != null && item.isEquipped())
+		if (player != null && item.isEquipped())
 		{
 			player.getEquipment().onLoadHandler(item);
 		}
-		else if(item.getItemTemplate().isKinah())
+		else if (item.getItemTemplate().isKinah())
 		{
 			storage.setKinahItem(item);
 		}

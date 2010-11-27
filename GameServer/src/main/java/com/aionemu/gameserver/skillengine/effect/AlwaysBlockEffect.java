@@ -35,8 +35,8 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 public class AlwaysBlockEffect extends EffectTemplate
 {
 	@XmlAttribute
-	protected int value;
-	
+	protected int	value;
+
 	@Override
 	public void applyEffect(Effect effect)
 	{
@@ -58,19 +58,19 @@ public class AlwaysBlockEffect extends EffectTemplate
 			@Override
 			public boolean checkStatus(AttackStatus status)
 			{
-				if(status == AttackStatus.BLOCK && value > 0)
+				if (status == AttackStatus.BLOCK && value > 0)
 				{
 					value -= 1;
 					return true;
 				}
 				return false;
 			}
-			
+
 		};
 		effect.getEffected().getObserveController().addAttackCalcObserver(acObserver);
 		effect.setAttackStatusObserver(acObserver, position);
 	}
-	
+
 	@Override
 	public void endEffect(Effect effect)
 	{

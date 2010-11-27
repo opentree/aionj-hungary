@@ -24,12 +24,12 @@ import com.aionemu.gameserver.model.gameobjects.PersistentState;
  */
 public class PlayerSettings
 {
-	private PersistentState persistentState;
+	private PersistentState	persistentState;
 
-	private byte[] uiSettings;
-	private byte[] shortcuts;
-	private int deny = 0;
-	private int display = 0;
+	private byte[]			uiSettings;
+	private byte[]			shortcuts;
+	private int				deny	= 0;
+	private int				display	= 0;
 
 	public PlayerSettings()
 	{
@@ -132,7 +132,7 @@ public class PlayerSettings
 	{
 		int isDeniedStatus = this.deny & deny.getId();
 
-		if(isDeniedStatus == deny.getId())
+		if (isDeniedStatus == deny.getId())
 			return true;
 
 		return false;

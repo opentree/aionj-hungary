@@ -27,8 +27,8 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class CM_CUSTOM_SETTINGS extends AbstractClientPacket<AionChannelHandler>
 {
-	private int display;
-	private int deny;
+	private int	display;
+	private int	deny;
 
 	public CM_CUSTOM_SETTINGS(int opcode)
 	{

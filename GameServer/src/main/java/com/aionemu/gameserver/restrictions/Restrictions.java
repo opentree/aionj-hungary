@@ -27,24 +27,24 @@ import com.aionemu.gameserver.skillengine.model.Skill;
 public interface Restrictions
 {
 	public boolean isRestricted(Player player, Class<? extends Restrictions> callingRestriction);
-	
+
 	public boolean canAttack(Player player, VisibleObject target);
-	
+
 	public boolean canAffectBySkill(Player player, VisibleObject target);
-	
+
 	public boolean canUseSkill(Player player, Skill skill);
-	
+
 	public boolean canChat(Player player);
-	
+
 	public boolean canInviteToGroup(Player player, Player target);
-	
+
 	public boolean canInviteToAlliance(Player player, Player target);
-	
+
 	public boolean canChangeEquip(Player player);
-	
+
 	public boolean canUseWarehouse(Player player);
-	
+
 	public boolean canTrade(Player player);
-	
+
 	public boolean canUseItem(Player player);
 }

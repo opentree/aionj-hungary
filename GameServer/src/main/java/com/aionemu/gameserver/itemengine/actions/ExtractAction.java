@@ -40,7 +40,7 @@ public class ExtractAction extends AbstractItemAction
 	@Override
 	public boolean canAct(Player player, Item parentItem, Item targetItem)
 	{
-		if(targetItem == null)
+		if (targetItem == null)
 		{ // no item selected.
 			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_ITEM_ERROR);
 			return false;
@@ -52,16 +52,16 @@ public class ExtractAction extends AbstractItemAction
 	@Override
 	public void act(final Player player, final Item parentItem, final Item targetItem)
 	{
-		PacketSendUtility.sendPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(),
-			parentItem.getObjectId(), parentItem.getItemTemplate().getTemplateId(), 5000, 0, 0));
+		PacketSendUtility.sendPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), parentItem.getObjectId(), parentItem.getItemTemplate()
+				.getTemplateId(), 5000, 0, 0));
 		player.cancelTask(TaskId.ITEM_USE);
-		player.addNewTask(TaskId.ITEM_USE,
-		ThreadPoolManager.getInstance().schedule(new Runnable(){
+		player.addNewTask(TaskId.ITEM_USE, ThreadPoolManager.getInstance().schedule(new Runnable()
+		{
 			@Override
 			public void run()
 			{
-				PacketSendUtility.sendPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), parentItem
-					.getObjectId(), parentItem.getItemTemplate().getTemplateId(), 0, 1, 0));
+				PacketSendUtility.sendPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), parentItem.getObjectId(), parentItem.getItemTemplate()
+						.getTemplateId(), 0, 1, 0));
 
 				EnchantService.breakItem(player, targetItem, parentItem);
 			}

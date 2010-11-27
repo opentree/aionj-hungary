@@ -27,28 +27,28 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_PET extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int actionId;
-	private ToyPet pet;
-	private List<ToyPet> pets;
-	private int petUniqueId;
-	
+	private int				actionId;
+	private ToyPet			pet;
+	private List<ToyPet>	pets;
+	private int				petUniqueId;
+
 	public SM_PET(int actionId)
 	{
 		this.actionId = actionId;
 	}
-	
+
 	public SM_PET(int actionId, int petUniqueId)
 	{
 		this.actionId = actionId;
 		this.petUniqueId = petUniqueId;
 	}
-	
+
 	public SM_PET(int actionId, ToyPet pet)
 	{
 		this.actionId = actionId;
 		this.pet = pet;
 	}
-	
+
 	public SM_PET(int actionId, List<ToyPet> pets)
 	{
 		this.actionId = actionId;
@@ -59,14 +59,14 @@ public class SM_PET extends AbstractAionServerPacket<AionChannelHandler>
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeH(actionId);
-		switch(actionId)
+		switch (actionId)
 		{
 			case 0:
 				// load list on login
 				int counter = 0;
-				writeC( 0); // unk
+				writeC(0); // unk
 				writeH(pets.size());
-				for(ToyPet p : pets)
+				for (ToyPet p : pets)
 				{
 					counter++;
 					writeS(p.getName());
@@ -76,13 +76,13 @@ public class SM_PET extends AbstractAionServerPacket<AionChannelHandler>
 					writeD(0); //unk
 					writeD(0); //unk
 					writeD(1284402195); //creation timestamp - birthday
-					writeC( 2); //unk +
+					writeC(2); //unk +
 					writeD(0); //unk
 					writeD(0); //unk
-					writeC( 2); //unk +
+					writeC(2); //unk +
 					writeD(0); //unk
 					writeD(0); //unk
-					writeC( 1); //unk +
+					writeC(1); //unk +
 					writeD(0); //unk
 					writeD(0); //function id(s) ?
 					writeD(0); //unk
@@ -98,13 +98,13 @@ public class SM_PET extends AbstractAionServerPacket<AionChannelHandler>
 				writeD(0); //unk
 				writeD(0); //unk
 				writeD(0); //unk
-				writeC( 0); //unk +
+				writeC(0); //unk +
 				writeD(0); //unk
 				writeD(0); //unk
-				writeC( 0); //unk +
+				writeC(0); //unk +
 				writeD(0); //unk
 				writeD(0); //unk
-				writeC( 0); //unk +
+				writeC(0); //unk +
 				writeD(0); //unk
 				writeD(0); //unk
 				writeD(0); //unk
@@ -122,38 +122,38 @@ public class SM_PET extends AbstractAionServerPacket<AionChannelHandler>
 				writeS(pet.getName());
 				writeD(pet.getPetId());
 				writeD(pet.getDatabaseIndex());
-				
-				if(pet.getX1() == 0 && pet.getY1() == 0 && pet.getZ1() == 0)
+
+				if (pet.getX1() == 0 && pet.getY1() == 0 && pet.getZ1() == 0)
 				{
 					writeF(pet.getMaster().getX());
 					writeF(pet.getMaster().getY());
 					writeF(pet.getMaster().getZ());
-					
+
 					writeF(pet.getMaster().getX());
 					writeF(pet.getMaster().getY());
 					writeF(pet.getMaster().getZ());
-					
-					writeC( pet.getMaster().getHeading());
+
+					writeC(pet.getMaster().getHeading());
 				}
 				else
 				{
 					writeF(pet.getX1());
 					writeF(pet.getY1());
 					writeF(pet.getZ1());
-					
+
 					writeF(pet.getX2());
 					writeF(pet.getY2());
 					writeF(pet.getZ2());
-					
-					writeC( pet.getH());
+
+					writeC(pet.getH());
 				}
-				
+
 				writeD(pet.getMaster().getObjectId()); //unk
-				
-				writeC( 1); //unk
-				
+
+				writeC(1); //unk
+
 				writeD(0); //unk
-				
+
 				writeD(0); //unk
 				writeD(0); //unk
 				writeD(0); //unk
@@ -162,7 +162,7 @@ public class SM_PET extends AbstractAionServerPacket<AionChannelHandler>
 			case 4:
 				// dismiss
 				writeD(petUniqueId);
-				writeC( 0x01);
+				writeC(0x01);
 				break;
 			case 10:
 				// rename
@@ -170,7 +170,7 @@ public class SM_PET extends AbstractAionServerPacket<AionChannelHandler>
 				writeS(pet.getName());
 				break;
 			default:
-				break;					
+				break;
 		}
 	}
 }

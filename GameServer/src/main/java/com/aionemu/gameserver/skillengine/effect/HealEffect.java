@@ -29,10 +29,9 @@ import com.aionemu.gameserver.skillengine.model.Effect;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "HealEffect")
-public class HealEffect
-	extends AbstractHealEffect
+public class HealEffect extends AbstractHealEffect
 {
-	
+
 	@Override
 	public void applyEffect(Effect effect)
 	{

@@ -28,8 +28,8 @@ import com.aionemu.gameserver.services.ExchangeService;
  */
 public class CM_EXCHANGE_ADD_KINAH extends AbstractClientPacket<AionChannelHandler>
 {
-	public int unk;
-	public int itemCount;
+	public int	unk;
+	public int	itemCount;
 
 	public CM_EXCHANGE_ADD_KINAH(int opcode)
 	{
@@ -52,7 +52,7 @@ public class CM_EXCHANGE_ADD_KINAH extends AbstractClientPacket<AionChannelHandl
 	@Override
 	protected void runImpl()
 	{
-		final Player activePlayer = getChannelHandler().getActivePlayer();		
+		final Player activePlayer = getChannelHandler().getActivePlayer();
 		ExchangeService.getInstance().addKinah(activePlayer, itemCount);
 	}
 }

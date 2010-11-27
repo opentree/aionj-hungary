@@ -34,14 +34,14 @@ public enum WILL
 	PRIEST(110),
 	CLERIC(110),
 	CHANTER(110);
-	
-	private int value;
-	
+
+	private int	value;
+
 	private WILL(int value)
 	{
 		this.value = value;
 	}
-	
+
 	public int getValue()
 	{
 		return value;

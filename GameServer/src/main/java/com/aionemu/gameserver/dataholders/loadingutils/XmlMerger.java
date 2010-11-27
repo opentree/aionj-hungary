@@ -98,18 +98,18 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class XmlMerger
 {
-	private static final Logger logger = Logger.getLogger(XmlMerger.class);
+	private static final Logger	logger			= Logger.getLogger(XmlMerger.class);
 
-	private final File  baseDir;
+	private final File			baseDir;
 
-	private final File  sourceFile;
-	private final File  destFile;
+	private final File			sourceFile;
+	private final File			destFile;
 
-	private final File  metaDataFile;
+	private final File			metaDataFile;
 
-	private XMLInputFactory     inputFactory    = XMLInputFactory.newInstance();
-	private XMLOutputFactory    outputFactory   = XMLOutputFactory.newInstance();
-	private XMLEventFactory     eventFactory    = XMLEventFactory.newInstance();
+	private XMLInputFactory		inputFactory	= XMLInputFactory.newInstance();
+	private XMLOutputFactory	outputFactory	= XMLOutputFactory.newInstance();
+	private XMLEventFactory		eventFactory	= XMLEventFactory.newInstance();
 
 	/**
 	 * Create new instance of <tt>XmlMerger </tt>.
@@ -137,7 +137,7 @@ public class XmlMerger
 
 		this.sourceFile = source;
 		this.destFile = target;
-		
+
 		this.metaDataFile = new File(target.getParent(), target.getName() + ".properties");
 	}
 
@@ -235,9 +235,9 @@ public class XmlMerger
 	 * the 'import' tags by the data from the relevant files.
 	 *
 	 * @throws XMLStreamException    on event writing error.
-     * @throws IOException  if the destination file exists but is a directory rather than
-     *                  a regular file, does not exist but cannot be created,
-     *                  or cannot be opened for any other reason
+	 * @throws IOException  if the destination file exists but is a directory rather than
+	 *                  a regular file, does not exist but cannot be created,
+	 *                  or cannot be opened for any other reason
 	 */
 	private void doUpdate() throws XMLStreamException, IOException
 	{
@@ -245,7 +245,7 @@ public class XmlMerger
 		XMLEventWriter writer = null;
 
 		Properties metadata = new Properties();
-		
+
 		try
 		{
 			writer = outputFactory.createXMLEventWriter(new BufferedWriter(new FileWriter(destFile, false)));
@@ -273,7 +273,8 @@ public class XmlMerger
 
 				writer.add(xmlEvent);
 
-				if (xmlEvent.isStartDocument()) {
+				if (xmlEvent.isStartDocument())
+				{
 					writer.add(eventFactory.createComment("\nThis file is machine-generated. DO NOT MODIFY IT!\n"));
 				}
 			}
@@ -283,9 +284,21 @@ public class XmlMerger
 		finally
 		{
 			if (writer != null)
-				try { writer.close(); } catch (Exception ignored) {}
+				try
+				{
+					writer.close();
+				}
+				catch (Exception ignored)
+				{
+				}
 			if (reader != null)
-				try { reader.close(); } catch (Exception ignored) {}
+				try
+				{
+					reader.close();
+				}
+				catch (Exception ignored)
+				{
+				}
 		}
 	}
 
@@ -294,14 +307,14 @@ public class XmlMerger
 		return "import".equals(name.getLocalPart());
 	}
 
-	private static final QName qNameFile = new QName("file");
-	private static final QName qNameSkipRoot = new QName("skipRoot");
+	private static final QName	qNameFile				= new QName("file");
+	private static final QName	qNameSkipRoot			= new QName("skipRoot");
 
 	/**
 	 * If this option is enabled you import the directory, and all its subdirectories.
 	 * Default is 'true'.
 	 */
-	private static final QName qNameRecursiveImport = new QName("recursiveImport");
+	private static final QName	qNameRecursiveImport	= new QName("recursiveImport");
 
 	/**
 	 * This method processes the 'import' element, replacing it
@@ -343,11 +356,7 @@ public class XmlMerger
 		IOFileFilter dirFilter = recursive ? makeSVNAware(HiddenFileFilter.VISIBLE) : null;
 
 		return FileUtils.listFiles(root,
-				andFileFilter(
-						andFileFilter(
-								notFileFilter(prefixFileFilter("new")), suffixFileFilter(".xml")),
-						HiddenFileFilter.VISIBLE),
-				dirFilter);
+				andFileFilter(andFileFilter(notFileFilter(prefixFileFilter("new")), suffixFileFilter(".xml")), HiddenFileFilter.VISIBLE), dirFilter);
 	}
 
 	/**
@@ -362,8 +371,7 @@ public class XmlMerger
 	 *
 	 * @throws XMLStreamException if attribute is missing and there is no default value set.
 	 */
-	private String getAttributeValue(StartElement element, QName name, String def, String onErrorMessage)
-			throws XMLStreamException
+	private String getAttributeValue(StartElement element, QName name, String def, String onErrorMessage) throws XMLStreamException
 	{
 		Attribute attribute = element.getAttributeByName(name);
 
@@ -449,18 +457,24 @@ public class XmlMerger
 		finally
 		{
 			if (reader != null)
-				try { reader.close(); } catch (Exception ignored) {}
+				try
+				{
+					reader.close();
+				}
+				catch (Exception ignored)
+				{
+				}
 		}
 	}
 
 	private static class TimeCheckerHandler extends DefaultHandler
 	{
-		private File basedir;
-		private Properties metadata;
+		private File		basedir;
+		private Properties	metadata;
 
-		private boolean isModified = false;
+		private boolean		isModified	= false;
 
-		private Locator locator;
+		private Locator		locator;
 
 		private TimeCheckerHandler(File basedir, Properties metadata)
 		{
@@ -530,8 +544,7 @@ public class XmlMerger
 			}
 			catch (IOException e)
 			{
-				logger.warn("File varification error. File: " + file.getPath()
-						+ ", location="+locator.getLineNumber()+":"+locator.getColumnNumber(), e);
+				logger.warn("File varification error. File: " + file.getPath() + ", location=" + locator.getLineNumber() + ":" + locator.getColumnNumber(), e);
 				return true;// was modified.
 			}
 
@@ -572,8 +585,7 @@ public class XmlMerger
 		}
 	}
 
-	private void storeFileModifications(Properties props, File file)
-			throws IOException
+	private void storeFileModifications(Properties props, File file) throws IOException
 	{
 		FileWriter writer = null;
 		try
@@ -599,8 +611,7 @@ public class XmlMerger
 	 * @return String identifier
 	 * @throws IOException if an IO error occurs reading the file
 	 */
-	private static String makeHash(File file)
-			throws IOException
+	private static String makeHash(File file) throws IOException
 	{
 		return String.valueOf(FileUtils.checksumCRC32(file));
 	}

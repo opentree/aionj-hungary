@@ -22,24 +22,23 @@ import com.aionemu.gameserver.model.templates.teleport.TelelocationTemplate;
 public class TeleLocationData
 {
 	@XmlElement(name = "teleloc_template")
-	private List<TelelocationTemplate> tlist;
-	
+	private List<TelelocationTemplate>				tlist;
+
 	/** A map containing all teleport location templates */
 	private TIntObjectHashMap<TelelocationTemplate>	loctlistData	= new TIntObjectHashMap<TelelocationTemplate>();
 
 	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
-		for(TelelocationTemplate loc: tlist)
+		for (TelelocationTemplate loc : tlist)
 		{
 			loctlistData.put(loc.getLocId(), loc);
 		}
 	}
-	
+
 	public int size()
 	{
 		return loctlistData.size();
 	}
-
 
 	public TelelocationTemplate getTelelocationTemplate(int id)
 	{

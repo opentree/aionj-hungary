@@ -25,20 +25,20 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_ALLIANCE_READY_CHECK extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int playerObjectId;
-	private int statusCode;
-	
+	private int	playerObjectId;
+	private int	statusCode;
+
 	public SM_ALLIANCE_READY_CHECK(int playerObjectId, int statusCode)
 	{
 		this.playerObjectId = playerObjectId;
 		this.statusCode = statusCode;
 	}
-	
+
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
-	{		
+	{
 		writeD(playerObjectId);
-		writeC( statusCode);
+		writeC(statusCode);
 	}
 
 }

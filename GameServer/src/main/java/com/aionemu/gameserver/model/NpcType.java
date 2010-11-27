@@ -40,14 +40,14 @@ public enum NpcType
 	ARTIFACT(38),
 	/** High Protector **/
 	ARTIFACT_PROTECTOR(0);
-	
-	private int someClientSideId;
-	
+
+	private int	someClientSideId;
+
 	private NpcType(int id)
 	{
 		this.someClientSideId = id;
 	}
-	
+
 	public int getId()
 	{
 		return someClientSideId;

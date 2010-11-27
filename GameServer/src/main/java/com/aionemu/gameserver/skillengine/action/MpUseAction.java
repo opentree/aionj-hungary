@@ -34,11 +34,11 @@ public class MpUseAction extends Action
 {
 
 	@XmlAttribute(required = true)
-    protected int value;
-	
+	protected int	value;
+
 	@XmlAttribute
-	protected int delta;
-	
+	protected int	delta;
+
 	@Override
 	public void act(Skill skill)
 	{
@@ -46,8 +46,8 @@ public class MpUseAction extends Action
 		int valueWithDelta = value + delta * skill.getSkillLevel();
 		int changeMpPercent = skill.getChangeMpConsumption();
 		if (changeMpPercent != 0)
-			valueWithDelta = valueWithDelta + ( (int)(valueWithDelta/((int)(100/changeMpPercent))) );
-		
+			valueWithDelta = valueWithDelta + ((int) (valueWithDelta / ((int) (100 / changeMpPercent))));
+
 		effector.getLifeStats().reduceMp(valueWithDelta);
 	}
 

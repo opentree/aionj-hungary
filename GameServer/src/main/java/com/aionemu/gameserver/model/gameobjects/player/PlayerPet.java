@@ -22,22 +22,22 @@ package com.aionemu.gameserver.model.gameobjects.player;
  */
 public class PlayerPet
 {
-	private int databaseIndex;
-	private Player master;
-	private int decoration;
-	private String name;
-	private int petId;
-	
+	private int		databaseIndex;
+	private Player	master;
+	private int		decoration;
+	private String	name;
+	private int		petId;
+
 	public PlayerPet()
 	{
-		
+
 	}
-	
+
 	public Player getMaster()
 	{
 		return master;
 	}
-	
+
 	/**
 	 * @return the databaseIndex
 	 */

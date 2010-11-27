@@ -42,49 +42,49 @@ public class ToyPetService
 
 	private ToyPetService()
 	{
-		
+
 	}
 
 	public void createPetForPlayer(Player player, int petId, int decorationId, String name)
 	{
 		DAOManager.getDAO(PlayerPetsDAO.class).insertPlayerPet(player, petId, decorationId, name);
 		List<ToyPet> list = DAOManager.getDAO(PlayerPetsDAO.class).getPlayerPets(player.getObjectId());
-		if(list == null)
+		if (list == null)
 			return;
 		ToyPet pet = null;
-		for(ToyPet p : list)
+		for (ToyPet p : list)
 		{
-			if(p.getPetId() == petId)
+			if (p.getPetId() == petId)
 				pet = p;
 		}
-		
-		if(pet != null)
+
+		if (pet != null)
 		{
 			PacketSendUtility.sendPacket(player, new SM_PET(1, pet));
 		}
 	}
-	
+
 	public void surrenderPet(Player player, int petId)
 	{
 		List<ToyPet> list = DAOManager.getDAO(PlayerPetsDAO.class).getPlayerPets(player.getObjectId());
-		if(list == null)
+		if (list == null)
 			return;
 		ToyPet pet = null;
-		for(ToyPet p : list)
+		for (ToyPet p : list)
 		{
-			if(p.getPetId() == petId)
+			if (p.getPetId() == petId)
 				pet = p;
 		}
 		DAOManager.getDAO(PlayerPetsDAO.class).removePlayerPet(player, pet.getPetId());
 		PacketSendUtility.sendPacket(player, new SM_PET(2, pet));
 	}
-	
+
 	public void summonPet(Player player, int petId)
 	{
-		if(player.getToyPet() != null)
+		if (player.getToyPet() != null)
 			dismissPet(player, petId);
 		ToyPet pet = DAOManager.getDAO(PlayerPetsDAO.class).getPlayerPet(player.getObjectId(), petId);
-		if(pet != null)
+		if (pet != null)
 		{
 			PetTemplate petTemplate = DataManager.PET_DATA.getPetTemplate(petId);
 			if (petTemplate == null)
@@ -113,37 +113,35 @@ public class ToyPetService
 				}
 				if (itemLocation != 0)
 				{
-					PacketSendUtility
-					.sendPacket(player, new SM_WAREHOUSE_INFO(player.getStorage(itemLocation).getAllItems(),
-						itemLocation, 0, true));
+					PacketSendUtility.sendPacket(player, new SM_WAREHOUSE_INFO(player.getStorage(itemLocation).getAllItems(), itemLocation, 0, true));
 
 					PacketSendUtility.sendPacket(player, new SM_WAREHOUSE_INFO(null, itemLocation, 0, false));
 				}
 			}
 		}
 	}
-	
+
 	public void dismissPet(Player player, int petId)
 	{
-		if(player.getToyPet() == null)
+		if (player.getToyPet() == null)
 			return;
 		int uid = player.getToyPet().getDatabaseIndex();
 		player.setToyPet(null);
 		PacketSendUtility.broadcastPacket(player, new SM_PET(4, uid), true);
 	}
-	
+
 	public void onPlayerLogin(Player player)
 	{
 		List<ToyPet> playerPets = DAOManager.getDAO(PlayerPetsDAO.class).getPlayerPets(player.getObjectId());
-		if(playerPets != null && playerPets.size() > 0)
+		if (playerPets != null && playerPets.size() > 0)
 		{
 			PacketSendUtility.sendPacket(player, new SM_PET(0, playerPets));
 		}
 	}
-	
+
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
-		protected static final ToyPetService instance = new ToyPetService();
+		protected static final ToyPetService	instance	= new ToyPetService();
 	}
 }

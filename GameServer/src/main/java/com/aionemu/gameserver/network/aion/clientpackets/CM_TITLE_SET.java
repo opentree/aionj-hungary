@@ -28,52 +28,52 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  * @author Lyahim, Nemiroff
  * Date: 01.12.2009
  */
-public class CM_TITLE_SET extends AbstractClientPacket<AionChannelHandler> 
+public class CM_TITLE_SET extends AbstractClientPacket<AionChannelHandler>
 {
-    /**
-     * Title id
-     */
-    private int titleId;
+	/**
+	 * Title id
+	 */
+	private int	titleId;
 
-    /**
-     * Constructs new instance of <tt>CM_TITLE_SET </tt> packet
-     *
-     * @param opcode
-     */
-    public CM_TITLE_SET(int opcode) 
-    {
-        super(opcode);
-    }
+	/**
+	 * Constructs new instance of <tt>CM_TITLE_SET </tt> packet
+	 *
+	 * @param opcode
+	 */
+	public CM_TITLE_SET(int opcode)
+	{
+		super(opcode);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void readImpl() 
-    {
-        titleId = readD();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void readImpl()
+	{
+		titleId = readD();
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void runImpl() 
-    {
-        Player player = getChannelHandler().getActivePlayer();
-        sendPacket(new SM_TITLE_SET(titleId));
-        PacketSendUtility.broadcastPacket(player, (new SM_TITLE_UPDATE(player, titleId)));
-        if (player.getCommonData().getTitleId()>0)
-        {
-        	if (player.getGameStats()!=null)
-        	{
-        		TitleChangeListener.onTitleChange(player.getGameStats(), player.getCommonData().getTitleId(), false);
-        	}
-        }
-        player.getCommonData().setTitleId(titleId);
-        if (player.getGameStats()!=null)
-        {
-        	TitleChangeListener.onTitleChange(player.getGameStats(), titleId, true);
-        }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void runImpl()
+	{
+		Player player = getChannelHandler().getActivePlayer();
+		sendPacket(new SM_TITLE_SET(titleId));
+		PacketSendUtility.broadcastPacket(player, (new SM_TITLE_UPDATE(player, titleId)));
+		if (player.getCommonData().getTitleId() > 0)
+		{
+			if (player.getGameStats() != null)
+			{
+				TitleChangeListener.onTitleChange(player.getGameStats(), player.getCommonData().getTitleId(), false);
+			}
+		}
+		player.getCommonData().setTitleId(titleId);
+		if (player.getGameStats() != null)
+		{
+			TitleChangeListener.onTitleChange(player.getGameStats(), titleId, true);
+		}
 	}
 }

@@ -26,37 +26,37 @@ import javolution.util.FastMap;
  */
 public class PlayerAllianceGroup
 {
-	private FastMap<Integer, PlayerAllianceMember> groupMembers;
-	private int allianceId;
-	private PlayerAlliance owner;
-	
+	private FastMap<Integer, PlayerAllianceMember>	groupMembers;
+	private int										allianceId;
+	private PlayerAlliance							owner;
+
 	public PlayerAllianceGroup(PlayerAlliance alliance)
 	{
 		groupMembers = new FastMap<Integer, PlayerAllianceMember>().shared();
 		this.owner = alliance;
 	}
-	
+
 	public PlayerAlliance getParent()
 	{
 		return owner;
 	}
-	
+
 	public void setAllianceId(int allianceId)
 	{
 		this.allianceId = allianceId;
 	}
-	
+
 	public int getAllianceId()
 	{
 		return this.allianceId;
 	}
-	
+
 	public void addMember(PlayerAllianceMember member)
 	{
 		groupMembers.put(member.getObjectId(), member);
 		member.setAllianceId(allianceId);
 	}
-	
+
 	/**
 	 * 
 	 * @param memberObjectId
@@ -66,12 +66,12 @@ public class PlayerAllianceGroup
 	{
 		return groupMembers.remove(memberObjectId);
 	}
-	
+
 	public PlayerAllianceMember getMemberById(int memberObjectId)
 	{
 		return groupMembers.get(memberObjectId);
 	}
-	
+
 	public Collection<PlayerAllianceMember> getMembers()
 	{
 		return groupMembers.values();

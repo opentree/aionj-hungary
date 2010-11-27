@@ -29,13 +29,13 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_FRIEND_LIST;
  */
 public class CM_SET_NOTE extends AbstractClientPacket<AionChannelHandler>
 {
-	private String note;
-	
+	private String	note;
+
 	public CM_SET_NOTE(int opcode)
 	{
 		super(opcode);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -53,22 +53,21 @@ public class CM_SET_NOTE extends AbstractClientPacket<AionChannelHandler>
 	protected void runImpl()
 	{
 		Player activePlayer = getChannelHandler().getActivePlayer();
-		
+
 		if (!note.equals(activePlayer.getCommonData().getNote()))
 		{
-		
+
 			activePlayer.getCommonData().setNote(note);
-			
+
 			for (Friend friend : activePlayer.getFriendList()) // For all my friends
 			{
-				
+
 				if (friend.isOnline()) // If the player is online
 				{
-					friend.getPlayer().getClientConnection()
-						.sendPacket(new SM_FRIEND_LIST()); // Send him a new friend list packet
+					friend.getPlayer().getClientConnection().sendPacket(new SM_FRIEND_LIST()); // Send him a new friend list packet
 				}
 			}
-			
+
 		}
 	}
 }

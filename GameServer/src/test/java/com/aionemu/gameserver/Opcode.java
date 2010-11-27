@@ -20,7 +20,6 @@ package com.aionemu.gameserver;
 
 import org.junit.Test;
 
-
 /**
  * @author Mr. Poke
  *
@@ -30,14 +29,14 @@ public class Opcode
 	@Test
 	public void testStorageFull()
 	{
-		for (int op=0 ; op <=255 ; op++)
+		for (int op = 0; op <= 255; op++)
 		{
 			/*
 			byte op1 = (byte)((op + 0xAE) ^ 0xEE);
 			op1 = (byte)((~op1)+ 0x45);*/
-			byte op1 = (byte)(((~op) + 0x45));
+			byte op1 = (byte) (((~op) + 0x45));
 			//op1 = (byte)(~(op1- 0x44));
-			System.out.println(Integer.toHexString(op).toUpperCase() +" > "+ Integer.toHexString(op1).toUpperCase());
+			System.out.println(Integer.toHexString(op).toUpperCase() + " > " + Integer.toHexString(op1).toUpperCase());
 		}
 	}
 }

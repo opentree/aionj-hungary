@@ -49,11 +49,11 @@ public class NpcIdCondition extends QuestCondition
 	{
 		int id = 0;
 		VisibleObject visibleObject = env.getVisibleObject();
-		if(visibleObject != null && visibleObject instanceof Npc)
+		if (visibleObject != null && visibleObject instanceof Npc)
 		{
 			id = ((Npc) visibleObject).getNpcId();
 		}
-		switch(getOp())
+		switch (getOp())
 		{
 			case EQUAL:
 				return id == values;

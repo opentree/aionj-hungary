@@ -32,14 +32,14 @@ public class SM_DELETE extends AbstractAionServerPacket<AionChannelHandler>
 	 * Object that is no longer visible.
 	 */
 	private final int	objectId;
-	private final int   time;
+	private final int	time;
 
 	/**
 	 * Constructor.
 	 * 
 	 * @param object
 	 */
-	
+
 	public SM_DELETE(AionObject object, int time)
 	{
 		this.objectId = object.getObjectId();
@@ -51,11 +51,12 @@ public class SM_DELETE extends AbstractAionServerPacket<AionChannelHandler>
 	 */
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
-	{	
+	{
 		int action = 0;
-		if (action != 1){
+		if (action != 1)
+		{
 			writeD(objectId);
-			writeC( time); // removal animation speed
+			writeC(time); // removal animation speed
 		}
 	}
 }

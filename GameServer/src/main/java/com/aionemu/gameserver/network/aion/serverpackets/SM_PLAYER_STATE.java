@@ -55,11 +55,11 @@ public class SM_PLAYER_STATE extends AbstractAionServerPacket<AionChannelHandler
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(playerObjId);
-		writeC( visualState);
-		writeC( seeState);
-		if(visualState == 64)
-			writeC( 0x01);
+		writeC(visualState);
+		writeC(seeState);
+		if (visualState == 64)
+			writeC(0x01);
 		else
-			writeC( 0x00);
+			writeC(0x00);
 	}
 }

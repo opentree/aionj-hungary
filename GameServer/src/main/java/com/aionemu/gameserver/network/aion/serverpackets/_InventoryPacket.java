@@ -33,7 +33,7 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  *
  */
 public abstract class _InventoryPacket extends AbstractAionServerPacket<AionChannelHandler>
-{	
+{
 	/**
 	 *  The header of every item block
 	 * @param buf
@@ -48,7 +48,7 @@ public abstract class _InventoryPacket extends AbstractAionServerPacket<AionChan
 		writeD(itemTemplate.getNameId());
 		writeH(0);
 	}
-	
+
 	protected void writeMailGeneralInfo(Item item)
 	{
 		writeD(item.getObjectId());
@@ -69,38 +69,35 @@ public abstract class _InventoryPacket extends AbstractAionServerPacket<AionChan
 	protected void writeGeneralItemInfo(Item item, boolean privateStore, boolean mail)
 	{
 		writeH(0x16); //length of details
-		writeC( 0);
+		writeC(0);
 		writeH(item.getItemMask());
 		writeQ(item.getItemCount());
 		writeD(0);
 		writeD(0);
-		if(!privateStore)
+		if (!privateStore)
 			writeH(0);
-		writeC( 0);
-		if(!mail)
+		writeC(0);
+		if (!mail)
 			writeH(item.getEquipmentSlot()); // not equipable items		
 	}
-	
+
 	protected void writeStigmaInfo(Item item)
 	{
 		writeH(325); //length of details 45 01
-		writeC( 0x6);
-		if(item.isEquipped())
+		writeC(0x6);
+		if (item.isEquipped())
 			writeD(item.getEquipmentSlot());
 		else
 			writeD(0);
-		writeC( 0x7);
+		writeC(0x7);
 		writeH(702); //skill id
 		writeD(0);
 		writeH(0);
-		writeD(0x3c);  //0x3c
-		
+		writeD(0x3c); //0x3c
+
 		writeD(0);
 		writeD(0);
-		
-		writeD(0);
-		writeD(0);
-		writeD(0);
+
 		writeD(0);
 		writeD(0);
 		writeD(0);
@@ -134,20 +131,15 @@ public abstract class _InventoryPacket extends AbstractAionServerPacket<AionChan
 		writeD(0);
 		writeD(0);
 		writeD(0);
-		
 		writeD(0);
-		writeD(0);	
+		writeD(0);
+		writeD(0);
+
+		writeD(0);
+		writeD(0);
 		writeD(1);//1
 		writeD(0);
-		
-		writeD(0);
-		writeD(0);
-		writeD(0);
-		writeD(0);	
-		writeD(0);
-		writeD(0);
-		writeD(0);
-		writeD(0);	
+
 		writeD(0);
 		writeD(0);
 		writeD(0);
@@ -156,17 +148,24 @@ public abstract class _InventoryPacket extends AbstractAionServerPacket<AionChan
 		writeD(0);
 		writeD(0);
 		writeD(0);
-		
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+		writeD(0);
+
 		writeD(0);
 		writeD(0);
 		writeD(0);
 		writeH(0);
 		writeH(0x0b); //0b
-		
-		
-		writeC( 0);
-		writeD(item.getItemTemplate().getTemplateId());		
-		
+
+		writeC(0);
+		writeD(item.getItemTemplate().getTemplateId());
+
 		writeD(0);
 		writeD(0);
 		writeD(0);
@@ -175,17 +174,17 @@ public abstract class _InventoryPacket extends AbstractAionServerPacket<AionChan
 		writeD(0);
 		writeD(0);
 		writeD(0);
-		writeC( 0);
-		
+		writeC(0);
+
 		writeD(82750); //3E 43 01 00
-		
+
 		writeD(0);
 		writeD(0);
 		writeD(0);
 		writeD(0);
-		writeC( 0);
-		
-		writeC( 0x22); // 22
+		writeC(0);
+
+		writeC(0x22); // 22
 		writeH(0);
 	}
 
@@ -197,16 +196,16 @@ public abstract class _InventoryPacket extends AbstractAionServerPacket<AionChan
 	protected void writeKinah(Item item, boolean isInventory)
 	{
 		writeH(0x16); //length of details
-		writeC( 0);
+		writeC(0);
 		writeH(item.getItemMask());
 		writeQ(item.getItemCount());
 		writeD(0);
 		writeD(0);
 		writeH(0);
-		writeC( 0);
+		writeC(0);
 		writeH(255); // FF FF equipment
-		if(isInventory)
-			writeC( 0);
+		if (isInventory)
+			writeC(0);
 	}
 
 	/**
@@ -220,7 +219,7 @@ public abstract class _InventoryPacket extends AbstractAionServerPacket<AionChan
 	{
 		this.writeWeaponInfo(item, isInventory, false, false, false);
 	}
-	
+
 	/**
 	 *  For all weapon. Weapon is identified by weapon_type in xml
 	 *  
@@ -230,48 +229,48 @@ public abstract class _InventoryPacket extends AbstractAionServerPacket<AionChan
 	protected void writeWeaponInfo(Item item, boolean isInventory, boolean isWeaponSwitch, boolean privateStore, boolean mail)
 	{
 		int itemSlotId = item.getEquipmentSlot();
-		
-		if(isWeaponSwitch)
+
+		if (isWeaponSwitch)
 			writeH(0x05); // next bytes count ??
 		else
 			writeH(0x4B); // next bytes count ??
-		
-		writeC( 0x06);	
+
+		writeC(0x06);
 		writeD(item.isEquipped() ? itemSlotId : 0);
-		
-		if(!isWeaponSwitch)
+
+		if (!isWeaponSwitch)
 		{
-			writeC( 0x01);
+			writeC(0x01);
 			writeD(ItemSlot.getSlotsFor(item.getItemTemplate().getItemSlot()).get(0).getSlotIdMask());
 			writeD(0x02);
-			writeC( 0x0B); //? some details separator
-			writeC( item.isSoulBound() ? 1 : 0);
-			writeC( item.getEnchantLevel()); //enchant (1-15)
+			writeC(0x0B); //? some details separator
+			writeC(item.isSoulBound() ? 1 : 0);
+			writeC(item.getEnchantLevel()); //enchant (1-15)
 			writeD(item.getItemSkinTemplate().getTemplateId());
-			writeC( 0);
+			writeC(0);
 
 			writeItemStones(item);
-			
+
 			ItemStone god = item.getGodStone();
 			writeD(god == null ? 0 : god.getItemId());
-			writeC( 0);
-			
+			writeC(0);
+
 			writeD(0);
 
 			writeD(0);//unk 1.5.1.9
-			writeC( 0);//unk 1.5.1.9
+			writeC(0);//unk 1.5.1.9
 
 			writeH(item.getItemMask());
 			writeQ(item.getItemCount());
 			writeD(0);
 			writeD(0);
-			if(!privateStore)
+			if (!privateStore)
 				writeH(0);
-			writeC( 0);
-			if(!mail)
+			writeC(0);
+			if (!mail)
 				writeH(item.isEquipped() ? 255 : item.getEquipmentSlot()); // FF FF equipment
-			if(isInventory)
-				writeC(  0);//item.isEquipped() ? 1 : 0
+			if (isInventory)
+				writeC(0);//item.isEquipped() ? 1 : 0
 		}
 	}
 
@@ -283,38 +282,38 @@ public abstract class _InventoryPacket extends AbstractAionServerPacket<AionChan
 	private void writeItemStones(Item item)
 	{
 		int count = 0;
-		
-		if(item.hasManaStones())
+
+		if (item.hasManaStones())
 		{
 			Set<ManaStone> itemStones = item.getItemStones();
-			
-			for(ManaStone itemStone : itemStones)
+
+			for (ManaStone itemStone : itemStones)
 			{
-				if(count == 6)
+				if (count == 6)
 					break;
 
 				StatModifier modifier = itemStone.getFirstModifier();
-				if(modifier != null)
+				if (modifier != null)
 				{
 					count++;
-					writeC( modifier.getStat().getItemStoneMask());
+					writeC(modifier.getStat().getItemStoneMask());
 				}
 			}
-			writeB(new byte[(6-count)]);
+			writeB(new byte[(6 - count)]);
 			count = 0;
-			for(ManaStone itemStone : itemStones)
+			for (ManaStone itemStone : itemStones)
 			{
-				if(count == 6)
+				if (count == 6)
 					break;
 
 				StatModifier modifier = itemStone.getFirstModifier();
-				if(modifier != null)
+				if (modifier != null)
 				{
 					count++;
-					writeH(((SimpleModifier)modifier).getValue());
+					writeH(((SimpleModifier) modifier).getValue());
 				}
 			}
-			writeB(new byte[(6-count)*2]);
+			writeB(new byte[(6 - count) * 2]);
 		}
 		else
 		{
@@ -333,38 +332,38 @@ public abstract class _InventoryPacket extends AbstractAionServerPacket<AionChan
 	{
 		int itemSlotId = item.getEquipmentSlot();
 		writeH(0x4F);
-		writeC( 0x06);
+		writeC(0x06);
 		writeD(item.isEquipped() ? itemSlotId : 0);
-		writeC( 0x02);
+		writeC(0x02);
 		writeD(ItemSlot.getSlotsFor(item.getItemTemplate().getItemSlot()).get(0).getSlotIdMask());
 		writeD(0);
 		writeD(0);
-		writeC( 0x0B); //? some details separator
-		writeC( item.isSoulBound() ? 1 : 0);
-		writeC( item.getEnchantLevel()); //enchant (1-15)
+		writeC(0x0B); //? some details separator
+		writeC(item.isSoulBound() ? 1 : 0);
+		writeC(item.getEnchantLevel()); //enchant (1-15)
 		writeD(item.getItemSkinTemplate().getTemplateId());
 
-		writeC( 0);
+		writeC(0);
 
 		writeItemStones(item);
 
-		writeC( 0);
+		writeC(0);
 		writeD(item.getItemColor());
 		writeD(0);
 
 		writeD(0);//unk 1.5.1.9
-		writeC( 0);//unk 1.5.1.9
+		writeC(0);//unk 1.5.1.9
 
 		writeH(item.getItemMask());
 		writeQ(item.getItemCount());
 		writeD(0);
 		writeD(0);
-		if(!privateStore)
+		if (!privateStore)
 			writeH(0);
-		writeC( 0);
-		if(!mail)
+		writeC(0);
+		if (!mail)
 			writeH(item.isEquipped() ? 255 : item.getEquipmentSlot()); // FF FF equipment
-		if(isInventory)
-			writeC(  1);//item.isEquipped() ? 1 : 0
+		if (isInventory)
+			writeC(1);//item.isEquipped() ? 1 : 0
 	}
 }

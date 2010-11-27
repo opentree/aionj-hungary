@@ -27,7 +27,7 @@ public abstract class TaskFromDBHandler implements Runnable
 {
 	protected int		id;
 	protected String	params[];
-	
+
 	/**
 	 * Task's id
 	 * 
@@ -37,7 +37,7 @@ public abstract class TaskFromDBHandler implements Runnable
 	{
 		this.id = id;
 	}
-	
+
 	/**
 	 * Task's param(s)
 	 * 
@@ -47,20 +47,20 @@ public abstract class TaskFromDBHandler implements Runnable
 	{
 		this.params = params;
 	}
-	
+
 	/**
 	 * The task's name
 	 * This allow to check with the table column "task"
 	 */
 	public abstract String getTaskName();
-	
+
 	/**
 	 * Check if the task's parameters are valid
 	 * 
 	 * @return true if valid, false otherwise
 	 */
 	public abstract boolean isValid();
-	
+
 	/**
 	 * Retuns {@link com.aionemu.gameserver.dao.TaskFromDBDAO} , just a shortcut
 	 * 

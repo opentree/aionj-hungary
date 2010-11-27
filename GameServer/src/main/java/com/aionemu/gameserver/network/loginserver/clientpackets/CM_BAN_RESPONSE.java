@@ -30,12 +30,12 @@ import com.aionemu.gameserver.world.World;
  */
 public class CM_BAN_RESPONSE extends AbstractClientPacket<LoginServerChannelHandler>
 {
-	private byte		type;
-	private int			accountId;
-	private String		ip;
-	private int			time;
-	private int			adminObjId;
-	private boolean		result;
+	private byte	type;
+	private int		accountId;
+	private String	ip;
+	private int		time;
+	private int		adminObjId;
+	private boolean	result;
 
 	public CM_BAN_RESPONSE(int opcode)
 	{
@@ -63,12 +63,12 @@ public class CM_BAN_RESPONSE extends AbstractClientPacket<LoginServerChannelHand
 	protected void runImpl()
 	{
 		Player admin = World.getInstance().findPlayer(adminObjId);
-		
+
 		if (admin == null)
 		{
 			return;
 		}
-		
+
 		// Some messages stuff
 		String message;
 		if (type == 1 || type == 3)

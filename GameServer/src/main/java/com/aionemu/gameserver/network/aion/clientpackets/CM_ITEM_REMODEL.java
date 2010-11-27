@@ -26,11 +26,11 @@ import com.aionemu.gameserver.services.ItemRemodelService;
  *
  */
 public class CM_ITEM_REMODEL extends AbstractClientPacket<AionChannelHandler>
-{	
+{
 
-	private int keepItemId;
-	private int extractItemId;
-	
+	private int	keepItemId;
+	private int	extractItemId;
+
 	public CM_ITEM_REMODEL(int opcode)
 	{
 		super(opcode);

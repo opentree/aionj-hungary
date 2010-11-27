@@ -22,10 +22,5 @@ package com.aionemu.gameserver.world;
  */
 public enum WorldType
 {
-	ASMODAE,
-	ELYSEA,
-	ABYSS,
-	PRISON,
-	BALAUREA,
-	NONE
+	ASMODAE, ELYSEA, ABYSS, PRISON, BALAUREA, NONE
 }

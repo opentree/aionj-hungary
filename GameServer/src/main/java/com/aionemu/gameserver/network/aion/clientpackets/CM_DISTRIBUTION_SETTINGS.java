@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.group.LootDistribution;
 import com.aionemu.gameserver.model.group.LootGroupRules;
@@ -30,19 +29,19 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class CM_DISTRIBUTION_SETTINGS extends AbstractClientPacket<AionChannelHandler>
 {
-		
-	private LootRuleType lootrules; //0-free-for-all, 1-round-robin 2-leader
-	private LootDistribution autodistribution;
+
+	private LootRuleType		lootrules;				//0-free-for-all, 1-round-robin 2-leader
+	private LootDistribution	autodistribution;
 	//rare item distribution
 	//0-normal, 2-Roll-dice,3-bid
-	private int common_item_above;
-	private int superior_item_above;
-	private int heroic_item_above;
-	private int fabled_item_above;
-	private int ethernal_item_above;
-	private int over_ethernal;
-	private int over_over_ethernal;
-	
+	private int					common_item_above;
+	private int					superior_item_above;
+	private int					heroic_item_above;
+	private int					fabled_item_above;
+	private int					ethernal_item_above;
+	private int					over_ethernal;
+	private int					over_over_ethernal;
+
 	public CM_DISTRIBUTION_SETTINGS(int opcode)
 	{
 		super(opcode);
@@ -54,7 +53,7 @@ public class CM_DISTRIBUTION_SETTINGS extends AbstractClientPacket<AionChannelHa
 	@Override
 	protected void readImpl()
 	{
-		switch(readD())
+		switch (readD())
 		{
 			case 0:
 				this.lootrules = LootRuleType.FREEFORALL;
@@ -69,8 +68,8 @@ public class CM_DISTRIBUTION_SETTINGS extends AbstractClientPacket<AionChannelHa
 				this.lootrules = LootRuleType.FREEFORALL;
 				break;
 		}
-		
-		switch(readD())
+
+		switch (readD())
 		{
 			case 0:
 				this.autodistribution = LootDistribution.NORMAL;
@@ -80,12 +79,12 @@ public class CM_DISTRIBUTION_SETTINGS extends AbstractClientPacket<AionChannelHa
 				break;
 			case 3:
 				this.autodistribution = LootDistribution.BID;
-				break;	
+				break;
 			default: // It happens!
 				this.autodistribution = LootDistribution.NORMAL;
-				break;	
+				break;
 		}
-		
+
 		this.common_item_above = readD();
 		this.superior_item_above = readD();
 		this.heroic_item_above = readD();
@@ -102,15 +101,12 @@ public class CM_DISTRIBUTION_SETTINGS extends AbstractClientPacket<AionChannelHa
 	protected void runImpl()
 	{
 		Player leader = getChannelHandler().getActivePlayer();
-		if(leader != null)
+		if (leader != null)
 		{
 			PlayerGroup pg = leader.getPlayerGroup();
-			if(pg != null)
-				pg.setLootGroupRules(new LootGroupRules(this.lootrules, 
-						this.autodistribution, this.common_item_above,
-						this.superior_item_above, this.heroic_item_above,
-						this.fabled_item_above, this.ethernal_item_above,
-						this.over_ethernal, this.over_over_ethernal));
+			if (pg != null)
+				pg.setLootGroupRules(new LootGroupRules(this.lootrules, this.autodistribution, this.common_item_above, this.superior_item_above,
+						this.heroic_item_above, this.fabled_item_above, this.ethernal_item_above, this.over_ethernal, this.over_over_ethernal));
 		}
 	}
 }

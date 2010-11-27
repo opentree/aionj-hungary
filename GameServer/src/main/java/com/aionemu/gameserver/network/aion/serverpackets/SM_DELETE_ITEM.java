@@ -23,18 +23,17 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 public class SM_DELETE_ITEM extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int itemUniqueId;
+	private int	itemUniqueId;
 
 	public SM_DELETE_ITEM(int itemUniqueId)
 	{
 		this.itemUniqueId = itemUniqueId;
 	}
 
-
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(itemUniqueId);
-		writeC( 0); //unk. can be any 1,2,3 etc.
+		writeC(0); //unk. can be any 1,2,3 etc.
 	}
 }

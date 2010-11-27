@@ -30,7 +30,7 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
  */
 public class GameTimeManager
 {
-	private static final Logger log = Logger.getLogger(GameTimeManager.class);
+	private static final Logger		log				= Logger.getLogger(GameTimeManager.class);
 	private static GameTime			instance;
 	private static GameTimeUpdater	updater;
 	private static boolean			clockStarted	= false;
@@ -59,14 +59,14 @@ public class GameTimeManager
 	 */
 	public static void startClock()
 	{
-		if(clockStarted)
+		if (clockStarted)
 		{
 			throw new IllegalStateException("Clock is already started");
 		}
 
 		updater = new GameTimeUpdater(getGameTime());
 		ThreadPoolManager.getInstance().scheduleAtFixedRate(updater, 0, 5000);
-		
+
 		clockStarted = true;
 	}
 

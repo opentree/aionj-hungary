@@ -36,32 +36,34 @@ import com.aionemu.gameserver.skillengine.model.SkillType;
 public class OneTimeBoostSkillAttackEffect extends BufEffect
 {
 	@XmlAttribute
-	private int count;
-	
+	private int	count;
+
 	@Override
 	public void startEffect(final Effect effect)
 	{
 		super.startEffect(effect);
-		
-		final int stopCount = count;
-		ActionObserver observer = new ActionObserver(ObserverType.SKILLUSE){
 
-			private int count = 0;
+		final int stopCount = count;
+		ActionObserver observer = new ActionObserver(ObserverType.SKILLUSE)
+		{
+
+			private int	count	= 0;
+
 			@Override
 			public void skilluse(Skill skill)
 			{
-				if( (count < stopCount) && (skill.getSkillTemplate().getType() == SkillType.PHYSICAL) )
+				if ((count < stopCount) && (skill.getSkillTemplate().getType() == SkillType.PHYSICAL))
 					count++;
-				
-				if(count == stopCount)
+
+				if (count == stopCount)
 					effect.endEffect();
 			}
 		};
-		
+
 		effect.getEffected().getObserveController().addObserver(observer);
 		effect.setActionObserver(observer, position);
 	}
-	
+
 	@Override
 	public void endEffect(Effect effect)
 	{

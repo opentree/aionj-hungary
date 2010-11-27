@@ -28,11 +28,11 @@ import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 public class AionClientPacketHandler<T extends AionChannelHandler> extends ClientPacketHandler<T>
 {
 	@Override
-    public AbstractClientPacket<T> handle(ChannelBuffer data, T ch)
+	public AbstractClientPacket<T> handle(ChannelBuffer data, T ch)
 	{
-        int id = data.readByte() & 0xff;
+		int id = data.readByte() & 0xff;
 		/* Second opcodec. */
-        data.readShort();
+		data.readShort();
 
 		return getPacket(id, data, ch);
 	}

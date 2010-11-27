@@ -24,21 +24,19 @@ import javax.xml.bind.annotation.XmlType;
 import com.aionemu.gameserver.skillengine.model.Effect;
 import com.aionemu.gameserver.utils.PositionUtil;
 
-
 /**
  * @author ATracer
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "FrontDamageModifier")
-public class FrontDamageModifier
-extends ActionModifier
+public class FrontDamageModifier extends ActionModifier
 {
 
 	@XmlAttribute(required = true)
-	protected int delta;
+	protected int	delta;
 	@XmlAttribute(required = true)
-	protected int value;
+	protected int	value;
 
 	@Override
 	public int analyze(Effect effect, int originalValue)
@@ -51,6 +49,5 @@ extends ActionModifier
 	{
 		return PositionUtil.isInFrontOfTarget(effect.getEffector(), effect.getEffected());
 	}
-	
-	
+
 }

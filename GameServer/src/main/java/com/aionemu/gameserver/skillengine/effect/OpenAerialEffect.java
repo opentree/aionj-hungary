@@ -44,18 +44,18 @@ public class OpenAerialEffect extends EffectTemplate
 	@Override
 	public void calculate(Effect effect)
 	{
-		if (calculateEffectResistRate(effect, StatEnum.OPENAREIAL_RESISTANCE)) 
-		{ 
+		if (calculateEffectResistRate(effect, StatEnum.OPENAREIAL_RESISTANCE))
+		{
 			effect.addSucessEffect(this);
-			effect.setSpellStatus(SpellStatus.OPENAERIAL);			
- 	    }
+			effect.setSpellStatus(SpellStatus.OPENAERIAL);
+		}
 	}
 
 	@Override
 	public void startEffect(Effect effect)
 	{
 		final Creature effected = effect.getEffected();
-		effected.cancelCurrentSkill(); 
+		effected.cancelCurrentSkill();
 		effected.getEffectController().setAbnormal(EffectId.OPENAERIAL.getEffectId());
 		PacketSendUtility.broadcastPacketAndReceive(effected, new SM_FORCED_MOVE(effect.getEffector(), effected));
 	}

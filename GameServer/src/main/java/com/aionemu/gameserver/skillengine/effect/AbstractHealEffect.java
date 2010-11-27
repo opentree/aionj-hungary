@@ -24,8 +24,6 @@ import javax.xml.bind.annotation.XmlType;
 import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
 import com.aionemu.gameserver.skillengine.model.Effect;
 
-
-
 /**
  * @author ATracer
  *
@@ -35,13 +33,13 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 public abstract class AbstractHealEffect extends EffectTemplate
 {
 	@XmlAttribute(required = true)
-	protected int value;
+	protected int		value;
 
 	@XmlAttribute
-	protected int delta;
+	protected int		delta;
 
 	@XmlAttribute
-	protected boolean percent;
+	protected boolean	percent;
 
 	@Override
 	public void calculate(Effect effect)
@@ -49,7 +47,7 @@ public abstract class AbstractHealEffect extends EffectTemplate
 		int valueWithDelta = value + delta * effect.getSkillLevel();
 
 		int healValue = valueWithDelta;
-		if(percent)
+		if (percent)
 		{
 			int currentValue = getCurrentStatValue(effect);
 			int maxValue = getMaxStatValue(effect);
@@ -58,10 +56,10 @@ public abstract class AbstractHealEffect extends EffectTemplate
 		}
 		// +100 = 100% heal min value for all class.
 		// Boost heal formula = boost heal value / 10 = additional % heal value.
-		int boostHeal = ((effect.getEffector().getGameStats().getCurrentStat(StatEnum.BOOST_HEAL) / 10)+100);
+		int boostHeal = ((effect.getEffector().getGameStats().getCurrentStat(StatEnum.BOOST_HEAL) / 10) + 100);
 		effect.setReserved1(Math.round(-healValue * boostHeal / 100f));
 	}
-	
+
 	/**
 	 * 
 	 * @param effect
@@ -71,7 +69,7 @@ public abstract class AbstractHealEffect extends EffectTemplate
 	{
 		return effect.getEffected().getLifeStats().getCurrentHp();
 	}
-	
+
 	/**
 	 * 
 	 * @param effect

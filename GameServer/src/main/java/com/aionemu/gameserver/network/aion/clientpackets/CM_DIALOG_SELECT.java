@@ -37,16 +37,17 @@ public class CM_DIALOG_SELECT extends AbstractClientPacket<AionChannelHandler>
 	/**
 	 * Target object id that client wants to TALK WITH or 0 if wants to unselect
 	 */
-	private int		targetObjectId;
-	private int		dialogId;
+	private int					targetObjectId;
+	private int					dialogId;
 	@SuppressWarnings("unused")
-	private int		unk1;
+	private int					unk1;
 	@SuppressWarnings("unused")
-	private int		lastPage;
-	private int		questId;
+	private int					lastPage;
+	private int					questId;
 
 	@SuppressWarnings("unused")
-	private static final Logger log = Logger.getLogger(CM_DIALOG_SELECT.class);
+	private static final Logger	log	= Logger.getLogger(CM_DIALOG_SELECT.class);
+
 	/**
 	 * Constructs new instance of <tt>CM_CM_REQUEST_DIALOG </tt> packet
 	 * 
@@ -77,20 +78,20 @@ public class CM_DIALOG_SELECT extends AbstractClientPacket<AionChannelHandler>
 	protected void runImpl()
 	{
 		final Player player = getChannelHandler().getActivePlayer();
-		if(player == null)
+		if (player == null)
 			return;
 
-		if(targetObjectId == 0)
+		if (targetObjectId == 0)
 		{
-			if(QuestEngine.getInstance().onDialog(new QuestEnv(null, player, questId, dialogId)))
+			if (QuestEngine.getInstance().onDialog(new QuestEnv(null, player, questId, dialogId)))
 				return;
 		}
 
 		AionObject object = World.getInstance().findAionObject(targetObjectId);
 
-		if(object instanceof IDialog)
+		if (object instanceof IDialog)
 		{
-			((IDialog)object).onDialogSelect(dialogId, player, questId);
+			((IDialog) object).onDialogSelect(dialogId, player, questId);
 		}
 		//log.info("id: "+targetObjectId+" dialogId: " + dialogId +" unk1: " + unk1 + " questId: "+questId);
 	}

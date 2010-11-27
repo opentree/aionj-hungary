@@ -44,7 +44,7 @@ public class SpellAtkDrainInstantEffect extends DamageEffect
 	{
 		super.applyEffect(effect);
 		int value = effect.getReserved1() * percent / 100;
-		switch(healType)
+		switch (healType)
 		{
 			case HP:
 				effect.getEffector().getLifeStats().increaseHp(TYPE.NATURAL_HP, value);

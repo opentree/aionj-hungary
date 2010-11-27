@@ -33,7 +33,7 @@ public class SM_FLY_TIME extends AbstractAionServerPacket<AionChannelHandler>
 		this.currentFp = currentFp;
 		this.maxFp = maxFp;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -41,6 +41,6 @@ public class SM_FLY_TIME extends AbstractAionServerPacket<AionChannelHandler>
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(currentFp); //current fly time
-        writeD(maxFp); //max flytime
+		writeD(maxFp); //max flytime
 	}
 }

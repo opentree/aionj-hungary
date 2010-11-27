@@ -25,16 +25,17 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_QUEST_DELETE extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int questId;
+	private int	questId;
 
 	public SM_QUEST_DELETE(int questId)
 	{
 		this.questId = questId;
 	}
+
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
-	{		
+	{
 		writeH(questId);
-		writeC( 0x00);
+		writeC(0x00);
 	}
 }

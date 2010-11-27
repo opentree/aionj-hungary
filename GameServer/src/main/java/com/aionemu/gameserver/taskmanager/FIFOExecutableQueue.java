@@ -23,14 +23,14 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
  */
 public abstract class FIFOExecutableQueue implements Runnable
 {
-	private static final byte NONE = 0;
-	private static final byte QUEUED = 1;
-	private static final byte RUNNING = 2;
-	
-	private final ReentrantLock lock = new ReentrantLock();
-	
-	private volatile byte state = NONE;
-	
+	private static final byte	NONE	= 0;
+	private static final byte	QUEUED	= 1;
+	private static final byte	RUNNING	= 2;
+
+	private final ReentrantLock	lock	= new ReentrantLock();
+
+	private volatile byte		state	= NONE;
+
 	protected final void execute()
 	{
 		lock();
@@ -38,27 +38,27 @@ public abstract class FIFOExecutableQueue implements Runnable
 		{
 			if (state != NONE)
 				return;
-			
+
 			state = QUEUED;
 		}
 		finally
 		{
 			unlock();
 		}
-		
+
 		ThreadPoolManager.getInstance().execute(this);
 	}
-	
+
 	public final void lock()
 	{
 		lock.lock();
 	}
-	
+
 	public final void unlock()
 	{
 		lock.unlock();
 	}
-	
+
 	public final void run()
 	{
 		try
@@ -66,7 +66,7 @@ public abstract class FIFOExecutableQueue implements Runnable
 			while (!isEmpty())
 			{
 				setState(QUEUED, RUNNING);
-				
+
 				try
 				{
 					while (!isEmpty())
@@ -83,7 +83,7 @@ public abstract class FIFOExecutableQueue implements Runnable
 			setState(QUEUED, NONE);
 		}
 	}
-	
+
 	private void setState(byte expected, byte value)
 	{
 		lock();
@@ -95,12 +95,12 @@ public abstract class FIFOExecutableQueue implements Runnable
 		finally
 		{
 			state = value;
-			
+
 			unlock();
 		}
 	}
-	
+
 	protected abstract boolean isEmpty();
-	
+
 	protected abstract void removeAndExecuteFirst();
 }

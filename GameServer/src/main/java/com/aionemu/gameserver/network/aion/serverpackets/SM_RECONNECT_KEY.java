@@ -49,7 +49,7 @@ public class SM_RECONNECT_KEY extends AbstractAionServerPacket<AionChannelHandle
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
-		writeC( 0x00);
+		writeC(0x00);
 		writeD(key);
 	}
 }

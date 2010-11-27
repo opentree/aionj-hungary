@@ -46,25 +46,25 @@ public class SkillList
 	/**
 	 * Class logger
 	 */
-	private static final Logger logger = Logger.getLogger(SkillList.class);
+	private static final Logger					logger				= Logger.getLogger(SkillList.class);
 
-	public static final String[]	split	= null;
+	public static final String[]				split				= null;
 
 	/**
 	 * Container of skilllist, position to xml.
 	 */
-	private final Map<Integer, SkillListEntry> skills;
-	
-	private final List<SkillListEntry> deletedSkills;
-	
+	private final Map<Integer, SkillListEntry>	skills;
+
+	private final List<SkillListEntry>			deletedSkills;
+
 	/**
 	 * Current weapon mastery skills
 	 */
-	private final Map<WeaponType, Integer> weaponMasterySkills = new HashMap<WeaponType, Integer>();
+	private final Map<WeaponType, Integer>		weaponMasterySkills	= new HashMap<WeaponType, Integer>();
 	/**
 	 * Current armor mastery skills
 	 */
-	private final Map<ArmorType, Integer> armorMasterySkills = new HashMap<ArmorType, Integer>();
+	private final Map<ArmorType, Integer>		armorMasterySkills	= new HashMap<ArmorType, Integer>();
 
 	/**
 	 * Creates an empty skill list
@@ -86,7 +86,7 @@ public class SkillList
 		calculateUsedWeaponMasterySkills();
 		calculateUsedArmorMasterySkills();
 	}
-	
+
 	/**
 	 * Returns array with all skills
 	 * @return SkillListEntry[]
@@ -95,7 +95,7 @@ public class SkillList
 	{
 		return skills.values().toArray(new SkillListEntry[skills.size()]);
 	}
-	
+
 	/**
 	 * 
 	 * @return SkillListEntry[]
@@ -104,7 +104,7 @@ public class SkillList
 	{
 		return deletedSkills.toArray(new SkillListEntry[deletedSkills.size()]);
 	}
-	
+
 	/**
 	 * @param skillId
 	 * @return SkillListEntry
@@ -124,7 +124,7 @@ public class SkillList
 		SkillListEntry existingSkill = skills.get(skillId);
 		if (existingSkill != null)
 		{
-			if(existingSkill.getSkillLevel() >= skillLevel)
+			if (existingSkill.getSkillLevel() >= skillLevel)
 			{
 				return false;
 			}
@@ -136,18 +136,18 @@ public class SkillList
 		}
 		if (msg)
 			sendMessage(player, skillId);
-		
+
 		SkillTemplate skillTemplate = DataManager.SKILL_DATA.getSkillTemplate(skillId);
-		
+
 		//do passive skills recalculations
-		if(skillTemplate.isPassive())
+		if (skillTemplate.isPassive())
 		{
 			calculateUsedWeaponMasterySkills();
 			calculateUsedArmorMasterySkills();
 		}
 		return true;
 	}
-	
+
 	/**
 	 * @param skill
 	 */
@@ -165,11 +165,11 @@ public class SkillList
 	 */
 	public boolean addSkillXp(Player player, int skillId, int xpReward)
 	{
-		SkillListEntry  skillEntry =  getSkillEntry(skillId);
-		switch(skillEntry.getSkillId())
+		SkillListEntry skillEntry = getSkillEntry(skillId);
+		switch (skillEntry.getSkillId())
 		{
 			case 30001:
-				if(skillEntry.getSkillLevel() == 49)
+				if (skillEntry.getSkillLevel() == 49)
 					return false;
 			case 30002:
 			case 30003:
@@ -196,6 +196,7 @@ public class SkillList
 			sendMessage(player, skillId);
 		return true;
 	}
+
 	/**
 	 * Checks whether player have skill with specified skillId
 	 * 
@@ -206,7 +207,7 @@ public class SkillList
 	{
 		return skills.containsKey(skillId);
 	}
-	
+
 	/**
 	 * @param skillId
 	 * @return level of the skill with specified skillId
@@ -216,7 +217,7 @@ public class SkillList
 	{
 		return skills.get(skillId).getSkillLevel();
 	}
-	
+
 	/**
 	 * 
 	 * @param skillId
@@ -225,15 +226,16 @@ public class SkillList
 	public synchronized boolean removeSkill(Player player, int skillId)
 	{
 		SkillListEntry entry = skills.get(skillId);
-		if(entry != null)
+		if (entry != null)
 		{
 			entry.setPersistentState(PersistentState.DELETED);
 			deletedSkills.add(entry);
 			skills.remove(skillId);
 			PacketSendUtility.sendPacket(player, new SM_SKILL_REMOVE(skillId));
-		}	
+		}
 		return entry != null;
 	}
+
 	/**
 	 * Returns count of available skillist.
 	 * @return count of available skillist.
@@ -242,13 +244,13 @@ public class SkillList
 	{
 		return skills.size();
 	}
-	
+
 	/**
 	 * 
 	 * @param player
 	 * @param skillId
 	 */
-	private void sendMessage(Player player , int skillId)
+	private void sendMessage(Player player, int skillId)
 	{
 		switch (skillId)
 		{
@@ -274,33 +276,32 @@ public class SkillList
 				PacketSendUtility.sendPacket(player, new SM_SKILL_LIST(player.getSkillList().getSkillEntry(skillId), 1300050));
 		}
 	}
-	
+
 	/**
 	 * Calculates weapon mastery skills that will used during equip
 	 */
 	private void calculateUsedWeaponMasterySkills()
-	{		
+	{
 		Map<WeaponType, Integer> skillLevels = new HashMap<WeaponType, Integer>();
-		for(SkillListEntry skillListEntry : getAllSkills())
+		for (SkillListEntry skillListEntry : getAllSkills())
 		{
 			SkillTemplate skillTemplate = DataManager.SKILL_DATA.getSkillTemplate(skillListEntry.getSkillId());
-			if(skillTemplate == null)
+			if (skillTemplate == null)
 			{
 				logger.warn("CHECKPOINT: no skill template found for " + skillListEntry.getSkillId());
 				continue;
 			}
-			
-			if(skillTemplate.isPassive())
+
+			if (skillTemplate.isPassive())
 			{
-				if(skillTemplate.getEffects() == null)
+				if (skillTemplate.getEffects() == null)
 					continue;
-				
+
 				EffectTemplate template = null;
-				if((template = skillTemplate.getEffectTemplate(1)) instanceof WeaponMasteryEffect)
+				if ((template = skillTemplate.getEffectTemplate(1)) instanceof WeaponMasteryEffect)
 				{
 					WeaponMasteryEffect wme = (WeaponMasteryEffect) template;
-					if(skillLevels.get(wme.getWeaponType()) == null
-						|| skillLevels.get(wme.getWeaponType()) < wme.getBasicLvl())
+					if (skillLevels.get(wme.getWeaponType()) == null || skillLevels.get(wme.getWeaponType()) < wme.getBasicLvl())
 					{
 						skillLevels.put(wme.getWeaponType(), wme.getBasicLvl());
 						weaponMasterySkills.put(wme.getWeaponType(), skillTemplate.getSkillId());
@@ -309,33 +310,32 @@ public class SkillList
 			}
 		}
 	}
-	
+
 	/**
 	 * Calculates armor mastery skills that will used during equip
 	 */
 	private void calculateUsedArmorMasterySkills()
-	{		
+	{
 		Map<ArmorType, Integer> skillLevels = new HashMap<ArmorType, Integer>();
-		for(SkillListEntry skillListEntry : getAllSkills())
+		for (SkillListEntry skillListEntry : getAllSkills())
 		{
 			SkillTemplate skillTemplate = DataManager.SKILL_DATA.getSkillTemplate(skillListEntry.getSkillId());
-			if(skillTemplate == null)
+			if (skillTemplate == null)
 			{
 				logger.warn("CHECKPOINT: no skill template found for " + skillListEntry.getSkillId());
 				continue;
 			}
-			
-			if(skillTemplate.isPassive())
+
+			if (skillTemplate.isPassive())
 			{
-				if(skillTemplate.getEffects() == null)
+				if (skillTemplate.getEffects() == null)
 					continue;
-				
+
 				EffectTemplate template = null;
-				if((template = skillTemplate.getEffectTemplate(1)) instanceof ArmorMasteryEffect)
+				if ((template = skillTemplate.getEffectTemplate(1)) instanceof ArmorMasteryEffect)
 				{
 					ArmorMasteryEffect ame = (ArmorMasteryEffect) template;
-					if(skillLevels.get(ame.getArmorType()) == null
-						|| skillLevels.get(ame.getArmorType()) < ame.getBasicLvl())
+					if (skillLevels.get(ame.getArmorType()) == null || skillLevels.get(ame.getArmorType()) < ame.getBasicLvl())
 					{
 						skillLevels.put(ame.getArmorType(), ame.getBasicLvl());
 						armorMasterySkills.put(ame.getArmorType(), skillTemplate.getSkillId());
@@ -344,7 +344,7 @@ public class SkillList
 			}
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param weaponType
@@ -354,7 +354,7 @@ public class SkillList
 	{
 		return weaponMasterySkills.get(weaponType);
 	}
-	
+
 	/**
 	 * 
 	 * @param armorType

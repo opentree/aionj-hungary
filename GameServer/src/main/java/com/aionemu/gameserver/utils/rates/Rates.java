@@ -30,9 +30,9 @@ public abstract class Rates
 	public abstract float getApPlayerRate();
 
 	public abstract float getGatheringXPRate();
-	
+
 	public abstract float getCraftingXPRate();
-	
+
 	public abstract int getDropRate();
 
 	public abstract int getQuestXpRate();
@@ -45,7 +45,7 @@ public abstract class Rates
 	 */
 	public static Rates getRatesFor(byte membership)
 	{
-		switch(membership)
+		switch (membership)
 		{
 			case 0:
 				return new RegularRates();

@@ -143,5 +143,5 @@ public class PortalTemplate
 	public int getIdTitle()
 	{
 		return IdTitle;
-	}	
+	}
 }

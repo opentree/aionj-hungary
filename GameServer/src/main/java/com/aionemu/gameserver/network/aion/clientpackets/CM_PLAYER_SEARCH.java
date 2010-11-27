@@ -60,7 +60,7 @@ public class CM_PLAYER_SEARCH extends AbstractClientPacket<AionChannelHandler>
 	@Override
 	protected void readImpl()
 	{
-		if(!(name = readS()).isEmpty())
+		if (!(name = readS()).isEmpty())
 		{
 			name = Util.convertName(name);
 			readB(44 - (name.length() * 2 + 2));
@@ -76,7 +76,7 @@ public class CM_PLAYER_SEARCH extends AbstractClientPacket<AionChannelHandler>
 		lfgOnly = readC();
 		readC(); // 0x00 in search pane 0x30 in /who?
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -87,32 +87,32 @@ public class CM_PLAYER_SEARCH extends AbstractClientPacket<AionChannelHandler>
 
 		List<Player> matches = new ArrayList<Player>(MAX_RESULTS);
 
-		if(activePlayer != null && activePlayer.getLevel() < 10)
+		if (activePlayer != null && activePlayer.getLevel() < 10)
 		{
 			sendPacket(SM_SYSTEM_MESSAGE.LEVEL_NOT_ENOUGH_FOR_SEARCH("10"));
 			return;
 		}
-		for(Player player : World.getInstance().getAllPlayers())
+		for (Player player : World.getInstance().getAllPlayers())
 		{
-			if(matches.size() > MAX_RESULTS)
+			if (matches.size() > MAX_RESULTS)
 				return;
-			if(!player.isSpawned())
+			if (!player.isSpawned())
 				continue;
-			else if(player.getFriendList().getStatus() == Status.OFFLINE)
+			else if (player.getFriendList().getStatus() == Status.OFFLINE)
 				continue;
-			else if(lfgOnly == 1 && !player.isLookingForGroup())
+			else if (lfgOnly == 1 && !player.isLookingForGroup())
 				continue;
-			else if(!name.isEmpty() && !player.getName().toLowerCase().contains(name.toLowerCase()))
+			else if (!name.isEmpty() && !player.getName().toLowerCase().contains(name.toLowerCase()))
 				continue;
-			else if(minLevel != 0xFF && player.getLevel() < minLevel)
+			else if (minLevel != 0xFF && player.getLevel() < minLevel)
 				continue;
-			else if(maxLevel != 0xFF && player.getLevel() > maxLevel)
+			else if (maxLevel != 0xFF && player.getLevel() > maxLevel)
 				continue;
-			else if(classMask > 0 && (player.getPlayerClass().getMask() & classMask) == 0)
+			else if (classMask > 0 && (player.getPlayerClass().getMask() & classMask) == 0)
 				continue;
-			else if(region > 0 && player.getActiveRegion().getMapId() != region)
+			else if (region > 0 && player.getActiveRegion().getMapId() != region)
 				continue;
-			else if((player.getCommonData().getRace() != activePlayer.getCommonData().getRace())&& (CustomConfig.FACTIONS_SEARCH_MODE == false))
+			else if ((player.getCommonData().getRace() != activePlayer.getCommonData().getRace()) && (CustomConfig.FACTIONS_SEARCH_MODE == false))
 				continue;
 			else
 			// This player matches criteria

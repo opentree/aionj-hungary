@@ -21,10 +21,10 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
 public class SM_PONG extends AbstractAionServerPacket<AionChannelHandler>
 {
-	@Override	
+	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
-		writeC( 0x00);
-		writeC( 0x00);
+		writeC(0x00);
+		writeC(0x00);
 	}
 }

@@ -22,14 +22,14 @@ import javax.xml.bind.annotation.XmlType;
 
 import com.aionemu.gameserver.skillengine.model.Effect;
 
-
 /**
  * @author ATracer
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ActionModifier")
-public abstract class ActionModifier {
+public abstract class ActionModifier
+{
 
 	/**
 	 *  Applies modifier to original value
@@ -39,7 +39,7 @@ public abstract class ActionModifier {
 	 * @return int
 	 */
 	public abstract int analyze(Effect effect, int originalValue);
-	
+
 	/**
 	 * Performs check of condition
 	 * 

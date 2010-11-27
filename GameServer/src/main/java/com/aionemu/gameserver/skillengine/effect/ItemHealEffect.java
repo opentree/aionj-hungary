@@ -23,15 +23,13 @@ import javax.xml.bind.annotation.XmlType;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
 import com.aionemu.gameserver.skillengine.model.Effect;
 
-
 /**
  * @author ATracer
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ItemHealEffect")
-public class ItemHealEffect
-extends AbstractHealEffect
+public class ItemHealEffect extends AbstractHealEffect
 {
 
 	@Override

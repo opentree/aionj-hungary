@@ -22,12 +22,12 @@ package com.aionemu.gameserver.model.gameobjects.stats;
  */
 public class Stat
 {
-	private StatEnum type;
-	private int origin;
-	private int base;
-	private int bonus;
-	private int old;
-	
+	private StatEnum	type;
+	private int			origin;
+	private int			base;
+	private int			bonus;
+	private int			old;
+
 	public Stat(StatEnum type, int origin)
 	{
 		this.type = type;
@@ -36,17 +36,17 @@ public class Stat
 		this.bonus = 0;
 		this.old = 0;
 	}
-	
+
 	public Stat(StatEnum type)
 	{
-		this(type,0);
+		this(type, 0);
 	}
-	
+
 	public StatEnum getType()
 	{
 		return type;
 	}
-	
+
 	public void increase(int amount, boolean bonus)
 	{
 		if (bonus)
@@ -58,7 +58,7 @@ public class Stat
 			this.base = amount;
 		}
 	}
-	
+
 	public void set(int value, boolean bonus)
 	{
 		if (bonus)
@@ -70,43 +70,43 @@ public class Stat
 			this.base = value;
 		}
 	}
-	
+
 	public int getOrigin()
 	{
 		return origin;
 	}
-	
+
 	public int getBase()
 	{
 		return base;
 	}
-	
+
 	public int getBonus()
 	{
 		return bonus;
 	}
-	
+
 	public int getCurrent()
 	{
-		return base+bonus;
+		return base + bonus;
 	}
 
 	public int getOld()
 	{
 		return old;
 	}
-	
+
 	public void reset()
 	{
 		old = base + bonus;
 		base = origin;
 		bonus = 0;
 	}
-	
+
 	@Override
 	public String toString()
 	{
-		final String s = type+":"+base+"+"+bonus;
+		final String s = type + ":" + base + "+" + bonus;
 		return s;
 	}
 }

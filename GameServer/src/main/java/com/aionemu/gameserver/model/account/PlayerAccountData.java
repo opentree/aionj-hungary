@@ -43,8 +43,7 @@ public class PlayerAccountData
 	private Timestamp			deletionDate;
 	private LegionMember		legionMember;
 
-	public PlayerAccountData(PlayerCommonData playerCommonData, PlayerAppearance appereance,
-		List<Item> equipment, LegionMember legionMember)
+	public PlayerAccountData(PlayerCommonData playerCommonData, PlayerAppearance appereance, List<Item> equipment, LegionMember legionMember)
 	{
 		this.playerCommonData = playerCommonData;
 		this.appereance = appereance;
@@ -123,7 +122,7 @@ public class PlayerAccountData
 	{
 		return legionMember.getLegion();
 	}
-	
+
 	/**
 	 * Returns true if player is a legion member
 	 * @return true or false

@@ -28,26 +28,26 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_QUESTION_WINDOW extends AbstractAionServerPacket<AionChannelHandler>
 {
-	public static final int	STR_BUDDYLIST_ADD_BUDDY_REQUETS		= 0x0DBEE9;
-	public static final int	STR_EXCHANGE_DO_YOU_ACCEPT_EXCHANGE	= 0x15f91;
-	public static final int	STR_EXCHANGE_HE_REJECTED_EXCHANGE	= 0x13D782;	// TODO: make it a simple box, not a
-																			// question.
-	public static final int	STR_DUEL_DO_YOU_CONFIRM_DUEL		= 0xc36e;
-	public static final int	STR_DUEL_DO_YOU_ACCEPT_DUEL			= 0xc36c;
-	public static final int	STR_SOUL_HEALING					= 160011;
-	public static final int	STR_BIND_TO_LOCATION				= 160012;
-	public static final int	STR_REQUEST_GROUP_INVITE			= 60000;
-	public static final int	STR_REQUEST_ALLIANCE_INVITE			= 70004;
-	public static final int	STR_WAREHOUSE_EXPAND_WARNING		= 900686;
-	public static final int	STR_USE_RIFT						= 160019;
-	public static final int	STR_LEGION_INVITE					= 80001;
-	public static final int	STR_LEGION_DISBAND					= 80008;
-	public static final int	STR_LEGION_DISBAND_CANCEL			= 80009;
-	public static final int	STR_LEGION_CHANGE_MASTER			= 80011;
-	public static final int STR_CRAFT_ADDSKILL_CONFIRM 			= 900852;
-	public static final int STR_BIND_TO_KISK					= 160018;
-	public static final int STR_SOUL_BOUND_ITEM_DO_YOU_WANT_SOUL_BOUND = 95006;
-	public static final int STR_ASK_GROUP_GATE_DO_YOU_ACCEPT_MOVE = 160014;
+	public static final int	STR_BUDDYLIST_ADD_BUDDY_REQUETS				= 0x0DBEE9;
+	public static final int	STR_EXCHANGE_DO_YOU_ACCEPT_EXCHANGE			= 0x15f91;
+	public static final int	STR_EXCHANGE_HE_REJECTED_EXCHANGE			= 0x13D782; // TODO: make it a simple box, not a
+																					// question.
+	public static final int	STR_DUEL_DO_YOU_CONFIRM_DUEL				= 0xc36e;
+	public static final int	STR_DUEL_DO_YOU_ACCEPT_DUEL					= 0xc36c;
+	public static final int	STR_SOUL_HEALING							= 160011;
+	public static final int	STR_BIND_TO_LOCATION						= 160012;
+	public static final int	STR_REQUEST_GROUP_INVITE					= 60000;
+	public static final int	STR_REQUEST_ALLIANCE_INVITE					= 70004;
+	public static final int	STR_WAREHOUSE_EXPAND_WARNING				= 900686;
+	public static final int	STR_USE_RIFT								= 160019;
+	public static final int	STR_LEGION_INVITE							= 80001;
+	public static final int	STR_LEGION_DISBAND							= 80008;
+	public static final int	STR_LEGION_DISBAND_CANCEL					= 80009;
+	public static final int	STR_LEGION_CHANGE_MASTER					= 80011;
+	public static final int	STR_CRAFT_ADDSKILL_CONFIRM					= 900852;
+	public static final int	STR_BIND_TO_KISK							= 160018;
+	public static final int	STR_SOUL_BOUND_ITEM_DO_YOU_WANT_SOUL_BOUND	= 95006;
+	public static final int	STR_ASK_GROUP_GATE_DO_YOU_ACCEPT_MOVE		= 160014;
 
 	private int				code;
 	private int				senderId;
@@ -78,7 +78,7 @@ public class SM_QUESTION_WINDOW extends AbstractAionServerPacket<AionChannelHand
 	{
 		writeD(code);
 
-		for(Object param : params)
+		for (Object param : params)
 		{
 			if (param instanceof DescriptionId)
 			{
@@ -92,7 +92,7 @@ public class SM_QUESTION_WINDOW extends AbstractAionServerPacket<AionChannelHand
 
 		writeD(0x00);// unk
 		writeH(0x00);// unk
-		writeC( 0x01);// unk
+		writeC(0x01);// unk
 		writeD(senderId);
 		writeD(0x06); // group 6, unk
 	}

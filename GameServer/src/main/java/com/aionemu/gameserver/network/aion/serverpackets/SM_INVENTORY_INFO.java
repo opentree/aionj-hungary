@@ -34,15 +34,15 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  * modified by ATracer
  */
 public class SM_INVENTORY_INFO extends _InventoryPacket
-{	
-	public static final int EMPTY = 0;
-	public static final int FULL = 1;
-	public int CUBE = 0;
+{
+	public static final int	EMPTY		= 0;
+	public static final int	FULL		= 1;
+	public int				CUBE		= 0;
 
-	private List<Item> items;
-	private int size;
+	private List<Item>		items;
+	private int				size;
 
-	public int packetType = FULL;
+	public int				packetType	= FULL;
 
 	/**
 	 * @param items
@@ -70,7 +70,7 @@ public class SM_INVENTORY_INFO extends _InventoryPacket
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
-		if(this.packetType == EMPTY)
+		if (this.packetType == EMPTY)
 		{
 			writeD(0);
 			writeH(0);
@@ -78,19 +78,19 @@ public class SM_INVENTORY_INFO extends _InventoryPacket
 		}
 
 		// something wrong with cube part.
-		writeC( 1); // TRUE/FALSE (1/0) update cube size
-		writeC( CUBE); // cube size from npc (so max 5 for now)
-		writeC( 0); // cube size from quest (so max 2 for now)
-		writeC( 0); // unk?
+		writeC(1); // TRUE/FALSE (1/0) update cube size
+		writeC(CUBE); // cube size from npc (so max 5 for now)
+		writeC(0); // cube size from quest (so max 2 for now)
+		writeC(0); // unk?
 		writeH(size); // number of entries
 
-		for(Item item : items)
+		for (Item item : items)
 		{
 			writeGeneralInfo(item);
 
 			ItemTemplate itemTemplate = item.getItemTemplate();
 
-			if(itemTemplate.getTemplateId() == ItemId.KINAH.value())
+			if (itemTemplate.getTemplateId() == ItemId.KINAH.value())
 			{
 				writeKinah(item, true);
 			}
@@ -102,14 +102,14 @@ public class SM_INVENTORY_INFO extends _InventoryPacket
 			{
 				writeArmorInfo(item, true, false, false);
 			}
-			else if(itemTemplate.isStigma())
+			else if (itemTemplate.isStigma())
 			{
 				writeStigmaInfo(item);
 			}
 			else
 			{
 				writeGeneralItemInfo(item, false, false);
-				writeC( 0);
+				writeC(0);
 			}
 		}
 	}

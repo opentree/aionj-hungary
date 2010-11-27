@@ -26,24 +26,24 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author orz
  * 
  */
-@XmlRootElement(name="teleporter_template")
+@XmlRootElement(name = "teleporter_template")
 @XmlAccessorType(XmlAccessType.NONE)
 public class TeleporterTemplate
 {
 	@XmlAttribute(name = "npc_id", required = true)
-	private int npcId;
-	
+	private int				npcId;
+
 	@XmlAttribute(name = "name", required = true)
-	private String name = "";
+	private String			name		= "";
 
 	@XmlAttribute(name = "teleportId", required = true)
-	private int	 teleportId = 0;
-	
+	private int				teleportId	= 0;
+
 	@XmlAttribute(name = "type", required = true)
-	private TeleportType type;
+	private TeleportType	type;
 
 	@XmlElement(name = "locations")
-	private TeleLocIdData teleLocIdData;
+	private TeleLocIdData	teleLocIdData;
 
 	/**
 	 * @return the npcId

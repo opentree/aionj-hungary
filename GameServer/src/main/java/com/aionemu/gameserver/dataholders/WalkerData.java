@@ -20,18 +20,18 @@ import com.aionemu.gameserver.model.templates.walker.WalkerTemplate;
 public class WalkerData
 {
 	@XmlElement(name = "walker_template")
-	private List<WalkerTemplate> walkerlist;
-	
+	private List<WalkerTemplate>				walkerlist;
+
 	private TIntObjectHashMap<WalkerTemplate>	walkerlistData	= new TIntObjectHashMap<WalkerTemplate>();
 
 	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
-		for(WalkerTemplate route: walkerlist)
+		for (WalkerTemplate route : walkerlist)
 		{
 			walkerlistData.put(route.getRouteId(), route);
 		}
 	}
-	
+
 	public int size()
 	{
 		return walkerlistData.size();

@@ -38,21 +38,23 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 public class SkillUseAction extends AbstractItemAction
 {
 	@XmlAttribute
-	protected int skillid;
+	protected int	skillid;
 	@XmlAttribute
-	protected int level;
+	protected int	level;
 
 	/**
 	 * Gets the value of the skillid property.
 	 */
-	public int getSkillid() {
+	public int getSkillid()
+	{
 		return skillid;
 	}
 
 	/**
 	 * Gets the value of the level property.   
 	 */
-	public int getLevel() {
+	public int getLevel()
+	{
 		return level;
 	}
 
@@ -60,7 +62,7 @@ public class SkillUseAction extends AbstractItemAction
 	public boolean canAct(Player player, Item parentItem, Item targetItem)
 	{
 		Skill skill = SkillEngine.getInstance().getSkill(player, skillid, level, player.getTarget());
-		if(skill == null)
+		if (skill == null)
 			return false;
 
 		return skill.canUseSkill();
@@ -70,11 +72,11 @@ public class SkillUseAction extends AbstractItemAction
 	public void act(Player player, Item parentItem, Item targetItem)
 	{
 		Skill skill = SkillEngine.getInstance().getSkill(player, skillid, level, player.getTarget());
-		if(skill != null)
+		if (skill != null)
 		{
 			skill.setItemTemplate(parentItem.getItemTemplate());
-			PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(),
-				parentItem.getObjectId(), parentItem.getItemTemplate().getTemplateId()), true);
+			PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), parentItem.getObjectId(), parentItem.getItemTemplate()
+					.getTemplateId()), true);
 			skill.useSkill();
 
 			ItemService.decreaseItemCount(player, parentItem, 1);

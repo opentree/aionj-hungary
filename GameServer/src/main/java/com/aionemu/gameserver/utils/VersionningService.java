@@ -98,19 +98,19 @@ public class VersionningService
 
 	public static String[] getFullVersionInfo()
 	{
-		return new String[] { 
-			"Commons Version: " + getCommonsVersion(), 
-			"Commons Revision: " + getCommonsRevision(),
-			"Commons Build Date: " + getCommonsDate(), 
-			"GS Version: " + getGameVersion(),
-			"GS Revision: " + getGameRevision(), 
-			"GS Build Date: " + getGameDate()
-		};
+		return new String[]
+		{
+				"Commons Version: " + getCommonsVersion(),
+				"Commons Revision: " + getCommonsRevision(),
+				"Commons Build Date: " + getCommonsDate(),
+				"GS Version: " + getGameVersion(),
+				"GS Revision: " + getGameRevision(),
+				"GS Build Date: " + getGameDate() };
 	}
 
 	public static void printFullVersionInfo()
 	{
-		for(String line : getFullVersionInfo())
+		for (String line : getFullVersionInfo())
 			log.info(line);
 	}
 }

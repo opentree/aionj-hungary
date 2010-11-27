@@ -31,20 +31,20 @@ public class SM_FRIEND_NOTIFY extends AbstractAionServerPacket<AionChannelHandle
 	 * Buddy has logged in
 	 * (Or become visible)
 	 */
-	public static final int LOGIN 		= 0;
+	public static final int	LOGIN	= 0;
 	/**
 	 * Buddy has logged out
 	 * (Or become invisible)
 	 */
-	public static final int LOGOUT 		= 1;
+	public static final int	LOGOUT	= 1;
 	/**
 	 * Buddy has deleted you
 	 */
-	public static final int DELETED		= 2;
-	
-	private final int code;
-	private final String name;
-	
+	public static final int	DELETED	= 2;
+
+	private final int		code;
+	private final String	name;
+
 	/**
 	 * Constructs a new notify packet
 	 * @param code Message code
@@ -55,7 +55,7 @@ public class SM_FRIEND_NOTIFY extends AbstractAionServerPacket<AionChannelHandle
 		this.code = code;
 		this.name = name;
 	}
-	
+
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{

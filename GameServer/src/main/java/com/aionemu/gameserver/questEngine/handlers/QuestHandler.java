@@ -38,15 +38,16 @@ import com.aionemu.gameserver.world.zone.ZoneName;
  */
 public class QuestHandler
 {
-	private final Integer questId;
+	private final Integer	questId;
 
-	protected QuestEngine		qe;
-	
+	protected QuestEngine	qe;
+
 	/**
 	 * If quest Aborted or finish this items deleted.
 	 */
 
-	protected int[] deletebleItems;
+	protected int[]			deletebleItems;
+
 	/**
 	 * @param questId
 	 */
@@ -56,19 +57,19 @@ public class QuestHandler
 		this.qe = QuestEngine.getInstance();
 		this.qe.addQuestHandler(this);
 	}
-	
+
 	public void deleteQuestItems(QuestEnv env)
 	{
 		QuestWorkItems qwi = DataManager.QUEST_DATA.getQuestById(env.getQuestId()).getQuestWorkItems();
-		
+
 		Player player = env.getPlayer();
-		if(qwi != null)
+		if (qwi != null)
 		{
-			for(QuestItems qi : qwi.getQuestWorkItem())
+			for (QuestItems qi : qwi.getQuestWorkItem())
 			{
-				if(qi != null)
+				if (qi != null)
 				{
-					ItemService.removeItemFromInventoryByItemId(player, qi.getItemId());					
+					ItemService.removeItemFromInventoryByItemId(player, qi.getItemId());
 				}
 			}
 		}
@@ -84,7 +85,7 @@ public class QuestHandler
 		if (qs.getStatus() == QuestStatus.COMPLETE)
 			player.updateNearbyQuests();
 	}
-	
+
 	public boolean sendQuestDialog(Player player, int objId, int dialogId)
 	{
 		PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(objId, dialogId, questId));
@@ -93,10 +94,10 @@ public class QuestHandler
 
 	public boolean defaultQuestStartDialog(QuestEnv env)
 	{
-		
+
 		Player player = env.getPlayer();
-		
-		int targetObjId = env.getVisibleObject()==null?0 : env.getVisibleObject().getObjectId();
+
+		int targetObjId = env.getVisibleObject() == null ? 0 : env.getVisibleObject().getObjectId();
 		switch (env.getDialogId())
 		{
 			case 1007:
@@ -104,18 +105,18 @@ public class QuestHandler
 			case 1002:
 				if (QuestService.startQuest(env, QuestStatus.START))
 					return sendQuestDialog(player, targetObjId, 1003);
-				else 
+				else
 					return false;
 			case 1003:
 				return sendQuestDialog(player, targetObjId, 1004);
 		}
 		return false;
 	}
-	
+
 	public boolean defaultQuestEndDialog(QuestEnv env)
 	{
 		Player player = env.getPlayer();
-		int targetObjId = env.getVisibleObject()==null ? 0 : env.getVisibleObject().getObjectId();
+		int targetObjId = env.getVisibleObject() == null ? 0 : env.getVisibleObject().getObjectId();
 		switch (env.getDialogId())
 		{
 			case 8:
@@ -144,6 +145,7 @@ public class QuestHandler
 		}
 		return false;
 	}
+
 	/**
 	 * @return the questId
 	 */
@@ -151,12 +153,12 @@ public class QuestHandler
 	{
 		return questId;
 	}
-	
+
 	public boolean onDialogEvent(QuestEnv questEnv)
 	{
 		return false;
 	}
-	
+
 	public boolean onEnterWorldEvent(QuestEnv questEnv)
 	{
 		return false;
@@ -186,7 +188,7 @@ public class QuestHandler
 	{
 		return false;
 	}
-	
+
 	public boolean onDieEvent(QuestEnv questEnv)
 	{
 		return false;
@@ -196,7 +198,7 @@ public class QuestHandler
 	{
 		return false;
 	}
-	
+
 	public boolean onQuestFinishEvent(QuestEnv questEnv)
 	{
 		return false;
@@ -211,10 +213,9 @@ public class QuestHandler
 	{
 		return false;
 	}
-	
+
 	public void register()
 	{
 	}
 
-	
 }

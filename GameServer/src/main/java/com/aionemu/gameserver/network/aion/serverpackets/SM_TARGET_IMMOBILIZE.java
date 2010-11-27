@@ -25,7 +25,7 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_TARGET_IMMOBILIZE extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private Creature creature;
+	private Creature	creature;
 
 	public SM_TARGET_IMMOBILIZE(Creature creature)
 	{
@@ -42,6 +42,6 @@ public class SM_TARGET_IMMOBILIZE extends AbstractAionServerPacket<AionChannelHa
 		writeF(creature.getX());
 		writeF(creature.getY());
 		writeF(creature.getZ());
-		writeC( creature.getHeading());
+		writeC(creature.getHeading());
 	}
 }

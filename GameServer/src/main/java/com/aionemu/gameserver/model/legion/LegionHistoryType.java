@@ -29,9 +29,9 @@ public enum LegionHistoryType
 	APPOINTED(4), // Parameter: legion level
 	EMBLEM_REGISTER(5), // No parameters
 	EMBLEM_MODIFIED(6); // No parameters
-	
-	private byte historyType;
-	
+
+	private byte	historyType;
+
 	private LegionHistoryType(int historyType)
 	{
 		this.historyType = (byte) historyType;

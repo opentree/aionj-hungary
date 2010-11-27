@@ -16,12 +16,12 @@ import com.aionemu.gameserver.services.ItemService;
 public class CM_SPLIT_ITEM extends AbstractClientPacket<AionChannelHandler>
 {
 
-	int sourceItemObjId;
-	int sourceStorageType;
-	long itemAmount;
-	int destinationItemObjId;
-	int destinationStorageType;
-	int slotNum; // destination slot.
+	int		sourceItemObjId;
+	int		sourceStorageType;
+	long	itemAmount;
+	int		destinationItemObjId;
+	int		destinationStorageType;
+	int		slotNum;				// destination slot.
 
 	public CM_SPLIT_ITEM(int opcode)
 	{
@@ -31,23 +31,22 @@ public class CM_SPLIT_ITEM extends AbstractClientPacket<AionChannelHandler>
 	@Override
 	protected void readImpl()
 	{
-		sourceItemObjId = readD();       // drag item unique ID. If merging and itemCount becoming null, this item must be deleted.
-		itemAmount = readD();            // Items count to be moved.
+		sourceItemObjId = readD(); // drag item unique ID. If merging and itemCount becoming null, this item must be deleted.
+		itemAmount = readD(); // Items count to be moved.
 		@SuppressWarnings("unused")
-		byte[] zeros = readB(4);         // Nothing
-		sourceStorageType = readC();     // Source storage
-		destinationItemObjId = readD();  // Destination item unique ID if merging. Null if spliting.
+		byte[] zeros = readB(4); // Nothing
+		sourceStorageType = readC(); // Source storage
+		destinationItemObjId = readD(); // Destination item unique ID if merging. Null if spliting.
 		destinationStorageType = readC();// Destination storage
-		slotNum = readH();               // Destination slot. Not needed right now, Items adding only to next available slot. Not needed at all when merge.
+		slotNum = readH(); // Destination slot. Not needed right now, Items adding only to next available slot. Not needed at all when merge.
 	}
-
 
 	@Override
 	protected void runImpl()
 	{
 		Player player = getChannelHandler().getActivePlayer();
 
-		if(destinationItemObjId == 0)
+		if (destinationItemObjId == 0)
 			ItemService.splitItem(player, sourceItemObjId, itemAmount, slotNum, sourceStorageType, destinationStorageType);
 		else
 			ItemService.mergeItems(player, sourceItemObjId, itemAmount, destinationItemObjId, sourceStorageType, destinationStorageType);

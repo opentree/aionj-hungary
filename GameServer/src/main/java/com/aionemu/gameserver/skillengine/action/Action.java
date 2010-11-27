@@ -23,7 +23,6 @@ import javax.xml.bind.annotation.XmlType;
 import com.aionemu.gameserver.skillengine.effect.modifier.ActionModifiers;
 import com.aionemu.gameserver.skillengine.model.Skill;
 
-
 /**
  * @author ATracer
  * 
@@ -32,14 +31,13 @@ import com.aionemu.gameserver.skillengine.model.Skill;
 @XmlType(name = "Action")
 public abstract class Action
 {
-	protected ActionModifiers modifiers;
-    
+	protected ActionModifiers	modifiers;
+
 	/**
 	 *  Perform action specified in template
 	 *  
 	 * @param env
 	 */
 	public abstract void act(Skill skill);
-	
-	
+
 }

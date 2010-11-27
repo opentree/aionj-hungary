@@ -38,16 +38,16 @@ import com.aionemu.gameserver.utils.stats.StatFunctions;
 public class DamageOverTimeEffect extends DamageEffect
 {
 	@XmlAttribute(required = true)
-	protected int checktime;	
+	protected int	checktime;
 
 	@Override
 	public void calculate(Effect effect)
 	{
 		//TODO ???
-		if (calculateEffectResistRate(effect, null)) 
+		if (calculateEffectResistRate(effect, null))
 			effect.addSucessEffect(this);
 	}
-	
+
 	@Override
 	public void applyEffect(Effect effect)
 	{
@@ -67,13 +67,14 @@ public class DamageOverTimeEffect extends DamageEffect
 		Creature effector = effect.getEffector();
 		int valueWithDelta = value + delta * effect.getSkillLevel();
 		int damage = StatFunctions.calculateMagicDamageToTarget(effector, effected, valueWithDelta, getElement());
-		effected.onAttack(effector, effect.getSkillId(), TYPE.DAMAGE, damage);			
+		effected.onAttack(effector, effect.getSkillId(), TYPE.DAMAGE, damage);
 	}
 
 	@Override
 	public void startEffect(final Effect effect)
 	{
-		Future<?> task = ThreadPoolManager.getInstance().scheduleEffectAtFixedRate(new Runnable(){
+		Future<?> task = ThreadPoolManager.getInstance().scheduleEffectAtFixedRate(new Runnable()
+		{
 
 			@Override
 			public void run()
@@ -81,6 +82,6 @@ public class DamageOverTimeEffect extends DamageEffect
 				onPeriodicAction(effect);
 			}
 		}, checktime, checktime);
-		effect.setPeriodicTask(task, position);	
+		effect.setPeriodicTask(task, position);
 	}
 }

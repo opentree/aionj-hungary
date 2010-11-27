@@ -29,37 +29,38 @@ import org.apache.log4j.Logger;
  */
 public class DeadlockDetector implements Runnable
 {
-	private static final Logger log = Logger.getLogger(DeadlockDetector.class);
+	private static final Logger	log				= Logger.getLogger(DeadlockDetector.class);
 
-	private int checkInterval = 0;
-	private static String INDENT = "    ";
-	private StringBuilder sb = null;
+	private int					checkInterval	= 0;
+	private static String		INDENT			= "    ";
+	private StringBuilder		sb				= null;
 
 	public DeadlockDetector(int checkInterval)
 	{
-		this.checkInterval = checkInterval * 1000; 
+		this.checkInterval = checkInterval * 1000;
 	}
 
 	@Override
-	public void run() 
+	public void run()
 	{
 		boolean noDeadLocks = true;
 
-		while(noDeadLocks)
+		while (noDeadLocks)
 		{
 			try
 			{
 				ThreadMXBean bean = ManagementFactory.getThreadMXBean();
 				long[] threadIds = bean.findDeadlockedThreads();
 
-				if (threadIds != null) {
+				if (threadIds != null)
+				{
 					log.error("Deadlock detected!");
 					sb = new StringBuilder();
 					noDeadLocks = false;
 
 					ThreadInfo[] infos = bean.getThreadInfo(threadIds);
 					sb.append("\nTHREAD LOCK INFO: \n");
-					for (ThreadInfo threadInfo : infos) 
+					for (ThreadInfo threadInfo : infos)
 					{
 						printThreadInfo(threadInfo);
 						LockInfo[] lockInfos = threadInfo.getLockedSynchronizers();
@@ -68,49 +69,49 @@ public class DeadlockDetector implements Runnable
 						printLockInfo(lockInfos);
 						printMonitorInfo(threadInfo, monitorInfos);
 					}
-					
+
 					sb.append("\nTHREAD DUMPS: \n");
-					for (ThreadInfo ti : bean.dumpAllThreads(true, true)) 
-					{  
-						printThreadInfo(ti); 
+					for (ThreadInfo ti : bean.dumpAllThreads(true, true))
+					{
+						printThreadInfo(ti);
 					}
 					log.error(sb.toString());
 				}
 				Thread.sleep(checkInterval);
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				ex.printStackTrace();
-			}			
+			}
 		}
 	}
 
-	private void printThreadInfo(ThreadInfo threadInfo) 
+	private void printThreadInfo(ThreadInfo threadInfo)
 	{
 		printThread(threadInfo);
 		sb.append(INDENT + threadInfo.toString() + "\n");
 		StackTraceElement[] stacktrace = threadInfo.getStackTrace();
 		MonitorInfo[] monitors = threadInfo.getLockedMonitors();
 
-		for (int i = 0; i < stacktrace.length; i++) 
+		for (int i = 0; i < stacktrace.length; i++)
 		{
 			StackTraceElement ste = stacktrace[i];
 			sb.append(INDENT + "at " + ste.toString() + "\n");
-			for (MonitorInfo mi : monitors) 
+			for (MonitorInfo mi : monitors)
 			{
-				if (mi.getLockedStackDepth() == i) {
+				if (mi.getLockedStackDepth() == i)
+				{
 					sb.append(INDENT + "  - locked " + mi + "\n");
 				}
 			}
 		}
 	}
 
-	private void printThread(ThreadInfo ti) 
+	private void printThread(ThreadInfo ti)
 	{
 		sb.append("\nPrintThread\n");
-		sb.append("\"" + ti.getThreadName() + "\"" + " Id="
-				+ ti.getThreadId() + " in " + ti.getThreadState() + "\n");
-		if (ti.getLockName() != null) 
+		sb.append("\"" + ti.getThreadName() + "\"" + " Id=" + ti.getThreadId() + " in " + ti.getThreadState() + "\n");
+		if (ti.getLockName() != null)
 		{
 			sb.append(" on lock=" + ti.getLockName() + "\n");
 		}
@@ -118,29 +119,27 @@ public class DeadlockDetector implements Runnable
 		{
 			sb.append(" (suspended)" + "\n");
 		}
-		if (ti.isInNative()) 
+		if (ti.isInNative())
 		{
 			sb.append(" (running in native)" + "\n");
 		}
-		if (ti.getLockOwnerName() != null) 
+		if (ti.getLockOwnerName() != null)
 		{
-			sb.append(INDENT + " owned by " + ti.getLockOwnerName() + " Id="
-					+ ti.getLockOwnerId() + "\n");
+			sb.append(INDENT + " owned by " + ti.getLockOwnerName() + " Id=" + ti.getLockOwnerId() + "\n");
 		}
 	}
 
-	private void printMonitorInfo(ThreadInfo threadInfo, MonitorInfo[] monitorInfos) 
+	private void printMonitorInfo(ThreadInfo threadInfo, MonitorInfo[] monitorInfos)
 	{
 		sb.append(INDENT + "Locked monitors: count = " + monitorInfos.length + "\n");
 		for (MonitorInfo monitorInfo : monitorInfos)
 		{
 			sb.append(INDENT + "  - " + monitorInfo + " locked at " + "\n");
-			sb.append(INDENT + "      " + monitorInfo.getLockedStackDepth() + " "
-					+ monitorInfo.getLockedStackFrame() + "\n");
+			sb.append(INDENT + "      " + monitorInfo.getLockedStackDepth() + " " + monitorInfo.getLockedStackFrame() + "\n");
 		}
 	}
 
-	private void printLockInfo(LockInfo[] lockInfos) 
+	private void printLockInfo(LockInfo[] lockInfos)
 	{
 		sb.append(INDENT + "Locked synchronizers: count = " + lockInfos.length + "\n");
 		for (LockInfo lockInfo : lockInfos)

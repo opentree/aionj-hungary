@@ -29,7 +29,7 @@ import com.aionemu.gameserver.services.GroupService;
 public class CM_GROUP_DISTRIBUTION extends AbstractClientPacket<AionChannelHandler>
 {
 
-	private int		amount;
+	private int	amount;
 
 	public CM_GROUP_DISTRIBUTION(int opcode)
 	{
@@ -51,12 +51,12 @@ public class CM_GROUP_DISTRIBUTION extends AbstractClientPacket<AionChannelHandl
 	@Override
 	protected void runImpl()
 	{
-		if(amount < 1)
+		if (amount < 1)
 			return;
 
 		Player player = getChannelHandler().getActivePlayer();
-		
-		if(!RestrictionsManager.canTrade(player))
+
+		if (!RestrictionsManager.canTrade(player))
 			return;
 
 		GroupService.getInstance().groupDistribution(player, amount);

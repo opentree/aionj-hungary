@@ -28,8 +28,8 @@ public class CM_LEGION_UPLOAD_EMBLEM extends AbstractClientPacket<AionChannelHan
 {
 
 	/** Emblem related information **/
-	private int				size;
-	private byte[]			data;
+	private int		size;
+	private byte[]	data;
 
 	/**
 	 * @param opcode

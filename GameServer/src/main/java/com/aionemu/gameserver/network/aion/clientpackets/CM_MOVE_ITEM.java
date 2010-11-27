@@ -31,10 +31,11 @@ public class CM_MOVE_ITEM extends AbstractClientPacket<AionChannelHandler>
 	/**
 	 * Target object id that client wants to TALK WITH or 0 if wants to unselect
 	 */
-	private int					targetObjectId;
-	private int					source;
-	private int                                     destination;
-	private int					slot;
+	private int	targetObjectId;
+	private int	source;
+	private int	destination;
+	private int	slot;
+
 	/**
 	 * Constructs new instance of <tt>CM_CM_REQUEST_DIALOG </tt> packet
 	 * @param opcode
@@ -51,8 +52,8 @@ public class CM_MOVE_ITEM extends AbstractClientPacket<AionChannelHandler>
 	protected void readImpl()
 	{
 		targetObjectId = readD();// empty
-		source = readC();        //FROM (0 - player inventory, 1 - regular warehouse, 2 - account warehouse, 3 - legion warehouse)
-		destination = readC();   //TO
+		source = readC(); //FROM (0 - player inventory, 1 - regular warehouse, 2 - account warehouse, 3 - legion warehouse)
+		destination = readC(); //TO
 		slot = readH();
 	}
 

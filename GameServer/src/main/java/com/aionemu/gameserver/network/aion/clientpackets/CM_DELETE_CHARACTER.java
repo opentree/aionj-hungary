@@ -40,7 +40,7 @@ public class CM_DELETE_CHARACTER extends AbstractClientPacket<AionChannelHandler
 	 * ObjectId of character that should be deleted.
 	 */
 	private int	chaOid;
-	
+
 	/**
 	 * Constructs new instance of <tt>CM_DELETE_CHARACTER </tt> packet
 	 * @param opcode
@@ -68,7 +68,7 @@ public class CM_DELETE_CHARACTER extends AbstractClientPacket<AionChannelHandler
 	{
 		AionChannelHandler client = getChannelHandler();
 		PlayerAccountData playerAccData = client.getAccount().getPlayerAccountData(chaOid);
-		if(playerAccData != null && !playerAccData.isLegionMember())
+		if (playerAccData != null && !playerAccData.isLegionMember())
 		{
 			PlayerService.deletePlayer(playerAccData);
 			client.sendPacket(new SM_DELETE_CHARACTER(chaOid, playerAccData.getDeletionTimeInSeconds()));
@@ -76,6 +76,6 @@ public class CM_DELETE_CHARACTER extends AbstractClientPacket<AionChannelHandler
 		else
 		{
 			client.sendPacket(SM_SYSTEM_MESSAGE.STR_DELETE_CHARACTER_IN_LEGION());
-		}		
+		}
 	}
 }

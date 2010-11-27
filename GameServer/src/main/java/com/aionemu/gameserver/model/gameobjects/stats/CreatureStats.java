@@ -27,7 +27,7 @@ import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
  */
 public class CreatureStats extends StaticNpcStats
 {
-	private Creature owner;
+	private Creature	owner;
 
 	/**
 	 * @param owner
@@ -36,7 +36,7 @@ public class CreatureStats extends StaticNpcStats
 	{
 		this.owner = owner;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see com.aionemu.gameserver.model.gameobjects.stats.StaticNpcStats#getAttackSpeed()
 	 */
@@ -45,7 +45,7 @@ public class CreatureStats extends StaticNpcStats
 	{
 		return owner.getGameStats().getCurrentStat(StatEnum.ATTACK_SPEED);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see com.aionemu.gameserver.model.gameobjects.stats.StaticNpcStats#getBaseAttackSpeed()
 	 */
@@ -67,7 +67,7 @@ public class CreatureStats extends StaticNpcStats
 		else
 			return owner.getGameStats().getCurrentStat(StatEnum.SPEED);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see com.aionemu.gameserver.model.gameobjects.stats.StaticNpcStats#getCurrentHp()
 	 */
@@ -76,7 +76,7 @@ public class CreatureStats extends StaticNpcStats
 	{
 		return owner.getLifeStats().getCurrentHp();
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see com.aionemu.gameserver.model.gameobjects.stats.StaticNpcStats#getMaxHp()
 	 */

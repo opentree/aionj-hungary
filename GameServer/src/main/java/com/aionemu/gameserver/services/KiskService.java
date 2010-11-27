@@ -30,8 +30,8 @@ import com.aionemu.gameserver.world.container.KiskContainer;
  */
 public class KiskService
 {
-	private static final KiskContainer		kiskContainer = new KiskContainer();
-	
+	private static final KiskContainer	kiskContainer	= new KiskContainer();
+
 	/**
 	 * 
 	 * @param player
@@ -41,7 +41,7 @@ public class KiskService
 	{
 		return kiskContainer.get(player);
 	}
-	
+
 	/**
 	 * Remove kisk references and containers.
 	 * @param kisk
@@ -58,7 +58,7 @@ public class KiskService
 			// TODO: Figure out what happens when kisk expires, but player has self-rez stone or Rebirth effect.
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param kisk
@@ -71,21 +71,20 @@ public class KiskService
 			kiskContainer.remove(player);
 			player.getKisk().removePlayer(player);
 		}
-		
+
 		kiskContainer.add(kisk, player);
 		kisk.addPlayer(player);
-		
+
 		// Send Bind Point Data
 		TeleportService.sendSetBindPoint(player);
-		
+
 		// Send System Message
 		PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_BINDSTONE_REGISTER);
-		
+
 		// Send Animated Bind Flash
-		PacketSendUtility.broadcastPacket(player, new SM_LEVEL_UPDATE(player.getObjectId(),
-			2, player.getCommonData().getLevel()), true);
+		PacketSendUtility.broadcastPacket(player, new SM_LEVEL_UPDATE(player.getObjectId(), 2, player.getCommonData().getLevel()), true);
 	}
-	
+
 	/**
 	 * @param player
 	 */

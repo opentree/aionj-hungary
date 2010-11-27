@@ -19,7 +19,6 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
-
 /**
  * 
  * @author Lyahim, orz, Sarynth
@@ -29,26 +28,26 @@ public class SM_SELL_ITEM extends AbstractAionServerPacket<AionChannelHandler>
 {
 
 	private int	targetObjectId;
-	private int sellPercentage;
-	
+	private int	sellPercentage;
+
 	public SM_SELL_ITEM(int targetObjectId, int sellPercentage)
 	{
-		
+
 		this.sellPercentage = sellPercentage;
 		this.targetObjectId = targetObjectId;
-	
+
 	}
 
 	/**
 	* {@inheritDoc}
 	*/
-	
+
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
-	{		
+	{
 
 		writeD(targetObjectId);
 		writeD(sellPercentage); // Buy Price * (sellPercentage / 100) = Display price.
-	
-	}	
+
+	}
 }

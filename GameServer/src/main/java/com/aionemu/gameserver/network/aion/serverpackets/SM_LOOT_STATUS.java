@@ -28,8 +28,7 @@ public class SM_LOOT_STATUS extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int	targetObjectId;
 	private int	state;
- 
-	
+
 	public SM_LOOT_STATUS(int targetObjectId, int state)
 	{
 		this.targetObjectId = targetObjectId;
@@ -39,11 +38,11 @@ public class SM_LOOT_STATUS extends AbstractAionServerPacket<AionChannelHandler>
 	/**
 	 * {@inheritDoc} dc
 	 */
-	
+
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
-	{		
+	{
 		writeD(targetObjectId);
-		writeC( state);
-	}	
+		writeC(state);
+	}
 }

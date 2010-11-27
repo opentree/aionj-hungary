@@ -38,7 +38,8 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class WorkOrders extends QuestHandler
 {
-	private final WorkOrdersData workOrdersData;
+	private final WorkOrdersData	workOrdersData;
+
 	/**
 	 * @param questId
 	 */
@@ -55,14 +56,14 @@ public class WorkOrders extends QuestHandler
 		qe.setNpcQuestData(workOrdersData.getStartNpcId()).addOnTalkEvent(workOrdersData.getId());
 		qe.addOnQuestAbort(workOrdersData.getId());
 		qe.addOnQuestFinish(workOrdersData.getId());
-		int i=0;
+		int i = 0;
 		CollectItems collectItems = DataManager.QUEST_DATA.getQuestById(workOrdersData.getId()).getCollectItems();
 		int count = 0;
 		if (collectItems != null)
 		{
 			count = collectItems.getCollectItem().size();
 		}
-		deletebleItems = new int[count+workOrdersData.getGiveComponent().size()];
+		deletebleItems = new int[count + workOrdersData.getGiveComponent().size()];
 		for (QuestItems questItem : workOrdersData.getGiveComponent())
 		{
 			this.deletebleItems[i++] = questItem.getItemId();
@@ -81,14 +82,14 @@ public class WorkOrders extends QuestHandler
 	{
 		final Player player = env.getPlayer();
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
-		if(targetId != workOrdersData.getStartNpcId())
+		if (targetId != workOrdersData.getStartNpcId())
 			return false;
 		QuestState qs = player.getQuestStateList().getQuestState(workOrdersData.getId());
-		if(qs == null || qs.getStatus() == QuestStatus.NONE || qs.getStatus() == QuestStatus.COMPLETE)
+		if (qs == null || qs.getStatus() == QuestStatus.NONE || qs.getStatus() == QuestStatus.COMPLETE)
 		{
-			switch(env.getDialogId())
+			switch (env.getDialogId())
 			{
 				case 25:
 					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 4);
@@ -124,7 +125,7 @@ public class WorkOrders extends QuestHandler
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean onQuestFinishEvent(QuestEnv env)
 	{
@@ -138,7 +139,7 @@ public class WorkOrders extends QuestHandler
 		abortQuest(env);
 		return true;
 	}
-	
+
 	private void abortQuest(QuestEnv env)
 	{
 		env.getPlayer().getRecipeList().deleteRecipe(env.getPlayer(), workOrdersData.getRecipeId());

@@ -45,9 +45,9 @@ import com.aionemu.gameserver.world.WorldType;
 public class BindPoint extends StaticNpc
 {
 
-	private static Logger log = Logger.getLogger(BindPoint.class);
+	private static Logger		log	= Logger.getLogger(BindPoint.class);
 
-	private BindPointTemplate bindPointTemplate;
+	private BindPointTemplate	bindPointTemplate;
 
 	/**
 	 * @param objId
@@ -82,32 +82,32 @@ public class BindPoint extends StaticNpc
 		WorldType worldType = World.getInstance().getWorldMap(player.getWorldId()).getWorldType();
 		if (!CustomConfig.ENABLE_CROSS_FACTION_BINDING)
 		{
-			if( worldType == WorldType.ASMODAE && player.getCommonData().getRace()==Race.ELYOS )
+			if (worldType == WorldType.ASMODAE && player.getCommonData().getRace() == Race.ELYOS)
 			{
 				PacketSendUtility.sendPacket(player, new SM_MESSAGE(0, null, "Elyos cannot bind in Asmodian territory.", ChatType.ANNOUNCEMENTS));
 				return;
 
 			}
-			if( worldType == WorldType.ELYSEA && player.getCommonData().getRace()==Race.ASMODIANS )
+			if (worldType == WorldType.ELYSEA && player.getCommonData().getRace() == Race.ASMODIANS)
 			{
 				PacketSendUtility.sendPacket(player, new SM_MESSAGE(0, null, "Asmodians cannot bind in Elyos territory.", ChatType.ANNOUNCEMENTS));
 				return;
 			}
-			if( worldType == WorldType.ABYSS )
+			if (worldType == WorldType.ABYSS)
 			{
-				if( player.getCommonData().getRace()==Race.ELYOS && player.getTarget().getObjectTemplate().getTemplateId()==700401 )
+				if (player.getCommonData().getRace() == Race.ELYOS && player.getTarget().getObjectTemplate().getTemplateId() == 700401)
 				{
 					PacketSendUtility.sendPacket(player, new SM_MESSAGE(0, null, "Elyos cannot bind in Asmodian territory.", ChatType.ANNOUNCEMENTS));
 					return;
 				}
-				if( player.getCommonData().getRace()==Race.ASMODIANS && player.getTarget().getObjectTemplate().getTemplateId()==730071 )
+				if (player.getCommonData().getRace() == Race.ASMODIANS && player.getTarget().getObjectTemplate().getTemplateId() == 730071)
 				{
 					PacketSendUtility.sendPacket(player, new SM_MESSAGE(0, null, "Asmodians cannot bind in Elyos territory.", ChatType.ANNOUNCEMENTS));
 					return;
 				}
 			}
 		}
-		if( worldType == WorldType.PRISON)
+		if (worldType == WorldType.PRISON)
 		{
 			PacketSendUtility.sendPacket(player, new SM_MESSAGE(0, null, "You cannot bind here.", ChatType.ANNOUNCEMENTS));
 			return;
@@ -117,6 +117,7 @@ public class BindPoint extends StaticNpc
 			bindHere(player);
 		}
 	}
+
 	private void bindHere(Player player)
 	{
 		RequestResponseHandler responseHandler = new RequestResponseHandler(this)
@@ -130,7 +131,8 @@ public class BindPoint extends StaticNpc
 					{
 						responder.getCommonData().setBindPoint(bindPointTemplate.getBindId());
 						TeleportService.sendSetBindPoint(responder);
-						PacketSendUtility.broadcastPacket(responder, new SM_LEVEL_UPDATE(responder.getObjectId(), 2, responder.getCommonData().getLevel()), true);
+						PacketSendUtility.broadcastPacket(responder, new SM_LEVEL_UPDATE(responder.getObjectId(), 2, responder.getCommonData().getLevel()),
+								true);
 						PacketSendUtility.sendPacket(responder, SM_SYSTEM_MESSAGE.STR_DEATH_REGISTER_RESURRECT_POINT());
 					}
 					else
@@ -140,6 +142,7 @@ public class BindPoint extends StaticNpc
 					}
 				}
 			}
+
 			@Override
 			public void denyRequest(StaticNpc requester, Player responder)
 			{

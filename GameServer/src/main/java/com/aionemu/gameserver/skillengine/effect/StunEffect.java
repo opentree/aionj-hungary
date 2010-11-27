@@ -43,7 +43,7 @@ public class StunEffect extends EffectTemplate
 	@Override
 	public void calculate(Effect effect)
 	{
-		if (calculateEffectResistRate(effect, StatEnum.STUN_RESISTANCE)) 
+		if (calculateEffectResistRate(effect, StatEnum.STUN_RESISTANCE))
 			effect.addSucessEffect(this);
 	}
 
@@ -51,7 +51,7 @@ public class StunEffect extends EffectTemplate
 	public void startEffect(Effect effect)
 	{
 		final Creature effected = effect.getEffected();
-		effected.cancelCurrentSkill(); 
+		effected.cancelCurrentSkill();
 		effect.getEffected().getEffectController().setAbnormal(EffectId.STUN.getEffectId());
 		PacketSendUtility.broadcastPacketAndReceive(effect.getEffected(), new SM_TARGET_IMMOBILIZE(effect.getEffected()));
 	}

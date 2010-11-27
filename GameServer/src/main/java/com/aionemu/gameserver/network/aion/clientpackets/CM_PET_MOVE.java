@@ -31,19 +31,19 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class CM_PET_MOVE extends AbstractClientPacket<AionChannelHandler>
 {
-	
-	private int actionId;
-	
-	private float x1;
-	private float y1;
-	private float z1;
-	
-	private int h;
-	
-	private float x2;
-	private float y2;
-	private float z2;
-	
+
+	private int		actionId;
+
+	private float	x1;
+	private float	y1;
+	private float	z1;
+
+	private int		h;
+
+	private float	x2;
+	private float	y2;
+	private float	z2;
+
 	public CM_PET_MOVE(int opcode)
 	{
 		super(opcode);
@@ -53,7 +53,7 @@ public class CM_PET_MOVE extends AbstractClientPacket<AionChannelHandler>
 	protected void readImpl()
 	{
 		actionId = readC();
-		switch(actionId)
+		switch (actionId)
 		{
 			case 12:
 				x1 = readF();
@@ -76,10 +76,10 @@ public class CM_PET_MOVE extends AbstractClientPacket<AionChannelHandler>
 	protected void runImpl()
 	{
 		Player player = getChannelHandler().getActivePlayer();
-		switch(actionId)
+		switch (actionId)
 		{
 			case 12:
-				if(player.getToyPet() != null)
+				if (player.getToyPet() != null)
 				{
 					ToyPet pet = player.getToyPet();
 					pet.setX1(x1);

@@ -45,10 +45,10 @@ public abstract class AbstractAionServerPacket<T extends AionChannelHandler> ext
 	}
 
 	@Override
-    public void write(T channelhandler)
-    {
+	public void write(T channelhandler)
+	{
 		writeH((short) 0);
 		writeOP();
 		writeImpl(channelhandler);
-    }
+	}
 }

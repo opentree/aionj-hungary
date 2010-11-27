@@ -31,8 +31,8 @@ public class AddModifier extends SimpleModifier
 		int minLimit = 0;
 		int maxLimit = 0;
 		int chkValue;
-		
-		switch(getStat())
+
+		switch (getStat())
 		{
 			case ATTACK_SPEED:
 			case SPEED:
@@ -42,23 +42,23 @@ public class AddModifier extends SimpleModifier
 			case FLY_SPEED:
 				minLimit = 600;
 				maxLimit = 16000;
-				break;					
+				break;
 		}
-		
-		if(isBonus())
+
+		if (isBonus())
 		{
 			chkValue = Math.round(value);
-			if(minLimit == 0 && maxLimit == 0)
+			if (minLimit == 0 && maxLimit == 0)
 			{
-			
-				if(chkValue + currentStat < 0)
+
+				if (chkValue + currentStat < 0)
 					return -currentStat;
 				else
 					return chkValue;
 			}
 			else
 			{
-				if(chkValue + currentStat < minLimit)
+				if (chkValue + currentStat < minLimit)
 				{
 					chkValue = currentStat - minLimit;
 					return -chkValue;
@@ -74,17 +74,17 @@ public class AddModifier extends SimpleModifier
 		}
 		else
 		{
-			chkValue =  Math.round(stat + value);
-			if(minLimit == 0 && maxLimit == 0)
+			chkValue = Math.round(stat + value);
+			if (minLimit == 0 && maxLimit == 0)
 			{
-				if(chkValue < 0)
+				if (chkValue < 0)
 					return 0;
 				else
 					return chkValue;
 			}
 			else
 			{
-				if(chkValue + currentStat < minLimit)
+				if (chkValue + currentStat < minLimit)
 				{
 					chkValue = currentStat - minLimit;
 					return -chkValue;
@@ -105,8 +105,8 @@ public class AddModifier extends SimpleModifier
 	{
 		return StatModifierPriority.MEDIUM;
 	}
-	
-	public static AddModifier newInstance (StatEnum stat, int value, boolean isBonus)
+
+	public static AddModifier newInstance(StatEnum stat, int value, boolean isBonus)
 	{
 		AddModifier m = new AddModifier();
 		m.setStat(stat);

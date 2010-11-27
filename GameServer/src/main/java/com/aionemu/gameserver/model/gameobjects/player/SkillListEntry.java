@@ -25,18 +25,18 @@ import com.aionemu.gameserver.model.gameobjects.PersistentState;
  */
 public class SkillListEntry
 {
-	private int skillId;
-	
-	private int skillLvl;
-	
-	private boolean isStigma;
-	
+	private int				skillId;
+
+	private int				skillLvl;
+
+	private boolean			isStigma;
+
 	/**
 	 * for crafting skills
 	 */
-	private int currentXp;
-	
-	private PersistentState persistentState;
+	private int				currentXp;
+
+	private PersistentState	persistentState;
 
 	public SkillListEntry(int skillId, boolean isStigma, int skillLvl, PersistentState persistentState)
 	{
@@ -61,7 +61,7 @@ public class SkillListEntry
 	{
 		return skillLvl;
 	}
-	
+
 	/**
 	 * 
 	 * @return isStigma
@@ -70,7 +70,7 @@ public class SkillListEntry
 	{
 		return this.isStigma;
 	}
-	
+
 	/**
 	 * 
 	 * @return the skill name
@@ -94,7 +94,7 @@ public class SkillListEntry
 	 */
 	public int getExtraLvl()
 	{
-		switch(skillId)
+		switch (skillId)
 		{
 			case 30002:
 			case 30003:
@@ -104,10 +104,11 @@ public class SkillListEntry
 			case 40004:
 			case 40007:
 			case 40008:
-				return skillLvl/100;
+				return skillLvl / 100;
 		}
 		return 0;
 	}
+
 	/**
 	 * @return the currentXp
 	 */
@@ -123,7 +124,7 @@ public class SkillListEntry
 	{
 		this.currentXp = currentXp;
 	}
-	
+
 	/**
 	 *  
 	 * @param xp
@@ -131,7 +132,7 @@ public class SkillListEntry
 	public boolean addSkillXp(int xp)
 	{
 		this.currentXp += xp;
-		if(currentXp > (0.15*(skillLvl+30)*(skillLvl+30)))
+		if (currentXp > (0.15 * (skillLvl + 30) * (skillLvl + 30)))
 		{
 			currentXp = 0;
 			setSkillLvl(skillLvl + 1);
@@ -153,21 +154,21 @@ public class SkillListEntry
 	 */
 	public void setPersistentState(PersistentState persistentState)
 	{
-		switch(persistentState)
+		switch (persistentState)
 		{
 			case DELETED:
-				if(this.persistentState == PersistentState.NEW)
+				if (this.persistentState == PersistentState.NEW)
 					this.persistentState = PersistentState.NOACTION;
 				else
 					this.persistentState = PersistentState.DELETED;
 				break;
 			case UPDATE_REQUIRED:
-				if(this.persistentState != PersistentState.NEW)
+				if (this.persistentState != PersistentState.NEW)
 					this.persistentState = PersistentState.UPDATE_REQUIRED;
 				break;
 			default:
 				this.persistentState = persistentState;
 		}
 	}
-	
+
 }

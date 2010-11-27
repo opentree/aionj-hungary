@@ -41,7 +41,7 @@ public class CM_EXCHANGE_OK extends AbstractClientPacket<AionChannelHandler>
 
 	@Override
 	protected void runImpl()
-	{	
+	{
 		final Player activePlayer = getChannelHandler().getActivePlayer();
 		ExchangeService.getInstance().confirmExchange(activePlayer);
 	}

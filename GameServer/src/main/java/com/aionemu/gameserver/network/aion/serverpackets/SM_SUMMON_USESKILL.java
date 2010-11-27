@@ -25,11 +25,11 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_SUMMON_USESKILL extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int summonId;
-	private int skillId;
-	private int skillLvl;
-	private int targetId;
-	
+	private int	summonId;
+	private int	skillId;
+	private int	skillLvl;
+	private int	targetId;
+
 	/**
 	 * 
 	 * @param summonId
@@ -50,7 +50,7 @@ public class SM_SUMMON_USESKILL extends AbstractAionServerPacket<AionChannelHand
 	{
 		writeD(summonId);
 		writeH(skillId);
-		writeC( skillLvl);
+		writeC(skillLvl);
 		writeD(targetId);
 	}
 

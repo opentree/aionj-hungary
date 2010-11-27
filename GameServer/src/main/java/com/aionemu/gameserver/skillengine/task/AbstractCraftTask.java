@@ -27,14 +27,14 @@ import com.aionemu.gameserver.configs.main.CraftConfig;
  */
 public abstract class AbstractCraftTask extends AbstractInteractionTask
 {
-	protected int successValue;
-	protected int failureValue;
-	protected int currentSuccessValue;
-	protected int currentFailureValue;
-	protected int skillLvlDiff;
-	protected boolean critical;
-	protected boolean setCritical = false;
-	
+	protected int		successValue;
+	protected int		failureValue;
+	protected int		currentSuccessValue;
+	protected int		currentFailureValue;
+	protected int		skillLvlDiff;
+	protected boolean	critical;
+	protected boolean	setCritical	= false;
+
 	/**
 	 * 
 	 * @param requestor
@@ -54,23 +54,23 @@ public abstract class AbstractCraftTask extends AbstractInteractionTask
 	@Override
 	protected boolean onInteraction()
 	{
-		if(currentSuccessValue == successValue)
+		if (currentSuccessValue == successValue)
 		{
 			onSuccessFinish();
 			return true;
 		}
-		if(currentFailureValue == failureValue)
+		if (currentFailureValue == failureValue)
 		{
 			onFailureFinish();
 			return true;
 		}
-		
+
 		analyzeInteraction();
-		
+
 		sendInteractionUpdate();
 		return false;
 	}
-	
+
 	/**
 	 *  Perform interaction calculation
 	 */
@@ -78,33 +78,33 @@ public abstract class AbstractCraftTask extends AbstractInteractionTask
 	{
 		//TODO better random
 		//if(Rnd.nextBoolean())
-		int multi = Math.max(0, 33-skillLvlDiff*5);
+		int multi = Math.max(0, 33 - skillLvlDiff * 5);
 		if (Rnd.get(100) > multi)
 		{
 			if (critical && Rnd.get(100) < 30)
 				setCritical = true;
-			currentSuccessValue += Rnd.get(successValue/(multi+1)/2,successValue);
+			currentSuccessValue += Rnd.get(successValue / (multi + 1) / 2, successValue);
 		}
 		else
 		{
-			currentFailureValue += Rnd.get(failureValue/(multi+1)/2,failureValue);
+			currentFailureValue += Rnd.get(failureValue / (multi + 1) / 2, failureValue);
 		}
-		
-		if(currentSuccessValue >= successValue)
+
+		if (currentSuccessValue >= successValue)
 		{
 			if (critical)
 				setCritical = true;
 			currentSuccessValue = successValue;
 		}
-		else if(currentFailureValue >= failureValue)
+		else if (currentFailureValue >= failureValue)
 		{
 			currentFailureValue = failureValue;
 		}
 	}
-	
+
 	protected abstract void sendInteractionUpdate();
-	
+
 	protected abstract void onSuccessFinish();
-	
+
 	protected abstract void onFailureFinish();
 }

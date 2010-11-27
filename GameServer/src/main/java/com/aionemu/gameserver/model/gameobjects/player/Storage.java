@@ -31,21 +31,21 @@ import com.aionemu.gameserver.model.items.ItemStorage;
  */
 public class Storage
 {
-	
-	private int ownerId;
 
-	protected ItemStorage storage;
+	private int				ownerId;
 
-	private Item kinahItem;
+	protected ItemStorage	storage;
 
-	protected int storageType;
-	
-	protected Queue<Item> deletedItems = new ConcurrentLinkedQueue<Item>();
-	
+	private Item			kinahItem;
+
+	protected int			storageType;
+
+	protected Queue<Item>	deletedItems	= new ConcurrentLinkedQueue<Item>();
+
 	/**
 	 * Can be of 2 types: UPDATED and UPDATE_REQUIRED
 	 */
-	private PersistentState persistentState = PersistentState.UPDATED;
+	private PersistentState	persistentState	= PersistentState.UPDATED;
 
 	/**
 	 *  Will be enhanced during development.
@@ -95,6 +95,7 @@ public class Storage
 	{
 		return storageType;
 	}
+
 	/**
 	 *  Increasing kinah amount is persisted immediately
 	 *  
@@ -105,6 +106,7 @@ public class Storage
 		kinahItem.increaseItemCount(amount);
 		setPersistentState(PersistentState.UPDATE_REQUIRED);
 	}
+
 	/**
 	 *  Decreasing kinah amount is persisted immediately
 	 *  
@@ -129,7 +131,7 @@ public class Storage
 	{
 
 		Item resultItem = storage.putToNextAvailableSlot(item);
-		if(resultItem != null)
+		if (resultItem != null)
 		{
 			resultItem.setItemLocation(storageType);
 		}
@@ -147,7 +149,7 @@ public class Storage
 	public void removeFromBag(Item item, boolean persist)
 	{
 		boolean operationResult = storage.removeItemFromStorage(item);
-		if(operationResult && persist)
+		if (operationResult && persist)
 		{
 			item.setPersistentState(PersistentState.DELETED);
 			deletedItems.add(item);
@@ -176,12 +178,12 @@ public class Storage
 	public List<Item> getAllItems()
 	{
 		List<Item> allItems = new ArrayList<Item>();
-		if(kinahItem != null)
+		if (kinahItem != null)
 			allItems.add(kinahItem);
 		allItems.addAll(storage.getStorageItems());
 		return allItems;
 	}
-	
+
 	/**
 	 *  All deleted items with persistent state DELETED
 	 *  
@@ -204,12 +206,11 @@ public class Storage
 
 		for (Item item : storage.getStorageItems())
 		{
-			if(item.getItemTemplate().getTemplateId() == itemId)
+			if (item.getItemTemplate().getTemplateId() == itemId)
 				allItemsByItemId.add(item);
 		}
 		return allItemsByItemId;
 	}
-
 
 	public List<Item> getStorageItems()
 	{
@@ -246,7 +247,7 @@ public class Storage
 	{
 		List<Item> items = getItemsByItemId(itemId);
 		long count = 0;
-		for(Item item : items)
+		for (Item item : items)
 		{
 			count += item.getItemCount();
 		}
@@ -262,7 +263,7 @@ public class Storage
 	{
 		return storage.isFull();
 	}
-	
+
 	/**
 	 *  Number of available slots of the underlying storage
 	 *  
@@ -272,7 +273,7 @@ public class Storage
 	{
 		return storage.getNumberOfFreeSlots();
 	}
-	
+
 	/**
 	 *  Sets the Inventory Limit from Cube Size
 	 *  
@@ -282,7 +283,7 @@ public class Storage
 	{
 		this.storage.setLimit(limit);
 	}
-	
+
 	/**
 	 *  Limit value of the underlying storage
 	 *  
@@ -323,6 +324,7 @@ public class Storage
 	{
 		return storage.putToNextAvailableSlot(item);
 	}
+
 	/**
 	 *  Size of underlying storage
 	 *  

@@ -26,9 +26,9 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
 public class SM_NAME_CHANGE extends AbstractAionServerPacket<AionChannelHandler>
 {
 
-	private int playerObjectId;
-	private String oldName;
-	private String newName;
+	private int		playerObjectId;
+	private String	oldName;
+	private String	newName;
 
 	public SM_NAME_CHANGE(int playerObjectId, String oldName, String newName)
 	{

@@ -23,20 +23,20 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  * @author Lyahim, Rhys2002
  */
 public class SM_GROUP_LOOT extends AbstractAionServerPacket<AionChannelHandler>
-{	
-	private int groupId;
-	private int unk1;
-	private int unk2;
-	private int itemId;
-	private int unk3;
-	private int lootCorpseId;
-	private int distributionId;
-    private int playerId;	
-	private int luck;
-	
+{
+	private int	groupId;
+	private int	unk1;
+	private int	unk2;
+	private int	itemId;
+	private int	unk3;
+	private int	lootCorpseId;
+	private int	distributionId;
+	private int	playerId;
+	private int	luck;
+
 	/**
 	 * @param Player Id must be 0 to start the Roll Options
-	 */	
+	 */
 	public SM_GROUP_LOOT(int groupId, int itemId, int lootCorpseId, int distributionId)
 	{
 		this.groupId = groupId;
@@ -49,7 +49,7 @@ public class SM_GROUP_LOOT extends AbstractAionServerPacket<AionChannelHandler>
 		this.playerId = 0;
 		this.luck = 1;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -60,9 +60,9 @@ public class SM_GROUP_LOOT extends AbstractAionServerPacket<AionChannelHandler>
 		writeD(unk1);
 		writeD(unk2);
 		writeD(itemId);
-		writeC( unk3);
+		writeC(unk3);
 		writeD(lootCorpseId);
-		writeC( distributionId);
+		writeC(distributionId);
 		writeD(playerId);
 		writeD(luck);
 	}

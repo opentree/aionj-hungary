@@ -42,18 +42,18 @@ import com.aionemu.gameserver.configs.main.HTMLConfig;
  */
 public final class HTMLCache
 {
-	private static final Logger		log				= Logger.getLogger(HTMLCache.class);
+	private static final Logger		log			= Logger.getLogger(HTMLCache.class);
 
-	private static final FileFilter	HTML_FILTER		= new FileFilter()
-	{
-			@Override
-			public boolean accept(File file)
-			{
-				return file.isDirectory() || file.getName().endsWith(".xhtml");
-			}
-	};
+	private static final FileFilter	HTML_FILTER	= new FileFilter()
+												{
+													@Override
+													public boolean accept(File file)
+													{
+														return file.isDirectory() || file.getName().endsWith(".xhtml");
+													}
+												};
 
-	private static final File		HTML_ROOT		= new File(HTMLConfig.HTML_ROOT);
+	private static final File		HTML_ROOT	= new File(HTMLConfig.HTML_ROOT);
 
 	private static final class SingletonHolder
 	{
@@ -84,7 +84,7 @@ public final class HTMLCache
 
 		final File cacheFile = getCacheFile();
 
-		if(deleteCacheFile && cacheFile.exists())
+		if (deleteCacheFile && cacheFile.exists())
 		{
 			log.info("Cache[HTML]: Deleting cache file... OK.");
 
@@ -93,7 +93,7 @@ public final class HTMLCache
 
 		log.info("Cache[HTML]: Caching started... OK.");
 
-		if(cacheFile.exists())
+		if (cacheFile.exists())
 		{
 			log.info("Cache[HTML]: Using cache file... OK.");
 
@@ -104,13 +104,13 @@ public final class HTMLCache
 
 				cache = (FastMap<String, String>) ois.readObject();
 
-				for(String html : cache.values())
+				for (String html : cache.values())
 				{
 					loadedFiles++;
 					size += html.length();
 				}
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				log.warn("", e);
 
@@ -129,7 +129,7 @@ public final class HTMLCache
 
 		log.info(String.valueOf(this));
 
-		if(cacheFile.exists())
+		if (cacheFile.exists())
 		{
 			log.info("Cache[HTML]: Compaction skipped!");
 		}
@@ -139,7 +139,7 @@ public final class HTMLCache
 
 			final StringBuilder sb = new StringBuilder(8192);
 
-			for(Entry<String, String> entry : cache.entrySet())
+			for (Entry<String, String> entry : cache.entrySet())
 			{
 				try
 				{
@@ -151,7 +151,7 @@ public final class HTMLCache
 
 					entry.setValue(newHtml);
 				}
-				catch(RuntimeException e)
+				catch (RuntimeException e)
 				{
 					log.warn("Cache[HTML]: Error during compaction of " + entry.getKey(), e);
 				}
@@ -160,7 +160,7 @@ public final class HTMLCache
 			log.info(String.valueOf(this));
 		}
 
-		if(!cacheFile.exists())
+		if (!cacheFile.exists())
 		{
 			log.info("Cache[HTML]: Creating cache file... OK.");
 
@@ -171,7 +171,7 @@ public final class HTMLCache
 
 				oos.writeObject(cache);
 			}
-			catch(IOException e)
+			catch (IOException e)
 			{
 				log.warn("", e);
 			}
@@ -192,11 +192,12 @@ public final class HTMLCache
 	static
 	{
 		// TODO: is there any other tag that should be replaced?
-		final String[] tagsToCompact = { "html", "title", "body", "br", "br1", "p", "table", "tr", "td" };
+		final String[] tagsToCompact =
+		{ "html", "title", "body", "br", "br1", "p", "table", "tr", "td" };
 
 		final List<String> list = new ArrayList<String>();
 
-		for(String tag : tagsToCompact)
+		for (String tag : tagsToCompact)
 		{
 			list.add("<" + tag + ">");
 			list.add("</" + tag + ">");
@@ -206,7 +207,7 @@ public final class HTMLCache
 
 		final List<String> list2 = new ArrayList<String>();
 
-		for(String tag : list)
+		for (String tag : list)
 		{
 			list2.add(tag);
 			list2.add(tag + " ");
@@ -221,8 +222,8 @@ public final class HTMLCache
 		sb.setLength(0);
 		sb.append(html);
 
-		for(int i = 0; i < sb.length(); i++)
-			if(Character.isWhitespace(sb.charAt(i)))
+		for (int i = 0; i < sb.length(); i++)
+			if (Character.isWhitespace(sb.charAt(i)))
 				sb.setCharAt(i, ' ');
 
 		replaceAll(sb, "  ", " ");
@@ -230,7 +231,7 @@ public final class HTMLCache
 		replaceAll(sb, "< ", "<");
 		replaceAll(sb, " >", ">");
 
-		for(int i = 0; i < TAGS_TO_COMPACT.length; i += 3)
+		for (int i = 0; i < TAGS_TO_COMPACT.length; i += 3)
 		{
 			replaceAll(sb, TAGS_TO_COMPACT[i + 1], TAGS_TO_COMPACT[i]);
 			replaceAll(sb, TAGS_TO_COMPACT[i + 2], TAGS_TO_COMPACT[i]);
@@ -242,10 +243,10 @@ public final class HTMLCache
 		int fromIndex = 0;
 		int toIndex = sb.length();
 
-		while(fromIndex < toIndex && sb.charAt(fromIndex) == ' ')
+		while (fromIndex < toIndex && sb.charAt(fromIndex) == ' ')
 			fromIndex++;
 
-		while(fromIndex < toIndex && sb.charAt(toIndex - 1) == ' ')
+		while (fromIndex < toIndex && sb.charAt(toIndex - 1) == ' ')
 			toIndex--;
 
 		return sb.substring(fromIndex, toIndex);
@@ -253,7 +254,7 @@ public final class HTMLCache
 
 	private void replaceAll(StringBuilder sb, String pattern, String value)
 	{
-		for(int index = 0; (index = sb.indexOf(pattern, index)) != -1;)
+		for (int index = 0; (index = sb.indexOf(pattern, index)) != -1;)
 			sb.replace(index, index + pattern.length(), value);
 	}
 
@@ -266,9 +267,9 @@ public final class HTMLCache
 
 	public void parseDir(File dir)
 	{
-		for(File file : dir.listFiles(HTML_FILTER))
+		for (File file : dir.listFiles(HTML_FILTER))
 		{
-			if(!file.isDirectory())
+			if (!file.isDirectory())
 				loadFile(file);
 			else
 				parseDir(file);
@@ -277,7 +278,7 @@ public final class HTMLCache
 
 	public String loadFile(File file)
 	{
-		if(isLoadable(file))
+		if (isLoadable(file))
 		{
 			BufferedInputStream bis = null;
 			try
@@ -292,7 +293,7 @@ public final class HTMLCache
 				size += content.length();
 
 				String oldContent = cache.get(relpath);
-				if(oldContent == null)
+				if (oldContent == null)
 					loadedFiles++;
 				else
 					size -= oldContent.length();
@@ -301,7 +302,7 @@ public final class HTMLCache
 
 				return content;
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				log.warn("Problem with htm file:", e);
 			}
@@ -332,8 +333,7 @@ public final class HTMLCache
 	@Override
 	public String toString()
 	{
-		return "Cache[HTML]: " + String.format("%.3f", (float) size / 1024) + " kilobytes on " + loadedFiles
-			+ " file(s) loaded.";
+		return "Cache[HTML]: " + String.format("%.3f", (float) size / 1024) + " kilobytes on " + loadedFiles + " file(s) loaded.";
 	}
 
 	public static String getRelativePath(File base, File file)

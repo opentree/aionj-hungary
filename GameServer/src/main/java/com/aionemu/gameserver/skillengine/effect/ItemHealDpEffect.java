@@ -24,15 +24,13 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
 import com.aionemu.gameserver.skillengine.model.Effect;
 
-
 /**
  * @author ATracer
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ItemHealDpEffect")
-public class ItemHealDpEffect
-extends AbstractHealEffect
+public class ItemHealDpEffect extends AbstractHealEffect
 {
 
 	@Override

@@ -24,9 +24,9 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_LOGIN_QUEUE extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int		waitingPosition; // What is the player's position in line
-	private int		waitingTime; // Per waiting position in seconds
-	private int		waitingCount; // How many are waiting in line
+	private int	waitingPosition;	// What is the player's position in line
+	private int	waitingTime;		// Per waiting position in seconds
+	private int	waitingCount;		// How many are waiting in line
 
 	private SM_LOGIN_QUEUE()
 	{

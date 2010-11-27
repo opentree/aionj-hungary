@@ -25,40 +25,39 @@ import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.skillengine.model.Skill;
 
-
 /**
  * @author ATracer
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TargetCondition")
-public class TargetCondition
-    extends Condition
+public class TargetCondition extends Condition
 {
 
-    @XmlAttribute(required = true)
-    protected TargetAttribute value;
+	@XmlAttribute(required = true)
+	protected TargetAttribute	value;
 
-    /**
-     * Gets the value of the value property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TargetAttribute }
-     *     
-     */
-    public TargetAttribute getValue() {
-        return value;
-    }
+	/**
+	 * Gets the value of the value property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link TargetAttribute }
+	 *     
+	 */
+	public TargetAttribute getValue()
+	{
+		return value;
+	}
 
 	@Override
 	public boolean verify(Skill skill)
 	{
-		if(value != TargetAttribute.NONE && skill.getFirstTarget() == null)
+		if (value != TargetAttribute.NONE && skill.getFirstTarget() == null)
 		{
 			return false;
 		}
-		switch(value)
+		switch (value)
 		{
 			case NPC:
 				return skill.getFirstTarget() instanceof Npc;

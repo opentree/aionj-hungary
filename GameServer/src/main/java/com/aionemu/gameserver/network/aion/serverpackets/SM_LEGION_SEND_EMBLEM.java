@@ -26,12 +26,12 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
 public class SM_LEGION_SEND_EMBLEM extends AbstractAionServerPacket<AionChannelHandler>
 {
 	/** Legion information **/
-	private int	legionId;
-	private int emblemId;
-	private int color_r;
-	private int color_g;
-	private int color_b;
-	private String legionName;
+	private int		legionId;
+	private int		emblemId;
+	private int		color_r;
+	private int		color_g;
+	private int		color_b;
+	private String	legionName;
 
 	/**
 	 * This constructor will handle legion emblem info
@@ -54,12 +54,12 @@ public class SM_LEGION_SEND_EMBLEM extends AbstractAionServerPacket<AionChannelH
 		writeD(legionId);
 		writeH(emblemId);
 		writeD(0x00);
-		writeC( 0xFF); // unk
-		writeC( color_r);
-		writeC( color_g);
-		writeC( color_b);
+		writeC(0xFF); // unk
+		writeC(color_r);
+		writeC(color_g);
+		writeC(color_b);
 		writeS(legionName);
-		writeC( 0x01);
+		writeC(0x01);
 
 		// ED 55 8A 6C 04 00 00 01 80 00 00 00 00 FF FF FF .U.l............
 		// FF 44 00 72 00 61 00 6B 00 65 00 73 00 00 00 01 .D.r.a.k.e.s....

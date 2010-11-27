@@ -28,12 +28,12 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
  */
 public abstract class AbstractInteractionTask
 {
-	private Future<?> task;
-	private int interval = 2500;
-	
-	protected Player requestor;
-	protected VisibleObject responder;
-	
+	private Future<?>		task;
+	private int				interval	= 2500;
+
+	protected Player		requestor;
+	protected VisibleObject	responder;
+
 	/**
 	 * @param requestor
 	 * @param responder
@@ -54,59 +54,60 @@ public abstract class AbstractInteractionTask
 	 * @return
 	 */
 	protected abstract boolean onInteraction();
-	
+
 	/**
 	 * Called when interaction is complete
 	 */
 	protected abstract void onInteractionFinish();
-	
+
 	/**
 	 * Called before interaction is started
 	 */
 	protected abstract void onInteractionStart();
-	
+
 	/**
 	 * Called when interaction is not complete and need to be aborted
 	 */
 	protected abstract void onInteractionAbort();
-	
+
 	/**
 	 * Interaction scheduling method
 	 */
 	public void start()
 	{
 		onInteractionStart();
-		
-		task = ThreadPoolManager.getInstance().scheduleAtFixedRate(new Runnable(){
-			
+
+		task = ThreadPoolManager.getInstance().scheduleAtFixedRate(new Runnable()
+		{
+
 			@Override
 			public void run()
 			{
-				if(!validateParticipants())
+				if (!validateParticipants())
 					stop();
-					
+
 				boolean stopTask = onInteraction();
-				if(stopTask)				
+				if (stopTask)
 					stop();
 			}
-	
+
 		}, 1000, interval);
 	}
-	
+
 	/**
 	 * Stop current interaction
 	 */
 	public void stop()
 	{
 		onInteractionFinish();
-		
-		if(task != null && !task.isCancelled())
+
+		if (task != null && !task.isCancelled())
 		{
 			task.cancel(true);
 			task = null;
 		}
 	}
-	
+
 	/**
 	 * Abort current interaction
 	 */
@@ -115,7 +116,7 @@ public abstract class AbstractInteractionTask
 		onInteractionAbort();
 		stop();
 	}
-	
+
 	/**
 	 * @return true or false
 	 */
@@ -123,7 +124,7 @@ public abstract class AbstractInteractionTask
 	{
 		return task != null && !task.isCancelled();
 	}
-	
+
 	/**
 	 * @return true or false
 	 */

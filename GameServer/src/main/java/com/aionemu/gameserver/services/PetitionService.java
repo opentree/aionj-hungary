@@ -36,60 +36,60 @@ import com.aionemu.gameserver.world.World;
  */
 public class PetitionService
 {
-	private static Logger	log	= Logger.getLogger(PetitionService.class);
-	
-	private static SortedMap<Integer, Petition> registeredPetitions = new TreeMap<Integer, Petition>();
-	
+	private static Logger						log					= Logger.getLogger(PetitionService.class);
+
+	private static SortedMap<Integer, Petition>	registeredPetitions	= new TreeMap<Integer, Petition>();
+
 	public static final PetitionService getInstance()
 	{
 		return SingletonHolder.instance;
 	}
-	
+
 	public PetitionService()
 	{
 		log.info("Loading PetitionService ...");
 		Set<Petition> petitions = DAOManager.getDAO(PetitionDAO.class).getPetitions();
-		for(Petition p : petitions)
+		for (Petition p : petitions)
 		{
 			registeredPetitions.put(p.getPetitionId(), p);
 		}
 		log.info("Successfully loaded " + registeredPetitions.size() + " database petitions");
 	}
-	
+
 	public Collection<Petition> getRegisteredPetitions()
 	{
 		return registeredPetitions.values();
 	}
-	
+
 	public void deletePetition(int playerObjId)
 	{
-		for(Petition p : registeredPetitions.values())
+		for (Petition p : registeredPetitions.values())
 		{
-			if(p.getPlayerObjId() == playerObjId)
+			if (p.getPlayerObjId() == playerObjId)
 				registeredPetitions.remove(p.getPetitionId());
 		}
 		DAOManager.getDAO(PetitionDAO.class).deletePetition(playerObjId);
-		if(playerObjId > 0 && World.getInstance().findPlayer(playerObjId) != null)
+		if (playerObjId > 0 && World.getInstance().findPlayer(playerObjId) != null)
 		{
 			Player p = World.getInstance().findPlayer(playerObjId);
 			PacketSendUtility.sendPacket(p, new SM_PETITION());
 		}
 		rebroadcastPlayerData();
 	}
-	
+
 	public void setPetitionReplied(int petitionId)
 	{
 		int playerObjId = registeredPetitions.get(petitionId).getPlayerObjId();
 		DAOManager.getDAO(PetitionDAO.class).setReplied(petitionId);
 		registeredPetitions.remove(petitionId);
 		rebroadcastPlayerData();
-		if(playerObjId > 0 && World.getInstance().findPlayer(playerObjId) != null)
+		if (playerObjId > 0 && World.getInstance().findPlayer(playerObjId) != null)
 		{
 			Player p = World.getInstance().findPlayer(playerObjId);
 			PacketSendUtility.sendPacket(p, new SM_PETITION());
 		}
 	}
-	
+
 	public synchronized Petition registerPetition(Player sender, int typeId, String title, String contentText, String additionalData)
 	{
 		int id = DAOManager.getDAO(PetitionDAO.class).getNextAvailableId();
@@ -99,96 +99,96 @@ public class PetitionService
 		broadcastMessageToGM(sender, ptt.getPetitionId());
 		return ptt;
 	}
-	
+
 	private void rebroadcastPlayerData()
 	{
-		for(Petition p : registeredPetitions.values())
+		for (Petition p : registeredPetitions.values())
 		{
 			Player player = World.getInstance().findPlayer(p.getPlayerObjId());
-			if(player != null)
+			if (player != null)
 				PacketSendUtility.sendPacket(player, new SM_PETITION(p));
 		}
 	}
-	
+
 	private void broadcastMessageToGM(Player sender, int petitionId)
 	{
-		for(Player player : World.getInstance().getAllPlayers()) 
+		for (Player player : World.getInstance().getAllPlayers())
 		{
-			if(player.getAccessLevel() > 0)
+			if (player.getAccessLevel() > 0)
 			{
 				PacketSendUtility.sendSysMessage(player, "New Support Petition from: " + sender.getName() + " (#" + petitionId + ")");
 			}
 		}
 	}
-	
+
 	public boolean hasRegisteredPetition(Player player)
 	{
 		return hasRegisteredPetition(player.getObjectId());
 	}
-	
+
 	public boolean hasRegisteredPetition(int playerObjId)
 	{
 		boolean result = false;
-		for(Petition p : registeredPetitions.values())
+		for (Petition p : registeredPetitions.values())
 		{
 			if (p.getPlayerObjId() == playerObjId)
 				result = true;
 		}
 		return result;
 	}
-	
+
 	public Petition getPetition(int playerObjId)
 	{
-		for(Petition p : registeredPetitions.values())
+		for (Petition p : registeredPetitions.values())
 		{
-			if(p.getPlayerObjId() == playerObjId)
+			if (p.getPlayerObjId() == playerObjId)
 				return p;
 		}
 		return null;
 	}
-	
+
 	public synchronized int getNextAvailablePetitionId()
 	{
 		return 0;
 	}
-	
+
 	public int getWaitingPlayers(int playerObjId)
 	{
 		int counter = 0;
-		for(Petition p : registeredPetitions.values())
+		for (Petition p : registeredPetitions.values())
 		{
-			if(p.getPlayerObjId() == playerObjId)
+			if (p.getPlayerObjId() == playerObjId)
 				break;
 			counter++;
 		}
 		return counter;
 	}
-	
+
 	public int calculateWaitTime(int playerObjId)
 	{
 		int timePerPetition = 15;
 		int timeBetweenPetition = 30;
 		int result = timeBetweenPetition;
-		for(Petition p : registeredPetitions.values())
+		for (Petition p : registeredPetitions.values())
 		{
-			if(p.getPlayerObjId() == playerObjId)
+			if (p.getPlayerObjId() == playerObjId)
 				break;
 			result += timePerPetition;
 			result += timeBetweenPetition;
 		}
 		return result;
 	}
-	
+
 	public void onPlayerLogin(Player player)
 	{
-		if(hasRegisteredPetition(player))
+		if (hasRegisteredPetition(player))
 			PacketSendUtility.sendPacket(player, new SM_PETITION(getPetition(player.getObjectId())));
 	}
-	
+
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
-		protected static final PetitionService instance = new PetitionService();
+		protected static final PetitionService	instance	= new PetitionService();
 	}
 
 }

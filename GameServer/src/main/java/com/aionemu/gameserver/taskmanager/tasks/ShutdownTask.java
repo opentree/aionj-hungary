@@ -32,18 +32,18 @@ import com.aionemu.gameserver.world.World;
  */
 public class ShutdownTask extends TaskFromDBHandler
 {
-	private static final	Logger			log	= Logger.getLogger(ShutdownTask.class);
-	
-	private int				countDown;
-	private int				announceInterval;
-	private int				warnCountDown;
-	
+	private static final Logger	log	= Logger.getLogger(ShutdownTask.class);
+
+	private int					countDown;
+	private int					announceInterval;
+	private int					warnCountDown;
+
 	@Override
 	public String getTaskName()
 	{
 		return "shutdown";
 	}
-	
+
 	@Override
 	public boolean isValid()
 	{
@@ -58,20 +58,22 @@ public class ShutdownTask extends TaskFromDBHandler
 	{
 		log.info("Task[" + id + "] launched : shuting down the server !");
 		setLastActivation();
-		
-		countDown			= Integer.parseInt(params[0]);
-		announceInterval	= Integer.parseInt(params[1]);
-		warnCountDown		= Integer.parseInt(params[2]);
-		
-		for(Player player : World.getInstance().getAllPlayers())
-			PacketSendUtility.sendSysMessage(player, "Automatic Task: The server will shutdown in " + warnCountDown + " seconds ! Please find a peace place and disconnect your character.");
-		
-		ThreadPoolManager.getInstance().schedule(new Runnable() {
+
+		countDown = Integer.parseInt(params[0]);
+		announceInterval = Integer.parseInt(params[1]);
+		warnCountDown = Integer.parseInt(params[2]);
+
+		for (Player player : World.getInstance().getAllPlayers())
+			PacketSendUtility.sendSysMessage(player, "Automatic Task: The server will shutdown in " + warnCountDown
+					+ " seconds ! Please find a peace place and disconnect your character.");
+
+		ThreadPoolManager.getInstance().schedule(new Runnable()
+		{
 			@Override
 			public void run()
 			{
 				ShutdownHook.getInstance().doShutdown(countDown, announceInterval, ShutdownMode.SHUTDOWN);
 			}
 		}, warnCountDown * 1000);
-	}	
+	}
 }

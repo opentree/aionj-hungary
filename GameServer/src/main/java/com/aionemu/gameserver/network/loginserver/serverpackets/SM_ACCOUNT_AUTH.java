@@ -19,7 +19,6 @@ package com.aionemu.gameserver.network.loginserver.serverpackets;
 import com.aionemu.commons.network.netty.packet.AbstractServerPacket;
 import com.aionemu.gameserver.network.loginserver.LoginServerChannelHandler;
 
-
 /**
  * In this packet Gameserver is asking if given account sessionKey is valid at Loginserver side. [if user that is
  * authenticating on Gameserver is already authenticated on Loginserver]

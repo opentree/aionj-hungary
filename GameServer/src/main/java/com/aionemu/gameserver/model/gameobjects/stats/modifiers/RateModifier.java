@@ -32,8 +32,8 @@ public class RateModifier extends SimpleModifier
 		int minLimit = 0;
 		int maxLimit = 0;
 		int chkValue;
-		
-		switch(getStat())
+
+		switch (getStat())
 		{
 			case ATTACK_SPEED:
 			case SPEED:
@@ -43,23 +43,23 @@ public class RateModifier extends SimpleModifier
 			case FLY_SPEED:
 				minLimit = 600;
 				maxLimit = 16000;
-				break;			
+				break;
 		}
-		
-		if(isBonus())
+
+		if (isBonus())
 		{
 			chkValue = Math.round(value * baseStat / 100f);
-			if(minLimit == 0 && maxLimit == 0)
+			if (minLimit == 0 && maxLimit == 0)
 			{
-			
-				if(chkValue + currentStat < 0)
+
+				if (chkValue + currentStat < 0)
 					return -currentStat;
 				else
 					return chkValue;
 			}
 			else
 			{
-				if(chkValue + currentStat < minLimit)
+				if (chkValue + currentStat < minLimit)
 				{
 					chkValue = currentStat - minLimit;
 					return -chkValue;
@@ -75,17 +75,17 @@ public class RateModifier extends SimpleModifier
 		}
 		else
 		{
-			chkValue = Math.round(baseStat * (1 + value / 100f));			
-			if(minLimit == 0 && maxLimit == 0)
+			chkValue = Math.round(baseStat * (1 + value / 100f));
+			if (minLimit == 0 && maxLimit == 0)
 			{
-				if(chkValue < 0)
+				if (chkValue < 0)
 					return 0;
 				else
 					return chkValue;
 			}
 			else
 			{
-				if(chkValue + currentStat < minLimit)
+				if (chkValue + currentStat < minLimit)
 				{
 					chkValue = currentStat - minLimit;
 					return -chkValue;
@@ -106,8 +106,8 @@ public class RateModifier extends SimpleModifier
 	{
 		return StatModifierPriority.LOW;
 	}
-	
-	public static RateModifier newInstance (StatEnum stat, int value, boolean isBonus)
+
+	public static RateModifier newInstance(StatEnum stat, int value, boolean isBonus)
 	{
 		RateModifier m = new RateModifier();
 		m.setStat(stat);

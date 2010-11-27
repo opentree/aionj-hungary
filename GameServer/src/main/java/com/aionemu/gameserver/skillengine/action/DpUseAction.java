@@ -35,7 +35,7 @@ import com.aionemu.gameserver.skillengine.model.Skill;
 public class DpUseAction extends Action
 {
 	@XmlAttribute(required = true)
-	protected int value;
+	protected int	value;
 
 	@Override
 	public void act(Skill skill)
@@ -43,9 +43,9 @@ public class DpUseAction extends Action
 		Player effector = (Player) skill.getEffector();
 		int currentDp = effector.getCommonData().getDp();
 
-		if(currentDp <= 0 || currentDp < value)
+		if (currentDp <= 0 || currentDp < value)
 			return;
 
-		effector.getCommonData().setDp(currentDp - value);	
+		effector.getCommonData().setDp(currentDp - value);
 	}
 }

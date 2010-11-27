@@ -35,89 +35,89 @@ import com.aionemu.gameserver.model.gameobjects.stats.StatModifierPriority;
 public abstract class StatModifier implements Comparable<StatModifier>
 {
 	@XmlAttribute
-	private StatEnum name;
-	
+	private StatEnum		name;
+
 	@XmlAttribute
-	private boolean bonus;
-	
-	protected static int MODIFIER_ID = 0;
-	
-	protected int id;
-	
+	private boolean			bonus;
+
+	protected static int	MODIFIER_ID	= 0;
+
+	protected int			id;
+
 	public StatModifier()
 	{
 		nextId();
 	}
-	
+
 	protected void setStat(StatEnum stat)
 	{
 		this.name = stat;
 	}
-	
+
 	protected void setBonus(boolean bonus)
 	{
 		this.bonus = bonus;
 	}
-	
+
 	protected void nextId()
 	{
 		MODIFIER_ID = (MODIFIER_ID + 1) % Integer.MAX_VALUE;
 		id = MODIFIER_ID;
 	}
-	
-	public StatEnum getStat ()
+
+	public StatEnum getStat()
 	{
 		return name;
 	}
-	
-	public boolean isBonus ()
+
+	public boolean isBonus()
 	{
 		return bonus;
 	}
-	
+
 	@Override
 	public int compareTo(StatModifier o)
 	{
 		int result = getPriority().getValue() - o.getPriority().getValue();
-		if (result==0)
+		if (result == 0)
 		{
 			result = id - o.id;
 		}
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object o)
 	{
-		boolean result = (o!=null);
-		result = (result)&&(o instanceof StatModifier);
-		result = (result)&&(((StatModifier)o).id==id);
+		boolean result = (o != null);
+		result = (result) && (o instanceof StatModifier);
+		result = (result) && (((StatModifier) o).id == id);
 		return result;
 	}
-	
+
 	@Override
 	public int hashCode()
 	{
 		return id;
 	}
-	
+
 	@Override
 	public String toString()
 	{
 		TextBuilder tb = TextBuilder.newInstance();
-		
+
 		tb.append(this.getClass().getSimpleName() + ",");
-		tb.append("i:"+id+",");
-		tb.append("s:"+name+",");
-		tb.append("b:"+bonus);	
-		
+		tb.append("i:" + id + ",");
+		tb.append("s:" + name + ",");
+		tb.append("b:" + bonus);
+
 		String toString = tb.toString();
 		TextBuilder.recycle(tb);
-		
+
 		return toString;
 	}
-	
+
 	public abstract int apply(int baseValue, int currentValue);
-	
+
 	public abstract StatModifierPriority getPriority();
 }

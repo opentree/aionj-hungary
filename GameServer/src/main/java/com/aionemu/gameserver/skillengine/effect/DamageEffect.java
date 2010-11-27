@@ -28,42 +28,39 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
 import com.aionemu.gameserver.skillengine.action.DamageType;
 import com.aionemu.gameserver.skillengine.model.Effect;
 
-
 /**
  * @author ATracer
  *  
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "DamageEffect")
-public abstract class DamageEffect
-extends EffectTemplate
+public abstract class DamageEffect extends EffectTemplate
 {
 
 	@XmlAttribute(required = true)
-	protected int value;
+	protected int	value;
 
 	@XmlAttribute
-	protected int delta;
-	
+	protected int	delta;
+
 	@Override
 	public void applyEffect(Effect effect)
 	{
-		effect.getEffected().onAttack(effect.getEffector(),
-			effect.getSkillId(), TYPE.REGULAR, effect.getReserved1());
+		effect.getEffected().onAttack(effect.getEffector(), effect.getSkillId(), TYPE.REGULAR, effect.getReserved1());
 		effect.getEffector().getObserveController().notifyAttackObservers(effect.getEffected());
 	}
-	
+
 	public void calculate(Effect effect, DamageType damageType)
 	{
 		int skillLvl = effect.getSkillLevel();
 		int valueWithDelta = value + delta * skillLvl;
 		valueWithDelta = applyActionModifiers(effect, valueWithDelta);
-		
+
 		// apply pvp damage ratio
-		if(effect.getEffected() instanceof Player && effect.getPvpDamage() != 0)
+		if (effect.getEffected() instanceof Player && effect.getPvpDamage() != 0)
 			valueWithDelta = Math.round(valueWithDelta * (effect.getPvpDamage() / 100f));
-		
-		switch(damageType)
+
+		switch (damageType)
 		{
 			case PHYSICAL:
 				AttackUtil.calculatePhysicalSkillAttackResult(effect, valueWithDelta);
@@ -73,10 +70,10 @@ extends EffectTemplate
 				break;
 			default:
 				AttackUtil.calculatePhysicalSkillAttackResult(effect, 0);
-		}	
-		
-		if(effect.getAttackStatus() != AttackStatus.RESIST && effect.getAttackStatus() != AttackStatus.DODGE)
+		}
+
+		if (effect.getAttackStatus() != AttackStatus.RESIST && effect.getAttackStatus() != AttackStatus.DODGE)
 			effect.addSucessEffect(this);
 	}
-	
+
 }

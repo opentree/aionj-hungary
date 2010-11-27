@@ -38,18 +38,19 @@ public class SiegeGuard extends SiegeNpc
 	public SiegeGuard(int objId, SpawnTemplate spawnTemplate)
 	{
 		super(objId, spawnTemplate);
-		NpcTemplate npcTemplate = (NpcTemplate)objectTemplate;
-		if (getSiegeRace()==SiegeRace.ELYOS)
+		NpcTemplate npcTemplate = (NpcTemplate) objectTemplate;
+		if (getSiegeRace() == SiegeRace.ELYOS)
 		{
 			npcTemplate.setRace(Race.ELYOS);
 			npcTemplate.setTribe(TribeClass.GUARD);
 		}
-		else if (getSiegeRace()==SiegeRace.ASMODIANS)
+		else if (getSiegeRace() == SiegeRace.ASMODIANS)
 		{
 			npcTemplate.setRace(Race.ASMODIANS);
 			npcTemplate.setTribe(TribeClass.GUARD_DARK);
 		}
-		else // BALAUR
+		else
+		// BALAUR
 		{
 			npcTemplate.setRace(Race.DRAKAN);
 			npcTemplate.setTribe(TribeClass.AGGRESSIVESINGLEMONSTER);

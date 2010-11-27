@@ -41,7 +41,7 @@ public class ZoneInstance
 		this.corners = template.getPoints().getPoint().size();
 		xCoordinates = new float[corners];
 		yCoordinates = new float[corners];
-		for(int i = 0; i < corners; i++)
+		for (int i = 0; i < corners; i++)
 		{
 			Point2D point = template.getPoints().getPoint().get(i);
 			xCoordinates[i] = point.getX();

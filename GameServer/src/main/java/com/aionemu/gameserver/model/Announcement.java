@@ -23,12 +23,12 @@ package com.aionemu.gameserver.model;
  */
 public class Announcement
 {
-	private	int		id;
+	private int		id;
 	private String	faction;
 	private String	announce;
 	private String	chatType;
-	private	int		delay;
-	
+	private int		delay;
+
 	/**
 	 * Constructor without the ID of announcement
 	 * 
@@ -39,17 +39,17 @@ public class Announcement
 	 */
 	public Announcement(String announce, String faction, String chatType, int delay)
 	{
-		this.announce	= announce;
-		
+		this.announce = announce;
+
 		// Checking the right syntax
 		if (!faction.equalsIgnoreCase("ELYOS") && !faction.equalsIgnoreCase("ASMODIANS"))
 			faction = "ALL";
-			
-		this.faction	= faction;
-		this.chatType	= chatType;
-		this.delay		= delay;
+
+		this.faction = faction;
+		this.chatType = chatType;
+		this.delay = delay;
 	}
-	
+
 	/**
 	 * Constructor with the ID of announcement
 	 * 
@@ -61,18 +61,18 @@ public class Announcement
 	 */
 	public Announcement(int id, String announce, String faction, String chatType, int delay)
 	{
-		this.id			= id;
-		this.announce	= announce;
-		
+		this.id = id;
+		this.announce = announce;
+
 		// Checking the right syntax
 		if (!faction.equalsIgnoreCase("ELYOS") && !faction.equalsIgnoreCase("ASMODIANS"))
 			faction = "ALL";
-		
-		this.faction	= faction;
-		this.chatType	= chatType;
-		this.delay		= delay;
+
+		this.faction = faction;
+		this.chatType = chatType;
+		this.delay = delay;
 	}
-	
+
 	/**
 	 * Return the id of the announcement
 	 * In case of the id doesn't exist, return -1
@@ -86,7 +86,7 @@ public class Announcement
 		else
 			return -1;
 	}
-	
+
 	/**
 	 * Return the announcement's text
 	 * 
@@ -96,7 +96,7 @@ public class Announcement
 	{
 		return announce;
 	}
-	
+
 	/**
 	 * Return the announcement's faction in string mode :
 	 *   - ELYOS
@@ -109,7 +109,7 @@ public class Announcement
 	{
 		return faction;
 	}
-	
+
 	/**
 	 * Return the announcement's faction in Race enum mode :
 	 *   - Race.ELYOS
@@ -123,10 +123,10 @@ public class Announcement
 			return Race.ELYOS;
 		else if (faction.equalsIgnoreCase("ASMODIANS"))
 			return Race.ASMODIANS;
-		
+
 		return null;
 	}
-	
+
 	/**
 	 * Return the chatType in String mode (for the insert in database)
 	 * 
@@ -136,7 +136,7 @@ public class Announcement
 	{
 		return chatType;
 	}
-	
+
 	/**
 	 * Return the chatType with the ChatType Enum
 	 * 
@@ -155,7 +155,7 @@ public class Announcement
 		else
 			return ChatType.SYSTEM_NOTICE;
 	}
-	
+
 	/**
 	 * Return the announcement's delay
 	 * 

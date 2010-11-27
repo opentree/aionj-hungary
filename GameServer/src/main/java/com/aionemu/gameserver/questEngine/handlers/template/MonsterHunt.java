@@ -34,9 +34,9 @@ import com.aionemu.gameserver.questEngine.model.QuestStatus;
  */
 public class MonsterHunt extends QuestHandler
 {
-	private final int				questId;
-	private final int				startNpc;
-	private final int				endNpc;
+	private final int							questId;
+	private final int							startNpc;
+	private final int							endNpc;
 	private final FastMap<Integer, MonsterInfo>	monsterInfo;
 
 	/**
@@ -59,7 +59,7 @@ public class MonsterHunt extends QuestHandler
 	{
 		qe.setNpcQuestData(startNpc).addOnQuestStart(questId);
 		qe.setNpcQuestData(startNpc).addOnTalkEvent(questId);
-		for(int monsterId : monsterInfo.keySet())
+		for (int monsterId : monsterInfo.keySet())
 			qe.setNpcQuestData(monsterId).addOnKillEvent(questId);
 		if (endNpc != startNpc)
 			qe.setNpcQuestData(endNpc).addOnTalkEvent(questId);
@@ -70,68 +70,68 @@ public class MonsterHunt extends QuestHandler
 	{
 		final Player player = env.getPlayer();
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
 		QuestTemplate template = DataManager.QUEST_DATA.getQuestById(questId);
-		if(qs == null || qs.getStatus() == QuestStatus.NONE || (qs.getStatus() == QuestStatus.COMPLETE && (qs.getCompliteCount() <= template.getMaxRepeatCount())))
+		if (qs == null || qs.getStatus() == QuestStatus.NONE
+				|| (qs.getStatus() == QuestStatus.COMPLETE && (qs.getCompliteCount() <= template.getMaxRepeatCount())))
 		{
-			if(targetId == startNpc)
+			if (targetId == startNpc)
 			{
-				if(env.getDialogId() == 25)
+				if (env.getDialogId() == 25)
 					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
 				else
 					return defaultQuestStartDialog(env);
 			}
 		}
-		else if(qs.getStatus() == QuestStatus.START)
+		else if (qs.getStatus() == QuestStatus.START)
 		{
-			for(MonsterInfo mi : monsterInfo.values())
+			for (MonsterInfo mi : monsterInfo.values())
 			{
-				if(mi.getMaxKill() < qs.getQuestVarById(mi.getVarId()))
+				if (mi.getMaxKill() < qs.getQuestVarById(mi.getVarId()))
 					return false;
 			}
 			if (targetId == endNpc)
 			{
-			if(env.getDialogId() == 25)
-				return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
-			else if(env.getDialogId() == 1009)
-			{
-				qs.setStatus(QuestStatus.REWARD);
-				qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
-				updateQuestStatus(player, qs);
-				return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
-			}
-			else
-				return defaultQuestEndDialog(env);
+				if (env.getDialogId() == 25)
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
+				else if (env.getDialogId() == 1009)
+				{
+					qs.setStatus(QuestStatus.REWARD);
+					qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
+					updateQuestStatus(player, qs);
+					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
+				}
+				else
+					return defaultQuestEndDialog(env);
 			}
 		}
-		else if(qs.getStatus() == QuestStatus.REWARD && targetId == endNpc)
+		else if (qs.getStatus() == QuestStatus.REWARD && targetId == endNpc)
 		{
 			return defaultQuestEndDialog(env);
 		}
-	return false;
+		return false;
 	}
-	
 
 	@Override
 	public boolean onKillEvent(QuestEnv env)
 	{
 		Player player = env.getPlayer();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
-		if(qs == null)
+		if (qs == null)
 			return false;
 
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 
-		if(qs.getStatus() != QuestStatus.START)
+		if (qs.getStatus() != QuestStatus.START)
 			return false;
 		MonsterInfo mi = monsterInfo.get(targetId);
-		if(mi == null)
+		if (mi == null)
 			return false;
-		if(mi.getMaxKill() <= qs.getQuestVarById(mi.getVarId()))
+		if (mi.getMaxKill() <= qs.getQuestVarById(mi.getVarId()))
 			return false;
 
 		qs.setQuestVarById(mi.getVarId(), qs.getQuestVarById(mi.getVarId()) + 1);

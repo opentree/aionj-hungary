@@ -24,8 +24,8 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_UI_SETTINGS extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private byte[] data;
-	private int type;
+	private byte[]	data;
+	private int		type;
 
 	/**
 	 * Constructs new <tt>SM_CHARACTER_UI </tt> packet
@@ -43,7 +43,7 @@ public class SM_UI_SETTINGS extends AbstractAionServerPacket<AionChannelHandler>
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeH(type);
-		writeC( 0x1C);
+		writeC(0x1C);
 		writeB(data);
 	}
 

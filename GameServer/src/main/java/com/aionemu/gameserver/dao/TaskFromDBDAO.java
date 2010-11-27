@@ -33,7 +33,7 @@ public abstract class TaskFromDBDAO implements DAO
 	 * @return all tasks
 	 */
 	public abstract ArrayList<TaskFromDB> getAllTasks();
-	
+
 	/**
 	 * Set the last activation to NOW()
 	 */

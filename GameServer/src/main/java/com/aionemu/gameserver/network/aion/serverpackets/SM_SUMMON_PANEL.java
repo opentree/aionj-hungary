@@ -27,12 +27,13 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_SUMMON_PANEL extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private Summon summon;
-	
+	private Summon	summon;
+
 	public SM_SUMMON_PANEL(Summon summon)
 	{
 		this.summon = summon;
 	}
+
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{

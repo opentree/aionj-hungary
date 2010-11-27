@@ -28,25 +28,26 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_ALLIANCE_INFO extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private PlayerAlliance alliance;
-	
+	private PlayerAlliance	alliance;
+
 	public SM_ALLIANCE_INFO(PlayerAlliance alliance)
 	{
 		this.alliance = alliance;
 	}
+
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeH(4);
 		writeD(alliance.getObjectId());
 		writeD(alliance.getCaptainObjectId());
-		
+
 		List<Integer> ids = alliance.getViceCaptainObjectIds();
 		writeD(ids.size() > 0 ? ids.get(0) : 0); // viceLeader1
 		writeD(ids.size() > 1 ? ids.get(1) : 0); // viceLeader2
 		writeD(ids.size() > 2 ? ids.get(2) : 0); // viceLeader3
 		writeD(ids.size() > 3 ? ids.get(3) : 0); // viceLeader4
-		
+
 		writeD(0); //loot rule type - 0 freeforall, 1 roundrobin, 2 leader
 		writeD(0); //autoDistribution - 0 or 1
 		writeD(0); //this.common_item_above); - 0 normal 2 roll 3 bid
@@ -56,8 +57,8 @@ public class SM_ALLIANCE_INFO extends AbstractAionServerPacket<AionChannelHandle
 		writeD(0); //this.ethernal_item_above); - 0 normal 2 roll 3 bid
 		writeD(0); //this.over_ethernal); - 0 normal 2 roll 3 bid
 		writeD(0); //this.over_over_ethernal); - 0 normal 2 roll 3 bid
-		writeC( 0); //unk
-		
+		writeC(0); //unk
+
 		writeD(0); // allianceGroupNumber 1
 		writeD(1000); // allianceId 1
 		writeD(1); // allianceGroupNumber 2
@@ -66,7 +67,7 @@ public class SM_ALLIANCE_INFO extends AbstractAionServerPacket<AionChannelHandle
 		writeD(1002); // allianceId 1
 		writeD(3); // allianceGroupNumber 4
 		writeD(1003); // allianceId 1
-		
+
 		writeD(0); //unk
 		writeH(0); //unk
 	}

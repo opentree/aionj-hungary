@@ -42,63 +42,63 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 public class WeaponStatupEffect extends BufEffect
 {
 	@XmlAttribute(name = "weapon")
-	private WeaponType weaponType;
-	
+	private WeaponType	weaponType;
+
 	@Override
 	public void startEffect(final Effect effect)
 	{
-		if(!(effect.getEffector() instanceof Player))
+		if (!(effect.getEffector() instanceof Player))
 			return;
-		
-		
-		final Player effected  = (Player) effect.getEffected();
-	
+
+		final Player effected = (Player) effect.getEffected();
+
 		final SkillEffectId skillEffectId = getSkillEffectId(effect);
 		final TreeSet<StatModifier> stats = getModifiers(effect);
-		
-		if(effected.getEquipment().isWeaponEquipped(weaponType))
+
+		if (effected.getEquipment().isWeaponEquipped(weaponType))
 			effected.getGameStats().addModifiers(skillEffectId, stats);
-		
+
 		/**
 		 * Since weapon stat boost is only for BOW and SWORD_2H in templates - checking only
 		 * one weapon is enough for final result.
 		 */
-		ActionObserver aObserver = new ActionObserver(ObserverType.EQUIP){
+		ActionObserver aObserver = new ActionObserver(ObserverType.EQUIP)
+		{
 
 			@Override
 			public void equip(Item item, Player owner)
 			{
-				if(item.getItemTemplate().getWeaponType() == weaponType)
+				if (item.getItemTemplate().getWeaponType() == weaponType)
 					effected.getGameStats().addModifiers(skillEffectId, stats);
 			}
 
 			@Override
 			public void unequip(Item item, Player owner)
 			{
-				if(item.getItemTemplate().getWeaponType() == weaponType)
+				if (item.getItemTemplate().getWeaponType() == weaponType)
 					effected.getGameStats().endEffect(skillEffectId);
 			}
-			
+
 		};
-		
+
 		effected.getObserveController().addEquipObserver(aObserver);
 		effect.setActionObserver(aObserver, position);
 	}
-	
+
 	@Override
 	public void endEffect(Effect effect)
 	{
 		ActionObserver observer = effect.getActionObserver(position);
-		if(observer != null)
+		if (observer != null)
 			effect.getEffected().getObserveController().removeEquipObserver(observer);
-		
+
 		final SkillEffectId skillEffectId = getSkillEffectId(effect);
-		
-		if(effect.getEffected().getGameStats().effectAlreadyAdded(skillEffectId))
+
+		if (effect.getEffected().getGameStats().effectAlreadyAdded(skillEffectId))
 			effect.getEffected().getGameStats().endEffect(skillEffectId);
-		
+
 	}
-	
+
 	@Override
 	public void applyEffect(Effect effect)
 	{

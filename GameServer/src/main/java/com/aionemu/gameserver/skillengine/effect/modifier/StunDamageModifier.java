@@ -24,21 +24,19 @@ import javax.xml.bind.annotation.XmlType;
 import com.aionemu.gameserver.skillengine.effect.EffectId;
 import com.aionemu.gameserver.skillengine.model.Effect;
 
-
 /**
  * @author ATracer
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "StunDamageModifier")
-public class StunDamageModifier
-extends ActionModifier
+public class StunDamageModifier extends ActionModifier
 {
 
 	@XmlAttribute(required = true)
-	protected int delta;
+	protected int	delta;
 	@XmlAttribute(required = true)
-	protected int value;
+	protected int	value;
 
 	@Override
 	public int analyze(Effect effect, int originalValue)
@@ -51,5 +49,5 @@ extends ActionModifier
 	{
 		return effect.getEffected().getEffectController().isAbnoramlSet(EffectId.STUN);
 	}
-	
+
 }

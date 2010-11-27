@@ -26,12 +26,12 @@ import com.aionemu.gameserver.model.gameobjects.player.PlayerCommonData;
  */
 public class PlayerAllianceMember extends AionObject
 {
-	private Player player;
-	
-	private String name;
-	private int allianceId;
-	private PlayerCommonData playerCommonData;
-	
+	private Player				player;
+
+	private String				name;
+	private int					allianceId;
+	private PlayerCommonData	playerCommonData;
+
 	/**
 	 * @param member
 	 */
@@ -42,7 +42,7 @@ public class PlayerAllianceMember extends AionObject
 		this.name = player.getName();
 		this.playerCommonData = player.getCommonData();
 	}
-	
+
 	@Override
 	public String getName()
 	{

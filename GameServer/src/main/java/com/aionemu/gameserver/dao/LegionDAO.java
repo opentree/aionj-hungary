@@ -154,7 +154,7 @@ public abstract class LegionDAO implements IDFactoryAwareDAO
 	 * @param legion
 	 */
 	public abstract void loadLegionHistory(Legion legion);
-	
+
 	/**
 	 * @param legionId
 	 * @param legionHistory

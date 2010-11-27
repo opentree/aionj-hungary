@@ -51,29 +51,28 @@ public class WarehouseService
 	 */
 	public static void expandWarehouse(final Player player, Npc npc)
 	{
-		final WarehouseExpandTemplate expandTemplate = DataManager.WAREHOUSEEXPANDER_DATA.getWarehouseExpandListTemplate(npc
-			.getNpcId());
+		final WarehouseExpandTemplate expandTemplate = DataManager.WAREHOUSEEXPANDER_DATA.getWarehouseExpandListTemplate(npc.getNpcId());
 
-		if(expandTemplate == null)
+		if (expandTemplate == null)
 		{
 			log.error("Warehouse Expand Template could not be found for Npc ID: " + npc.getObjectId());
 			return;
 		}
 
-		if(npcCanExpandLevel(expandTemplate, player.getWarehouseSize() + 1)
-			&& validateNewSize(player.getWarehouseSize() + 1))
+		if (npcCanExpandLevel(expandTemplate, player.getWarehouseSize() + 1) && validateNewSize(player.getWarehouseSize() + 1))
 
-			if(validateNewSize(player.getWarehouseSize() + 1))
+			if (validateNewSize(player.getWarehouseSize() + 1))
 			{
 				/**
 				 * Check if our player can pay the warehouse expand price
 				 */
 				final int price = getPriceByLevel(expandTemplate, player.getWarehouseSize() + 1);
-				RequestResponseHandler responseHandler = new RequestResponseHandler(npc){
+				RequestResponseHandler responseHandler = new RequestResponseHandler(npc)
+				{
 					@Override
 					public void acceptRequest(StaticNpc requester, Player responder)
 					{
-						if(!ItemService.decreaseKinah(responder, price))
+						if (!ItemService.decreaseKinah(responder, price))
 						{
 							PacketSendUtility.sendPacket(player, new SM_SYSTEM_MESSAGE(1300831));
 							return;
@@ -89,7 +88,7 @@ public class WarehouseService
 				};
 
 				boolean result = player.getResponseRequester().putRequest(900686, responseHandler);
-				if(result)
+				if (result)
 				{
 					PacketSendUtility.sendPacket(player, new SM_QUESTION_WINDOW(900686, 0, String.valueOf(price)));
 				}
@@ -108,7 +107,7 @@ public class WarehouseService
 			return;
 		PacketSendUtility.sendPacket(player, new SM_SYSTEM_MESSAGE(1300433, "8")); // 8 Slots added
 		player.setWarehouseSize(player.getWarehouseSize() + 1);
-		
+
 		sendWarehouseInfo(player, false);
 	}
 
@@ -121,7 +120,7 @@ public class WarehouseService
 	private static boolean validateNewSize(int level)
 	{
 		// check min and max level
-		if(level < MIN_EXPAND || level > MAX_EXPAND)
+		if (level < MIN_EXPAND || level > MAX_EXPAND)
 			return false;
 		return true;
 	}
@@ -136,7 +135,7 @@ public class WarehouseService
 	private static boolean npcCanExpandLevel(WarehouseExpandTemplate clist, int level)
 	{
 		// check if level exists in template
-		if(!clist.contains(level))
+		if (!clist.contains(level))
 			return false;
 		return true;
 	}
@@ -152,17 +151,16 @@ public class WarehouseService
 	{
 		return clist.get(level).getPrice();
 	}
-	
-	
+
 	/**
 	 *  Sends correctly warehouse packets
 	 *  
 	 * @param player
 	 */
 	public static void sendWarehouseInfo(Player player, boolean sendAccountWh)
-	{		
+	{
 		List<Item> items = player.getStorage(StorageType.REGULAR_WAREHOUSE.getId()).getStorageItems();
-		
+
 		int whSize = player.getWarehouseSize();
 		int itemsSize = items.size();
 
@@ -170,36 +168,32 @@ public class WarehouseService
 		 * Regular warehouse
 		 */
 		boolean firstPacket = true;
-		if(itemsSize != 0)
+		if (itemsSize != 0)
 		{
 			int index = 0;
-			
-			while(index + 10 < itemsSize)
+
+			while (index + 10 < itemsSize)
 			{
-				PacketSendUtility.sendPacket(player, new SM_WAREHOUSE_INFO(items.subList(index, index + 10),
-					StorageType.REGULAR_WAREHOUSE.getId(), whSize, firstPacket));
+				PacketSendUtility.sendPacket(player, new SM_WAREHOUSE_INFO(items.subList(index, index + 10), StorageType.REGULAR_WAREHOUSE.getId(), whSize,
+						firstPacket));
 				index += 10;
 				firstPacket = false;
 			}
-			PacketSendUtility.sendPacket(player, new SM_WAREHOUSE_INFO(items.subList(index, itemsSize),
-				StorageType.REGULAR_WAREHOUSE.getId(), whSize, firstPacket));
+			PacketSendUtility.sendPacket(player, new SM_WAREHOUSE_INFO(items.subList(index, itemsSize), StorageType.REGULAR_WAREHOUSE.getId(), whSize,
+					firstPacket));
 		}
 
-		PacketSendUtility.sendPacket(player, new SM_WAREHOUSE_INFO(null, StorageType.REGULAR_WAREHOUSE
-			.getId(), whSize, false)); 
-		
-		if(sendAccountWh)
+		PacketSendUtility.sendPacket(player, new SM_WAREHOUSE_INFO(null, StorageType.REGULAR_WAREHOUSE.getId(), whSize, false));
+
+		if (sendAccountWh)
 		{
 			/**
 			 * Account warehouse
 			 */
-			PacketSendUtility
-				.sendPacket(player, new SM_WAREHOUSE_INFO(player.getStorage(
-					StorageType.ACCOUNT_WAREHOUSE.getId()).getAllItems(),
+			PacketSendUtility.sendPacket(player, new SM_WAREHOUSE_INFO(player.getStorage(StorageType.ACCOUNT_WAREHOUSE.getId()).getAllItems(),
 					StorageType.ACCOUNT_WAREHOUSE.getId(), 0, true));
 		}
 
-		PacketSendUtility.sendPacket(player, new SM_WAREHOUSE_INFO(null, StorageType.ACCOUNT_WAREHOUSE
-			.getId(), 0, false));
+		PacketSendUtility.sendPacket(player, new SM_WAREHOUSE_INFO(null, StorageType.ACCOUNT_WAREHOUSE.getId(), 0, false));
 	}
 }

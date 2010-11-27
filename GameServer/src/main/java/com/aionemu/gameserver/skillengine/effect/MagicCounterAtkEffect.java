@@ -42,20 +42,20 @@ public class MagicCounterAtkEffect extends EffectTemplate
 	protected int	percent;
 	@XmlAttribute
 	protected int	maxdmg;
-	
+
 	@Override
 	public void calculate(Effect effect)
 	{
-		if (calculateEffectResistRate(effect, null)) 
+		if (calculateEffectResistRate(effect, null))
 			effect.addSucessEffect(this);
 	}
-	
+
 	@Override
 	public void applyEffect(Effect effect)
 	{
 		effect.addToEffectedController();
 	}
-	
+
 	@Override
 	public void startEffect(final Effect effect)
 	{
@@ -63,27 +63,27 @@ public class MagicCounterAtkEffect extends EffectTemplate
 		final Creature effected = effect.getEffected();
 		final CreatureLifeStats<? extends Creature> cls = effect.getEffected().getLifeStats();
 		ActionObserver observer = null;
-		
+
 		observer = new ActionObserver(ObserverType.SKILLUSE)
+		{
+			@Override
+			public void skilluse(Skill skill)
 			{
-				@Override
-				public void skilluse(Skill skill)
+				if (skill.getSkillTemplate().getType() == SkillType.MAGICAL)
 				{
-					if (skill.getSkillTemplate().getType()==SkillType.MAGICAL)
-					{
-						if (cls.getMaxHp()/100*percent<=maxdmg)
-							effected.onAttack(effector, effect.getSkillId(), TYPE.DAMAGE, cls.getMaxHp()/100*percent);
-						else
-							effected.onAttack(effector, maxdmg);
-					}
-						
+					if (cls.getMaxHp() / 100 * percent <= maxdmg)
+						effected.onAttack(effector, effect.getSkillId(), TYPE.DAMAGE, cls.getMaxHp() / 100 * percent);
+					else
+						effected.onAttack(effector, maxdmg);
 				}
-			};
+
+			}
+		};
 
 		effect.setActionObserver(observer, position);
 		effected.getObserveController().addObserver(observer);
 	}
-	
+
 	@Override
 	public void endEffect(Effect effect)
 	{

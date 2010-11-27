@@ -32,7 +32,8 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 public class Postman extends StaticNpc
 {
 
-	private int RecipientId;	//ID of the express mail recipient, to prevent messenger using by non-recipient players
+	private int	RecipientId;	//ID of the express mail recipient, to prevent messenger using by non-recipient players
+
 	/**
 	 * @param objId
 	 * @param spawnTemplate
@@ -42,20 +43,21 @@ public class Postman extends StaticNpc
 	{
 		super(objId, spawnTemplate);
 		this.objectTemplate = DataManager.NPC_DATA.getNpcTemplate(798044);
-		ThreadPoolManager.getInstance().schedule(new Runnable(){
+		ThreadPoolManager.getInstance().schedule(new Runnable()
+		{
 
 			@Override
 			public void run()
 			{
-					onDelete();
+				onDelete();
 			}
-		},5*60*1000); //Despawn postman after 5 minutes, need to place retail value.
+		}, 5 * 60 * 1000); //Despawn postman after 5 minutes, need to place retail value.
 	}
 
 	@Override
 	public void onDialogRequest(Player player)
 	{
-		if ( player.getObjectId() == RecipientId)
+		if (player.getObjectId() == RecipientId)
 		{
 			PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(getObjectId(), 18));
 		}

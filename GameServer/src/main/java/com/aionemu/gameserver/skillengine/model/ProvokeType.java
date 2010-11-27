@@ -27,6 +27,5 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum ProvokeType
 {
-	ATTACK,
-	ATTACKED
+	ATTACK, ATTACKED
 }

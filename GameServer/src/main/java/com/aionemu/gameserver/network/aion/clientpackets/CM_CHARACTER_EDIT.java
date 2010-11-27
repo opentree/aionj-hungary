@@ -37,13 +37,13 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  *
  */
 public class CM_CHARACTER_EDIT extends AbstractClientPacket<AionChannelHandler>
-{    
-	
-    private int objectId;
+{
 
-    private boolean gender_change;
+	private int		objectId;
 
-    private boolean check_ticket = true;
+	private boolean	gender_change;
+
+	private boolean	check_ticket	= true;
 
 	/**
 	 * Constructs new instance of <tt>CM_CREATE_CHARACTER </tt> packet
@@ -63,31 +63,31 @@ public class CM_CHARACTER_EDIT extends AbstractClientPacket<AionChannelHandler>
 	{
 		AionChannelHandler client = getChannelHandler();
 		Account account = client.getAccount();
-        objectId = readD();
-        Player player = PlayerService.getPlayer(objectId, account);
-        readB(44);
-        PlayerCommonData playerCommonData = player.getCommonData();
-        PlayerAppearance playerAppearance = player.getPlayerAppearance();
-        //Before modify appearance, we do a check of ticket
-        int gender = readD();
-        gender_change = playerCommonData.getGender().getGenderId() == gender ? false : true;
-        if(!gender_change)
-        {
-            if (player.getInventory().getItemCountByItemId(169650000) == 0 && player.getInventory().getItemCountByItemId(169650001) == 0)
-            {
-                check_ticket = false;
-                return;
-            }
-        }
-        else
-        {
-            if (player.getInventory().getItemCountByItemId(169660000) == 0 && player.getInventory().getItemCountByItemId(169660001) == 0)
-            {
-                check_ticket = false;
-                return;
-            }
-        }
-        playerCommonData.setGender(gender == 0 ? Gender.MALE : Gender.FEMALE);
+		objectId = readD();
+		Player player = PlayerService.getPlayer(objectId, account);
+		readB(44);
+		PlayerCommonData playerCommonData = player.getCommonData();
+		PlayerAppearance playerAppearance = player.getPlayerAppearance();
+		//Before modify appearance, we do a check of ticket
+		int gender = readD();
+		gender_change = playerCommonData.getGender().getGenderId() == gender ? false : true;
+		if (!gender_change)
+		{
+			if (player.getInventory().getItemCountByItemId(169650000) == 0 && player.getInventory().getItemCountByItemId(169650001) == 0)
+			{
+				check_ticket = false;
+				return;
+			}
+		}
+		else
+		{
+			if (player.getInventory().getItemCountByItemId(169660000) == 0 && player.getInventory().getItemCountByItemId(169660001) == 0)
+			{
+				check_ticket = false;
+				return;
+			}
+		}
+		playerCommonData.setGender(gender == 0 ? Gender.MALE : Gender.FEMALE);
 		readD(); //race
 		readD(); //player class
 
@@ -166,35 +166,35 @@ public class CM_CHARACTER_EDIT extends AbstractClientPacket<AionChannelHandler>
 	@Override
 	protected void runImpl()
 	{
-		AionChannelHandler client = getChannelHandler();		
+		AionChannelHandler client = getChannelHandler();
 		CM_ENTER_WORLD.enterWorld(client, objectId);
 		Player player = client.getActivePlayer();
-        if (!check_ticket)
-        {
-            if (!gender_change)
-                PacketSendUtility.sendSysMessage(player, "You must have a Plastic Surgery Ticket!");
-            else
-                PacketSendUtility.sendSysMessage(player, "You must have a Gender Switch Ticket!");
-        }
-        else
-        {
-        	//Remove ticket and save appearance
-        	if(!gender_change)
-            {
-                if (player.getInventory().getItemCountByItemId(169650000) > 0) //plastic surgery ticket normal
-                    ItemService.decreaseItemCountByItemId(player,169650000,1);
-                else if (player.getInventory().getItemCountByItemId(169650001) > 0) //plastic surgery ticket event
-                	ItemService.decreaseItemCountByItemId(player,169650001, 1);
-            }
-            else
-            {
-                if (player.getInventory().getItemCountByItemId(169660000) > 0) //gender switch ticket normal
-                	ItemService.decreaseItemCountByItemId(player,169660000, 1);
-                else if (player.getInventory().getItemCountByItemId(169660001) > 0) //gender switch ticket event
-                	ItemService.decreaseItemCountByItemId(player,169660001, 1);
-                DAOManager.getDAO(PlayerDAO.class).storePlayer(player); //save new gender
-            }
-        	DAOManager.getDAO(PlayerAppearanceDAO.class).store(player);	//save new appearance
-        }
+		if (!check_ticket)
+		{
+			if (!gender_change)
+				PacketSendUtility.sendSysMessage(player, "You must have a Plastic Surgery Ticket!");
+			else
+				PacketSendUtility.sendSysMessage(player, "You must have a Gender Switch Ticket!");
+		}
+		else
+		{
+			//Remove ticket and save appearance
+			if (!gender_change)
+			{
+				if (player.getInventory().getItemCountByItemId(169650000) > 0) //plastic surgery ticket normal
+					ItemService.decreaseItemCountByItemId(player, 169650000, 1);
+				else if (player.getInventory().getItemCountByItemId(169650001) > 0) //plastic surgery ticket event
+					ItemService.decreaseItemCountByItemId(player, 169650001, 1);
+			}
+			else
+			{
+				if (player.getInventory().getItemCountByItemId(169660000) > 0) //gender switch ticket normal
+					ItemService.decreaseItemCountByItemId(player, 169660000, 1);
+				else if (player.getInventory().getItemCountByItemId(169660001) > 0) //gender switch ticket event
+					ItemService.decreaseItemCountByItemId(player, 169660001, 1);
+				DAOManager.getDAO(PlayerDAO.class).storePlayer(player); //save new gender
+			}
+			DAOManager.getDAO(PlayerAppearanceDAO.class).store(player); //save new appearance
+		}
 	}
 }

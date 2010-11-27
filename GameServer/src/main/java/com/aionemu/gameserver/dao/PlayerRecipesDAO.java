@@ -28,12 +28,12 @@ public abstract class PlayerRecipesDAO implements DAO
 	@Override
 	public String getClassName()
 	{
-		return PlayerRecipesDAO.class.getName();	
+		return PlayerRecipesDAO.class.getName();
 	}
 
 	public abstract RecipeList load(final int playerId);
-	
+
 	public abstract boolean addRecipe(final int playerId, final int recipeId);
-	
+
 	public abstract boolean deleteRecipe(final int playerId, final int recipeId);
 }

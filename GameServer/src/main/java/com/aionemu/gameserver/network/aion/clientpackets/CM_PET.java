@@ -31,22 +31,22 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class CM_PET extends AbstractClientPacket<AionChannelHandler>
 {
-	
-	private int actionId;
-	private int petId;
-	private String petName;
-	private int decorationId;
-	private int eggObjId;
-	
+
+	private int		actionId;
+	private int		petId;
+	private String	petName;
+	private int		decorationId;
+	private int		eggObjId;
+
 	@SuppressWarnings("unused")
-	private int unk2;
+	private int		unk2;
 	@SuppressWarnings("unused")
-	private int unk3;
+	private int		unk3;
 	@SuppressWarnings("unused")
-	private int unk5;
+	private int		unk5;
 	@SuppressWarnings("unused")
-	private int unk6;
-	
+	private int		unk6;
+
 	public CM_PET(int opcode)
 	{
 		super(opcode);
@@ -56,7 +56,7 @@ public class CM_PET extends AbstractClientPacket<AionChannelHandler>
 	protected void readImpl()
 	{
 		actionId = readH();
-		switch(actionId)
+		switch (actionId)
 		{
 			case 1:
 				//adopt
@@ -90,7 +90,7 @@ public class CM_PET extends AbstractClientPacket<AionChannelHandler>
 	protected void runImpl()
 	{
 		Player player = getChannelHandler().getActivePlayer();
-		switch(actionId)
+		switch (actionId)
 		{
 			case 1:
 				// adopt

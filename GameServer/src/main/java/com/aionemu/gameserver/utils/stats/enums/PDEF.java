@@ -34,14 +34,14 @@ public enum PDEF
 	PRIEST(100),
 	CLERIC(100),
 	CHANTER(100);
-	
-	private int value;
-	
+
+	private int	value;
+
 	private PDEF(int value)
 	{
 		this.value = value;
 	}
-	
+
 	public int getValue()
 	{
 		return value;

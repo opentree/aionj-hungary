@@ -22,7 +22,7 @@ package com.aionemu.gameserver.model.trade;
  */
 public class TradePSItem extends TradeItem
 {
-	private int	itemObjId;
+	private int		itemObjId;
 	private long	price;
 
 	/**

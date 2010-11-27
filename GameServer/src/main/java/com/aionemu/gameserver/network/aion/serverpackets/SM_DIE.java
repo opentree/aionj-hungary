@@ -26,22 +26,22 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_DIE extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private boolean hasRebirth;
-	private boolean hasItem;
-	private int remainingKiskTime;
-	
+	private boolean	hasRebirth;
+	private boolean	hasItem;
+	private int		remainingKiskTime;
+
 	public SM_DIE(boolean hasRebirth, boolean hasItem, int remainingKiskTime)
 	{
 		this.hasRebirth = hasRebirth;
 		this.hasItem = hasItem;
-		this.remainingKiskTime = remainingKiskTime; 
+		this.remainingKiskTime = remainingKiskTime;
 	}
 
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
-		writeC( (hasRebirth ? 1 : 0)); // skillRevive
-		writeC( (hasItem ? 1 : 0)); // itemRevive
+		writeC((hasRebirth ? 1 : 0)); // skillRevive
+		writeC((hasItem ? 1 : 0)); // itemRevive
 		writeD(remainingKiskTime);
 	}
 }

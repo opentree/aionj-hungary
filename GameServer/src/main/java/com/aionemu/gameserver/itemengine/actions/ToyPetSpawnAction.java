@@ -43,13 +43,13 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 @XmlType(name = "ToyPetSpawnAction")
 public class ToyPetSpawnAction extends AbstractItemAction
 {
-	
+
 	@XmlAttribute
-	protected int npcid;
-	
+	protected int	npcid;
+
 	@XmlAttribute
-	protected int time;	
-	
+	protected int	time;
+
 	/**
 	 * 
 	 * @return the Npc Id
@@ -58,20 +58,21 @@ public class ToyPetSpawnAction extends AbstractItemAction
 	{
 		return npcid;
 	}
-	
+
 	public int getTime()
 	{
 		return time;
 	}
 
 	@Override
-	public boolean canAct(Player player, Item parentItem, Item targetItem) {
+	public boolean canAct(Player player, Item parentItem, Item targetItem)
+	{
 		if (player.getFlyState() != 0)
 		{
 			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_CANNOT_USE_BINDSTONE_ITEM_WHILE_FLYING);
 			return false;
 		}
-		if(player.isInInstance())
+		if (player.isInInstance())
 		{
 			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_CANNOT_REGISTER_BINDSTONE_FAR_FROM_NPC);
 			return false;
@@ -87,17 +88,17 @@ public class ToyPetSpawnAction extends AbstractItemAction
 		float x = player.getX();
 		float y = player.getY();
 		float z = player.getZ();
-		byte heading = (byte) ((player.getHeading() + 60)%120);
+		byte heading = (byte) ((player.getHeading() + 60) % 120);
 		int worldId = player.getWorldId();
 		int instanceId = player.getInstanceId();
 
-		SpawnTemplate spawn = spawnEngine.addNewSpawn(worldId, 
-			instanceId, npcid, x, y, z, heading, 0, 0, true, true);
-		
+		SpawnTemplate spawn = spawnEngine.addNewSpawn(worldId, instanceId, npcid, x, y, z, heading, 0, 0, true, true);
+
 		final Kisk kisk = spawnEngine.spawnKisk(spawn, instanceId, player);
 
 		// Schedule Despawn Action
-		Future<?> task = ThreadPoolManager.getInstance().schedule(new Runnable(){
+		Future<?> task = ThreadPoolManager.getInstance().schedule(new Runnable()
+		{
 
 			@Override
 			public void run()
@@ -106,13 +107,13 @@ public class ToyPetSpawnAction extends AbstractItemAction
 			}
 		}, 7200000);
 		// Fixed 2 hours 2 * 60 * 60 * 1000
-		
+
 		kisk.addTask(TaskId.DESPAWN, task);
-		
+
 		//ShowAction
-		PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(),
-			parentItem.getObjectId(), parentItem.getItemTemplate().getTemplateId()), true);
-			
+		PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), parentItem.getObjectId(), parentItem.getItemTemplate()
+				.getTemplateId()), true);
+
 		//RemoveKisk
 		ItemService.decreaseItemCount(player, parentItem, 1);
 	}

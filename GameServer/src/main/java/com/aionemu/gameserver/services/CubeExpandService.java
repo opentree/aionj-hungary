@@ -50,25 +50,25 @@ public class CubeExpandService
 	{
 		final CubeExpandTemplate expandTemplate = DataManager.CUBEEXPANDER_DATA.getCubeExpandListTemplate(npc.getNpcId());
 
-		if(expandTemplate == null)
+		if (expandTemplate == null)
 		{
 			log.error("Cube Expand Template could not be found for Npc ID: " + npc.getObjectId());
 			return;
 		}
-		
-		if(npcCanExpandLevel(expandTemplate, player.getCubeSize() + 1)
-			&& validateNewSize(player.getCubeSize() + 1))
+
+		if (npcCanExpandLevel(expandTemplate, player.getCubeSize() + 1) && validateNewSize(player.getCubeSize() + 1))
 		{
 			/**
 			 * Check if our player can pay the cubic expand price
 			 */
 			final int price = getPriceByLevel(expandTemplate, player.getCubeSize() + 1);
 
-			RequestResponseHandler responseHandler = new RequestResponseHandler(npc){
+			RequestResponseHandler responseHandler = new RequestResponseHandler(npc)
+			{
 				@Override
 				public void acceptRequest(StaticNpc requester, Player responder)
 				{
-					if(!ItemService.decreaseKinah(responder, price))
+					if (!ItemService.decreaseKinah(responder, price))
 					{
 						PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.CUBEEXPAND_NOT_ENOUGH_KINAH);
 						return;
@@ -83,12 +83,10 @@ public class CubeExpandService
 				}
 			};
 
-			boolean result = player.getResponseRequester().putRequest(SM_QUESTION_WINDOW.STR_WAREHOUSE_EXPAND_WARNING,
-				responseHandler);
-			if(result)
+			boolean result = player.getResponseRequester().putRequest(SM_QUESTION_WINDOW.STR_WAREHOUSE_EXPAND_WARNING, responseHandler);
+			if (result)
 			{
-				PacketSendUtility.sendPacket(player, new SM_QUESTION_WINDOW(
-					SM_QUESTION_WINDOW.STR_WAREHOUSE_EXPAND_WARNING, 0, String.valueOf(price)));
+				PacketSendUtility.sendPacket(player, new SM_QUESTION_WINDOW(SM_QUESTION_WINDOW.STR_WAREHOUSE_EXPAND_WARNING, 0, String.valueOf(price)));
 			}
 		}
 		else
@@ -117,7 +115,7 @@ public class CubeExpandService
 	private static boolean validateNewSize(int level)
 	{
 		// check min and max level
-		if(level < MIN_EXPAND || level > MAX_EXPAND)
+		if (level < MIN_EXPAND || level > MAX_EXPAND)
 			return false;
 		return true;
 	}
@@ -132,7 +130,7 @@ public class CubeExpandService
 	private static boolean npcCanExpandLevel(CubeExpandTemplate clist, int level)
 	{
 		// check if level exists in template
-		if(!clist.contains(level))
+		if (!clist.contains(level))
 			return false;
 		return true;
 	}

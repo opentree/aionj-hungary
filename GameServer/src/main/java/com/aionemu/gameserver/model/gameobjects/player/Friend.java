@@ -25,19 +25,18 @@ import com.aionemu.gameserver.model.gameobjects.player.FriendList.Status;
  */
 public class Friend
 {
-	private final PlayerCommonData pcd;
-	
-	
-	public Friend(PlayerCommonData pcd) 
+	private final PlayerCommonData	pcd;
+
+	public Friend(PlayerCommonData pcd)
 	{
 		this.pcd = pcd;
 	}
-	
+
 	/**
 	 * Returns the status of this player 
 	 * @return Friend's status
 	 */
-	public Status getStatus() 
+	public Status getStatus()
 	{
 		if (pcd.getPlayer() == null || !pcd.isOnline())//second check is temporary
 		{
@@ -45,6 +44,7 @@ public class Friend
 		}
 		return pcd.getPlayer().getFriendList().getStatus();
 	}
+
 	/**
 	 * Returns this friend's name
 	 * @return Friend's name
@@ -53,50 +53,50 @@ public class Friend
 	{
 		return pcd.getName();
 	}
-	
-	public int getLevel() 
+
+	public int getLevel()
 	{
 		return pcd.getLevel();
 	}
-	
-	public String getNote() 
+
+	public String getNote()
 	{
 		return pcd.getNote();
 	}
-	
+
 	public PlayerClass getPlayerClass()
 	{
 		return pcd.getPlayerClass();
 	}
-	
-	public int getMapId() 
+
+	public int getMapId()
 	{
 		return pcd.getPosition().getMapId();
 	}
-	
+
 	/**
 	 * Gets the last time this player was online as a unix timestamp<br />
 	 * Returns 0 if the player is online now
 	 * @return Unix timestamp the player was last online
 	 */
-	public int getLastOnlineTime() 
+	public int getLastOnlineTime()
 	{
 		if (pcd.getLastOnline() == null || isOnline())
 			return 0;
-		
-		return (int)(pcd.getLastOnline().getTime() / 1000); // Convert to int, unix time format (ms -> seconds)
+
+		return (int) (pcd.getLastOnline().getTime() / 1000); // Convert to int, unix time format (ms -> seconds)
 	}
-	
-	public int getOid() 
+
+	public int getOid()
 	{
 		return pcd.getPlayerObjId();
 	}
-	
+
 	public Player getPlayer()
 	{
 		return pcd.getPlayer();
 	}
-	
+
 	public boolean isOnline()
 	{
 		return pcd.isOnline();

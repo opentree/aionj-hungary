@@ -44,14 +44,14 @@ public class WorldMapInstance
 	/**
 	 * Logger for this class.
 	 */
-	private static final Logger				log			= Logger.getLogger(WorldMapInstance.class);
+	private static final Logger					log					= Logger.getLogger(WorldMapInstance.class);
 
 	/**
 	 * Size of region
 	 */
 	public static final int						regionSize			= OptionsConfig.REGION_SIZE;
-	
-	protected static final int					offset		= 1000;
+
+	protected static final int					offset				= 1000;
 	/**
 	 * WorldMap witch is parent of this instance.
 	 */
@@ -59,7 +59,7 @@ public class WorldMapInstance
 	/**
 	 * Map of active regions.
 	 */
-	protected MapRegion[][]		regions;
+	protected MapRegion[][]						regions;
 
 	/**
 	 * All objects spawned in this world map instance
@@ -71,9 +71,7 @@ public class WorldMapInstance
 	 */
 	private final Map<Integer, Player>			worldMapPlayers		= new FastMap<Integer, Player>().shared();
 
-	private final Set<Integer>					registeredObjects	= Collections
-																		.newSetFromMap(new FastMap<Integer, Boolean>()
-																			.shared());
+	private final Set<Integer>					registeredObjects	= Collections.newSetFromMap(new FastMap<Integer, Boolean>().shared());
 
 	private PlayerGroup							registeredGroup		= null;
 
@@ -108,29 +106,28 @@ public class WorldMapInstance
 
 	protected void initMapRegions()
 	{
-		this.regions = new MapRegion[parent.getWorldSize()/regionSize+1][parent.getWorldSize()/regionSize+1];
-		int size = parent.getWorldSize()/regionSize;
+		this.regions = new MapRegion[parent.getWorldSize() / regionSize + 1][parent.getWorldSize() / regionSize + 1];
+		int size = parent.getWorldSize() / regionSize;
 		//Create all mapRegion
-		for (int x=0; x <= size ; x++)
+		for (int x = 0; x <= size; x++)
 		{
-			for (int y=0; y <= size ; y++)
+			for (int y = 0; y <= size; y++)
 			{
 				regions[x][y] = new MapRegion(this, false);
 			}
 		}
-		
-		
+
 		// Add Neighbour
-		for (int x=0; x <= size ; x++)
+		for (int x = 0; x <= size; x++)
 		{
-			for (int y=0; y <= size ; y++)
+			for (int y = 0; y <= size; y++)
 			{
 				MapRegion mapRegion = regions[x][y];
-				for(int x2 = x - 1; x2 <= x + 1; x2++)
+				for (int x2 = x - 1; x2 <= x + 1; x2++)
 				{
-					for(int y2 = y - 1; y2 <= y + 1; y2++)
+					for (int y2 = y - 1; y2 <= y + 1; y2++)
 					{
-						if((x2 == x && y2 == y) || x2 == -1 || y2 == -1)
+						if ((x2 == x && y2 == y) || x2 == -1 || y2 == -1)
 							continue;
 						try
 						{
@@ -149,8 +146,8 @@ public class WorldMapInstance
 				}
 			}
 		}
-		
-		log.debug(this.getMapId()+" Created map regions: "+ regions.length);
+
+		log.debug(this.getMapId() + " Created map regions: " + regions.length);
 	}
 
 	/**
@@ -191,11 +188,11 @@ public class WorldMapInstance
 		}
 		catch (ArrayIndexOutOfBoundsException e)
 		{
-			log.warn("MAP REGION: Cord out of world!!! x: "+x+" y: "+y+" z: "+z);
+			log.warn("MAP REGION: Cord out of world!!! x: " + x + " y: " + y + " z: " + z);
 		}
-		if(region == null)
+		if (region == null)
 		{
-			log.warn("MAP REGION: Not found!!! x: "+x+" y: "+y+" z: "+z);
+			log.warn("MAP REGION: Not found!!! x: " + x + " y: " + y + " z: " + z);
 		}
 		return region;
 	}
@@ -216,10 +213,10 @@ public class WorldMapInstance
 	 */
 	public void addObject(VisibleObject object)
 	{
-		if(worldMapObjects.put(object.getObjectId(), object) != null)
+		if (worldMapObjects.put(object.getObjectId(), object) != null)
 			throw new DuplicateAionObjectException();
 
-		if(object instanceof Player)
+		if (object instanceof Player)
 			worldMapPlayers.put(object.getObjectId(), (Player) object);
 	}
 
@@ -230,7 +227,7 @@ public class WorldMapInstance
 	public void removeObject(AionObject object)
 	{
 		worldMapObjects.remove(object.getObjectId());
-		if(object instanceof Player)
+		if (object instanceof Player)
 			worldMapPlayers.remove(object.getObjectId());
 	}
 

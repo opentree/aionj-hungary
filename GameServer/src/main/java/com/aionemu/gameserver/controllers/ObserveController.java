@@ -42,18 +42,18 @@ public class ObserveController
 	protected Queue<ActionObserver>	attackObservers		= new ConcurrentLinkedQueue<ActionObserver>();
 	protected Queue<ActionObserver>	attackedObservers	= new ConcurrentLinkedQueue<ActionObserver>();
 	protected Queue<ActionObserver>	skilluseObservers	= new ConcurrentLinkedQueue<ActionObserver>();
-	
-	protected ActionObserver[] observers = new ActionObserver[0];
-	protected ActionObserver[] equipObservers = new ActionObserver[0];
-	protected AttackCalcObserver[] attackCalcObservers = new AttackCalcObserver[0];
-	
+
+	protected ActionObserver[]		observers			= new ActionObserver[0];
+	protected ActionObserver[]		equipObservers		= new ActionObserver[0];
+	protected AttackCalcObserver[]	attackCalcObservers	= new AttackCalcObserver[0];
+
 	/**
 	 * 
 	 * @param observer
 	 */
 	public void attach(ActionObserver observer)
 	{
-		switch(observer.getObserverType())
+		switch (observer.getObserverType())
 		{
 			case ATTACK:
 				attackObservers.add(observer);
@@ -75,14 +75,14 @@ public class ObserveController
 	 */
 	public void notifyMoveObservers()
 	{
-		while(!moveObservers.isEmpty())
+		while (!moveObservers.isEmpty())
 		{
 			ActionObserver observer = moveObservers.poll();
 			observer.moved();
 		}
-		synchronized(observers)
+		synchronized (observers)
 		{
-			for(ActionObserver observer : observers)
+			for (ActionObserver observer : observers)
 			{
 				observer.moved();
 			}
@@ -94,14 +94,14 @@ public class ObserveController
 	 */
 	public void notifyAttackObservers(Creature creature)
 	{
-		while(!attackObservers.isEmpty())
+		while (!attackObservers.isEmpty())
 		{
 			ActionObserver observer = attackObservers.poll();
 			observer.attack(creature);
 		}
-		synchronized(observers)
+		synchronized (observers)
 		{
-			for(ActionObserver observer : observers)
+			for (ActionObserver observer : observers)
 			{
 				observer.attack(creature);
 			}
@@ -113,14 +113,14 @@ public class ObserveController
 	 */
 	public void notifyAttackedObservers(Creature creature)
 	{
-		while(!attackedObservers.isEmpty())
+		while (!attackedObservers.isEmpty())
 		{
 			ActionObserver observer = attackedObservers.poll();
 			observer.attacked(creature);
 		}
-		synchronized(observers)
+		synchronized (observers)
 		{
-			for(ActionObserver observer : observers)
+			for (ActionObserver observer : observers)
 			{
 				observer.attacked(creature);
 			}
@@ -132,20 +132,20 @@ public class ObserveController
 	 */
 	public void notifySkilluseObservers(Skill skill)
 	{
-		while(!skilluseObservers.isEmpty())
+		while (!skilluseObservers.isEmpty())
 		{
 			ActionObserver observer = skilluseObservers.poll();
 			observer.skilluse(skill);
 		}
-		synchronized(observers)
+		synchronized (observers)
 		{
-			for(ActionObserver observer : observers)
+			for (ActionObserver observer : observers)
 			{
 				observer.skilluse(skill);
 			}
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param item
@@ -153,15 +153,15 @@ public class ObserveController
 	 */
 	public void notifyItemEquip(Item item, Player owner)
 	{
-		synchronized(equipObservers)
+		synchronized (equipObservers)
 		{
-			for(ActionObserver observer : equipObservers)
+			for (ActionObserver observer : equipObservers)
 			{
 				observer.equip(item, owner);
 			}
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param item
@@ -169,87 +169,87 @@ public class ObserveController
 	 */
 	public void notifyItemUnEquip(Item item, Player owner)
 	{
-		synchronized(equipObservers)
+		synchronized (equipObservers)
 		{
-			for(ActionObserver observer : equipObservers)
+			for (ActionObserver observer : equipObservers)
 			{
 				observer.unequip(item, owner);
 			}
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param observer
 	 */
 	public void addObserver(ActionObserver observer)
 	{
-		synchronized(observers)
+		synchronized (observers)
 		{
 			observers = (ActionObserver[]) ArrayUtils.add(observers, observer);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param observer
 	 */
 	public void addEquipObserver(ActionObserver observer)
 	{
-		synchronized(equipObservers)
+		synchronized (equipObservers)
 		{
 			equipObservers = (ActionObserver[]) ArrayUtils.add(equipObservers, observer);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param observer
 	 */
 	public void addAttackCalcObserver(AttackCalcObserver observer)
 	{
-		synchronized(attackCalcObservers)
+		synchronized (attackCalcObservers)
 		{
 			attackCalcObservers = (AttackCalcObserver[]) ArrayUtils.add(attackCalcObservers, observer);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param observer
 	 */
 	public void removeObserver(ActionObserver observer)
 	{
-		synchronized(observers)
+		synchronized (observers)
 		{
 			observers = (ActionObserver[]) ArrayUtils.removeElement(observers, observer);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param observer
 	 */
 	public void removeEquipObserver(ActionObserver observer)
 	{
-		synchronized(equipObservers)
+		synchronized (equipObservers)
 		{
 			equipObservers = (ActionObserver[]) ArrayUtils.removeElement(equipObservers, observer);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param observer
 	 */
 	public void removeAttackCalcObserver(AttackCalcObserver observer)
 	{
-		synchronized(attackCalcObservers)
+		synchronized (attackCalcObservers)
 		{
 			attackCalcObservers = (AttackCalcObserver[]) ArrayUtils.removeElement(attackCalcObservers, observer);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param status
@@ -257,17 +257,17 @@ public class ObserveController
 	 */
 	public boolean checkAttackStatus(AttackStatus status)
 	{
-		synchronized(attackCalcObservers)
+		synchronized (attackCalcObservers)
 		{
-			for(AttackCalcObserver observer : attackCalcObservers)
+			for (AttackCalcObserver observer : attackCalcObservers)
 			{
-				if(observer.checkStatus(status))
+				if (observer.checkStatus(status))
 					return true;
 			}
 		}
 		return false;
 	}
-	
+
 	/**
 	 * 
 	 * @param status
@@ -275,11 +275,11 @@ public class ObserveController
 	 */
 	public boolean checkAttackerStatus(AttackStatus status)
 	{
-		synchronized(attackCalcObservers)
+		synchronized (attackCalcObservers)
 		{
-			for(AttackCalcObserver observer : attackCalcObservers)
+			for (AttackCalcObserver observer : attackCalcObservers)
 			{
-				if(observer.checkAttackerStatus(status))
+				if (observer.checkAttackerStatus(status))
 					return true;
 			}
 		}
@@ -291,9 +291,9 @@ public class ObserveController
 	 */
 	public void checkShieldStatus(List<AttackResult> attackList)
 	{
-		synchronized(attackCalcObservers)
+		synchronized (attackCalcObservers)
 		{
-			for(AttackCalcObserver observer : attackCalcObservers)
+			for (AttackCalcObserver observer : attackCalcObservers)
 			{
 				observer.checkShield(attackList);
 			}

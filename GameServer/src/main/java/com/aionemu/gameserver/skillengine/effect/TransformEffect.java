@@ -37,24 +37,24 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 public class TransformEffect extends EffectTemplate
 {
 	@XmlAttribute
-	protected int model;
-	
+	protected int	model;
+
 	@Override
 	public void applyEffect(Effect effect)
 	{
 		final Creature effected = effect.getEffected();
 		boolean transformed = false;
-		if(effected instanceof Npc)
+		if (effected instanceof Npc)
 		{
 			transformed = effected.getTransformedModelId() == effected.getObjectTemplate().getTemplateId();
 		}
-		else if(effected instanceof Player)
+		else if (effected instanceof Player)
 		{
 			transformed = effected.getTransformedModelId() != 0;
 		}
 		if (transformed)
 		{
-			for ( Effect tmp : effected.getEffectController().getAbnormalEffects())
+			for (Effect tmp : effected.getEffectController().getAbnormalEffects())
 			{
 				if (effect.getSkillId() == tmp.getSkillId())
 					continue;
@@ -87,11 +87,11 @@ public class TransformEffect extends EffectTemplate
 		final Creature effected = effect.getEffected();
 		effected.getEffectController().unsetAbnormal(EffectId.SHAPECHANGE.getEffectId());
 
-		if(effected instanceof Npc)
+		if (effected instanceof Npc)
 		{
 			effected.setTransformedModelId(effected.getObjectTemplate().getTemplateId());
 		}
-		else if(effected instanceof Player)
+		else if (effected instanceof Player)
 		{
 			effected.setTransformedModelId(0);
 		}
@@ -102,9 +102,10 @@ public class TransformEffect extends EffectTemplate
 	public void startEffect(final Effect effect)
 	{
 		final Creature effected = effect.getEffected();
-		switch(effect.getSkillId())	//check, if allowed fly transform - don't ban flying
+		switch (effect.getSkillId())
+		//check, if allowed fly transform - don't ban flying
 		{
-			case (689):		//MAU transform effect
+			case (689): //MAU transform effect
 			case (690):
 			case (780):
 			case (781):
@@ -112,7 +113,7 @@ public class TransformEffect extends EffectTemplate
 			case (789):
 			case (790):
 			case (791):
-			case (9737):	//Abyss trasfrom effect
+			case (9737): //Abyss trasfrom effect
 			case (9738):
 			case (9739):
 			case (9740):
@@ -125,7 +126,7 @@ public class TransformEffect extends EffectTemplate
 				break;
 			default:
 				effected.getEffectController().setAbnormal(EffectId.SHAPECHANGE.getEffectId());
-			}
+		}
 		effected.setTransformedModelId(model);
 		PacketSendUtility.broadcastPacketAndReceive(effected, new SM_TRANSFORM(effected));
 	}

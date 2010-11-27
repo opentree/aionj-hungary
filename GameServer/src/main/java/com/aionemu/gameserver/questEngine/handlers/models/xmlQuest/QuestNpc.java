@@ -33,7 +33,8 @@ import com.aionemu.gameserver.questEngine.model.QuestState;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "QuestNpc", propOrder = { "dialog" })
+@XmlType(name = "QuestNpc", propOrder =
+{ "dialog" })
 public class QuestNpc
 {
 
@@ -44,7 +45,7 @@ public class QuestNpc
 	public boolean operate(QuestEnv env, QuestState qs)
 	{
 		int npcId = -1;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			npcId = ((Npc) env.getVisibleObject()).getNpcId();
 		if (npcId != id)
 			return false;

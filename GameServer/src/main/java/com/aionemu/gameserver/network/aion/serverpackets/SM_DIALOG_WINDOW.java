@@ -27,28 +27,29 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
 public class SM_DIALOG_WINDOW extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int	targetObjectId;
-	private int dialogID;
-	private int	questId = 0;
-	
+	private int	dialogID;
+	private int	questId	= 0;
+
 	public SM_DIALOG_WINDOW(int targetObjectId, int dlgID)
 	{
 		this.targetObjectId = targetObjectId;
 		this.dialogID = dlgID;
 	}
 
-	public SM_DIALOG_WINDOW(int targetObjectId , int dlgID , int questId)
+	public SM_DIALOG_WINDOW(int targetObjectId, int dlgID, int questId)
 	{
 		this.targetObjectId = targetObjectId;
 		this.dialogID = dlgID;
 		this.questId = questId;
 	}
+
 	/**
 	* {@inheritDoc}
 	*/
-	
+
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
-	{		
+	{
 		writeD(targetObjectId);
 		writeH(dialogID);
 		writeD(questId);

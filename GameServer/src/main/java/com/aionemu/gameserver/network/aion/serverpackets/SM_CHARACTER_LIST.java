@@ -50,10 +50,10 @@ public class SM_CHARACTER_LIST extends _PlayerInfo
 		writeD(playOk2);
 
 		Account account = cHandler.getAccount();
-		writeC( account.size());// characters count
-		
-		for(PlayerAccountData playerData : account.getSortedAccountsList())
-		{	
+		writeC(account.size());// characters count
+
+		for (PlayerAccountData playerData : account.getSortedAccountsList())
+		{
 			writePlayerInfo(playerData);
 			writeB(new byte[14]);
 		}

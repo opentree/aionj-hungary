@@ -25,8 +25,8 @@ import com.aionemu.gameserver.model.templates.item.ItemTemplate;
  */
 public class BrokerPlayerClassFilter extends BrokerFilter
 {
-	private PlayerClass playerClass;
-	
+	private PlayerClass	playerClass;
+
 	/**
 	 * 
 	 * @param playerClass
@@ -36,7 +36,6 @@ public class BrokerPlayerClassFilter extends BrokerFilter
 		super();
 		this.playerClass = playerClass;
 	}
-
 
 	@Override
 	public boolean accept(ItemTemplate template)

@@ -55,21 +55,21 @@ public class ItemTemplate extends VisibleObjectTemplate
 
 	@XmlElement(name = "actions", required = false)
 	protected ItemActions		actions;
-	
+
 	@XmlAttribute(name = "mask")
 	private int					mask;
 
 	@XmlAttribute(name = "slot")
 	private int					itemSlot;
-	
+
 	@XmlAttribute(name = "usedelayid")
 	private int					useDelayId;
-	
+
 	@XmlAttribute(name = "usedelay")
 	private int					useDelay;
 
 	@XmlAttribute(name = "equipment_type")
-	private EquipType			equipmentType = EquipType.NONE;
+	private EquipType			equipmentType	= EquipType.NONE;
 
 	@XmlAttribute(name = "cash_item")
 	private int					cashItem;
@@ -102,7 +102,7 @@ public class ItemTemplate extends VisibleObjectTemplate
 	private ItemQuality			itemQuality;
 
 	@XmlAttribute(name = "item_type")
-	private String				itemType;					// TODO enum
+	private String				itemType;							// TODO enum
 
 	@XmlAttribute(name = "weapon_type")
 	private WeaponType			weaponType;
@@ -111,22 +111,22 @@ public class ItemTemplate extends VisibleObjectTemplate
 	private ArmorType			armorType;
 
 	@XmlAttribute(name = "attack_type")
-	private String				attackType;				// TODO enum
+	private String				attackType;						// TODO enum
 
 	@XmlAttribute(name = "attack_gap")
-	private float				attackGap;					// TODO enum
+	private float				attackGap;							// TODO enum
 
 	@XmlAttribute(name = "desc")
-	private String				description;				// TODO string or int
+	private String				description;						// TODO string or int
 
 	@XmlAttribute(name = "gender")
-	private String				genderPermitted;			// enum
+	private String				genderPermitted;					// enum
 
 	@XmlAttribute(name = "option_slot_bonus")
 	private int					optionSlotBonus;
 
 	@XmlAttribute(name = "bonus_apply")
-	private String				bonusApply;				// enum
+	private String				bonusApply;						// enum
 
 	@XmlAttribute(name = "no_enchant")
 	private boolean				noEnchant;
@@ -144,10 +144,10 @@ public class ItemTemplate extends VisibleObjectTemplate
 	private boolean				itemDyePermitted;
 
 	@XmlAttribute(name = "race")
-	private ItemRace			race	= ItemRace.ALL;
+	private ItemRace			race			= ItemRace.ALL;
 
 	private int					itemId;
-	
+
 	@XmlAttribute(name = "return_world")
 	private int					returnWorldId;
 
@@ -168,7 +168,7 @@ public class ItemTemplate extends VisibleObjectTemplate
 
 	@XmlTransient
 	private int[]				restricts;
-	
+
 	/**
 	 * @return the mask
 	 */
@@ -181,7 +181,7 @@ public class ItemTemplate extends VisibleObjectTemplate
 	{
 		return itemSlot;
 	}
-	
+
 	/**
 	 * 
 	 * @param playerClass
@@ -190,13 +190,13 @@ public class ItemTemplate extends VisibleObjectTemplate
 	public boolean isClassSpecific(PlayerClass playerClass)
 	{
 		boolean related = restricts[playerClass.ordinal()] > 0;
-		if(!related && !playerClass.isStartingClass())
+		if (!related && !playerClass.isStartingClass())
 		{
 			related = restricts[PlayerClass.getStartingClassFor(playerClass).ordinal()] > 0;
 		}
 		return related;
 	}
-	
+
 	/**
 	 * 
 	 * @param playerClass
@@ -213,7 +213,7 @@ public class ItemTemplate extends VisibleObjectTemplate
 	 */
 	public TreeSet<StatModifier> getModifiers()
 	{
-		if(modifiers != null)
+		if (modifiers != null)
 		{
 			return modifiers.getModifiers();
 		}
@@ -323,7 +323,7 @@ public class ItemTemplate extends VisibleObjectTemplate
 			int val = Integer.parseInt(description);
 			return val;
 		}
-		catch(NumberFormatException nfe)
+		catch (NumberFormatException nfe)
 		{
 			return 0;
 		}
@@ -469,18 +469,18 @@ public class ItemTemplate extends VisibleObjectTemplate
 	{
 		return itemId == ItemId.KINAH.value();
 	}
-	
+
 	public boolean isStigma()
 	{
 		return itemId > 140000000 && itemId < 140001000;
 	}
-	
-	void afterUnmarshal (Unmarshaller u, Object parent)
+
+	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
 		setItemId(Integer.parseInt(id));
 		String[] parts = restrict.split(",");
 		restricts = new int[12];
-		for(int i = 0; i < parts.length; i++)
+		for (int i = 0; i < parts.length; i++)
 		{
 			restricts[i] = Integer.parseInt(parts[i]);
 		}
@@ -498,7 +498,7 @@ public class ItemTemplate extends VisibleObjectTemplate
 	{
 		return DataManager.ITEM_SET_DATA.getItemSetTemplateByItemId(itemId);
 	}
-	
+
 	/*
 	 * Checks if the ItemTemplate belongs to an item set
 	 */
@@ -506,7 +506,7 @@ public class ItemTemplate extends VisibleObjectTemplate
 	{
 		return getItemSet() != null;
 	}
-	
+
 	/**
 	 * @return the godstoneInfo
 	 */
@@ -542,7 +542,7 @@ public class ItemTemplate extends VisibleObjectTemplate
 	{
 		return returnAlias;
 	}
-	
+
 	/**
 	 * @return the delay for item.
 	 */
@@ -550,7 +550,7 @@ public class ItemTemplate extends VisibleObjectTemplate
 	{
 		return useDelay;
 	}
-	
+
 	/**
 	 * @return item delay id
 	 */

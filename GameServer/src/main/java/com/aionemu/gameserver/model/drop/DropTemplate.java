@@ -16,19 +16,18 @@
  */
 package com.aionemu.gameserver.model.drop;
 
-
 /**
  * @author ATracer
  *
  */
 public class DropTemplate
 {
-	private int mobId;
-	private int itemId;
-	private int min;
-	private int max;
-	private float chance;
-	
+	private int		mobId;
+	private int		itemId;
+	private int		min;
+	private int		max;
+	private float	chance;
+
 	/**
 	 * @param mobId
 	 * @param itemId
@@ -36,7 +35,7 @@ public class DropTemplate
 	 * @param max
 	 * @param chance
 	 */
-	public DropTemplate(int mobId, int itemId, int min, int max, float chance) 
+	public DropTemplate(int mobId, int itemId, int min, int max, float chance)
 	{
 		this.mobId = mobId;
 		this.itemId = itemId;

@@ -47,7 +47,7 @@ public abstract class AbstractArea implements Area
 	 */
 	protected AbstractArea(int minZ, int maxZ)
 	{
-		if(minZ > maxZ)
+		if (minZ > maxZ)
 		{
 			throw new IllegalArgumentException("minZ(" + minZ + ") > maxZ(" + maxZ + ")");
 		}
@@ -146,11 +146,11 @@ public abstract class AbstractArea implements Area
 
 		int zCoord;
 
-		if(isInsideZ(z))
+		if (isInsideZ(z))
 		{
 			zCoord = z;
 		}
-		else if(z < getMinZ())
+		else if (z < getMinZ())
 		{
 			zCoord = getMinZ();
 		}

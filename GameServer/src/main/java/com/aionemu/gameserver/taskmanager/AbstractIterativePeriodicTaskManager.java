@@ -27,8 +27,8 @@ import com.aionemu.commons.utils.concurrent.RunnableStatsManager;
  */
 public abstract class AbstractIterativePeriodicTaskManager<T> extends AbstractPeriodicTaskManager
 {
-	private final Set<T>		startList		= new FastSet<T>();
-	private final Set<T>		stopList		= new FastSet<T>();
+	private final Set<T>		startList	= new FastSet<T>();
+	private final Set<T>		stopList	= new FastSet<T>();
 
 	private final FastSet<T>	activeTasks	= new FastSet<T>();
 
@@ -42,7 +42,7 @@ public abstract class AbstractIterativePeriodicTaskManager<T> extends AbstractPe
 		readLock();
 		try
 		{
-			if(stopList.contains(task))
+			if (stopList.contains(task))
 				return false;
 
 			return activeTasks.contains(task) || startList.contains(task);
@@ -100,7 +100,7 @@ public abstract class AbstractIterativePeriodicTaskManager<T> extends AbstractPe
 			writeUnlock();
 		}
 
-		for(FastSet.Record r = activeTasks.head(), end = activeTasks.tail(); (r = r.getNext()) != end;)
+		for (FastSet.Record r = activeTasks.head(), end = activeTasks.tail(); (r = r.getNext()) != end;)
 		{
 			final T task = activeTasks.valueOf(r);
 			final long begin = System.nanoTime();
@@ -109,7 +109,7 @@ public abstract class AbstractIterativePeriodicTaskManager<T> extends AbstractPe
 			{
 				callTask(task);
 			}
-			catch(RuntimeException e)
+			catch (RuntimeException e)
 			{
 				log.warn("", e);
 			}

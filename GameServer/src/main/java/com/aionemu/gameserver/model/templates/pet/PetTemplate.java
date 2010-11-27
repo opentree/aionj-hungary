@@ -35,36 +35,36 @@ import com.aionemu.gameserver.model.templates.stats.PetStatsTemplate;
 public class PetTemplate
 {
 	@XmlAttribute(name = "id", required = true)
-	private int id;
+	private int					id;
 	@XmlAttribute(name = "name", required = true)
-	private String name;
+	private String				name;
 	@XmlAttribute(name = "nameid", required = true)
-	private int nameId;
+	private int					nameId;
 	@XmlElement(name = "petfunction")
-	private List<PetFunction> petFunctions;
+	private List<PetFunction>	petFunctions;
 	@XmlElement(name = "petstats")
-	private PetStatsTemplate petStats;
-	
+	private PetStatsTemplate	petStats;
+
 	public int getId()
 	{
 		return id;
 	}
-	
+
 	public String getName()
 	{
 		return name;
 	}
-	
+
 	public int getNameId()
 	{
 		return nameId;
 	}
-	
+
 	public List<PetFunction> getPetFunction()
 	{
 		return petFunctions;
 	}
-	
+
 	public PetFunction getWarehouseFunction()
 	{
 		for (PetFunction pf : petFunctions)
@@ -74,6 +74,7 @@ public class PetTemplate
 		}
 		return null;
 	}
+
 	public PetStatsTemplate getPetStats()
 	{
 		return petStats;

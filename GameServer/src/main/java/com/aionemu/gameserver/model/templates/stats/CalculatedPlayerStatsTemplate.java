@@ -25,14 +25,14 @@ import com.aionemu.gameserver.utils.stats.ClassStats;
  */
 public class CalculatedPlayerStatsTemplate extends PlayerStatsTemplate
 {
-	
-	private PlayerClass playerClass;
-	
+
+	private PlayerClass	playerClass;
+
 	public CalculatedPlayerStatsTemplate(PlayerClass playerClass)
 	{
 		this.playerClass = playerClass;
 	}
-	
+
 	@Override
 	public int getAccuracy()
 	{

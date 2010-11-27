@@ -30,8 +30,8 @@ import com.aionemu.gameserver.world.World;
  */
 public class CM_FLIGHT_TELEPORT extends AbstractClientPacket<AionChannelHandler>
 {
-	float x, y, z;
-	int distance;
+	float	x, y, z;
+	int		distance;
 
 	/**
 	 * Constructs new instance of <tt>CM_FLIGHT_TELEPORT </tt> packet
@@ -54,7 +54,7 @@ public class CM_FLIGHT_TELEPORT extends AbstractClientPacket<AionChannelHandler>
 		y = readF();
 		z = readF();
 		readC(); // locationId
-		distance = readD();	
+		distance = readD();
 	}
 
 	/**
@@ -65,10 +65,10 @@ public class CM_FLIGHT_TELEPORT extends AbstractClientPacket<AionChannelHandler>
 	{
 		Player player = getChannelHandler().getActivePlayer();
 
-		if(player != null && player.isInState(CreatureState.FLIGHT_TELEPORT))
+		if (player != null && player.isInState(CreatureState.FLIGHT_TELEPORT))
 		{
 			player.setFlightDistance(distance);
-			World.getInstance().updatePosition(player, x, y, z, (byte)0);
+			World.getInstance().updatePosition(player, x, y, z, (byte) 0);
 		}
 	}
 }

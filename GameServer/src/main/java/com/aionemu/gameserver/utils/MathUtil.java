@@ -180,7 +180,7 @@ public class MathUtil
 		// We should avoid Math.pow or Math.hypot due to perfomance reasons
 		return Math.sqrt(dx * dx + dy * dy + dz * dz);
 	}
-	
+
 	/**
 	 * 
 	 * @param object
@@ -189,7 +189,7 @@ public class MathUtil
 	 * @param z
 	 * @return
 	 */
-	public static double getDistance(VisibleObject object , float x, float y , float z)
+	public static double getDistance(VisibleObject object, float x, float y, float z)
 	{
 		return getDistance(object.getX(), object.getY(), object.getZ(), x, y, z);
 	}
@@ -232,7 +232,7 @@ public class MathUtil
 		double xDelta = sx2 - sx1;
 		double yDelta = sy2 - sy1;
 
-		if((xDelta == 0) && (yDelta == 0))
+		if ((xDelta == 0) && (yDelta == 0))
 		{
 			throw new IllegalArgumentException("Segment start equals segment end");
 		}
@@ -240,11 +240,11 @@ public class MathUtil
 		double u = ((px - sx1) * xDelta + (py - sy1) * yDelta) / (xDelta * xDelta + yDelta * yDelta);
 
 		final Point closestPoint;
-		if(u < 0)
+		if (u < 0)
 		{
 			closestPoint = new Point(sx1, sy1);
 		}
-		else if(u > 1)
+		else if (u > 1)
 		{
 			closestPoint = new Point(sx2, sy2);
 		}
@@ -305,14 +305,14 @@ public class MathUtil
 	 */
 	public static boolean isInRange(VisibleObject object1, VisibleObject object2, float range)
 	{
-		if(object1.getWorldId() != object2.getWorldId() || object1.getInstanceId() != object2.getInstanceId())
+		if (object1.getWorldId() != object2.getWorldId() || object1.getInstanceId() != object2.getInstanceId())
 			return false;
-		
+
 		float dx = (object2.getX() - object1.getX());
 		float dy = (object2.getY() - object1.getY());
 		return dx * dx + dy * dy < range * range;
 	}
-	
+
 	/**
 	 * Checks whether two given instances of AionObject are within given range.
 	 * Includes Z-Axis check.
@@ -323,15 +323,15 @@ public class MathUtil
 	 */
 	public static boolean isIn3dRange(VisibleObject object1, VisibleObject object2, float range)
 	{
-		if(object1.getWorldId() != object2.getWorldId())
+		if (object1.getWorldId() != object2.getWorldId())
 			return false;
-		
+
 		float dx = (object2.getX() - object1.getX());
 		float dy = (object2.getY() - object1.getY());
 		float dz = (object2.getZ() - object1.getZ());
 		return dx * dx + dy * dy + dz * dz < range * range;
 	}
-	
+
 	/**
 	+	 * Check Coordinate with formula: " sqrt((x-x0)^2 + (y-y0)^2 + (z-z0)^2) < radius "
 	 * @param obj
@@ -343,13 +343,13 @@ public class MathUtil
 	 */
 	public static boolean isInSphere(final VisibleObject obj, final float centerX, final float centerY, final float centerZ, final float radius)
 	{
-		if ( ( Math.pow((double)(obj.getX() - centerX),2) + Math.pow( (double)(obj.getY() - centerY),2)
-					+ Math.pow( (double)(obj.getZ() - centerZ),2) ) <= Math.pow( (double)radius,2) )
+		if ((Math.pow((double) (obj.getX() - centerX), 2) + Math.pow((double) (obj.getY() - centerY), 2) + Math.pow((double) (obj.getZ() - centerZ), 2)) <= Math
+				.pow((double) radius, 2))
 			return true;
-		
+
 		return false;
 	}
-	
+
 	/** 
 	 * @param obj1X
 	 * @param obj1Y
@@ -364,7 +364,7 @@ public class MathUtil
 			angleTarget = 360 + angleTarget;
 		return angleTarget;
 	}
-	
+
 	/**
 	 * 
 	 * @param obj1
@@ -375,7 +375,7 @@ public class MathUtil
 	{
 		return calculateAngleFrom(obj1.getX(), obj1.getY(), obj2.getX(), obj2.getY());
 	}
-	
+
 	/**
 	 * 
 	 * @param clientHeading

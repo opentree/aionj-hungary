@@ -37,6 +37,7 @@ public class ExitPoint
 	protected float	y;
 	@XmlAttribute(name = "z")
 	protected float	z;
+
 	/**
 	 * @return the mapId
 	 */
@@ -44,6 +45,7 @@ public class ExitPoint
 	{
 		return mapId;
 	}
+
 	/**
 	 * @return the x
 	 */
@@ -51,6 +53,7 @@ public class ExitPoint
 	{
 		return x;
 	}
+
 	/**
 	 * @return the y
 	 */
@@ -58,6 +61,7 @@ public class ExitPoint
 	{
 		return y;
 	}
+
 	/**
 	 * @return the z
 	 */

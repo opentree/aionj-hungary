@@ -24,13 +24,16 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  * @author Lyahim, Nemiroff
  * Date: 01.12.2009
  */
-public class SM_TITLE_SET extends AbstractAionServerPacket<AionChannelHandler> {
+public class SM_TITLE_SET extends AbstractAionServerPacket<AionChannelHandler>
+{
 
-    private int titleId;
+	private int	titleId;
 
-	public SM_TITLE_SET (int titleId) {
+	public SM_TITLE_SET(int titleId)
+	{
 		this.titleId = titleId;
 	}
+
 	/**
 	 * {@inheritDoc}
 	 */

@@ -39,6 +39,6 @@ public class DpCondition extends Condition
 	@Override
 	public boolean verify(Skill skill)
 	{
-		return ((Player)skill.getEffector()).getCommonData().getDp() >= value;
+		return ((Player) skill.getEffector()).getCommonData().getDp() >= value;
 	}
 }

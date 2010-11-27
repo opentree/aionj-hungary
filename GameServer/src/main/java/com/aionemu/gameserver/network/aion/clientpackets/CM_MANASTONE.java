@@ -32,15 +32,15 @@ import com.aionemu.gameserver.world.World;
  */
 public class CM_MANASTONE extends AbstractClientPacket<AionChannelHandler>
 {
-	
-	private int npcObjId;
-	private int slotNum;
-	
-	private int actionType;
-	private int stoneUniqueId;
-	private int targetItemUniqueId;
-	private int supplementUniqueId;
-	
+
+	private int	npcObjId;
+	private int	slotNum;
+
+	private int	actionType;
+	private int	stoneUniqueId;
+	private int	targetItemUniqueId;
+	private int	supplementUniqueId;
+
 	/**
 	 * @param opcode
 	 */
@@ -55,7 +55,7 @@ public class CM_MANASTONE extends AbstractClientPacket<AionChannelHandler>
 		actionType = readC();
 		readC();
 		targetItemUniqueId = readD();
-		switch(actionType)
+		switch (actionType)
 		{
 			case 1:
 			case 2:
@@ -76,19 +76,19 @@ public class CM_MANASTONE extends AbstractClientPacket<AionChannelHandler>
 	{
 		AionObject npc = World.getInstance().findAionObject(npcObjId);
 		Player player = getChannelHandler().getActivePlayer();
-		
-		switch(actionType)
+
+		switch (actionType)
 		{
 			case 1: //enchant stone
 			case 2: //add manastone
 				EnchantItemAction action = new EnchantItemAction();
 				Item manastone = player.getInventory().getItemByObjId(stoneUniqueId);
 				Item targetItem = player.getInventory().getItemByObjId(targetItemUniqueId);
-				if(targetItem == null)
+				if (targetItem == null)
 				{
 					targetItem = player.getEquipment().getEquippedItemByObjId(targetItemUniqueId);
 				}
-				if(manastone != null && targetItem != null && action.canAct(player, manastone, targetItem))
+				if (manastone != null && targetItem != null && action.canAct(player, manastone, targetItem))
 				{
 					Item supplement = player.getInventory().getItemByObjId(supplementUniqueId);
 					action.act(player, manastone, targetItem, supplement);
@@ -101,7 +101,7 @@ public class CM_MANASTONE extends AbstractClientPacket<AionChannelHandler>
 					PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.NOT_ENOUGH_KINAH(price));
 					return;
 				}
-				if(npc != null)
+				if (npc != null)
 				{
 					ItemService.decreaseKinah(player, price);
 					ItemService.removeManastone(player, targetItemUniqueId, slotNum);

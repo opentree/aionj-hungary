@@ -33,31 +33,32 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
 public class SM_SKILL_LIST extends AbstractAionServerPacket<AionChannelHandler>
 {
 
-	private SkillListEntry[] skillList;
-	private int messageId;
-	private int skillNameId;
-	private String skillLvl;
-	public static final int YOU_LEARNED_SKILL = 1300050;
+	private SkillListEntry[]	skillList;
+	private int					messageId;
+	private int					skillNameId;
+	private String				skillLvl;
+	public static final int		YOU_LEARNED_SKILL	= 1300050;
 
 	/**
 	 *  This constructor is used on player entering the world
 	 *  
- 	 * Constructs new <tt>SM_SKILL_LIST </tt> packet
- 	 */
+	 * Constructs new <tt>SM_SKILL_LIST </tt> packet
+	 */
 
 	public SM_SKILL_LIST(Player player)
- 	{
+	{
 		this.skillList = player.getSkillList().getAllSkills();
 		this.messageId = 0;
- 	}
-	
+	}
+
 	public SM_SKILL_LIST(SkillListEntry skillListEntry, int messageId)
- 	{
-		this.skillList = new SkillListEntry[]{skillListEntry};
+	{
+		this.skillList = new SkillListEntry[]
+		{ skillListEntry };
 		this.messageId = messageId;
 		this.skillNameId = DataManager.SKILL_DATA.getSkillTemplate(skillListEntry.getSkillId()).getNameId();
 		this.skillLvl = String.valueOf(skillListEntry.getSkillLevel());
- 	}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -68,21 +69,22 @@ public class SM_SKILL_LIST extends AbstractAionServerPacket<AionChannelHandler>
 
 		final int size = skillList.length;
 		writeH(size); //skills list size
-		
+
 		if (size > 0)
 		{
 			for (SkillListEntry entry : skillList)
 			{
 				writeH(entry.getSkillId());//id
 				writeH(entry.getSkillLevel());//lvl
-				writeC( 0x00);
-				writeC( entry.getExtraLvl());
+				writeC(0x00);
+				writeC(entry.getExtraLvl());
 				writeD(0); //use time? [s]
-				writeC( entry.isStigma() ? 1 : 0); // stigma flag
+				writeC(entry.isStigma() ? 1 : 0); // stigma flag
 			}
 		}
 		writeD(messageId);
-		if (messageId != 0);
+		if (messageId != 0)
+			;
 		{
 			writeH(0x24); //unk
 			writeD(skillNameId);

@@ -35,7 +35,7 @@ import com.aionemu.gameserver.world.World;
  */
 public class CM_LEVEL_READY extends AbstractClientPacket<AionChannelHandler>
 {
-	
+
 	/**
 	 * Constructs new instance of <tt>CM_LEVEL_READY </tt> packet
 	 * 
@@ -70,21 +70,21 @@ public class CM_LEVEL_READY extends AbstractClientPacket<AionChannelHandler>
 		 * Spawn player into the world.
 		 */
 		World.getInstance().spawn(activePlayer);
-		
+
 		activePlayer.refreshZoneImpl();
-		
+
 		/**
 		 * Loading weather for the player's region
 		 */
 		WeatherService.getInstance().loadWeather(activePlayer);
 
 		QuestEngine.getInstance().onEnterWorld(new QuestEnv(null, activePlayer, 0, 0));
-		
+
 		// zone channel message
 		sendPacket(new SM_SYSTEM_MESSAGE(1390122, activePlayer.getPosition().getInstanceId()));
-		
+
 		RiftSpawnManager.sendRiftStatus(activePlayer);
-		
+
 		activePlayer.getEffectController().updatePlayerEffectIcons();
 	}
 }

@@ -27,16 +27,16 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class CM_QUESTION_RESPONSE extends AbstractClientPacket<AionChannelHandler>
 {
-    private int 			questionid;
-    private int 			response;
-    @SuppressWarnings("unused")
-	private int 			senderid;
-    
-	public CM_QUESTION_RESPONSE(int opcode) 
+	private int	questionid;
+	private int	response;
+	@SuppressWarnings("unused")
+	private int	senderid;
+
+	public CM_QUESTION_RESPONSE(int opcode)
 	{
 		super(opcode);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -44,7 +44,7 @@ public class CM_QUESTION_RESPONSE extends AbstractClientPacket<AionChannelHandle
 	protected void readImpl()
 	{
 		questionid = readD();
-		
+
 		response = readC(); // y/n
 		readC(); // unk 0x00 - 0x01 ?
 		readH();

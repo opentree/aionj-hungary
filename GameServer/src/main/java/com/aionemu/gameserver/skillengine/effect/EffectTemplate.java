@@ -43,32 +43,32 @@ import com.aionemu.gameserver.utils.stats.StatFunctions;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Effect")
-public abstract class EffectTemplate 
+public abstract class EffectTemplate
 {
 
-	protected ActionModifiers modifiers;
-    protected List<Change> change;
-    @XmlAttribute
-    protected int effectid;
+	protected ActionModifiers	modifiers;
+	protected List<Change>		change;
+	@XmlAttribute
+	protected int				effectid;
 	@XmlAttribute(required = true)
-	protected int duration;
+	protected int				duration;
 	@XmlAttribute(name = "randomtime")
-	protected int randomTime;
+	protected int				randomTime;
 	@XmlAttribute(name = "e")
-	protected int position;
+	protected int				position;
 	@XmlAttribute(name = "basiclvl")
-	protected int basicLvl;
+	protected int				basicLvl;
 	@XmlAttribute(name = "element")
-	protected SkillElement element = SkillElement.NONE;
+	protected SkillElement		element	= SkillElement.NONE;
 	@XmlElement(name = "subeffect")
-	protected SubEffect subEffect;
+	protected SubEffect			subEffect;
 	@XmlAttribute(name = "hoptype")
-	protected HopType hopType;
+	protected HopType			hopType;
 	@XmlAttribute(name = "hopa")
-	protected int hopA;
+	protected int				hopA;
 	@XmlAttribute(name = "hopb")
-	protected int hopB;
-	
+	protected int				hopB;
+
 	/**
 	 * @return the duration
 	 */
@@ -76,7 +76,7 @@ public abstract class EffectTemplate
 	{
 		return duration;
 	}
-	
+
 	/**
 	 * @return the randomtime
 	 */
@@ -84,7 +84,6 @@ public abstract class EffectTemplate
 	{
 		return randomTime;
 	}
-	
 
 	/**
 	 * @return the modifiers
@@ -93,7 +92,6 @@ public abstract class EffectTemplate
 	{
 		return modifiers;
 	}
-
 
 	/**
 	 * @return the change
@@ -135,25 +133,24 @@ public abstract class EffectTemplate
 		return element;
 	}
 
-
 	/**
 	 * @param value
 	 * @return
 	 */
 	protected int applyActionModifiers(Effect effect, int value)
-	{	
-		if(modifiers == null)
+	{
+		if (modifiers == null)
 			return value;
-		
+
 		/**
 		 * Only one of modifiers will be applied now
 		 */
-		for(ActionModifier modifier : modifiers.getActionModifiers())
+		for (ActionModifier modifier : modifiers.getActionModifiers())
 		{
-			if(modifier.check(effect))
+			if (modifier.check(effect))
 				return modifier.analyze(effect, value);
 		}
-		
+
 		return value;
 	}
 
@@ -163,28 +160,32 @@ public abstract class EffectTemplate
 	 * @param effect
 	 */
 	public abstract void calculate(Effect effect);
+
 	/**
 	 *  Apply effect to effected 
 	 *  
 	 * @param effect
 	 */
 	public abstract void applyEffect(Effect effect);
+
 	/**
 	 *  Start effect on effected
 	 *  
 	 * @param effect
 	 */
-	public void startEffect(Effect effect){};
-	
+	public void startEffect(Effect effect)
+	{
+	};
+
 	/**
 	 * 
 	 * @param effect
 	 */
 	public void calculateSubEffect(Effect effect)
 	{
-		if(subEffect == null)
+		if (subEffect == null)
 			return;
-		
+
 		SkillTemplate template = DataManager.SKILL_DATA.getSkillTemplate(subEffect.getSkillId());
 		int duration = template.getEffectsDuration();
 		Effect newEffect = new Effect(effect.getEffector(), effect.getEffected(), template, template.getLvl(), duration);
@@ -192,7 +193,7 @@ public abstract class EffectTemplate
 		effect.setSpellStatus(newEffect.getSpellStatus());
 		effect.setSubEffect(newEffect);
 	}
-	
+
 	/**
 	 *  Hate will be added to result value only if particular
 	 *  effect template has success result
@@ -200,24 +201,24 @@ public abstract class EffectTemplate
 	 * @param effect
 	 */
 	public void calculateHate(Effect effect)
-	{	
-		if(hopType == null)
+	{
+		if (hopType == null)
 			return;
-		
-		if(effect.getSuccessEffect().isEmpty())
+
+		if (effect.getSuccessEffect().isEmpty())
 			return;
-		
+
 		int currentHate = effect.getEffectHate();
-		if(hopType != null)
+		if (hopType != null)
 		{
-			switch(hopType)
+			switch (hopType)
 			{
 				case DAMAGE:
-					currentHate += effect.getReserved1(); 
+					currentHate += effect.getReserved1();
 					break;
 				case SKILLLV:
 					int skillLvl = effect.getSkillLevel();
-					currentHate += hopB + hopA * skillLvl; 
+					currentHate += hopB + hopA * skillLvl;
 				default:
 					break;
 			}
@@ -226,63 +227,69 @@ public abstract class EffectTemplate
 			currentHate = 1;
 		effect.setEffectHate(StatFunctions.calculateHate(effect.getEffector(), currentHate));
 	}
-	
+
 	/**
 	 * 
 	 * @param effect
 	 */
 	public void startSubEffect(Effect effect)
 	{
-		if(subEffect == null)
+		if (subEffect == null)
 			return;
-		
+
 		effect.getSubEffect().applyEffect();
 	}
+
 	/**
 	 *  Do periodic effect on effected
 	 *  
 	 * @param effect
 	 */
-	public void onPeriodicAction(Effect effect){};
+	public void onPeriodicAction(Effect effect)
+	{
+	};
+
 	/**
 	 *  End effect on effected
 	 *  
 	 * @param effect
 	 */
-	public void endEffect(Effect effect){};
-	
-	public boolean calculateEffectResistRate(Effect effect, StatEnum statEnum ) 
- 	{ 
- 		// TODO: Need correct value in client. 1000 = 100% 
-		int effectPower = 1000; 
- 		                 
- 		//first resist? 
- 		if (statEnum != null) 
- 		{ 
-			int stat = effect.getEffected().getGameStats().getCurrentStat(statEnum); 
- 		    effectPower -= stat; 
- 		} 
- 		 
- 		int attackerLevel = effect.getEffector().getLevel(); 
- 		int targetLevel = effect.getEffected().getLevel(); 
- 		                 
- 		float multipler = 0.0f; 
-	    int differ = (targetLevel - attackerLevel); 
-	    //lvl mod 
- 	    if(differ > 0 && differ < 8 ) 
-	    { 
-	        multipler = differ / 10f; 
- 	        effectPower -= Math.round((effectPower * multipler)); 
-        } 
-        else if (differ >= 8) 
- 	    { 
-	        effectPower -= Math.round((effectPower * 0.80f)); 
-	    } 
-	    if (effect.getEffected() instanceof Npc) 
-	    { 
-	        float hpGaugeMod = ((Npc) effect.getEffected()).getObjectTemplate().getHpGauge(); 
-	        effectPower -= (200*(1+(hpGaugeMod/10))); 
-	    } 
-	    return  (Rnd.get()*1000 < effectPower); 
-	} 
+	public void endEffect(Effect effect)
+	{
+	};
+
+	public boolean calculateEffectResistRate(Effect effect, StatEnum statEnum)
+	{
+		// TODO: Need correct value in client. 1000 = 100% 
+		int effectPower = 1000;
+
+		//first resist? 
+		if (statEnum != null)
+		{
+			int stat = effect.getEffected().getGameStats().getCurrentStat(statEnum);
+			effectPower -= stat;
+		}
+
+		int attackerLevel = effect.getEffector().getLevel();
+		int targetLevel = effect.getEffected().getLevel();
+
+		float multipler = 0.0f;
+		int differ = (targetLevel - attackerLevel);
+		//lvl mod 
+		if (differ > 0 && differ < 8)
+		{
+			multipler = differ / 10f;
+			effectPower -= Math.round((effectPower * multipler));
+		}
+		else if (differ >= 8)
+		{
+			effectPower -= Math.round((effectPower * 0.80f));
+		}
+		if (effect.getEffected() instanceof Npc)
+		{
+			float hpGaugeMod = ((Npc) effect.getEffected()).getObjectTemplate().getHpGauge();
+			effectPower -= (200 * (1 + (hpGaugeMod / 10)));
+		}
+		return (Rnd.get() * 1000 < effectPower);
+	}
 }

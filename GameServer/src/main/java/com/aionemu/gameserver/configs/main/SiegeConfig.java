@@ -48,19 +48,19 @@ public class SiegeConfig
 
 	@Property(key = "siege.influence.artifact", defaultValue = "1")
 	public static int		SIEGE_POINTS_ARTIFACT;
-	
+
 	@Property(key = "siege.vulnerable.chance", defaultValue = "100")
 	public static int		SIEGE_VULNERABLE_CHANCE;
-	
-    @Property(key = "siege.invul.interval", defaultValue = "3600")
+
+	@Property(key = "siege.invul.interval", defaultValue = "3600")
 	public static int		SIEGE_INVUL_INTERVAL;
-	
-	 @Property(key = "siege.gmedal.amount", defaultValue = "3")
+
+	@Property(key = "siege.gmedal.amount", defaultValue = "3")
 	public static int		SIEGE_GMEDAL_AMOUNT;
-	
+
 	@Property(key = "siege.smedal.amount", defaultValue = "3")
 	public static int		SIEGE_SMEDAL_AMOUNT;
-	
+
 	@Property(key = "siege.pmedal.amount", defaultValue = "0")
 	public static int		SIEGE_PMEDAL_AMOUNT;
 }

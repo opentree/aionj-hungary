@@ -94,8 +94,8 @@ public class BlockList
 	 */
 	public BlockedPlayer getBlockedPlayer(String name)
 	{
-		for(BlockedPlayer entry : getBlockedList())
-			if(entry.getName().equalsIgnoreCase(name))
+		for (BlockedPlayer entry : getBlockedList())
+			if (entry.getName().equalsIgnoreCase(name))
 				return entry;
 
 		return null;

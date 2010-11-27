@@ -31,33 +31,33 @@ public final class GroupAllianceUpdater extends AbstractFIFOPeriodicTaskManager<
 {
 	private static final class SingletonHolder
 	{
-		private static final GroupAllianceUpdater INSTANCE	= new GroupAllianceUpdater();
+		private static final GroupAllianceUpdater	INSTANCE	= new GroupAllianceUpdater();
 	}
 
 	public static GroupAllianceUpdater getInstance()
 	{
 		return SingletonHolder.INSTANCE;
 	}
-	
+
 	public GroupAllianceUpdater()
 	{
 		super(2000);
 	}
-	
+
 	@Override
 	protected void callTask(Player player)
 	{
 		if (player.isInGroup())
 			player.getPlayerGroup().updateGroupUIToEvent(player, GroupEvent.MOVEMENT);
-		
+
 		if (player.isInAlliance())
 			AllianceService.getInstance().updateAllianceUIToEvent(player, PlayerAllianceEvent.MOVEMENT);
 	}
-	
+
 	@Override
 	protected String getCalledMethodName()
 	{
 		return "groupAllianceUpdate()";
 	}
-	
+
 }

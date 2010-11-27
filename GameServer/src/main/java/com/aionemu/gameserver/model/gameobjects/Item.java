@@ -34,32 +34,32 @@ import com.aionemu.gameserver.utils.idfactory.IDFactory;
  * @author ATracer
  */
 public class Item extends AionObject
-{	
-	private long itemCount = 1;
+{
+	private long			itemCount		= 1;
 
-	private int ownerId = 0;
-	private int itemColor = 0;
+	private int				ownerId			= 0;
+	private int				itemColor		= 0;
 
 	private ItemTemplate	itemTemplate;
 	private ItemTemplate	itemSkinTemplate;
 
-	private boolean isEquipped = false;
+	private boolean			isEquipped		= false;
 
-	private int equipmentSlot = ItemStorage.FIRST_AVAILABLE_SLOT;
+	private int				equipmentSlot	= ItemStorage.FIRST_AVAILABLE_SLOT;
 
-	private PersistentState persistentState;
+	private PersistentState	persistentState;
 
-	private Set<ManaStone> manaStones;
-	
-	private GodStone godStone;
+	private Set<ManaStone>	manaStones;
 
-	private boolean isSoulBound = false;
+	private GodStone		godStone;
 
-	private int itemLocation;
-	
-	private int enchantLevel;
-	
-	private int fusionedItemId;
+	private boolean			isSoulBound		= false;
+
+	private int				itemLocation;
+
+	private int				enchantLevel;
+
+	private int				fusionedItemId;
 
 	/**
 	 * @param ownerId
@@ -94,8 +94,8 @@ public class Item extends AionObject
 	 * 
 	 * This constructor should be called only from DAO while loading from DB
 	 */
-	public Item(int ownerId, int objId, int itemId, long itemCount, int itemColor, boolean isEquipped, boolean isSoulBound,int equipmentSlot, int itemLocation,
-		int enchant, int itemSkin, int fusionedItem)
+	public Item(int ownerId, int objId, int itemId, long itemCount, int itemColor, boolean isEquipped, boolean isSoulBound, int equipmentSlot,
+			int itemLocation, int enchant, int itemSkin, int fusionedItem)
 	{
 		super(objId);
 		this.ownerId = ownerId;
@@ -135,6 +135,7 @@ public class Item extends AionObject
 		//item description should return probably string and not id
 		return String.valueOf(itemTemplate.getNameId());
 	}
+
 	public String getItemName()
 	{
 		return itemTemplate.getName();
@@ -147,7 +148,7 @@ public class Item extends AionObject
 	{
 		return itemTemplate;
 	}
-	
+
 	/**
 	 * @return the itemAppearanceTemplate
 	 */
@@ -157,13 +158,13 @@ public class Item extends AionObject
 			return this.itemTemplate;
 		return this.itemSkinTemplate;
 	}
-	
+
 	public void setItemSkinTemplate(ItemTemplate newTemplate)
 	{
 		this.itemSkinTemplate = newTemplate;
 		setPersistentState(PersistentState.UPDATE_REQUIRED);
 	}
-	
+
 	/**
 	 *@return the itemColor
 	 */
@@ -230,10 +231,10 @@ public class Item extends AionObject
 	 */
 	public boolean decreaseItemCount(long remCount)
 	{
-		if( this.itemCount - remCount >= 0 )
+		if (this.itemCount - remCount >= 0)
 		{
 			this.itemCount -= remCount;
-			if(itemCount == 0 && !this.itemTemplate.isKinah())
+			if (itemCount == 0 && !this.itemTemplate.isKinah())
 			{
 				setPersistentState(PersistentState.DELETED);
 			}
@@ -288,21 +289,22 @@ public class Item extends AionObject
 	 */
 	public Set<ManaStone> getItemStones()
 	{
-		if(manaStones == null)
-			this.manaStones = new TreeSet<ManaStone>(new Comparator<ManaStone>(){
+		if (manaStones == null)
+			this.manaStones = new TreeSet<ManaStone>(new Comparator<ManaStone>()
+			{
 
 				@Override
 				public int compare(ManaStone o1, ManaStone o2)
 				{
-					if(o1.getSlot() == o2.getSlot())
+					if (o1.getSlot() == o2.getSlot())
 						return 0;
 					return o1.getSlot() > o2.getSlot() ? 1 : -1;
 				}
-				
+
 			});
 		return manaStones;
 	}
-	
+
 	/**
 	 * Check manastones without initialization
 	 * 
@@ -312,7 +314,7 @@ public class Item extends AionObject
 	{
 		return manaStones != null && manaStones.size() > 0;
 	}
-	
+
 	/**
 	 * @return the goodStone
 	 */
@@ -320,7 +322,7 @@ public class Item extends AionObject
 	{
 		return godStone;
 	}
-	
+
 	/**
 	 * 
 	 * @param itemId
@@ -332,7 +334,7 @@ public class Item extends AionObject
 		this.godStone = new GodStone(getObjectId(), itemId, state);
 		return this.godStone;
 	}
-	
+
 	/**
 	 * @param goodStone the goodStone to set
 	 */
@@ -380,16 +382,16 @@ public class Item extends AionObject
 	{
 		if (persistentState != PersistentState.UPDATED && persistentState != PersistentState.NOACTION && ownerId != 0)
 			ItemUpdater.getInstance().add(this);
-		switch(persistentState)
+		switch (persistentState)
 		{
 			case DELETED:
-				if(this.persistentState == PersistentState.NEW)
+				if (this.persistentState == PersistentState.NEW)
 					this.persistentState = PersistentState.NOACTION;
 				else
 					this.persistentState = PersistentState.DELETED;
 				break;
 			case UPDATE_REQUIRED:
-				if(this.persistentState == PersistentState.NEW)
+				if (this.persistentState == PersistentState.NEW)
 					break;
 			default:
 				this.persistentState = persistentState;
@@ -407,7 +409,7 @@ public class Item extends AionObject
 	{
 		return itemLocation;
 	}
-	
+
 	public int getItemMask()
 	{
 		return itemTemplate.getMask();
@@ -432,22 +434,21 @@ public class Item extends AionObject
 		this.isSoulBound = isSoulBound;
 		setPersistentState(PersistentState.UPDATE_REQUIRED);
 	}
-	
+
 	public EquipType getEquipmentType()
 	{
-		if(itemTemplate.isStigma())
+		if (itemTemplate.isStigma())
 			return EquipType.STIGMA;
 		else
 			return itemTemplate.getEquipmentType();
 	}
-	
+
 	@Override
 	public String toString()
 	{
-		return "Item [equipmentSlot=" + equipmentSlot + ", godStone=" + godStone + ", isEquipped=" + isEquipped
-			+ ", itemColor=" + itemColor + ", itemCount=" + itemCount + ", itemLocation="
-			+ itemLocation + ", itemTemplate=" + itemTemplate + ", manaStones=" + manaStones + ", persistentState="
-			+ persistentState + "]";
+		return "Item [equipmentSlot=" + equipmentSlot + ", godStone=" + godStone + ", isEquipped=" + isEquipped + ", itemColor=" + itemColor + ", itemCount="
+				+ itemCount + ", itemLocation=" + itemLocation + ", itemTemplate=" + itemTemplate + ", manaStones=" + manaStones + ", persistentState="
+				+ persistentState + "]";
 	}
 
 	public int getItemId()
@@ -459,23 +460,22 @@ public class Item extends AionObject
 	{
 		return itemTemplate.getNameId();
 	}
-	
+
 	public boolean hasFusionedItem()
 	{
 		return (fusionedItemId != 0);
 	}
-	
+
 	public int getFusionedItem()
 	{
 		return fusionedItemId;
 	}
-	
+
 	public void setFusionedItem(int itemTemplateId)
 	{
 		fusionedItemId = itemTemplateId;
 	}
 
-	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#finalize()
 	 */
@@ -490,7 +490,7 @@ public class Item extends AionObject
 		{
 			super.finalize();
 		}
-		catch(Throwable e)
+		catch (Throwable e)
 		{
 			e.printStackTrace();
 		}

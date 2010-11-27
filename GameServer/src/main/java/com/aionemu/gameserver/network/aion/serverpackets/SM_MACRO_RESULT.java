@@ -25,17 +25,18 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_MACRO_RESULT extends AbstractAionServerPacket<AionChannelHandler>
 {
-	public static SM_MACRO_RESULT SM_MACRO_CREATED = new SM_MACRO_RESULT (0x00);
-	public static SM_MACRO_RESULT SM_MACRO_DELETED = new SM_MACRO_RESULT (0x01);
-	
-	private int code;
-	
-	private SM_MACRO_RESULT (int code) {
+	public static SM_MACRO_RESULT	SM_MACRO_CREATED	= new SM_MACRO_RESULT(0x00);
+	public static SM_MACRO_RESULT	SM_MACRO_DELETED	= new SM_MACRO_RESULT(0x01);
+
+	private int						code;
+
+	private SM_MACRO_RESULT(int code)
+	{
 		this.code = code;
 	}
-	
+
 	@Override
-	public void writeImpl (AionChannelHandler con) 
+	public void writeImpl(AionChannelHandler con)
 	{
 		writeC(code);
 	}

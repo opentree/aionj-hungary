@@ -34,14 +34,14 @@ public enum ACCURACY
 	PRIEST(100),
 	CLERIC(100),
 	CHANTER(90);
-	
-	private int value;
-	
+
+	private int	value;
+
 	private ACCURACY(int value)
 	{
 		this.value = value;
 	}
-	
+
 	public int getValue()
 	{
 		return value;

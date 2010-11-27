@@ -33,21 +33,21 @@ import com.aionemu.gameserver.world.WorldPosition;
  */
 public class SM_ALLIANCE_MEMBER_INFO extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private PlayerAllianceMember member;
-	private PlayerAllianceEvent event;
-	
+	private PlayerAllianceMember	member;
+	private PlayerAllianceEvent		event;
+
 	public SM_ALLIANCE_MEMBER_INFO(PlayerAllianceMember member, PlayerAllianceEvent event)
 	{
 		this.member = member;
 		this.event = event;
 	}
-	
+
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		PlayerCommonData pcd = member.getCommonData();
 		WorldPosition wp = pcd.getPosition();
-		
+
 		/**
 		 * Required so that when member is disconnected, and his
 		 * playerAllianceGroup slot is changed, he will continue
@@ -55,7 +55,7 @@ public class SM_ALLIANCE_MEMBER_INFO extends AbstractAionServerPacket<AionChanne
 		 */
 		if (!member.isOnline())
 			event = PlayerAllianceEvent.DISCONNECTED;
-		
+
 		writeD(member.getAllianceId());
 		writeD(member.getObjectId());
 		if (member.isOnline())
@@ -82,12 +82,12 @@ public class SM_ALLIANCE_MEMBER_INFO extends AbstractAionServerPacket<AionChanne
 		writeF(wp.getX());
 		writeF(wp.getY());
 		writeF(wp.getZ());
-		writeC( pcd.getPlayerClass().getClassId());
-		writeC( pcd.getGender().getGenderId());
-		writeC( pcd.getLevel());
-		writeC( this.event.getId());
+		writeC(pcd.getPlayerClass().getClassId());
+		writeC(pcd.getGender().getGenderId());
+		writeC(pcd.getLevel());
+		writeC(this.event.getId());
 		writeH(0x00); //channel 0x01?
-		switch(this.event)
+		switch (this.event)
 		{
 			case LEAVE:
 			case LEAVE_TIMEOUT:
@@ -95,28 +95,28 @@ public class SM_ALLIANCE_MEMBER_INFO extends AbstractAionServerPacket<AionChanne
 			case MOVEMENT:
 			case DISCONNECTED:
 				break;
-				
+
 			case ENTER:
 			case UPDATE:
 			case RECONNECT:
 			case MEMBER_GROUP_CHANGE:
-				
+
 			case APPOINT_VICE_CAPTAIN: // Unused maybe...
 			case DEMOTE_VICE_CAPTAIN:
 			case APPOINT_CAPTAIN:
 				writeS(pcd.getName());
 				writeD(0x00); //unk
-				
+
 				if (member.isOnline())
 				{
 					List<Effect> abnormalEffects = member.getPlayer().getEffectController().getAbnormalEffects();
 					writeH(abnormalEffects.size());
-					for(Effect effect : abnormalEffects)
+					for (Effect effect : abnormalEffects)
 					{
 						writeD(effect.getEffectorId());
 						writeH(effect.getSkillId());
-						writeC( effect.getSkillLevel());
-						writeC( effect.getTargetSlot());
+						writeC(effect.getSkillLevel());
+						writeC(effect.getTargetSlot());
 						writeD(effect.getElapsedTime());
 					}
 				}
@@ -129,5 +129,5 @@ public class SM_ALLIANCE_MEMBER_INFO extends AbstractAionServerPacket<AionChanne
 				break;
 		}
 	}
-	
+
 }

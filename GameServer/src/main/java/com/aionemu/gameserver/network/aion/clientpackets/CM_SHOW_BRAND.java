@@ -29,8 +29,8 @@ import com.aionemu.gameserver.services.GroupService;
 public class CM_SHOW_BRAND extends AbstractClientPacket<AionChannelHandler>
 {
 
-	private int				brandId;
-	private int				targetObjectId;
+	private int	brandId;
+	private int	targetObjectId;
 
 	/**
 	 * @param opcode
@@ -57,10 +57,10 @@ public class CM_SHOW_BRAND extends AbstractClientPacket<AionChannelHandler>
 	protected void runImpl()
 	{
 		Player player = getChannelHandler().getActivePlayer();
-		
+
 		if (player == null)
 			return;
-		
+
 		if (player.isInGroup())
 			GroupService.getInstance().showBrand(player.getPlayerGroup(), brandId, targetObjectId);
 		if (player.isInAlliance())

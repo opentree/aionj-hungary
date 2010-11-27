@@ -36,6 +36,6 @@ public interface ISummoned
 	 * @return Master of this creature or self
 	 */
 	public Creature getMaster();
-	
+
 	public void setMaster(Creature creature);
 }

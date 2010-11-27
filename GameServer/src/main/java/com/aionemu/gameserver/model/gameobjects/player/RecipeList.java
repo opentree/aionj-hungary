@@ -35,13 +35,13 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class RecipeList
 {
-	private Set<Integer>		recipeList = new HashSet<Integer>();
-	
-	public RecipeList (HashSet<Integer> recipeList)
+	private Set<Integer>	recipeList	= new HashSet<Integer>();
+
+	public RecipeList(HashSet<Integer> recipeList)
 	{
 		this.recipeList = recipeList;
 	}
-	
+
 	public Set<Integer> getRecipeList()
 	{
 		return recipeList;
@@ -69,7 +69,7 @@ public class RecipeList
 		}
 	}
 
-	public void autoLearnRecipe (Player player, int skillId, int skillLvl)
+	public void autoLearnRecipe(Player player, int skillId, int skillLvl)
 	{
 		for (RecipeTemplate recipe : DataManager.RECIPE_DATA.getRecipeIdFor(player.getCommonData().getRace(), skillId, skillLvl))
 		{

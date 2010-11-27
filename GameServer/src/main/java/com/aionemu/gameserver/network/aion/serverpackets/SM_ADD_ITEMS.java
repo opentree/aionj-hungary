@@ -30,10 +30,10 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_ADD_ITEMS extends _InventoryPacket
 {
-	private List<Item> items;
-	private int size;
+	private List<Item>	items;
+	private int			size;
 
-	public SM_ADD_ITEMS (List<Item> items)
+	public SM_ADD_ITEMS(List<Item> items)
 	{
 		this.items = items;
 		this.size = items.size();
@@ -45,16 +45,16 @@ public class SM_ADD_ITEMS extends _InventoryPacket
 
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
-	{	
+	{
 		writeH(25); // padding?
 		writeH(size); // number of entries
-		for(Item item : items)
+		for (Item item : items)
 		{
 			writeGeneralInfo(item);
 
 			ItemTemplate itemTemplate = item.getItemTemplate();
 
-			if(itemTemplate.getTemplateId() == ItemId.KINAH.value())
+			if (itemTemplate.getTemplateId() == ItemId.KINAH.value())
 			{
 				writeKinah(item, true);
 			}
@@ -73,8 +73,8 @@ public class SM_ADD_ITEMS extends _InventoryPacket
 			else
 			{
 				writeGeneralItemInfo(item, false, false);
-				writeC( 0);
+				writeC(0);
 			}
 		}
-	}	
+	}
 }

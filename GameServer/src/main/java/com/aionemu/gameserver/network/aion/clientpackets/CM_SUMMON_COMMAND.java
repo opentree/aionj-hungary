@@ -32,9 +32,9 @@ import com.aionemu.gameserver.world.World;
 public class CM_SUMMON_COMMAND extends AbstractClientPacket<AionChannelHandler>
 {
 
-	private int mode;
-	private int targetObjId;
-	
+	private int	mode;
+	private int	targetObjId;
+
 	public CM_SUMMON_COMMAND(int opcode)
 	{
 		super(opcode);
@@ -54,13 +54,13 @@ public class CM_SUMMON_COMMAND extends AbstractClientPacket<AionChannelHandler>
 	{
 		Player activePlayer = getChannelHandler().getActivePlayer();
 		Summon summon = activePlayer.getSummon();
-		if(summon != null)
+		if (summon != null)
 		{
-			switch(mode)
+			switch (mode)
 			{
 				case 0:
 					AionObject target = World.getInstance().findAionObject(targetObjId);
-					if(target != null && target instanceof Creature)
+					if (target != null && target instanceof Creature)
 					{
 						summon.attackMode();
 					}
@@ -74,7 +74,7 @@ public class CM_SUMMON_COMMAND extends AbstractClientPacket<AionChannelHandler>
 				case 3:
 					summon.release(UnsummonType.COMMAND);
 					break;
-					
+
 			}
 		}
 	}

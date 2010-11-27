@@ -33,15 +33,15 @@ public class SM_KISK_UPDATE extends AbstractAionServerPacket<AionChannelHandler>
 	// 4 ~ group
 	// 5 ~ alliance
 	// of course, we must programmatically check as well.
-	
-	private int objId;
-	private int useMask;
-	private int currentMembers;
-	private int maxMembers;
-	private int remainingRessurects;
-	private int maxRessurects;
-	private int remainingLifetime;
-	
+
+	private int	objId;
+	private int	useMask;
+	private int	currentMembers;
+	private int	maxMembers;
+	private int	remainingRessurects;
+	private int	maxRessurects;
+	private int	remainingLifetime;
+
 	public SM_KISK_UPDATE(Kisk kisk)
 	{
 		this.objId = kisk.getObjectId();
@@ -64,5 +64,5 @@ public class SM_KISK_UPDATE extends AbstractAionServerPacket<AionChannelHandler>
 		writeD(maxRessurects);
 		writeD(remainingLifetime);
 	}
-	
+
 }

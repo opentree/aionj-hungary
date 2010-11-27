@@ -37,28 +37,28 @@ import com.aionemu.gameserver.world.World;
 public class Legion
 {
 	/** Static Permission settings **/
-	private static final int						PERMISSION1_MIN				= 0x60;
-	private static final int						PERMISSION2_MIN				= 0x00;
-	private static final int						LEGIONAR_PERMISSION2_MAX	= 0x08;
-	private static final int						CENTURION_PERMISSION1_MAX	= 0x7C;
-	private static final int						CENTURION_PERMISSION2_MAX	= 0x0E;
+	private static final int			PERMISSION1_MIN				= 0x60;
+	private static final int			PERMISSION2_MIN				= 0x00;
+	private static final int			LEGIONAR_PERMISSION2_MAX	= 0x08;
+	private static final int			CENTURION_PERMISSION1_MAX	= 0x7C;
+	private static final int			CENTURION_PERMISSION2_MAX	= 0x0E;
 
 	/** Legion Information **/
-	private int										legionId					= 0;
-	private String									legionName					= "";
-	private int										legionLevel					= 1;
-	private int										legionRank					= 0;
-	private int										contributionPoints			= 0;
-	private List<Integer>							legionMembers				= new ArrayList<Integer>();
-	private static final int						legionarPermission1			= 0x40;
-	private int										legionarPermission2			= 0x00;
-	private int										centurionPermission1		= 0x60;
-	private int										centurionPermission2		= 0x00;
-	private int										disbandTime;
-	private TreeMap<Timestamp, String>				announcementList			= new TreeMap<Timestamp, String>();
-	private LegionEmblem							legionEmblem				= new LegionEmblem();
-	private LegionWarehouse							legionWarehouse;
-	private SortedSet<LegionHistory>				legionHistory;
+	private int							legionId					= 0;
+	private String						legionName					= "";
+	private int							legionLevel					= 1;
+	private int							legionRank					= 0;
+	private int							contributionPoints			= 0;
+	private List<Integer>				legionMembers				= new ArrayList<Integer>();
+	private static final int			legionarPermission1			= 0x40;
+	private int							legionarPermission2			= 0x00;
+	private int							centurionPermission1		= 0x60;
+	private int							centurionPermission2		= 0x00;
+	private int							disbandTime;
+	private TreeMap<Timestamp, String>	announcementList			= new TreeMap<Timestamp, String>();
+	private LegionEmblem				legionEmblem				= new LegionEmblem();
+	private LegionWarehouse				legionWarehouse;
+	private SortedSet<LegionHistory>	legionHistory;
 
 	/**
 	 * Only called when a legion is created!
@@ -82,14 +82,15 @@ public class Legion
 	public Legion()
 	{
 		this.legionWarehouse = new LegionWarehouse(this);
-		this.legionHistory = new TreeSet<LegionHistory>(new Comparator<LegionHistory>(){
+		this.legionHistory = new TreeSet<LegionHistory>(new Comparator<LegionHistory>()
+		{
 
 			@Override
 			public int compare(LegionHistory o1, LegionHistory o2)
 			{
 				return o1.getTime().getTime() < o2.getTime().getTime() ? 1 : -1;
 			}
-			
+
 		});
 	}
 
@@ -150,10 +151,10 @@ public class Legion
 	public ArrayList<Player> getOnlineLegionMembers()
 	{
 		ArrayList<Player> onlineLegionMembers = new ArrayList<Player>();
-		for(int legionMemberObjId : legionMembers)
+		for (int legionMemberObjId : legionMembers)
 		{
 			Player onlineLegionMember = World.getInstance().findPlayer(legionMemberObjId);
-			if(onlineLegionMember != null)
+			if (onlineLegionMember != null)
 				onlineLegionMembers.add(onlineLegionMember);
 		}
 		return onlineLegionMembers;
@@ -166,7 +167,7 @@ public class Legion
 	 */
 	public boolean addLegionMember(int playerObjId)
 	{
-		if(canAddMember())
+		if (canAddMember())
 		{
 			legionMembers.add(playerObjId);
 			return true;
@@ -194,7 +195,7 @@ public class Legion
 	 */
 	public boolean setLegionPermissions(int legionarPermission2, int centurionPermission1, int centurionPermission2)
 	{
-		if(checkPermissions(legionarPermission2, centurionPermission1, centurionPermission2))
+		if (checkPermissions(legionarPermission2, centurionPermission1, centurionPermission2))
 		{
 			this.legionarPermission2 = legionarPermission2;
 			this.centurionPermission1 = centurionPermission1;
@@ -211,11 +212,11 @@ public class Legion
 	 */
 	private boolean checkPermissions(int legionarPermission2, int centurionPermission1, int centurionPermission2)
 	{
-		if(legionarPermission2 < PERMISSION2_MIN || legionarPermission2 > LEGIONAR_PERMISSION2_MAX)
+		if (legionarPermission2 < PERMISSION2_MIN || legionarPermission2 > LEGIONAR_PERMISSION2_MAX)
 			return false;
-		if(centurionPermission1 < PERMISSION1_MIN || centurionPermission1 > CENTURION_PERMISSION1_MAX)
+		if (centurionPermission1 < PERMISSION1_MIN || centurionPermission1 > CENTURION_PERMISSION1_MAX)
 			return false;
-		if(centurionPermission2 < PERMISSION2_MIN || centurionPermission2 > CENTURION_PERMISSION2_MAX)
+		if (centurionPermission2 < PERMISSION2_MIN || centurionPermission2 > CENTURION_PERMISSION2_MAX)
 			return false;
 		return true;
 	}
@@ -317,22 +318,22 @@ public class Legion
 	 */
 	public boolean hasRequiredMembers()
 	{
-		switch(getLegionLevel())
+		switch (getLegionLevel())
 		{
 			case 1:
-				if(getLegionMembers().size() >= LegionConfig.LEGION_LEVEL2_REQUIRED_MEMBERS)
+				if (getLegionMembers().size() >= LegionConfig.LEGION_LEVEL2_REQUIRED_MEMBERS)
 					return true;
 				break;
 			case 2:
-				if(getLegionMembers().size() >= LegionConfig.LEGION_LEVEL3_REQUIRED_MEMBERS)
+				if (getLegionMembers().size() >= LegionConfig.LEGION_LEVEL3_REQUIRED_MEMBERS)
 					return true;
 				break;
 			case 3:
-				if(getLegionMembers().size() >= LegionConfig.LEGION_LEVEL4_REQUIRED_MEMBERS)
+				if (getLegionMembers().size() >= LegionConfig.LEGION_LEVEL4_REQUIRED_MEMBERS)
 					return true;
 				break;
 			case 4:
-				if(getLegionMembers().size() >= LegionConfig.LEGION_LEVEL5_REQUIRED_MEMBERS)
+				if (getLegionMembers().size() >= LegionConfig.LEGION_LEVEL5_REQUIRED_MEMBERS)
 					return true;
 				break;
 		}
@@ -346,7 +347,7 @@ public class Legion
 	 */
 	public int getKinahPrice()
 	{
-		switch(getLegionLevel())
+		switch (getLegionLevel())
 		{
 			case 1:
 				return LegionConfig.LEGION_LEVEL2_REQUIRED_KINAH;
@@ -367,7 +368,7 @@ public class Legion
 	 */
 	public int getContributionPrice()
 	{
-		switch(getLegionLevel())
+		switch (getLegionLevel())
 		{
 			case 1:
 				return LegionConfig.LEGION_LEVEL2_REQUIRED_CONTRIBUTION;
@@ -388,26 +389,26 @@ public class Legion
 	 */
 	private boolean canAddMember()
 	{
-		switch(getLegionLevel())
+		switch (getLegionLevel())
 		{
 			case 1:
-				if(getLegionMembers().size() < LegionConfig.LEGION_LEVEL1_MAX_MEMBERS)
+				if (getLegionMembers().size() < LegionConfig.LEGION_LEVEL1_MAX_MEMBERS)
 					return true;
 				break;
 			case 2:
-				if(getLegionMembers().size() < LegionConfig.LEGION_LEVEL2_MAX_MEMBERS)
+				if (getLegionMembers().size() < LegionConfig.LEGION_LEVEL2_MAX_MEMBERS)
 					return true;
 				break;
 			case 3:
-				if(getLegionMembers().size() < LegionConfig.LEGION_LEVEL3_MAX_MEMBERS)
+				if (getLegionMembers().size() < LegionConfig.LEGION_LEVEL3_MAX_MEMBERS)
 					return true;
 				break;
 			case 4:
-				if(getLegionMembers().size() < LegionConfig.LEGION_LEVEL4_MAX_MEMBERS)
+				if (getLegionMembers().size() < LegionConfig.LEGION_LEVEL4_MAX_MEMBERS)
 					return true;
 				break;
 			case 5:
-				if(getLegionMembers().size() < LegionConfig.LEGION_LEVEL5_MAX_MEMBERS)
+				if (getLegionMembers().size() < LegionConfig.LEGION_LEVEL5_MAX_MEMBERS)
 					return true;
 				break;
 		}
@@ -452,7 +453,7 @@ public class Legion
 	 */
 	public Entry<Timestamp, String> getCurrentAnnouncement()
 	{
-		if(this.announcementList.size() > 0)
+		if (this.announcementList.size() > 0)
 			return this.announcementList.lastEntry();
 		return null;
 	}
@@ -479,7 +480,7 @@ public class Legion
 	 */
 	public boolean isDisbanding()
 	{
-		if(disbandTime > 0)
+		if (disbandTime > 0)
 		{
 			return true;
 		}
@@ -538,7 +539,7 @@ public class Legion
 	 */
 	public int getWarehouseSlots()
 	{
-		switch(getLegionLevel())
+		switch (getLegionLevel())
 		{
 			case 1:
 				return 24;

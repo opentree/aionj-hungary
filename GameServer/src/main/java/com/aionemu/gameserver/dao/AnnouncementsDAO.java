@@ -32,7 +32,9 @@ import com.aionemu.gameserver.model.Announcement;
 public abstract class AnnouncementsDAO implements DAO
 {
 	public abstract Set<Announcement> getAnnouncements();
+
 	public abstract void addAnnouncement(final Announcement announce);
+
 	public abstract boolean delAnnouncement(final int idAnnounce);
 
 	/**

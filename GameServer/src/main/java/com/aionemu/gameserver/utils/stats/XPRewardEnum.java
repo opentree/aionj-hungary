@@ -41,22 +41,21 @@ public enum XPRewardEnum
 	PLUS_3(3, 115),
 	PLUS_4(4, 120);
 
-	
-	private int xpRewardPercent;
-	
-	private int levelDifference;
-	
+	private int	xpRewardPercent;
+
+	private int	levelDifference;
+
 	private XPRewardEnum(int levelDifference, int xpRewardPercent)
 	{
 		this.levelDifference = levelDifference;
 		this.xpRewardPercent = xpRewardPercent;
 	}
-	
+
 	public int rewardPercent()
 	{
 		return xpRewardPercent;
 	}
-	
+
 	/**
 	 * 
 	 * @param levelDifference between two objects
@@ -64,23 +63,23 @@ public enum XPRewardEnum
 	 */
 	public static int xpRewardFrom(int levelDifference)
 	{
-		if(levelDifference < MINUS_11.levelDifference)
+		if (levelDifference < MINUS_11.levelDifference)
 		{
 			return MINUS_11.xpRewardPercent;
 		}
-		if(levelDifference > PLUS_4.levelDifference)
+		if (levelDifference > PLUS_4.levelDifference)
 		{
 			return PLUS_4.xpRewardPercent;
 		}
-	
-		for(XPRewardEnum xpReward : values())
+
+		for (XPRewardEnum xpReward : values())
 		{
-			if(xpReward.levelDifference == levelDifference)
+			if (xpReward.levelDifference == levelDifference)
 			{
 				return xpReward.xpRewardPercent;
 			}
 		}
-		
+
 		throw new NoSuchElementException("XP reward for such level difference was not found");
 	}
 }

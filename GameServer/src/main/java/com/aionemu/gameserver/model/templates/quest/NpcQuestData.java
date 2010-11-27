@@ -25,11 +25,11 @@ import java.util.List;
  */
 public class NpcQuestData
 {
-	private final List<Integer> onQuestStart;
-	private final List<Integer> onKillEvent;
-	private final List<Integer> onTalkEvent;
-	private final List<Integer> onAttackEvent;
-	
+	private final List<Integer>	onQuestStart;
+	private final List<Integer>	onKillEvent;
+	private final List<Integer>	onTalkEvent;
+	private final List<Integer>	onAttackEvent;
+
 	public NpcQuestData()
 	{
 		onQuestStart = new ArrayList<Integer>();
@@ -45,6 +45,7 @@ public class NpcQuestData
 			onQuestStart.add(questId);
 		}
 	}
+
 	public List<Integer> getOnQuestStart()
 	{
 		return onQuestStart;
@@ -57,6 +58,7 @@ public class NpcQuestData
 			onAttackEvent.add(questId);
 		}
 	}
+
 	public List<Integer> getOnAttackEvent()
 	{
 		return onAttackEvent;
@@ -69,6 +71,7 @@ public class NpcQuestData
 			onKillEvent.add(questId);
 		}
 	}
+
 	public List<Integer> getOnKillEvent()
 	{
 		return onKillEvent;
@@ -81,6 +84,7 @@ public class NpcQuestData
 			onTalkEvent.add(questId);
 		}
 	}
+
 	public List<Integer> getOnTalkEvent()
 	{
 		return onTalkEvent;

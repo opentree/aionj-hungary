@@ -37,7 +37,7 @@ public class SM_SUMMON_UPDATE extends AbstractAionServerPacket<AionChannelHandle
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
-		writeC( summon.getLevel());
+		writeC(summon.getLevel());
 		writeH(summon.getMode().getId());
 		writeD(0);// unk
 		writeD(0);// unk
@@ -49,21 +49,21 @@ public class SM_SUMMON_UPDATE extends AbstractAionServerPacket<AionChannelHandle
 		writeH(summon.getGameStats().getCurrentStat(StatEnum.ACCURACY));
 		writeH(summon.getGameStats().getCurrentStat(StatEnum.CRITICAL_RESIST));
 		writeH(summon.getGameStats().getCurrentStat(StatEnum.BOOST_MAGICAL_SKILL));
-		writeH(summon.getGameStats().getCurrentStat(StatEnum.MAGICAL_ACCURACY));		
+		writeH(summon.getGameStats().getCurrentStat(StatEnum.MAGICAL_ACCURACY));
 		writeH(summon.getGameStats().getCurrentStat(StatEnum.MAGICAL_CRITICAL));
 		writeH(summon.getGameStats().getCurrentStat(StatEnum.PARRY));
 		writeH(summon.getGameStats().getCurrentStat(StatEnum.EVASION));
 		writeD(summon.getGameStats().getBaseStat(StatEnum.MAXHP));
 		writeD(summon.getGameStats().getBaseStat(StatEnum.MAIN_HAND_POWER));
-		writeH(summon.getGameStats().getBaseStat(StatEnum.PHYSICAL_DEFENSE));		
-		writeH(summon.getGameStats().getBaseStat(StatEnum.MAGICAL_RESIST));		
+		writeH(summon.getGameStats().getBaseStat(StatEnum.PHYSICAL_DEFENSE));
+		writeH(summon.getGameStats().getBaseStat(StatEnum.MAGICAL_RESIST));
 		writeH(summon.getGameStats().getBaseStat(StatEnum.ACCURACY));
 		writeH(summon.getGameStats().getBaseStat(StatEnum.CRITICAL_RESIST));
 		writeH(summon.getGameStats().getBaseStat(StatEnum.BOOST_MAGICAL_SKILL));
-		writeH(summon.getGameStats().getBaseStat(StatEnum.MAGICAL_ACCURACY));		
+		writeH(summon.getGameStats().getBaseStat(StatEnum.MAGICAL_ACCURACY));
 		writeH(summon.getGameStats().getBaseStat(StatEnum.MAGICAL_CRITICAL));
 		writeH(summon.getGameStats().getBaseStat(StatEnum.PARRY));
-		writeH(summon.getGameStats().getBaseStat(StatEnum.EVASION));		
+		writeH(summon.getGameStats().getBaseStat(StatEnum.EVASION));
 	}
 
 }

@@ -27,16 +27,15 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum DamageType
 {
-	PHYSICAL,
-	MAGICAL;
-	
-	public String value() 
-    {
-        return name();
-    }
+	PHYSICAL, MAGICAL;
 
-    public static DamageType fromValue(String v) 
-    {
-        return valueOf(v);
-    }
+	public String value()
+	{
+		return name();
+	}
+
+	public static DamageType fromValue(String v)
+	{
+		return valueOf(v);
+	}
 }

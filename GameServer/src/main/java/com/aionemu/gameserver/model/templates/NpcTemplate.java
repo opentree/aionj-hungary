@@ -81,7 +81,7 @@ public class NpcTemplate extends VisibleObjectTemplate
 	private Race				race;
 	@XmlAttribute
 	private int					state;
-	
+
 	@Override
 	public int getTemplateId()
 	{
@@ -143,12 +143,12 @@ public class NpcTemplate extends VisibleObjectTemplate
 	{
 		this.statsTemplate = statsTemplate;
 	}
-	
+
 	public KiskStatsTemplate getKiskStatsTemplate()
 	{
 		return kiskStatsTemplate;
 	}
-	
+
 	/**
 	 * @return the tribe
 	 */
@@ -156,6 +156,7 @@ public class NpcTemplate extends VisibleObjectTemplate
 	{
 		return tribe;
 	}
+
 	/**
 	 * Set tribe(needed for siegeNpcs)
 	 * 
@@ -163,9 +164,9 @@ public class NpcTemplate extends VisibleObjectTemplate
 	 */
 	public void setTribe(TribeClass tribe)
 	{
-		this.tribe=tribe;
+		this.tribe = tribe;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -175,7 +176,6 @@ public class NpcTemplate extends VisibleObjectTemplate
 		return "Npc Template id: " + npcId + " name: " + name;
 	}
 
-	
 	@SuppressWarnings("unused")
 	@XmlID
 	@XmlAttribute(name = "npc_id", required = true)
@@ -196,7 +196,7 @@ public class NpcTemplate extends VisibleObjectTemplate
 	{
 		return rank;
 	}
-	
+
 	public int getAggroRange()
 	{
 		return aggrorange;

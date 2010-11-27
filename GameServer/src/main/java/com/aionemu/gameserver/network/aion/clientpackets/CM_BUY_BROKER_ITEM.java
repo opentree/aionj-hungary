@@ -29,16 +29,16 @@ public class CM_BUY_BROKER_ITEM extends AbstractClientPacket<AionChannelHandler>
 {
 
 	@SuppressWarnings("unused")
-	private int brokerId;
-	private int itemUniqueId;
+	private int	brokerId;
+	private int	itemUniqueId;
 	@SuppressWarnings("unused")
-	private int itemCount;
-	
+	private int	itemCount;
+
 	public CM_BUY_BROKER_ITEM(int opcode)
 	{
 		super(opcode);
 	}
-	
+
 	@Override
 	protected void readImpl()
 	{
@@ -46,12 +46,12 @@ public class CM_BUY_BROKER_ITEM extends AbstractClientPacket<AionChannelHandler>
 		this.itemUniqueId = readD();
 		this.itemCount = readH();
 	}
-	
+
 	@Override
 	protected void runImpl()
 	{
 		Player player = getChannelHandler().getActivePlayer();
-		
+
 		BrokerService.getInstance().buyBrokerItem(player, itemUniqueId);
 	}
 }

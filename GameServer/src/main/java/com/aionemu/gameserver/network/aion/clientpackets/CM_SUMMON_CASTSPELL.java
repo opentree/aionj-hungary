@@ -31,14 +31,14 @@ import com.aionemu.gameserver.world.World;
 public class CM_SUMMON_CASTSPELL extends AbstractClientPacket<AionChannelHandler>
 {
 	@SuppressWarnings("unused")
-	private int summonObjId;
-	private int targetObjId;
-	private int skillId;
+	private int		summonObjId;
+	private int		targetObjId;
+	private int		skillId;
 	@SuppressWarnings("unused")
-	private int skillLvl;
+	private int		skillLvl;
 	@SuppressWarnings("unused")
-	private float unk;
-	
+	private float	unk;
+
 	public CM_SUMMON_CASTSPELL(int opcode)
 	{
 		super(opcode);
@@ -51,7 +51,7 @@ public class CM_SUMMON_CASTSPELL extends AbstractClientPacket<AionChannelHandler
 		skillId = readH();
 		skillLvl = readC();
 		targetObjId = readD();
-		unk = readF();	
+		unk = readF();
 	}
 
 	@Override
@@ -59,14 +59,14 @@ public class CM_SUMMON_CASTSPELL extends AbstractClientPacket<AionChannelHandler
 	{
 		Player activePlayer = getChannelHandler().getActivePlayer();
 		Summon summon = activePlayer.getSummon();
-		
-		if(summon == null)//TODO log here?
+
+		if (summon == null)//TODO log here?
 			return;
-		
+
 		AionObject targetObject = World.getInstance().findAionObject(targetObjId);
-		if(targetObject instanceof Creature)
+		if (targetObject instanceof Creature)
 		{
 			summon.useSkill(skillId, (Creature) targetObject);
-		}		
+		}
 	}
 }

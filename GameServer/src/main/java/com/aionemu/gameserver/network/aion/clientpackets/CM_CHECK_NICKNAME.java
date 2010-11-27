@@ -22,6 +22,7 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_CREATE_CHARACTER;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_NICKNAME_CHECK_RESPONSE;
 import com.aionemu.gameserver.services.PlayerService;
+
 /**
  * In this packets aion client is asking if given nickname is ok/free?.
  * 
@@ -34,7 +35,7 @@ public class CM_CHECK_NICKNAME extends AbstractClientPacket<AionChannelHandler>
 	 * nick name that need to be checked
 	 */
 	private String	nick;
-	
+
 	/**
 	 * Constructs new instance of <tt>CM_CHECK_NICKNAME </tt> packet
 	 * @param opcode
@@ -61,11 +62,11 @@ public class CM_CHECK_NICKNAME extends AbstractClientPacket<AionChannelHandler>
 	{
 		AionChannelHandler client = getChannelHandler();
 
-		if(!PlayerService.isValidName(nick))
+		if (!PlayerService.isValidName(nick))
 		{
 			client.sendPacket(new SM_NICKNAME_CHECK_RESPONSE(SM_CREATE_CHARACTER.RESPONSE_INVALID_NAME));
 		}
-		else if(!PlayerService.isFreeName(nick))
+		else if (!PlayerService.isFreeName(nick))
 		{
 			client.sendPacket(new SM_NICKNAME_CHECK_RESPONSE(SM_CREATE_CHARACTER.RESPONSE_NAME_ALREADY_USED));
 		}

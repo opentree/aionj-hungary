@@ -26,8 +26,8 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class CM_SKILL_DEACTIVATE extends AbstractClientPacket<AionChannelHandler>
 {
-	private int skillId;
-	
+	private int	skillId;
+
 	public CM_SKILL_DEACTIVATE(int opcode)
 	{
 		super(opcode);

@@ -79,8 +79,8 @@ public class CM_ENTER_WORLD extends AbstractClientPacket<AionChannelHandler>
 	/**
 	 * Object Id of player that is entering world
 	 */
-	private int					objectId;
-		
+	private int	objectId;
+
 	/**
 	 * Constructs new instance of <tt>CM_ENTER_WORLD </tt> packet
 	 * 
@@ -109,13 +109,13 @@ public class CM_ENTER_WORLD extends AbstractClientPacket<AionChannelHandler>
 		AionChannelHandler client = getChannelHandler();
 		enterWorld(client, objectId);
 	}
-	
+
 	public static void enterWorld(AionChannelHandler client, int objectId)
 	{
 		Account account = client.getAccount();
 		PlayerAccountData playerAccData = client.getAccount().getPlayerAccountData(objectId);
 
-		if(playerAccData == null)
+		if (playerAccData == null)
 		{
 			// Somebody wanted to login on character that is not at his account
 			return;
@@ -123,7 +123,7 @@ public class CM_ENTER_WORLD extends AbstractClientPacket<AionChannelHandler>
 
 		Player player = PlayerService.getPlayer(objectId, account);
 
-		if(player != null && client.setActivePlayer(player))
+		if (player != null && client.setActivePlayer(player))
 		{
 			player.setClientConnection(client);
 			/*
@@ -139,12 +139,12 @@ public class CM_ENTER_WORLD extends AbstractClientPacket<AionChannelHandler>
 
 			StigmaService.onPlayerLogin(player);
 			client.sendPacket(new SM_SKILL_LIST(player));
-			
-			if(player.getSkillCoolDowns() != null)
-			client.sendPacket(new SM_SKILL_COOLDOWN(player.getSkillCoolDowns()));
-			
-			if(player.getItemCoolDowns() != null)
-			client.sendPacket(new SM_ITEM_COOLDOWN(player.getItemCoolDowns()));
+
+			if (player.getSkillCoolDowns() != null)
+				client.sendPacket(new SM_SKILL_COOLDOWN(player.getSkillCoolDowns()));
+
+			if (player.getItemCoolDowns() != null)
+				client.sendPacket(new SM_ITEM_COOLDOWN(player.getItemCoolDowns()));
 
 			client.sendPacket(new SM_QUEST_LIST(player));
 			client.sendPacket(new SM_RECIPE_LIST(player.getRecipeList().getRecipeList()));
@@ -157,10 +157,10 @@ public class CM_ENTER_WORLD extends AbstractClientPacket<AionChannelHandler>
 			byte[] uiSettings = player.getPlayerSettings().getUiSettings();
 			byte[] shortcuts = player.getPlayerSettings().getShortcuts();
 
-			if(uiSettings != null)
+			if (uiSettings != null)
 				client.sendPacket(new SM_UI_SETTINGS(uiSettings, 0));
 
-			if(shortcuts != null)
+			if (shortcuts != null)
 				client.sendPacket(new SM_UI_SETTINGS(shortcuts, 1));
 
 			// Cubesize limit set in inventory.
@@ -170,7 +170,7 @@ public class CM_ENTER_WORLD extends AbstractClientPacket<AionChannelHandler>
 			// items
 			Storage inventory = player.getInventory();
 			List<Item> equipedItems = player.getEquipment().getEquippedItems();
-			if(equipedItems.size() != 0)
+			if (equipedItems.size() != 0)
 			{
 				client.sendPacket(new SM_INVENTORY_INFO(player.getEquipment().getEquippedItems(), cubeSize));
 			}
@@ -178,10 +178,10 @@ public class CM_ENTER_WORLD extends AbstractClientPacket<AionChannelHandler>
 			List<Item> unequipedItems = inventory.getAllItems();
 			int itemsSize = unequipedItems.size();
 
-			if(itemsSize != 0)
+			if (itemsSize != 0)
 			{
 				int index = 0;
-				while(index + 10 < itemsSize)
+				while (index + 10 < itemsSize)
 				{
 					client.sendPacket(new SM_INVENTORY_INFO(unequipedItems.subList(index, index + 10), cubeSize));
 					index += 10;
@@ -192,25 +192,25 @@ public class CM_ENTER_WORLD extends AbstractClientPacket<AionChannelHandler>
 			client.sendPacket(new SM_INVENTORY_INFO());
 
 			PlayerService.playerLoggedIn(player);
-			
+
 			client.sendPacket(new SM_STATS_INFO(player));
-			
+
 			client.sendPacket(new SM_CUBE_UPDATE(player, 6, player.getCommonData().getAdvencedStigmaSlotSize()));
-			
+
 			KiskService.onLogin(player);
 			TeleportService.sendSetBindPoint(player);
-			
+
 			// Alliance Packet after SetBindPoint
-			if(player.isInAlliance())
+			if (player.isInAlliance())
 				AllianceService.getInstance().onLogin(player);
-			
+
 			client.sendPacket(new SM_PLAYER_ID(player));
-			
+
 			client.sendPacket(new SM_MACRO_LIST(player));
 			client.sendPacket(new SM_GAME_TIME());
 			player.updateNearbyQuests();
 
-			client.sendPacket(new SM_TITLE_LIST(player));		
+			client.sendPacket(new SM_TITLE_LIST(player));
 			client.sendPacket(new SM_CHANNEL_INFO(player.getPosition()));
 			client.sendPacket(new SM_PLAYER_SPAWN(player));
 			client.sendPacket(new SM_EMOTION_LIST());
@@ -220,22 +220,22 @@ public class CM_ENTER_WORLD extends AbstractClientPacket<AionChannelHandler>
 			client.sendPacket(new SM_PRICES(player.getPrices()));
 			client.sendPacket(new SM_ABYSS_RANK(player.getAbyssRank()));
 
-			for(String message : getWelcomeMessage())
+			for (String message : getWelcomeMessage())
 				PacketSendUtility.sendMessage(player, message);
 
-			if(player.isInPrison())
+			if (player.isInPrison())
 				PunishmentService.updatePrisonStatus(player);
 
-			if(player.isLegionMember())
+			if (player.isLegionMember())
 				LegionService.getInstance().onLogin(player);
 
-			if(player.isInGroup())
+			if (player.isInGroup())
 				GroupService.getInstance().onLogin(player);
 
 			player.setRates(Rates.getRatesFor(client.getAccount().getMembership()));
-			
+
 			ToyPetService.getInstance().onPlayerLogin(player);
-			
+
 			/**
 			 * Notify mail service to load all mails
 			 */
@@ -248,20 +248,20 @@ public class CM_ENTER_WORLD extends AbstractClientPacket<AionChannelHandler>
 			/**
 			 * Start initializing chat connection(/1, /2, /3, /4 channels)
 			 */
-			if(!GSConfig.DISABLE_CHAT_SERVER)
+			if (!GSConfig.DISABLE_CHAT_SERVER)
 				ChatService.onPlayerLogin(player);
-			
+
 			/**
 			 * Send petition data if player has one
 			 */
 			PetitionService.getInstance().onPlayerLogin(player);
-			
+
 			/**
 			 * Trigger restore services on login.
 			 */
 			player.getLifeStats().updateCurrentStats();
-			
-			if(CustomConfig.ENABLE_HTML_WELCOME)
+
+			if (CustomConfig.ENABLE_HTML_WELCOME)
 				HTMLService.showHTML(player, HTMLCache.getInstance().getHTML("welcome.xhtml"));
 		}
 		else
@@ -270,12 +270,12 @@ public class CM_ENTER_WORLD extends AbstractClientPacket<AionChannelHandler>
 		}
 	}
 
-	private static String[] getWelcomeMessage() 
+	private static String[] getWelcomeMessage()
 	{
-		return new String[] {
+		return new String[]
+		{
 				"Welcome to " + GSConfig.SERVER_NAME + ", powered by Aion Lightning revision " + VersionningService.getGameRevision(),
 				"This software is under GPL. See our website for more info: http://www.aion-lightning.com",
-				"And remember, our source is based on Aion Unique."
-		};
+				"And remember, our source is based on Aion Unique." };
 	}
 }

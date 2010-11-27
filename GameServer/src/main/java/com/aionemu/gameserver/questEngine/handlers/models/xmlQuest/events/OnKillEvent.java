@@ -38,7 +38,8 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "OnKillEvent", propOrder = { "monsterInfos", "complite" })
+@XmlType(name = "OnKillEvent", propOrder =
+{ "monsterInfos", "complite" })
 public class OnKillEvent extends QuestEvent
 {
 
@@ -48,7 +49,7 @@ public class OnKillEvent extends QuestEvent
 
 	public List<MonsterInfo> getMonsterInfos()
 	{
-		if(monsterInfos == null)
+		if (monsterInfos == null)
 		{
 			monsterInfos = new ArrayList<MonsterInfo>();
 		}
@@ -58,33 +59,32 @@ public class OnKillEvent extends QuestEvent
 	@Override
 	public boolean operate(QuestEnv env)
 	{
-		if(monsterInfos == null || !(env.getVisibleObject() instanceof Npc))
+		if (monsterInfos == null || !(env.getVisibleObject() instanceof Npc))
 			return false;
 
 		QuestState qs = env.getPlayer().getQuestStateList().getQuestState(env.getQuestId());
-		if(qs == null)
+		if (qs == null)
 			return false;
 
 		Npc npc = (Npc) env.getVisibleObject();
-		for(MonsterInfo monsterInfo : monsterInfos)
+		for (MonsterInfo monsterInfo : monsterInfos)
 		{
-			if(monsterInfo.getNpcId() == npc.getNpcId())
+			if (monsterInfo.getNpcId() == npc.getNpcId())
 			{
 				int var = qs.getQuestVarById(monsterInfo.getVarId());
-				if(var >= (monsterInfo.getMinVarValue() == null ? 0 : monsterInfo.getMinVarValue()) && var < monsterInfo.getMaxKill())
+				if (var >= (monsterInfo.getMinVarValue() == null ? 0 : monsterInfo.getMinVarValue()) && var < monsterInfo.getMaxKill())
 				{
 					qs.setQuestVarById(monsterInfo.getVarId(), var + 1);
-					PacketSendUtility.sendPacket(env.getPlayer(), new SM_QUEST_ACCEPTED(env.getQuestId(), qs.getStatus(),
-						qs.getQuestVars().getQuestVars()));
+					PacketSendUtility.sendPacket(env.getPlayer(), new SM_QUEST_ACCEPTED(env.getQuestId(), qs.getStatus(), qs.getQuestVars().getQuestVars()));
 				}
 			}
 		}
 
-		if(complite != null)
+		if (complite != null)
 		{
-			for(MonsterInfo monsterInfo : monsterInfos)
+			for (MonsterInfo monsterInfo : monsterInfos)
 			{
-				if(qs.getQuestVarById(monsterInfo.getVarId()) != qs.getQuestVarById(monsterInfo.getVarId()))
+				if (qs.getQuestVarById(monsterInfo.getVarId()) != qs.getQuestVarById(monsterInfo.getVarId()))
 					return false;
 			}
 			complite.operate(env);

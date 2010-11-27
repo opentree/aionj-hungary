@@ -26,23 +26,23 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
 public class DropItem
 {
 
-	private int index = 0;
+	private int				index					= 0;
 
-	private long count = 0;
+	private long			count					= 0;
 
-	private DropTemplate dropTemplate;
+	private DropTemplate	dropTemplate;
 
-	private int playerObjId = 0;
+	private int				playerObjId				= 0;
 
-	private boolean	isFreeForAll = false;
+	private boolean			isFreeForAll			= false;
 
-	private long	highestValue = 0;
+	private long			highestValue			= 0;
 
-	private Player	winningPlayer = null;
+	private Player			winningPlayer			= null;
 
-	private boolean	isItemWonNotCollected = false;
+	private boolean			isItemWonNotCollected	= false;
 
-	private boolean	isDistributeItem = false;
+	private boolean			isDistributeItem		= false;
 
 	public DropItem(DropTemplate dropTemplate)
 	{
@@ -56,7 +56,7 @@ public class DropItem
 	 */
 	public void calculateCount(float rate)
 	{
-		if(Rnd.get() * 100 < dropTemplate.getChance() * rate)
+		if (Rnd.get() * 100 < dropTemplate.getChance() * rate)
 		{
 			count = Rnd.get(dropTemplate.getMin(), dropTemplate.getMax());
 		}
@@ -123,7 +123,7 @@ public class DropItem
 	 */
 	public void isFreeForAll(boolean isFreeForAll)
 	{
-		this.isFreeForAll  = isFreeForAll;
+		this.isFreeForAll = isFreeForAll;
 	}
 
 	/**
@@ -147,7 +147,7 @@ public class DropItem
 	 */
 	public void setHighestValue(long highestValue)
 	{
-		this.highestValue  = highestValue;
+		this.highestValue = highestValue;
 	}
 
 	/**
@@ -155,8 +155,8 @@ public class DropItem
 	 */
 	public void setWinningPlayer(Player winningPlayer)
 	{
-		this.winningPlayer  = winningPlayer;
-		
+		this.winningPlayer = winningPlayer;
+
 	}
 
 	/**
@@ -166,13 +166,13 @@ public class DropItem
 	{
 		return winningPlayer;
 	}
-	
+
 	/**
 	 * @param isItemWonNotCollected to set
 	 */
 	public void isItemWonNotCollected(boolean isItemWonNotCollected)
 	{
-		this.isItemWonNotCollected   = isItemWonNotCollected;
+		this.isItemWonNotCollected = isItemWonNotCollected;
 	}
 
 	/**
@@ -182,13 +182,13 @@ public class DropItem
 	{
 		return isItemWonNotCollected;
 	}
-	
+
 	/**
 	 * @param isDistributeItem to set
 	 */
 	public void isDistributeItem(boolean isDistributeItem)
 	{
-		this.isDistributeItem   = isDistributeItem;
+		this.isDistributeItem = isDistributeItem;
 	}
 
 	/**
@@ -197,5 +197,5 @@ public class DropItem
 	public boolean isDistributeItem()
 	{
 		return isDistributeItem;
-	}	
+	}
 }

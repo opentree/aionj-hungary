@@ -25,6 +25,7 @@ import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.world.World;
+
 /**
  * 
  * @author Lyahim, alexa026 , orz
@@ -32,22 +33,21 @@ import com.aionemu.gameserver.world.World;
  */
 public class SM_TELEPORT_MAP extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int	targetObjectId;
-	private Player	player;
-	private TeleporterTemplate teleport;
-	public Npc npc;
-	
+	private int					targetObjectId;
+	private Player				player;
+	private TeleporterTemplate	teleport;
+	public Npc					npc;
+
 	private static final Logger	log	= Logger.getLogger(SM_TELEPORT_MAP.class);
 
-	
 	public SM_TELEPORT_MAP(Player player, int targetObjectId, TeleporterTemplate teleport)
 	{
 		this.player = player;
 		this.targetObjectId = targetObjectId;
-		this.npc = (Npc)World.getInstance().findAionObject(targetObjectId);
+		this.npc = (Npc) World.getInstance().findAionObject(targetObjectId);
 		this.teleport = teleport;
 	}
-	
+
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
@@ -58,7 +58,7 @@ public class SM_TELEPORT_MAP extends AbstractAionServerPacket<AionChannelHandler
 		}
 		else
 		{
-			PacketSendUtility.sendMessage(player, "Missing info at npc_teleporter.xml with npcid: "+ npc.getNpcId());
+			PacketSendUtility.sendMessage(player, "Missing info at npc_teleporter.xml with npcid: " + npc.getNpcId());
 			log.info(String.format("Missing teleport info with npcid: %d", npc.getNpcId()));
 		}
 	}

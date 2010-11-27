@@ -41,7 +41,7 @@ public class EnchantItemAction extends AbstractItemAction
 	@Override
 	public boolean canAct(Player player, Item parentItem, Item targetItem)
 	{
-		if(targetItem == null)
+		if (targetItem == null)
 		{ // no item selected.
 			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_ITEM_ERROR);
 			return false;
@@ -59,31 +59,31 @@ public class EnchantItemAction extends AbstractItemAction
 	//necessary overloading to not change AbstractItemAction
 	public void act(final Player player, final Item parentItem, final Item targetItem, final Item supplementItem)
 	{
-		PacketSendUtility.sendPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(),
-		parentItem.getObjectId(), parentItem.getItemTemplate().getTemplateId(), 5000, 0, 0));
+		PacketSendUtility.sendPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), parentItem.getObjectId(), parentItem.getItemTemplate()
+				.getTemplateId(), 5000, 0, 0));
 		player.cancelTask(TaskId.ITEM_USE);
-		player.addNewTask(TaskId.ITEM_USE,
-		ThreadPoolManager.getInstance().schedule(new Runnable(){
+		player.addNewTask(TaskId.ITEM_USE, ThreadPoolManager.getInstance().schedule(new Runnable()
+		{
 			@Override
 			public void run()
 			{
-				
+
 				int itemId = parentItem.getItemTemplate().getTemplateId();
-				if(itemId > 166000000 && itemId < 167000000)
+				if (itemId > 166000000 && itemId < 167000000)
 				{
 					boolean result = EnchantService.enchantItem(player, parentItem, targetItem, supplementItem);
-					PacketSendUtility.sendPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), parentItem
-						.getObjectId(), parentItem.getItemTemplate().getTemplateId(), 0, result ? 1 : 2, 0));
+					PacketSendUtility.sendPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), parentItem.getObjectId(), parentItem
+							.getItemTemplate().getTemplateId(), 0, result ? 1 : 2, 0));
 				}
 				else
 				{
 					boolean result = EnchantService.socketManastone(player, parentItem, targetItem, supplementItem);
-					PacketSendUtility.sendPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), parentItem
-						.getObjectId(), parentItem.getItemTemplate().getTemplateId(), 0, result ? 1 : 2, 0));
+					PacketSendUtility.sendPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), parentItem.getObjectId(), parentItem
+							.getItemTemplate().getTemplateId(), 0, result ? 1 : 2, 0));
 				}
-				
+
 			}
-			
+
 		}, 5000));
 	}
 }

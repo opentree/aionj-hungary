@@ -75,7 +75,7 @@ public class KnownList
 	 */
 	public synchronized final void updateKnownList()
 	{
-		if((System.currentTimeMillis() - lastUpdate) < 100 || !owner.getActiveRegion().isActive())
+		if ((System.currentTimeMillis() - lastUpdate) < 100 || !owner.getActiveRegion().isActive())
 			return;
 
 		updateKnownListImpl();
@@ -94,7 +94,7 @@ public class KnownList
 	 */
 	public final void clearKnownList()
 	{
-		for(VisibleObject object : getKnownObjects().values())
+		for (VisibleObject object : getKnownObjects().values())
 		{
 			removeKnownObject(object, false);
 			object.getKnownList().removeKnownObject(getOwner(), false);
@@ -122,13 +122,13 @@ public class KnownList
 	 */
 	protected boolean addKnownObject(VisibleObject object)
 	{
-		if(object == null || object == getOwner())
+		if (object == null || object == getOwner())
 			return false;
 
-		if(!checkObjectInRange(getOwner(), object))
+		if (!checkObjectInRange(getOwner(), object))
 			return false;
 
-		if(getKnownObjects().put(object.getObjectId(), object) != null)
+		if (getKnownObjects().put(object.getObjectId(), object) != null)
 			return false;
 
 		getOwner().see(object);
@@ -144,10 +144,10 @@ public class KnownList
 	 */
 	private final boolean removeKnownObject(VisibleObject object, boolean isOutOfRange)
 	{
-		if(object == null)
+		if (object == null)
 			return false;
 
-		if(getKnownObjects().remove(object.getObjectId()) == null)
+		if (getKnownObjects().remove(object.getObjectId()) == null)
 			return false;
 
 		getOwner().notSee(object, isOutOfRange);
@@ -157,7 +157,7 @@ public class KnownList
 
 	private final void forgetVisibleObjects()
 	{
-		for(VisibleObject object : getKnownObjects().values())
+		for (VisibleObject object : getKnownObjects().values())
 		{
 			forgetVisibleObject(object);
 			object.getKnownList().forgetVisibleObject(getOwner());
@@ -166,7 +166,7 @@ public class KnownList
 
 	private final boolean forgetVisibleObject(VisibleObject object)
 	{
-		if(checkObjectInRange(getOwner(), object))
+		if (checkObjectInRange(getOwner(), object))
 			return false;
 
 		return removeKnownObject(object, true);
@@ -177,12 +177,12 @@ public class KnownList
 	 */
 	protected void findVisibleObjects()
 	{
-		if(getOwner() == null || !getOwner().isSpawned())
+		if (getOwner() == null || !getOwner().isSpawned())
 			return;
 
-		for(MapRegion region : getOwner().getActiveRegion().getNeighbours())
+		for (MapRegion region : getOwner().getActiveRegion().getNeighbours())
 		{
-			for(VisibleObject object : region.getVisibleObjects().values())
+			for (VisibleObject object : region.getVisibleObjects().values())
 			{
 				if (!object.isSpawned())
 					continue;
@@ -195,7 +195,7 @@ public class KnownList
 	protected final boolean checkObjectInRange(VisibleObject owner, VisibleObject newObject)
 	{
 		// check if Z distance is greater than maxZvisibleDistance
-		if(Math.abs(owner.getZ() - newObject.getZ()) > maxZvisibleDistance)
+		if (Math.abs(owner.getZ() - newObject.getZ()) > maxZvisibleDistance)
 			return false;
 
 		return MathUtil.isInRange(owner, newObject, visibilityDistance);

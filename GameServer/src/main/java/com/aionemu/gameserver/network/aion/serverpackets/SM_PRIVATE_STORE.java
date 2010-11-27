@@ -41,14 +41,14 @@ public class SM_PRIVATE_STORE extends _InventoryPacket
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
-		if(store != null)
+		if (store != null)
 		{
 			Player storePlayer = store.getOwner();
 			LinkedHashMap<Integer, TradePSItem> soldItems = store.getSoldItems();
-			
+
 			writeD(storePlayer.getObjectId());
 			writeH(soldItems.size());
-			for(Integer itemObjId : soldItems.keySet())
+			for (Integer itemObjId : soldItems.keySet())
 			{
 				Item item = storePlayer.getInventory().getItemByObjId(itemObjId);
 				TradePSItem tradeItem = store.getTradeItemById(itemObjId);

@@ -48,13 +48,13 @@ public class SetQuestVarOperation extends QuestOperation
 	@Override
 	public void doOperate(QuestEnv env)
 	{
-        Player player = env.getPlayer();
-        int questId = env.getQuestId();
-        QuestState qs = player.getQuestStateList().getQuestState(questId);
-        if (qs!=null)
-        {
-        	qs.getQuestVars().setVarById(varId, value);
-    		PacketSendUtility.sendPacket(player, new SM_QUEST_ACCEPTED(questId, qs.getStatus(), qs.getQuestVars().getQuestVars()));
-        }
+		Player player = env.getPlayer();
+		int questId = env.getQuestId();
+		QuestState qs = player.getQuestStateList().getQuestState(questId);
+		if (qs != null)
+		{
+			qs.getQuestVars().setVarById(varId, value);
+			PacketSendUtility.sendPacket(player, new SM_QUEST_ACCEPTED(questId, qs.getStatus(), qs.getQuestVars().getQuestVars()));
+		}
 	}
 }

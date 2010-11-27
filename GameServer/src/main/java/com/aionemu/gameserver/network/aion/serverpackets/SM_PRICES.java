@@ -26,8 +26,8 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_PRICES extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private Prices prices;
-	
+	private Prices	prices;
+
 	/**
 	 * @param prices
 	 */
@@ -35,15 +35,15 @@ public class SM_PRICES extends AbstractAionServerPacket<AionChannelHandler>
 	{
 		this.prices = prices;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
-		writeC( prices.getGlobalPrices());		// Display Buying Price %
-        writeC( prices.getGlobalPricesModifier());	// Buying Modified Price %
-        writeC( prices.getTaxes());				// Tax = -100 + C %
+		writeC(prices.getGlobalPrices()); // Display Buying Price %
+		writeC(prices.getGlobalPricesModifier()); // Buying Modified Price %
+		writeC(prices.getTaxes()); // Tax = -100 + C %
 	}
 }

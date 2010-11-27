@@ -26,24 +26,24 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_PLAYER_ID extends AbstractAionServerPacket<AionChannelHandler>
 {
-    private AionObject playerAionObject;
+	private AionObject	playerAionObject;
 
-    public SM_PLAYER_ID(AionObject playerAionObject)
-    {
-        this.playerAionObject = playerAionObject;
-    }
+	public SM_PLAYER_ID(AionObject playerAionObject)
+	{
+		this.playerAionObject = playerAionObject;
+	}
 
-    /**
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeH(0x2);
-        writeD(0x0);
-        writeH(0x1);
-        writeD(playerAionObject.getObjectId());
-        writeH(0x0);
-        writeS(playerAionObject.getName());
+		writeD(0x0);
+		writeH(0x1);
+		writeD(playerAionObject.getObjectId());
+		writeH(0x0);
+		writeS(playerAionObject.getName());
 	}
 }

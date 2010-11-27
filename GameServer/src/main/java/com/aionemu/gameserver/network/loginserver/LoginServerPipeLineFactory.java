@@ -38,12 +38,12 @@ public class LoginServerPipeLineFactory extends AbstractPipeLineFactory
 	{
 		ChannelPipeline pipeline = Channels.pipeline();
 
-//		pipeline.addLast("logger", new LoggingHandler(Logger.class, InternalLogLevel.INFO, true));
+		//		pipeline.addLast("logger", new LoggingHandler(Logger.class, InternalLogLevel.INFO, true));
 		pipeline.addLast("logger", new LoggingHandler(Logger.class, InternalLogLevel.DEBUG, true));
 		pipeline.addLast("framedecoder", new PacketFrameDecoder());
 		pipeline.addLast("frameencoder", new PacketFrameEncoder(2));
-//		pipeline.addLast("packetdecoder", new PacketDecoder());
-//		pipeline.addLast("packetencoder", new PacketEncoder());
+		//		pipeline.addLast("packetdecoder", new PacketDecoder());
+		//		pipeline.addLast("packetencoder", new PacketEncoder());
 		pipeline.addLast("executor", new ExecutionHandler(pipelineExecutor));
 		pipeline.addLast("handler", new LoginServerChannelHandler(new LoginServerPacketHandlerFactory()));
 

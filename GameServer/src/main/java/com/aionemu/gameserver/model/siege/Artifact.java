@@ -28,7 +28,7 @@ public class Artifact extends SiegeLocation
 	public Artifact(SiegeLocationTemplate template)
 	{
 		super(template);
-		
+
 		// Artifacts Always Vulnerable
 		setVulnerable(true);
 		setNextState(1);

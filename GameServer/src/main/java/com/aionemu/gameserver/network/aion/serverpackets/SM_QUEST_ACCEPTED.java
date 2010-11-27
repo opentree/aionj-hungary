@@ -26,17 +26,17 @@ import com.aionemu.gameserver.questEngine.model.QuestStatus;
  */
 public class SM_QUEST_ACCEPTED extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int questId;
-	private int status;
-	private int step;
-	private int action;
-	private int timer;
+	private int	questId;
+	private int	status;
+	private int	step;
+	private int	action;
+	private int	timer;
 
- // accept = 1 - get quest 2 - quest steps/hand in 3 - fail/delete 4 - display client timer	
-	
+	// accept = 1 - get quest 2 - quest steps/hand in 3 - fail/delete 4 - display client timer	
+
 	/**
 	 *  Accept Quest(1)
-	 */		
+	 */
 	public SM_QUEST_ACCEPTED(int questId, int status, int step)
 	{
 		this.action = 1;
@@ -47,7 +47,7 @@ public class SM_QUEST_ACCEPTED extends AbstractAionServerPacket<AionChannelHandl
 
 	/**
 	 *  Quest Steps/Finish (2)
-	 */		
+	 */
 	public SM_QUEST_ACCEPTED(int questId, QuestStatus status, int step)
 	{
 		this.action = 2;
@@ -58,7 +58,7 @@ public class SM_QUEST_ACCEPTED extends AbstractAionServerPacket<AionChannelHandl
 
 	/**
 	 *  Delete Quest(3)
-	 */	
+	 */
 	public SM_QUEST_ACCEPTED(int questId)
 	{
 		this.action = 3;
@@ -66,42 +66,43 @@ public class SM_QUEST_ACCEPTED extends AbstractAionServerPacket<AionChannelHandl
 		this.status = 0;
 		this.step = 0;
 	}
-	
+
 	/**
 	 *  Display Timer(4)
-	 */	
+	 */
 	public SM_QUEST_ACCEPTED(int questId, int timer)
 	{
 		this.action = 4;
 		this.questId = questId;
 		this.timer = timer;
 		this.step = 0;
-	}	
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
-		switch(action)
+		switch (action)
 		{
 			case 1:
 			case 2:
 			case 3:
-				writeC( action);
+				writeC(action);
 				writeD(questId);
-				writeC( status);// quest status goes by ENUM value
-				writeC( 0x0);
+				writeC(status);// quest status goes by ENUM value
+				writeC(0x0);
 				writeD(step);// current quest step
 				writeH(0);
 				break;
 			case 4:
-				writeC( action);
+				writeC(action);
 				writeD(questId);
 				writeD(timer);// sets client timer ie 84030000 is 900 seconds/15 mins
-				writeC( 0x01);
+				writeC(0x01);
 				writeH(0x0);
-				writeC( 0x01);
+				writeC(0x01);
 		}
 	}
 }

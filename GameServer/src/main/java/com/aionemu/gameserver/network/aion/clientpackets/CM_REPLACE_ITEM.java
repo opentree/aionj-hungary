@@ -21,6 +21,7 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.ItemService;
+
 /**
  *
  * @author Lyahim, kosyachok
@@ -28,10 +29,10 @@ import com.aionemu.gameserver.services.ItemService;
 public class CM_REPLACE_ITEM extends AbstractClientPacket<AionChannelHandler>
 {
 
-	private int sourceStorageType;
-	private int sourceItemObjId;
-	private int replaceStorageType;
-	private int replaceItemObjId;
+	private int	sourceStorageType;
+	private int	sourceItemObjId;
+	private int	replaceStorageType;
+	private int	replaceItemObjId;
 
 	public CM_REPLACE_ITEM(int opcode)
 	{

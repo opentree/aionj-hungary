@@ -26,7 +26,7 @@ public enum CreatureSeeState
 	SEARCH1(1), // See-Through: Hide I
 	SEARCH2(2); // See-Through: Hide II
 
-	private int id;
+	private int	id;
 
 	private CreatureSeeState(int id)
 	{

@@ -37,7 +37,7 @@ public class SiegeLocationTemplate
 	protected SiegeType	type;
 	@XmlAttribute(name = "world")
 	protected int		world;
-	
+
 	/**
 	 * @return the location id
 	 */
@@ -45,7 +45,7 @@ public class SiegeLocationTemplate
 	{
 		return this.id;
 	}
-	
+
 	/**
 	 * @return the location type
 	 */
@@ -53,7 +53,7 @@ public class SiegeLocationTemplate
 	{
 		return this.type;
 	}
-	
+
 	/**
 	 * @return the world id
 	 */

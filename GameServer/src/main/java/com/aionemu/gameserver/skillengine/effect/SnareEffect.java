@@ -41,7 +41,7 @@ public class SnareEffect extends BufEffect
 	@Override
 	public void calculate(Effect effect)
 	{
-		if (calculateEffectResistRate(effect, StatEnum.SNARE_RESISTANCE)) 
+		if (calculateEffectResistRate(effect, StatEnum.SNARE_RESISTANCE))
 			effect.addSucessEffect(this);
 	}
 

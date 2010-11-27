@@ -35,9 +35,9 @@ import com.aionemu.gameserver.world.World;
  * @author MrPoke, sphinx
  *
  */
-public class CraftService 
+public class CraftService
 {
-	private static final Logger log = Logger.getLogger(CraftService.class);
+	private static final Logger	log	= Logger.getLogger(CraftService.class);
 
 	/**
 	 * 
@@ -48,16 +48,17 @@ public class CraftService
 	public static void finishCrafting(Player player, RecipeTemplate recipetemplate, boolean critical)
 	{
 		int productItemId = 0;
-		
+
 		if (critical && recipetemplate.getComboProduct() != null)
 			productItemId = recipetemplate.getComboProduct();
 		else
-			productItemId = recipetemplate.getProductid();		
+			productItemId = recipetemplate.getProductid();
 
-		if(productItemId != 0)
+		if (productItemId != 0)
 		{
-			int xpReward = (int)((0.008*(recipetemplate.getSkillpoint()+100)*(recipetemplate.getSkillpoint()+100)+60)*player.getRates().getCraftingXPRate());
-			ItemService.addItem(player, productItemId, recipetemplate.getQuantity());			
+			int xpReward = (int) ((0.008 * (recipetemplate.getSkillpoint() + 100) * (recipetemplate.getSkillpoint() + 100) + 60) * player.getRates()
+					.getCraftingXPRate());
+			ItemService.addItem(player, productItemId, recipetemplate.getQuantity());
 
 			if (player.getSkillList().addSkillXp(player, recipetemplate.getSkillid(), xpReward))
 				player.getCommonData().addExp(xpReward);
@@ -75,26 +76,26 @@ public class CraftService
 	 * @param targetObjId
 	 */
 	public static void startCrafting(Player player, int targetTemplateId, int recipeId, int targetObjId)
-	{		
+	{
 		if (player.getCraftingTask() != null && player.getCraftingTask().isInProgress())
 			return;
 
-		RecipeTemplate recipeTemplate = DataManager.RECIPE_DATA.getRecipeTemplateById(recipeId);		
+		RecipeTemplate recipeTemplate = DataManager.RECIPE_DATA.getRecipeTemplateById(recipeId);
 
 		if (recipeTemplate != null)
 		{
 			// check for pre-usage crafting -----------------------------------------------------
 			int skillId = recipeTemplate.getSkillid();
 			AionObject target = World.getInstance().findAionObject(targetObjId);
-			
+
 			//morphing dont need static object/npc to use
 			if ((skillId != 40009) && (target == null || !(target instanceof SpawnedItem)))
 			{
 				log.info("[AUDIT] Player " + player.getName() + " tried to craft incorrect target.");
 				return;
 			}
-			
-			if (recipeTemplate.getDp() != null && (player.getCommonData().getDp() <recipeTemplate.getDp()))
+
+			if (recipeTemplate.getDp() != null && (player.getCommonData().getDp() < recipeTemplate.getDp()))
 			{
 				log.info("[AUDIT] Player " + player.getName() + " modded her/his client.");
 				return;
@@ -104,7 +105,7 @@ public class CraftService
 				PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.COMBINE_INVENTORY_IS_FULL);
 				return;
 			}
-			
+
 			for (Component component : recipeTemplate.getComponent())
 			{
 				if (player.getInventory().getItemCountByItemId(component.getItemid()) < component.getQuantity())
@@ -112,34 +113,34 @@ public class CraftService
 					log.info("[AUDIT] Player " + player.getName() + " modded her/his client.");
 					return;
 				}
-			}									
+			}
 			// ---------------------------------------------------------------------------------
-			
+
 			//craft item template --------------------------------------------------------------
 			ItemTemplate critItemTemplate = null;
 			ItemTemplate itemTemplate = DataManager.ITEM_DATA.getItemTemplate(recipeTemplate.getProductid());
 			if (itemTemplate == null)
-				return;			
-	
+				return;
+
 			if (recipeTemplate.getComboProduct() != null)
 				critItemTemplate = DataManager.ITEM_DATA.getItemTemplate(recipeTemplate.getComboProduct());
-	
+
 			if (critItemTemplate == null)
 				critItemTemplate = itemTemplate;
-	
+
 			if (recipeTemplate.getDp() != null)
 				player.getCommonData().addDp(-recipeTemplate.getDp());
-	
+
 			for (Component component : recipeTemplate.getComponent())
 			{
 				ItemService.decreaseItemCountByItemId(player, component.getItemid(), component.getQuantity());
 			}
 			// ----------------------------------------------------------------------------------
-			
+
 			// start crafting
-			int skillLvlDiff = player.getSkillList().getSkillLevel(skillId)-recipeTemplate.getSkillpoint();
-			player.setCraftingTask(new CraftingTask(player, (SpawnedItem)target, recipeTemplate, itemTemplate, critItemTemplate, skillLvlDiff));			
+			int skillLvlDiff = player.getSkillList().getSkillLevel(skillId) - recipeTemplate.getSkillpoint();
+			player.setCraftingTask(new CraftingTask(player, (SpawnedItem) target, recipeTemplate, itemTemplate, critItemTemplate, skillLvlDiff));
 			player.getCraftingTask().start();
 		}
-	}	
+	}
 }

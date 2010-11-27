@@ -34,19 +34,19 @@ import com.aionemu.gameserver.skillengine.model.Skill;
 public class ItemUseAction extends Action
 {
 	@XmlAttribute(required = true)
-	protected int itemid;
+	protected int	itemid;
 
 	@XmlAttribute(required = true)
-	protected int count;
+	protected int	count;
 
 	@Override
 	public void act(Skill skill)
 	{
-		if(skill.getEffector() instanceof Player)
-		{		
+		if (skill.getEffector() instanceof Player)
+		{
 			Player player = (Player) skill.getEffector();
-			if(!ItemService.decreaseItemCountByItemId(player, itemid, count))
-				return;			
+			if (!ItemService.decreaseItemCountByItemId(player, itemid, count))
+				return;
 		}
 	}
 

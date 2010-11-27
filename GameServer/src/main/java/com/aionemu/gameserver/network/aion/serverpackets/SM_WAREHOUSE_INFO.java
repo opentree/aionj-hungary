@@ -24,23 +24,24 @@ import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.items.ItemId;
 import com.aionemu.gameserver.model.templates.item.ItemTemplate;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
+
 /**
  *
  * @author Lyahim, kosyachok
  */
 public class SM_WAREHOUSE_INFO extends _InventoryPacket
 {
-	private int warehouseType;
-	private List<Item> itemList;
-	private boolean firstPacket;
-	private int expandLvl;
+	private int			warehouseType;
+	private List<Item>	itemList;
+	private boolean		firstPacket;
+	private int			expandLvl;
 
 	public SM_WAREHOUSE_INFO(List<Item> items, int warehouseType, int expandLvl, boolean firstPacket)
 	{
 		this.warehouseType = warehouseType;
 		this.expandLvl = expandLvl;
 		this.firstPacket = firstPacket;
-		if(items == null)
+		if (items == null)
 			this.itemList = Collections.emptyList();
 		else
 			this.itemList = items;
@@ -49,18 +50,18 @@ public class SM_WAREHOUSE_INFO extends _InventoryPacket
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
-		writeC( warehouseType);
-		writeC( firstPacket ? 1 : 0);
-		writeC( expandLvl); //warehouse expand (0 - 9)
+		writeC(warehouseType);
+		writeC(firstPacket ? 1 : 0);
+		writeC(expandLvl); //warehouse expand (0 - 9)
 		writeH(0);
 		writeH(itemList.size());
-		for(Item item : itemList)
+		for (Item item : itemList)
 		{
 			writeGeneralInfo(item);
 
 			ItemTemplate itemTemplate = item.getItemTemplate();
 
-			if(itemTemplate.getTemplateId() == ItemId.KINAH.value())
+			if (itemTemplate.getTemplateId() == ItemId.KINAH.value())
 				writeKinah(item, false);
 
 			else if (itemTemplate.isWeapon())
@@ -80,7 +81,7 @@ public class SM_WAREHOUSE_INFO extends _InventoryPacket
 		writeD(item.getObjectId());
 		ItemTemplate itemTemplate = item.getItemTemplate();
 		writeD(itemTemplate.getTemplateId());
-		writeC( 0); //some item info (4 - weapon, 7 - armor, 8 - rings, 17 - bottles)
+		writeC(0); //some item info (4 - weapon, 7 - armor, 8 - rings, 17 - bottles)
 		writeH(0x24);
 		writeD(itemTemplate.getNameId());
 		writeH(0);
@@ -90,14 +91,14 @@ public class SM_WAREHOUSE_INFO extends _InventoryPacket
 	protected void writeKinah(Item item, boolean isInventory)
 	{
 		writeH(0x16); //length of details
-		writeC( 0);
+		writeC(0);
 		writeH(item.getItemMask());
 		writeQ(item.getItemCount());
 		writeD(0);
 		writeD(0);
 		writeH(0);
-		writeC( 0);
-		writeC( 0xFF); // FF FF equipment
-		writeC( 0xFF);
+		writeC(0);
+		writeC(0xFF); // FF FF equipment
+		writeC(0xFF);
 	}
 }

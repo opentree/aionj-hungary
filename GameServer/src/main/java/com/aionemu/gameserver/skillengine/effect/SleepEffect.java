@@ -43,27 +43,25 @@ public class SleepEffect extends EffectTemplate
 	@Override
 	public void calculate(Effect effect)
 	{
-		if (calculateEffectResistRate(effect, StatEnum.SLEEP_RESISTANCE)) 
-			effect.addSucessEffect(this);	
+		if (calculateEffectResistRate(effect, StatEnum.SLEEP_RESISTANCE))
+			effect.addSucessEffect(this);
 	}
 
 	@Override
 	public void startEffect(final Effect effect)
 	{
 		final Creature effected = effect.getEffected();
-		effected.cancelCurrentSkill(); 
+		effected.cancelCurrentSkill();
 		effected.getEffectController().setAbnormal(EffectId.SLEEP.getEffectId());
-		
-		effected.getObserveController().attach(
-			new ActionObserver(ObserverType.ATTACKED)
+
+		effected.getObserveController().attach(new ActionObserver(ObserverType.ATTACKED)
+		{
+			@Override
+			public void attacked(Creature creature)
 			{
-				@Override
-				public void attacked(Creature creature)
-				{
-					effected.getEffectController().removeEffect(effect.getSkillId());
-				}			
+				effected.getEffectController().removeEffect(effect.getSkillId());
 			}
-		);
+		});
 	}
 
 	@Override

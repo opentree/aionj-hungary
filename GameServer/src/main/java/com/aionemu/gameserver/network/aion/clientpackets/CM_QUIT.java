@@ -37,7 +37,7 @@ public class CM_QUIT extends AbstractClientPacket<AionChannelHandler>
 	 * Logout - if true player is wanted to go to character selection.
 	 */
 	private boolean	logout;
-	
+
 	/**
 	 * Constructs new instance of <tt>CM_QUIT </tt> packet
 	 * @param opcode
@@ -65,11 +65,11 @@ public class CM_QUIT extends AbstractClientPacket<AionChannelHandler>
 		AionChannelHandler client = getChannelHandler();
 
 		Player player = null;
-		if(client.getState() == State.ENTERED)
+		if (client.getState() == State.ENTERED)
 		{
 			player = client.getActivePlayer();
 			// TODO! check if may quit
-			if(!logout)
+			if (!logout)
 				LoginServer.getInstance().aionClientDisconnected(client.getAccount().getId());
 
 			PlayerService.playerLoggedOut(player);
@@ -80,12 +80,12 @@ public class CM_QUIT extends AbstractClientPacket<AionChannelHandler>
 			client.setActivePlayer(null);
 		}
 
-		if(logout)
+		if (logout)
 		{
 			if (player != null && player.isInEditMode())
 			{
-                sendPacket(new SM_QUIT_RESPONSE(true));
-                player.setEditMode(false);
+				sendPacket(new SM_QUIT_RESPONSE(true));
+				player.setEditMode(false);
 			}
 			else
 				sendPacket(new SM_QUIT_RESPONSE());

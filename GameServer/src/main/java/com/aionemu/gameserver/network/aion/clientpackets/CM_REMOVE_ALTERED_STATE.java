@@ -28,7 +28,7 @@ public class CM_REMOVE_ALTERED_STATE extends AbstractClientPacket<AionChannelHan
 	protected void readImpl()
 	{
 		skillid = readH();
-		
+
 	}
 
 	/* (non-Javadoc)

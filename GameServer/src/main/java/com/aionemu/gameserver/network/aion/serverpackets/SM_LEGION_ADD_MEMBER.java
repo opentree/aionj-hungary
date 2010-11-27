@@ -26,11 +26,11 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  * 
  */
 public class SM_LEGION_ADD_MEMBER extends AbstractAionServerPacket<AionChannelHandler>
-{	
+{
 	private Player	player;
-	private boolean isMember;
-	private int msgId;
-	private String text;
+	private boolean	isMember;
+	private int		msgId;
+	private String	text;
 
 	public SM_LEGION_ADD_MEMBER(Player player, boolean isMember, int msgId, String text)
 	{
@@ -45,10 +45,10 @@ public class SM_LEGION_ADD_MEMBER extends AbstractAionServerPacket<AionChannelHa
 	{
 		writeD(player.getObjectId());
 		writeS(player.getName());
-		writeC( player.getLegionMember().getRank().getRankId());
-		writeC( isMember ? 0x01 : 0x00);// is New Member?
-		writeC( player.getCommonData().getPlayerClass().getClassId());
-		writeC( player.getLevel());
+		writeC(player.getLegionMember().getRank().getRankId());
+		writeC(isMember ? 0x01 : 0x00);// is New Member?
+		writeC(player.getCommonData().getPlayerClass().getClassId());
+		writeC(player.getLevel());
 		writeD(player.getPosition().getMapId());
 		writeD(msgId);
 		writeS(text);

@@ -25,7 +25,7 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_CUSTOM_SETTINGS extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private Player player;
+	private Player	player;
 
 	public SM_CUSTOM_SETTINGS(Player player)
 	{
@@ -39,7 +39,7 @@ public class SM_CUSTOM_SETTINGS extends AbstractAionServerPacket<AionChannelHand
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(player.getObjectId());
-		writeC( 0x01); // unk
+		writeC(0x01); // unk
 		writeH(player.getPlayerSettings().getDisplay());
 		writeH(player.getPlayerSettings().getDeny());
 	}

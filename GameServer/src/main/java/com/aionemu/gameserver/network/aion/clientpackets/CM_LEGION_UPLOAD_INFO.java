@@ -28,7 +28,7 @@ public class CM_LEGION_UPLOAD_INFO extends AbstractClientPacket<AionChannelHandl
 {
 
 	/** Emblem related information **/
-	private int					totalSize;
+	private int	totalSize;
 
 	/**
 	 * @param opcode

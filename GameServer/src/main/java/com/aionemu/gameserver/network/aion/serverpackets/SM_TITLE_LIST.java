@@ -44,10 +44,10 @@ public class SM_TITLE_LIST extends AbstractAionServerPacket<AionChannelHandler>
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
-	  writeC( 0x00); // new 2.0 Packet
-		writeC( 0); // unk
+		writeC(0x00); // new 2.0 Packet
+		writeC(0); // unk
 		writeH(titleList.size());
-		for(Title title : titleList.getTitles())
+		for (Title title : titleList.getTitles())
 		{
 			writeD(title.getTemplate().getTitleId());
 			writeD(0);

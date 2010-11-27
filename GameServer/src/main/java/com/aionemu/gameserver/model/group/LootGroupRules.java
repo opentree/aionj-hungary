@@ -24,16 +24,16 @@ import com.aionemu.gameserver.model.templates.item.ItemQuality;
  */
 public class LootGroupRules
 {
-	private LootRuleType lootRule;
-	private LootDistribution autodistribution;
-	private int common_item_above;
-	private int superior_item_above;
-	private int heroic_item_above;
-	private int fabled_item_above;
-	private int ethernal_item_above;
-	private int over_ethernal;
-	private int over_over_ethernal;
-	
+	private LootRuleType		lootRule;
+	private LootDistribution	autodistribution;
+	private int					common_item_above;
+	private int					superior_item_above;
+	private int					heroic_item_above;
+	private int					fabled_item_above;
+	private int					ethernal_item_above;
+	private int					over_ethernal;
+	private int					over_over_ethernal;
+
 	public LootGroupRules()
 	{
 		this.lootRule = LootRuleType.ROUNDROBIN;
@@ -44,11 +44,11 @@ public class LootGroupRules
 		fabled_item_above = 2;
 		ethernal_item_above = 2;
 		over_ethernal = 2;
-		over_over_ethernal = 0;		
+		over_over_ethernal = 0;
 	}
-	
-	public LootGroupRules(LootRuleType lootRule, LootDistribution autodistribution, int commonItemAbove, int superiorItemAbove,
-		int heroicItemAbove, int fabledItemAbove, int ethernalItemAbove, int overEthernal, int overOverEthernal)
+
+	public LootGroupRules(LootRuleType lootRule, LootDistribution autodistribution, int commonItemAbove, int superiorItemAbove, int heroicItemAbove,
+			int fabledItemAbove, int ethernalItemAbove, int overEthernal, int overOverEthernal)
 	{
 		super();
 		this.lootRule = lootRule;
@@ -68,24 +68,24 @@ public class LootGroupRules
 	 */
 	public int getQualityRule(ItemQuality quality)
 	{
-		switch(quality)
+		switch (quality)
 		{
 			case COMMON:
-					return common_item_above;
+				return common_item_above;
 			case RARE:
-					return superior_item_above;
+				return superior_item_above;
 			case LEGEND:
-					return heroic_item_above;
+				return heroic_item_above;
 			case UNIQUE:
-					return fabled_item_above;
+				return fabled_item_above;
 			case EPIC:
-					return ethernal_item_above;
+				return ethernal_item_above;
 			case MYTHIC:
-					return over_ethernal;
+				return over_ethernal;
 		}
 		return 0;
-	}	
-	
+	}
+
 	/**
 	 * @return the lootRule
 	 */

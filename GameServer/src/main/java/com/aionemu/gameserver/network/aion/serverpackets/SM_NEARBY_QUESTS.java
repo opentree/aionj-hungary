@@ -28,28 +28,27 @@ import com.aionemu.gameserver.services.QuestService;
 
 public class SM_NEARBY_QUESTS extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private Integer[] questIds;
-	private int size;
-	
+	private Integer[]	questIds;
+	private int			size;
+
 	public SM_NEARBY_QUESTS(List<Integer> questIds)
 	{
 		this.questIds = questIds.toArray(new Integer[questIds.size()]);
 		this.size = questIds.size();
 	}
 
-
 	@Override
- 	protected void writeImpl(AionChannelHandler cHandler)
- 	{
- 		int playerLevel = cHandler.getActivePlayer().getLevel();
- 		writeD(size);
-  		for(int id : questIds)
-  		{
+	protected void writeImpl(AionChannelHandler cHandler)
+	{
+		int playerLevel = cHandler.getActivePlayer().getLevel();
+		writeD(size);
+		for (int id : questIds)
+		{
 			writeH(id);
 			if (QuestService.checkLevelRequirement(id, playerLevel))
-			writeH(0);
+				writeH(0);
 			else
-    		writeH(2);
-  		}
- 	}
+				writeH(2);
+		}
+	}
 }

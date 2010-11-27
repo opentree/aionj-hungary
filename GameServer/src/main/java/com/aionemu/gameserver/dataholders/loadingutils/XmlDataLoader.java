@@ -46,7 +46,7 @@ public class XmlDataLoader
 	private static final String	CACHE_DIRECTORY	= "./cache/";
 	private static final String	CACHE_XML_FILE	= "./cache/static_data.xml";
 	private static final String	MAIN_XML_FILE	= "./data/static_data/static_data.xml";
-	
+
 	public static final XmlDataLoader getInstance()
 	{
 		return SingletonHolder.instance;
@@ -54,8 +54,9 @@ public class XmlDataLoader
 
 	private XmlDataLoader()
 	{
-		
+
 	}
+
 	/**
 	 * Creates {@link StaticData} object based on xml files, starting from static_data.xml
 	 * 
@@ -77,7 +78,7 @@ public class XmlDataLoader
 			un.setSchema(getSchema());
 			return (StaticData) un.unmarshal(new File(CACHE_XML_FILE));
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			log.fatal("Error while loading static data", e);
 			throw new Error("Error while loading static data", e);
@@ -98,7 +99,7 @@ public class XmlDataLoader
 		{
 			schema = sf.newSchema(new File(XML_SCHEMA_FILE));
 		}
-		catch(SAXException saxe)
+		catch (SAXException saxe)
 		{
 			log.fatal("Error while getting schema", saxe);
 			throw new Error("Error while getting schema", saxe);
@@ -111,7 +112,7 @@ public class XmlDataLoader
 	private void makeCacheDirectory()
 	{
 		File cacheDir = new File(CACHE_DIRECTORY);
-		if(!cacheDir.exists())
+		if (!cacheDir.exists())
 			cacheDir.mkdir();
 	}
 
@@ -130,16 +131,16 @@ public class XmlDataLoader
 		{
 			merger.process();
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			log.error("Error while merging xml files,e");
 			throw new Error("Error while merging xml files", e);
 		}
 	}
-	
+
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
-		protected static final XmlDataLoader instance = new XmlDataLoader();
+		protected static final XmlDataLoader	instance	= new XmlDataLoader();
 	}
 }

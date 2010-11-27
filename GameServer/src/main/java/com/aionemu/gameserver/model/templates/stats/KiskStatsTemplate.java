@@ -26,29 +26,29 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  */
 
-@XmlRootElement(name="kisk_stats")
+@XmlRootElement(name = "kisk_stats")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class KiskStatsTemplate
 {
 	@XmlAttribute(name = "usemask")
-	private int		useMask = 4;
+	private int	useMask			= 4;
 
 	@XmlAttribute(name = "members")
-	private int		maxMembers = 6;
+	private int	maxMembers		= 6;
 
 	@XmlAttribute(name = "resurrects")
-	private int		maxResurrects = 18;
+	private int	maxResurrects	= 18;
 
 	public int getUseMask()
 	{
 		return useMask;
 	}
-	
+
 	public int getMaxMembers()
 	{
 		return maxMembers;
 	}
-	
+
 	public int getMaxResurrects()
 	{
 		return maxResurrects;

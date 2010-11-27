@@ -19,7 +19,6 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
-
 /**
  * @author Lyahim, Lyahim
  */

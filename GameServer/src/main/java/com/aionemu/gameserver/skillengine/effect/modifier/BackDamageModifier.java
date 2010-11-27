@@ -25,26 +25,23 @@ import javax.xml.bind.annotation.XmlType;
 import com.aionemu.gameserver.skillengine.model.Effect;
 import com.aionemu.gameserver.utils.PositionUtil;
 
-
 /**
  * @author ATracer
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "BackDamageModifier")
-public class BackDamageModifier
-extends ActionModifier
+public class BackDamageModifier extends ActionModifier
 {
 
 	@XmlAttribute(required = true)
-	protected int delta;
+	protected int	delta;
 	@XmlAttribute(required = true)
-	protected int value;
-
+	protected int	value;
 
 	@Override
 	public int analyze(Effect effect, int originalValue)
-	{  	
+	{
 		return originalValue + value + effect.getSkillLevel() * delta;
 	}
 

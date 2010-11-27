@@ -38,7 +38,7 @@ public class SM_PLAY_MOVIE extends AbstractAionServerPacket<AionChannelHandler>
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
-		writeC( type);
+		writeC(type);
 		writeD(0x00);
 		writeD(0x00);
 		writeH(movieId);

@@ -28,9 +28,9 @@ import com.aionemu.gameserver.services.ExchangeService;
  */
 public class CM_EXCHANGE_ADD_ITEM extends AbstractClientPacket<AionChannelHandler>
 {
-	public int itemObjId;
-	public int itemCount;
-	
+	public int	itemObjId;
+	public int	itemCount;
+
 	public CM_EXCHANGE_ADD_ITEM(int opcode)
 	{
 		super(opcode);

@@ -34,8 +34,8 @@ public class GameTime
 	public static final int	MINUTES_IN_HOUR		= 60;
 
 	private int				gameTime			= 0;
-	
-	private DayTime dayTime;
+
+	private DayTime			dayTime;
 
 	/**
 	 * Constructs a GameTime with the given time in minutes since midnight 1/1/00
@@ -45,7 +45,7 @@ public class GameTime
 	 */
 	public GameTime(int time)
 	{
-		if(time < 0)
+		if (time < 0)
 			throw new InvalidParameterException("Time must be >= 0");
 		gameTime = time;
 	}
@@ -66,7 +66,7 @@ public class GameTime
 	protected void increase()
 	{
 		gameTime++;
-		if(getMinute() == 0)
+		if (getMinute() == 0)
 		{
 			analyzeDayTime();
 		}
@@ -79,16 +79,16 @@ public class GameTime
 	{
 		DayTime newDateTime = null;
 		int hour = getHour();
-		if(hour > 21 || hour < 4)
+		if (hour > 21 || hour < 4)
 			newDateTime = DayTime.NIGHT;
-		else if(hour > 16)
+		else if (hour > 16)
 			newDateTime = DayTime.EVENING;
 		else if (hour > 8)
 			newDateTime = DayTime.AFTERNOON;
 		else
 			newDateTime = DayTime.MORNING;
-		
-		if(newDateTime != this.dayTime)
+
+		if (newDateTime != this.dayTime)
 		{
 			this.dayTime = newDateTime;
 			DayNightSpawnManager.getInstance().notifyChangeMode();

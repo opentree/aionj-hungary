@@ -48,15 +48,15 @@ public class NpcDialogOperation extends QuestOperation
 	@Override
 	public void doOperate(QuestEnv env)
 	{
-        Player player = env.getPlayer();
-        VisibleObject obj = env.getVisibleObject();
-        int qId = env.getQuestId();
-        if (questId != null)
-                qId = questId;
-        if (qId == 0)
-                PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(obj.getObjectId(), id));
-        else
-                PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(obj.getObjectId(), id, qId));
+		Player player = env.getPlayer();
+		VisibleObject obj = env.getVisibleObject();
+		int qId = env.getQuestId();
+		if (questId != null)
+			qId = questId;
+		if (qId == 0)
+			PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(obj.getObjectId(), id));
+		else
+			PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(obj.getObjectId(), id, qId));
 	}
 
 }

@@ -36,7 +36,8 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ActionItemUseOperation", propOrder = { "finish" })
+@XmlType(name = "ActionItemUseOperation", propOrder =
+{ "finish" })
 public class ActionItemUseOperation extends QuestOperation
 {
 
@@ -58,15 +59,14 @@ public class ActionItemUseOperation extends QuestOperation
 		else
 			return;
 		final int defaultUseTime = 3000;
-		PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(player.getObjectId(), 
-			npc.getObjectId(), defaultUseTime, 1));
+		PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(player.getObjectId(), npc.getObjectId(), defaultUseTime, 1));
 		PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.START_QUESTLOOT, 0, npc.getObjectId()), true);
-		ThreadPoolManager.getInstance().schedule(new Runnable(){
+		ThreadPoolManager.getInstance().schedule(new Runnable()
+		{
 			@Override
 			public void run()
 			{
-				PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(player.getObjectId(), 
-					npc.getObjectId(), defaultUseTime, 0));
+				PacketSendUtility.sendPacket(player, new SM_USE_OBJECT(player.getObjectId(), npc.getObjectId(), defaultUseTime, 0));
 				finish.operate(env);
 			}
 		}, defaultUseTime);

@@ -31,20 +31,20 @@ public class Servant extends Npc implements ISummoned
 	/**
 	 * Skill that will be used upon execution
 	 */
-	private int skillId;
+	private int			skillId;
 	/**
 	 * Creator of this trap.
 	 */
-	private Creature creator;
+	private Creature	creator;
 	/**
 	 * Target of this servant
 	 */
-	private Creature target;
+	private Creature	target;
 	/**
 	 * Hp used on skill usage
 	 */
-	private int hpRatio;
-	
+	private int			hpRatio;
+
 	/**
 	 * 
 	 * @param objId
@@ -72,7 +72,7 @@ public class Servant extends Npc implements ISummoned
 	{
 		this.skillId = skillId;
 	}
-	
+
 	/**
 	 * @return the target
 	 */
@@ -89,7 +89,7 @@ public class Servant extends Npc implements ISummoned
 	{
 		this.target = target;
 	}
-	
+
 	/**
 	 * @return the hpRatio
 	 */
@@ -110,7 +110,7 @@ public class Servant extends Npc implements ISummoned
 	public void initializeAi()
 	{
 	}
-	
+
 	@Override
 	public boolean isEnemyNpc(Npc visibleObject)
 	{
@@ -122,7 +122,7 @@ public class Servant extends Npc implements ISummoned
 	{
 		return this.creator.isEnemyPlayer(visibleObject);
 	}
-	
+
 	@Override
 	public boolean isEnemySummon(Summon summon)
 	{
@@ -149,7 +149,7 @@ public class Servant extends Npc implements ISummoned
 	{
 		this.creator = creature;
 	}
-	
+
 	@Override
 	public void onDie(Creature lastAttacker)
 	{

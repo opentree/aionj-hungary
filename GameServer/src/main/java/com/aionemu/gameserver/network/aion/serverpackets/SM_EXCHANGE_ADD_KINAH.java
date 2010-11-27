@@ -24,19 +24,19 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_EXCHANGE_ADD_KINAH extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private long itemCount;
-	private int action;
+	private long	itemCount;
+	private int		action;
 
 	public SM_EXCHANGE_ADD_KINAH(long itemCount, int action)
 	{
-		this.itemCount = itemCount;	
+		this.itemCount = itemCount;
 		this.action = action;
 	}
 
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
-		writeC( action); // 0 -self 1-other
+		writeC(action); // 0 -self 1-other
 		writeD((int) itemCount); // itemId
 		writeD(0); // unk
 	}

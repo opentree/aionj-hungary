@@ -30,49 +30,49 @@ import com.aionemu.gameserver.model.items.ItemSlot;
 @XmlEnum
 public enum StatEnum
 {
-//	None = 0,
-//	FireResistance = 15,
-//	HP = 18,
-//	MP = 20,
-//	FlightTime = 23,
-//	Attack = 25,
-//	PhysicalDefense = 26,
-//	MagicalAttack = 27,
-//	MagicalRes = 28,
-//	AttackSpeed = 29, //%
-//	Accuracy = 30,
-//	Evasion = 31,
-//	Parry = 32,
-//	Block = 33,
-//	PhysicalCrit = 34,
-//	Speed = 36, // %
-//	FlightSpeed = 37, // %
-//	MagicalCrit = 40,
-//	Concentration = 41,
-//	MagicPower = 104,
-//	MagicalAccuracy = 105,
-//	Knowledge = 106,
-//	Agility = 107,
-//	Hate = 109
+	//	None = 0,
+	//	FireResistance = 15,
+	//	HP = 18,
+	//	MP = 20,
+	//	FlightTime = 23,
+	//	Attack = 25,
+	//	PhysicalDefense = 26,
+	//	MagicalAttack = 27,
+	//	MagicalRes = 28,
+	//	AttackSpeed = 29, //%
+	//	Accuracy = 30,
+	//	Evasion = 31,
+	//	Parry = 32,
+	//	Block = 33,
+	//	PhysicalCrit = 34,
+	//	Speed = 36, // %
+	//	FlightSpeed = 37, // %
+	//	MagicalCrit = 40,
+	//	Concentration = 41,
+	//	MagicPower = 104,
+	//	MagicalAccuracy = 105,
+	//	Knowledge = 106,
+	//	Agility = 107,
+	//	Hate = 109
 	MAXDP(0, "maxdp"),
 	MAXHP(18, "maxhp"),
 	MAXMP(20, "maxmp"),
 
-	AGILITY(107, "agility",true),
+	AGILITY(107, "agility", true),
 	BLOCK(33, "block"),
 	EVASION(31, "dodge"),
 	CONCENTRATION(41, "concentration"),
-	WILL(0, "will",true),
-	HEALTH(0, "health",true),
-	ACCURACY(0, "accuracy",true),
-	KNOWLEDGE(106, "knowledge",true),
+	WILL(0, "will", true),
+	HEALTH(0, "health", true),
+	ACCURACY(0, "accuracy", true),
+	KNOWLEDGE(106, "knowledge", true),
 	PARRY(32, "parry"),
-	POWER(0, "strength",true),
-	SPEED(36, "speed",true),
-	HIT_COUNT(0, "hitcount",true),
+	POWER(0, "strength", true),
+	SPEED(36, "speed", true),
+	HIT_COUNT(0, "hitcount", true),
 
-	ATTACK_RANGE(0, "attackrange",true),
-	ATTACK_SPEED(29, "attackdelay",-1,true),
+	ATTACK_RANGE(0, "attackrange", true),
+	ATTACK_SPEED(29, "attackdelay", -1, true),
 	PHYSICAL_ATTACK(25, "phyattack"),
 	PHYSICAL_ACCURACY(30, "hitaccuracy"),
 	PHYSICAL_CRITICAL(34, "critical"),
@@ -81,12 +81,12 @@ public enum StatEnum
 	MAIN_HAND_ACCURACY(0, "mainhandaccuracy"),
 	MAIN_HAND_CRITICAL(0, "mainhandcritical"),
 	MAIN_HAND_POWER(0, "mainhandpower"),
-	MAIN_HAND_ATTACK_SPEED(0,"mainhandattackspeed"),
+	MAIN_HAND_ATTACK_SPEED(0, "mainhandattackspeed"),
 	OFF_HAND_HITS(0, "offhandhits"),
 	OFF_HAND_ACCURACY(0, "offhandaccuracy"),
 	OFF_HAND_CRITICAL(0, "offhandcritical"),
 	OFF_HAND_POWER(0, "offhandpower"),
-	OFF_HAND_ATTACK_SPEED(0,"offhandattackspeed"),
+	OFF_HAND_ATTACK_SPEED(0, "offhandattackspeed"),
 	CRITICAL_RESIST(0, "physicalcriticalreducerate"),
 
 	MAGICAL_ATTACK(27, "magicalattack"),
@@ -95,7 +95,7 @@ public enum StatEnum
 	MAGICAL_RESIST(28, "magicalresist"),
 	MAX_DAMAGES(0, "maxdamages"),
 	MIN_DAMAGES(0, "mindamages"),
-	IS_MAGICAL_ATTACK(0, "ismagicalattack",true),
+	IS_MAGICAL_ATTACK(0, "ismagicalattack", true),
 
 	EARTH_RESISTANCE(0, "elementaldefendearth"),
 	FIRE_RESISTANCE(15, "elementaldefendfire"),
@@ -138,56 +138,56 @@ public enum StatEnum
 
 	REGEN_MP(0, "mpregen"),
 	REGEN_HP(0, "hpregen"),
-	
+
 	/**
 	 * New/Strange
 	 */
-    REGEN_FP(0, "fpregen"),
-    STAGGER_BOOST(0, "stagger_arp"),
-    STUMBLE_BOOST(0, "stumble_arp"),
-    STUN_BOOST(0, "stun_arp"),
-    HEAL_BOOST(0, "healskillboost"),
-    ALLRESIST(0, "allresist"),
-    STUNLIKE_RESISTANCE(0, "arstunlike"),
-    ELEMENTAL_RESISTANCE_DARK(0, "elemental_resistance_dark"),
-    ELEMENTAL_RESISTANCE_LIGHT(0, "elemental_resistance_light"),
-    MAGICAL_CRITICAL_RESIST(0, "magicalcriticalresist"),
-    MAGICAL_CRITICAL_DAMAGE_REDUCE(0, "magicalcriticaldamagereduce"),
-    PHYSICAL_CRITICAL_RESIST(0, "physicalcriticalresist"),
-    PHYSICAL_CRITICAL_DAMAGE_REDUCE(0, "physicalcriticalreducerate"),
-    ERFIRE(0, "erfire"),
-    ERAIR(0, "erair"),
-    EREARTH(0, "erearth"),
-    ERWATER(0, "erwater"),
-    ABNORMAL_RESISTANCE_ALL(0, "abnormal_resistance_all"),
-    MAGICAL_DEFEND(0, "magical_defend"),
-    ALLPARA(0, "allpara"),
-    KNOWIL(0, "knowil"),
-    AGIDEX(0, "agidex"),
-    STRVIT(0, "strvit");
+	REGEN_FP(0, "fpregen"),
+	STAGGER_BOOST(0, "stagger_arp"),
+	STUMBLE_BOOST(0, "stumble_arp"),
+	STUN_BOOST(0, "stun_arp"),
+	HEAL_BOOST(0, "healskillboost"),
+	ALLRESIST(0, "allresist"),
+	STUNLIKE_RESISTANCE(0, "arstunlike"),
+	ELEMENTAL_RESISTANCE_DARK(0, "elemental_resistance_dark"),
+	ELEMENTAL_RESISTANCE_LIGHT(0, "elemental_resistance_light"),
+	MAGICAL_CRITICAL_RESIST(0, "magicalcriticalresist"),
+	MAGICAL_CRITICAL_DAMAGE_REDUCE(0, "magicalcriticaldamagereduce"),
+	PHYSICAL_CRITICAL_RESIST(0, "physicalcriticalresist"),
+	PHYSICAL_CRITICAL_DAMAGE_REDUCE(0, "physicalcriticalreducerate"),
+	ERFIRE(0, "erfire"),
+	ERAIR(0, "erair"),
+	EREARTH(0, "erearth"),
+	ERWATER(0, "erwater"),
+	ABNORMAL_RESISTANCE_ALL(0, "abnormal_resistance_all"),
+	MAGICAL_DEFEND(0, "magical_defend"),
+	ALLPARA(0, "allpara"),
+	KNOWIL(0, "knowil"),
+	AGIDEX(0, "agidex"),
+	STRVIT(0, "strvit");
 
-	private String name;
-	private boolean replace;
-	private int sign;
-	
-	private int itemStoneMask;
+	private String	name;
+	private boolean	replace;
+	private int		sign;
 
-	private StatEnum (int stoneMask, String name) 
+	private int		itemStoneMask;
+
+	private StatEnum(int stoneMask, String name)
 	{
-		this(stoneMask, name,1,false);
+		this(stoneMask, name, 1, false);
 	}
 
-	private StatEnum (int stoneMask, String name, boolean replace) 
+	private StatEnum(int stoneMask, String name, boolean replace)
 	{
-		this(stoneMask,name,1,replace);
+		this(stoneMask, name, 1, replace);
 	}
 
-	private StatEnum (int stoneMask, String name, int sign) 
+	private StatEnum(int stoneMask, String name, int sign)
 	{
-		this(stoneMask, name,sign,false);
+		this(stoneMask, name, sign, false);
 	}
 
-	private StatEnum (int stoneMask, String name, int sign, boolean replace) 
+	private StatEnum(int stoneMask, String name, int sign, boolean replace)
 	{
 		this.itemStoneMask = stoneMask;
 		this.name = name;
@@ -195,12 +195,12 @@ public enum StatEnum
 		this.sign = sign;
 	}
 
-	public String getName () 
+	public String getName()
 	{
 		return name;
 	}
 
-	public int getSign () 
+	public int getSign()
 	{
 		return sign;
 	}
@@ -215,16 +215,16 @@ public enum StatEnum
 
 	public static StatEnum find(String name)
 	{
-		for(StatEnum sEnum : values())
+		for (StatEnum sEnum : values())
 		{
-			if(sEnum.getName().toLowerCase().equals(name.toLowerCase()))
+			if (sEnum.getName().toLowerCase().equals(name.toLowerCase()))
 			{
 				return sEnum;
 			}
 		}
 		throw new IllegalArgumentException("Cannot find StatEnum for: " + name);
 	}
-	
+
 	/**
 	 *  Used to find specific StatEnum by its item stone mask
 	 *   
@@ -233,9 +233,9 @@ public enum StatEnum
 	 */
 	public static StatEnum findByItemStoneMask(int mask)
 	{
-		for(StatEnum sEnum : values())
+		for (StatEnum sEnum : values())
 		{
-			if(sEnum.getItemStoneMask() == mask)
+			if (sEnum.getItemStoneMask() == mask)
 			{
 				return sEnum;
 			}
@@ -243,15 +243,15 @@ public enum StatEnum
 		throw new IllegalArgumentException("Cannot find StatEnum for stone mask: " + mask);
 	}
 
-	public StatEnum getMainOrSubHandStat (ItemSlot slot) 
+	public StatEnum getMainOrSubHandStat(ItemSlot slot)
 	{
-		if(slot == null)
+		if (slot == null)
 			return this;
-		switch(this)
+		switch (this)
 		{
 			case PHYSICAL_ATTACK:
 			case POWER:
-				switch(slot)
+				switch (slot)
 				{
 					case SUB_HAND:
 						return OFF_HAND_POWER;
@@ -259,7 +259,7 @@ public enum StatEnum
 						return MAIN_HAND_POWER;
 				}
 			case PHYSICAL_ACCURACY:
-				switch(slot)
+				switch (slot)
 				{
 					case SUB_HAND:
 						return OFF_HAND_ACCURACY;
@@ -267,7 +267,7 @@ public enum StatEnum
 						return MAIN_HAND_ACCURACY;
 				}
 			case PHYSICAL_CRITICAL:
-				switch(slot)
+				switch (slot)
 				{
 					case SUB_HAND:
 						return OFF_HAND_CRITICAL;
@@ -275,7 +275,7 @@ public enum StatEnum
 						return MAIN_HAND_CRITICAL;
 				}
 			case HIT_COUNT:
-				switch(slot)
+				switch (slot)
 				{
 					case SUB_HAND:
 						return OFF_HAND_HITS;
@@ -283,7 +283,7 @@ public enum StatEnum
 						return MAIN_HAND_HITS;
 				}
 			case ATTACK_SPEED:
-				switch(slot)
+				switch (slot)
 				{
 					case SUB_HAND:
 						return OFF_HAND_ATTACK_SPEED;
@@ -297,7 +297,7 @@ public enum StatEnum
 
 	public boolean isMainOrSubHandStat()
 	{
-		switch(this)
+		switch (this)
 		{
 			case PHYSICAL_ATTACK:
 			case POWER:
@@ -310,7 +310,8 @@ public enum StatEnum
 		}
 	}
 
-	public boolean isReplace () {
+	public boolean isReplace()
+	{
 		return replace;
 	}
 }

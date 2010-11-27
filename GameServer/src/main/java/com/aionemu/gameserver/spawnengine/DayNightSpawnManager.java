@@ -58,7 +58,7 @@ public class DayNightSpawnManager
 
 	public void addSpawnTemplate(SpawnTemplate spawnTemplate)
 	{
-		if(spawnTemplate.getSpawnTime() == SpawnTime.DAY)
+		if (spawnTemplate.getSpawnTime() == SpawnTime.DAY)
 			daySpawns.add(spawnTemplate);
 		else
 			nightSpawns.add(spawnTemplate);
@@ -66,13 +66,13 @@ public class DayNightSpawnManager
 
 	private void spawnNpcs(List<SpawnTemplate> spawns)
 	{
-		for(SpawnTemplate spawnTemplate : spawns)
+		for (SpawnTemplate spawnTemplate : spawns)
 		{
 			Set<Integer> instanceIds = World.getInstance().getWorldMap(spawnTemplate.getMapId()).getInstanceIds();
-			for(Integer instanceId : instanceIds)
+			for (Integer instanceId : instanceIds)
 			{
 				VisibleObject object = SpawnEngine.getInstance().spawnObject(spawnTemplate, instanceId);
-				if(object != null)
+				if (object != null)
 					spawnedObjects.add(object);
 			}
 		}
@@ -80,7 +80,7 @@ public class DayNightSpawnManager
 
 	private void deleteObjects()
 	{
-		for(VisibleObject object : spawnedObjects)
+		for (VisibleObject object : spawnedObjects)
 			object.delete();
 		spawnedObjects.clear();
 	}
@@ -89,14 +89,14 @@ public class DayNightSpawnManager
 	{
 		deleteObjects();
 		DayTime dayTime = GameTimeManager.getGameTime().getDayTime();
-		if(dayTime == DayTime.NIGHT && (currentSpawnTime == null || currentSpawnTime == SpawnTime.DAY))
+		if (dayTime == DayTime.NIGHT && (currentSpawnTime == null || currentSpawnTime == SpawnTime.DAY))
 		{
 			spawnNpcs(nightSpawns);
 			currentSpawnTime = SpawnTime.NIGHT;
 			log.info("DayNightSpawnManager: " + spawnedObjects.size() + " night objects spawned.");
 
 		}
-		else if(dayTime != DayTime.NIGHT && (currentSpawnTime == null || currentSpawnTime == SpawnTime.NIGHT))
+		else if (dayTime != DayTime.NIGHT && (currentSpawnTime == null || currentSpawnTime == SpawnTime.NIGHT))
 		{
 			spawnNpcs(daySpawns);
 			currentSpawnTime = SpawnTime.DAY;

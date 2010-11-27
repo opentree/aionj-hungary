@@ -43,42 +43,48 @@ public final class PacketBroadcaster extends AbstractFIFOPeriodicTaskManager<Cre
 
 	public static enum BroadcastMode
 	{
-		UPDATE_PLAYER_HP_STAT {
+		UPDATE_PLAYER_HP_STAT
+		{
 			@Override
 			public void sendPacket(Creature creature)
 			{
 				((Player) creature).getLifeStats().sendHpPacketUpdateImpl();
 			}
 		},
-		UPDATE_PLAYER_MP_STAT {
+		UPDATE_PLAYER_MP_STAT
+		{
 			@Override
 			public void sendPacket(Creature creature)
 			{
 				((Player) creature).getLifeStats().sendMpPacketUpdateImpl();
 			}
 		},
-		UPDATE_PLAYER_EFFECT_ICONS {
+		UPDATE_PLAYER_EFFECT_ICONS
+		{
 			@Override
 			public void sendPacket(Creature creature)
 			{
 				((Player) creature).getEffectController().updatePlayerEffectIconsImpl();
 			}
 		},
-		UPDATE_NEARBY_QUEST_LIST {
+		UPDATE_NEARBY_QUEST_LIST
+		{
 			@Override
 			public void sendPacket(Creature creature)
 			{
 				((Player) creature).updateNearbyQuestListImpl();
 			}
 		},
-		UPDATE_PLAYER_FLY_TIME {
+		UPDATE_PLAYER_FLY_TIME
+		{
 			@Override
 			public void sendPacket(Creature creature)
 			{
 				((Player) creature).getLifeStats().sendFpPacketUpdateImpl();
 			}
 		},
-		BROAD_CAST_EFFECTS {
+		BROAD_CAST_EFFECTS
+		{
 			@Override
 			public void sendPacket(Creature creature)
 			{
@@ -103,7 +109,7 @@ public final class PacketBroadcaster extends AbstractFIFOPeriodicTaskManager<Cre
 
 		protected final void trySendPacket(final Creature creature, byte mask)
 		{
-			if((mask & mask()) == mask())
+			if ((mask & mask()) == mask())
 			{
 				sendPacket(creature);
 				creature.removePacketBroadcastMask(this);
@@ -116,9 +122,9 @@ public final class PacketBroadcaster extends AbstractFIFOPeriodicTaskManager<Cre
 	@Override
 	protected void callTask(Creature creature)
 	{
-		for(byte mask; (mask = creature.getPacketBroadcastMask()) != 0;)
+		for (byte mask; (mask = creature.getPacketBroadcastMask()) != 0;)
 		{
-			for(BroadcastMode mode : VALUES)
+			for (BroadcastMode mode : VALUES)
 			{
 				mode.trySendPacket(creature, mask);
 			}

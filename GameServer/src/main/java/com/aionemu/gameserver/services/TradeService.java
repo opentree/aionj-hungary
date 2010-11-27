@@ -58,7 +58,7 @@ public class TradeService
 	public static boolean performBuyFromShop(Player player, TradeList tradeList)
 	{
 
-		if(!validateBuyItems(tradeList, player))
+		if (!validateBuyItems(tradeList, player))
 		{
 			PacketSendUtility.sendMessage(player, "Some items are not allowed to be sold by this npc.");
 			return false;
@@ -70,23 +70,23 @@ public class TradeService
 		int tradeModifier = tradeListData.getTradeListTemplate(npc.getNpcId()).getSellPriceRate();
 
 		// 1. check kinah
-		if(!tradeList.calculateBuyListPrice(player, tradeModifier))
+		if (!tradeList.calculateBuyListPrice(player, tradeModifier))
 			return false;
 
 		// 2. check free slots, need to check retail behaviour
 		int freeSlots = inventory.getLimit() - inventory.getAllItems().size() + 1;
-		if(freeSlots < tradeList.size())
+		if (freeSlots < tradeList.size())
 			return false; // TODO message
 
 		long tradeListPrice = tradeList.getRequiredKinah();
 
-		for(TradeItem tradeItem : tradeList.getTradeItems())
+		for (TradeItem tradeItem : tradeList.getTradeItems())
 		{
-			if(!ItemService.addItem(player, tradeItem.getItemTemplate().getTemplateId(), tradeItem.getCount()))
+			if (!ItemService.addItem(player, tradeItem.getItemTemplate().getTemplateId(), tradeItem.getCount()))
 			{
-				if(OptionsConfig.LOG_AUDIT)
-					log.warn(String.format("[AUDIT] Itemservice couldnt add all items on buy: %d %d %d %d", player
-						.getObjectId(), tradeItem.getItemTemplate().getTemplateId(), tradeItem.getCount(), tradeItem.getCount()));
+				if (OptionsConfig.LOG_AUDIT)
+					log.warn(String.format("[AUDIT] Itemservice couldnt add all items on buy: %d %d %d %d", player.getObjectId(), tradeItem.getItemTemplate()
+							.getTemplateId(), tradeItem.getCount(), tradeItem.getCount()));
 				ItemService.decreaseKinah(player, tradeListPrice);
 				return false;
 			}
@@ -106,7 +106,7 @@ public class TradeService
 	public static boolean performBuyFromAbyssShop(Player player, TradeList tradeList)
 	{
 
-		if(!validateBuyItems(tradeList, player))
+		if (!validateBuyItems(tradeList, player))
 		{
 			PacketSendUtility.sendMessage(player, "Some items are not allowed to be selled from this npc");
 			return false;
@@ -115,26 +115,26 @@ public class TradeService
 		int freeSlots = inventory.getLimit() - inventory.getAllItems().size() + 1;
 
 		// 1. check required items and ap
-		if(!tradeList.calculateAbyssBuyListPrice(player))
+		if (!tradeList.calculateAbyssBuyListPrice(player))
 			return false;
 
 		if (tradeList.getRequiredAp() < 0)
 		{
-			if(OptionsConfig.LOG_AUDIT)
+			if (OptionsConfig.LOG_AUDIT)
 				log.warn("[AUDIT] Player: " + player.getName() + " posible client hack. tradeList.getRequiredAp() < 0");
 			return false;
 		}
 		// 2. check free slots, need to check retail behaviour
-		if(freeSlots < tradeList.size())
+		if (freeSlots < tradeList.size())
 			return false; // TODO message
 
-		for(TradeItem tradeItem : tradeList.getTradeItems())
+		for (TradeItem tradeItem : tradeList.getTradeItems())
 		{
-			if(!ItemService.addItem(player, tradeItem.getItemTemplate().getTemplateId(), tradeItem.getCount()))
+			if (!ItemService.addItem(player, tradeItem.getItemTemplate().getTemplateId(), tradeItem.getCount()))
 			{
-				if(OptionsConfig.LOG_AUDIT)
-					log.warn(String.format("[AUDIT] Itemservice couldnt add all items on buy: %d %d %d %d", player
-						.getObjectId(), tradeItem.getItemTemplate().getTemplateId(), tradeItem.getCount(), tradeItem.getCount()));
+				if (OptionsConfig.LOG_AUDIT)
+					log.warn(String.format("[AUDIT] Itemservice couldnt add all items on buy: %d %d %d %d", player.getObjectId(), tradeItem.getItemTemplate()
+							.getTemplateId(), tradeItem.getCount(), tradeItem.getCount()));
 				player.getCommonData().addAp(-tradeList.getRequiredAp());
 				return false;
 			}
@@ -142,7 +142,7 @@ public class TradeService
 
 		player.getCommonData().addAp(-tradeList.getRequiredAp());
 		Map<Integer, Integer> requiredItems = tradeList.getRequiredItems();
-		for(Integer itemId : requiredItems.keySet())
+		for (Integer itemId : requiredItems.keySet())
 		{
 			ItemService.decreaseItemCountByItemId(player, itemId, requiredItems.get(itemId));
 		}
@@ -157,38 +157,37 @@ public class TradeService
 	private static boolean validateBuyItems(TradeList tradeList, Player player)
 	{
 		Npc npc = (Npc) World.getInstance().findAionObject(tradeList.getSellerObjId());
-		TradeListTemplate tradeListTemplate = tradeListData.getTradeListTemplate(npc.getObjectTemplate()
-			.getTemplateId());
+		TradeListTemplate tradeListTemplate = tradeListData.getTradeListTemplate(npc.getObjectTemplate().getTemplateId());
 
 		Set<Integer> allowedItems = new HashSet<Integer>();
-		for(TradeTab tradeTab : tradeListTemplate.getTradeTablist())
+		for (TradeTab tradeTab : tradeListTemplate.getTradeTablist())
 		{
 			GoodsList goodsList = goodsListData.getGoodsListById(tradeTab.getId());
-			if(goodsList != null && goodsList.getItemIdList() != null)
+			if (goodsList != null && goodsList.getItemIdList() != null)
 			{
 				allowedItems.addAll(goodsList.getItemIdList());
 			}
 		}
 
-		for(TradeItem tradeItem : tradeList.getTradeItems())
+		for (TradeItem tradeItem : tradeList.getTradeItems())
 		{
-			if(tradeItem.getCount() < 1)
+			if (tradeItem.getCount() < 1)
 			{
-				if(OptionsConfig.LOG_AUDIT)
+				if (OptionsConfig.LOG_AUDIT)
 					log.warn("[AUDIT] Player: " + player.getName() + " posible client hack. Trade count < 1");
 				return false;
 			}
 
 			if (tradeItem.getItemTemplate().getMaxStackCount() < tradeItem.getCount())
 			{
-				if(OptionsConfig.LOG_AUDIT)
+				if (OptionsConfig.LOG_AUDIT)
 					log.warn("[AUDIT] Player: " + player.getName() + " posible client hack. item count > MaxStackCount");
 				return false;
 			}
 
-			if(!allowedItems.contains(tradeItem.getItemId()))
+			if (!allowedItems.contains(tradeItem.getItemId()))
 			{
-				if(OptionsConfig.LOG_AUDIT)
+				if (OptionsConfig.LOG_AUDIT)
 					log.warn("[AUDIT] Player: " + player.getName() + " posible client hack. Tade item not in GoodsList");
 				return false;
 			}
@@ -207,20 +206,20 @@ public class TradeService
 		Storage inventory = player.getInventory();
 
 		long kinahReward = 0;
-		for(TradeItem tradeItem : tradeList.getTradeItems())
+		for (TradeItem tradeItem : tradeList.getTradeItems())
 		{
 			Item item = inventory.getItemByObjId(tradeItem.getItemId());
 			// 1) don't allow to sell fake items;
-			if(item == null)
+			if (item == null)
 				return false;
 
-			if(item.getItemCount() - tradeItem.getCount() < 0)
+			if (item.getItemCount() - tradeItem.getCount() < 0)
 			{
-				if(OptionsConfig.LOG_AUDIT)
+				if (OptionsConfig.LOG_AUDIT)
 					log.warn("[AUDIT] Trade exploit, sell item count big: " + player.getName());
 				return false;
 			}
-			else if(ItemService.decreaseItemCount(player, item, tradeItem.getCount()) == 0)
+			else if (ItemService.decreaseItemCount(player, item, tradeItem.getCount()) == 0)
 			{
 				// TODO check retail packet here
 				kinahReward += item.getItemTemplate().getPrice() * tradeItem.getCount();

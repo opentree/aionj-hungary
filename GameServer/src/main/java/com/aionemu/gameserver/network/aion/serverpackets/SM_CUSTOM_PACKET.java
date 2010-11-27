@@ -101,8 +101,8 @@ public class SM_CUSTOM_PACKET extends AbstractAionServerPacket<AionChannelHandle
 
 		public static PacketElementType getByCode(char code)
 		{
-			for(PacketElementType type : values())
-				if(type.code == code)
+			for (PacketElementType type : values())
+				if (type.code == code)
 					return type;
 			return null;
 		}
@@ -178,7 +178,7 @@ public class SM_CUSTOM_PACKET extends AbstractAionServerPacket<AionChannelHandle
 	@Override
 	public void writeImpl(AionChannelHandler cHandler)
 	{
-		for(PacketElement el : elements)
+		for (PacketElement el : elements)
 		{
 			el.writeValue(this);
 		}

@@ -50,13 +50,13 @@ public abstract class AbstractRestrictions implements Restrictions
 	{
 		return getClass().equals(obj.getClass());
 	}
-	
+
 	@DisabledRestriction
 	public boolean isRestricted(Player player, Class<? extends Restrictions> callingRestriction)
 	{
 		throw new AbstractMethodError();
 	}
-	
+
 	@DisabledRestriction
 	public boolean canAttack(Player player, VisibleObject target)
 	{
@@ -74,25 +74,25 @@ public abstract class AbstractRestrictions implements Restrictions
 	{
 		throw new AbstractMethodError();
 	}
-	
+
 	@DisabledRestriction
 	public boolean canChat(Player player)
 	{
 		throw new AbstractMethodError();
 	}
-	
+
 	@DisabledRestriction
 	public boolean canInviteToGroup(Player player, Player target)
 	{
 		throw new AbstractMethodError();
 	}
-	
+
 	@DisabledRestriction
 	public boolean canChangeEquip(Player player)
 	{
 		throw new AbstractMethodError();
 	}
-	
+
 	@DisabledRestriction
 	public boolean canUseWarehouse(Player player)
 	{
@@ -104,7 +104,7 @@ public abstract class AbstractRestrictions implements Restrictions
 	{
 		throw new AbstractMethodError();
 	}
-	
+
 	@DisabledRestriction
 	public boolean canUseItem(Player player)
 	{

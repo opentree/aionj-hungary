@@ -44,7 +44,7 @@ public class SM_PLAYER_SPAWN extends AbstractAionServerPacket<AionChannelHandler
 		this.player = player;
 	}
 
-    /**
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -53,10 +53,10 @@ public class SM_PLAYER_SPAWN extends AbstractAionServerPacket<AionChannelHandler
 		writeD(player.getWorldId());
 		writeD(player.getWorldId());//world + chnl
 		writeD(0x00);// unk
-		writeC( 0x00);// unk
+		writeC(0x00);// unk
 		writeF(player.getX());// x
 		writeF(player.getY());// y
 		writeF(player.getZ());// z
-		writeC( player.getHeading());// heading
+		writeC(player.getHeading());// heading
 	}
 }

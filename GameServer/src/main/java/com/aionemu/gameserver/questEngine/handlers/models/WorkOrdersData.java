@@ -35,7 +35,8 @@ import com.aionemu.gameserver.questEngine.handlers.template.WorkOrders;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "WorkOrdersData", propOrder = { "giveComponent" })
+@XmlType(name = "WorkOrdersData", propOrder =
+{ "giveComponent" })
 public class WorkOrdersData extends QuestScriptData
 {
 
@@ -69,7 +70,7 @@ public class WorkOrdersData extends QuestScriptData
 	 */
 	public List<QuestItems> getGiveComponent()
 	{
-		if(giveComponent == null)
+		if (giveComponent == null)
 		{
 			giveComponent = new ArrayList<QuestItems>();
 		}

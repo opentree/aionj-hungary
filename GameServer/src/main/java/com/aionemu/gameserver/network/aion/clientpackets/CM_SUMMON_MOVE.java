@@ -61,7 +61,7 @@ public class CM_SUMMON_MOVE extends AbstractClientPacket<AionChannelHandler>
 	{
 		Player player = getChannelHandler().getActivePlayer();
 
-		if(!player.isSpawned())
+		if (!player.isSpawned())
 			return;
 
 		readD();//object id
@@ -74,7 +74,7 @@ public class CM_SUMMON_MOVE extends AbstractClientPacket<AionChannelHandler>
 		movementType = (byte) readC();
 		type = MovementType.getMovementTypeById(movementType);
 
-		switch(type)
+		switch (type)
 		{
 			case MOVEMENT_START_MOUSE:
 			case MOVEMENT_START_KEYBOARD:
@@ -94,19 +94,19 @@ public class CM_SUMMON_MOVE extends AbstractClientPacket<AionChannelHandler>
 	protected void runImpl()
 	{
 		Player player = getChannelHandler().getActivePlayer();
-		if(player == null)
+		if (player == null)
 		{
 			log.error("CM_SUMMON_MOVE packet received but cannot get master player.");
 			return;
 		}
 		Summon summon = player.getSummon();
-		if(summon == null)
+		if (summon == null)
 			return;
 		// packet was not read correctly
-		if(type == null)
+		if (type == null)
 			return;
 
-		switch(type)
+		switch (type)
 		{
 			case MOVEMENT_START_MOUSE:
 			case MOVEMENT_START_KEYBOARD:
@@ -116,8 +116,7 @@ public class CM_SUMMON_MOVE extends AbstractClientPacket<AionChannelHandler>
 			case VALIDATE_MOUSE:
 			case VALIDATE_KEYBOARD:
 				PacketSendUtility.broadcastPacket(summon, new SM_MOVE(summon.getObjectId(), x, y, z, x2, y2, z2, heading,
-					(type == MovementType.VALIDATE_MOUSE) ? MovementType.MOVEMENT_START_MOUSE
-						: MovementType.MOVEMENT_START_KEYBOARD));
+						(type == MovementType.VALIDATE_MOUSE) ? MovementType.MOVEMENT_START_MOUSE : MovementType.MOVEMENT_START_KEYBOARD));
 				break;
 			case MOVEMENT_STOP:
 				PacketSendUtility.broadcastPacket(summon, new SM_MOVE(summon.getObjectId(), x, y, z, heading, type));

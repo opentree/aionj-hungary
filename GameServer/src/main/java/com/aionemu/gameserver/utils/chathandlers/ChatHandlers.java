@@ -37,7 +37,7 @@ public class ChatHandlers
 
 	private ChatHandlers()
 	{
-		handlers	= new FastList<ChatHandler>();
+		handlers = new FastList<ChatHandler>();
 		createChatHandlers();
 	}
 
@@ -45,6 +45,7 @@ public class ChatHandlers
 	{
 		handlers.add(ch);
 	}
+
 	/**
 	 * @return the handlers
 	 */
@@ -67,6 +68,6 @@ public class ChatHandlers
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
-		protected static final ChatHandlers instance = new ChatHandlers();
+		protected static final ChatHandlers	instance	= new ChatHandlers();
 	}
 }

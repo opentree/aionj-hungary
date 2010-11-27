@@ -40,10 +40,10 @@ import com.aionemu.gameserver.services.RespawnService;
  */
 public class StaticNpc extends VisibleObject implements IDialog
 {
-	
-	private int state = CreatureState.ACTIVE.getId();
-	private int visualState = CreatureVisualState.VISIBLE.getId();
-	private StaticNpcStats stats = new StaticNpcStats();
+
+	private int				state		= CreatureState.ACTIVE.getId();
+	private int				visualState	= CreatureVisualState.VISIBLE.getId();
+	private StaticNpcStats	stats		= new StaticNpcStats();
 
 	/**
 	 * @param objId
@@ -56,7 +56,7 @@ public class StaticNpc extends VisibleObject implements IDialog
 		if (spawnTemplate != null)
 			this.objectTemplate = DataManager.NPC_DATA.getNpcTemplate(spawnTemplate.getTemplateId());
 		this.setKnownlist(new StaticObjectKnownList(this));
-		
+
 	}
 
 	/* (non-Javadoc)
@@ -76,6 +76,7 @@ public class StaticNpc extends VisibleObject implements IDialog
 	{
 		return (NpcTemplate) super.getObjectTemplate();
 	}
+
 	/**
 	 * @return Returns the stats.
 	 */
@@ -99,7 +100,7 @@ public class StaticNpc extends VisibleObject implements IDialog
 	{
 		this.state |= state.getId();
 	}
-	
+
 	/** 
 	 * @param state taken usually from templates
 	 */
@@ -117,12 +118,12 @@ public class StaticNpc extends VisibleObject implements IDialog
 	{
 		int isState = this.state & state.getId();
 
-		if(isState == state.getId())
+		if (isState == state.getId())
 			return true;
 
 		return false;
 	}
-	
+
 	/**
 	 * @return visualState
 	 */
@@ -148,7 +149,7 @@ public class StaticNpc extends VisibleObject implements IDialog
 	{
 		int isVisualState = this.visualState & visualState.getId();
 
-		if(isVisualState == visualState.getId())
+		if (isVisualState == visualState.getId())
 			return true;
 
 		return false;
@@ -166,7 +167,7 @@ public class StaticNpc extends VisibleObject implements IDialog
 	public void onDialogRequest(Player player)
 	{
 	}
-	
+
 	/**
 	 * Perform tasks on Creature death
 	 */
@@ -174,7 +175,7 @@ public class StaticNpc extends VisibleObject implements IDialog
 	{
 		this.setState(CreatureState.DEAD);
 	}
-	
+
 	/**
 	 * Perform reward operation
 	 * 
@@ -191,17 +192,17 @@ public class StaticNpc extends VisibleObject implements IDialog
 	public void onDialogSelect(int dialogId, Player player, int questId)
 	{
 	}
-	
+
 	/**
 	 * Schedule respawn of npc
 	 * In instances - no npc respawn
 	 */
 	public void scheduleRespawn()
-	{	
-		if(isInInstance())
+	{
+		if (isInInstance())
 			return;
-		
-		if(getSpawn().getInterval() > 0)
+
+		if (getSpawn().getInterval() > 0)
 		{
 			Future<?> respawnTask = RespawnService.scheduleRespawnTask(this);
 			addTask(TaskId.RESPAWN, respawnTask);

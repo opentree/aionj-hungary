@@ -27,65 +27,58 @@ import com.aionemu.gameserver.skillengine.effect.EffectTemplate;
 import com.aionemu.gameserver.skillengine.effect.Effects;
 import com.aionemu.gameserver.skillengine.properties.Properties;
 
-
 /**
  * @author ATracer
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "skillTemplate", propOrder = {
-	"initproperties",
-    "startconditions",
-    "setproperties",
-    "useconditions",
-    "effects",
-    "actions"
-})
-public class SkillTemplate 
+@XmlType(name = "skillTemplate", propOrder =
+{ "initproperties", "startconditions", "setproperties", "useconditions", "effects", "actions" })
+public class SkillTemplate
 {
-	protected Properties initproperties;
-	protected Conditions startconditions;
-	protected Properties setproperties;
-    protected Conditions useconditions;
-    protected Effects effects;
-    protected Actions actions;
-    
-    @XmlAttribute(name = "skill_id", required = true)
-    protected int skillId;
-    @XmlAttribute(required = true)
-    protected String name;
-    @XmlAttribute(required = true)
-    protected int nameId;
-    @XmlAttribute
-    protected String stack = "NONE";
-    @XmlAttribute
-    protected int lvl;
-    @XmlAttribute(name = "skilltype", required = true)
-    protected SkillType type;
-    @XmlAttribute(name = "skillsubtype", required = true)
-    protected SkillSubType subType;
-    @XmlAttribute(name = "tslot")
-    protected SkillTargetSlot targetSlot;
-    @XmlAttribute(name = "activation", required = true)
-    protected ActivationAttribute activationAttribute;
-    @XmlAttribute(required = true)
-    protected int duration;
-    @XmlAttribute(name = "cooldown")
-    protected int cooldown;
-    @XmlAttribute(name = "penalty_skill_id")
-    protected int penaltySkillId;
-    @XmlAttribute(name = "pvp_damage")
-    protected int pvpDamage;
-    @XmlAttribute(name = "pvp_duration")
-    protected int pvpDuration;
-    @XmlAttribute(name = "chain_skill_prob")
-    protected int chainSkillProb;
-    @XmlAttribute(name = "cancel_rate")
-    protected int cancelRate;
-	@XmlAttribute(name = "skillset_exception")
-    protected int skillSetException;
+	protected Properties			initproperties;
+	protected Conditions			startconditions;
+	protected Properties			setproperties;
+	protected Conditions			useconditions;
+	protected Effects				effects;
+	protected Actions				actions;
 
-    /**
+	@XmlAttribute(name = "skill_id", required = true)
+	protected int					skillId;
+	@XmlAttribute(required = true)
+	protected String				name;
+	@XmlAttribute(required = true)
+	protected int					nameId;
+	@XmlAttribute
+	protected String				stack	= "NONE";
+	@XmlAttribute
+	protected int					lvl;
+	@XmlAttribute(name = "skilltype", required = true)
+	protected SkillType				type;
+	@XmlAttribute(name = "skillsubtype", required = true)
+	protected SkillSubType			subType;
+	@XmlAttribute(name = "tslot")
+	protected SkillTargetSlot		targetSlot;
+	@XmlAttribute(name = "activation", required = true)
+	protected ActivationAttribute	activationAttribute;
+	@XmlAttribute(required = true)
+	protected int					duration;
+	@XmlAttribute(name = "cooldown")
+	protected int					cooldown;
+	@XmlAttribute(name = "penalty_skill_id")
+	protected int					penaltySkillId;
+	@XmlAttribute(name = "pvp_damage")
+	protected int					pvpDamage;
+	@XmlAttribute(name = "pvp_duration")
+	protected int					pvpDuration;
+	@XmlAttribute(name = "chain_skill_prob")
+	protected int					chainSkillProb;
+	@XmlAttribute(name = "cancel_rate")
+	protected int					cancelRate;
+	@XmlAttribute(name = "skillset_exception")
+	protected int					skillSetException;
+
+	/**
 	 * @return the initProperties
 	 */
 	public Properties getInitproperties()
@@ -102,74 +95,80 @@ public class SkillTemplate
 	}
 
 	/**
-     * Gets the value of the startconditions property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Conditions }
-     *     
-     */
-    public Conditions getStartconditions() {
-        return startconditions;
-    }
-    
-    /**
-     * Gets the value of the useconditions property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Conditions }
-     *     
-     */
-    public Conditions getUseconditions() {
-        return useconditions;
-    }
+	 * Gets the value of the startconditions property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link Conditions }
+	 *     
+	 */
+	public Conditions getStartconditions()
+	{
+		return startconditions;
+	}
 
-    /**
-     * Gets the value of the effects property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Effects }
-     *     
-     */
-    public Effects getEffects() {
-        return effects;
-    }
+	/**
+	 * Gets the value of the useconditions property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link Conditions }
+	 *     
+	 */
+	public Conditions getUseconditions()
+	{
+		return useconditions;
+	}
 
-    /**
-     * Gets the value of the actions property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Actions }
-     *     
-     */
-    public Actions getActions() {
-        return actions;
-    }
+	/**
+	 * Gets the value of the effects property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link Effects }
+	 *     
+	 */
+	public Effects getEffects()
+	{
+		return effects;
+	}
 
-    /**
-     * Gets the value of the skillId property.
-     * 
-     */
-    public int getSkillId() {
-        return skillId;
-    }
+	/**
+	 * Gets the value of the actions property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link Actions }
+	 *     
+	 */
+	public Actions getActions()
+	{
+		return actions;
+	}
 
-    /**
-     * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getName() {
-        return name;
-    }
+	/**
+	 * Gets the value of the skillId property.
+	 * 
+	 */
+	public int getSkillId()
+	{
+		return skillId;
+	}
 
-    /**
+	/**
+	 * Gets the value of the name property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link String }
+	 *     
+	 */
+	public String getName()
+	{
+		return name;
+	}
+
+	/**
 	 * @return the nameId
 	 */
 	public int getNameId()
@@ -194,18 +193,19 @@ public class SkillTemplate
 	}
 
 	/**
-     * Gets the value of the type property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link SkillType }
-     *     
-     */
-    public SkillType getType() {
-        return type;
-    }
-    
-    /**
+	 * Gets the value of the type property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link SkillType }
+	 *     
+	 */
+	public SkillType getType()
+	{
+		return type;
+	}
+
+	/**
 	 * @return the subType
 	 */
 	public SkillSubType getSubType()
@@ -236,27 +236,27 @@ public class SkillTemplate
 	{
 		return activationAttribute;
 	}
-	
+
 	public boolean isPassive()
 	{
 		return activationAttribute == ActivationAttribute.PASSIVE;
 	}
-	
+
 	public boolean isToggle()
 	{
 		return activationAttribute == ActivationAttribute.TOGGLE;
 	}
-	
+
 	public boolean isProvoked()
 	{
 		return activationAttribute == ActivationAttribute.PROVOKED;
 	}
-	
+
 	public boolean isActive()
 	{
 		return activationAttribute == ActivationAttribute.ACTIVE;
 	}
-	
+
 	/**
 	 * 
 	 * @param position
@@ -264,11 +264,10 @@ public class SkillTemplate
 	 */
 	public EffectTemplate getEffectTemplate(int position)
 	{
-		return effects != null && effects.getEffects().size() >= position
-		? effects.getEffects().get(position - 1) : null;
-		
+		return effects != null && effects.getEffects().size() >= position ? effects.getEffects().get(position - 1) : null;
+
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -309,27 +308,31 @@ public class SkillTemplate
 	{
 		return pvpDuration;
 	}
-    /**
-     * @return chainSkillProb
-     */
-	public int getChainSkillProb() {
-    	return chainSkillProb;
+
+	/**
+	 * @return chainSkillProb
+	 */
+	public int getChainSkillProb()
+	{
+		return chainSkillProb;
 	}
 
 	/**
 	 * @return cancelRate
 	 */
-	public int getCancelRate() {
+	public int getCancelRate()
+	{
 		return cancelRate;
 	}
-	
+
 	/**
 	 * @return skillSetException
 	 */
-	public int getSkillSetException() {
+	public int getSkillSetException()
+	{
 		return skillSetException;
 	}
-    
+
 	public boolean hasResurrectEffect()
 	{
 		return getEffects() != null && getEffects().isResurrect();

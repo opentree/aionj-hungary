@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.utils.stats.enums;
 
-
 /**
  * @author ATracer
  *
@@ -35,14 +34,14 @@ public enum POWER
 	PRIEST(95),
 	CLERIC(105),
 	CHANTER(110);
-	
-	private int value;
-	
+
+	private int	value;
+
 	private POWER(int value)
 	{
 		this.value = value;
 	}
-	
+
 	public int getValue()
 	{
 		return value;

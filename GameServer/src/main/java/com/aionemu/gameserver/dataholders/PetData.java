@@ -39,25 +39,26 @@ import com.aionemu.gameserver.model.templates.pet.PetTemplate;
 public class PetData
 {
 	@XmlElement(name = "pet")
-	private List<PetTemplate> pets;
-	
+	private List<PetTemplate>				pets;
+
 	/** A map containing all pet templates */
 	private TIntObjectHashMap<PetTemplate>	petData	= new TIntObjectHashMap<PetTemplate>();
 
 	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
-		for(PetTemplate pet: pets)
+		for (PetTemplate pet : pets)
 		{
 			petData.put(pet.getId(), pet);
 		}
 		pets.clear();
 		pets = null;
 	}
-	
+
 	public int size()
 	{
 		return petData.size();
 	}
+
 	/**
 
 	/**
@@ -73,4 +74,3 @@ public class PetData
 	}
 
 }
-

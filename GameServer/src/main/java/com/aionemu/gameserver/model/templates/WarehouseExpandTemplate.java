@@ -40,7 +40,7 @@ public class WarehouseExpandTemplate
 	 * NPC ID
 	 */
 	@XmlAttribute(name = "id", required = true)
-	protected int				id;
+	protected int			id;
 
 	public int getNpcId()
 	{
@@ -54,32 +54,32 @@ public class WarehouseExpandTemplate
 	{
 		return this.warehouseExpands;
 	}
-	
+
 	/**
 	 * Returns true if list contains level
 	 * @return true or false
 	 */
 	public boolean contains(int level)
 	{
-		for(Expand expand : warehouseExpands)
+		for (Expand expand : warehouseExpands)
 		{
-			if(expand.getLevel() == level)
+			if (expand.getLevel() == level)
 				return true;
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Returns true if list contains level
 	 * @return expand
 	 */
 	public Expand get(int level)
 	{
-		for(Expand expand : warehouseExpands)
+		for (Expand expand : warehouseExpands)
 		{
-			if(expand.getLevel() == level)
+			if (expand.getLevel() == level)
 				return expand;
 		}
 		return null;
-	}	
+	}
 }

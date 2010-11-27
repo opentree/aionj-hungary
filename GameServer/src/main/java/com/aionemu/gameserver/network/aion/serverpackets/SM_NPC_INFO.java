@@ -44,15 +44,14 @@ public class SM_NPC_INFO extends AbstractAionServerPacket<AionChannelHandler>
 	/**
 	 * Visible npc
 	 */
-	private StaticNpc npc;
-	private NpcTemplate npcTemplate;
-	private int npcId;
-	private int masterObjId;
-	private String masterName = "";
+	private StaticNpc	npc;
+	private NpcTemplate	npcTemplate;
+	private int			npcId;
+	private int			masterObjId;
+	private String		masterName	= "";
 	@SuppressWarnings("unused")
-	private float speed = 0.3f;
-	private final int npcTypeId;
-	
+	private float		speed		= 0.3f;
+	private final int	npcTypeId;
 
 	/**
 	 * Constructs new <tt>SM_NPC_INFO </tt> packet
@@ -65,12 +64,11 @@ public class SM_NPC_INFO extends AbstractAionServerPacket<AionChannelHandler>
 	{
 		this.npc = npc;
 		npcTemplate = npc.getObjectTemplate();
-		npcTypeId = (player.isAggroIconTo(npc) ?
-			NpcType.AGGRESSIVE.getId() : npcTemplate.getNpcType().getId());
+		npcTypeId = (player.isAggroIconTo(npc) ? NpcType.AGGRESSIVE.getId() : npcTemplate.getNpcType().getId());
 		npcId = npc.getObjectTemplate().getTemplateId();
-		
+
 	}
-	
+
 	/**
 	 * Constructs new <tt>SM_NPC_INFO </tt> packet
 	 * 
@@ -82,9 +80,9 @@ public class SM_NPC_INFO extends AbstractAionServerPacket<AionChannelHandler>
 	{
 		this.npc = npc;
 		npcTemplate = npc.getObjectTemplate();
-		npcTypeId =  npcTemplate.getNpcType().getId();
+		npcTypeId = npcTemplate.getNpcType().getId();
 		npcId = npc.getObjectTemplate().getTemplateId();
-		
+
 	}
 
 	/**
@@ -96,15 +94,14 @@ public class SM_NPC_INFO extends AbstractAionServerPacket<AionChannelHandler>
 	public SM_NPC_INFO(Player player, Kisk kisk)
 	{
 		this.npc = kisk;
-		npcTypeId = (kisk.isAggroFrom(player) ?
-			NpcType.ATTACKABLE.getId() : NpcType.NON_ATTACKABLE.getId());
+		npcTypeId = (kisk.isAggroFrom(player) ? NpcType.ATTACKABLE.getId() : NpcType.NON_ATTACKABLE.getId());
 		npcTemplate = kisk.getObjectTemplate();
 		npcId = kisk.getNpcId();
-		
+
 		masterObjId = kisk.getOwnerObjectId();
 		masterName = kisk.getOwnerName();
 	}
-		
+
 	/**
 	 * 
 	 * @param player
@@ -113,19 +110,18 @@ public class SM_NPC_INFO extends AbstractAionServerPacket<AionChannelHandler>
 	public SM_NPC_INFO(Player player, GroupGate groupgate)
 	{
 		this.npc = groupgate;
-		npcTypeId = (groupgate.isAggroFrom(player) ?
-			NpcType.ATTACKABLE.getId() : NpcType.NON_ATTACKABLE.getId());
+		npcTypeId = (groupgate.isAggroFrom(player) ? NpcType.ATTACKABLE.getId() : NpcType.NON_ATTACKABLE.getId());
 		npcTemplate = groupgate.getObjectTemplate();
 		npcId = groupgate.getNpcId();
-		
-		Player owner = (Player)groupgate.getMaster();
-		if(owner != null)
+
+		Player owner = (Player) groupgate.getMaster();
+		if (owner != null)
 		{
 			masterObjId = owner.getObjectId();
 			masterName = owner.getName();
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param summon
@@ -137,7 +133,7 @@ public class SM_NPC_INFO extends AbstractAionServerPacket<AionChannelHandler>
 		npcTypeId = npcTemplate.getNpcType().getId();
 		npcId = summon.getNpcId();
 		Player owner = summon.getMaster();
-		if(owner != null)
+		if (owner != null)
 		{
 			masterObjId = owner.getObjectId();
 			masterName = owner.getName();
@@ -148,7 +144,7 @@ public class SM_NPC_INFO extends AbstractAionServerPacket<AionChannelHandler>
 			masterName = "LOST";
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -162,7 +158,7 @@ public class SM_NPC_INFO extends AbstractAionServerPacket<AionChannelHandler>
 		writeD(npcId);
 		writeD(npcId);
 
-		writeC( npcTypeId);
+		writeC(npcTypeId);
 
 		writeH(npc.getState());// unk 65=normal,0x47 (71)= [dead npc ?]no drop,0x21(33)=fight state,0x07=[dead monster?]
 								// no drop
@@ -172,12 +168,12 @@ public class SM_NPC_INFO extends AbstractAionServerPacket<AionChannelHandler>
 								// 8,24 - [dead][NPC only] - looks like some orb of light (no normal mesh)
 								// 32,33 - fight mode
 
-		writeC( npc.getHeading());
+		writeC(npc.getHeading());
 		writeD(npcTemplate.getNameId());
 		writeD(npcTemplate.getTitleId());// titleID
 
 		writeH(0x00);// unk
-		writeC( 0x00);// unk
+		writeC(0x00);// unk
 		writeD(0x00);// unk
 
 		/*
@@ -193,12 +189,12 @@ public class SM_NPC_INFO extends AbstractAionServerPacket<AionChannelHandler>
 		writeC(npc.getLevel());// lvl
 
 		NpcEquippedGear gear = npcTemplate.getEquipment();
-		if(gear == null)
+		if (gear == null)
 			writeH(0x00);
 		else
 		{
 			writeH(gear.getItemsMask());
-			for(Entry<ItemSlot,ItemTemplate> item: gear.getItems()) // getting it from template ( later if we make sure that npcs actually use items, we'll make Item from it )
+			for (Entry<ItemSlot, ItemTemplate> item : gear.getItems()) // getting it from template ( later if we make sure that npcs actually use items, we'll make Item from it )
 			{
 				writeD(item.getValue().getTemplateId());
 				writeD(0x00);
@@ -223,21 +219,21 @@ public class SM_NPC_INFO extends AbstractAionServerPacket<AionChannelHandler>
 		writeF(npc.getX());// x
 		writeF(npc.getY());// y
 		writeF(npc.getZ());// z
-		writeC( 0x00); // move type
+		writeC(0x00); // move type
 		SpawnTemplate spawn = npc.getSpawn();
 		if (spawn == null)
 			writeH(0);
 		else
 			writeH(spawn.getStaticid());
-		writeC( 0);
-		writeC( 0); // all unknown
-		writeC( 0);
-		writeC( 0);
-		writeC( 0);
-		writeC( 0);
-		writeC( 0);
-		writeC( 0);
-		writeC( npc.getVisualState()); // visualState
+		writeC(0);
+		writeC(0); // all unknown
+		writeC(0);
+		writeC(0);
+		writeC(0);
+		writeC(0);
+		writeC(0);
+		writeC(0);
+		writeC(npc.getVisualState()); // visualState
 
 		/**
 		 * 1 : normal (kisk too)
@@ -247,7 +243,7 @@ public class SM_NPC_INFO extends AbstractAionServerPacket<AionChannelHandler>
 		 */
 		//TODO ??????????
 		writeH(1);
-		writeC( 0x00);// unk
+		writeC(0x00);// unk
 		writeD(npc.getTarget() == null ? 0 : npc.getTarget().getObjectId());
 	}
 }

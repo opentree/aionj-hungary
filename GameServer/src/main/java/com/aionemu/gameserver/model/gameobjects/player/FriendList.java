@@ -32,15 +32,15 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_FRIEND_UPDATE;
  */
 public class FriendList implements Iterable<Friend>
 {
-	public static final int 		MAX_FRIENDS 		= 10;
-	
-	private Status 					status 				= Status.OFFLINE;
-	
+	public static final int		MAX_FRIENDS	= 10;
+
+	private Status				status		= Status.OFFLINE;
+
 	// Stores friend Oids and their friend notes
-	private final Queue<Friend> 	friends;
-	
-	private Player 					player;
-	
+	private final Queue<Friend>	friends;
+
+	private Player				player;
+
 	/**
 	 * Constructs an empty friend list for the given player
 	 * @param player Player who has this friendlist
@@ -49,6 +49,7 @@ public class FriendList implements Iterable<Friend>
 	{
 		this(player, new ConcurrentLinkedQueue<Friend>());
 	}
+
 	/**
 	 * Constructs a friend list for the given player, with the given friends
 	 * @param player Player who has this friend list
@@ -59,13 +60,14 @@ public class FriendList implements Iterable<Friend>
 		this.friends = new ConcurrentLinkedQueue<Friend>(newFriends);
 		this.player = owner;
 	}
+
 	/**
 	 * Gets the friend with this objId<br />
 	 * Returns null if it is not our friend
 	 * @param objId objId of friend
 	 * @return Friend
 	 */
-	public Friend getFriend(int objId) 
+	public Friend getFriend(int objId)
 	{
 		for (Friend friend : friends)
 		{
@@ -79,11 +81,11 @@ public class FriendList implements Iterable<Friend>
 	 * Returns number of friends in list
 	 * @return Num Friends in list
 	 */
-	public int getSize() 
+	public int getSize()
 	{
 		return friends.size();
 	}
-	
+
 	/**
 	 * Adds the given friend to the list<br />
 	 * To add a friend in the database, see <tt>PlayerService</tt>
@@ -93,13 +95,13 @@ public class FriendList implements Iterable<Friend>
 	{
 		friends.add(friend);
 	}
-	
+
 	/**
 	 * Gets the Friend by this name
 	 * @param name Name of friend
 	 * @return Friend matching name
 	 */
-	public Friend getFriend(String name) 
+	public Friend getFriend(String name)
 	{
 		for (Friend friend : friends)
 			if (friend.getName().equalsIgnoreCase(name))
@@ -121,12 +123,12 @@ public class FriendList implements Iterable<Friend>
 			if (it.next().getOid() == friendOid)
 				it.remove();
 	}
-	
+
 	public boolean isFull()
 	{
 		return getSize() >= MAX_FRIENDS;
 	}
-	
+
 	/**
 	 * Gets players status
 	 * @return Status
@@ -135,45 +137,44 @@ public class FriendList implements Iterable<Friend>
 	{
 		return status;
 	}
-	
+
 	/**
 	 * Sets the status of the player<br />
 	 * <ul><li>Note: Does not update friends</li></ul>
 	 * @param status
 	 */
-	public void setStatus(Status status) 
+	public void setStatus(Status status)
 	{
 		Status previousStatus = this.status;
 		this.status = status;
-		
+
 		for (Friend friend : friends) // For all my friends
 		{
 			if (friend.isOnline()) // If the player is online
 			{
 				Player friendPlayer = friend.getPlayer();
-				
+
 				//normally friendPlayer is not null, but need fix status for stuck players
-				if(friendPlayer == null)
+				if (friendPlayer == null)
 					continue;
-				
+
 				friendPlayer.getClientConnection().sendPacket(new SM_FRIEND_UPDATE(player.getObjectId()));
-				
-				if (previousStatus == Status.OFFLINE) 
+
+				if (previousStatus == Status.OFFLINE)
 				{
 					//Show LOGIN message
-					friendPlayer.getClientConnection().sendPacket(new SM_FRIEND_NOTIFY(SM_FRIEND_NOTIFY.LOGIN,player.getName()));
+					friendPlayer.getClientConnection().sendPacket(new SM_FRIEND_NOTIFY(SM_FRIEND_NOTIFY.LOGIN, player.getName()));
 				}
 				else if (status == Status.OFFLINE)
 				{
 					//Show LOGOUT message
-					friendPlayer.getClientConnection().sendPacket(new SM_FRIEND_NOTIFY(SM_FRIEND_NOTIFY.LOGOUT,player.getName()));
+					friendPlayer.getClientConnection().sendPacket(new SM_FRIEND_NOTIFY(SM_FRIEND_NOTIFY.LOGOUT, player.getName()));
 				}
 			}
 		}
-		
+
 	}
-	
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -182,7 +183,7 @@ public class FriendList implements Iterable<Friend>
 	{
 		return friends.iterator();
 	}
-	
+
 	public enum Status
 	{
 		/**
@@ -197,19 +198,19 @@ public class FriendList implements Iterable<Friend>
 		 * User is away or busy
 		 */
 		AWAY(2);
-		
-		int value;
-		
+
+		int	value;
+
 		private Status(int value)
 		{
 			this.value = value;
 		}
-		
+
 		public int getIntValue()
 		{
 			return value;
 		}
-		
+
 		/**
 		 * Gets the Status from its int value<br />
 		 * Returns null if out of range

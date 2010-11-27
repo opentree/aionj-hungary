@@ -47,12 +47,12 @@ public class SM_LEGION_INFO extends AbstractAionServerPacket<AionChannelHandler>
 	public void writeImpl(AionChannelHandler cHandler)
 	{
 		writeS(legion.getLegionName());
-		writeC( legion.getLegionLevel());
+		writeC(legion.getLegionLevel());
 		writeD(legion.getLegionRank());
-		writeC( legion.getCenturionPermission1());
-		writeC( legion.getCenturionPermission2());
-		writeC( legion.getLegionarPermission1());
-		writeC( legion.getLegionarPermission2());
+		writeC(legion.getCenturionPermission1());
+		writeC(legion.getCenturionPermission2());
+		writeC(legion.getLegionarPermission1());
+		writeC(legion.getLegionarPermission2());
 		writeD(legion.getContributionPoints());
 		writeD(0x00); // unk
 		writeD(0x00); // unk
@@ -63,12 +63,12 @@ public class SM_LEGION_INFO extends AbstractAionServerPacket<AionChannelHandler>
 
 		/** Show max 7 announcements **/
 		int i = 0;
-		for(Timestamp unixTime : announcementList.keySet())
+		for (Timestamp unixTime : announcementList.keySet())
 		{
 			writeS(announcementList.get(unixTime));
 			writeD((int) (unixTime.getTime() / 1000));
 			i++;
-			if(i >= 7)
+			if (i >= 7)
 				break;
 		}
 

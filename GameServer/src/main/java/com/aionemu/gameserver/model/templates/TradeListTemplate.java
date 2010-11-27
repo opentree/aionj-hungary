@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlType;
  * @author orz
  * 
  */
-@XmlRootElement(name="tradelist_template")
+@XmlRootElement(name = "tradelist_template")
 @XmlAccessorType(XmlAccessType.NONE)
 public class TradeListTemplate
 {
@@ -38,40 +38,42 @@ public class TradeListTemplate
 	 * Npc Id.
 	 */
 	@XmlAttribute(name = "npc_id", required = true)
-	private int		npcId;
-	
+	private int					npcId;
+
 	/**
 	 * Npc name.
 	 */
 	@XmlAttribute(name = "name", required = true)
-	private String	name	= "";
+	private String				name			= "";
 
 	/**
 	 * Number of twin instances [players will be balanced so every one could exp easy]
 	 */
 	@XmlAttribute(name = "count", required = true)
-	private int	 Count = 0;
-	
+	private int					Count			= 0;
+
 	@XmlAttribute(name = "abyss")
-	private boolean abyss;
+	private boolean				abyss;
 
 	@XmlElement(name = "tradelist")
-	protected List<TradeTab> tradeTablist;
-	
+	protected List<TradeTab>	tradeTablist;
+
 	@XmlAttribute(name = "sell_price_rate")
-	protected int sellPriceRate = 100;
-	
+	protected int				sellPriceRate	= 100;
+
 	/**
 	 * 
 	 * @return List<TradeTab>
 	 */
-	public List<TradeTab> getTradeTablist() {
-        if (tradeTablist == null) {
-            tradeTablist = new ArrayList<TradeTab>();
-        }
-        return this.tradeTablist;
-    }
-	
+	public List<TradeTab> getTradeTablist()
+	{
+		if (tradeTablist == null)
+		{
+			tradeTablist = new ArrayList<TradeTab>();
+		}
+		return this.tradeTablist;
+	}
+
 	public String getName()
 	{
 		return name;
@@ -104,35 +106,37 @@ public class TradeListTemplate
 	}
 
 	/**
-     * <p>Java class for anonymous complex type.
-     * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
-     * <pre>
-     * &lt;complexType>
-     *   &lt;complexContent>
-     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}int" />
-     *     &lt;/restriction>
-     *   &lt;/complexContent>
-     * &lt;/complexType>
-     * </pre>
-     * 
-     * 
-     */
-    @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "Tradelist")
-    public static class TradeTab {
+	 * <p>Java class for anonymous complex type.
+	 * 
+	 * <p>The following schema fragment specifies the expected content contained within this class.
+	 * 
+	 * <pre>
+	 * &lt;complexType>
+	 *   &lt;complexContent>
+	 *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+	 *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}int" />
+	 *     &lt;/restriction>
+	 *   &lt;/complexContent>
+	 * &lt;/complexType>
+	 * </pre>
+	 * 
+	 * 
+	 */
+	@XmlAccessorType(XmlAccessType.FIELD)
+	@XmlType(name = "Tradelist")
+	public static class TradeTab
+	{
 
-        @XmlAttribute
-        protected int id;
+		@XmlAttribute
+		protected int	id;
 
-        /**
-         * Gets the value of the id property.
-         *     
-         */
-        public int getId() {
-            return id;
-        }
-    }
+		/**
+		 * Gets the value of the id property.
+		 *     
+		 */
+		public int getId()
+		{
+			return id;
+		}
+	}
 }

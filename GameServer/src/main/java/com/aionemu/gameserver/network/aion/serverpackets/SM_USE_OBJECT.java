@@ -24,10 +24,10 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_USE_OBJECT extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int playerObjId;
-	private int targetObjId;
-	private int time;
-	private int actionType;
+	private int	playerObjId;
+	private int	targetObjId;
+	private int	time;
+	private int	actionType;
 
 	public SM_USE_OBJECT(int playerObjId, int targetObjId, int time, int actionType)
 	{
@@ -44,6 +44,6 @@ public class SM_USE_OBJECT extends AbstractAionServerPacket<AionChannelHandler>
 		writeD(playerObjId);
 		writeD(targetObjId);
 		writeD(time);
-		writeC( actionType);
+		writeC(actionType);
 	}
 }

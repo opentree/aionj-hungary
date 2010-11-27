@@ -34,25 +34,25 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ItemSetTemplate
 {
 	@XmlElement(required = true)
-    protected List<ItemPart> itempart;
-    @XmlElement(required = true)
-    protected List<PartBonus> partbonus;
-    protected FullBonus fullbonus;
-    @XmlAttribute
-    protected String name;
-    @XmlAttribute
-    protected int id;
-    
-    /*
-     * Final setting
-     */
+	protected List<ItemPart>	itempart;
+	@XmlElement(required = true)
+	protected List<PartBonus>	partbonus;
+	protected FullBonus			fullbonus;
+	@XmlAttribute
+	protected String			name;
+	@XmlAttribute
+	protected int				id;
+
+	/*
+	 * Final setting
+	 */
 	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
-		if(fullbonus != null)
+		if (fullbonus != null)
 		{
 			// Set number of items to apply the full bonus
-			fullbonus.setNumberOfItems( itempart.size());
-		}		
+			fullbonus.setNumberOfItems(itempart.size());
+		}
 	}
 
 	/**
@@ -62,6 +62,7 @@ public class ItemSetTemplate
 	{
 		return itempart;
 	}
+
 	/**
 	 * @return the partbonus
 	 */
@@ -69,6 +70,7 @@ public class ItemSetTemplate
 	{
 		return partbonus;
 	}
+
 	/**
 	 * @return the fullbonus
 	 */
@@ -76,6 +78,7 @@ public class ItemSetTemplate
 	{
 		return fullbonus;
 	}
+
 	/**
 	 * @return the name
 	 */
@@ -83,6 +86,7 @@ public class ItemSetTemplate
 	{
 		return name;
 	}
+
 	/**
 	 * @return the id
 	 */

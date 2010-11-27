@@ -43,7 +43,7 @@ public final class DataManager
 	 * @see NpcData
 	 */
 	public static NpcData				NPC_DATA;
-	
+
 	/**
 	 * Pet data is keeping information about all pets.
 	 * 
@@ -56,7 +56,7 @@ public final class DataManager
 	 * 
 	 * @see GatherableData
 	 */
-	public static GatherableData			GATHERABLE_DATA;
+	public static GatherableData		GATHERABLE_DATA;
 
 	/**
 	 * World maps data is keeping information about all world maps.
@@ -70,7 +70,7 @@ public final class DataManager
 	 * 
 	 * @see PlayerExperienceTable
 	 */
-	public static TradeListData				TRADE_LIST_DATA;
+	public static TradeListData			TRADE_LIST_DATA;
 
 	public static PlayerExperienceTable	PLAYER_EXPERIENCE_TABLE;
 
@@ -87,10 +87,10 @@ public final class DataManager
 	public static QuestsData			QUEST_DATA;
 
 	public static QuestScriptsData		QUEST_SCRIPTS_DATA;
-	
+
 	public static PlayerStatsData		PLAYER_STATS_DATA;
-	
-	public static SummonStatsData				SUMMON_STATS_DATA;
+
+	public static SummonStatsData		SUMMON_STATS_DATA;
 
 	public static ItemData				ITEM_DATA;
 
@@ -121,20 +121,20 @@ public final class DataManager
 	public static TribeRelationsData	TRIBE_RELATIONS_DATA;
 
 	public static RecipeData			RECIPE_DATA;
-	
+
 	public static PortalData			PORTAL_DATA;
-	
+
 	public static ItemSetData			ITEM_SET_DATA;
-	
+
 	public static NpcSkillData			NPC_SKILL_DATA;
-	
+
 	public static PetSkillData			PET_SKILL_DATA;
-	
+
 	public static SiegeLocationData		SIEGE_LOCATION_DATA;
-	
+
 	public static ObjectInfos			OBJECT_INFOS_DATA;
-	
-	private XmlDataLoader loader;
+
+	private XmlDataLoader				loader;
 
 	/**
 	 * Constructor creating <tt>DataManager</tt> instance.<br>
@@ -177,16 +177,16 @@ public final class DataManager
 		TRIBE_RELATIONS_DATA = data.tribeRelationsData;
 		RECIPE_DATA = data.recipeData;
 		PORTAL_DATA = data.portalData;
-		ITEM_SET_DATA  = data.itemSetData;
+		ITEM_SET_DATA = data.itemSetData;
 		NPC_SKILL_DATA = data.npcSkillData;
 		PET_SKILL_DATA = data.petSkillData;
 		SIEGE_LOCATION_DATA = data.siegeLocationData;
 		OBJECT_INFOS_DATA = data.objectInfosData;
 	}
-	
+
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
-		protected static final DataManager instance = new DataManager();
+		protected static final DataManager	instance	= new DataManager();
 	}
 }

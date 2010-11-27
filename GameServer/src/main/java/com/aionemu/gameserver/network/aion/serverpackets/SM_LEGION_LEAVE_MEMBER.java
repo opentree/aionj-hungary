@@ -50,7 +50,7 @@ public class SM_LEGION_LEAVE_MEMBER extends AbstractAionServerPacket<AionChannel
 	public void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(playerObjId);
-		writeC( 0x00); // isMember ? 1 : 0
+		writeC(0x00); // isMember ? 1 : 0
 		writeD(0x00); // unix time for log off
 		writeD(msgId);
 		writeS(name);

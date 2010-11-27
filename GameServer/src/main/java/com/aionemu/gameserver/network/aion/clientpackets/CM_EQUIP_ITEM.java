@@ -34,7 +34,7 @@ public class CM_EQUIP_ITEM extends AbstractClientPacket<AionChannelHandler>
 	public int	slotRead;
 	public int	itemUniqueId;
 	public int	action;
-	
+
 	public CM_EQUIP_ITEM(int opcode)
 	{
 		super(opcode);
@@ -55,10 +55,10 @@ public class CM_EQUIP_ITEM extends AbstractClientPacket<AionChannelHandler>
 		Equipment equipment = activePlayer.getEquipment();
 		Item resultItem = null;
 
-		if(!RestrictionsManager.canChangeEquip(activePlayer))
+		if (!RestrictionsManager.canChangeEquip(activePlayer))
 			return;
-		
-		switch(action)
+
+		switch (action)
 		{
 			case 0:
 				resultItem = equipment.equipItem(itemUniqueId, slotRead);
@@ -71,10 +71,10 @@ public class CM_EQUIP_ITEM extends AbstractClientPacket<AionChannelHandler>
 				break;
 		}
 
-		if(resultItem != null || action == 2)
+		if (resultItem != null || action == 2)
 		{
-			PacketSendUtility.broadcastPacket(activePlayer, new SM_UPDATE_PLAYER_APPEARANCE(activePlayer.getObjectId(),
-				equipment.getEquippedItemsWithoutStigma()), true);		
+			PacketSendUtility.broadcastPacket(activePlayer,
+					new SM_UPDATE_PLAYER_APPEARANCE(activePlayer.getObjectId(), equipment.getEquippedItemsWithoutStigma()), true);
 		}
 	}
 }

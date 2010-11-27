@@ -31,9 +31,10 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class PlayerGameStats extends CreatureGameStats<Player>
 {
-	private int currentRunSpeed = 0;
-	private int currentFlySpeed = 0;
-	private int currentAttackSpeed = 0;
+	private int	currentRunSpeed		= 0;
+	private int	currentFlySpeed		= 0;
+	private int	currentAttackSpeed	= 0;
+
 	/**
 	 * 
 	 * @param owner
@@ -53,10 +54,8 @@ public class PlayerGameStats extends CreatureGameStats<Player>
 		super(owner);
 		PlayerStatsTemplate pst = playerStatsData.getTemplate(owner.getPlayerClass(), owner.getLevel());
 		initStats(pst, owner.getLevel());
-		log.debug("loading base game stats for player " + owner.getName() + " (id " + owner.getObjectId() + "): "
-			+ this);
+		log.debug("loading base game stats for player " + owner.getName() + " (id " + owner.getObjectId() + "): " + this);
 	}
-
 
 	@Override
 	public void recomputeStats()
@@ -66,13 +65,13 @@ public class PlayerGameStats extends CreatureGameStats<Player>
 		int newFlySpeed = getCurrentStat(StatEnum.FLY_SPEED);
 		int newAttackSpeed = getCurrentStat(StatEnum.ATTACK_SPEED);
 
-		if(newRunSpeed != currentRunSpeed || currentFlySpeed != newFlySpeed || newAttackSpeed != currentAttackSpeed)
+		if (newRunSpeed != currentRunSpeed || currentFlySpeed != newFlySpeed || newAttackSpeed != currentAttackSpeed)
 		{
 			PacketSendUtility.broadcastPacket(owner, new SM_EMOTION(owner, EmotionType.START_EMOTE2, 0, 0), true);
-		}	
-				
+		}
+
 		PacketSendUtility.sendPacket(owner, new SM_STATS_INFO(owner));
-				
+
 		this.currentRunSpeed = newRunSpeed;
 		this.currentFlySpeed = newFlySpeed;
 		this.currentAttackSpeed = newAttackSpeed;
@@ -88,9 +87,9 @@ public class PlayerGameStats extends CreatureGameStats<Player>
 		lock.writeLock().lock();
 		try
 		{
-			this.initStats(pst.getMaxHp(), pst.getMaxMp(), pst.getPower(), pst.getHealth(), pst.getAgility(), pst
-				.getAccuracy(), pst.getKnowledge(), pst.getWill(), pst.getMainHandAttack(), pst.getMainHandCritRate(), Math
-				.round(pst.getAttackSpeed() * 1000), 1500, Math.round(pst.getRunSpeed() * 1000), Math.round(pst.getFlySpeed() * 1000));
+			this.initStats(pst.getMaxHp(), pst.getMaxMp(), pst.getPower(), pst.getHealth(), pst.getAgility(), pst.getAccuracy(), pst.getKnowledge(),
+					pst.getWill(), pst.getMainHandAttack(), pst.getMainHandCritRate(), Math.round(pst.getAttackSpeed() * 1000), 1500,
+					Math.round(pst.getRunSpeed() * 1000), Math.round(pst.getFlySpeed() * 1000));
 			setAttackCounter(1);
 			initStat(StatEnum.PARRY, pst.getParry());
 			initStat(StatEnum.BLOCK, pst.getBlock());
@@ -107,7 +106,7 @@ public class PlayerGameStats extends CreatureGameStats<Player>
 			lock.writeLock().unlock();
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param maxHp
@@ -125,7 +124,8 @@ public class PlayerGameStats extends CreatureGameStats<Player>
 	 * @param runSpeed
 	 * @param flySpeed
 	 */
-	protected void initStats(int maxHp, int maxMp, int power, int health, int agility, int accuracy, int knowledge, int will, int mainHandAttack, int mainHandCritRate, int attackSpeed, int attackRange, int runSpeed, int flySpeed)
+	protected void initStats(int maxHp, int maxMp, int power, int health, int agility, int accuracy, int knowledge, int will, int mainHandAttack,
+			int mainHandCritRate, int attackSpeed, int attackRange, int runSpeed, int flySpeed)
 	{
 		stats.clear();
 		initStat(StatEnum.MAXHP, maxHp);

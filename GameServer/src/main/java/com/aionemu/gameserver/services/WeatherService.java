@@ -58,7 +58,8 @@ public class WeatherService
 	private WeatherService()
 	{
 		worldWeathers = new FastMap<WeatherKey, Integer>();
-		ThreadPoolManager.getInstance().scheduleAtFixedRate(new Runnable(){
+		ThreadPoolManager.getInstance().scheduleAtFixedRate(new Runnable()
+		{
 			/*
 			 * (non-Javadoc)
 			 * @see java.lang.Runnable#run()
@@ -133,14 +134,14 @@ public class WeatherService
 	private void checkWeathersTime()
 	{
 		List<WeatherKey> toBeRefreshed = new ArrayList<WeatherKey>();
-		for(WeatherKey key : worldWeathers.keySet())
+		for (WeatherKey key : worldWeathers.keySet())
 		{
-			if(key.isOutDated())
+			if (key.isOutDated())
 			{
 				toBeRefreshed.add(key);
 			}
 		}
-		for(WeatherKey key : toBeRefreshed)
+		for (WeatherKey key : toBeRefreshed)
 		{
 			worldWeathers.remove(key);
 			onWeatherChange(key.getMap(), null);
@@ -174,9 +175,9 @@ public class WeatherService
 	 */
 	private WeatherKey getKeyFromMapByWorldMap(WorldMap map)
 	{
-		for(WeatherKey key : worldWeathers.keySet())
+		for (WeatherKey key : worldWeathers.keySet())
 		{
-			if(key.getMap().equals(map))
+			if (key.getMap().equals(map))
 			{
 				return key;
 			}
@@ -203,7 +204,7 @@ public class WeatherService
 	{
 		Set<WeatherKey> loadedWeathers = new HashSet<WeatherKey>(worldWeathers.keySet());
 		worldWeathers.clear();
-		for(WeatherKey key : loadedWeathers)
+		for (WeatherKey key : loadedWeathers)
 		{
 			onWeatherChange(key.getMap(), null);
 		}
@@ -236,18 +237,17 @@ public class WeatherService
 	 */
 	private void onWeatherChange(WorldMap worldMap, Player player)
 	{
-		if(player == null)
+		if (player == null)
 		{
-			for(Player currentPlayer : World.getInstance().getAllPlayers())
+			for (Player currentPlayer : World.getInstance().getAllPlayers())
 			{
-				if(!currentPlayer.isSpawned())
+				if (!currentPlayer.isSpawned())
 					continue;
-				
+
 				WorldMap currentPlayerWorldMap = currentPlayer.getActiveRegion().getParent().getParent();
-				if(currentPlayerWorldMap.equals(worldMap))
+				if (currentPlayerWorldMap.equals(worldMap))
 				{
-					PacketSendUtility.sendPacket(currentPlayer, new SM_WEATHER(
-						getWeatherTypeByRegion(currentPlayerWorldMap)));
+					PacketSendUtility.sendPacket(currentPlayer, new SM_WEATHER(getWeatherTypeByRegion(currentPlayerWorldMap)));
 				}
 			}
 		}
@@ -256,10 +256,10 @@ public class WeatherService
 			PacketSendUtility.sendPacket(player, new SM_WEATHER(getWeatherTypeByRegion(worldMap)));
 		}
 	}
-	
+
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
-		protected static final WeatherService instance = new WeatherService();
+		protected static final WeatherService	instance	= new WeatherService();
 	}
 }

@@ -34,12 +34,12 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 public class CM_SUMMON_EMOTION extends AbstractClientPacket<AionChannelHandler>
 {
 	private static final Logger	log	= Logger.getLogger(CM_SUMMON_EMOTION.class);
-	
+
 	@SuppressWarnings("unused")
-	private int objId;
-	
-	private int emotionTypeId;
-	
+	private int					objId;
+
+	private int					emotionTypeId;
+
 	public CM_SUMMON_EMOTION(int opcode)
 	{
 		super(opcode);
@@ -56,18 +56,20 @@ public class CM_SUMMON_EMOTION extends AbstractClientPacket<AionChannelHandler>
 	protected void runImpl()
 	{
 		EmotionType emotionType = EmotionType.getEmotionTypeById(emotionTypeId);
-		
+
 		// Unknown Summon Emotion Type
-		if(emotionType == EmotionType.UNK)
+		if (emotionType == EmotionType.UNK)
 			log.error("Unknown emotion type? 0x" + Integer.toHexString(emotionTypeId).toUpperCase());
-		
+
 		Player activePlayer = getChannelHandler().getActivePlayer();
-		if(activePlayer == null) return;
-		
+		if (activePlayer == null)
+			return;
+
 		Summon summon = activePlayer.getSummon();
-		if (summon == null) return;
-			
-		switch(emotionType)
+		if (summon == null)
+			return;
+
+		switch (emotionType)
 		{
 			case FLY:
 			case LAND:
@@ -81,6 +83,6 @@ public class CM_SUMMON_EMOTION extends AbstractClientPacket<AionChannelHandler>
 				summon.unsetState(CreatureState.WEAPON_EQUIPPED);
 				PacketSendUtility.broadcastPacket(summon, new SM_EMOTION(summon, emotionType));
 				break;
-		}	
+		}
 	}
 }

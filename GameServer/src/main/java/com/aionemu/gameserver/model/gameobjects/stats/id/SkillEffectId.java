@@ -24,12 +24,12 @@ import com.aionemu.gameserver.model.gameobjects.stats.StatEffectType;
  */
 public class SkillEffectId extends StatEffectId
 {
-	private int effectId;
-	private int effectOrder;
+	private int	effectId;
+	private int	effectOrder;
 
 	private SkillEffectId(int skillId, int effectId, int effectOrder)
 	{
-		super(skillId,StatEffectType.SKILL_EFFECT);
+		super(skillId, StatEffectType.SKILL_EFFECT);
 		this.effectId = effectId;
 		this.effectOrder = effectOrder;
 	}
@@ -43,10 +43,10 @@ public class SkillEffectId extends StatEffectId
 	public boolean equals(Object o)
 	{
 		boolean result = super.equals(o);
-		result = (result)&&(o!=null);
-		result = (result)&&(o instanceof SkillEffectId);
-		result = (result)&&(((SkillEffectId)o).effectId==effectId);
-		result = (result)&&(((SkillEffectId)o).effectOrder==effectOrder);
+		result = (result) && (o != null);
+		result = (result) && (o instanceof SkillEffectId);
+		result = (result) && (((SkillEffectId) o).effectId == effectId);
+		result = (result) && (((SkillEffectId) o).effectOrder == effectOrder);
 		return result;
 	}
 
@@ -54,13 +54,13 @@ public class SkillEffectId extends StatEffectId
 	public int compareTo(StatEffectId o)
 	{
 		int result = super.compareTo(o);
-		if (result==0)
+		if (result == 0)
 		{
 			if (o instanceof SkillEffectId)
 			{
-				result = effectId - ((SkillEffectId)o).effectId;
-				if(result == 0)
-					result = effectOrder - ((SkillEffectId)o).effectOrder;
+				result = effectId - ((SkillEffectId) o).effectId;
+				if (result == 0)
+					result = effectOrder - ((SkillEffectId) o).effectOrder;
 			}
 		}
 		return result;
@@ -69,7 +69,7 @@ public class SkillEffectId extends StatEffectId
 	@Override
 	public String toString()
 	{
-		final String str = super.toString()+",effectId:"+effectId+",effectOrder:"+effectOrder;
+		final String str = super.toString() + ",effectId:" + effectId + ",effectOrder:" + effectOrder;
 		return str;
 	}
 
@@ -89,5 +89,4 @@ public class SkillEffectId extends StatEffectId
 		return effectOrder;
 	}
 
-	
 }

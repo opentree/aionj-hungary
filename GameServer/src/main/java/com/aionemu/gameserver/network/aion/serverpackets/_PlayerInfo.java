@@ -62,57 +62,57 @@ public abstract class _PlayerInfo extends AbstractAionServerPacket<AionChannelHa
 		writeD(playerAppearance.getHairRGB());
 		writeD(playerAppearance.getEyeRGB());
 		writeD(playerAppearance.getLipRGB());
-		writeC( playerAppearance.getFace());
-		writeC( playerAppearance.getHair());
-		writeC( playerAppearance.getDeco());
-		writeC( playerAppearance.getTattoo());
-		writeC( 4);// always 4 o0
-		writeC( playerAppearance.getFaceShape());
-		writeC( playerAppearance.getForehead());
-		writeC( playerAppearance.getEyeHeight());
-		writeC( playerAppearance.getEyeSpace());
-		writeC( playerAppearance.getEyeWidth());
-		writeC( playerAppearance.getEyeSize());
-		writeC( playerAppearance.getEyeShape());
-		writeC( playerAppearance.getEyeAngle());
-		writeC( playerAppearance.getBrowHeight());
-		writeC( playerAppearance.getBrowAngle());
-		writeC( playerAppearance.getBrowShape());
-		writeC( playerAppearance.getNose());
-		writeC( playerAppearance.getNoseBridge());
-		writeC( playerAppearance.getNoseWidth());
-		writeC( playerAppearance.getNoseTip());
-		writeC( playerAppearance.getCheek());
-		writeC( playerAppearance.getLipHeight());
-		writeC( playerAppearance.getMouthSize());
-		writeC( playerAppearance.getLipSize());
-		writeC( playerAppearance.getSmile());
-		writeC( playerAppearance.getLipShape());
-		writeC( playerAppearance.getJawHeigh());
-		writeC( playerAppearance.getChinJut());
-		writeC( playerAppearance.getEarShape());
-		writeC( playerAppearance.getHeadSize());
+		writeC(playerAppearance.getFace());
+		writeC(playerAppearance.getHair());
+		writeC(playerAppearance.getDeco());
+		writeC(playerAppearance.getTattoo());
+		writeC(4);// always 4 o0
+		writeC(playerAppearance.getFaceShape());
+		writeC(playerAppearance.getForehead());
+		writeC(playerAppearance.getEyeHeight());
+		writeC(playerAppearance.getEyeSpace());
+		writeC(playerAppearance.getEyeWidth());
+		writeC(playerAppearance.getEyeSize());
+		writeC(playerAppearance.getEyeShape());
+		writeC(playerAppearance.getEyeAngle());
+		writeC(playerAppearance.getBrowHeight());
+		writeC(playerAppearance.getBrowAngle());
+		writeC(playerAppearance.getBrowShape());
+		writeC(playerAppearance.getNose());
+		writeC(playerAppearance.getNoseBridge());
+		writeC(playerAppearance.getNoseWidth());
+		writeC(playerAppearance.getNoseTip());
+		writeC(playerAppearance.getCheek());
+		writeC(playerAppearance.getLipHeight());
+		writeC(playerAppearance.getMouthSize());
+		writeC(playerAppearance.getLipSize());
+		writeC(playerAppearance.getSmile());
+		writeC(playerAppearance.getLipShape());
+		writeC(playerAppearance.getJawHeigh());
+		writeC(playerAppearance.getChinJut());
+		writeC(playerAppearance.getEarShape());
+		writeC(playerAppearance.getHeadSize());
 		// 1.5.x 0x00, shoulderSize, armLength, legLength (BYTE) after HeadSize
 
-		writeC( playerAppearance.getNeck());
-		writeC( playerAppearance.getNeckLength());
-		writeC( playerAppearance.getShoulderSize()); // shoulderSize
+		writeC(playerAppearance.getNeck());
+		writeC(playerAppearance.getNeckLength());
+		writeC(playerAppearance.getShoulderSize()); // shoulderSize
 
-		writeC( playerAppearance.getTorso());
-		writeC( playerAppearance.getChest());
-		writeC( playerAppearance.getWaist());
-		writeC( playerAppearance.getHips());
-		writeC( playerAppearance.getArmThickness());
-		writeC( playerAppearance.getHandSize());
-		writeC( playerAppearance.getLegThicnkess());
-		writeC( playerAppearance.getFootSize());
-		writeC( playerAppearance.getFacialRate());
-		writeC( 0x00); // 0x00
-		writeC( playerAppearance.getArmLength()); // armLength
-		writeC( playerAppearance.getLegLength()); // legLength
-		writeC( playerAppearance.getShoulders());
-		writeC( 0x00); // always 0 may be acessLevel
-		writeC( 0x00); // always 0 - unk
+		writeC(playerAppearance.getTorso());
+		writeC(playerAppearance.getChest());
+		writeC(playerAppearance.getWaist());
+		writeC(playerAppearance.getHips());
+		writeC(playerAppearance.getArmThickness());
+		writeC(playerAppearance.getHandSize());
+		writeC(playerAppearance.getLegThicnkess());
+		writeC(playerAppearance.getFootSize());
+		writeC(playerAppearance.getFacialRate());
+		writeC(0x00); // 0x00
+		writeC(playerAppearance.getArmLength()); // armLength
+		writeC(playerAppearance.getLegLength()); // legLength
+		writeC(playerAppearance.getShoulders());
+		writeC(0x00); // always 0 may be acessLevel
+		writeC(0x00); // always 0 - unk
 
 		writeF(playerAppearance.getHeight());
 		int raceSex = 100000 + raceId * 2 + genderId;
@@ -148,21 +148,22 @@ public abstract class _PlayerInfo extends AbstractAionServerPacket<AionChannelHa
 		//TODO figure out this part when fully equipped
 		List<Item> items = accPlData.getEquipment();
 
-		for(Item item : items) {
+		for (Item item : items)
+		{
 
-			if(itemsDataSize < 208 && item.getItemTemplate().getItemSlot() <= ItemSlot.PANTS.getSlotIdMask())
+			if (itemsDataSize < 208 && item.getItemTemplate().getItemSlot() <= ItemSlot.PANTS.getSlotIdMask())
 			{
-				writeC( 1); // this flas is needed to show equipment on selection screen
+				writeC(1); // this flas is needed to show equipment on selection screen
 				writeD(item.getItemSkinTemplate().getTemplateId());
 				GodStone godStone = item.getGodStone();
-				writeD(godStone != null ? godStone.getItemId() : 0); 
+				writeD(godStone != null ? godStone.getItemId() : 0);
 				writeD(item.getItemColor());
 
 				itemsDataSize += 13;
-			}	
+			}
 		}
 
-		stupidNc = new byte[208-itemsDataSize];
+		stupidNc = new byte[208 - itemsDataSize];
 		writeB(stupidNc);
 		writeD(accPlData.getDeletionTimeInSeconds());
 		writeD(0x00);// unk	

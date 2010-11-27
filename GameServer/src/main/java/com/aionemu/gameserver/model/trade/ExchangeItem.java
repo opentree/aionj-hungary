@@ -24,10 +24,10 @@ import com.aionemu.gameserver.model.gameobjects.Item;
  */
 public class ExchangeItem
 {
-	private int itemObjId;
-	private long itemCount;
-	private int itemDesc;
-	private Item item;
+	private int		itemObjId;
+	private long	itemCount;
+	private int		itemDesc;
+	private Item	item;
 
 	/**
 	 * Used when exchange item != original item
@@ -43,7 +43,7 @@ public class ExchangeItem
 		this.item = item;
 		this.itemDesc = item.getItemTemplate().getNameId();
 	}
-	
+
 	/**
 	 * @param item the item to set
 	 */

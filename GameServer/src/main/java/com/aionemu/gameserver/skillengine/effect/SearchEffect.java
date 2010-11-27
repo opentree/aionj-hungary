@@ -37,7 +37,7 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 public class SearchEffect extends EffectTemplate
 {
 	@XmlAttribute
-	protected int value;
+	protected int	value;
 
 	@Override
 	public void applyEffect(Effect effect)
@@ -58,7 +58,7 @@ public class SearchEffect extends EffectTemplate
 
 		CreatureSeeState seeState;
 
-		switch(value)
+		switch (value)
 		{
 			case 1:
 				seeState = CreatureSeeState.SEARCH1;
@@ -72,9 +72,9 @@ public class SearchEffect extends EffectTemplate
 		}
 		effected.unsetSeeState(seeState);
 
-		if(effected instanceof Player)
+		if (effected instanceof Player)
 		{
-			PacketSendUtility.broadcastPacket((Player)effected, new SM_PLAYER_STATE((Player)effected), true);
+			PacketSendUtility.broadcastPacket((Player) effected, new SM_PLAYER_STATE((Player) effected), true);
 		}
 	}
 
@@ -85,7 +85,7 @@ public class SearchEffect extends EffectTemplate
 
 		CreatureSeeState seeState;
 
-		switch(value)
+		switch (value)
 		{
 			case 1:
 				seeState = CreatureSeeState.SEARCH1;
@@ -99,9 +99,9 @@ public class SearchEffect extends EffectTemplate
 		}
 		effected.setSeeState(seeState);
 
-		if(effected instanceof Player)
+		if (effected instanceof Player)
 		{
-			PacketSendUtility.broadcastPacket((Player)effected, new SM_PLAYER_STATE((Player)effected), true);
+			PacketSendUtility.broadcastPacket((Player) effected, new SM_PLAYER_STATE((Player) effected), true);
 		}
 	}
 }

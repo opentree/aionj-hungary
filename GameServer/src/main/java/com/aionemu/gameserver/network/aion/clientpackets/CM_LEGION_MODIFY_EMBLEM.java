@@ -29,11 +29,11 @@ public class CM_LEGION_MODIFY_EMBLEM extends AbstractClientPacket<AionChannelHan
 {
 
 	/** Emblem related information **/
-	private int				legionId;
-	private int				emblemId;
-	private int				red;
-	private int				green;
-	private int				blue;
+	private int	legionId;
+	private int	emblemId;
+	private int	red;
+	private int	green;
+	private int	blue;
 
 	/**
 	 * @param opcode
@@ -59,7 +59,7 @@ public class CM_LEGION_MODIFY_EMBLEM extends AbstractClientPacket<AionChannelHan
 	{
 		Player activePlayer = getChannelHandler().getActivePlayer();
 
-		if(activePlayer.isLegionMember())
+		if (activePlayer.isLegionMember())
 			LegionService.getInstance().storeLegionEmblem(activePlayer, legionId, emblemId, red, green, blue);
 	}
 }

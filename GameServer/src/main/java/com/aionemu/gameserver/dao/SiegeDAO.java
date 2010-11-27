@@ -32,10 +32,10 @@ public abstract class SiegeDAO implements DAO
 	{
 		return SiegeDAO.class.getName();
 	}
-	
+
 	public abstract boolean loadSiegeLocations(FastMap<Integer, SiegeLocation> locations);
-	
+
 	//private abstract boolean insertSiegeLocation(SiegeLocation siegeLocation);
-	
+
 	public abstract boolean updateSiegeLocation(SiegeLocation siegeLocation);
 }

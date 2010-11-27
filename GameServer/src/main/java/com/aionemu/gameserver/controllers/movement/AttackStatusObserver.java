@@ -24,9 +24,9 @@ import com.aionemu.gameserver.controllers.attack.AttackStatus;
  */
 public class AttackStatusObserver extends AttackCalcObserver
 {
-	protected int value;
-	protected AttackStatus status;
-	
+	protected int			value;
+	protected AttackStatus	status;
+
 	/**
 	 * 
 	 * @param value

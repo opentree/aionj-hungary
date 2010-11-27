@@ -54,8 +54,8 @@ import com.aionemu.gameserver.world.WorldType;
  */
 public class GroupService
 {
-	private static final Logger log = Logger.getLogger(GroupService.class);
-	
+	private static final Logger						log	= Logger.getLogger(GroupService.class);
+
 	/**
 	 * Caching group members
 	 */
@@ -66,25 +66,23 @@ public class GroupService
 	 */
 	private FastMap<Integer, ScheduledFuture<?>>	playerGroup;
 
-	private List<Player>	inRangePlayers;
+	private List<Player>							inRangePlayers;
 
 	public static final GroupService getInstance()
 	{
 		return SingletonHolder.instance;
 	}
 
-	
 	/**
 	 * @param playerGroup
 	 */
 	private GroupService()
 	{
-		groupMembers	= new FastMap<Integer, PlayerGroup>();
-		playerGroup		= new FastMap<Integer, ScheduledFuture<?>>();
-		
+		groupMembers = new FastMap<Integer, PlayerGroup>();
+		playerGroup = new FastMap<Integer, ScheduledFuture<?>>();
+
 		log.info("GroupService: Initialized.");
 	}
-
 
 	/**
 	 * This method will add a member to the group member cache
@@ -93,13 +91,13 @@ public class GroupService
 	 */
 	private void addGroupMemberToCache(Player player)
 	{
-		if(!groupMembers.containsKey(player.getObjectId()))
+		if (!groupMembers.containsKey(player.getObjectId()))
 			groupMembers.put(player.getObjectId(), player.getPlayerGroup());
 	}
 
 	private void removeGroupMemberFromCache(int playerObjId)
 	{
-		if(groupMembers.containsKey(playerObjId))
+		if (groupMembers.containsKey(playerObjId))
 			groupMembers.remove(playerObjId);
 	}
 
@@ -131,18 +129,19 @@ public class GroupService
 	 */
 	public void invitePlayerToGroup(final Player inviter, final Player invited)
 	{
-		if(RestrictionsManager.canInviteToGroup(inviter, invited))
+		if (RestrictionsManager.canInviteToGroup(inviter, invited))
 		{
-			RequestResponseHandler responseHandler = new RequestResponseHandler(inviter){
+			RequestResponseHandler responseHandler = new RequestResponseHandler(inviter)
+			{
 				@Override
 				public void acceptRequest(StaticNpc requester, Player responder)
 				{
 					final PlayerGroup group = inviter.getPlayerGroup();
-					if(group != null && group.isFull())
+					if (group != null && group.isFull())
 						return;
 
 					PacketSendUtility.sendPacket(inviter, SM_SYSTEM_MESSAGE.REQUEST_GROUP_INVITE(invited.getName()));
-					if(group != null)
+					if (group != null)
 					{
 						inviter.getPlayerGroup().addPlayerToGroup(invited);
 						addGroupMemberToCache(invited);
@@ -163,12 +162,10 @@ public class GroupService
 				}
 			};
 
-			boolean result = invited.getResponseRequester().putRequest(SM_QUESTION_WINDOW.STR_REQUEST_GROUP_INVITE,
-				responseHandler);
-			if(result)
+			boolean result = invited.getResponseRequester().putRequest(SM_QUESTION_WINDOW.STR_REQUEST_GROUP_INVITE, responseHandler);
+			if (result)
 			{
-				PacketSendUtility.sendPacket(invited, new SM_QUESTION_WINDOW(
-					SM_QUESTION_WINDOW.STR_REQUEST_GROUP_INVITE, 0, inviter.getName()));
+				PacketSendUtility.sendPacket(invited, new SM_QUESTION_WINDOW(SM_QUESTION_WINDOW.STR_REQUEST_GROUP_INVITE, 0, inviter.getName()));
 			}
 		}
 	}
@@ -178,14 +175,14 @@ public class GroupService
 	 */
 	public void removePlayerFromGroup(Player player)
 	{
-		if(player.isInGroup())
+		if (player.isInGroup())
 		{
 			final PlayerGroup group = player.getPlayerGroup();
 
 			group.removePlayerFromGroup(player);
 			removeGroupMemberFromCache(player.getObjectId());
 
-			if(group.size() < 2)
+			if (group.size() < 2)
 				disbandGroup(group);
 		}
 	}
@@ -208,7 +205,7 @@ public class GroupService
 	 */
 	public void playerStatusInfo(int status, Player player)
 	{
-		switch(status)
+		switch (status)
 		{
 			case 2:
 				removePlayerFromGroup(player);
@@ -229,24 +226,24 @@ public class GroupService
 	public void groupDistribution(Player player, long amount)
 	{
 		PlayerGroup pg = player.getPlayerGroup();
-		if(pg == null)
+		if (pg == null)
 			return;
 
 		long availableKinah = player.getInventory().getKinahItem().getItemCount();
-		if(availableKinah < amount)
+		if (availableKinah < amount)
 		{
 			// TODO retail message ?
 			return;
 		}
 
 		long rewardcount = pg.size() - 1;
-		if(rewardcount <= amount)
+		if (rewardcount <= amount)
 		{
 			long reward = amount / rewardcount;
 
-			for(Player groupMember : pg.getMembers())
+			for (Player groupMember : pg.getMembers())
 			{
-				if(groupMember.equals(player))
+				if (groupMember.equals(player))
 					ItemService.decreaseKinah(groupMember, amount);
 				else
 					ItemService.increaseKinah(groupMember, reward);
@@ -265,10 +262,11 @@ public class GroupService
 		List<Player> players = new ArrayList<Player>();
 		int partyLvlSum = 0;
 		int highestLevel = 0;
-		for(Player member : group.getMembers())
+		for (Player member : group.getMembers())
 		{
-			if (!member.isOnline()) continue;
-			if(MathUtil.isIn3dRange(member, owner, GroupConfig.GROUP_MAX_DISTANCE))
+			if (!member.isOnline())
+				continue;
+			if (MathUtil.isIn3dRange(member, owner, GroupConfig.GROUP_MAX_DISTANCE))
 			{
 				if (member.getLifeStats().isAlreadyDead())
 					continue;
@@ -278,37 +276,37 @@ public class GroupService
 					highestLevel = member.getLevel();
 			}
 		}
-		
+
 		// All are dead or not nearby.
 		if (players.size() == 0)
 			return;
-		
+
 		//AP reward
 		int apRewardPerMember = 0;
 		WorldType worldType = owner.getWorldType();
-		
+
 		//WorldType worldType = sp.getWorld().getWorldMap(player.getWorldId()).getWorldType();
-		if(worldType == WorldType.ABYSS)
+		if (worldType == WorldType.ABYSS)
 		{
 			// Split Evenly
 			apRewardPerMember = Math.round(StatFunctions.calculateGroupAPReward(highestLevel, owner) / players.size());
 		}
-		
+
 		// Exp reward
 		long expReward = StatFunctions.calculateGroupExperienceReward(highestLevel, owner);
-		
+
 		// Party Bonus 2 members 10%, 3 members 20% ... 6 members 50%
 		int bonus = 1;
 		if (players.size() == 0)
 			return;
 		else if (players.size() > 0)
-			bonus = 100+((players.size()-1)*10);	
+			bonus = 100 + ((players.size() - 1) * 10);
 
-		for(Player member : players)
+		for (Player member : players)
 		{
 			// Exp reward
 			long currentExp = member.getCommonData().getExp();
-			long reward = (expReward * bonus * member.getLevel())/(partyLvlSum * 100);
+			long reward = (expReward * bonus * member.getLevel()) / (partyLvlSum * 100);
 			reward *= member.getRates().getGroupXpRate();
 			// Players 10 levels below highest member get 0 exp.
 			if (highestLevel - member.getLevel() >= 10)
@@ -321,20 +319,20 @@ public class GroupService
 			int currentDp = member.getCommonData().getDp();
 			int dpReward = StatFunctions.calculateGroupDPReward(member, owner);
 			member.getCommonData().setDp(dpReward + currentDp);
-			
+
 			// AP reward
 			if (apRewardPerMember > 0)
 				member.getCommonData().addAp(Math.round(apRewardPerMember * member.getRates().getApNpcRate()));
-			
-			QuestEngine.getInstance().onKill(new QuestEnv(owner, member, 0 , 0));
+
+			QuestEngine.getInstance().onKill(new QuestEnv(owner, member, 0, 0));
 		}
-		
+
 		// Give Drop
 		setInRangePlayers(players);
 		Player leader = group.getGroupLeader();
 		DropService.getInstance().registerDrop(owner, leader, highestLevel);
 	}
-	
+
 	/**
 	 * This method will send the show brand to every groupmember
 	 * 
@@ -344,7 +342,7 @@ public class GroupService
 	 */
 	public void showBrand(PlayerGroup playerGroup, int brandId, int targetObjectId)
 	{
-		for(Player member : playerGroup.getMembers())
+		for (Player member : playerGroup.getMembers())
 		{
 			PacketSendUtility.sendPacket(member, new SM_SHOW_BRAND(brandId, targetObjectId));
 		}
@@ -370,9 +368,9 @@ public class GroupService
 
 		// Send legion info packets
 		PacketSendUtility.sendPacket(activePlayer, new SM_GROUP_INFO(group));
-		for(Player member : group.getMembers())
+		for (Player member : group.getMembers())
 		{
-			if(!activePlayer.equals(member))
+			if (!activePlayer.equals(member))
 				PacketSendUtility.sendPacket(activePlayer, new SM_GROUP_MEMBER_INFO(group, member, GroupEvent.ENTER));
 		}
 	}
@@ -383,7 +381,7 @@ public class GroupService
 	 */
 	private void addPlayerGroupCache(int playerObjId, ScheduledFuture<?> future)
 	{
-		if(!playerGroup.containsKey(playerObjId))
+		if (!playerGroup.containsKey(playerObjId))
 			playerGroup.put(playerObjId, future);
 	}
 
@@ -394,7 +392,7 @@ public class GroupService
 	 */
 	private void cancelScheduleRemove(int playerObjId)
 	{
-		if(playerGroup.containsKey(playerObjId))
+		if (playerGroup.containsKey(playerObjId))
 		{
 			playerGroup.get(playerObjId).cancel(true);
 			playerGroup.remove(playerObjId);
@@ -408,7 +406,8 @@ public class GroupService
 	 */
 	public void scheduleRemove(final Player player)
 	{
-		ScheduledFuture<?> future = ThreadPoolManager.getInstance().schedule(new Runnable(){
+		ScheduledFuture<?> future = ThreadPoolManager.getInstance().schedule(new Runnable()
+		{
 			@Override
 			public void run()
 			{
@@ -418,8 +417,8 @@ public class GroupService
 		}, GroupConfig.GROUP_REMOVE_TIME * 1000);
 		addPlayerGroupCache(player.getObjectId(), future);
 		player.getPlayerGroup().getMembers().remove(player.getObjectId());
-		
-		for(Player groupMember : player.getPlayerGroup().getMembers())
+
+		for (Player groupMember : player.getPlayerGroup().getMembers())
 		{
 			// TODO: MISSING SEND PARTY MEMBER PACKETS
 			PacketSendUtility.sendPacket(groupMember, SM_SYSTEM_MESSAGE.PARTY_HE_BECOME_OFFLINE(player.getName()));
@@ -431,11 +430,11 @@ public class GroupService
 	 */
 	public void setGroup(Player player)
 	{
-		if(!isGroupMember(player.getObjectId()))
+		if (!isGroupMember(player.getObjectId()))
 			return;
 
 		final PlayerGroup group = getGroup(player.getObjectId());
-		if(group.size() < 2)
+		if (group.size() < 2)
 		{
 			removeGroupMemberFromCache(player.getObjectId());
 			cancelScheduleRemove(player.getObjectId());
@@ -444,7 +443,7 @@ public class GroupService
 		player.setPlayerGroup(group);
 		group.onGroupMemberLogIn(player);
 		cancelScheduleRemove(player.getObjectId());
-		if(group.getGroupLeader().getObjectId() == player.getObjectId())
+		if (group.getGroupLeader().getObjectId() == player.getObjectId())
 			group.setGroupLeader(player);
 	}
 
@@ -457,11 +456,11 @@ public class GroupService
 		LootRuleType lootRule = lootRules.getLootRule();
 		List<Integer> luckyMembers = new ArrayList<Integer>();
 
-		switch(lootRule)
+		switch (lootRule)
 		{
 			case ROUNDROBIN:
 				int roundRobinMember = group.getRoundRobinMember(npc);
-				if(roundRobinMember != 0)
+				if (roundRobinMember != 0)
 				{
 					luckyMembers.add(roundRobinMember);
 					break;
@@ -486,11 +485,11 @@ public class GroupService
 	public List<Integer> getGroupMembers(final PlayerGroup group, boolean except)
 	{
 		List<Integer> luckyMembers = new ArrayList<Integer>();
-		for(int memberObjId : group.getMemberObjIds())
+		for (int memberObjId : group.getMemberObjIds())
 		{
-			if(except)
+			if (except)
 			{
-				if(group.getGroupLeader().getObjectId() != memberObjId)
+				if (group.getGroupLeader().getObjectId() != memberObjId)
 					luckyMembers.add(memberObjId);
 			}
 			else
@@ -505,7 +504,7 @@ public class GroupService
 	public Player getLuckyPlayer(Player player)
 	{
 		final PlayerGroup group = player.getPlayerGroup();
-		switch(group.getLootGroupRules().getAutodistribution())
+		switch (group.getLootGroupRules().getAutodistribution())
 		{
 			case NORMAL:
 				return player;
@@ -518,7 +517,7 @@ public class GroupService
 		}
 		return player;
 	}
-	
+
 	/**
 	 * @param inRangePlayers the inRangePlayers to set
 	 */
@@ -538,7 +537,7 @@ public class GroupService
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
-		protected static final GroupService instance = new GroupService();
+		protected static final GroupService	instance	= new GroupService();
 	}
 
 }

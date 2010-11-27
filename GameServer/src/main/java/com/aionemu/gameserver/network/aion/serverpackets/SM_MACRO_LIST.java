@@ -47,17 +47,17 @@ public class SM_MACRO_LIST extends AbstractAionServerPacket<AionChannelHandler>
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(player.getObjectId());// player oid
-		writeC( 0x01);// unk
+		writeC(0x01);// unk
 
 		final int size = player.getMacroList().getSize();
 
 		writeH(-size);// (-)count
 
-		if(size > 0)
+		if (size > 0)
 		{
-			for(Map.Entry<Integer, String> entry : player.getMacroList().entrySet())
+			for (Map.Entry<Integer, String> entry : player.getMacroList().entrySet())
 			{
-				writeC( entry.getKey());// order
+				writeC(entry.getKey());// order
 				writeS(entry.getValue());// xml
 			}
 		}

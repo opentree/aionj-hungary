@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.dataholders;
 
-
 import gnu.trove.TIntObjectHashMap;
 
 import java.util.ArrayList;
@@ -44,9 +43,9 @@ import com.aionemu.gameserver.model.templates.stats.PlayerStatsTemplate;
 public class PlayerStatsData
 {
 	@XmlElement(name = "player_stats", required = true)
-	private List<PlayerStatsType> templatesList = new ArrayList<PlayerStatsType>();
-	
-	private final TIntObjectHashMap<PlayerStatsTemplate> playerTemplates = new TIntObjectHashMap<PlayerStatsTemplate>();
+	private List<PlayerStatsType>							templatesList	= new ArrayList<PlayerStatsType>();
+
+	private final TIntObjectHashMap<PlayerStatsTemplate>	playerTemplates	= new TIntObjectHashMap<PlayerStatsTemplate>();
 
 	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
@@ -55,7 +54,7 @@ public class PlayerStatsData
 			int code = makeHash(pt.getRequiredPlayerClass(), pt.getRequiredLevel());
 			playerTemplates.put(code, pt.getTemplate());
 		}
-		
+
 		/** for unknown templates **/
 		playerTemplates.put(makeHash(PlayerClass.WARRIOR, 0), new CalculatedPlayerStatsTemplate(PlayerClass.WARRIOR));
 		playerTemplates.put(makeHash(PlayerClass.ASSASSIN, 0), new CalculatedPlayerStatsTemplate(PlayerClass.ASSASSIN));
@@ -69,7 +68,7 @@ public class PlayerStatsData
 		playerTemplates.put(makeHash(PlayerClass.SORCERER, 0), new CalculatedPlayerStatsTemplate(PlayerClass.SORCERER));
 		playerTemplates.put(makeHash(PlayerClass.SPIRIT_MASTER, 0), new CalculatedPlayerStatsTemplate(PlayerClass.SPIRIT_MASTER));
 		playerTemplates.put(makeHash(PlayerClass.TEMPLAR, 0), new CalculatedPlayerStatsTemplate(PlayerClass.TEMPLAR));
-		
+
 		templatesList.clear();
 		templatesList = null;
 	}
@@ -82,7 +81,7 @@ public class PlayerStatsData
 	public PlayerStatsTemplate getTemplate(Player player)
 	{
 		PlayerStatsTemplate template = getTemplate(player.getCommonData().getPlayerClass(), player.getLevel());
-		if(template == null)
+		if (template == null)
 			template = getTemplate(player.getCommonData().getPlayerClass(), 0);
 		return template;
 	}
@@ -95,8 +94,8 @@ public class PlayerStatsData
 	 */
 	public PlayerStatsTemplate getTemplate(PlayerClass playerClass, int level)
 	{
-		PlayerStatsTemplate template =  playerTemplates.get(makeHash(playerClass, level));
-		if(template == null)
+		PlayerStatsTemplate template = playerTemplates.get(makeHash(playerClass, level));
+		if (template == null)
 			template = getTemplate(playerClass, 0);
 		return template;
 	}
@@ -110,17 +109,17 @@ public class PlayerStatsData
 	{
 		return playerTemplates.size();
 	}
-	
-	@XmlRootElement(name="playerStatsTemplateType")
+
+	@XmlRootElement(name = "playerStatsTemplateType")
 	private static class PlayerStatsType
 	{
 		@XmlAttribute(name = "class", required = true)
-		private PlayerClass requiredPlayerClass;
+		private PlayerClass			requiredPlayerClass;
 		@XmlAttribute(name = "level", required = true)
-		private int requiredLevel;
+		private int					requiredLevel;
 
-		@XmlElement(name="stats_template")
-		private PlayerStatsTemplate template;
+		@XmlElement(name = "stats_template")
+		private PlayerStatsTemplate	template;
 
 		public PlayerClass getRequiredPlayerClass()
 		{

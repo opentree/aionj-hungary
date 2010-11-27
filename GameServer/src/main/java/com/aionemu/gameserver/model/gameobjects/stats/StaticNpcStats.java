@@ -22,9 +22,9 @@ package com.aionemu.gameserver.model.gameobjects.stats;
  * @author Mr. Poke
  *
  */
-public class StaticNpcStats 
+public class StaticNpcStats
 {
-	
+
 	public int getMaxHp()
 	{
 		return 100;
@@ -39,12 +39,12 @@ public class StaticNpcStats
 	{
 		return 0;
 	}
-	
+
 	public int getBaseAttackSpeed()
 	{
 		return 2000;
 	}
-	
+
 	public int getCurrentAttackSpeed()
 	{
 		return 2000;

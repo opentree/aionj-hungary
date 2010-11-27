@@ -34,15 +34,15 @@ public class CM_SUMMON_ATTACK extends AbstractClientPacket<AionChannelHandler>
 	private static final Logger	log	= Logger.getLogger(CM_SUMMON_ATTACK.class);
 
 	@SuppressWarnings("unused")
-	private int summonObjId;
-	private int targetObjId;
+	private int					summonObjId;
+	private int					targetObjId;
 	@SuppressWarnings("unused")
-	private int unk1;
+	private int					unk1;
 	@SuppressWarnings("unused")
-	private int unk2;
+	private int					unk2;
 	@SuppressWarnings("unused")
-	private int unk3;
-	
+	private int					unk3;
+
 	public CM_SUMMON_ATTACK(int opcode)
 	{
 		super(opcode);
@@ -68,15 +68,15 @@ public class CM_SUMMON_ATTACK extends AbstractClientPacket<AionChannelHandler>
 			log.error("CM_SUMMON_ATTACK packet received but cannot get master player.");
 			return;
 		}
-		
+
 		Summon summon = activePlayer.getSummon();
-		
-		if(summon == null)
+
+		if (summon == null)
 		{
 			log.error("CM_SUMMON_ATTACK packet received but cannot get summon.");
 			return;
 		}
-		
+
 		Creature creature = (Creature) World.getInstance().findAionObject(targetObjId);
 		summon.attackTarget(creature);
 	}

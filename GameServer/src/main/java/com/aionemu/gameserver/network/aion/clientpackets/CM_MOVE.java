@@ -46,13 +46,13 @@ public class CM_MOVE extends AbstractClientPacket<AionChannelHandler>
 
 	private MovementType		type;
 
-	private byte heading;
+	private byte				heading;
 
-	private byte movementType;
+	private byte				movementType;
 
-	private float x, y, z, x2, y2, z2;
+	private float				x, y, z, x2, y2, z2;
 
-	private byte glideFlag;
+	private byte				glideFlag;
 
 	/**
 	 * Constructs new instance of <tt>CM_MOVE </tt> packet
@@ -72,7 +72,7 @@ public class CM_MOVE extends AbstractClientPacket<AionChannelHandler>
 	{
 		Player player = getChannelHandler().getActivePlayer();
 
-		if(!player.isSpawned())
+		if (!player.isSpawned())
 			return;
 
 		x = readF();
@@ -83,7 +83,7 @@ public class CM_MOVE extends AbstractClientPacket<AionChannelHandler>
 		movementType = (byte) readC();
 		type = MovementType.getMovementTypeById(movementType);
 
-		switch(type)
+		switch (type)
 		{
 			case MOVEMENT_START_MOUSE:
 			case MOVEMENT_START_KEYBOARD:
@@ -99,7 +99,7 @@ public class CM_MOVE extends AbstractClientPacket<AionChannelHandler>
 				// no break
 			case MOVEMENT_GLIDE_UP:
 			case VALIDATE_GLIDE_MOUSE:
-				glideFlag = (byte)readC();
+				glideFlag = (byte) readC();
 				break;
 			default:
 				break;
@@ -115,12 +115,12 @@ public class CM_MOVE extends AbstractClientPacket<AionChannelHandler>
 		Player player = getChannelHandler().getActivePlayer();
 		World world = World.getInstance();
 		//packet was not read correctly
-		if(type == null)
+		if (type == null)
 			return;
 
 		float playerZ = player.getZ();
 
-		switch(type)
+		switch (type)
 		{
 			case MOVEMENT_START_MOUSE:
 			case MOVEMENT_START_KEYBOARD:
@@ -130,23 +130,20 @@ public class CM_MOVE extends AbstractClientPacket<AionChannelHandler>
 				world.updatePosition(player, x, y, z, heading);
 				player.onStartMove();
 				player.getFlyController().onStopGliding();
-				PacketSendUtility.broadcastPacket(player, new SM_MOVE(player.getObjectId(), x, y, z, x2, y2, z2, heading, type),
-					false);
+				PacketSendUtility.broadcastPacket(player, new SM_MOVE(player.getObjectId(), x, y, z, x2, y2, z2, heading, type), false);
 				break;
 			case MOVEMENT_GLIDE_START_MOUSE:
 				// no break
 			case MOVEMENT_GLIDE_DOWN:
 				world.updatePosition(player, x, y, z, heading);
 				player.onMove();
-				PacketSendUtility.broadcastPacket(player, new SM_MOVE(player.getObjectId(), x, y, z, x2, y2, z2, heading, glideFlag, type),
-					false);
+				PacketSendUtility.broadcastPacket(player, new SM_MOVE(player.getObjectId(), x, y, z, x2, y2, z2, heading, glideFlag, type), false);
 				player.getFlyController().switchToGliding();
 				break;
 			case MOVEMENT_GLIDE_UP:
 				world.updatePosition(player, x, y, z, heading);
 				player.onMove();
-				PacketSendUtility.broadcastPacket(player, new SM_MOVE(player.getObjectId(), x, y, z, heading, glideFlag, type),
-					false);
+				PacketSendUtility.broadcastPacket(player, new SM_MOVE(player.getObjectId(), x, y, z, heading, glideFlag, type), false);
 				player.getFlyController().switchToGliding();
 				break;
 			case VALIDATE_GLIDE_MOUSE:
@@ -163,9 +160,8 @@ public class CM_MOVE extends AbstractClientPacket<AionChannelHandler>
 				x2 = (float) (glideSpeed * Math.cos(angle));
 				y2 = (float) (glideSpeed * Math.sin(angle));
 
-				PacketSendUtility.broadcastPacket(player,
-						new SM_MOVE(player.getObjectId(), x, y, z, x2, y2, z2, heading, glideFlag, MovementType.MOVEMENT_GLIDE_DOWN),
-						false);
+				PacketSendUtility.broadcastPacket(player, new SM_MOVE(player.getObjectId(), x, y, z, x2, y2, z2, heading, glideFlag,
+						MovementType.MOVEMENT_GLIDE_DOWN), false);
 				break;
 			case VALIDATE_MOUSE:
 			case VALIDATE_KEYBOARD:
@@ -184,8 +180,7 @@ public class CM_MOVE extends AbstractClientPacket<AionChannelHandler>
 				break;
 				*/
 			case MOVEMENT_STOP:
-				PacketSendUtility.broadcastPacket(player, new SM_MOVE(player.getObjectId(), x, y, z, heading, type),
-					false);
+				PacketSendUtility.broadcastPacket(player, new SM_MOVE(player.getObjectId(), x, y, z, heading, type), false);
 				world.updatePosition(player, x, y, z, heading);
 				player.onStopMove();
 				player.getFlyController().onStopGliding();
@@ -202,24 +197,23 @@ public class CM_MOVE extends AbstractClientPacket<AionChannelHandler>
 			default:
 				break;
 		}
-		
+
 		if (player.isInGroup() || player.isInAlliance())
 		{
 			GroupAllianceUpdater.getInstance().add(player);
 		}
-		
+
 		float distance = playerZ - z;
-		if(FallDamageConfig.ACTIVE_FALL_DAMAGE && player.isInState(CreatureState.ACTIVE)
-			&& !player.isInState(CreatureState.FLYING) && !player.isInState(CreatureState.GLIDING)
-			&& (type == MovementType.MOVEMENT_STOP || distance >= FallDamageConfig.MAXIMUM_DISTANCE_MIDAIR))
+		if (FallDamageConfig.ACTIVE_FALL_DAMAGE && player.isInState(CreatureState.ACTIVE) && !player.isInState(CreatureState.FLYING)
+				&& !player.isInState(CreatureState.GLIDING) && (type == MovementType.MOVEMENT_STOP || distance >= FallDamageConfig.MAXIMUM_DISTANCE_MIDAIR))
 		{
-			if(StatFunctions.calculateFallDamage(player, distance))
+			if (StatFunctions.calculateFallDamage(player, distance))
 			{
 				return; // the player resurrected at his bind location.
 			}
 		}
 
-		if(type != MovementType.MOVEMENT_STOP && player.isProtectionActive())
+		if (type != MovementType.MOVEMENT_STOP && player.isProtectionActive())
 		{
 			player.stopProtectionActiveTask();
 		}

@@ -29,20 +29,20 @@ import com.aionemu.gameserver.model.templates.item.ItemTemplate;
  */
 public class ManaStone extends ItemStone
 {
-	
-	private TreeSet<StatModifier> modifiers;
-	
+
+	private TreeSet<StatModifier>	modifiers;
+
 	public ManaStone(int itemObjId, int itemId, int slot, PersistentState persistentState)
 	{
 		super(itemObjId, itemId, slot, ItemStoneType.MANASTONE, persistentState);
-		
+
 		ItemTemplate stoneTemplate = DataManager.ITEM_DATA.getItemTemplate(itemId);
-		if(stoneTemplate != null && stoneTemplate.getModifiers() != null)
+		if (stoneTemplate != null && stoneTemplate.getModifiers() != null)
 		{
 			this.modifiers = stoneTemplate.getModifiers();
-		}	
+		}
 	}
-	
+
 	/**
 	 * @return modifiers
 	 */
@@ -50,10 +50,10 @@ public class ManaStone extends ItemStone
 	{
 		return modifiers;
 	}
-	
+
 	public StatModifier getFirstModifier()
 	{
 		return modifiers != null ? modifiers.first() : null;
 	}
-	
+
 }

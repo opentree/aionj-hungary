@@ -16,7 +16,6 @@
  */
 package com.aionemu.gameserver.skillengine.effect;
 
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -43,7 +42,7 @@ public class CurseEffect extends EffectTemplate
 	@Override
 	public void calculate(Effect effect)
 	{
-		if (calculateEffectResistRate(effect, StatEnum.CURSE_RESISTANCE)) 
+		if (calculateEffectResistRate(effect, StatEnum.CURSE_RESISTANCE))
 			effect.addSucessEffect(this);
 	}
 

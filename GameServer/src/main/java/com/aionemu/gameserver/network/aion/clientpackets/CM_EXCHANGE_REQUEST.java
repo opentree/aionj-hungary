@@ -35,7 +35,7 @@ import com.aionemu.gameserver.world.World;
  */
 public class CM_EXCHANGE_REQUEST extends AbstractClientPacket<AionChannelHandler>
 {
-	public Integer			targetObjectId;
+	public Integer	targetObjectId;
 
 	public CM_EXCHANGE_REQUEST(int opcode)
 	{
@@ -48,7 +48,6 @@ public class CM_EXCHANGE_REQUEST extends AbstractClientPacket<AionChannelHandler
 		targetObjectId = readD();
 	}
 
-
 	@Override
 	protected void runImpl()
 	{
@@ -58,21 +57,22 @@ public class CM_EXCHANGE_REQUEST extends AbstractClientPacket<AionChannelHandler
 		/**
 		 * check if not trading with yourself.
 		 */
-		if(activePlayer != targetPlayer)
+		if (activePlayer != targetPlayer)
 		{
 			/**
 			 * check if trade partner exists or is he/she a player.
 			 */
-			if(targetPlayer!=null)
+			if (targetPlayer != null)
 			{
-				if(targetPlayer.getPlayerSettings().isInDeniedStatus(DeniedStatus.TRADE))
+				if (targetPlayer.getPlayerSettings().isInDeniedStatus(DeniedStatus.TRADE))
 				{
 					sendPacket(SM_SYSTEM_MESSAGE.STR_MSG_REJECTED_TRADE(targetPlayer.getName()));
 					return;
 				}
 				sendPacket(SM_SYSTEM_MESSAGE.REQUEST_TRADE(targetPlayer.getName()));
 
-				RequestResponseHandler responseHandler = new RequestResponseHandler(activePlayer){
+				RequestResponseHandler responseHandler = new RequestResponseHandler(activePlayer)
+				{
 					@Override
 					public void acceptRequest(StaticNpc requester, Player responder)
 					{
@@ -82,14 +82,16 @@ public class CM_EXCHANGE_REQUEST extends AbstractClientPacket<AionChannelHandler
 					@Override
 					public void denyRequest(StaticNpc requester, Player responder)
 					{
-						PacketSendUtility.sendPacket(activePlayer, new SM_SYSTEM_MESSAGE(SystemMessageId.EXCHANGE_HE_REJECTED_EXCHANGE, targetPlayer.getName()));
+						PacketSendUtility
+								.sendPacket(activePlayer, new SM_SYSTEM_MESSAGE(SystemMessageId.EXCHANGE_HE_REJECTED_EXCHANGE, targetPlayer.getName()));
 					}
 				};
 
-				boolean requested = targetPlayer.getResponseRequester().putRequest(SM_QUESTION_WINDOW.STR_EXCHANGE_DO_YOU_ACCEPT_EXCHANGE,responseHandler);
-				if(requested)
+				boolean requested = targetPlayer.getResponseRequester().putRequest(SM_QUESTION_WINDOW.STR_EXCHANGE_DO_YOU_ACCEPT_EXCHANGE, responseHandler);
+				if (requested)
 				{
-					PacketSendUtility.sendPacket(targetPlayer, new SM_QUESTION_WINDOW(SM_QUESTION_WINDOW.STR_EXCHANGE_DO_YOU_ACCEPT_EXCHANGE, 0, activePlayer.getName()));
+					PacketSendUtility.sendPacket(targetPlayer,
+							new SM_QUESTION_WINDOW(SM_QUESTION_WINDOW.STR_EXCHANGE_DO_YOU_ACCEPT_EXCHANGE, 0, activePlayer.getName()));
 				}
 			}
 		}

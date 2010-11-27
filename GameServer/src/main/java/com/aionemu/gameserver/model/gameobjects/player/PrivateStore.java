@@ -78,12 +78,12 @@ public class PrivateStore
 	 */
 	public void removeItem(int itemObjId)
 	{
-		if(items.containsKey(itemObjId))
+		if (items.containsKey(itemObjId))
 		{
 			LinkedHashMap<Integer, TradePSItem> newItems = new LinkedHashMap<Integer, TradePSItem>();
-			for(int itemObjIds : items.keySet())
+			for (int itemObjIds : items.keySet())
 			{
-				if(itemObjId != itemObjIds)
+				if (itemObjId != itemObjIds)
 					newItems.put(itemObjIds, items.get(itemObjIds));
 			}
 			this.items = newItems;
@@ -96,7 +96,7 @@ public class PrivateStore
 	 */
 	public TradePSItem getTradeItemById(int itemObjId)
 	{
-		if(items.containsKey(itemObjId))
+		if (items.containsKey(itemObjId))
 			return items.get(itemObjId);
 		return null;
 	}
@@ -117,7 +117,7 @@ public class PrivateStore
 	{
 		return storeMessage;
 	}
-	
+
 	public void clear()
 	{
 		owner = null;

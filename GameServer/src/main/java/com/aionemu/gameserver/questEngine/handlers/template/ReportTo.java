@@ -60,7 +60,8 @@ public class ReportTo extends QuestHandler
 		qe.setNpcQuestData(startNpc).addOnQuestStart(questId);
 		qe.setNpcQuestData(startNpc).addOnTalkEvent(questId);
 		qe.setNpcQuestData(endNpc).addOnTalkEvent(questId);
-		deletebleItems = new int[]{itemId};
+		deletebleItems = new int[]
+		{ itemId };
 	}
 
 	@Override
@@ -68,17 +69,18 @@ public class ReportTo extends QuestHandler
 	{
 		final Player player = env.getPlayer();
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
 		QuestTemplate template = DataManager.QUEST_DATA.getQuestById(questId);
-		if(targetId == startNpc)
+		if (targetId == startNpc)
 		{
-			if(qs == null || qs.getStatus() == QuestStatus.NONE || (qs.getStatus() == QuestStatus.COMPLETE && (qs.getCompliteCount() <= template.getMaxRepeatCount())))
+			if (qs == null || qs.getStatus() == QuestStatus.NONE
+					|| (qs.getStatus() == QuestStatus.COMPLETE && (qs.getCompliteCount() <= template.getMaxRepeatCount())))
 			{
-				if(env.getDialogId() == 25)
+				if (env.getDialogId() == 25)
 					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
-				else if(env.getDialogId() == 1002 && itemId != 0)
+				else if (env.getDialogId() == 1002 && itemId != 0)
 				{
 					if (ItemService.addItems(player, Collections.singletonList(new QuestItems(itemId, 1))))
 						return defaultQuestStartDialog(env);
@@ -88,15 +90,15 @@ public class ReportTo extends QuestHandler
 					return defaultQuestStartDialog(env);
 			}
 		}
-		else if(targetId == endNpc)
+		else if (targetId == endNpc)
 		{
-			if(qs != null)
+			if (qs != null)
 			{
-				if(env.getDialogId() == 25 && qs.getStatus() == QuestStatus.START)
+				if (env.getDialogId() == 25 && qs.getStatus() == QuestStatus.START)
 					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375);
-				else if(env.getDialogId() == 1009)
+				else if (env.getDialogId() == 1009)
 				{
-					if(itemId != 0)
+					if (itemId != 0)
 						ItemService.removeItemFromInventoryByItemId(player, itemId);
 					qs.setQuestVar(1);
 					qs.setStatus(QuestStatus.REWARD);

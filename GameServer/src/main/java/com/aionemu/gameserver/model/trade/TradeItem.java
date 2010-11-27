@@ -73,7 +73,7 @@ public class TradeItem
 	 */
 	public void decreaseCount(long decreaseCount)
 	{
-		if(decreaseCount < count)
+		if (decreaseCount < count)
 			this.count = count - decreaseCount;
 	}
 }

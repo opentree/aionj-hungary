@@ -26,8 +26,8 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_ABYSS_RANK_UPDATE extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private Player player;
-	private int rankId;
+	private Player	player;
+	private int		rankId;
 
 	public SM_ABYSS_RANK_UPDATE(Player player)
 	{

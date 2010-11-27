@@ -38,15 +38,15 @@ public class GoodsListData
 {
 
 	@XmlElement(required = true)
-	protected List<GoodsList> list;
+	protected List<GoodsList>				list;
 
 	/** A map containing all goodslist templates */
-	private TIntObjectHashMap<GoodsList> goodsListData;
+	private TIntObjectHashMap<GoodsList>	goodsListData;
 
 	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
 		goodsListData = new TIntObjectHashMap<GoodsList>();
-		for(GoodsList it : list)
+		for (GoodsList it : list)
 		{
 			goodsListData.put(it.getId(), it);
 		}

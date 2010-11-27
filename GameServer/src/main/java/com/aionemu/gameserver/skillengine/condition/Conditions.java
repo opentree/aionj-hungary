@@ -29,43 +29,43 @@ import javax.xml.bind.annotation.XmlType;
  * @author ATracer 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Conditions", propOrder = {
-    "conditions"
-})
-public class Conditions 
+@XmlType(name = "Conditions", propOrder =
+{ "conditions" })
+public class Conditions
 {
-    @XmlElements({
-        @XmlElement(name = "target", type = TargetCondition.class),
-        @XmlElement(name = "mp", type = MpCondition.class),
-		@XmlElement(name = "hp", type = HpCondition.class),
-        @XmlElement(name = "dp", type = DpCondition.class),
-        @XmlElement(name = "playermove", type = PlayerMovedCondition.class),
-        @XmlElement(name = "arrowcheck", type = ArrowCheckCondition.class)
-    })
-    protected List<Condition> conditions;
+	@XmlElements(
+	{
+			@XmlElement(name = "target", type = TargetCondition.class),
+			@XmlElement(name = "mp", type = MpCondition.class),
+			@XmlElement(name = "hp", type = HpCondition.class),
+			@XmlElement(name = "dp", type = DpCondition.class),
+			@XmlElement(name = "playermove", type = PlayerMovedCondition.class),
+			@XmlElement(name = "arrowcheck", type = ArrowCheckCondition.class) })
+	protected List<Condition>	conditions;
 
-    /**
-     * Gets the value of the conditions property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the conditions property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getConditions().add(newItem);
-     * </pre>
-     * 
-     */
-    public List<Condition> getConditions()
-    {
-        if (conditions == null) {
-            conditions = new ArrayList<Condition>();
-        }
-        return this.conditions;
-    }
+	/**
+	 * Gets the value of the conditions property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list,
+	 * not a snapshot. Therefore any modification you make to the
+	 * returned list will be present inside the JAXB object.
+	 * This is why there is not a <CODE>set</CODE> method for the conditions property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getConditions().add(newItem);
+	 * </pre>
+	 * 
+	 */
+	public List<Condition> getConditions()
+	{
+		if (conditions == null)
+		{
+			conditions = new ArrayList<Condition>();
+		}
+		return this.conditions;
+	}
 
 }

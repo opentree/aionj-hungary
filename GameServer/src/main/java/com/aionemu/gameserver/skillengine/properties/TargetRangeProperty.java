@@ -33,32 +33,31 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.skillengine.model.Skill;
 import com.aionemu.gameserver.utils.MathUtil;
 
-
 /**
  * @author ATracer
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TargetRangeProperty")
-public class TargetRangeProperty
-extends Property
+public class TargetRangeProperty extends Property
 {
 
-	private static final Logger log = Logger.getLogger(TargetRangeProperty.class);
-	
+	private static final Logger		log	= Logger.getLogger(TargetRangeProperty.class);
+
 	@XmlAttribute(required = true)
-	protected TargetRangeAttribute value;
+	protected TargetRangeAttribute	value;
 
 	@XmlAttribute
-	protected int distance;
-	
+	protected int					distance;
+
 	@XmlAttribute
-	protected int maxcount;
+	protected int					maxcount;
 
 	/**
 	 * Gets the value of the value property.
 	 *     
 	 */
-	public TargetRangeAttribute getValue() {
+	public TargetRangeAttribute getValue()
+	{
 		return value;
 	}
 
@@ -67,34 +66,33 @@ extends Property
 	{
 		List<Creature> effectedList = skill.getEffectedList();
 		int counter = 0;
-		switch(value)
+		switch (value)
 		{
 			case ONLYONE:
-				break;			
-			case AREA:	
+				break;
+			case AREA:
 				Creature firstTarget = skill.getFirstTarget();
-				if(firstTarget == null)
+				if (firstTarget == null)
 				{
 					log.warn("CHECKPOINT: first target is null for skillid " + skill.getSkillTemplate().getSkillId());
 					return false;
 				}
-			
-				for(VisibleObject nextCreature : firstTarget.getKnownList().getKnownObjects().values())
+
+				for (VisibleObject nextCreature : firstTarget.getKnownList().getKnownObjects().values())
 				{
-					if(counter >= maxcount)
+					if (counter >= maxcount)
 						break;
 
 					//firstTarget is already added, look: FirstTargetProperty
-					if(firstTarget == nextCreature)
+					if (firstTarget == nextCreature)
 						continue;
-					
+
 					//TODO this is a temporary hack for traps
-					if(skill.getEffector() instanceof Trap && ((Trap) skill.getEffector()).getMaster() == nextCreature)
+					if (skill.getEffector() instanceof Trap && ((Trap) skill.getEffector()).getMaster() == nextCreature)
 						continue;
-					
+
 					//TODO: here value +4 till better move controller developed
-					if(nextCreature instanceof Creature 
-						&& MathUtil.isIn3dRange(firstTarget, nextCreature, distance + 4))
+					if (nextCreature instanceof Creature && MathUtil.isIn3dRange(firstTarget, nextCreature, distance + 4))
 					{
 						effectedList.add((Creature) nextCreature);
 						counter++;
@@ -102,27 +100,28 @@ extends Property
 				}
 				break;
 			case PARTY:
-				if(skill.getEffector() instanceof Player)
+				if (skill.getEffector() instanceof Player)
 				{
-					Player effector = (Player)skill.getEffector();
+					Player effector = (Player) skill.getEffector();
 					if (effector.isInAlliance())
 					{
 						effectedList.clear();
-						for(PlayerAllianceMember allianceMember : effector.getPlayerAlliance().getMembersForGroup(effector.getObjectId()))
+						for (PlayerAllianceMember allianceMember : effector.getPlayerAlliance().getMembersForGroup(effector.getObjectId()))
 						{
-							if (!allianceMember.isOnline()) continue;
+							if (!allianceMember.isOnline())
+								continue;
 							Player member = allianceMember.getPlayer();
-							if(MathUtil.isIn3dRange(effector, member, distance + 4))
+							if (MathUtil.isIn3dRange(effector, member, distance + 4))
 								effectedList.add(member);
 						}
 					}
 					else if (effector.isInGroup())
 					{
 						effectedList.clear();
-						for(Player member : effector.getPlayerGroup().getMembers())
+						for (Player member : effector.getPlayerGroup().getMembers())
 						{
 							//TODO: here value +4 till better move controller developed
-							if(member != null && MathUtil.isIn3dRange(effector, member, distance + 4))
+							if (member != null && MathUtil.isIn3dRange(effector, member, distance + 4))
 								effectedList.add(member);
 						}
 					}
@@ -130,7 +129,7 @@ extends Property
 				break;
 			case NONE:
 				break;
-			
+
 			//TODO other enum values
 		}
 		return true;

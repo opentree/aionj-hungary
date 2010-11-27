@@ -37,11 +37,11 @@ public class ConfuseEffect extends EffectTemplate
 	{
 		// TODO Auto-generated method stub
 	}
-	
+
 	@Override
 	public void calculate(Effect effect)
 	{
-		if (calculateEffectResistRate(effect, StatEnum.CONFUSE_RESISTANCE)) 
+		if (calculateEffectResistRate(effect, StatEnum.CONFUSE_RESISTANCE))
 			effect.addSucessEffect(this);
 	}
 

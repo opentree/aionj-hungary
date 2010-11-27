@@ -32,9 +32,9 @@ import com.aionemu.gameserver.world.World;
  */
 public class CM_VIEW_PLAYER_DETAILS extends AbstractClientPacket<AionChannelHandler>
 {
-	private static final Logger log = Logger.getLogger(CM_VIEW_PLAYER_DETAILS.class);
+	private static final Logger	log	= Logger.getLogger(CM_VIEW_PLAYER_DETAILS.class);
 
-	private int targetObjectId;
+	private int					targetObjectId;
 
 	public CM_VIEW_PLAYER_DETAILS(int opcode)
 	{
@@ -57,14 +57,14 @@ public class CM_VIEW_PLAYER_DETAILS extends AbstractClientPacket<AionChannelHand
 	protected void runImpl()
 	{
 		Player player = World.getInstance().findPlayer(targetObjectId);
-		if(player == null)
+		if (player == null)
 		{
 			//probably targetObjectId can be 0
 			log.warn("CHECKPOINT: can't show player details for " + targetObjectId);
 			return;
 		}
 
-		if(player.getPlayerSettings().isInDeniedStatus(DeniedStatus.VEIW_DETAIL))
+		if (player.getPlayerSettings().isInDeniedStatus(DeniedStatus.VEIW_DETAIL))
 		{
 			sendPacket(SM_SYSTEM_MESSAGE.STR_MSG_REJECTED_WATCH(player.getName()));
 			return;

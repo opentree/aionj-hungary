@@ -36,7 +36,7 @@ public class ChatServerPacketHandlerFactory extends AbstractPacketHandlerFactory
 		//Client Packet's
 		addPacket(new CM_CS_AUTH_RESPONSE(0x00), State.CONNECTED);
 		addPacket(new CM_CS_PLAYER_AUTH_RESPONSE(0x01), State.AUTHED);
-		
+
 		//Server Packet's
 		addPacket(SM_CS_AUTH.class, 0x00);
 		addPacket(SM_CS_PLAYER_AUTH.class, 0x01);

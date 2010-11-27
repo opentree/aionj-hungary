@@ -34,40 +34,40 @@ public class SM_EMOTION extends AbstractAionServerPacket<AionChannelHandler>
 	/**
 	 * Object id of emotion sender
 	 */
-	private int					senderObjectId;
+	private int			senderObjectId;
 
 	/**
 	 * Some unknown variable
 	 */
-	private EmotionType					emotionType;
+	private EmotionType	emotionType;
 
 	/**
 	 * ID of emotion
 	 */
-	private int					emotion;
+	private int			emotion;
 
 	/**
 	 * Object id of emotion target
 	 */
-	private int					targetObjectId;
+	private int			targetObjectId;
 
 	/**
 	 * Temporary Speed..
 	 */
-	private float				speed = 6.0f;
+	private float		speed	= 6.0f;
 
-	private int					state;
+	private int			state;
 
-	private int 				baseAttackSpeed;
-	private int 				currentAttackSpeed;
+	private int			baseAttackSpeed;
+	private int			currentAttackSpeed;
 
 	/**
 	 * Coordinates of player
 	 */
-	private float				x;
-	private float				y;
-	private float				z;
-	private byte				heading;
+	private float		x;
+	private float		y;
+	private float		z;
+	private byte		heading;
 
 	/**
 	 * This constructor should be used when emotion and targetid is 0
@@ -114,7 +114,7 @@ public class SM_EMOTION extends AbstractAionServerPacket<AionChannelHandler>
 		this.senderObjectId = doorId;
 		this.emotionType = EmotionType.SWITCH_DOOR;
 	}
-	
+
 	/**
 	 * New
 	 *
@@ -147,8 +147,8 @@ public class SM_EMOTION extends AbstractAionServerPacket<AionChannelHandler>
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(senderObjectId);
-		writeC( emotionType.getTypeId());
-		switch(emotionType)
+		writeC(emotionType.getTypeId());
+		switch (emotionType)
 		{
 			case SELECT_TARGET:
 				// select target
@@ -177,7 +177,7 @@ public class SM_EMOTION extends AbstractAionServerPacket<AionChannelHandler>
 				writeF(x);
 				writeF(y);
 				writeF(z);
-				writeC( heading);
+				writeC(heading);
 				break;
 			case CHAIR_UP:
 				// stand (chair)
@@ -186,8 +186,8 @@ public class SM_EMOTION extends AbstractAionServerPacket<AionChannelHandler>
 				writeF(x);
 				writeF(y);
 				writeF(z);
-				writeC( heading);
-				break;				
+				writeC(heading);
+				break;
 			case START_FLYTELEPORT:
 				// fly teleport (start)
 				writeH(state);
@@ -219,15 +219,15 @@ public class SM_EMOTION extends AbstractAionServerPacket<AionChannelHandler>
 				// resurrect
 				writeH(state);
 				writeF(speed);
-				break;						
+				break;
 			case EMOTE:
 				// emote
 				writeH(state);
 				writeF(speed);
 				writeD(targetObjectId);
 				writeH(emotion);
-				writeC( 1);
-				break;				
+				writeC(1);
+				break;
 			case ATTACKMODE:
 				// toggle attack mode
 				writeH(state);
@@ -237,7 +237,7 @@ public class SM_EMOTION extends AbstractAionServerPacket<AionChannelHandler>
 				// toggle normal mode
 				writeH(state);
 				writeF(speed);
-				break;		
+				break;
 			case WALK:
 				// toggle walk
 				writeH(state);
@@ -252,14 +252,14 @@ public class SM_EMOTION extends AbstractAionServerPacket<AionChannelHandler>
 				// toggle doors
 				writeH(9);
 				writeD(0);
-				break;				
+				break;
 			case START_EMOTE:
 				// emote startloop
 				writeH(state);
 				writeF(speed);
 				writeH(baseAttackSpeed);
 				writeH(currentAttackSpeed);
-				break;								
+				break;
 			case OPEN_PRIVATESHOP:
 				// private shop open
 				writeH(state);
@@ -276,7 +276,7 @@ public class SM_EMOTION extends AbstractAionServerPacket<AionChannelHandler>
 				writeF(speed);
 				writeH(baseAttackSpeed);
 				writeH(currentAttackSpeed);
-				break;				
+				break;
 			case POWERSHARD_ON:
 				// powershard on
 				writeH(state);
@@ -302,13 +302,13 @@ public class SM_EMOTION extends AbstractAionServerPacket<AionChannelHandler>
 				writeH(state);
 				writeF(speed);
 				writeD(targetObjectId);
-                break;
+				break;
 			case END_LOOT:
 				// looting end
 				writeH(state);
 				writeF(speed);
 				writeD(targetObjectId);
-                break;
+				break;
 			case START_QUESTLOOT:
 				// looting start (quest)
 				writeH(state);
@@ -324,7 +324,7 @@ public class SM_EMOTION extends AbstractAionServerPacket<AionChannelHandler>
 			default:
 				writeH(state);
 				writeF(speed);
-				if(targetObjectId != 0)
+				if (targetObjectId != 0)
 				{
 					writeD(targetObjectId);
 				}

@@ -28,14 +28,13 @@ import com.aionemu.gameserver.questEngine.QuestEngine;
 public class CM_DELETE_QUEST extends AbstractClientPacket<AionChannelHandler>
 {
 
-	static QuestsData		questsData = DataManager.QUEST_DATA;
-	public int questId;
-	
+	static QuestsData	questsData	= DataManager.QUEST_DATA;
+	public int			questId;
+
 	public CM_DELETE_QUEST(int opcode)
 	{
 		super(opcode);
 	}
-
 
 	@Override
 	protected void readImpl()
@@ -47,11 +46,11 @@ public class CM_DELETE_QUEST extends AbstractClientPacket<AionChannelHandler>
 	protected void runImpl()
 	{
 		Player player = getChannelHandler().getActivePlayer();
-		if(questsData.getQuestById(questId).isTimer())
+		if (questsData.getQuestById(questId).isTimer())
 		{
 			player.cancelTask(TaskId.QUEST_TIMER);
 			sendPacket(new SM_QUEST_ACCEPTED(questId, 0));
-		}		
+		}
 		if (!QuestEngine.getInstance().deleteQuest(player, questId))
 			return;
 		sendPacket(new SM_QUEST_ACCEPTED(questId));

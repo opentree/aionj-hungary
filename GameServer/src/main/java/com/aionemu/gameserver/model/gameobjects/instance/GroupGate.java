@@ -77,7 +77,7 @@ public class GroupGate extends Npc implements ISummoned
 	{
 		this.creator = creature;
 	}
-	
+
 	@Override
 	public void onDialogRequest(Player player)
 	{

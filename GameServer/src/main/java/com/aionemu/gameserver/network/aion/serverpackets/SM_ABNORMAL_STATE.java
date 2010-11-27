@@ -28,9 +28,9 @@ import com.aionemu.gameserver.skillengine.model.Effect;
  */
 public class SM_ABNORMAL_STATE extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private Collection<Effect> effects;
-	private int abnormals;
-	
+	private Collection<Effect>	effects;
+	private int					abnormals;
+
 	public SM_ABNORMAL_STATE(Collection<Effect> effects, int abnormals)
 	{
 		this.effects = effects;
@@ -41,14 +41,14 @@ public class SM_ABNORMAL_STATE extends AbstractAionServerPacket<AionChannelHandl
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(abnormals);
-		writeH(effects.size()); 
-		
-		for(Effect effect : effects)
+		writeH(effects.size());
+
+		for (Effect effect : effects)
 		{
 			writeD(effect.getEffectorId());
 			writeH(effect.getSkillId());
-			writeC( effect.getSkillLevel());
-			writeC( effect.getTargetSlot());
+			writeC(effect.getSkillLevel());
+			writeC(effect.getTargetSlot());
 			writeD(effect.getElapsedTime());
 		}
 	}

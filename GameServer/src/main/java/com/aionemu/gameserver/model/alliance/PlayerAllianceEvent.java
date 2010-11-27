@@ -22,34 +22,32 @@ package com.aionemu.gameserver.model.alliance;
  */
 public enum PlayerAllianceEvent
 {
-	LEAVE(0),
-	LEAVE_TIMEOUT(0),
-	BANNED(0),
-	
+	LEAVE(0), LEAVE_TIMEOUT(0), BANNED(0),
+
 	MOVEMENT(1),
-	
+
 	DISCONNECTED(3),
-	
+
 	// Similar to 0, 1, 3 -- only the initial information block.
 	UNK(9),
-	
+
 	RECONNECT(13),
 	ENTER(13),
 	UPDATE(13),
 	MEMBER_GROUP_CHANGE(13),
-	
+
 	// Extra? Unused?
 	APPOINT_VICE_CAPTAIN(13),
 	DEMOTE_VICE_CAPTAIN(13),
 	APPOINT_CAPTAIN(13);
-	
-	private int id;
-	
+
+	private int	id;
+
 	private PlayerAllianceEvent(int id)
 	{
 		this.id = id;
 	}
-	
+
 	public int getId()
 	{
 		return this.id;

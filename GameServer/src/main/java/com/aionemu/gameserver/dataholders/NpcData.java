@@ -42,25 +42,26 @@ import com.aionemu.gameserver.model.templates.NpcTemplate;
 public class NpcData
 {
 	@XmlElement(name = "npc_template")
-	private List<NpcTemplate> npcs;
-	
+	private List<NpcTemplate>				npcs;
+
 	/** A map containing all npc templates */
 	private TIntObjectHashMap<NpcTemplate>	npcData	= new TIntObjectHashMap<NpcTemplate>();
 
 	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
-		for(NpcTemplate npc: npcs)
+		for (NpcTemplate npc : npcs)
 		{
 			npcData.put(npc.getTemplateId(), npc);
 		}
 		npcs.clear();
 		npcs = null;
 	}
-	
+
 	public int size()
 	{
 		return npcData.size();
 	}
+
 	/**
 
 	/**

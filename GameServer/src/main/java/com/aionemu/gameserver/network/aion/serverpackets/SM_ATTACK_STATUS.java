@@ -28,37 +28,28 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_ATTACK_STATUS extends AbstractAionServerPacket<AionChannelHandler>
 {
-    private Creature creature;
-    private TYPE type;
-    private int skillId;
-    private int value;
- 
-    
-    public static enum TYPE
-    {
-    	NATURAL_HP(3),
-    	REGULAR(5),
-    	DAMAGE(7),
-    	HP(7),
-    	MP(21),
-    	NATURAL_MP(22),
-    	FP_RINGS(23),
-    	FP(25),
-    	NATURAL_FP(26);
-    	
-    	private int value;
-    	
-    	private TYPE(int value)
-    	{
-    		this.value = value;
-    	}
-    	
-    	public int getValue()
-    	{
-    		return this.value;
-    	}
-    }
-	
+	private Creature	creature;
+	private TYPE		type;
+	private int			skillId;
+	private int			value;
+
+	public static enum TYPE
+	{
+		NATURAL_HP(3), REGULAR(5), DAMAGE(7), HP(7), MP(21), NATURAL_MP(22), FP_RINGS(23), FP(25), NATURAL_FP(26);
+
+		private int	value;
+
+		private TYPE(int value)
+		{
+			this.value = value;
+		}
+
+		public int getValue()
+		{
+			return this.value;
+		}
+	}
+
 	public SM_ATTACK_STATUS(Creature creature, TYPE type, int skillId, int value)
 	{
 		this.creature = creature;
@@ -66,7 +57,7 @@ public class SM_ATTACK_STATUS extends AbstractAionServerPacket<AionChannelHandle
 		this.skillId = skillId;
 		this.value = value;
 	}
-	
+
 	public SM_ATTACK_STATUS(Creature creature, int value)
 	{
 		this.creature = creature;
@@ -77,22 +68,22 @@ public class SM_ATTACK_STATUS extends AbstractAionServerPacket<AionChannelHandle
 	/**
 	 * {@inheritDoc} ddchcc
 	 */
-	
+
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
-	{		
+	{
 		writeD(creature.getObjectId());
-		switch(type)
+		switch (type)
 		{
 			case DAMAGE:
 				writeD(-value);
 				break;
 			default:
 				writeD(value);
-		}		
-		writeC( type.getValue());
-		writeC( creature.getLifeStats().getHpPercentage());
+		}
+		writeC(type.getValue());
+		writeC(creature.getLifeStats().getHpPercentage());
 		writeH(skillId);
 		writeH(0xA6);
-	}	
+	}
 }

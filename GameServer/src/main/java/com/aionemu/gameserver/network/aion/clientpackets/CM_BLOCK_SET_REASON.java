@@ -29,10 +29,10 @@ import com.aionemu.gameserver.services.SocialService;
  */
 public class CM_BLOCK_SET_REASON extends AbstractClientPacket<AionChannelHandler>
 {
-	
-	String					targetName;
-	String 					reason;
-	
+
+	String	targetName;
+	String	reason;
+
 	public CM_BLOCK_SET_REASON(int opcode)
 	{
 		super(opcode);
@@ -57,11 +57,11 @@ public class CM_BLOCK_SET_REASON extends AbstractClientPacket<AionChannelHandler
 	{
 		Player activePlayer = getChannelHandler().getActivePlayer();
 		BlockedPlayer target = activePlayer.getBlockList().getBlockedPlayer(targetName);
-		
+
 		if (target == null)
 			sendPacket(SM_SYSTEM_MESSAGE.BLOCKLIST_NOT_BLOCKED);
-		
-		else 
+
+		else
 		{
 			SocialService.setBlockedReason(activePlayer, target, reason);
 

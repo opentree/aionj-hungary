@@ -47,9 +47,9 @@ public class LegionContainer
 	 */
 	public void add(Legion legion)
 	{
-		if(legionsById.put(legion.getLegionId(), legion) != null)
+		if (legionsById.put(legion.getLegionId(), legion) != null)
 			throw new DuplicateAionObjectException();
-		if(legionsByName.put(legion.getLegionName().toLowerCase(), legion) != null)
+		if (legionsByName.put(legion.getLegionName().toLowerCase(), legion) != null)
 			throw new DuplicateAionObjectException();
 	}
 

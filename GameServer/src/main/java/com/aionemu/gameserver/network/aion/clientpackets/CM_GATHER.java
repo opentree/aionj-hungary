@@ -28,19 +28,18 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class CM_GATHER extends AbstractClientPacket<AionChannelHandler>
 {
-	boolean isStartGather = false;
+	boolean	isStartGather	= false;
 
 	public CM_GATHER(int opcode)
 	{
 		super(opcode);
 	}
 
-
 	@Override
 	protected void readImpl()
 	{
 		int action = readD();
-		if(action == 0)
+		if (action == 0)
 			isStartGather = true;
 
 	}
@@ -50,18 +49,18 @@ public class CM_GATHER extends AbstractClientPacket<AionChannelHandler>
 	{
 
 		Player player = getChannelHandler().getActivePlayer();
-		if(player != null)
+		if (player != null)
 		{
 			VisibleObject target = player.getTarget();
-			if(target != null && target instanceof Gatherable)
+			if (target != null && target instanceof Gatherable)
 			{
-				if(isStartGather)
+				if (isStartGather)
 				{
-					((Gatherable)target).onStartUse(player);
+					((Gatherable) target).onStartUse(player);
 				}
 				else
 				{
-					((Gatherable)target).finishGathering(player);
+					((Gatherable) target).finishGathering(player);
 				}
 			}
 		}

@@ -41,7 +41,7 @@ public class ItemStorageTest
 	{
 		itemList = new ArrayList<Item>();
 
-		for(int i = 0; i < 30; i++)
+		for (int i = 0; i < 30; i++)
 		{
 			ItemTemplate template = new ItemTemplate();
 			template.setItemId(i);
@@ -56,7 +56,7 @@ public class ItemStorageTest
 		Storage inventory = new Storage(StorageType.CUBE);
 		Assert.assertEquals(false, inventory.isFull());
 
-		for(Item item : itemList)
+		for (Item item : itemList)
 		{
 			inventory.putToBag(item);
 		}

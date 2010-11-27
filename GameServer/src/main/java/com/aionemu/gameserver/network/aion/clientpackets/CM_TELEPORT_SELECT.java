@@ -33,14 +33,14 @@ import com.aionemu.gameserver.world.World;
 public class CM_TELEPORT_SELECT extends AbstractClientPacket<AionChannelHandler>
 {
 	/** NPC ID */
-	public  int					targetObjectId;
+	public int					targetObjectId;
 
 	/** Destination of teleport */
-	public  int					locId;
+	public int					locId;
 
-	public  TelelocationTemplate _tele;
+	public TelelocationTemplate	_tele;
 
-	private TeleporterTemplate teleport;
+	private TeleporterTemplate	teleport;
 
 	public CM_TELEPORT_SELECT(int opcode)
 	{
@@ -66,14 +66,14 @@ public class CM_TELEPORT_SELECT extends AbstractClientPacket<AionChannelHandler>
 	{
 		Player activePlayer = getChannelHandler().getActivePlayer();
 
-		Npc npc = (Npc)World.getInstance().findAionObject(targetObjectId);
+		Npc npc = (Npc) World.getInstance().findAionObject(targetObjectId);
 
-		if(activePlayer == null || activePlayer.getLifeStats().isAlreadyDead())
+		if (activePlayer == null || activePlayer.getLifeStats().isAlreadyDead())
 			return;
 
 		teleport = DataManager.TELEPORTER_DATA.getTeleporterTemplate(npc.getNpcId());
 
-		switch(teleport.getType())
+		switch (teleport.getType())
 		{
 			case FLIGHT:
 				TeleportService.flightTeleport(teleport, locId, activePlayer);

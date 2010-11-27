@@ -28,7 +28,7 @@ import com.aionemu.gameserver.services.LegionService;
  */
 public class CM_LEGION_SEND_EMBLEM extends AbstractClientPacket<AionChannelHandler>
 {
-	
+
 	private int	legionId;
 
 	public CM_LEGION_SEND_EMBLEM(int opcode)
@@ -53,6 +53,7 @@ public class CM_LEGION_SEND_EMBLEM extends AbstractClientPacket<AionChannelHandl
 	{
 		Legion legion = LegionService.getInstance().getLegion(legionId);
 		LegionEmblem legionEmblem = legion.getLegionEmblem();
-		sendPacket(new SM_LEGION_SEND_EMBLEM(legionId, legionEmblem.getEmblemId(), legionEmblem.getColor_r(), legionEmblem.getColor_g(), legionEmblem.getColor_b(), legion.getLegionName()));
+		sendPacket(new SM_LEGION_SEND_EMBLEM(legionId, legionEmblem.getEmblemId(), legionEmblem.getColor_r(), legionEmblem.getColor_g(),
+				legionEmblem.getColor_b(), legion.getLegionName()));
 	}
 }

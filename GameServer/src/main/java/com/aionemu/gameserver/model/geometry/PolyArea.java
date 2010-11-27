@@ -75,7 +75,7 @@ public class PolyArea extends AbstractArea
 	{
 		super(zMin, zMax);
 
-		if(points.length < 3)
+		if (points.length < 3)
 		{
 			throw new IllegalArgumentException("Not enough points, needed at least 3 but got " + points.length);
 		}
@@ -84,7 +84,7 @@ public class PolyArea extends AbstractArea
 		this.yPoints = new int[points.length];
 
 		Polygon polygon = new Polygon();
-		for(int i = 0, n = points.length; i < n; i++)
+		for (int i = 0, n = points.length; i < n; i++)
 		{
 			Point p = points[i];
 			polygon.addPoint(p.x, p.y);
@@ -109,7 +109,7 @@ public class PolyArea extends AbstractArea
 	@Override
 	public double getDistance2D(int x, int y)
 	{
-		if(isInside2D(x, y))
+		if (isInside2D(x, y))
 		{
 			return 0;
 		}
@@ -126,11 +126,11 @@ public class PolyArea extends AbstractArea
 	@Override
 	public double getDistance3D(int x, int y, int z)
 	{
-		if(isInside3D(x, y, z))
+		if (isInside3D(x, y, z))
 		{
 			return 0;
 		}
-		else if(isInsideZ(z))
+		else if (isInsideZ(z))
 		{
 			return getDistance2D(x, y);
 		}
@@ -151,10 +151,10 @@ public class PolyArea extends AbstractArea
 		Point closestPoint = null;
 		double closestDistance = 0;
 
-		for(int i = 0; i < xPoints.length; i++)
+		for (int i = 0; i < xPoints.length; i++)
 		{
 			int nextIndex = i + 1;
-			if(nextIndex == xPoints.length)
+			if (nextIndex == xPoints.length)
 			{
 				nextIndex = 0;
 			}
@@ -166,7 +166,7 @@ public class PolyArea extends AbstractArea
 
 			Point point = MathUtil.getClosestPointOnSegment(p1x, p1y, p2x, p2y, x, y);
 
-			if(closestPoint == null)
+			if (closestPoint == null)
 			{
 				closestPoint = point;
 				closestDistance = MathUtil.getDistance(closestPoint.x, closestPoint.y, x, y);
@@ -174,7 +174,7 @@ public class PolyArea extends AbstractArea
 			else
 			{
 				double newDistance = MathUtil.getDistance(point.x, point.y, x, y);
-				if(newDistance < closestDistance)
+				if (newDistance < closestDistance)
 				{
 					closestPoint = point;
 					closestDistance = newDistance;

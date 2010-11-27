@@ -35,15 +35,15 @@ public class ShieldEffect extends EffectTemplate
 {
 
 	@XmlAttribute
-	protected int	hitdelta;
+	protected int		hitdelta;
 	@XmlAttribute
-	protected int	hitvalue;
+	protected int		hitvalue;
 	@XmlAttribute
 	protected boolean	percent;
 	@XmlAttribute
-	protected int	delta;
+	protected int		delta;
 	@XmlAttribute
-	protected int	value;
+	protected int		value;
 
 	@Override
 	public void applyEffect(Effect effect)
@@ -65,9 +65,8 @@ public class ShieldEffect extends EffectTemplate
 	@Override
 	public void startEffect(final Effect effect)
 	{
-		AttackShieldObserver asObserver = new AttackShieldObserver(effect.getReserved3(),
-			effect.getReserved2(), percent, effect);
-		
+		AttackShieldObserver asObserver = new AttackShieldObserver(effect.getReserved3(), effect.getReserved2(), percent, effect);
+
 		effect.getEffected().getObserveController().addAttackCalcObserver(asObserver);
 		effect.setAttackShieldObserver(asObserver, position);
 	}

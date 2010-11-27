@@ -59,19 +59,16 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 public class Summon extends Creature implements ISummoned
 {
 
-	private Player	master;
-	private SummonMode mode;
-	private byte level;
+	private Player		master;
+	private SummonMode	mode;
+	private byte		level;
 
 	public static enum SummonMode
 	{
-		ATTACK(0),
-		GUARD(1),
-		REST(2),
-		RELEASE(3);
-		
-		private int id;
-		
+		ATTACK(0), GUARD(1), REST(2), RELEASE(3);
+
+		private int	id;
+
 		private SummonMode(int id)
 		{
 			this.id = id;
@@ -83,8 +80,9 @@ public class Summon extends Creature implements ISummoned
 		public int getId()
 		{
 			return id;
-		}	
+		}
 	}
+
 	/**
 	 * 
 	 * @param objId
@@ -94,8 +92,7 @@ public class Summon extends Creature implements ISummoned
 	 * @param statsTemplate 
 	 * @param position
 	 */
-	public Summon(int objId, SpawnTemplate spawnTemplate,
-		VisibleObjectTemplate objectTemplate, SummonStatsTemplate statsTemplate, byte level)
+	public Summon(int objId, SpawnTemplate spawnTemplate, VisibleObjectTemplate objectTemplate, SummonStatsTemplate statsTemplate, byte level)
 	{
 		super(objId, spawnTemplate);
 		this.objectTemplate = objectTemplate;
@@ -147,7 +144,7 @@ public class Summon extends Creature implements ISummoned
 	{
 		return getObjectTemplate().getTemplateId();
 	}
-	
+
 	public int getNameId()
 	{
 		return getObjectTemplate().getNameId();
@@ -198,13 +195,13 @@ public class Summon extends Creature implements ISummoned
 	{
 		return creature.isAggroFrom(this);
 	}
-	
+
 	@Override
 	public boolean isAggroFrom(Npc npc)
 	{
-		if(getMaster() == null)
+		if (getMaster() == null)
 			return false;
-		
+
 		return getMaster().isAggroFrom(npc);
 	}
 
@@ -216,18 +213,17 @@ public class Summon extends Creature implements ISummoned
 	{
 		this.master = (Player) creature;
 	}
-	
 
-	private long lastAttackMilis = 0;
+	private long	lastAttackMilis	= 0;
 
 	@Override
 	public void notSee(VisibleObject object, boolean isOutOfRange)
 	{
 		super.notSee(object, isOutOfRange);
-		if(getMaster() == null)
+		if (getMaster() == null)
 			return;
-		
-		if(object.getObjectId() == getMaster().getObjectId())
+
+		if (object.getObjectId() == getMaster().getObjectId())
 		{
 			release(UnsummonType.DISTANCE);
 		}
@@ -239,22 +235,21 @@ public class Summon extends Creature implements ISummoned
 	public void release(final UnsummonType unsummonType)
 	{
 
-		if(getMode() == SummonMode.RELEASE)
+		if (getMode() == SummonMode.RELEASE)
 			return;
 		setMode(SummonMode.RELEASE);
 
 		final Player master = getMaster();
 		final int summonObjId = getObjectId();
 
-		switch(unsummonType)
+		switch (unsummonType)
 		{
 			case COMMAND:
 				PacketSendUtility.sendPacket(master, SM_SYSTEM_MESSAGE.SUMMON_UNSUMMON(getNameId()));
 				PacketSendUtility.sendPacket(master, new SM_SUMMON_UPDATE(this));
 				break;
 			case DISTANCE:
-				PacketSendUtility.sendPacket(master, SM_SYSTEM_MESSAGE
-					.SUMMON_UNSUMMON_BY_TOO_DISTANCE());
+				PacketSendUtility.sendPacket(master, SM_SYSTEM_MESSAGE.SUMMON_UNSUMMON_BY_TOO_DISTANCE());
 				PacketSendUtility.sendPacket(master, new SM_SUMMON_UPDATE(this));
 				break;
 			case LOGOUT:
@@ -262,7 +257,8 @@ public class Summon extends Creature implements ISummoned
 				break;
 		}
 
-		ThreadPoolManager.getInstance().schedule(new Runnable(){
+		ThreadPoolManager.getInstance().schedule(new Runnable()
+		{
 
 			@Override
 			public void run()
@@ -271,19 +267,18 @@ public class Summon extends Creature implements ISummoned
 				master.setSummon(null);
 				delete();
 
-				switch(unsummonType)
+				switch (unsummonType)
 				{
 					case COMMAND:
 					case DISTANCE:
 					case UNSPECIFIED:
-						PacketSendUtility
-							.sendPacket(master, SM_SYSTEM_MESSAGE.SUMMON_DISMISSED(getNameId()));
+						PacketSendUtility.sendPacket(master, SM_SYSTEM_MESSAGE.SUMMON_DISMISSED(getNameId()));
 						PacketSendUtility.sendPacket(master, new SM_SUMMON_OWNER_REMOVE(summonObjId));
 
 						// TODO temp till found on retail
 						PacketSendUtility.sendPacket(master, new SM_SUMMON_PANEL_REMOVE());
 						break;
-					case LOGOUT:				
+					case LOGOUT:
 						break;
 				}
 			}
@@ -298,15 +293,14 @@ public class Summon extends Creature implements ISummoned
 		setMode(SummonMode.REST);
 		Player master = getMaster();
 		PacketSendUtility.sendPacket(master, SM_SYSTEM_MESSAGE.SUMMON_RESTMODE(this.getNameId()));
-		PacketSendUtility.sendPacket(master, new SM_SUMMON_UPDATE(this));		
+		PacketSendUtility.sendPacket(master, new SM_SUMMON_UPDATE(this));
 		checkCurrentHp();
 	}
 
 	private void checkCurrentHp()
 	{
-		if(!getLifeStats().isFullyRestoredHp())
-			addNewTask(TaskId.RESTORE,
-				LifeStatsRestoreService.getInstance().scheduleHpRestoreTask(getLifeStats()));
+		if (!getLifeStats().isFullyRestoredHp())
+			addNewTask(TaskId.RESTORE, LifeStatsRestoreService.getInstance().scheduleHpRestoreTask(getLifeStats()));
 	}
 
 	/**
@@ -337,13 +331,13 @@ public class Summon extends Creature implements ISummoned
 	public void attackTarget(Creature target)
 	{
 		Player master = getMaster();
-		if(!canAttack())
+		if (!canAttack())
 			return;
 
-		if(!RestrictionsManager.canAttack(master, target))
+		if (!RestrictionsManager.canAttack(master, target))
 			return;
 
-		if(!isEnemy(target))
+		if (!isEnemy(target))
 			return;
 
 		int attackSpeed = getGameStats().getCurrentStat(StatEnum.ATTACK_SPEED);
@@ -365,14 +359,13 @@ public class Summon extends Creature implements ISummoned
 		List<AttackResult> attackList = AttackUtil.calculateAttackResult(this, target);
 
 		int damage = 0;
-		for(AttackResult result : attackList)
+		for (AttackResult result : attackList)
 		{
 			damage += result.getDamage();
 		}
 
 		int attackType = 0;
-		PacketSendUtility.broadcastPacket(this, new SM_ATTACK(this, target, getGameStats()
-			.getAttackCounter(), 274, attackType, attackList));
+		PacketSendUtility.broadcastPacket(this, new SM_ATTACK(this, target, getGameStats().getAttackCounter(), 274, attackType, attackList));
 
 		target.onAttack(this, damage);
 		getGameStats().increaseAttackCounter();
@@ -382,17 +375,16 @@ public class Summon extends Creature implements ISummoned
 	@Override
 	public void onAttack(Creature creature, int skillId, TYPE type, int damage)
 	{
-		if(getLifeStats().isAlreadyDead())
+		if (getLifeStats().isAlreadyDead())
 			return;
-		
+
 		//temp 
-		if(getMode() == SummonMode.RELEASE)
+		if (getMode() == SummonMode.RELEASE)
 			return;
-		
+
 		super.onAttack(creature, skillId, type, damage);
 		getLifeStats().reduceHp(damage, creature);
-		PacketSendUtility.broadcastPacket(this, new SM_ATTACK_STATUS(this, TYPE.REGULAR, 0,
-			damage));
+		PacketSendUtility.broadcastPacket(this, new SM_ATTACK_STATUS(this, TYPE.REGULAR, 0, damage));
 		PacketSendUtility.sendPacket(getMaster(), new SM_SUMMON_UPDATE(this));
 	}
 
@@ -401,14 +393,13 @@ public class Summon extends Creature implements ISummoned
 	{
 		super.onDie(lastAttacker);
 		release(UnsummonType.UNSPECIFIED);
-		PacketSendUtility.broadcastPacket(this, new SM_EMOTION(this, EmotionType.DIE, 0, lastAttacker == null ? 0 : lastAttacker
-			.getObjectId()));
+		PacketSendUtility.broadcastPacket(this, new SM_EMOTION(this, EmotionType.DIE, 0, lastAttacker == null ? 0 : lastAttacker.getObjectId()));
 	}
-	
+
 	public void useSkill(int skillId, Creature target)
 	{
 		Skill skill = SkillEngine.getInstance().getSkill(this, skillId, 1, target);
-		if(skill != null)
+		if (skill != null)
 		{
 			skill.useSkill();
 		}
@@ -416,9 +407,6 @@ public class Summon extends Creature implements ISummoned
 
 	public static enum UnsummonType
 	{
-		LOGOUT,
-		DISTANCE,
-		COMMAND,
-		UNSPECIFIED
+		LOGOUT, DISTANCE, COMMAND, UNSPECIFIED
 	}
 }

@@ -37,17 +37,17 @@ import com.aionemu.gameserver.model.gameobjects.stats.modifiers.SubModifier;
  */
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "modifiers")
-public class ModifiersTemplate 
+public class ModifiersTemplate
 {
-	@XmlElements ({
-			@XmlElement(name = "sub", type=SubModifier.class),
-			@XmlElement(name = "add", type=AddModifier.class),
-			@XmlElement(name = "rate", type=RateModifier.class),
-			@XmlElement(name = "set", type=SetModifier.class),
-			@XmlElement(name = "mean", type=MeanModifier.class)
-	})
-	private TreeSet<StatModifier> modifiers;
-	
+	@XmlElements(
+	{
+			@XmlElement(name = "sub", type = SubModifier.class),
+			@XmlElement(name = "add", type = AddModifier.class),
+			@XmlElement(name = "rate", type = RateModifier.class),
+			@XmlElement(name = "set", type = SetModifier.class),
+			@XmlElement(name = "mean", type = MeanModifier.class) })
+	private TreeSet<StatModifier>	modifiers;
+
 	public TreeSet<StatModifier> getModifiers()
 	{
 		return modifiers;

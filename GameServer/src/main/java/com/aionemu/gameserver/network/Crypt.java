@@ -35,12 +35,11 @@ public class Crypt
 	/**
 	 * Second byte of server packet must be equal to this
 	 */
-	public final static byte	staticServerPacketCode	= 0x50;// 1.5.x (0x54 works too)
+	public final static byte	staticServerPacketCode	= 0x50;																				// 1.5.x (0x54 works too)
 	/**
 	 * Static xor key
 	 */
-	private static byte[]		staticKey				= "nKO/WctQ0AVLbpzfBkS6NevDYT8ourG5CRlmdjyJ72aswx4EPq1UgZhFMXH?3iI9"
-															.getBytes();
+	private static byte[]		staticKey				= "nKO/WctQ0AVLbpzfBkS6NevDYT8ourG5CRlmdjyJ72aswx4EPq1UgZhFMXH?3iI9".getBytes();
 	/**
 	 * Current xor key for client packet decoding.
 	 */
@@ -63,14 +62,22 @@ public class Crypt
 	 */
 	public final int enableKey()
 	{
-		if(clientPacketKey != null)
+		if (clientPacketKey != null)
 			throw new KeyAlreadySetException();
 
 		/** rnd key - this will be used to encrypt/decrypt packet */
 		int key = Rnd.nextInt();
 
-		clientPacketKey = new byte[] { (byte) (key & 0xff), (byte) ((key >> 8) & 0xff), (byte) ((key >> 16) & 0xff),
-			(byte) ((key >> 24) & 0xff), (byte) 0xa1, (byte) 0x6c, (byte) 0x54, (byte) 0x87 };
+		clientPacketKey = new byte[]
+		{
+				(byte) (key & 0xff),
+				(byte) ((key >> 8) & 0xff),
+				(byte) ((key >> 16) & 0xff),
+				(byte) ((key >> 24) & 0xff),
+				(byte) 0xa1,
+				(byte) 0x6c,
+				(byte) 0x54,
+				(byte) 0x87 };
 
 		serverPacketKey = new byte[clientPacketKey.length];
 		System.arraycopy(clientPacketKey, 0, serverPacketKey, 0, clientPacketKey.length);
@@ -87,7 +94,7 @@ public class Crypt
 	 */
 	public final boolean decrypt(ChannelBuffer buf)
 	{
-		if(!isEnabled)
+		if (!isEnabled)
 			return false;
 
 		final byte[] data = buf.array();
@@ -103,7 +110,7 @@ public class Crypt
 		data[arrayIndex++] ^= (clientPacketKey[0] & 0xff);
 
 		/** decrypt loop */
-		for(int i = 1; i < size; i++, arrayIndex++)
+		for (int i = 1; i < size; i++, arrayIndex++)
 		{
 			int curr = data[arrayIndex] & 0xff;
 			data[arrayIndex] ^= (staticKey[i & 63] & 0xff) ^ (clientPacketKey[i & 7] & 0xff) ^ prev;
@@ -111,10 +118,9 @@ public class Crypt
 		}
 
 		/** oldKey value as long */
-		long oldKey = (((long) clientPacketKey[0] & 0xff) << 0) | (((long) clientPacketKey[1] & 0xff) << 8)
-			| (((long) clientPacketKey[2] & 0xff) << 16) | (((long) clientPacketKey[3] & 0xff) << 24)
-			| (((long) clientPacketKey[4] & 0xff) << 32) | (((long) clientPacketKey[5] & 0xff) << 40)
-			| (((long) clientPacketKey[6] & 0xff) << 48) | (((long) clientPacketKey[7] & 0xff) << 56);
+		long oldKey = (((long) clientPacketKey[0] & 0xff) << 0) | (((long) clientPacketKey[1] & 0xff) << 8) | (((long) clientPacketKey[2] & 0xff) << 16)
+				| (((long) clientPacketKey[3] & 0xff) << 24) | (((long) clientPacketKey[4] & 0xff) << 32) | (((long) clientPacketKey[5] & 0xff) << 40)
+				| (((long) clientPacketKey[6] & 0xff) << 48) | (((long) clientPacketKey[7] & 0xff) << 56);
 
 		/** change key */
 		oldKey += size;
@@ -150,7 +156,7 @@ public class Crypt
 	 */
 	public final void encrypt(ChannelBuffer buf)
 	{
-		if(!isEnabled)
+		if (!isEnabled)
 		{
 			/** first packet is not encrypted */
 			isEnabled = true;
@@ -158,10 +164,10 @@ public class Crypt
 		}
 
 		final byte[] data = buf.array();
-		final int size = buf.readableBytes()-2;
+		final int size = buf.readableBytes() - 2;
 
 		/** index to byte that should be encrypted now */
-		int arrayIndex = buf.arrayOffset() + buf.readerIndex()+2;
+		int arrayIndex = buf.arrayOffset() + buf.readerIndex() + 2;
 
 		/** encrypt first byte */
 		data[arrayIndex] ^= (serverPacketKey[0] & 0xff);
@@ -170,17 +176,16 @@ public class Crypt
 		int prev = data[arrayIndex++];
 
 		/** encrypt loop */
-		for(int i = 1; i < size; i++, arrayIndex++)
+		for (int i = 1; i < size; i++, arrayIndex++)
 		{
 			data[arrayIndex] ^= (staticKey[i & 63] & 0xff) ^ (serverPacketKey[i & 7] & 0xff) ^ prev;
 			prev = data[arrayIndex];
 		}
 
 		/** oldKey value as long */
-		long oldKey = (((long) serverPacketKey[0] & 0xff) << 0) | (((long) serverPacketKey[1] & 0xff) << 8)
-			| (((long) serverPacketKey[2] & 0xff) << 16) | (((long) serverPacketKey[3] & 0xff) << 24)
-			| (((long) serverPacketKey[4] & 0xff) << 32) | (((long) serverPacketKey[5] & 0xff) << 40)
-			| (((long) serverPacketKey[6] & 0xff) << 48) | (((long) serverPacketKey[7] & 0xff) << 56);
+		long oldKey = (((long) serverPacketKey[0] & 0xff) << 0) | (((long) serverPacketKey[1] & 0xff) << 8) | (((long) serverPacketKey[2] & 0xff) << 16)
+				| (((long) serverPacketKey[3] & 0xff) << 24) | (((long) serverPacketKey[4] & 0xff) << 32) | (((long) serverPacketKey[5] & 0xff) << 40)
+				| (((long) serverPacketKey[6] & 0xff) << 48) | (((long) serverPacketKey[7] & 0xff) << 56);
 
 		/** change key */
 		oldKey += size;
@@ -204,6 +209,6 @@ public class Crypt
 	 */
 	public static final byte encodeOpcodec(int op)
 	{
-		return (byte)(~(op - 0x44));
+		return (byte) (~(op - 0x44));
 	}
 }

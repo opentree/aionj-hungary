@@ -38,13 +38,13 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class PlayerGroup extends AionObject
 {
-	private LootGroupRules				lootGroupRules		= new LootGroupRules();
+	private LootGroupRules				lootGroupRules	= new LootGroupRules();
 
 	private Player						groupLeader;
 
-	private FastMap<Integer, Player>	groupMembers		= new FastMap<Integer, Player>().shared();
+	private FastMap<Integer, Player>	groupMembers	= new FastMap<Integer, Player>().shared();
 
-	private int							RoundRobinNr		= 0;
+	private int							RoundRobinNr	= 0;
 
 	/**
 	 * Instantiates new player group with unique groupId
@@ -111,11 +111,11 @@ public class PlayerGroup extends AionObject
 	{
 		RoundRobinNr = ++RoundRobinNr % size();
 		int i = 0;
-		for(Player player : getMembers())
+		for (Player player : getMembers())
 		{
-			if(i == RoundRobinNr)
+			if (i == RoundRobinNr)
 			{
-				if(MathUtil.isIn3dRange(player, npc, GroupConfig.GROUP_MAX_DISTANCE))
+				if (MathUtil.isIn3dRange(player, npc, GroupConfig.GROUP_MAX_DISTANCE))
 				{ // the player is in range of the killed NPC.
 					return player.getObjectId();
 				}
@@ -143,7 +143,8 @@ public class PlayerGroup extends AionObject
 		/**
 		 * Inform all group members player has left the group
 		 */
-		PacketSendUtility.broadcastPacket(player, new SM_LEAVE_GROUP_MEMBER(), true, new ObjectFilter<Player>(){
+		PacketSendUtility.broadcastPacket(player, new SM_LEAVE_GROUP_MEMBER(), true, new ObjectFilter<Player>()
+		{
 			@Override
 			public boolean acceptObject(Player object)
 			{
@@ -152,7 +153,8 @@ public class PlayerGroup extends AionObject
 		});
 	}
 
-	public void disband() {
+	public void disband()
+	{
 		this.groupMembers.clear();
 	}
 
@@ -201,7 +203,7 @@ public class PlayerGroup extends AionObject
 	public void setLootGroupRules(LootGroupRules lgr)
 	{
 		this.lootGroupRules = lgr;
-		for(Player member : groupMembers.values())
+		for (Player member : groupMembers.values())
 			PacketSendUtility.sendPacket(member, new SM_GROUP_INFO(this));
 	}
 
@@ -211,14 +213,14 @@ public class PlayerGroup extends AionObject
 	// TODO: Move to GroupService
 	public void updateGroupUIToEvent(Player subjective, GroupEvent groupEvent)
 	{
-		switch(groupEvent)
+		switch (groupEvent)
 		{
 			case CHANGELEADER:
 			{
-				for(Player member : this.getMembers())
+				for (Player member : this.getMembers())
 				{
 					PacketSendUtility.sendPacket(member, new SM_GROUP_INFO(this));
-					if(subjective.equals(member))
+					if (subjective.equals(member))
 						PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.CHANGE_GROUP_LEADER());
 					PacketSendUtility.sendPacket(member, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent));
 				}
@@ -227,21 +229,21 @@ public class PlayerGroup extends AionObject
 			case LEAVE:
 			{
 				boolean changeleader = false;
-				if(subjective == this.getGroupLeader())// change group leader
+				if (subjective == this.getGroupLeader())// change group leader
 				{
 					this.setGroupLeader(this.getMembers().iterator().next());
 					changeleader = true;
 				}
-				for(Player member : this.getMembers())
+				for (Player member : this.getMembers())
 				{
-					if(changeleader)
+					if (changeleader)
 					{
 						PacketSendUtility.sendPacket(member, new SM_GROUP_INFO(this));
 						PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.CHANGE_GROUP_LEADER());
 					}
-					if(!subjective.equals(member))
+					if (!subjective.equals(member))
 						PacketSendUtility.sendPacket(member, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent));
-					if(this.size() > 1)
+					if (this.size() > 1)
 						PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.MEMBER_LEFT_GROUP(subjective.getName()));
 				}
 				eventToSubjective(subjective, GroupEvent.LEAVE);
@@ -250,18 +252,18 @@ public class PlayerGroup extends AionObject
 			case ENTER:
 			{
 				eventToSubjective(subjective, GroupEvent.ENTER);
-				for(Player member : this.getMembers())
+				for (Player member : this.getMembers())
 				{
-					if(!subjective.equals(member))
+					if (!subjective.equals(member))
 						PacketSendUtility.sendPacket(member, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent));
 				}
 			}
 				break;
 			default:
 			{
-				for(Player member : this.getMembers())
+				for (Player member : this.getMembers())
 				{
-					if(!subjective.equals(member))
+					if (!subjective.equals(member))
 						PacketSendUtility.sendPacket(member, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent));
 				}
 			}
@@ -272,12 +274,12 @@ public class PlayerGroup extends AionObject
 	// TODO: Move to GroupService
 	private void eventToSubjective(Player subjective, GroupEvent groupEvent)
 	{
-		for(Player member : getMembers())
+		for (Player member : getMembers())
 		{
-			if(!subjective.equals(member))
+			if (!subjective.equals(member))
 				PacketSendUtility.sendPacket(subjective, new SM_GROUP_MEMBER_INFO(this, member, groupEvent));
 		}
-		if(groupEvent == GroupEvent.LEAVE)
+		if (groupEvent == GroupEvent.LEAVE)
 			PacketSendUtility.sendPacket(subjective, SM_SYSTEM_MESSAGE.YOU_LEFT_GROUP());
 	}
 

@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class TeleLocIdData
 {
 	@XmlElement(name = "telelocation")
-	private List<TeleportLocation> locids;
+	private List<TeleportLocation>	locids;
 
 	/**
 	 * @return Teleport locations
@@ -41,12 +41,12 @@ public class TeleLocIdData
 	{
 		return locids;
 	}
-	
+
 	public TeleportLocation getTeleportLocation(int value)
 	{
-		for(TeleportLocation t : locids)
+		for (TeleportLocation t : locids)
 		{
-			if(t != null && t.getLocId() == value)
+			if (t != null && t.getLocId() == value)
 			{
 				return t;
 			}

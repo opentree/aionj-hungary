@@ -32,8 +32,8 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 public class CM_CLIENT_COMMAND_ROLL extends AbstractClientPacket<AionChannelHandler>
 {
 	private int	maxRoll;
-	private int roll;
-	
+	private int	roll;
+
 	public CM_CLIENT_COMMAND_ROLL(int opcode)
 	{
 		super(opcode);
@@ -48,10 +48,10 @@ public class CM_CLIENT_COMMAND_ROLL extends AbstractClientPacket<AionChannelHand
 	@Override
 	protected void runImpl()
 	{
-		Player player = getChannelHandler().getActivePlayer();	
+		Player player = getChannelHandler().getActivePlayer();
 		if (player == null)
 			return;
-		
+
 		roll = Rnd.get(1, maxRoll);
 		PacketSendUtility.sendPacket(player, new SM_SYSTEM_MESSAGE(1400126, roll, maxRoll));
 		PacketSendUtility.broadcastPacket(player, new SM_SYSTEM_MESSAGE(1400127, player.getName(), roll, maxRoll));

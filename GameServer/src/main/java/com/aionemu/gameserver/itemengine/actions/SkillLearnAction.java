@@ -40,13 +40,13 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 public class SkillLearnAction extends AbstractItemAction
 {
 	@XmlAttribute
-	protected int skillid;
+	protected int			skillid;
 	@XmlAttribute
-	protected int level;
+	protected int			level;
 	@XmlAttribute(name = "class")
-	protected SkillClass playerClass;
+	protected SkillClass	playerClass;
 	@XmlAttribute
-	protected SkillRace race;
+	protected SkillRace		race;
 
 	@Override
 	public boolean canAct(Player player, Item parentItem, Item targetItem)
@@ -62,8 +62,8 @@ public class SkillLearnAction extends AbstractItemAction
 		//item animation and message
 		ItemTemplate itemTemplate = parentItem.getItemTemplate();
 		//PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.USE_ITEM(itemTemplate.getDescription()));
-		PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(),
-			parentItem.getObjectId(), itemTemplate.getTemplateId()), true);	
+		PacketSendUtility.broadcastPacket(player, new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), parentItem.getObjectId(), itemTemplate.getTemplateId()),
+				true);
 		//add skill
 		player.getSkillList().addSkill(player, skillid, 1, true);
 	}
@@ -71,20 +71,19 @@ public class SkillLearnAction extends AbstractItemAction
 	private boolean validateConditions(Player player)
 	{
 		//1. check player level
-		if(player.getCommonData().getLevel() < level)
+		if (player.getCommonData().getLevel() < level)
 			return false;
 
 		PlayerClass pc = player.getCommonData().getPlayerClass();
 
-		if(!validateClass(pc))
+		if (!validateClass(pc))
 			return false;
 
 		//4. check player race and SkillRace.ALL
-		if(player.getCommonData().getRace().ordinal() != race.ordinal() 
-			&& race != SkillRace.ALL)
+		if (player.getCommonData().getRace().ordinal() != race.ordinal() && race != SkillRace.ALL)
 			return false;
 		//5. check whether this skill is already learned
-		if(player.getSkillList().isSkillPresent(skillid))
+		if (player.getSkillList().isSkillPresent(skillid))
 			return false;
 
 		return true;
@@ -94,11 +93,10 @@ public class SkillLearnAction extends AbstractItemAction
 	{
 		boolean result = false;
 		//2. check if current class is second class and book is for starting class
-		if(!pc.isStartingClass() && PlayerClass.getStartingClassFor(pc).ordinal() == playerClass.ordinal())
+		if (!pc.isStartingClass() && PlayerClass.getStartingClassFor(pc).ordinal() == playerClass.ordinal())
 			result = true;
 		//3. check player class and SkillClass.ALL
-		if(pc.ordinal() == playerClass.ordinal()
-			|| playerClass == SkillClass.ALL)
+		if (pc.ordinal() == playerClass.ordinal() || playerClass == SkillClass.ALL)
 			result = true;
 
 		return result;

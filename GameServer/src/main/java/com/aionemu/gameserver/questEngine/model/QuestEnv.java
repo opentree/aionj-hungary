@@ -25,13 +25,13 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
  */
 public class QuestEnv
 {
-	private VisibleObject visibleObject;
+	private VisibleObject	visibleObject;
 
-	private Player player;
-	
-	private Integer questId;
-	
-	private Integer dialogId;
+	private Player			player;
+
+	private Integer			questId;
+
+	private Integer			dialogId;
 
 	/**
 	 * @param creature

@@ -27,12 +27,12 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_GATHER_UPDATE extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private GatherableTemplate template;
-	private int action;
-	private int itemId;
-	private int success;
-	private int failure;
-	private int nameId;
+	private GatherableTemplate	template;
+	private int					action;
+	private int					itemId;
+	private int					success;
+	private int					failure;
+	private int					nameId;
 
 	public SM_GATHER_UPDATE(GatherableTemplate template, Material material, int success, int failure, int action)
 	{
@@ -48,29 +48,29 @@ public class SM_GATHER_UPDATE extends AbstractAionServerPacket<AionChannelHandle
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeH(template.getSkillLevel());
-		writeC( action);
+		writeC(action);
 		writeD(itemId);
 
-		switch(action)
+		switch (action)
 		{
 			case 0:
 			{
 				writeD(template.getSuccessAdj());
 				writeD(template.getFailureAdj());
 				writeD(0);
-				writeD(1200);        //timer??
+				writeD(1200); //timer??
 				writeD(1330011); //??text??skill??
 				writeH(0x24); //0x24
-				writeD(nameId); 
+				writeD(nameId);
 				writeH(0); //0x24
 				break;
 			}
-			case  1:
+			case 1:
 			{
 				writeD(success);
 				writeD(failure);
-				writeD(700);        //unk timer??
-				writeD(1200);      //unk timer??
+				writeD(700); //unk timer??
+				writeD(1200); //unk timer??
 				writeD(0); //unk timer??writeD(700);
 				writeH(0);
 				break;

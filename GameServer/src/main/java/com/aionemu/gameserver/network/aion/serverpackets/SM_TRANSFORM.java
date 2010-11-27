@@ -25,8 +25,8 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_TRANSFORM extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private Creature creature;
-	private int	state;
+	private Creature	creature;
+	private int			state;
 
 	public SM_TRANSFORM(Creature creature)
 	{
@@ -45,6 +45,6 @@ public class SM_TRANSFORM extends AbstractAionServerPacket<AionChannelHandler>
 		writeH(state);
 		writeF(0.55f);
 		writeF(1.5f);
-		writeC( 0);
+		writeC(0);
 	}
 }

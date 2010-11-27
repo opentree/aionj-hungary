@@ -37,13 +37,13 @@ public class FullBonus
 	@XmlElement(name = "modifiers", required = false)
 	protected ModifiersTemplate	modifiers;
 
-	private int totalnumberofitems;
-	
+	private int					totalnumberofitems;
+
 	public TreeSet<StatModifier> getModifiers()
 	{
 		return modifiers != null ? modifiers.getModifiers() : null;
 	}
-	
+
 	/**
 	 * @return Value of the number of items in the set
 	 */
@@ -51,7 +51,7 @@ public class FullBonus
 	{
 		return totalnumberofitems;
 	}
-	
+
 	/**
 	 * Sets number of items in the set (when this bonus applies)
 	 * @param number

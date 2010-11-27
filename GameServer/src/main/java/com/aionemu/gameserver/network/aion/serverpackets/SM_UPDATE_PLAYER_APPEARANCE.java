@@ -30,9 +30,9 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_UPDATE_PLAYER_APPEARANCE extends AbstractAionServerPacket<AionChannelHandler>
 {
-	public int playerId;
-	public int size;
-	public List<Item> items;
+	public int			playerId;
+	public int			size;
+	public List<Item>	items;
 
 	public SM_UPDATE_PLAYER_APPEARANCE(int playerId, List<Item> items)
 	{
@@ -45,20 +45,20 @@ public class SM_UPDATE_PLAYER_APPEARANCE extends AbstractAionServerPacket<AionCh
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(playerId);
-		
+
 		short mask = 0;
-		for(Item item : items)
+		for (Item item : items)
 		{
 			mask |= item.getEquipmentSlot();
 		}
-		
+
 		writeH(mask);
 
-		for(Item item : items)
-		{		
+		for (Item item : items)
+		{
 			writeD(item.getItemSkinTemplate().getTemplateId());
 			GodStone godStone = item.getGodStone();
-			writeD(godStone != null ? godStone.getItemId() : 0); 
+			writeD(godStone != null ? godStone.getItemId() : 0);
 			writeD(item.getItemColor());
 			writeH(0x00);// unk (0x00)
 		}

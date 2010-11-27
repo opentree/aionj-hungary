@@ -43,31 +43,31 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
  */
 public class Effect
 {
-	private SkillTemplate skillTemplate;
-	private int skillLevel;
-	private int duration;
-	private int endTime;
+	private SkillTemplate				skillTemplate;
+	private int							skillLevel;
+	private int							duration;
+	private int							endTime;
 
-	private Creature effected;
-	private Creature effector;
-	private Future<?> checkTask = null;
-	private Future<?> task = null;
-	private Future<?>[] periodicTasks = null;
-	private Future<?> mpUseTask = null;
-	
+	private Creature					effected;
+	private Creature					effector;
+	private Future<?>					checkTask		= null;
+	private Future<?>					task			= null;
+	private Future<?>[]					periodicTasks	= null;
+	private Future<?>					mpUseTask		= null;
+
 	/**
 	 * Used for damage/heal values
 	 */
-	private int reserved1;
+	private int							reserved1;
 	/**
 	 * Used for shield total hit damage;
 	 */
-	private int reserved2;
+	private int							reserved2;
 	/**
 	 * Used for shield hit damage
 	 */
-	private int reserved3;
-	
+	private int							reserved3;
+
 	/**
 	 * Spell Status
 	 * 
@@ -81,39 +81,39 @@ public class Effect
 	 * 128 : dodge
 	 * 256 : resist
 	 */
-	private SpellStatus spellStatus = SpellStatus.NONE;
-	
-	private AttackStatus attackStatus = AttackStatus.NORMALHIT;
-	private int shieldDefense;
-	
-	private boolean addedToController;
-	private AttackCalcObserver[] attackStatusObserver;
-	
-	private AttackCalcObserver[] attackShieldObserver;
-	
-	private boolean launchSubEffect = true;
-	private Effect subEffect = null;
-	
-	private boolean isStopped;
-	
-	private ItemTemplate itemTemplate;
-	
+	private SpellStatus					spellStatus		= SpellStatus.NONE;
+
+	private AttackStatus				attackStatus	= AttackStatus.NORMALHIT;
+	private int							shieldDefense;
+
+	private boolean						addedToController;
+	private AttackCalcObserver[]		attackStatusObserver;
+
+	private AttackCalcObserver[]		attackShieldObserver;
+
+	private boolean						launchSubEffect	= true;
+	private Effect						subEffect		= null;
+
+	private boolean						isStopped;
+
+	private ItemTemplate				itemTemplate;
+
 	/**
 	 * Hate that will be placed on effected list
 	 */
-	private int tauntHate;
+	private int							tauntHate;
 	/**
 	 * Total hate that will be broadcasted
 	 */
-	private int effectHate;
-	
-	private Collection<EffectTemplate> sucessEffects = new FastList<EffectTemplate>().shared();
-	
+	private int							effectHate;
+
+	private Collection<EffectTemplate>	sucessEffects	= new FastList<EffectTemplate>().shared();
+
 	/**
 	 * Action observer that should be removed after effect end
 	 */
-	private ActionObserver[] actionObserver;
-	
+	private ActionObserver[]			actionObserver;
+
 	public Effect(Creature effector, Creature effected, SkillTemplate skillTemplate, int skillLevel, int duration)
 	{
 		this.effector = effector;
@@ -122,13 +122,13 @@ public class Effect
 		this.skillLevel = skillLevel;
 		this.duration = duration;
 	}
-	
+
 	public Effect(Creature effector, Creature effected, SkillTemplate skillTemplate, int skillLevel, int duration, ItemTemplate itemTemplate)
 	{
 		this(effector, effected, skillTemplate, skillLevel, duration);
 		this.itemTemplate = itemTemplate;
 	}
-	
+
 	/**
 	 * @return the effectorId
 	 */
@@ -144,7 +144,7 @@ public class Effect
 	{
 		return skillTemplate.getSkillId();
 	}
-	
+
 	/**
 	 * @return the SkillSetException
 	 */
@@ -168,7 +168,7 @@ public class Effect
 	{
 		return skillLevel;
 	}
-	
+
 	/**
 	 * @return the skillStackLvl
 	 */
@@ -176,7 +176,7 @@ public class Effect
 	{
 		return skillTemplate.getLvl();
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -193,7 +193,7 @@ public class Effect
 	{
 		return duration;
 	}
-	
+
 	/**
 	 * @param newDuration
 	 */
@@ -239,7 +239,7 @@ public class Effect
 	 */
 	public Future<?> getPeriodicTask(int i)
 	{
-		return periodicTasks[i-1];
+		return periodicTasks[i - 1];
 	}
 
 	/**
@@ -248,9 +248,9 @@ public class Effect
 	 */
 	public void setPeriodicTask(Future<?> periodicTask, int i)
 	{
-		if(periodicTasks == null)
+		if (periodicTasks == null)
 			periodicTasks = new Future<?>[4];
-		this.periodicTasks[i-1] = periodicTask;
+		this.periodicTasks[i - 1] = periodicTask;
 	}
 
 	/**
@@ -332,24 +332,23 @@ public class Effect
 	{
 		this.attackStatus = attackStatus;
 	}
-	
+
 	public List<EffectTemplate> getEffectTemplates()
 	{
 		return skillTemplate.getEffects().getEffects();
 	}
-	
+
 	public boolean isFood()
 	{
 		Effects effects = skillTemplate.getEffects();
 		return effects != null && effects.isFood();
 	}
-	
 
 	public boolean isToggle()
 	{
 		return skillTemplate.getActivationAttribute() == ActivationAttribute.TOGGLE;
 	}
-	
+
 	public int getTargetSlot()
 	{
 		return skillTemplate.getTargetSlot().ordinal();
@@ -361,7 +360,7 @@ public class Effect
 	 */
 	public AttackCalcObserver getAttackStatusObserver(int i)
 	{
-		return attackStatusObserver[i-1];
+		return attackStatusObserver[i - 1];
 	}
 
 	/**
@@ -369,9 +368,9 @@ public class Effect
 	 */
 	public void setAttackStatusObserver(AttackCalcObserver attackStatusObserver, int i)
 	{
-		if(this.attackStatusObserver == null)
+		if (this.attackStatusObserver == null)
 			this.attackStatusObserver = new AttackCalcObserver[4];
-		this.attackStatusObserver[i-1] = attackStatusObserver;
+		this.attackStatusObserver[i - 1] = attackStatusObserver;
 	}
 
 	/**
@@ -380,7 +379,7 @@ public class Effect
 	 */
 	public AttackCalcObserver getAttackShieldObserver(int i)
 	{
-		return attackShieldObserver[i-1];
+		return attackShieldObserver[i - 1];
 	}
 
 	/**
@@ -388,9 +387,9 @@ public class Effect
 	 */
 	public void setAttackShieldObserver(AttackCalcObserver attackShieldObserver, int i)
 	{
-		if(this.attackShieldObserver == null)
+		if (this.attackShieldObserver == null)
 			this.attackShieldObserver = new AttackCalcObserver[4];
-		this.attackShieldObserver[i-1] = attackShieldObserver;
+		this.attackShieldObserver[i - 1] = attackShieldObserver;
 	}
 
 	/**
@@ -464,14 +463,14 @@ public class Effect
 	 */
 	public boolean containsEffectId(int effectId)
 	{
-		for(EffectTemplate template : sucessEffects)
+		for (EffectTemplate template : sucessEffects)
 		{
-			if(template.getEffectid() == effectId)
+			if (template.getEffectid() == effectId)
 				return true;
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Correct lifecycle of Effect
 	 *  - INITIALIZE
@@ -479,19 +478,18 @@ public class Effect
 	 *  - START
 	 *  - END
 	 */
-	
-	
+
 	/**
 	 * Do initialization with proper calculations
 	 */
 	public void initialize()
 	{
-		if(skillTemplate.getEffects() == null)
+		if (skillTemplate.getEffects() == null)
 			return;
-		
+
 		boolean isDmgEffect = false;
 
-		for(EffectTemplate template : getEffectTemplates())
+		for (EffectTemplate template : getEffectTemplates())
 		{
 			template.calculate(this);
 			if (template instanceof DamageEffect && !(template instanceof DamageOverTimeEffect))
@@ -500,7 +498,7 @@ public class Effect
 			}
 		}
 
-		for(EffectTemplate template : sucessEffects)
+		for (EffectTemplate template : sucessEffects)
 		{
 			template.calculateSubEffect(this);
 			template.calculateHate(this);
@@ -508,7 +506,7 @@ public class Effect
 
 		if (isDmgEffect)
 		{
-			if(getAttackStatus() == AttackStatus.RESIST || getAttackStatus() == AttackStatus.DODGE)
+			if (getAttackStatus() == AttackStatus.RESIST || getAttackStatus() == AttackStatus.DODGE)
 			{
 				sucessEffects.clear();
 				return;
@@ -517,7 +515,7 @@ public class Effect
 			{
 				if (sucessEffects.size() != getEffectTemplates().size())
 				{
-					for(EffectTemplate template : sucessEffects)
+					for (EffectTemplate template : sucessEffects)
 					{
 						if (template instanceof DamageEffect && !(template instanceof DamageOverTimeEffect))
 							continue;
@@ -536,27 +534,28 @@ public class Effect
 				setAttackStatus(AttackStatus.DODGE);
 		}
 	}
-	
+
 	/**
 	 * Apply all effect templates
 	 */
 	public void applyEffect()
 	{
-		if(skillTemplate.getEffects() == null || sucessEffects.isEmpty())
+		if (skillTemplate.getEffects() == null || sucessEffects.isEmpty())
 			return;
-		
-		for(EffectTemplate template : sucessEffects)
+
+		for (EffectTemplate template : sucessEffects)
 		{
 			template.applyEffect(this);
 			template.startSubEffect(this);
 		}
-		
+
 		/**
 		 * broadcast final hate to all visible objects
 		 */
-		if(effectHate != 0)
+		if (effectHate != 0)
 			effector.broadcastHate(effectHate);
 	}
+
 	/**
 	 * Start effect which includes:
 	 * - start effect defined in template
@@ -568,22 +567,22 @@ public class Effect
 	{
 		if (sucessEffects.isEmpty())
 			return;
-		
-		for(EffectTemplate template : sucessEffects)
+
+		for (EffectTemplate template : sucessEffects)
 		{
 			template.startEffect(this);
 		}
-		
-		if(isToggle() && effector instanceof Player)
+
+		if (isToggle() && effector instanceof Player)
 		{
-			activateToggleSkill();			
+			activateToggleSkill();
 		}
-		
+
 		if (!restored)
 			duration = getEffectsDuration();
-		if(duration == 0)
+		if (duration == 0)
 			return;
-		
+
 		endTime = (int) System.currentTimeMillis() + duration;
 
 		task = ThreadPoolManager.getInstance().scheduleEffect((new Runnable()
@@ -595,7 +594,7 @@ public class Effect
 			}
 		}), duration);
 	}
-	
+
 	/**
 	 * Will activate toggle skill and start checking task
 	 */
@@ -603,7 +602,7 @@ public class Effect
 	{
 		PacketSendUtility.sendPacket((Player) effector, new SM_SKILL_ACTIVATION(getSkillId(), true));
 	}
-	
+
 	/**
 	 * Will deactivate toggle skill and stop checking task
 	 */
@@ -611,7 +610,7 @@ public class Effect
 	{
 		PacketSendUtility.sendPacket((Player) effector, new SM_SKILL_ACTIVATION(getSkillId(), false));
 	}
-	
+
 	/**
 	 * End effect and all effect actions
 	 * This method is synchronized and prevented to be called several times
@@ -619,20 +618,20 @@ public class Effect
 	 */
 	public synchronized void endEffect()
 	{
-		if(isStopped)
+		if (isStopped)
 			return;
-		
-		for(EffectTemplate template : sucessEffects)
+
+		for (EffectTemplate template : sucessEffects)
 		{
 			template.endEffect(this);
 		}
-		
-		if(isToggle() && effector instanceof Player)
+
+		if (isToggle() && effector instanceof Player)
 		{
 			deactivateToggleSkill();
 		}
 		stopTasks();
-		effected.getEffectController().clearEffect(this);	
+		effected.getEffectController().clearEffect(this);
 		this.isStopped = true;
 	}
 
@@ -641,36 +640,37 @@ public class Effect
 	 */
 	public void stopTasks()
 	{
-		if(task != null)
+		if (task != null)
 		{
 			task.cancel(true);
 			task = null;
 		}
-		
-		if(checkTask != null)
+
+		if (checkTask != null)
 		{
 			checkTask.cancel(true);
 			checkTask = null;
 		}
-		
-		if(periodicTasks != null)
+
+		if (periodicTasks != null)
 		{
-			for(Future<?> periodicTask : this.periodicTasks)
+			for (Future<?> periodicTask : this.periodicTasks)
 			{
-				if(periodicTask != null)
+				if (periodicTask != null)
 				{
 					periodicTask.cancel(true);
 					periodicTask = null;
 				}
 			}
 		}
-		
-		if(mpUseTask != null)
+
+		if (mpUseTask != null)
 		{
 			mpUseTask.cancel(true);
 			mpUseTask = null;
 		}
 	}
+
 	/**
 	 * Time till the effect end
 	 * 
@@ -678,10 +678,10 @@ public class Effect
 	 */
 	public int getElapsedTime()
 	{
-		int elapsedTime = endTime - (int)System.currentTimeMillis();
+		int elapsedTime = endTime - (int) System.currentTimeMillis();
 		return elapsedTime > 0 ? elapsedTime : 0;
 	}
-	
+
 	/**
 	 * Time effect is active
 	 * 
@@ -691,7 +691,7 @@ public class Effect
 	{
 		return duration - getElapsedTime();
 	}
-	
+
 	/**
 	 * PVP damage ration
 	 * 
@@ -701,7 +701,7 @@ public class Effect
 	{
 		return skillTemplate.getPvpDamage();
 	}
-	
+
 	public ItemTemplate getItemTemplate()
 	{
 		return itemTemplate;
@@ -712,7 +712,7 @@ public class Effect
 	 */
 	public void addToEffectedController()
 	{
-		if(!addedToController)
+		if (!addedToController)
 		{
 			effected.getEffectController().addEffect(this);
 			addedToController = true;
@@ -757,7 +757,7 @@ public class Effect
 	 */
 	public ActionObserver getActionObserver(int i)
 	{
-		return actionObserver[i-1];
+		return actionObserver[i - 1];
 	}
 
 	/**
@@ -765,9 +765,9 @@ public class Effect
 	 */
 	public void setActionObserver(ActionObserver observer, int i)
 	{
-		if(actionObserver == null)
+		if (actionObserver == null)
 			actionObserver = new ActionObserver[4];
-		actionObserver[i-1] = observer;
+		actionObserver[i - 1] = observer;
 	}
 
 	public void addSucessEffect(EffectTemplate effect)
@@ -782,26 +782,26 @@ public class Effect
 	{
 		return sucessEffects;
 	}
-	
+
 	public void addAllEffectToSucess()
 	{
-		for(EffectTemplate template : getEffectTemplates())
+		for (EffectTemplate template : getEffectTemplates())
 		{
 			sucessEffects.add(template);
 		}
 	}
-	
+
 	public int getEffectsDuration()
 	{
 		int duration = 0;
-		for(EffectTemplate template : sucessEffects)
+		for (EffectTemplate template : sucessEffects)
 		{
 			int effectDuration = template.getDuration();
 			if (template.getRandomTime() > 0)
 				effectDuration -= Rnd.get(template.getRandomTime());
 			duration = duration > effectDuration ? duration : effectDuration;
 		}
-		if(effected instanceof Player && skillTemplate.getPvpDuration() != 0)
+		if (effected instanceof Player && skillTemplate.getPvpDuration() != 0)
 			duration = duration * skillTemplate.getPvpDuration() / 100;
 		return duration;
 	}

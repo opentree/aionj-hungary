@@ -35,31 +35,30 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class PlayerAlliance extends AionObject
 {
-	private int captainObjectId;
-	
-	private List<Integer> viceCaptainObjectIds = new ArrayList<Integer>();
-	
-	private FastMap<Integer, PlayerAllianceMember> allianceMembers = new FastMap<Integer, PlayerAllianceMember>().shared();
-	private FastMap<Integer, PlayerAllianceGroup> allianceGroupForMember = new FastMap<Integer, PlayerAllianceGroup>().shared();
-	
-	private FastMap<Integer, PlayerAllianceGroup> allianceGroups = new FastMap<Integer, PlayerAllianceGroup>().shared();
+	private int										captainObjectId;
 
-	
+	private List<Integer>							viceCaptainObjectIds	= new ArrayList<Integer>();
+
+	private FastMap<Integer, PlayerAllianceMember>	allianceMembers			= new FastMap<Integer, PlayerAllianceMember>().shared();
+	private FastMap<Integer, PlayerAllianceGroup>	allianceGroupForMember	= new FastMap<Integer, PlayerAllianceGroup>().shared();
+
+	private FastMap<Integer, PlayerAllianceGroup>	allianceGroups			= new FastMap<Integer, PlayerAllianceGroup>().shared();
+
 	public PlayerAlliance(int objectId, int leaderObjectId)
 	{
 		super(objectId);
 		setLeader(leaderObjectId);
 	}
-	
+
 	public void addMember(Player member)
 	{
 		PlayerAllianceGroup group = getOpenAllianceGroup();
 		PlayerAllianceMember allianceMember = new PlayerAllianceMember(member);
 		group.addMember(allianceMember);
-		
+
 		allianceMembers.put(member.getObjectId(), allianceMember);
 		allianceGroupForMember.put(member.getObjectId(), group);
-		
+
 		member.setPlayerAlliance(this);
 	}
 
@@ -71,7 +70,7 @@ public class PlayerAlliance extends AionObject
 		for (int i = 1000; i <= 1004; i++)
 		{
 			PlayerAllianceGroup group = allianceGroups.get(i);
-			
+
 			if (group == null)
 			{
 				group = new PlayerAllianceGroup(this);
@@ -79,13 +78,13 @@ public class PlayerAlliance extends AionObject
 				allianceGroups.put(i, group);
 				return group;
 			}
-			
+
 			if (group.getMembers().size() < 6)
 				return group;
 		}
 		throw new RuntimeException("All Alliance Groups Full.");
 	}
-	
+
 	/**
 	 * @param member
 	 */
@@ -94,13 +93,13 @@ public class PlayerAlliance extends AionObject
 		allianceGroupForMember.get(memberObjectId).removeMember(memberObjectId);
 		allianceGroupForMember.remove(memberObjectId);
 		allianceMembers.remove(memberObjectId);
-		
+
 		// Check if Member was a Vice Captain
 		if (viceCaptainObjectIds.contains(memberObjectId))
 		{
 			viceCaptainObjectIds.remove(viceCaptainObjectIds.indexOf(memberObjectId));
 		}
-		
+
 		// Check if Member was Captain
 		if (memberObjectId == this.captainObjectId)
 		{
@@ -118,10 +117,9 @@ public class PlayerAlliance extends AionObject
 				this.captainObjectId = newCaptain.getObjectId();
 			}
 		}
-		
+
 		AllianceService.getInstance().broadcastAllianceInfo(this, PlayerAllianceEvent.UPDATE);
 	}
-
 
 	/**
 	 * @param leader
@@ -136,7 +134,7 @@ public class PlayerAlliance extends AionObject
 		}
 		this.captainObjectId = newLeaderObjectId;
 	}
-	
+
 	/**
 	 * @param viceLeader
 	 */
@@ -160,7 +158,7 @@ public class PlayerAlliance extends AionObject
 	{
 		return getPlayer(getCaptainObjectId());
 	}
-	
+
 	/**
 	 * @return captainObjectId
 	 */
@@ -188,7 +186,7 @@ public class PlayerAlliance extends AionObject
 		else
 			return allianceGroupForMember.get(playerObjectId).getAllianceId();
 	}
-	
+
 	/**
 	 * @param playerObjectId
 	 * @return member
@@ -205,7 +203,7 @@ public class PlayerAlliance extends AionObject
 	{
 		return getMembers().size();
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -231,7 +229,6 @@ public class PlayerAlliance extends AionObject
 		return (playerObjectId == captainObjectId || viceCaptainObjectIds.contains(playerObjectId));
 	}
 
-
 	@Override
 	public String getName()
 	{
@@ -246,13 +243,13 @@ public class PlayerAlliance extends AionObject
 	{
 		PlayerAllianceGroup group1 = allianceGroupForMember.get(playerObjectId1);
 		PlayerAllianceGroup group2 = allianceGroupForMember.get(playerObjectId2);
-		
+
 		PlayerAllianceMember player1 = group1.removeMember(playerObjectId1);
 		PlayerAllianceMember player2 = group2.removeMember(playerObjectId2);
-		
+
 		group1.addMember(player2);
 		group2.addMember(player1);
-		
+
 		allianceGroupForMember.put(playerObjectId1, group2);
 		allianceGroupForMember.put(playerObjectId2, group1);
 	}
@@ -268,16 +265,16 @@ public class PlayerAlliance extends AionObject
 		PlayerAllianceGroup leavingGroup = allianceGroupForMember.get(memberObjectId);
 		PlayerAllianceMember member = leavingGroup.getMemberById(memberObjectId);
 		leavingGroup.removeMember(memberObjectId);
-		
+
 		PlayerAllianceGroup group = allianceGroups.get(allianceGroupId);
-		
+
 		if (group == null)
 		{
 			group = new PlayerAllianceGroup(this);
 			group.setAllianceId(allianceGroupId);
 			allianceGroups.put(allianceGroupId, group);
 		}
-		
+
 		group.addMember(member);
 		allianceGroupForMember.put(memberObjectId, group);
 	}
@@ -306,8 +303,8 @@ public class PlayerAlliance extends AionObject
 	{
 		PlayerAllianceMember allianceMember = allianceMembers.get(player.getObjectId());
 		allianceMember.onDisconnect();
-		
-		for(PlayerAllianceMember member : allianceMembers.values())
+
+		for (PlayerAllianceMember member : allianceMembers.values())
 		{
 			// Check offline
 			if (member.isOnline())
@@ -326,7 +323,8 @@ public class PlayerAlliance extends AionObject
 	{
 		PlayerAllianceGroup group = allianceGroupForMember.get(playerObjectId);
 		// TODO: This should not be null...
-		if (group == null) return (new FastMap<Integer, PlayerAllianceMember>()).values();
+		if (group == null)
+			return (new FastMap<Integer, PlayerAllianceMember>()).values();
 		return group.getMembers();
 	}
 

@@ -31,16 +31,16 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 public class SkillLauncherEffect extends EffectTemplate
 {
 	@XmlAttribute(name = "skill_id")
-	protected int skillId;	
+	protected int	skillId;
 	@XmlAttribute
-	protected int value;
-	
+	protected int	value;
+
 	@Override
 	public void applyEffect(Effect effect)
 	{
 		// TODO Auto-generated method stub
 	}
-	
+
 	@Override
 	public void calculate(Effect effect)
 	{

@@ -29,36 +29,36 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_MAIL_SERVICE extends _MailServicePacket
 {
-	private int serviceId;
-	private Player player;
-	private Collection<Letter> letters;
-	
-	private int haveNewMail;
-	private int haveUnread;
-	
-	private int mailMessage;
-	
-	private Letter letter;
-	private long time;
-	
-	private int letterId;
-	private int attachmentType;
-	
+	private int					serviceId;
+	private Player				player;
+	private Collection<Letter>	letters;
+
+	private int					haveNewMail;
+	private int					haveUnread;
+
+	private int					mailMessage;
+
+	private Letter				letter;
+	private long				time;
+
+	private int					letterId;
+	private int					attachmentType;
+
 	public SM_MAIL_SERVICE(boolean isNewMail, boolean haveUnread)
 	{
 		this.serviceId = 0;
-		
-		if(isNewMail)
+
+		if (isNewMail)
 			this.haveNewMail = 1;
 		else
 			this.haveNewMail = 0;
-		
-		if(haveUnread)
+
+		if (haveUnread)
 			this.haveUnread = 1;
 		else
 			this.haveUnread = 0;
 	}
-	
+
 	/**
 	 * Send mailMessage(ex. Send OK, Mailbox full etc.)
 	 * @param mailMessage
@@ -68,7 +68,7 @@ public class SM_MAIL_SERVICE extends _MailServicePacket
 		this.serviceId = 1;
 		this.mailMessage = mailMessage.getId();
 	}
-	
+
 	/**
 	 * Send mailbox info
 	 * @param player
@@ -80,7 +80,7 @@ public class SM_MAIL_SERVICE extends _MailServicePacket
 		this.player = player;
 		this.letters = letters;
 	}
-	
+
 	/**
 	 * used when reading letter
 	 * @param player
@@ -94,7 +94,7 @@ public class SM_MAIL_SERVICE extends _MailServicePacket
 		this.letter = letter;
 		this.time = time;
 	}
-	
+
 	/**
 	 * used when getting attached items
 	 * @param letterId
@@ -106,7 +106,7 @@ public class SM_MAIL_SERVICE extends _MailServicePacket
 		this.letterId = letterId;
 		this.attachmentType = attachmentType;
 	}
-	
+
 	/**
 	 * used when deleting letter
 	 * @param letterId
@@ -116,35 +116,35 @@ public class SM_MAIL_SERVICE extends _MailServicePacket
 		this.serviceId = 6;
 		this.letterId = letterId;
 	}
-	
+
 	@Override
-	public void writeImpl (AionChannelHandler con)
+	public void writeImpl(AionChannelHandler con)
 	{
-		switch(serviceId)
+		switch (serviceId)
 		{
 			case 0:
 				writeMailboxState(haveNewMail, haveUnread);
 				break;
-				
+
 			case 1:
 				writeMailMessage(mailMessage);
 				break;
-				
+
 			case 2:
-				if(letters.size() > 0)
+				if (letters.size() > 0)
 					writeLettersList(letters, player);
 				else
 					writeEmptyLettersList(player);
-				break;	
-				
+				break;
+
 			case 3:
 				writeLetterRead(letter, time);
 				break;
-				
+
 			case 5:
 				writeLetterState(letterId, attachmentType);
 				break;
-				
+
 			case 6:
 				writeLetterDelete(letterId);
 				break;

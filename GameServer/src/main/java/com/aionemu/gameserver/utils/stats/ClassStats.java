@@ -40,7 +40,6 @@ import com.aionemu.gameserver.utils.stats.enums.WATER_RESIST;
 import com.aionemu.gameserver.utils.stats.enums.WILL;
 import com.aionemu.gameserver.utils.stats.enums.WIND_RESIST;
 
-
 /**
  * @author ATracer
  *
@@ -56,7 +55,7 @@ public class ClassStats
 	{
 		return MAXHP.valueOf(playerClass.toString()).getMaxHpFor(level);
 	}
-	
+
 	/**
 	 * @param playerClass
 	 * @return power stat for player class and level
@@ -65,7 +64,7 @@ public class ClassStats
 	{
 		return POWER.valueOf(playerClass.toString()).getValue();
 	}
-	
+
 	/**
 	 * @param playerClass
 	 * @return int
@@ -74,7 +73,7 @@ public class ClassStats
 	{
 		return HEALTH.valueOf(playerClass.toString()).getValue();
 	}
-	
+
 	/**
 	 * @param playerClass
 	 * @return int
@@ -83,7 +82,7 @@ public class ClassStats
 	{
 		return AGILITY.valueOf(playerClass.toString()).getValue();
 	}
-	
+
 	/**
 	 * @param playerClass
 	 * @return int
@@ -92,7 +91,7 @@ public class ClassStats
 	{
 		return ACCURACY.valueOf(playerClass.toString()).getValue();
 	}
-	
+
 	/**
 	 * @param playerClass
 	 * @return int
@@ -101,7 +100,7 @@ public class ClassStats
 	{
 		return KNOWLEDGE.valueOf(playerClass.toString()).getValue();
 	}
-	
+
 	/**
 	 * @param playerClass
 	 * @return int
@@ -110,7 +109,7 @@ public class ClassStats
 	{
 		return WILL.valueOf(playerClass.toString()).getValue();
 	}
-	
+
 	/**
 	 * @param playerClass
 	 * @return int
@@ -119,7 +118,7 @@ public class ClassStats
 	{
 		return MAIN_HAND_ATTACK.valueOf(playerClass.toString()).getValue();
 	}
-	
+
 	/**
 	 * @param playerClass
 	 * @return int
@@ -128,7 +127,7 @@ public class ClassStats
 	{
 		return MAIN_HAND_CRITRATE.valueOf(playerClass.toString()).getValue();
 	}
-	
+
 	/**
 	 * @param playerClass
 	 * @return int
@@ -137,7 +136,7 @@ public class ClassStats
 	{
 		return MAIN_HAND_ACCURACY.valueOf(playerClass.toString()).getValue();
 	}
-	
+
 	/**
 	 * @param playerClass
 	 * @return int
@@ -146,7 +145,7 @@ public class ClassStats
 	{
 		return WATER_RESIST.valueOf(playerClass.toString()).getValue();
 	}
-	
+
 	/**
 	 * @param playerClass
 	 * @return int
@@ -155,7 +154,7 @@ public class ClassStats
 	{
 		return WIND_RESIST.valueOf(playerClass.toString()).getValue();
 	}
-	
+
 	/**
 	 * @param playerClass
 	 * @return int
@@ -164,7 +163,7 @@ public class ClassStats
 	{
 		return EARTH_RESIST.valueOf(playerClass.toString()).getValue();
 	}
-	
+
 	/**
 	 * @param playerClass
 	 * @return int
@@ -173,7 +172,7 @@ public class ClassStats
 	{
 		return FIRE_RESIST.valueOf(playerClass.toString()).getValue();
 	}
-	
+
 	/**
 	 * @param playerClass
 	 * @return int
@@ -182,7 +181,7 @@ public class ClassStats
 	{
 		return MAGIC_ACCURACY.valueOf(playerClass.toString()).getValue();
 	}
-	
+
 	/**
 	 * @param playerClass
 	 * @return int
@@ -191,7 +190,7 @@ public class ClassStats
 	{
 		return EVASION.valueOf(playerClass.toString()).getValue();
 	}
-	
+
 	/**
 	 * @param playerClass
 	 * @return int
@@ -200,7 +199,7 @@ public class ClassStats
 	{
 		return BLOCK.valueOf(playerClass.toString()).getValue();
 	}
-	
+
 	/**
 	 * @param playerClass
 	 * @return int
@@ -209,7 +208,7 @@ public class ClassStats
 	{
 		return PARRY.valueOf(playerClass.toString()).getValue();
 	}
-	
+
 	/**
 	 * @param playerClass
 	 * @return int
@@ -218,7 +217,7 @@ public class ClassStats
 	{
 		return ATTACK_RANGE.valueOf(playerClass.toString()).getValue();
 	}
-	
+
 	/**
 	 * @param playerClass
 	 * @return int
@@ -227,7 +226,7 @@ public class ClassStats
 	{
 		return ATTACK_SPEED.valueOf(playerClass.toString()).getValue();
 	}
-	
+
 	/**
 	 * @param playerClass
 	 * @return int
@@ -236,7 +235,7 @@ public class ClassStats
 	{
 		return FLY_SPEED.valueOf(playerClass.toString()).getValue();
 	}
-	
+
 	/**
 	 * @param playerClass
 	 * @return int

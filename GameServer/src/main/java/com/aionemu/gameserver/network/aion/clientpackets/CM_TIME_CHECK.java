@@ -31,7 +31,7 @@ public class CM_TIME_CHECK extends AbstractClientPacket<AionChannelHandler>
 	/**
 	 * Nano time / 1000000
 	 */
-	private int					nanoTime;
+	private int	nanoTime;
 
 	/**
 	 * Constructs new instance of <tt>CM_VERSION_CHECK </tt> packet
@@ -62,7 +62,7 @@ public class CM_TIME_CHECK extends AbstractClientPacket<AionChannelHandler>
 		@SuppressWarnings("unused")
 		int diff = timeNow - nanoTime;
 		client.sendPacket(new SM_TIME_CHECK(nanoTime));
-		
+
 		//log.info("CM_TIME_CHECK: " + nanoTime + " =?= " + timeNow + " dif: " + diff);
 	}
 }

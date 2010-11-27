@@ -15,6 +15,7 @@
  *  along with aion-unique.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.aionemu.gameserver.utils.stats;
+
 /**
  * @author ATracer
  * @author Sarynth
@@ -39,13 +40,13 @@ public enum AbyssRankEnum
 	GREAT_GENERAL(16, 6343, 7258, 643200, 10),
 	COMMANDER(17, 7612, 9799, 721600, 3),
 	SUPREME_COMMANDER(18, 9134, 13229, 800700, 1);
-	
-	private int id;
-	private int pointsGained;
-	private int pointsLost;		
-	private int required;
-	private int quota;
-	
+
+	private int	id;
+	private int	pointsGained;
+	private int	pointsLost;
+	private int	required;
+	private int	quota;
+
 	/**
 	 * 
 	 * @param id
@@ -55,13 +56,13 @@ public enum AbyssRankEnum
 	 */
 	private AbyssRankEnum(int id, int pointsGained, int pointsLost, int required)
 	{
-		this.id				= id;
-		this.pointsGained	= pointsGained;
-		this.pointsLost		= pointsLost;
-		this.required		= required;
-		this.quota			= 0;
+		this.id = id;
+		this.pointsGained = pointsGained;
+		this.pointsLost = pointsLost;
+		this.required = required;
+		this.quota = 0;
 	}
-	
+
 	/**
 	 * @author Divinity
 	 * 
@@ -73,11 +74,11 @@ public enum AbyssRankEnum
 	 */
 	private AbyssRankEnum(int id, int pointsGained, int pointsLost, int required, int quota)
 	{
-		this.id				= id;
-		this.pointsGained	= pointsGained;
-		this.pointsLost		= pointsLost;
-		this.required		= required;
-		this.quota			= quota;
+		this.id = id;
+		this.pointsGained = pointsGained;
+		this.pointsLost = pointsLost;
+		this.required = required;
+		this.quota = quota;
 	}
 
 	/**
@@ -102,8 +103,8 @@ public enum AbyssRankEnum
 	public int getPointsGained()
 	{
 		return pointsGained;
-	}	
-	
+	}
+
 	/**
 	 * @return AP required for Rank
 	 */
@@ -111,7 +112,7 @@ public enum AbyssRankEnum
 	{
 		return required;
 	}
-	
+
 	/**
 	 * @return The quota is the maximum number of allowed player to have the rank
 	 */
@@ -126,14 +127,14 @@ public enum AbyssRankEnum
 	 */
 	public static AbyssRankEnum getRankById(int id)
 	{
-		for(AbyssRankEnum rank : values())
+		for (AbyssRankEnum rank : values())
 		{
-			if(rank.getId() == id)
+			if (rank.getId() == id)
 				return rank;
 		}
 		throw new IllegalArgumentException("Invalid abyss rank provided");
 	}
-	
+
 	/**
 	 * @param ap
 	 * @return The abyss rank enum for his needed ap
@@ -141,9 +142,9 @@ public enum AbyssRankEnum
 	public static AbyssRankEnum getRankForAp(int ap)
 	{
 		AbyssRankEnum r = AbyssRankEnum.GRADE9_SOLDIER;
-		for(AbyssRankEnum rank : values())
+		for (AbyssRankEnum rank : values())
 		{
-			if(rank.getRequired() <= ap)
+			if (rank.getRequired() <= ap)
 				r = rank;
 			else
 				break;

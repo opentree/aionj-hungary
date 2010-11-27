@@ -66,7 +66,7 @@ public class CM_LEGION extends AbstractClientPacket<AionChannelHandler>
 	{
 		exOpcode = readC();
 
-		switch(exOpcode)
+		switch (exOpcode)
 		{
 			/** Create a legion **/
 			case 0x00:
@@ -145,17 +145,17 @@ public class CM_LEGION extends AbstractClientPacket<AionChannelHandler>
 	protected void runImpl()
 	{
 		final Player activePlayer = getChannelHandler().getActivePlayer();
-		if(activePlayer.isLegionMember())
+		if (activePlayer.isLegionMember())
 		{
 			final Legion legion = activePlayer.getLegion();
 
-			if(charName != null)
+			if (charName != null)
 			{
 				LegionService.getInstance().handleCharNameRequest(exOpcode, activePlayer, charName, newNickname, rank);
 			}
 			else
 			{
-				switch(exOpcode)
+				switch (exOpcode)
 				{
 					/** Refresh legion info **/
 					case 0x08:
@@ -171,9 +171,8 @@ public class CM_LEGION extends AbstractClientPacket<AionChannelHandler>
 						break;
 					/** Edit permissions **/
 					case 0x0D:
-						if(activePlayer.getLegionMember().isBrigadeGeneral())
-							LegionService.getInstance().changePermissions(legion, legionarPermission2, centurionPermission1,
-								centurionPermission2);
+						if (activePlayer.getLegionMember().isBrigadeGeneral())
+							LegionService.getInstance().changePermissions(legion, legionarPermission2, centurionPermission1, centurionPermission2);
 						break;
 					/** Misc. **/
 					default:
@@ -184,7 +183,7 @@ public class CM_LEGION extends AbstractClientPacket<AionChannelHandler>
 		}
 		else
 		{
-			switch(exOpcode)
+			switch (exOpcode)
 			{
 				/** Create a legion **/
 				case 0x00:

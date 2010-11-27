@@ -98,7 +98,7 @@ public class CylinderArea extends AbstractArea
 	@Override
 	public double getDistance2D(int x, int y)
 	{
-		if(isInside2D(x, y))
+		if (isInside2D(x, y))
 		{
 			return 0;
 		}
@@ -114,17 +114,17 @@ public class CylinderArea extends AbstractArea
 	@Override
 	public double getDistance3D(int x, int y, int z)
 	{
-		if(isInside3D(x, y, z))
+		if (isInside3D(x, y, z))
 		{
 			return 0;
 		}
-		else if(isInsideZ(z))
+		else if (isInsideZ(z))
 		{
 			return getDistance2D(x, y);
 		}
 		else
 		{
-			if(z < getMinZ())
+			if (z < getMinZ())
 			{
 				return MathUtil.getDistance(centerX, centerY, getMinZ(), x, y, z);
 			}
@@ -141,7 +141,7 @@ public class CylinderArea extends AbstractArea
 	@Override
 	public Point getClosestPoint(int x, int y)
 	{
-		if(isInside2D(x, y))
+		if (isInside2D(x, y))
 		{
 			return new Point(x, y);
 		}

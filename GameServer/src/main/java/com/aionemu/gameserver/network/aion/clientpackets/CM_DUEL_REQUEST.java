@@ -35,7 +35,7 @@ public class CM_DUEL_REQUEST extends AbstractClientPacket<AionChannelHandler>
 	/**
 	 * Target object id that client wants to start duel with
 	 */
-	private int			objectId;
+	private int	objectId;
 
 	/**
 	 * Constructs new instance of <tt>CM_DUEL_REQUEST</tt> packet
@@ -62,14 +62,14 @@ public class CM_DUEL_REQUEST extends AbstractClientPacket<AionChannelHandler>
 		Player activePlayer = getChannelHandler().getActivePlayer();
 		AionObject target = World.getInstance().findAionObject(objectId);
 
-		if(target == null)
+		if (target == null)
 			return;
 
-		if(target instanceof Player)
+		if (target instanceof Player)
 		{
 			Player targetPlayer = (Player) target;
 
-			if(targetPlayer.getPlayerSettings().isInDeniedStatus(DeniedStatus.DUEL))
+			if (targetPlayer.getPlayerSettings().isInDeniedStatus(DeniedStatus.DUEL))
 			{
 				sendPacket(SM_SYSTEM_MESSAGE.STR_MSG_REJECTED_DUEL(targetPlayer.getName()));
 				return;

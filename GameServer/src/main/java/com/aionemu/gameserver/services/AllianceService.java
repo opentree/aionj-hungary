@@ -57,8 +57,8 @@ import com.aionemu.gameserver.world.WorldType;
  */
 public class AllianceService
 {
-	private static final Logger log = Logger.getLogger(AllianceService.class);
-	
+	private static final Logger	log	= Logger.getLogger(AllianceService.class);
+
 	/**
 	 * 
 	 * @return alliance service
@@ -67,7 +67,7 @@ public class AllianceService
 	{
 		return SingletonHolder.instance;
 	}
-	
+
 	/**
 	 * Caching remove group member schedule
 	 */
@@ -76,13 +76,13 @@ public class AllianceService
 	/**
 	 * Caching alliance members
 	 */
-	private final FastMap<Integer, PlayerAlliance> allianceMembers;
-	
+	private final FastMap<Integer, PlayerAlliance>	allianceMembers;
+
 	public AllianceService()
 	{
 		allianceMembers = new FastMap<Integer, PlayerAlliance>();
 		playerAllianceRemovalTasks = new FastMap<Integer, ScheduledFuture<?>>();
-		
+
 		log.info("AllianceService: Initialized.");
 	}
 
@@ -93,21 +93,20 @@ public class AllianceService
 	 */
 	private void addAllianceMemberToCache(Player player)
 	{
-		if(!allianceMembers.containsKey(player.getObjectId()))
+		if (!allianceMembers.containsKey(player.getObjectId()))
 			allianceMembers.put(player.getObjectId(), player.getPlayerAlliance());
 	}
-	
+
 	/**
 	 * 
 	 * @param playerObjId
 	 */
 	private void removeAllianceMemberFromCache(int playerObjId)
 	{
-		if(allianceMembers.containsKey(playerObjId))
+		if (allianceMembers.containsKey(playerObjId))
 			allianceMembers.remove(playerObjId);
 	}
 
-	
 	/**
 	 * @param playerObjId
 	 * @return returns true if player is in the cache
@@ -127,7 +126,7 @@ public class AllianceService
 	{
 		return allianceMembers.get(playerObjId);
 	}
-	
+
 	/**
 	 * 
 	 * @param playerObjectId
@@ -138,38 +137,39 @@ public class AllianceService
 		if (!playerAllianceRemovalTasks.containsKey(playerObjectId))
 			playerAllianceRemovalTasks.put(playerObjectId, task);
 	}
-	
+
 	/**
 	 * 
 	 * @param playerObjectId
 	 */
 	private void cancelRemovalTask(int playerObjectId)
 	{
-		if(playerAllianceRemovalTasks.containsKey(playerObjectId))
+		if (playerAllianceRemovalTasks.containsKey(playerObjectId))
 		{
 			playerAllianceRemovalTasks.get(playerObjectId).cancel(true);
 			playerAllianceRemovalTasks.remove(playerObjectId);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param player
 	 */
 	public void scheduleRemove(final Player player)
 	{
-		ScheduledFuture<?> future = ThreadPoolManager.getInstance().schedule(new Runnable(){
+		ScheduledFuture<?> future = ThreadPoolManager.getInstance().schedule(new Runnable()
+		{
 			@Override
 			public void run()
 			{
 				removeMemberFromAlliance(player.getPlayerAlliance(), player.getObjectId(), PlayerAllianceEvent.LEAVE_TIMEOUT);
 			}
 		}, GroupConfig.ALLIANCE_REMOVE_TIME * 1000);
-		
+
 		addAllianceRemovalTask(player.getObjectId(), future);
 		player.getPlayerAlliance().onPlayerDisconnect(player);
 	}
-	
+
 	/**
 	 * 
 	 * @param inviter
@@ -177,13 +177,13 @@ public class AllianceService
 	 */
 	public void invitePlayerToAlliance(final Player inviter, final Player invited)
 	{
-		if(RestrictionsManager.canInviteToAlliance(inviter, invited))
+		if (RestrictionsManager.canInviteToAlliance(inviter, invited))
 		{
 			RequestResponseHandler responseHandler = getResponseHandler(inviter, invited);
 
 			boolean result = invited.getResponseRequester().putRequest(SM_QUESTION_WINDOW.STR_REQUEST_ALLIANCE_INVITE, responseHandler);
-			
-			if(result)
+
+			if (result)
 			{
 				if (invited.isInGroup())
 				{
@@ -193,7 +193,7 @@ public class AllianceService
 				{
 					PacketSendUtility.sendPacket(inviter, SM_SYSTEM_MESSAGE.STR_FORCE_INVITED_HIM(invited.getName()));
 				}
-				
+
 				PacketSendUtility.sendPacket(invited, new SM_QUESTION_WINDOW(SM_QUESTION_WINDOW.STR_REQUEST_ALLIANCE_INVITE, 0, inviter.getName()));
 			}
 		}
@@ -206,25 +206,26 @@ public class AllianceService
 	 */
 	private RequestResponseHandler getResponseHandler(final Player inviter, final Player invited)
 	{
-		RequestResponseHandler responseHandler = new RequestResponseHandler(inviter){
+		RequestResponseHandler responseHandler = new RequestResponseHandler(inviter)
+		{
 			@Override
 			public void acceptRequest(StaticNpc requester, Player responder)
 			{
 				List<Player> playersToAdd = new ArrayList<Player>();
 				PlayerAlliance alliance = inviter.getPlayerAlliance();
-				
+
 				if (alliance == null)
 				{
 					alliance = new PlayerAlliance(IDFactory.getInstance().nextId(), inviter.getObjectId());
-					
+
 					// Collect Inviter Group
 					if (inviter.isInGroup())
 					{
 						PlayerGroup group = inviter.getPlayerGroup();
 						playersToAdd.addAll(group.getMembers());
-						
-						for(Player member : group.getMembers())				
-							GroupService.getInstance().removePlayerFromGroup(member);				
+
+						for (Player member : group.getMembers())
+							GroupService.getInstance().removePlayerFromGroup(member);
 					}
 					else
 					{
@@ -243,21 +244,21 @@ public class AllianceService
 					PacketSendUtility.sendMessage(inviter, "Your alliance is now too full for that group to join.");
 					return;
 				}
-				
+
 				// Collect Invited Group
 				if (invited.isInGroup())
 				{
 					PlayerGroup group = invited.getPlayerGroup();
 					playersToAdd.addAll(group.getMembers());
-					
-					for(Player member : group.getMembers())
+
+					for (Player member : group.getMembers())
 						GroupService.getInstance().removePlayerFromGroup(member);
 				}
 				else
 				{
 					playersToAdd.add(invited);
 				}
-				
+
 				// Finally, send packets and add players.
 				for (Player member : playersToAdd)
 				{
@@ -273,7 +274,7 @@ public class AllianceService
 		};
 		return responseHandler;
 	}
-	
+
 	/**
 	 * 
 	 * @param alliance
@@ -283,15 +284,14 @@ public class AllianceService
 	{
 		alliance.addMember(newMember);
 		addAllianceMemberToCache(newMember);
-		
+
 		PacketSendUtility.sendPacket(newMember, new SM_ALLIANCE_INFO(alliance));
 		PacketSendUtility.sendPacket(newMember, new SM_SHOW_BRAND(0, 0));
 		PacketSendUtility.sendPacket(newMember, SM_SYSTEM_MESSAGE.STR_FORCE_ENTERED_FORCE());
-		
+
 		broadcastAllianceMemberInfo(alliance, newMember.getObjectId(), PlayerAllianceEvent.ENTER);
 		sendOtherMemberInfo(alliance, newMember);
 	}
-
 
 	/**
 	 * 
@@ -305,7 +305,7 @@ public class AllianceService
 		if (allianceGroupId == 0)
 		{
 			alliance.swapPlayers(playerObjectId, secondObjectId);
-			
+
 			broadcastAllianceMemberInfo(alliance, playerObjectId, PlayerAllianceEvent.MEMBER_GROUP_CHANGE);
 			broadcastAllianceMemberInfo(alliance, secondObjectId, PlayerAllianceEvent.MEMBER_GROUP_CHANGE);
 		}
@@ -322,21 +322,22 @@ public class AllianceService
 	 * @param event
 	 * @param params
 	 */
-	private void broadcastAllianceMemberInfo(PlayerAlliance alliance, int playerObjectId, PlayerAllianceEvent event, String ... params)
+	private void broadcastAllianceMemberInfo(PlayerAlliance alliance, int playerObjectId, PlayerAllianceEvent event, String... params)
 	{
 		PlayerAllianceMember memberToUpdate = alliance.getPlayer(playerObjectId);
 		broadcastAllianceMemberInfo(alliance, memberToUpdate, event, params);
 	}
-	
-	private void broadcastAllianceMemberInfo(PlayerAlliance alliance, PlayerAllianceMember memberToUpdate, PlayerAllianceEvent event, String ... params)
+
+	private void broadcastAllianceMemberInfo(PlayerAlliance alliance, PlayerAllianceMember memberToUpdate, PlayerAllianceEvent event, String... params)
 	{
-		for(PlayerAllianceMember allianceMember : alliance.getMembers())
+		for (PlayerAllianceMember allianceMember : alliance.getMembers())
 		{
-			if (!allianceMember.isOnline()) continue;
+			if (!allianceMember.isOnline())
+				continue;
 			Player member = allianceMember.getPlayer();
 			PacketSendUtility.sendPacket(member, new SM_ALLIANCE_MEMBER_INFO(memberToUpdate, event));
 			PacketSendUtility.sendPacket(member, new SM_PLAYER_ID(memberToUpdate));
-			switch(event)
+			switch (event)
 			{
 				case ENTER:
 					if (!member.equals(memberToUpdate.getPlayer()))
@@ -359,22 +360,23 @@ public class AllianceService
 			}
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param alliance
 	 * @param event
 	 * @param params
 	 */
-	public void broadcastAllianceInfo(PlayerAlliance alliance, PlayerAllianceEvent event, String ... params)
+	public void broadcastAllianceInfo(PlayerAlliance alliance, PlayerAllianceEvent event, String... params)
 	{
 		SM_ALLIANCE_INFO packet = new SM_ALLIANCE_INFO(alliance);
-		for(PlayerAllianceMember allianceMember : alliance.getMembers())
+		for (PlayerAllianceMember allianceMember : alliance.getMembers())
 		{
-			if (!allianceMember.isOnline()) continue;
+			if (!allianceMember.isOnline())
+				continue;
 			Player member = allianceMember.getPlayer();
 			PacketSendUtility.sendPacket(member, packet);
-			switch(event)
+			switch (event)
 			{
 				case APPOINT_CAPTAIN:
 					PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.STR_FORCE_CHANGE_LEADER(params[0], alliance.getCaptain().getName()));
@@ -388,18 +390,20 @@ public class AllianceService
 			}
 		}
 	}
-	
+
 	/**
 	 * @param alliance
 	 * @param member
 	 */
 	private void sendOtherMemberInfo(PlayerAlliance alliance, Player memberToSend)
 	{
-		
-		for(PlayerAllianceMember allianceMember : alliance.getMembers())
+
+		for (PlayerAllianceMember allianceMember : alliance.getMembers())
 		{
-			if (!allianceMember.isOnline()) continue;
-			if (memberToSend.getObjectId() == allianceMember.getObjectId()) continue;
+			if (!allianceMember.isOnline())
+				continue;
+			if (memberToSend.getObjectId() == allianceMember.getObjectId())
+				continue;
 			PacketSendUtility.sendPacket(memberToSend, new SM_ALLIANCE_MEMBER_INFO(allianceMember, PlayerAllianceEvent.UPDATE));
 			PacketSendUtility.sendPacket(memberToSend, new SM_PLAYER_ID(allianceMember));
 		}
@@ -413,13 +417,13 @@ public class AllianceService
 	public void playerStatusInfo(Player actingMember, int status, int playerObjId)
 	{
 		PlayerAlliance alliance = actingMember.getPlayerAlliance();
-		
+
 		if (alliance == null)
 		{
 			PacketSendUtility.sendMessage(actingMember, "Your alliance is null...");
 		}
-		
-		switch(status)
+
+		switch (status)
 		{
 			case 12: // Leave Alliance
 				removeMemberFromAlliance(alliance, actingMember.getObjectId(), PlayerAllianceEvent.LEAVE);
@@ -452,26 +456,26 @@ public class AllianceService
 	 * @param event
 	 * @param params
 	 */
-	private void removeMemberFromAlliance(PlayerAlliance alliance, int memberObjectId, PlayerAllianceEvent event, String ... params)
+	private void removeMemberFromAlliance(PlayerAlliance alliance, int memberObjectId, PlayerAllianceEvent event, String... params)
 	{
 		// Player
 		PlayerAllianceMember allianceMember = alliance.getPlayer(memberObjectId);
-		
+
 		// TODO: Why is this null sometimes (found when banning from alliance)
 		if (allianceMember == null)
 			return;
-		
+
 		if (allianceMember.isOnline())
 		{
 			allianceMember.getPlayer().setPlayerAlliance(null);
 			PacketSendUtility.sendPacket(allianceMember.getPlayer(), new SM_LEAVE_GROUP_MEMBER());
 		}
-		
+
 		// Alliance
 		alliance.removeMember(memberObjectId);
 		broadcastAllianceMemberInfo(alliance, allianceMember, event, params);
 		removeAllianceMemberFromCache(memberObjectId);
-		
+
 		// Check Disband
 		if (alliance.size() == 1)
 		{
@@ -489,18 +493,18 @@ public class AllianceService
 	 */
 	public void setAlliance(Player player)
 	{
-		if(!isAllianceMember(player.getObjectId()))
+		if (!isAllianceMember(player.getObjectId()))
 			return;
 
 		final PlayerAlliance alliance = getPlayerAlliance(player.getObjectId());
-		
+
 		// Alliance is empty.
-		if(alliance.size() == 0)
+		if (alliance.size() == 0)
 		{
 			removeAllianceMemberFromCache(player.getObjectId());
 			return;
 		}
-		
+
 		player.setPlayerAlliance(alliance);
 		cancelRemovalTask(player.getObjectId());
 	}
@@ -515,25 +519,25 @@ public class AllianceService
 		final PlayerAlliance alliance = player.getPlayerAlliance();
 
 		alliance.onPlayerLogin(player);
-		
+
 		// Required for relogging to work. (?)
 		PacketSendUtility.sendPacket(player, new SM_PLAYER_INFO(player, false));
-		
+
 		PacketSendUtility.sendPacket(player, new SM_ALLIANCE_INFO(alliance));
 		PacketSendUtility.sendPacket(player, new SM_SHOW_BRAND(0, 0));
-		
+
 		broadcastAllianceMemberInfo(alliance, player.getObjectId(), PlayerAllianceEvent.RECONNECT);
 		sendOtherMemberInfo(alliance, player);
 	}
-	
+
 	/**
 	 * @param player
 	 */
 	public void onLogout(Player player)
 	{
-		scheduleRemove(player);		
+		scheduleRemove(player);
 	}
-	
+
 	/**
 	 * Currently sends movement packet to all alliance members.
 	 * 
@@ -543,24 +547,24 @@ public class AllianceService
 	public void updateAllianceUIToEvent(Player player, PlayerAllianceEvent event)
 	{
 		PlayerAlliance alliance = player.getPlayerAlliance();
-		switch(event)
+		switch (event)
 		{
 			case MOVEMENT:
 			case UPDATE:
 				SM_ALLIANCE_MEMBER_INFO packet = new SM_ALLIANCE_MEMBER_INFO(alliance.getPlayer(player.getObjectId()), event);
-				for(PlayerAllianceMember allianceMember : alliance.getMembers())
+				for (PlayerAllianceMember allianceMember : alliance.getMembers())
 				{
 					if (allianceMember.isOnline() && !player.equals(allianceMember.getPlayer()))
 						PacketSendUtility.sendPacket(allianceMember.getPlayer(), packet);
 				}
 				break;
-				
+
 			default:
 				// Unsupported
 				break;
 		}
 	}
-	
+
 	/**
 	 * Sends brand information to each member.
 	 * 
@@ -570,9 +574,10 @@ public class AllianceService
 	 */
 	public void showBrand(PlayerAlliance alliance, int brandId, int targetObjectId)
 	{
-		for(PlayerAllianceMember allianceMember : alliance.getMembers())
+		for (PlayerAllianceMember allianceMember : alliance.getMembers())
 		{
-			if (!allianceMember.isOnline()) continue;
+			if (!allianceMember.isOnline())
+				continue;
 			PacketSendUtility.sendPacket(allianceMember.getPlayer(), new SM_SHOW_BRAND(brandId, targetObjectId));
 		}
 	}
@@ -586,16 +591,17 @@ public class AllianceService
 		// TODO: Merge with group type do-reward. (Near identical to GroupService doReward code.)
 		// Plus complete rewrite of drop system and exp system.
 		// http://www.aionsource.com/topic/40542-character-stats-xp-dp-origin-gerbatorteam-july-2009/
-		
+
 		// Find Group Members and Determine Highest Level
 		List<Player> players = new ArrayList<Player>();
 		int partyLvlSum = 0;
 		int highestLevel = 0;
-		for(PlayerAllianceMember allianceMember : alliance.getMembers())
+		for (PlayerAllianceMember allianceMember : alliance.getMembers())
 		{
-			if (!allianceMember.isOnline()) continue;
-			Player member = allianceMember.getPlayer();  
-			if(MathUtil.isIn3dRange(member, owner, GroupConfig.GROUP_MAX_DISTANCE))
+			if (!allianceMember.isOnline())
+				continue;
+			Player member = allianceMember.getPlayer();
+			if (MathUtil.isIn3dRange(member, owner, GroupConfig.GROUP_MAX_DISTANCE))
 			{
 				if (member.getLifeStats().isAlreadyDead())
 					continue;
@@ -605,40 +611,40 @@ public class AllianceService
 					highestLevel = member.getLevel();
 			}
 		}
-		
+
 		// All are dead or not nearby.
 		if (players.size() == 0)
 			return;
-		
+
 		//AP reward
 		int apRewardPerMember = 0;
 		WorldType worldType = owner.getWorldType();
-		
+
 		//WorldType worldType = sp.getWorld().getWorldMap(player.getWorldId()).getWorldType();
-		if(worldType == WorldType.ABYSS)
+		if (worldType == WorldType.ABYSS)
 		{
 			// Split Evenly
 			apRewardPerMember = Math.round(StatFunctions.calculateGroupAPReward(highestLevel, owner) / players.size());
 		}
-		
+
 		// Exp reward
 		long expReward = StatFunctions.calculateGroupExperienceReward(highestLevel, owner);
-		
+
 		// Exp Mod
 		// TODO: Add logic to prevent power leveling. Players 10 levels below highest member should get 0 exp.
 		double mod = 1;
 		if (players.size() == 0)
 			return;
 		else if (players.size() > 1)
-			mod = 1+(((players.size()-1)*10)/100);
-		
-		expReward *= mod; 
+			mod = 1 + (((players.size() - 1) * 10) / 100);
 
-		for(Player member : players)
+		expReward *= mod;
+
+		for (Player member : players)
 		{
 			// Exp reward
 			long currentExp = member.getCommonData().getExp();
-			long reward = (expReward * member.getLevel())/partyLvlSum;
+			long reward = (expReward * member.getLevel()) / partyLvlSum;
 			reward *= member.getRates().getGroupXpRate();
 			member.getCommonData().setExp(currentExp + reward);
 
@@ -648,26 +654,27 @@ public class AllianceService
 			int currentDp = member.getCommonData().getDp();
 			int dpReward = StatFunctions.calculateGroupDPReward(member, owner);
 			member.getCommonData().setDp(dpReward + currentDp);
-			
+
 			// AP reward
 			if (apRewardPerMember > 0)
 				member.getCommonData().addAp(Math.round(apRewardPerMember * member.getRates().getApNpcRate()));
-			
-			QuestEngine.getInstance().onKill(new QuestEnv(owner, member, 0 , 0));
+
+			QuestEngine.getInstance().onKill(new QuestEnv(owner, member, 0, 0));
 		}
-		
+
 		// Give Drop
 		Player leader = alliance.getCaptain().getPlayer();
-		
+
 		// TODO: Better Group/Alliance Drop methods.
-		if (leader == null) return;
-		
+		if (leader == null)
+			return;
+
 		DropService.getInstance().registerDrop(owner, leader, highestLevel);
 	}
-	
+
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
-		protected static final AllianceService instance = new AllianceService();
+		protected static final AllianceService	instance	= new AllianceService();
 	}
 }

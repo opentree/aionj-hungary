@@ -37,7 +37,7 @@ import com.aionemu.gameserver.dao.PlayerDAO;
 public class IDFactory
 {
 
-	private static final Logger							log						= Logger.getLogger(IDFactory.class);
+	private static final Logger	log			= Logger.getLogger(IDFactory.class);
 	/**
 	 * Bitset that is used for all id's.<br>
 	 * We are allowing BitSet to grow over time, so in the end it can be as big as {@link Integer#MAX_VALUE}
@@ -61,11 +61,11 @@ public class IDFactory
 	 * @throws IDFactoryError
 	 *             if there is no free id's
 	 */
-	
+
 	private IDFactory()
 	{
-		idList		= new BitSet();
-		lock		= new ReentrantLock();
+		idList = new BitSet();
+		lock = new ReentrantLock();
 		lockIds(0);
 		// Here should be calls to all IDFactoryAwareDAO implementations to initialize
 		// used values in IDFactory
@@ -88,7 +88,7 @@ public class IDFactory
 			lock.lock();
 
 			int id;
-			if(nextMinId == Integer.MIN_VALUE)
+			if (nextMinId == Integer.MIN_VALUE)
 			{
 				// Error will be thrown few lines later, we have no more free id's.
 				// BitSet will throw IllegalArgumentException if nextMinId is negative
@@ -101,7 +101,7 @@ public class IDFactory
 
 			// If BitSet reached Integer.MAX_VALUE size and returned last free id before - it will return
 			// Intger.MIN_VALUE as the next id, so we must catch such case and throw error (no free id's left)
-			if(id == Integer.MIN_VALUE)
+			if (id == Integer.MIN_VALUE)
 			{
 				throw new IDFactoryError("All id's are used, please clear your database");
 			}
@@ -130,10 +130,10 @@ public class IDFactory
 		try
 		{
 			lock.lock();
-			for(int id : ids)
+			for (int id : ids)
 			{
 				boolean status = idList.get(id);
-				if(status)
+				if (status)
 				{
 					throw new IDFactoryError("ID " + id + " is already taken, fatal error!!!");
 				}
@@ -159,10 +159,10 @@ public class IDFactory
 		try
 		{
 			lock.lock();
-			for(int id : ids)
+			for (int id : ids)
 			{
 				boolean status = idList.get(id);
-				if(status)
+				if (status)
 				{
 					throw new IDFactoryError("ID " + id + " is already taken, fatal error!!!");
 				}
@@ -189,12 +189,12 @@ public class IDFactory
 		{
 			lock.lock();
 			boolean status = idList.get(id);
-			if(!status)
+			if (!status)
 			{
 				throw new IDFactoryError("ID " + id + " is not taken, can't release it.");
 			}
 			idList.clear(id);
-			if(id < nextMinId || nextMinId == Integer.MIN_VALUE)
+			if (id < nextMinId || nextMinId == Integer.MIN_VALUE)
 			{
 				nextMinId = id;
 			}
@@ -226,6 +226,6 @@ public class IDFactory
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
-		protected static final IDFactory instance = new IDFactory();
+		protected static final IDFactory	instance	= new IDFactory();
 	}
 }

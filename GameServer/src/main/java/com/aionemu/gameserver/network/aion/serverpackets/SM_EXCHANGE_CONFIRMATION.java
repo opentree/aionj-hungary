@@ -26,8 +26,7 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
 public class SM_EXCHANGE_CONFIRMATION extends AbstractAionServerPacket<AionChannelHandler>
 {
 	private int	action;
-	
-	
+
 	public SM_EXCHANGE_CONFIRMATION(int action)
 	{
 		this.action = action;
@@ -36,6 +35,6 @@ public class SM_EXCHANGE_CONFIRMATION extends AbstractAionServerPacket<AionChann
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
-		writeC( action);
+		writeC(action);
 	}
 }

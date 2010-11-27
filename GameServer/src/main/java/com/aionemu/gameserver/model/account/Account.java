@@ -53,11 +53,11 @@ public class Account implements Iterable<PlayerAccountData>
 	 * Membership of this account
 	 */
 	private byte							membership;
-	
+
 	private AccountTime						accountTime;
 
 	private Map<Integer, PlayerAccountData>	players	= new HashMap<Integer, PlayerAccountData>();
-	
+
 	private Storage							accountWarehouse;
 
 	public Account(int id)
@@ -125,12 +125,12 @@ public class Account implements Iterable<PlayerAccountData>
 	@Override
 	public boolean equals(Object o)
 	{
-		if(this == o)
+		if (this == o)
 		{
 			return true;
 		}
 
-		if(!(o instanceof Account))
+		if (!(o instanceof Account))
 		{
 			return false;
 		}
@@ -192,15 +192,16 @@ public class Account implements Iterable<PlayerAccountData>
 	{
 		ArrayList<PlayerAccountData> list = new ArrayList<PlayerAccountData>();
 		list.addAll(players.values());
-		Collections.sort(list, new Comparator<PlayerAccountData>(){
+		Collections.sort(list, new Comparator<PlayerAccountData>()
+		{
 			@Override
 			public int compare(PlayerAccountData x, PlayerAccountData y)
 			{
 				Timestamp t1 = x.getPlayerCommonData().getLastOnline();
 				Timestamp t2 = y.getPlayerCommonData().getLastOnline();
-				if(t2 == null)
+				if (t2 == null)
 					return 1;
-				else if(t1 == null)
+				else if (t1 == null)
 					return -1;
 				return y.getPlayerCommonData().getLastOnline().compareTo(x.getPlayerCommonData().getLastOnline());
 			}

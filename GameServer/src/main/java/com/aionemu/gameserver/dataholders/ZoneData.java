@@ -41,24 +41,24 @@ import com.aionemu.gameserver.world.zone.ZoneName;
 public class ZoneData implements Iterable<ZoneTemplate>
 {
 	@XmlElement(name = "zone")
-	protected List<ZoneTemplate> zoneList;
-	
-	private THashMap<ZoneName, ZoneTemplate> zoneNameMap = new THashMap<ZoneName, ZoneTemplate>();
-	
+	protected List<ZoneTemplate>				zoneList;
+
+	private THashMap<ZoneName, ZoneTemplate>	zoneNameMap	= new THashMap<ZoneName, ZoneTemplate>();
+
 	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
-		for(ZoneTemplate zone : zoneList)
+		for (ZoneTemplate zone : zoneList)
 		{
 			zoneNameMap.put(zone.getName(), zone);
 		}
 	}
-	
+
 	@Override
 	public Iterator<ZoneTemplate> iterator()
 	{
 		return zoneList.iterator();
 	}
-	
+
 	public int size()
 	{
 		return zoneList.size();

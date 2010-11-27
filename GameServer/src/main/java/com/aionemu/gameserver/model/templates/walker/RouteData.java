@@ -32,18 +32,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class RouteData
 {
 	@XmlElement(name = "routestep")
-	private List<RouteStep> stepids;
+	private List<RouteStep>	stepids;
 
 	public List<RouteStep> getRouteSteps()
 	{
 		return stepids;
 	}
-	
+
 	public RouteStep getRouteStep(int value)
 	{
-		for(RouteStep t : stepids)
+		for (RouteStep t : stepids)
 		{
-			if(t != null && t.getRouteStep() == value)
+			if (t != null && t.getRouteStep() == value)
 			{
 				return t;
 			}

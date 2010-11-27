@@ -39,10 +39,10 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class ExchangeService
 {
-	private static final Logger log = Logger.getLogger(ExchangeService.class);
+	private static final Logger		log	= Logger.getLogger(ExchangeService.class);
 
-	private Map<Integer, Exchange>		exchanges;
-	
+	private Map<Integer, Exchange>	exchanges;
+
 	public static final ExchangeService getInstance()
 	{
 		return SingletonHolder.instance;
@@ -53,7 +53,7 @@ public class ExchangeService
 	 */
 	private ExchangeService()
 	{
-		exchanges			= new HashMap<Integer, Exchange>();
+		exchanges = new HashMap<Integer, Exchange>();
 		log.info("ExchangeService: Initialized.");
 	}
 
@@ -63,12 +63,12 @@ public class ExchangeService
 	 */
 	public void registerExchange(Player player1, Player player2)
 	{
-		if(!validateParticipants(player1, player2))
+		if (!validateParticipants(player1, player2))
 			return;
-		
+
 		player1.setTrading(true);
 		player2.setTrading(true);
-		
+
 		exchanges.put(player1.getObjectId(), new Exchange(player1, player2));
 		exchanges.put(player2.getObjectId(), new Exchange(player2, player1));
 
@@ -90,6 +90,7 @@ public class ExchangeService
 		Exchange exchange = exchanges.get(player.getObjectId());
 		return exchange != null ? exchange.getTargetPlayer() : null;
 	}
+
 	/**
 	 * 
 	 * @param player
@@ -118,21 +119,21 @@ public class ExchangeService
 	public void addKinah(Player activePlayer, long itemCount)
 	{
 		Exchange currentExchange = getCurrentExchange(activePlayer);
-		if(currentExchange.isLocked())
+		if (currentExchange.isLocked())
 			return;
-		
-		if(itemCount < 1)
+
+		if (itemCount < 1)
 			return;
 
 		//count total amount in inventory
 		long availableCount = activePlayer.getInventory().getKinahItem().getItemCount();
-		
+
 		//count amount that was already added to exchange
 		availableCount -= currentExchange.getKinahCount();
 
 		long countToAdd = availableCount > itemCount ? itemCount : availableCount;
 
-		if(countToAdd > 0)
+		if (countToAdd > 0)
 		{
 			Player partner = getCurrentParter(activePlayer);
 			PacketSendUtility.sendPacket(activePlayer, new SM_EXCHANGE_ADD_KINAH(countToAdd, 0));
@@ -149,17 +150,17 @@ public class ExchangeService
 	public void addItem(Player activePlayer, int itemObjId, long itemCount)
 	{
 		Item item = activePlayer.getInventory().getItemByObjId(itemObjId);
-		if(item == null)
+		if (item == null)
 			return;
-		
+
 		// Check Trade Hack
 		if (!item.isTradeable())
 			return;
-			
-		if(itemCount < 1)
+
+		if (itemCount < 1)
 			return;
-		
-		if(itemCount > item.getItemCount())
+
+		if (itemCount > item.getItemCount())
 			return;
 
 		Player partner = getCurrentParter(activePlayer);
@@ -168,17 +169,17 @@ public class ExchangeService
 		if (currentExchange == null)
 			return;
 
-		if(currentExchange.isLocked())
+		if (currentExchange.isLocked())
 			return;
 
-		if(currentExchange.isExchangeListFull())
+		if (currentExchange.isExchangeListFull())
 			return;
 
 		ExchangeItem exchangeItem = currentExchange.getItems().get(item.getObjectId());
 
 		long actuallAddCount = 0;
 		//item was not added previosly
-		if(exchangeItem == null)
+		if (exchangeItem == null)
 		{
 			if (item.getItemCount() == itemCount)
 				exchangeItem = new ExchangeItem(itemObjId, itemCount, item);
@@ -196,11 +197,11 @@ public class ExchangeService
 		{
 			//if player add item count that is more than possible
 			//happens with exploits
-			if(item.getItemCount() == exchangeItem.getItemCount())
+			if (item.getItemCount() == exchangeItem.getItemCount())
 				return;
 
 			long possibleToAdd = item.getItemCount() - exchangeItem.getItemCount();
-			actuallAddCount = itemCount > possibleToAdd ? possibleToAdd : itemCount;	
+			actuallAddCount = itemCount > possibleToAdd ? possibleToAdd : itemCount;
 			exchangeItem.addCount(actuallAddCount);
 		}
 
@@ -214,7 +215,7 @@ public class ExchangeService
 	public void lockExchange(Player activePlayer)
 	{
 		Exchange exchange = getCurrentExchange(activePlayer);
-		if(exchange != null)
+		if (exchange != null)
 		{
 			exchange.lock();
 			Player currentParter = getCurrentParter(activePlayer);
@@ -227,9 +228,9 @@ public class ExchangeService
 	 */
 	public void cancelExchange(Player activePlayer)
 	{
-		Player currentParter = getCurrentParter(activePlayer);	
-		cleanupExchanges(activePlayer, currentParter);	
-		if(currentParter != null)
+		Player currentParter = getCurrentParter(activePlayer);
+		cleanupExchanges(activePlayer, currentParter);
+		if (currentParter != null)
 			PacketSendUtility.sendPacket(currentParter, new SM_EXCHANGE_CONFIRMATION(1));
 	}
 
@@ -241,10 +242,10 @@ public class ExchangeService
 		Exchange currentExchange = getCurrentExchange(activePlayer);
 		currentExchange.confirm();
 
-		Player currentPartner = getCurrentParter(activePlayer);	
+		Player currentPartner = getCurrentParter(activePlayer);
 		PacketSendUtility.sendPacket(currentPartner, new SM_EXCHANGE_CONFIRMATION(2));
 
-		if(getCurrentExchange(currentPartner).isConfirmed())
+		if (getCurrentExchange(currentPartner).isConfirmed())
 		{
 			performTrade(activePlayer, currentPartner);
 		}
@@ -258,12 +259,12 @@ public class ExchangeService
 	{
 		//TODO message here
 		//TODO release item id if return
-		if(!validateExchange(activePlayer, currentPartner))
+		if (!validateExchange(activePlayer, currentPartner))
 			return;
 
 		PacketSendUtility.sendPacket(activePlayer, new SM_EXCHANGE_CONFIRMATION(0));
 		PacketSendUtility.sendPacket(currentPartner, new SM_EXCHANGE_CONFIRMATION(0));
-		
+
 		doExchanges(activePlayer, currentPartner);
 		doExchanges(currentPartner, activePlayer);
 
@@ -277,15 +278,15 @@ public class ExchangeService
 	 */
 	private void cleanupExchanges(Player activePlayer, Player currentPartner)
 	{
-		if(activePlayer != null)
+		if (activePlayer != null)
 		{
 			Exchange exchange = exchanges.remove(activePlayer.getObjectId());
 			if (exchange != null)
 				exchange.clear();
 			activePlayer.setTrading(false);
 		}
-			
-		if(currentPartner != null)
+
+		if (currentPartner != null)
 		{
 			Exchange exchange = exchanges.remove(currentPartner.getObjectId());
 			if (exchange != null)
@@ -297,8 +298,8 @@ public class ExchangeService
 	private void doExchanges(Player sourcePlayer, Player targetPlayer)
 	{
 		Exchange exchange = getCurrentExchange(sourcePlayer);
-		
-		for(ExchangeItem exchangeItem : exchange.getItems().values())
+
+		for (ExchangeItem exchangeItem : exchange.getItems().values())
 		{
 			Item itemInInventory = sourcePlayer.getInventory().getItemByObjId(exchangeItem.getItemObjId());
 			if (exchangeItem.getItemCount() == itemInInventory.getItemCount())
@@ -330,19 +331,18 @@ public class ExchangeService
 		Exchange exchange1 = getCurrentExchange(activePlayer);
 		Exchange exchange2 = getCurrentExchange(currentPartner);
 
-		return validateInventorySize(activePlayer, exchange2) 
-		&& validateInventorySize(currentPartner, exchange1);
+		return validateInventorySize(activePlayer, exchange2) && validateInventorySize(currentPartner, exchange1);
 	}
 
 	private boolean validateInventorySize(Player activePlayer, Exchange exchange)
 	{
 		int numberOfFreeSlots = activePlayer.getInventory().getNumberOfFreeSlots();
-		return numberOfFreeSlots >=  exchange.getItems().size();			
+		return numberOfFreeSlots >= exchange.getItems().size();
 	}
 
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
-		protected static final ExchangeService instance = new ExchangeService();
+		protected static final ExchangeService	instance	= new ExchangeService();
 	}
 }

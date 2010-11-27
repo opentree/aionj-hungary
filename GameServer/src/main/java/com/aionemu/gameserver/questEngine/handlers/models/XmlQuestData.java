@@ -35,7 +35,8 @@ import com.aionemu.gameserver.questEngine.handlers.template.XmlQuest;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "XmlQuest", propOrder = {"onTalkEvent", "onKillEvent" })
+@XmlType(name = "XmlQuest", propOrder =
+{ "onTalkEvent", "onKillEvent" })
 public class XmlQuestData extends QuestScriptData
 {
 	@XmlElement(name = "on_talk_event")
@@ -70,7 +71,7 @@ public class XmlQuestData extends QuestScriptData
 	 */
 	public List<OnTalkEvent> getOnTalkEvent()
 	{
-		if(onTalkEvent == null)
+		if (onTalkEvent == null)
 		{
 			onTalkEvent = new ArrayList<OnTalkEvent>();
 		}
@@ -100,7 +101,7 @@ public class XmlQuestData extends QuestScriptData
 	 */
 	public List<OnKillEvent> getOnKillEvent()
 	{
-		if(onKillEvent == null)
+		if (onKillEvent == null)
 		{
 			onKillEvent = new ArrayList<OnKillEvent>();
 		}

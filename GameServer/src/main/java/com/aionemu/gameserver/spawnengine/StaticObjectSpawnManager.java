@@ -38,8 +38,8 @@ public class StaticObjectSpawnManager
 	public static void spawnGroup(SpawnTemplate spawnTemplate, int instanceIndex)
 	{
 		VisibleObjectTemplate objectTemplate = DataManager.ITEM_DATA.getItemTemplate(spawnTemplate.getTemplateId());
-		
-		if(objectTemplate == null)
+
+		if (objectTemplate == null)
 			return;
 
 		int objectId = IDFactory.getInstance().nextId();
@@ -47,7 +47,7 @@ public class StaticObjectSpawnManager
 		bringIntoWorld(spawnedItem, spawnTemplate, instanceIndex);
 
 	}
-	
+
 	/**
 	 * 
 	 * @param visibleObject

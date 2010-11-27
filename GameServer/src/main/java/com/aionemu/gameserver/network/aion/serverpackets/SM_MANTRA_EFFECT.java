@@ -25,8 +25,8 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_MANTRA_EFFECT extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private Player player;
-	private int subEffectId;
+	private Player	player;
+	private int		subEffectId;
 
 	public SM_MANTRA_EFFECT(Player player, int subEffectId)
 	{

@@ -48,8 +48,7 @@ public abstract class AbstractPeriodicTaskManager extends AbstractLockManager im
 	@Override
 	public final void onStartup()
 	{
-		ThreadPoolManager.getInstance().scheduleAtFixedRate(this, 1000 + Rnd.get(period),
-			Rnd.get(period - 5, period + 5));
+		ThreadPoolManager.getInstance().scheduleAtFixedRate(this, 1000 + Rnd.get(period), Rnd.get(period - 5, period + 5));
 	}
 
 	@Override

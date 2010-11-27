@@ -18,7 +18,6 @@ package com.aionemu.gameserver.utils.stats;
 
 import java.util.NoSuchElementException;
 
-
 public enum DropRewardEnum
 {
 	MINUS_11(-11, 0),
@@ -34,21 +33,21 @@ public enum DropRewardEnum
 	MINUS_1(-1, 100),
 	ZERO(0, 100);
 
-	private int dropRewardPercent;
-	
-	private int levelDifference;
-	
+	private int	dropRewardPercent;
+
+	private int	levelDifference;
+
 	private DropRewardEnum(int levelDifference, int dropRewardPercent)
 	{
 		this.levelDifference = levelDifference;
 		this.dropRewardPercent = dropRewardPercent;
 	}
-	
+
 	public int rewardPercent()
 	{
 		return dropRewardPercent;
 	}
-	
+
 	/**
 	 * 
 	 * @param levelDifference between two objects
@@ -56,23 +55,23 @@ public enum DropRewardEnum
 	 */
 	public static int dropRewardFrom(int levelDifference)
 	{
-		if(levelDifference < MINUS_11.levelDifference)
+		if (levelDifference < MINUS_11.levelDifference)
 		{
 			return MINUS_11.dropRewardPercent;
 		}
-		if(levelDifference > ZERO.levelDifference)
+		if (levelDifference > ZERO.levelDifference)
 		{
 			return ZERO.dropRewardPercent;
 		}
-	
-		for(DropRewardEnum dropReward : values())
+
+		for (DropRewardEnum dropReward : values())
 		{
-			if(dropReward.levelDifference == levelDifference)
+			if (dropReward.levelDifference == levelDifference)
 			{
 				return dropReward.dropRewardPercent;
 			}
 		}
-		
+
 		throw new NoSuchElementException("Drop reward for such level difference was not found");
 	}
 }

@@ -31,8 +31,8 @@ import com.aionemu.gameserver.services.SocialService;
  */
 public class CM_BLOCK_DEL extends AbstractClientPacket<AionChannelHandler>
 {
-	private static Logger	log				= Logger.getLogger(CM_BLOCK_DEL.class);
-	
+	private static Logger	log	= Logger.getLogger(CM_BLOCK_DEL.class);
+
 	private String			targetName;
 
 	/**
@@ -51,7 +51,7 @@ public class CM_BLOCK_DEL extends AbstractClientPacket<AionChannelHandler>
 	{
 		targetName = readS();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -59,13 +59,13 @@ public class CM_BLOCK_DEL extends AbstractClientPacket<AionChannelHandler>
 	protected void runImpl()
 	{
 		Player activePlayer = getChannelHandler().getActivePlayer();
-		
+
 		BlockedPlayer target = activePlayer.getBlockList().getBlockedPlayer(targetName);
 		if (target == null)
 		{
 			sendPacket(SM_SYSTEM_MESSAGE.BUDDYLIST_NOT_IN_LIST);
 		}
-		else 
+		else
 		{
 			if (!SocialService.deleteBlockedUser(activePlayer, target.getObjId()))
 			{

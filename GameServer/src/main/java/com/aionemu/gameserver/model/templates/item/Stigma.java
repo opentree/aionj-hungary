@@ -33,14 +33,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Stigma")
 public class Stigma
 {
-    @XmlElement(name = "require_skill")
-    protected List<RequireSkill> requireSkill;
+	@XmlElement(name = "require_skill")
+	protected List<RequireSkill>	requireSkill;
 	@XmlAttribute
-	protected int	skillid;
+	protected int					skillid;
 	@XmlAttribute
-	protected int	skilllvl;
+	protected int					skilllvl;
 	@XmlAttribute
-	protected int	shard;
+	protected int					shard;
+
 	/**
 	 * @return the skillid
 	 */
@@ -48,6 +49,7 @@ public class Stigma
 	{
 		return skillid;
 	}
+
 	/**
 	 * @return the skilllvl
 	 */
@@ -55,6 +57,7 @@ public class Stigma
 	{
 		return skilllvl;
 	}
+
 	/**
 	 * @return the shard
 	 */
@@ -62,12 +65,13 @@ public class Stigma
 	{
 		return shard;
 	}
-	
-    public List<RequireSkill> getRequireSkill()
-    {
-        if (requireSkill == null) {
-            requireSkill = new ArrayList<RequireSkill>();
-        }
-        return this.requireSkill;
-    }
+
+	public List<RequireSkill> getRequireSkill()
+	{
+		if (requireSkill == null)
+		{
+			requireSkill = new ArrayList<RequireSkill>();
+		}
+		return this.requireSkill;
+	}
 }

@@ -37,8 +37,8 @@ public class ItemCollectingData extends QuestScriptData
 	protected int	startNpcId;
 	@XmlAttribute(name = "action_item_id")
 	protected int	actionItemId;
-    @XmlAttribute(name = "end_npc_id")
-    protected int endNpcId;
+	@XmlAttribute(name = "end_npc_id")
+	protected int	endNpcId;
 
 	@Override
 	public void register(QuestEngine questEngine)

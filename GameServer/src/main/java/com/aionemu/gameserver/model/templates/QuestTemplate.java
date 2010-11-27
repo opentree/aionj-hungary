@@ -40,10 +40,23 @@ import com.aionemu.gameserver.model.templates.quest.Rewards;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Quest", propOrder = { "collectItems", "rewards", "questDrop", "finishedQuestConds", "classPermitted",
-	"genderPermitted", "questWorkItems", "fighterSelectableReward", "knightSelectableReward", "rangerSelectableReward",
-	"assassinSelectableReward", "wizardSelectableReward", "elementalistSelectableReward", "priestSelectableReward",
-	"chanterSelectableReward" })
+@XmlType(name = "Quest", propOrder =
+{
+		"collectItems",
+		"rewards",
+		"questDrop",
+		"finishedQuestConds",
+		"classPermitted",
+		"genderPermitted",
+		"questWorkItems",
+		"fighterSelectableReward",
+		"knightSelectableReward",
+		"rangerSelectableReward",
+		"assassinSelectableReward",
+		"wizardSelectableReward",
+		"elementalistSelectableReward",
+		"priestSelectableReward",
+		"chanterSelectableReward" })
 public class QuestTemplate
 {
 
@@ -102,7 +115,7 @@ public class QuestTemplate
 	protected Integer			combineSkillpoint;
 	@XmlAttribute(name = "timer")
 	protected Boolean			timer;
-	
+
 	/**
 	 * Gets the value of the collectItems property.
 	 * 
@@ -137,7 +150,7 @@ public class QuestTemplate
 	 */
 	public List<Rewards> getRewards()
 	{
-		if(rewards == null)
+		if (rewards == null)
 		{
 			rewards = new ArrayList<Rewards>();
 		}
@@ -167,7 +180,7 @@ public class QuestTemplate
 	 */
 	public List<QuestDrop> getQuestDrop()
 	{
-		if(questDrop == null)
+		if (questDrop == null)
 		{
 			questDrop = new ArrayList<QuestDrop>();
 		}
@@ -197,7 +210,7 @@ public class QuestTemplate
 	 */
 	public List<Integer> getFinishedQuestConds()
 	{
-		if(finishedQuestConds == null)
+		if (finishedQuestConds == null)
 		{
 			finishedQuestConds = new ArrayList<Integer>();
 		}
@@ -227,7 +240,7 @@ public class QuestTemplate
 	 */
 	public List<PlayerClass> getClassPermitted()
 	{
-		if(classPermitted == null)
+		if (classPermitted == null)
 		{
 			classPermitted = new ArrayList<PlayerClass>();
 		}
@@ -279,7 +292,7 @@ public class QuestTemplate
 	 */
 	public List<QuestItems> getFighterSelectableReward()
 	{
-		if(fighterSelectableReward == null)
+		if (fighterSelectableReward == null)
 		{
 			fighterSelectableReward = new ArrayList<QuestItems>();
 		}
@@ -309,7 +322,7 @@ public class QuestTemplate
 	 */
 	public List<QuestItems> getKnightSelectableReward()
 	{
-		if(knightSelectableReward == null)
+		if (knightSelectableReward == null)
 		{
 			knightSelectableReward = new ArrayList<QuestItems>();
 		}
@@ -339,7 +352,7 @@ public class QuestTemplate
 	 */
 	public List<QuestItems> getRangerSelectableReward()
 	{
-		if(rangerSelectableReward == null)
+		if (rangerSelectableReward == null)
 		{
 			rangerSelectableReward = new ArrayList<QuestItems>();
 		}
@@ -369,7 +382,7 @@ public class QuestTemplate
 	 */
 	public List<QuestItems> getAssassinSelectableReward()
 	{
-		if(assassinSelectableReward == null)
+		if (assassinSelectableReward == null)
 		{
 			assassinSelectableReward = new ArrayList<QuestItems>();
 		}
@@ -399,7 +412,7 @@ public class QuestTemplate
 	 */
 	public List<QuestItems> getWizardSelectableReward()
 	{
-		if(wizardSelectableReward == null)
+		if (wizardSelectableReward == null)
 		{
 			wizardSelectableReward = new ArrayList<QuestItems>();
 		}
@@ -429,7 +442,7 @@ public class QuestTemplate
 	 */
 	public List<QuestItems> getElementalistSelectableReward()
 	{
-		if(elementalistSelectableReward == null)
+		if (elementalistSelectableReward == null)
 		{
 			elementalistSelectableReward = new ArrayList<QuestItems>();
 		}
@@ -459,7 +472,7 @@ public class QuestTemplate
 	 */
 	public List<QuestItems> getPriestSelectableReward()
 	{
-		if(priestSelectableReward == null)
+		if (priestSelectableReward == null)
 		{
 			priestSelectableReward = new ArrayList<QuestItems>();
 		}
@@ -489,7 +502,7 @@ public class QuestTemplate
 	 */
 	public List<QuestItems> getChanterSelectableReward()
 	{
-		if(chanterSelectableReward == null)
+		if (chanterSelectableReward == null)
 		{
 			chanterSelectableReward = new ArrayList<QuestItems>();
 		}
@@ -557,7 +570,7 @@ public class QuestTemplate
 	 */
 	public boolean isCannotShare()
 	{
-		if(cannotShare == null)
+		if (cannotShare == null)
 		{
 			return false;
 		}
@@ -575,7 +588,7 @@ public class QuestTemplate
 	 */
 	public boolean isCannotGiveup()
 	{
-		if(cannotGiveup == null)
+		if (cannotGiveup == null)
 		{
 			return false;
 		}
@@ -593,7 +606,7 @@ public class QuestTemplate
 	 */
 	public boolean isUseClassReward()
 	{
-		if(useClassReward == null)
+		if (useClassReward == null)
 		{
 			return false;
 		}
@@ -635,16 +648,17 @@ public class QuestTemplate
 	{
 		return combineSkillpoint;
 	}
+
 	/**
 	 * Gets the value of the timer property.
 	 * 
 	 * @return possible object is {@link Integer }
 	 * 
 	 */
-	 
+
 	public boolean isTimer()
 	{
-		if(timer == null)
+		if (timer == null)
 		{
 			return false;
 		}
@@ -652,5 +666,5 @@ public class QuestTemplate
 		{
 			return timer;
 		}
-	}	
+	}
 }

@@ -36,9 +36,8 @@ public enum ReviveType
 	SKILL_REVIVE(3),
 	/**
 	 * Revive to Kisk
-	 */	
+	 */
 	KISK_REVIVE(4);
-	
 
 	private int	typeId;
 
@@ -59,9 +58,9 @@ public enum ReviveType
 
 	public static ReviveType getReviveTypeById(int id)
 	{
-		for(ReviveType rt : values())
+		for (ReviveType rt : values())
 		{
-			if(rt.typeId == id)
+			if (rt.typeId == id)
 				return rt;
 		}
 		throw new IllegalArgumentException("Unsupported revive type: " + id);

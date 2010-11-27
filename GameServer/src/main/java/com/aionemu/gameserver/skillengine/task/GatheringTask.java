@@ -33,14 +33,12 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class GatheringTask extends AbstractCraftTask
 {
-	private GatherableTemplate template;
-	private Material material;
+	private GatherableTemplate	template;
+	private Material			material;
 
-	public GatheringTask(Player requestor, Gatherable gatherable, Material material,
-		int skillLvlDiff)
+	public GatheringTask(Player requestor, Gatherable gatherable, Material material, int skillLvlDiff)
 	{
-		super(requestor, gatherable, gatherable.getObjectTemplate().getSuccessAdj(), gatherable.getObjectTemplate()
-			.getFailureAdj(), skillLvlDiff);
+		super(requestor, gatherable, gatherable.getObjectTemplate().getSuccessAdj(), gatherable.getObjectTemplate().getFailureAdj(), skillLvlDiff);
 		this.template = gatherable.getObjectTemplate();
 		this.material = material;
 	}
@@ -52,7 +50,6 @@ public class GatheringTask extends AbstractCraftTask
 		//TODO this packet is incorrect cause i need to find emotion of aborted gathering
 		PacketSendUtility.broadcastPacket(requestor, new SM_GATHER_STATUS(requestor.getObjectId(), responder.getObjectId(), 2));
 	}
-	
 
 	@Override
 	protected void onInteractionFinish()
@@ -67,7 +64,7 @@ public class GatheringTask extends AbstractCraftTask
 		PacketSendUtility.broadcastPacket(requestor, new SM_GATHER_STATUS(requestor.getObjectId(), responder.getObjectId(), 0), true);
 		PacketSendUtility.broadcastPacket(requestor, new SM_GATHER_STATUS(requestor.getObjectId(), responder.getObjectId(), 1), true);
 	}
-	
+
 	@Override
 	protected void sendInteractionUpdate()
 	{
@@ -77,7 +74,7 @@ public class GatheringTask extends AbstractCraftTask
 	@Override
 	protected void onFailureFinish()
 	{
-		PacketSendUtility.sendPacket(requestor, new SM_GATHER_UPDATE(template, material, currentSuccessValue, currentFailureValue, 1));					
+		PacketSendUtility.sendPacket(requestor, new SM_GATHER_UPDATE(template, material, currentSuccessValue, currentFailureValue, 1));
 		PacketSendUtility.sendPacket(requestor, new SM_GATHER_UPDATE(template, material, currentSuccessValue, currentFailureValue, 7));
 		PacketSendUtility.broadcastPacket(requestor, new SM_GATHER_STATUS(requestor.getObjectId(), responder.getObjectId(), 3), true);
 	}
@@ -85,11 +82,11 @@ public class GatheringTask extends AbstractCraftTask
 	@Override
 	protected void onSuccessFinish()
 	{
-		PacketSendUtility.sendPacket(requestor, new SM_GATHER_UPDATE(template, material, currentSuccessValue, currentFailureValue, 2));					
+		PacketSendUtility.sendPacket(requestor, new SM_GATHER_UPDATE(template, material, currentSuccessValue, currentFailureValue, 2));
 		PacketSendUtility.sendPacket(requestor, new SM_GATHER_UPDATE(template, material, currentSuccessValue, currentFailureValue, 6));
 		PacketSendUtility.broadcastPacket(requestor, new SM_GATHER_STATUS(requestor.getObjectId(), responder.getObjectId(), 2), true);
-		PacketSendUtility.sendPacket(requestor,SM_SYSTEM_MESSAGE.EXTRACT_GATHER_SUCCESS_1_BASIC(new DescriptionId(material.getNameid())));
+		PacketSendUtility.sendPacket(requestor, SM_SYSTEM_MESSAGE.EXTRACT_GATHER_SUCCESS_1_BASIC(new DescriptionId(material.getNameid())));
 		ItemService.addItem(requestor, material.getItemid(), 1);
-		((Gatherable)responder).rewardPlayer(requestor);		
+		((Gatherable) responder).rewardPlayer(requestor);
 	}
 }

@@ -30,14 +30,14 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
  */
 public class LegionMemberEx extends LegionMember
 {
-	private static Logger	log	= Logger.getLogger(LegionMemberEx.class);
+	private static Logger	log		= Logger.getLogger(LegionMemberEx.class);
 
-	private String		name;
-	private PlayerClass	playerClass;
-	private int			level;
-	private Timestamp	lastOnline;
-	private int			worldId;
-	private boolean		online	= false;
+	private String			name;
+	private PlayerClass		playerClass;
+	private int				level;
+	private Timestamp		lastOnline;
+	private int				worldId;
+	private boolean			online	= false;
 
 	/**
 	 * If player is immediately after this constructor is called
@@ -120,19 +120,19 @@ public class LegionMemberEx extends LegionMember
 		// maxLevel is 51 but in game 50 should be shown with full XP bar
 		int maxLevel = DataManager.PLAYER_EXPERIENCE_TABLE.getMaxLevel();
 
-		if(getPlayerClass() != null && getPlayerClass().isStartingClass())
+		if (getPlayerClass() != null && getPlayerClass().isStartingClass())
 			maxLevel = 10;
 
 		long maxExp = DataManager.PLAYER_EXPERIENCE_TABLE.getStartExpForLevel(maxLevel);
 		int level = 1;
 
-		if(exp > maxExp)
+		if (exp > maxExp)
 		{
 			exp = maxExp;
 		}
 
 		// make sure level is never larger than maxLevel-1
-		while((level + 1) != maxLevel && exp >= DataManager.PLAYER_EXPERIENCE_TABLE.getStartExpForLevel(level + 1))
+		while ((level + 1) != maxLevel && exp >= DataManager.PLAYER_EXPERIENCE_TABLE.getStartExpForLevel(level + 1))
 		{
 			level++;
 		}
@@ -179,9 +179,9 @@ public class LegionMemberEx extends LegionMember
 	 */
 	public boolean isValidLegionMemberEx()
 	{
-		if(getObjectId() < 1)
+		if (getObjectId() < 1)
 		{
-			log.error("[LegionMemberEx] Player Object ID is empty.");			
+			log.error("[LegionMemberEx] Player Object ID is empty.");
 		}
 		else if (getName() == null)
 		{

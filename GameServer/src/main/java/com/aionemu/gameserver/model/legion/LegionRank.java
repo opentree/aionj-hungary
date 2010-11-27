@@ -23,9 +23,7 @@ package com.aionemu.gameserver.model.legion;
 public enum LegionRank
 {
 	/** All Legion Ranks **/
-	BRIGADE_GENERAL(0),
-	CENTURION(1),
-	LEGIONARY(2);
+	BRIGADE_GENERAL(0), CENTURION(1), LEGIONARY(2);
 
 	/** Static Rights Information **/
 	// Add to 0x60
@@ -68,18 +66,17 @@ public enum LegionRank
 	 */
 	public boolean canUseGateGuardianStone(final int centurionPermission2, final int legionarPermission2)
 	{
-		switch(this)
+		switch (this)
 		{
 			/** Legion Member is Centurion **/
 			case CENTURION:
-				if(centurionPermission2 == LP_GATE_GUARDIAN_STONE || centurionPermission2 == (LP_COMBINATION_00_13)
-					|| centurionPermission2 == (LP_COMBINATION_00_23)
-					|| centurionPermission2 == (LP_COMBINATION_00_123))
+				if (centurionPermission2 == LP_GATE_GUARDIAN_STONE || centurionPermission2 == (LP_COMBINATION_00_13)
+						|| centurionPermission2 == (LP_COMBINATION_00_23) || centurionPermission2 == (LP_COMBINATION_00_123))
 					return true;
 				break;
 			/** Legion Member is Legionary **/
 			case LEGIONARY:
-				if(legionarPermission2 == LP_GATE_GUARDIAN_STONE)
+				if (legionarPermission2 == LP_GATE_GUARDIAN_STONE)
 					return true;
 				break;
 		}
@@ -91,14 +88,13 @@ public enum LegionRank
 	 */
 	public boolean canUseArtifact(final int centurionPermission2)
 	{
-		switch(this)
+		switch (this)
 		{
 			/** Legion Member is Centurion **/
 			case CENTURION:
 			{
-				if(centurionPermission2 == LP_ARTIFACT || centurionPermission2 == (LP_COMBINATION_00_12)
-					|| centurionPermission2 == (LP_COMBINATION_00_23)
-					|| centurionPermission2 == (LP_COMBINATION_00_123))
+				if (centurionPermission2 == LP_ARTIFACT || centurionPermission2 == (LP_COMBINATION_00_12) || centurionPermission2 == (LP_COMBINATION_00_23)
+						|| centurionPermission2 == (LP_COMBINATION_00_123))
 					return true;
 				break;
 			}
@@ -111,14 +107,13 @@ public enum LegionRank
 	 */
 	public boolean canEditAnnouncement(final int centurionPermission2)
 	{
-		switch(this)
+		switch (this)
 		{
 			/** Legion Member is Centurion **/
 			case CENTURION:
 			{
-				if(centurionPermission2 == LP_EDIT_ANNOUNCEMENT || centurionPermission2 == (LP_COMBINATION_00_13)
-					|| centurionPermission2 == (LP_COMBINATION_00_23)
-					|| centurionPermission2 == (LP_COMBINATION_00_123))
+				if (centurionPermission2 == LP_EDIT_ANNOUNCEMENT || centurionPermission2 == (LP_COMBINATION_00_13)
+						|| centurionPermission2 == (LP_COMBINATION_00_23) || centurionPermission2 == (LP_COMBINATION_00_123))
 					return true;
 				break;
 			}
@@ -131,14 +126,13 @@ public enum LegionRank
 	 */
 	public boolean canUseLegionWarehouse(final int centurionPermission1)
 	{
-		switch(this)
+		switch (this)
 		{
 			/** Legion Member is Centurion **/
 			case CENTURION:
 			{
-				if(centurionPermission1 == LP_LEGION_WAREHOUSE || centurionPermission1 == (LP_COMBINATION_60_13)
-					|| centurionPermission1 == (LP_COMBINATION_60_13)
-					|| centurionPermission1 == (LP_COMBINATION_60_123))
+				if (centurionPermission1 == LP_LEGION_WAREHOUSE || centurionPermission1 == (LP_COMBINATION_60_13)
+						|| centurionPermission1 == (LP_COMBINATION_60_13) || centurionPermission1 == (LP_COMBINATION_60_123))
 					return true;
 				break;
 			}
@@ -151,14 +145,13 @@ public enum LegionRank
 	 */
 	public boolean canKickFromLegion(final int centurionPermission1)
 	{
-		switch(this)
+		switch (this)
 		{
 			/** Legion Member is Centurion **/
 			case CENTURION:
 			{
-				if(centurionPermission1 == LP_KICK_FROM_LEGION || centurionPermission1 == (LP_COMBINATION_60_12)
-					|| centurionPermission1 == (LP_COMBINATION_60_23)
-					|| centurionPermission1 == (LP_COMBINATION_60_123))
+				if (centurionPermission1 == LP_KICK_FROM_LEGION || centurionPermission1 == (LP_COMBINATION_60_12)
+						|| centurionPermission1 == (LP_COMBINATION_60_23) || centurionPermission1 == (LP_COMBINATION_60_123))
 					return true;
 				break;
 			}
@@ -171,14 +164,13 @@ public enum LegionRank
 	 */
 	public boolean canInviteToLegion(int centurionPermission1)
 	{
-		switch(this)
+		switch (this)
 		{
 			/** Legion Member is Centurion **/
 			case CENTURION:
 			{
-				if(centurionPermission1 == LP_INVITE_TO_LEGION || centurionPermission1 == (LP_COMBINATION_60_13)
-					|| centurionPermission1 == (LP_COMBINATION_60_23)
-					|| centurionPermission1 == (LP_COMBINATION_60_123))
+				if (centurionPermission1 == LP_INVITE_TO_LEGION || centurionPermission1 == (LP_COMBINATION_60_13)
+						|| centurionPermission1 == (LP_COMBINATION_60_23) || centurionPermission1 == (LP_COMBINATION_60_123))
 					return true;
 				break;
 			}

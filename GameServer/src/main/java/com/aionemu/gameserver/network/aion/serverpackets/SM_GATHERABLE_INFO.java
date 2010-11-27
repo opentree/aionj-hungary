@@ -24,16 +24,16 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  * @author Lyahim, ATracer
  *
  */
-public class SM_GATHERABLE_INFO  extends AbstractAionServerPacket<AionChannelHandler>
+public class SM_GATHERABLE_INFO extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private VisibleObject visibleObject;
+	private VisibleObject	visibleObject;
 
 	public SM_GATHERABLE_INFO(VisibleObject visibleObject)
 	{
 		super();
 		this.visibleObject = visibleObject;
 	}
-	
+
 	@Override
 	public void writeImpl(AionChannelHandler cHandler)
 	{
@@ -44,11 +44,11 @@ public class SM_GATHERABLE_INFO  extends AbstractAionServerPacket<AionChannelHan
 		writeD(visibleObject.getSpawn().getStaticid()); //unk
 		writeD(visibleObject.getObjectTemplate().getTemplateId());
 		writeH(1); //unk
-		writeC( 0);
+		writeC(0);
 		writeD(visibleObject.getObjectTemplate().getNameId());
 		writeH(0);
 		writeH(0);
 		writeH(0);
-		writeC( 100); //unk
+		writeC(100); //unk
 	}
 }

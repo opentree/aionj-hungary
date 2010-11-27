@@ -32,8 +32,7 @@ public class NpcLifeStats extends CreatureLifeStats<Npc>
 	 */
 	public NpcLifeStats(Npc owner)
 	{
-		super(owner, owner.getGameStats().getCurrentStat(StatEnum.MAXHP), owner.getGameStats().getCurrentStat(
-			StatEnum.MAXMP));
+		super(owner, owner.getGameStats().getCurrentStat(StatEnum.MAXHP), owner.getGameStats().getCurrentStat(StatEnum.MAXMP));
 	}
 
 	@Override
@@ -59,11 +58,11 @@ public class NpcLifeStats extends CreatureLifeStats<Npc>
 	{
 		// nothing todo	
 	}
-	
+
 	@Override
 	protected void triggerRestoreTask()
 	{
-		if(lifeRestoreTask == null && !alreadyDead)
+		if (lifeRestoreTask == null && !alreadyDead)
 		{
 			this.lifeRestoreTask = LifeStatsRestoreService.getInstance().scheduleHpRestoreTask(this);
 		}

@@ -22,15 +22,7 @@ package com.aionemu.gameserver.controllers.attack;
  */
 public enum AttackStatus
 {
-	DODGE(0),
-	OFFHAND_DODGE(1),
-	PARRY(2),
-	OFFHAND_PARRY(3),
-	BLOCK(4),
-	OFFHAND_BLOCK(5),
-	RESIST(6),
-	OFFHAND_RESIST(7),
-	BUF(8),// ??
+	DODGE(0), OFFHAND_DODGE(1), PARRY(2), OFFHAND_PARRY(3), BLOCK(4), OFFHAND_BLOCK(5), RESIST(6), OFFHAND_RESIST(7), BUF(8), // ??
 	OFFHAND_BUF(9),
 	NORMALHIT(10),
 	OFFHAND_NORMALHIT(11),
@@ -45,7 +37,7 @@ public enum AttackStatus
 	OFFHAND_CRITICAL_RESIST(-41),
 	OFFHAND_CRITICAL(-37);
 
-	private int _type;
+	private int	_type;
 
 	private AttackStatus(int type)
 	{

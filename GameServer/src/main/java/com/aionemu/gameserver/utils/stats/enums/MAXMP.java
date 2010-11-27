@@ -34,14 +34,14 @@ public enum MAXMP
 	PRIEST(100),
 	CLERIC(100),
 	CHANTER(100);
-	
-	private int value;
-	
+
+	private int	value;
+
 	private MAXMP(int value)
 	{
 		this.value = value;
 	}
-	
+
 	public int getValue()
 	{
 		return value;

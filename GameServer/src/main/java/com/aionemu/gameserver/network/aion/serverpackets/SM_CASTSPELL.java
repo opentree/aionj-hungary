@@ -25,18 +25,18 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_CASTSPELL extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int attackerObjectId;
-	private int	spellId;
-	private int	level;
-	private int	targetType; 
-	private int duration;
-	
-	private int	targetObjectId;
-	
-	private float x;
-	private float y;
-	private float z;
-	
+	private int		attackerObjectId;
+	private int		spellId;
+	private int		level;
+	private int		targetType;
+	private int		duration;
+
+	private int		targetObjectId;
+
+	private float	x;
+	private float	y;
+	private float	z;
+
 	public SM_CASTSPELL(int attackerObjectId, int spellId, int level, int targetType, int targetObjectId, int duration)
 	{
 		this.attackerObjectId = attackerObjectId;
@@ -46,7 +46,7 @@ public class SM_CASTSPELL extends AbstractAionServerPacket<AionChannelHandler>
 		this.targetObjectId = targetObjectId;
 		this.duration = duration;
 	}
-	
+
 	public SM_CASTSPELL(int attackerObjectId, int spellId, int level, int targetType, float x, float y, float z, int duration)
 	{
 		this(attackerObjectId, spellId, level, targetType, 0, duration);
@@ -62,14 +62,14 @@ public class SM_CASTSPELL extends AbstractAionServerPacket<AionChannelHandler>
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(attackerObjectId);
-		writeH(spellId); 
-		writeC( level);
-		
-		writeC( targetType);
-		switch(targetType)
+		writeH(spellId);
+		writeC(level);
+
+		writeC(targetType);
+		switch (targetType)
 		{
 			case 0:
-				writeD(targetObjectId); 
+				writeD(targetObjectId);
 				break;
 			case 1:
 				writeF(x);
@@ -77,7 +77,7 @@ public class SM_CASTSPELL extends AbstractAionServerPacket<AionChannelHandler>
 				writeF(z);
 				break;
 		}
-		
+
 		writeH(duration);
 		writeD(0);
 	}

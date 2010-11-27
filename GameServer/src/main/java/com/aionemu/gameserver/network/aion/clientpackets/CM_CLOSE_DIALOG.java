@@ -59,18 +59,17 @@ public class CM_CLOSE_DIALOG extends AbstractClientPacket<AionChannelHandler>
 		AionObject targetObject = World.getInstance().findAionObject(targetObjectId);
 		Player player = getChannelHandler().getActivePlayer();
 
-		if(targetObject == null || player == null)
+		if (targetObject == null || player == null)
 			return;
 
-		if(targetObject instanceof Npc)
+		if (targetObject instanceof Npc)
 		{
 			Npc npc = (Npc) targetObject;
-				
-			if(npc.getTarget() == player)
+
+			if (npc.getTarget() == player)
 				npc.setTarget(null);
 
-			PacketSendUtility.broadcastPacket((Npc) targetObject,
-				new SM_LOOKATOBJECT((Npc) targetObject));
+			PacketSendUtility.broadcastPacket((Npc) targetObject, new SM_LOOKATOBJECT((Npc) targetObject));
 		}
 	}
 }

@@ -30,13 +30,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class TeleportLocation
 {
 	@XmlAttribute(name = "loc_id", required = true)
-	private int locId;
+	private int	locId;
 
 	@XmlAttribute(name = "teleportid")
-	private int teleportid = 0;
+	private int	teleportid	= 0;
 
 	@XmlAttribute(name = "price", required = true)
-	private int price = 0;
+	private int	price		= 0;
 
 	public int getLocId()
 	{

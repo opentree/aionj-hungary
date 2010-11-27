@@ -24,12 +24,12 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_ITEM_USAGE_ANIMATION extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int playerObjId;
-	private int itemObjId;
-	private int itemId;
-    private int time;
-    private int end;
-    private int unk;
+	private int	playerObjId;
+	private int	itemObjId;
+	private int	itemId;
+	private int	time;
+	private int	end;
+	private int	unk;
 
 	public SM_ITEM_USAGE_ANIMATION(int playerObjId, int itemObjId, int itemId)
 	{
@@ -65,14 +65,14 @@ public class SM_ITEM_USAGE_ANIMATION extends AbstractAionServerPacket<AionChanne
 	{
 		writeD(playerObjId); // player obj id
 		writeD(playerObjId); // player obj id 2x - other player? maybe item can be used on other player.
-		
+
 		writeD(itemObjId); // itemObjId
 		writeD(itemId); // item id
-		
+
 		writeD(time); // unk
-		writeC( end); // unk
-		writeC( 1); // unk
-		writeC( 0);
+		writeC(end); // unk
+		writeC(1); // unk
+		writeC(0);
 		writeD(unk);
 	}
 }

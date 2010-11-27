@@ -32,14 +32,14 @@ import com.aionemu.gameserver.services.SocialService;
 public class CM_FRIEND_DEL extends AbstractClientPacket<AionChannelHandler>
 {
 
-	private String 				targetName;
-	private static Logger		log				= Logger.getLogger(CM_FRIEND_DEL.class);
-	
+	private String			targetName;
+	private static Logger	log	= Logger.getLogger(CM_FRIEND_DEL.class);
+
 	public CM_FRIEND_DEL(int opcode)
 	{
 		super(opcode);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -56,7 +56,7 @@ public class CM_FRIEND_DEL extends AbstractClientPacket<AionChannelHandler>
 	@Override
 	protected void runImpl()
 	{
-		
+
 		Player activePlayer = getChannelHandler().getActivePlayer();
 		Friend target = activePlayer.getFriendList().getFriend(targetName);
 		if (target == null)
@@ -67,10 +67,8 @@ public class CM_FRIEND_DEL extends AbstractClientPacket<AionChannelHandler>
 		else
 		{
 			SocialService.deleteFriend(activePlayer, target.getOid());
-			
-			
+
 		}
-		
 
 	}
 

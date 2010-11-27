@@ -61,7 +61,7 @@ public class ItemCollecting extends QuestHandler
 	{
 		qe.setNpcQuestData(startNpcId).addOnQuestStart(questId);
 		qe.setNpcQuestData(startNpcId).addOnTalkEvent(questId);
-		if(actionItemId != 0)
+		if (actionItemId != 0)
 			qe.setNpcQuestData(actionItemId).addOnTalkEvent(questId);
 		if (endNpcId != startNpcId)
 			qe.setNpcQuestData(endNpcId).addOnTalkEvent(questId);
@@ -72,29 +72,30 @@ public class ItemCollecting extends QuestHandler
 	{
 		final Player player = env.getPlayer();
 		int targetId = 0;
-		if(env.getVisibleObject() instanceof Npc)
+		if (env.getVisibleObject() instanceof Npc)
 			targetId = ((Npc) env.getVisibleObject()).getNpcId();
 		QuestState qs = player.getQuestStateList().getQuestState(questId);
 		QuestTemplate template = DataManager.QUEST_DATA.getQuestById(questId);
-		if(qs == null || qs.getStatus() == QuestStatus.NONE  || (qs.getStatus() == QuestStatus.COMPLETE && (qs.getCompliteCount() <= template.getMaxRepeatCount())))
+		if (qs == null || qs.getStatus() == QuestStatus.NONE
+				|| (qs.getStatus() == QuestStatus.COMPLETE && (qs.getCompliteCount() <= template.getMaxRepeatCount())))
 		{
-			if(targetId == startNpcId)
+			if (targetId == startNpcId)
 			{
-				if(env.getDialogId() == 25)
+				if (env.getDialogId() == 25)
 					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
 				else
 					return defaultQuestStartDialog(env);
 			}
 		}
-		else if(qs != null && qs.getStatus() == QuestStatus.START)
+		else if (qs != null && qs.getStatus() == QuestStatus.START)
 		{
 			if (targetId == endNpcId)
 			{
-				if(env.getDialogId() == 25)
+				if (env.getDialogId() == 25)
 					return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375);
-				else if(env.getDialogId() == 33)
+				else if (env.getDialogId() == 33)
 				{
-					if(QuestService.collectItemCheck(env, true))
+					if (QuestService.collectItemCheck(env, true))
 					{
 						qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
 						qs.setStatus(QuestStatus.REWARD);
@@ -105,10 +106,10 @@ public class ItemCollecting extends QuestHandler
 						return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2716);
 				}
 			}
-			else if(targetId == actionItemId && targetId != 0)
+			else if (targetId == actionItemId && targetId != 0)
 				return true;
 		}
-		else if(qs.getStatus() == QuestStatus.REWARD && targetId == endNpcId)
+		else if (qs.getStatus() == QuestStatus.REWARD && targetId == endNpcId)
 		{
 			return defaultQuestEndDialog(env);
 		}

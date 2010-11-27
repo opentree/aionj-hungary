@@ -31,15 +31,15 @@ public class CM_START_LOOT extends AbstractClientPacket<AionChannelHandler>
 	/**
 	 * Target object id that client wants to TALK WITH or 0 if wants to unselect
 	 */
-	
-	private int					targetObjectId;
-	private int					action;
-	
+
+	private int	targetObjectId;
+	private int	action;
+
 	/**
 	 * Constructs new instance of <tt>CM_CM_REQUEST_DIALOG </tt> packet
 	 * @param opcode
 	 */
-	public CM_START_LOOT(int opcode) 
+	public CM_START_LOOT(int opcode)
 	{
 		super(opcode);
 	}
@@ -48,7 +48,7 @@ public class CM_START_LOOT extends AbstractClientPacket<AionChannelHandler>
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void readImpl() 
+	protected void readImpl()
 	{
 		targetObjectId = readD();// empty
 		action = readC();
@@ -58,15 +58,15 @@ public class CM_START_LOOT extends AbstractClientPacket<AionChannelHandler>
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void runImpl() 
+	protected void runImpl()
 	{
 		Player player = getChannelHandler().getActivePlayer();
 
-		if(action == 0) //open
+		if (action == 0) //open
 		{
 			DropService.getInstance().requestDropList(player, targetObjectId);
 		}
-		else if(action == 1) //close
+		else if (action == 1) //close
 		{
 			DropService.getInstance().requestDropList(player, targetObjectId, true);
 		}

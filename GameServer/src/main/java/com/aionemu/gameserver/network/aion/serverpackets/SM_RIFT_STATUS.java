@@ -25,11 +25,11 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_RIFT_STATUS extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int usedEntries;
-	private int maxEntries;
-	private int maxLevel;
-	private int targetObjectId;
-	
+	private int	usedEntries;
+	private int	maxEntries;
+	private int	maxLevel;
+	private int	targetObjectId;
+
 	public SM_RIFT_STATUS(int targetObjId, int usedEntries, int maxEntries, int maxLevel)
 	{
 		this.targetObjectId = targetObjId;
@@ -37,7 +37,6 @@ public class SM_RIFT_STATUS extends AbstractAionServerPacket<AionChannelHandler>
 		this.maxEntries = maxEntries;
 		this.maxLevel = maxLevel;
 	}
-
 
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
@@ -47,6 +46,6 @@ public class SM_RIFT_STATUS extends AbstractAionServerPacket<AionChannelHandler>
 		writeD(maxEntries);
 		writeD(6793); //unk
 		writeD(25); // min level
-		writeD(maxLevel);	
+		writeD(maxLevel);
 	}
 }

@@ -27,16 +27,16 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
 public class SM_TARGET_SELECTED extends AbstractAionServerPacket<AionChannelHandler>
 {
 	@SuppressWarnings("unused")
-	private Player		player;
-	private int	level;
-	private int	maxHp;
-	private int	currentHp;
-	private int targetObjId;
+	private Player	player;
+	private int		level;
+	private int		maxHp;
+	private int		currentHp;
+	private int		targetObjId;
 
 	public SM_TARGET_SELECTED(Player player)
 	{
 		this.player = player;
-		if(player.getTarget() instanceof Creature)
+		if (player.getTarget() instanceof Creature)
 		{
 			this.level = ((Creature) player.getTarget()).getLevel();
 			this.maxHp = ((Creature) player.getTarget()).getLifeStats().getMaxHp();
@@ -49,8 +49,8 @@ public class SM_TARGET_SELECTED extends AbstractAionServerPacket<AionChannelHand
 			this.maxHp = 1;
 			this.currentHp = 1;
 		}
-		
-		if(player.getTarget() != null)
+
+		if (player.getTarget() != null)
 			targetObjId = player.getTarget().getObjectId();
 	}
 

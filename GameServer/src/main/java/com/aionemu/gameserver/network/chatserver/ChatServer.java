@@ -27,22 +27,24 @@ import com.aionemu.gameserver.network.chatserver.serverpackets.SM_CS_PLAYER_LOGO
  */
 public class ChatServer
 {
-	private static final Logger			log				= Logger.getLogger(ChatServer.class);
+	private static final Logger			log	= Logger.getLogger(ChatServer.class);
 
 	private ChatServerChannelHandler	chatServerChannelHandler;
-	
+
 	public static final ChatServer getInstance()
 	{
 		return SingletonHolder.instance;
 	}
 
-	private ChatServer(){}
-	
+	private ChatServer()
+	{
+	}
+
 	public void setChannelHandler(ChatServerChannelHandler csch)
 	{
 		this.chatServerChannelHandler = csch;
 	}
-	
+
 	/**
 	 * This method is called when we lost connection to ChatServer.
 	 */
@@ -51,7 +53,7 @@ public class ChatServer
 		log.warn("Connection with ChatServer lost...");
 
 		chatServerChannelHandler = null;
-		
+
 	}
 
 	/**
@@ -60,23 +62,23 @@ public class ChatServer
 	 */
 	public void sendPlayerLoginRequst(Player player)
 	{
-		if(chatServerChannelHandler != null)
+		if (chatServerChannelHandler != null)
 			chatServerChannelHandler.sendPacket(new SM_CS_PLAYER_AUTH(player.getObjectId(), player.getAcountName()));
 	}
-	
+
 	/**
 	 * 
 	 * @param player
 	 */
 	public void sendPlayerLogout(Player player)
 	{
-		if(chatServerChannelHandler != null)
+		if (chatServerChannelHandler != null)
 			chatServerChannelHandler.sendPacket(new SM_CS_PLAYER_LOGOUT(player.getObjectId()));
 	}
-	
+
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
-		protected static final ChatServer instance = new ChatServer();
+		protected static final ChatServer	instance	= new ChatServer();
 	}
 }

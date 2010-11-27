@@ -30,20 +30,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class NpcStatsTemplate extends StatsTemplate
 {
 	@XmlAttribute(name = "run_speed_fight")
-	private float runSpeedFight;
+	private float	runSpeedFight;
 	@XmlAttribute(name = "pdef")
-	private int pdef;
+	private int		pdef;
 	@XmlAttribute(name = "mdef")
-	private int mdef;
+	private int		mdef;
 	@XmlAttribute(name = "crit")
-	private int crit;
+	private int		crit;
 	@XmlAttribute(name = "accuracy")
-	private int accuracy;
+	private int		accuracy;
 	@XmlAttribute(name = "power")
-	private int power;
+	private int		power;
 	@XmlAttribute(name = "maxXp")
-	private int maxXp;
-	
+	private int		maxXp;
+
 	public float getRunSpeedFight()
 	{
 		return runSpeedFight;
@@ -96,5 +96,5 @@ public class NpcStatsTemplate extends StatsTemplate
 	{
 		return maxXp;
 	}
-	
+
 }

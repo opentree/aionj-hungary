@@ -51,7 +51,7 @@ public class InstanceService
 	{
 		WorldMap map = World.getInstance().getWorldMap(worldId);
 
-		if(!map.isInstanceType())
+		if (!map.isInstanceType())
 			throw new UnsupportedOperationException("Invalid call for next available instance  of " + worldId);
 
 		int nextInstanceId = map.getNextInstanceId();
@@ -61,7 +61,7 @@ public class InstanceService
 		WorldMapInstance worldMapInstance = map.addInstance(nextInstanceId);
 		startInstanceChecker(worldMapInstance);
 		SpawnEngine.getInstance().spawnInstance(worldId, worldMapInstance.getInstanceId());
-		
+
 		return worldMapInstance;
 	}
 
@@ -71,7 +71,7 @@ public class InstanceService
 	private static void destroyInstance(WorldMapInstance instance)
 	{
 		instance.getEmptyInstanceTask().cancel(false);
-		
+
 		int worldId = instance.getMapId();
 		int instanceId = instance.getInstanceId();
 
@@ -80,10 +80,10 @@ public class InstanceService
 
 		log.info("Destroying instance:" + worldId + " " + instanceId);
 
-		for(VisibleObject obj : instance.getAllWorldMapObjects())
+		for (VisibleObject obj : instance.getAllWorldMapObjects())
 		{
-			if(obj instanceof Player)
-			{			
+			if (obj instanceof Player)
+			{
 				Player player = (Player) obj;
 				PortalTemplate portal = DataManager.PORTAL_DATA.getInstancePortalTemplate(worldId, player.getCommonData().getRace());
 				moveToEntryPoint((Player) obj, portal, true);
@@ -94,7 +94,7 @@ public class InstanceService
 			}
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param instance
@@ -104,7 +104,7 @@ public class InstanceService
 	{
 		instance.register(player.getObjectId());
 	}
-	
+
 	/**
 	 * 
 	 * @param instance
@@ -114,7 +114,7 @@ public class InstanceService
 	{
 		instance.registerGroup(group);
 	}
-	
+
 	/**
 	 * 
 	 * @param worldId
@@ -123,9 +123,9 @@ public class InstanceService
 	 */
 	public static WorldMapInstance getRegisteredInstance(int worldId, int objectId)
 	{
-		for(WorldMapInstance instance : World.getInstance().getWorldMap(worldId).getAllWorldMapInstances())
+		for (WorldMapInstance instance : World.getInstance().getWorldMap(worldId).getAllWorldMapInstances())
 		{
-			if(instance.isRegistered(objectId))
+			if (instance.isRegistered(objectId))
 				return instance;
 		}
 		return null;
@@ -137,72 +137,70 @@ public class InstanceService
 	public static void onPlayerLogin(Player player)
 	{
 		int worldId = player.getWorldId();
-		
+
 		WorldMapTemplate worldTemplate = DataManager.WORLD_MAPS_DATA.getTemplate(worldId);
-		if(worldTemplate.isInstance())
+		if (worldTemplate.isInstance())
 		{
 			PortalTemplate portalTemplate = DataManager.PORTAL_DATA.getInstancePortalTemplate(worldId, player.getCommonData().getRace());
-			
+
 			if (portalTemplate == null)
 			{
 				log.error("No portal template found for " + worldId);
 				return;
 			}
-			
+
 			int lookupId = player.getObjectId();
-			if(portalTemplate.isGroup() && player.getPlayerGroup() != null)
+			if (portalTemplate.isGroup() && player.getPlayerGroup() != null)
 			{
 				lookupId = player.getPlayerGroup().getGroupId();
 			}
-			
+
 			WorldMapInstance registeredInstance = getRegisteredInstance(worldId, lookupId);
-			if(registeredInstance != null)
+			if (registeredInstance != null)
 			{
-				World.getInstance().setPosition(player, worldId, registeredInstance.getInstanceId(), player.getX(), player.getY(),
-					player.getZ(), player.getHeading());
+				World.getInstance().setPosition(player, worldId, registeredInstance.getInstanceId(), player.getX(), player.getY(), player.getZ(),
+						player.getHeading());
 				return;
 			}
-			
-			moveToEntryPoint(player, portalTemplate, false);			
+
+			moveToEntryPoint(player, portalTemplate, false);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param player
 	 * @param portalTemplates
 	 */
 	private static void moveToEntryPoint(Player player, PortalTemplate portalTemplate, boolean useTeleport)
-	{		
+	{
 		EntryPoint entryPoint = null;
 		List<EntryPoint> entryPoints = portalTemplate.getEntryPoint();
 
-		for(EntryPoint point : entryPoints)
+		for (EntryPoint point : entryPoints)
 		{
-			if(point.getRace() == null || point.getRace().equals(player.getCommonData().getRace()))
+			if (point.getRace() == null || point.getRace().equals(player.getCommonData().getRace()))
 			{
 				entryPoint = point;
 				break;
 			}
 		}
-		
-		if(entryPoint == null)
+
+		if (entryPoint == null)
 		{
 			log.warn("Entry point not found for " + player.getCommonData().getRace() + " " + player.getWorldId());
 			return;
 		}
-		
-		if(useTeleport)
+
+		if (useTeleport)
 		{
-			TeleportService.teleportTo(player, entryPoint.getMapId(), 1,  entryPoint.getX(), entryPoint.getY(),
-				entryPoint.getZ(), 0);
+			TeleportService.teleportTo(player, entryPoint.getMapId(), 1, entryPoint.getX(), entryPoint.getY(), entryPoint.getZ(), 0);
 		}
 		else
 		{
-			World.getInstance().setPosition(player, entryPoint.getMapId(), 1, entryPoint.getX(), entryPoint.getY(),
-				entryPoint.getZ(), player.getHeading());
-		}	
-		
+			World.getInstance().setPosition(player, entryPoint.getMapId(), 1, entryPoint.getX(), entryPoint.getY(), entryPoint.getZ(), player.getHeading());
+		}
+
 	}
 
 	/**
@@ -214,7 +212,7 @@ public class InstanceService
 	{
 		return World.getInstance().getWorldMap(worldId).getWorldMapInstanceById(instanceId) != null;
 	}
-	
+
 	/**
 	 * 
 	 * @param worldMapInstance
@@ -222,13 +220,13 @@ public class InstanceService
 	private static void startInstanceChecker(WorldMapInstance worldMapInstance)
 	{
 		int delay = 60000 + Rnd.get(-10, 10);
-		worldMapInstance.setEmptyInstanceTask(ThreadPoolManager.getInstance().scheduleAtFixedRate(
-			new EmptyInstanceCheckerTask(worldMapInstance), delay, delay));
+		worldMapInstance
+				.setEmptyInstanceTask(ThreadPoolManager.getInstance().scheduleAtFixedRate(new EmptyInstanceCheckerTask(worldMapInstance), delay, delay));
 	}
 
 	private static class EmptyInstanceCheckerTask implements Runnable
 	{
-		private WorldMapInstance worldMapInstance;
+		private WorldMapInstance	worldMapInstance;
 
 		private EmptyInstanceCheckerTask(WorldMapInstance worldMapInstance)
 		{
@@ -239,22 +237,22 @@ public class InstanceService
 		public void run()
 		{
 			PlayerGroup registeredGroup = worldMapInstance.getRegisteredGroup();
-			if(registeredGroup == null)
+			if (registeredGroup == null)
 			{
-				if(worldMapInstance.playersCount() == 0)
+				if (worldMapInstance.playersCount() == 0)
 				{
 					destroyInstance(worldMapInstance);
 					return;
 				}
 				int mapId = worldMapInstance.getMapId();
-				for(Player player : worldMapInstance.getAllWorldMapPlayers())
+				for (Player player : worldMapInstance.getAllWorldMapPlayers())
 				{
-					if(player.isOnline() && player.getWorldId() == mapId)	
-						return;	
+					if (player.isOnline() && player.getWorldId() == mapId)
+						return;
 				}
 				destroyInstance(worldMapInstance);
 			}
-			else if(registeredGroup.size() == 0)
+			else if (registeredGroup.size() == 0)
 			{
 				destroyInstance(worldMapInstance);
 			}

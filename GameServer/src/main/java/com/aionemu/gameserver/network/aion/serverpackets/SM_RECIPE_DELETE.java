@@ -25,13 +25,13 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_RECIPE_DELETE extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int recipeId;
-	
+	private int	recipeId;
+
 	public SM_RECIPE_DELETE(int recipeId)
 	{
 		this.recipeId = recipeId;
 	}
-	
+
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{

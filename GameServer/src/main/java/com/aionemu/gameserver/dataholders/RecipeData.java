@@ -41,16 +41,16 @@ public class RecipeData
 {
 
 	@XmlElement(name = "recipe_template")
-	protected List<RecipeTemplate> list;
+	protected List<RecipeTemplate>								list;
 
 	/** A map containing all goodslist templates */
-	private TIntObjectHashMap<RecipeTemplate> recipeData;
-	private final TIntObjectHashMap<ArrayList<RecipeTemplate>> learnTemplates = new TIntObjectHashMap<ArrayList<RecipeTemplate>>();
+	private TIntObjectHashMap<RecipeTemplate>					recipeData;
+	private final TIntObjectHashMap<ArrayList<RecipeTemplate>>	learnTemplates	= new TIntObjectHashMap<ArrayList<RecipeTemplate>>();
 
 	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
 		recipeData = new TIntObjectHashMap<RecipeTemplate>();
-		for(RecipeTemplate it : list)
+		for (RecipeTemplate it : list)
 		{
 			recipeData.put(it.getId(), it);
 			if (it.getAutolearn() == 0)
@@ -66,30 +66,28 @@ public class RecipeData
 	}
 
 	private void addTemplate(RecipeTemplate template)
-	{	
+	{
 		SkillRace race = template.getRace();
-		if(race == null)
+		if (race == null)
 			race = SkillRace.ALL;
 
 		int hash = makeHash(race.ordinal(), template.getSkillid(), template.getSkillpoint());
 		ArrayList<RecipeTemplate> value = learnTemplates.get(hash);
-		if(value == null)
+		if (value == null)
 		{
 			value = new ArrayList<RecipeTemplate>();
 			learnTemplates.put(hash, value);
 		}
-			
+
 		value.add(template);
 	}
 
 	public RecipeTemplate[] getRecipeIdFor(Race race, int skillId, int skillPoint)
 	{
 		List<RecipeTemplate> newRecipes = new ArrayList<RecipeTemplate>();
-		List<RecipeTemplate> raceSpecificTemplates = 
-			learnTemplates.get(makeHash(race.ordinal(), skillId, skillPoint));
-		List<RecipeTemplate> allRaceSpecificTemplates = 
-			learnTemplates.get(makeHash(SkillRace.ALL.ordinal(), skillId, skillPoint));
-		
+		List<RecipeTemplate> raceSpecificTemplates = learnTemplates.get(makeHash(race.ordinal(), skillId, skillPoint));
+		List<RecipeTemplate> allRaceSpecificTemplates = learnTemplates.get(makeHash(SkillRace.ALL.ordinal(), skillId, skillPoint));
+
 		if (raceSpecificTemplates != null)
 			newRecipes.addAll(raceSpecificTemplates);
 		if (allRaceSpecificTemplates != null)
@@ -105,11 +103,11 @@ public class RecipeData
 	{
 		return recipeData.size();
 	}
-	
+
 	private static int makeHash(int race, int skillId, int skillLevel)
 	{
 		int result = race << 8;
-        result = (result | skillId) << 8;
-        return result | skillLevel;
+		result = (result | skillId) << 8;
+		return result | skillLevel;
 	}
 }

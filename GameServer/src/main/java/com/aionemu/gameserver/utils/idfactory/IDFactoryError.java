@@ -27,7 +27,7 @@ public class IDFactoryError extends Error
 {
 	public IDFactoryError()
 	{
-		
+
 	}
 
 	public IDFactoryError(String message)

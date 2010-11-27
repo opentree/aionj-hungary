@@ -18,15 +18,16 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
+
 /**
  * @author Lyahim, Lyahim
  *
  */
 public class SM_SHOW_NPC_ON_MAP extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private	int npcid, worldid;
-	private	float x,y,z;
-	
+	private int	npcid, worldid;
+	private float	x, y, z;
+
 	public SM_SHOW_NPC_ON_MAP(int npcid, int worldid, float x, float y, float z)
 	{
 		this.npcid = npcid;
@@ -35,10 +36,10 @@ public class SM_SHOW_NPC_ON_MAP extends AbstractAionServerPacket<AionChannelHand
 		this.y = y;
 		this.z = z;
 	}
-	
+
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
-	{		
+	{
 		writeD(this.npcid);
 		writeD(this.worldid);
 		writeD(this.worldid);

@@ -69,8 +69,7 @@ public enum MovementType
 	 */
 	MOVEMENT_STOP(0),
 
-	MOVEMENT_STAYIN_ELEVATOR(24),
-	MOVEMENT_JUMPIN_ELEVATOR(-48), //sometimes not jump
+	MOVEMENT_STAYIN_ELEVATOR(24), MOVEMENT_JUMPIN_ELEVATOR(-48), //sometimes not jump
 	MOVEMENT_VALIDATEIN_ELEVATOR(-112), //unk
 	MOVEMENT_MOVIN_ELEVATOR(-16),
 	MOVEMENT_ON_ELEVATOR(16),
@@ -106,9 +105,9 @@ public enum MovementType
 	 */
 	public static MovementType getMovementTypeById(int id)
 	{
-		for(MovementType mt : values())
+		for (MovementType mt : values())
 		{
-			if(mt.typeId == id)
+			if (mt.typeId == id)
 				return mt;
 		}
 		return UNKNOWN;

@@ -64,7 +64,7 @@ public class CM_CLIENT_COMMAND_LOC extends AbstractClientPacket<AionChannelHandl
 	{
 		Player player = getChannelHandler().getActivePlayer();
 		log.info("[AUDIT] Received \"/loc\" command");
-		
+
 		sendPacket(SM_SYSTEM_MESSAGE.CURRENT_LOCATION(player.getWorldId(), player.getX(), player.getY(), player.getZ()));
 	}
 }

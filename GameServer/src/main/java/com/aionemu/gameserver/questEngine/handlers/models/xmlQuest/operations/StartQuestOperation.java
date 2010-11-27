@@ -43,6 +43,6 @@ public class StartQuestOperation extends QuestOperation
 	public void doOperate(QuestEnv env)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 }

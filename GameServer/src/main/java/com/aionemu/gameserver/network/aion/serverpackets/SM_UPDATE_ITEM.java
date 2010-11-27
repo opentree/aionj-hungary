@@ -27,13 +27,13 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  *
  */
 public class SM_UPDATE_ITEM extends _InventoryPacket
-{	
-	private Item item;
-	private boolean isWeaponSwitch = false;
+{
+	private Item	item;
+	private boolean	isWeaponSwitch	= false;
 
 	public SM_UPDATE_ITEM(Item item)
 	{
-		this.item = item;	
+		this.item = item;
 	}
 
 	public SM_UPDATE_ITEM(Item item, boolean isWeaponSwitch)
@@ -60,7 +60,7 @@ public class SM_UPDATE_ITEM extends _InventoryPacket
 
 		ItemTemplate itemTemplate = item.getItemTemplate();
 
-		if(itemTemplate.getTemplateId() == ItemId.KINAH.value())
+		if (itemTemplate.getTemplateId() == ItemId.KINAH.value())
 		{
 			writeKinah(item, true);
 		}
@@ -81,28 +81,28 @@ public class SM_UPDATE_ITEM extends _InventoryPacket
 			writeGeneralItemInfo(item);
 		}
 	}
-	
+
 	protected void writeGeneralItemInfo(Item item)
 	{
 		writeH(0x16); //length of details
-		writeC( 0);
+		writeC(0);
 		writeH(item.getItemMask());
 		writeD((int) item.getItemCount());
 		writeD(0);
 		writeD(0);
 		writeD(0);
 		writeH(0);
-		writeC( 0);
+		writeC(0);
 		writeH(0);
 		writeH(item.getEquipmentSlot()); // not equipable items		
 	}
-	
+
 	@Override
 	protected void writeStigmaInfo(Item item)
 	{
 		int itemSlotId = item.getEquipmentSlot();
 		writeH(0x05); //length of details
-		writeC( 0x06); //unk
+		writeC(0x06); //unk
 		writeD(item.isEquipped() ? itemSlotId : 0);
 	}
 
@@ -110,15 +110,15 @@ public class SM_UPDATE_ITEM extends _InventoryPacket
 	protected void writeKinah(Item item, boolean isInventory)
 	{
 		writeH(0x16); //length of details
-		writeC( 0);
+		writeC(0);
 		writeH(item.getItemMask());
 		writeQ(item.getItemCount());
 		writeD(0);
 		writeD(0);
 		writeH(0);
-		writeC( 0);
-		writeC( 0x1A); // FF FF equipment
-		writeC( 0);
+		writeC(0);
+		writeC(0x1A); // FF FF equipment
+		writeC(0);
 	}
 
 }

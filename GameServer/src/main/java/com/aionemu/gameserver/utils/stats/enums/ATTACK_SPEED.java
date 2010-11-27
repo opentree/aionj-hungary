@@ -34,14 +34,14 @@ public enum ATTACK_SPEED
 	PRIEST(1500),
 	CLERIC(1500),
 	CHANTER(1500);
-	
-	private int value;
-	
+
+	private int	value;
+
 	private ATTACK_SPEED(int value)
 	{
 		this.value = value;
 	}
-	
+
 	public int getValue()
 	{
 		return value;

@@ -39,11 +39,11 @@ public class SM_QUEST_LIST extends AbstractAionServerPacket<AionChannelHandler>
 
 	public SM_QUEST_LIST(Player player)
 	{
-		for(QuestState qs : player.getQuestStateList().getAllQuestState())
+		for (QuestState qs : player.getQuestStateList().getAllQuestState())
 		{
-			if(qs.getStatus() == QuestStatus.COMPLETE)
+			if (qs.getStatus() == QuestStatus.COMPLETE)
 				completeQuestList.put(qs.getQuestId(), qs);
-			else if(qs.getStatus() != QuestStatus.NONE)
+			else if (qs.getStatus() != QuestStatus.NONE)
 				startedQuestList.add(qs);
 		}
 	}
@@ -55,23 +55,23 @@ public class SM_QUEST_LIST extends AbstractAionServerPacket<AionChannelHandler>
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeH(completeQuestList.size());
-		for(QuestState qs : completeQuestList.values())
+		for (QuestState qs : completeQuestList.values())
 		{
 			writeH(qs.getQuestId());
 			writeH(0x00);
-			writeC( qs.getCompliteCount());
+			writeC(qs.getCompliteCount());
 		}
-		writeC( startedQuestList.size());
-		for(QuestState qs : startedQuestList) // quest list size ( max is 25 )
+		writeC(startedQuestList.size());
+		for (QuestState qs : startedQuestList) // quest list size ( max is 25 )
 		{
 			writeH(qs.getQuestId());
 			writeH(0);
 		}
-		for(QuestState qs : startedQuestList)
+		for (QuestState qs : startedQuestList)
 		{
-			writeC( qs.getStatus().value());
+			writeC(qs.getStatus().value());
 			writeD(qs.getQuestVars().getQuestVars());
-			writeC( 0);
+			writeC(0);
 		}
 	}
 

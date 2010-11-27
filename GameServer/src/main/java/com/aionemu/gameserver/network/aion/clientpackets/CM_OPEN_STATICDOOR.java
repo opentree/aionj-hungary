@@ -28,8 +28,8 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class CM_OPEN_STATICDOOR extends AbstractClientPacket<AionChannelHandler>
 {
-	private int doorId;
-	
+	private int	doorId;
+
 	/**
 	 * @param opcode
 	 */
@@ -37,7 +37,7 @@ public class CM_OPEN_STATICDOOR extends AbstractClientPacket<AionChannelHandler>
 	{
 		super(opcode);
 	}
-	
+
 	@Override
 	protected void readImpl()
 	{

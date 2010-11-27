@@ -57,9 +57,9 @@ public class MapRegion
 	MapRegion(WorldMapInstance parent, boolean is3D)
 	{
 		if (is3D)
-			neighbours		= new FastList<MapRegion>(27);
+			neighbours = new FastList<MapRegion>(27);
 		else
-			neighbours		= new FastList<MapRegion>(9);
+			neighbours = new FastList<MapRegion>(9);
 		this.parent = parent;
 		this.neighbours.add(this);
 	}
@@ -84,7 +84,7 @@ public class MapRegion
 	{
 		return playerCount > 0;
 	}
-	
+
 	/**
 	 * Returns WorldMapInstance witch is parent of this instance
 	 * 
@@ -130,9 +130,9 @@ public class MapRegion
 	 */
 	void add(VisibleObject object)
 	{
-		if(objects.put(object.getObjectId(), object) == null)
+		if (objects.put(object.getObjectId(), object) == null)
 		{
-			if(object instanceof Player)
+			if (object instanceof Player)
 			{
 				playerCount++;
 			}
@@ -146,9 +146,9 @@ public class MapRegion
 	 */
 	void remove(VisibleObject object)
 	{
-		if(objects.remove(object.getObjectId()) != null)
+		if (objects.remove(object.getObjectId()) != null)
 		{
-			if(object instanceof Player)
+			if (object instanceof Player)
 			{
 				playerCount--;
 			}

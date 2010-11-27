@@ -40,7 +40,7 @@ public class CM_RESTORE_CHARACTER extends AbstractClientPacket<AionChannelHandle
 	 * ObjectId of character that deletion should be canceled
 	 */
 	private int	chaOid;
-	
+
 	/**
 	 * Constructs new instance of <tt>CM_RESTORE_CHARACTER </tt> packet
 	 * @param opcode

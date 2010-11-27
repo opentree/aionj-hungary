@@ -39,7 +39,7 @@ public enum Race
 	 * Playable races
 	 */
 	ASMODIANS(1),
-	
+
 	/**
 	 * Npc races
 	 */
@@ -54,7 +54,7 @@ public enum Race
 	KRALL(10),
 	SHULACK(11),
 	BARRIER(12),
-	PC_LIGHT_CASTLE_DOOR(13),	
+	PC_LIGHT_CASTLE_DOOR(13),
 	PC_DARK_CASTLE_DOOR(14),
 	DRAGON_CASTLE_DOOR(15),
 	GCHIEF_LIGHT(16),
@@ -62,12 +62,12 @@ public enum Race
 	DRAGON(18),
 	OUTSIDER(19),
 	RATMAN(20),
-	DEMIHUMANOID(21),	
+	DEMIHUMANOID(21),
 	UNDEAD(22),
 	BEAST(23),
 	MAGICALMONSTER(24),
 	ELEMENTAL(25),
-	
+
 	/**
 	 * Special races
 	 */

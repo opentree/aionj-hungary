@@ -32,12 +32,12 @@ public class Trap extends Npc implements ISummoned
 	/**
 	 * Skill that will be used upon execution
 	 */
-	private int skillId;
+	private int			skillId;
 	/**
 	 * Creator of this trap.
 	 */
-	private Creature master;
-	
+	private Creature	master;
+
 	/**
 	 * 
 	 * @param objId
@@ -65,7 +65,7 @@ public class Trap extends Npc implements ISummoned
 	{
 		this.skillId = skillId;
 	}
-	
+
 	@Override
 	public byte getLevel()
 	{
@@ -76,7 +76,7 @@ public class Trap extends Npc implements ISummoned
 	public void initializeAi()
 	{
 	}
-	
+
 	@Override
 	public boolean isEnemyNpc(Npc visibleObject)
 	{

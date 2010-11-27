@@ -27,7 +27,7 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_RIFT_ANNOUNCE extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private Race race;
+	private Race	race;
 
 	/**
 	 * Constructs new <tt>SM_RIFT_ANNOUNCE</tt> packet
@@ -46,7 +46,8 @@ public class SM_RIFT_ANNOUNCE extends AbstractAionServerPacket<AionChannelHandle
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(0); // unk 1.9
-		switch(race) //destination
+		switch (race)
+		//destination
 		{
 			//master rift announcements
 			case ASMODIANS:
@@ -58,7 +59,7 @@ public class SM_RIFT_ANNOUNCE extends AbstractAionServerPacket<AionChannelHandle
 				writeD(0);
 				break;
 		}
-		
+
 		// [1.9] Need Extra writeD
 		// Sample 08 50 A7 00 00 00 00 01 00 00 00 00 00 00 00
 		// Sample 08 50 A7 00 00 00 00 00 00 00 00 00 00 00 00
@@ -67,7 +68,7 @@ public class SM_RIFT_ANNOUNCE extends AbstractAionServerPacket<AionChannelHandle
 		// Sample 08 50 A7 00 A5 B3 43 00 00 00 00 00 00 00 00
 		// Sample 08 50 A7 01 2C 0B 8E 00 00 00 00 00 00 00 00
 		// Delete these once this packet is fixed for 1.9
-		
+
 		// Old data?
 		// ELYSEA:
 		// 1 0 -> to asmodae

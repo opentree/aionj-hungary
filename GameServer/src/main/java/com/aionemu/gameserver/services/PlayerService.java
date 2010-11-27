@@ -88,9 +88,8 @@ import com.aionemu.gameserver.world.WorldPosition;
  */
 public class PlayerService
 {
-	private static final Logger			log			= Logger.getLogger(PlayerService.class);
+	private static final Logger						log			= Logger.getLogger(PlayerService.class);
 	private static final CacheMap<Integer, Player>	playerCache	= CacheMapFactory.createSoftCacheMap("Player", "player");
-
 
 	/**
 	 * Checks if name is already taken or not
@@ -126,10 +125,9 @@ public class PlayerService
 	public static boolean storeNewPlayer(Player player, String accountName, int accountId)
 	{
 		return DAOManager.getDAO(PlayerDAO.class).saveNewPlayer(player.getCommonData(), accountId, accountName)
-			&& DAOManager.getDAO(PlayerAppearanceDAO.class).store(player)
-			&& DAOManager.getDAO(PlayerSkillListDAO.class).storeSkills(player)
-			&& DAOManager.getDAO(InventoryDAO.class).store(player.getDirtyItemsToUpdate())
-			&& DAOManager.getDAO(PlayerTitleListDAO.class).storeTitles(player);
+				&& DAOManager.getDAO(PlayerAppearanceDAO.class).store(player) && DAOManager.getDAO(PlayerSkillListDAO.class).storeSkills(player)
+				&& DAOManager.getDAO(InventoryDAO.class).store(player.getDirtyItemsToUpdate())
+				&& DAOManager.getDAO(PlayerTitleListDAO.class).storeTitles(player);
 	}
 
 	/**
@@ -161,29 +159,29 @@ public class PlayerService
 	public static Player getPlayer(int playerObjId, Account account)
 	{
 		Player player = playerCache.get(playerObjId);
-		if(player != null)
+		if (player != null)
 			return player;
-		
+
 		/**
 		 * Player common data and appearance should be already loaded in account
 		 */
-		
+
 		PlayerAccountData playerAccountData = account.getPlayerAccountData(playerObjId);
 		PlayerCommonData pcd = playerAccountData.getPlayerCommonData();
 		PlayerAppearance appearance = playerAccountData.getAppereance();
 
-		player = new Player(pcd, appearance);		
-		
+		player = new Player(pcd, appearance);
+
 		LegionMember legionMember = LegionService.getInstance().getLegionMember(player.getObjectId());
-		if(legionMember != null)
+		if (legionMember != null)
 			player.setLegionMember(legionMember);
 
-		if(GroupService.getInstance().isGroupMember(playerObjId))
+		if (GroupService.getInstance().isGroupMember(playerObjId))
 			GroupService.getInstance().setGroup(player);
-		
+
 		if (AllianceService.getInstance().isAllianceMember(playerObjId))
 			AllianceService.getInstance().setAlliance(player);
-		
+
 		MacroList macroses = DAOManager.getDAO(PlayerMacrossesDAO.class).restoreMacrosses(playerObjId);
 		player.setMacroList(macroses);
 
@@ -209,40 +207,40 @@ public class PlayerService
 		player.setEffectController(new PlayerEffectController(player));
 		player.setFlyController(new FlyController(player));
 		player.setReviveController(new ReviveController(player));
-		
+
 		player.setQuestStateList(DAOManager.getDAO(PlayerQuestListDAO.class).load(player));
 		player.setRecipeList(DAOManager.getDAO(PlayerRecipesDAO.class).load(player.getObjectId()));
-		
+
 		/**
 		 * Account warehouse should be already loaded in account
 		 */
 		Storage accWarehouse = account.getAccountWarehouse();
-		
+
 		player.setStorage(accWarehouse, StorageType.ACCOUNT_WAREHOUSE);
-		
+
 		Storage inventory = DAOManager.getDAO(InventoryDAO.class).loadStorage(player, player.getObjectId(), StorageType.CUBE);
 		ItemService.loadItemStones(inventory.getStorageItems());
 
 		player.setStorage(inventory, StorageType.CUBE);
-		
+
 		for (int petBagId = 32; petBagId < 36; petBagId++)
 		{
 			Storage petBag = DAOManager.getDAO(InventoryDAO.class).loadStorage(player, player.getObjectId(), StorageType.getStorageTypeById(petBagId));
 			ItemService.loadItemStones(petBag.getStorageItems());
-	
+
 			player.setStorage(petBag, StorageType.getStorageTypeById(petBagId));
 		}
-		
+
 		Storage warehouse = DAOManager.getDAO(InventoryDAO.class).loadStorage(player, player.getObjectId(), StorageType.REGULAR_WAREHOUSE);
 		ItemService.loadItemStones(warehouse.getStorageItems());
 
 		player.setStorage(warehouse, StorageType.REGULAR_WAREHOUSE);
-		
+
 		/**
 		 * Apply equipment stats (items and manastones were loaded in account) 
 		 */
 		player.getEquipment().onLoadApplyEquipmentStats();
-		
+
 		DAOManager.getDAO(PlayerPunishmentsDAO.class).loadPlayerPunishments(player);
 
 		ItemService.restoreKinah(player);
@@ -254,17 +252,17 @@ public class PlayerService
 		// load item cooldowns
 		DAOManager.getDAO(ItemCooldownsDAO.class).loadItemCooldowns(player);
 
-		if(player.getCommonData().getTitleId() > 0)
+		if (player.getCommonData().getTitleId() > 0)
 		{
 			TitleChangeListener.onTitleChange(player.getGameStats(), player.getCommonData().getTitleId(), true);
 		}
 		player.getGameStats().recomputeStats();
-		
+
 		DAOManager.getDAO(PlayerLifeStatsDAO.class).loadPlayerLifeStat(player);
 		//analyze current instance
 		InstanceService.onPlayerLogin(player);
-		
-		if(CacheConfig.CACHE_PLAYERS)
+
+		if (CacheConfig.CACHE_PLAYERS)
 			playerCache.put(playerObjId, player);
 
 		return player;
@@ -291,15 +289,14 @@ public class PlayerService
 		SkillLearnService.addNewSkills(newPlayer, true);
 
 		// Starting items
-		PlayerCreationData playerCreationData = playerInitialData.getPlayerCreationData(playerCommonData
-			.getPlayerClass());
+		PlayerCreationData playerCreationData = playerInitialData.getPlayerCreationData(playerCommonData.getPlayerClass());
 
 		List<ItemType> items = playerCreationData.getItems();
 
 		Storage playerInventory = new Storage(StorageType.CUBE);
 		Storage regularWarehouse = new Storage(StorageType.REGULAR_WAREHOUSE);
 		Storage accountWarehouse = new Storage(StorageType.ACCOUNT_WAREHOUSE);
-		
+
 		Equipment equipment = new Equipment(newPlayer);
 		newPlayer.setStorage(playerInventory, StorageType.CUBE);
 		newPlayer.setStorage(regularWarehouse, StorageType.REGULAR_WAREHOUSE);
@@ -307,18 +304,18 @@ public class PlayerService
 		newPlayer.setEquipment(equipment);
 		newPlayer.setMailbox(new Mailbox());
 
-		for(ItemType itemType : items)
+		for (ItemType itemType : items)
 		{
 			int itemId = itemType.getTemplate().getTemplateId();
 			Item item = ItemService.newItem(itemId, itemType.getCount());
-			if(item == null)
+			if (item == null)
 				continue;
 
 			// When creating new player - all equipment that has slot values will be equipped
 			// Make sure you will not put into xml file more items than possible to equip.
 			ItemTemplate itemTemplate = item.getItemTemplate();
 			item.setOwnerId(newPlayer.getObjectId());
-			if(itemTemplate.isArmor() || itemTemplate.isWeapon())
+			if (itemTemplate.isArmor() || itemTemplate.isWeapon())
 			{
 				item.setEquipped(true);
 				List<ItemSlot> itemSlots = ItemSlot.getSlotsFor(itemTemplate.getItemSlot());
@@ -348,9 +345,9 @@ public class PlayerService
 	 */
 	public static void playerLoggedIn(Player player)
 	{
-		if(log.isDebugEnabled())
+		if (log.isDebugEnabled())
 			log.debug("Player logged in: " + player.getName() + " Account: " + player.getClientConnection().getAccount().getName());
-		
+
 		player.getCommonData().setOnline(true);
 		DAOManager.getDAO(PlayerDAO.class).onlinePlayer(player, true);
 		player.getFriendList().setStatus(Status.ONLINE);
@@ -369,59 +366,59 @@ public class PlayerService
 	 */
 	public static void playerLoggedOut(final Player player)
 	{
-		if(log.isDebugEnabled())
+		if (log.isDebugEnabled())
 			log.debug("Player logged out: " + player.getName() + " Account: " + player.getClientConnection().getAccount().getName());
-		
+
 		player.onLoggedOut();
-		
+
 		// Update prison timer
 		if (player.isInPrison())
 		{
 			long prisonTimer = System.currentTimeMillis() - player.getStartPrison();
 			prisonTimer = player.getPrisonTimer() - prisonTimer;
-			
+
 			player.setPrisonTimer(prisonTimer);
-			
-			log.debug("Update prison timer to " + prisonTimer/1000 + " seconds !");
+
+			log.debug("Update prison timer to " + prisonTimer / 1000 + " seconds !");
 		}
-		
+
 		//store current effects
 		DAOManager.getDAO(PlayerEffectsDAO.class).storePlayerEffects(player);
 		DAOManager.getDAO(ItemCooldownsDAO.class).storeItemCooldowns(player);
 		DAOManager.getDAO(PlayerLifeStatsDAO.class).updatePlayerLifeStat(player);
 		player.getEffectController().removeAllEffects();
-		
+
 		player.getLifeStats().cancelAllTasks();
-		
-		if(player.getLifeStats().isAlreadyDead())
+
+		if (player.getLifeStats().isAlreadyDead())
 			TeleportService.moveToBindLocation(player, false);
 
-		if(DuelService.getInstance().isDueling(player.getObjectId()))
+		if (DuelService.getInstance().isDueling(player.getObjectId()))
 			DuelService.getInstance().loseDuel(player);
-		
-		if(player.getSummon() != null)
+
+		if (player.getSummon() != null)
 			player.getSummon().release(UnsummonType.LOGOUT);
 
 		PunishmentService.stopPrisonTask(player, true);
 
 		player.getCommonData().setOnline(false);
 		player.getCommonData().setLastOnline(new Timestamp(System.currentTimeMillis()));
-		
+
 		player.setClientConnection(null);
 
-		if(player.isLegionMember())
+		if (player.isLegionMember())
 			LegionService.getInstance().onLogout(player);
 
-		if(player.isInGroup())
+		if (player.isInGroup())
 			GroupService.getInstance().scheduleRemove(player);
-		
+
 		if (player.isInAlliance())
 			AllianceService.getInstance().onLogout(player);
-		
+
 		player.delete();
 		DAOManager.getDAO(PlayerDAO.class).onlinePlayer(player, false);
-		
-		if(!GSConfig.DISABLE_CHAT_SERVER)
+
+		if (!GSConfig.DISABLE_CHAT_SERVER)
 			ChatService.onPlayerLogout(player);
 
 		storePlayer(player);
@@ -432,8 +429,9 @@ public class PlayerService
 	{
 		// force stop movement of player
 		player.stopMoving();
-		
-		ThreadPoolManager.getInstance().scheduleTaskManager(new Runnable(){
+
+		ThreadPoolManager.getInstance().scheduleTaskManager(new Runnable()
+		{
 			@Override
 			public void run()
 			{
@@ -452,10 +450,10 @@ public class PlayerService
 	 */
 	public static boolean cancelPlayerDeletion(PlayerAccountData accData)
 	{
-		if(accData.getDeletionDate() == null)
+		if (accData.getDeletionDate() == null)
 			return true;
 
-		if(accData.getDeletionDate().getTime() > System.currentTimeMillis())
+		if (accData.getDeletionDate().getTime() > System.currentTimeMillis())
 		{
 			accData.setDeletionDate(null);
 			storeDeletionTime(accData);
@@ -473,7 +471,7 @@ public class PlayerService
 	 */
 	public static void deletePlayer(PlayerAccountData accData)
 	{
-		if(accData.getDeletionDate() != null)
+		if (accData.getDeletionDate() != null)
 			return;
 
 		accData.setDeletionDate(new Timestamp(System.currentTimeMillis() + 5 * 60 * 1000));
@@ -501,8 +499,7 @@ public class PlayerService
 	 */
 	private static void storeDeletionTime(PlayerAccountData accData)
 	{
-		DAOManager.getDAO(PlayerDAO.class).updateDeletionTime(accData.getPlayerCommonData().getPlayerObjId(),
-			accData.getDeletionDate());
+		DAOManager.getDAO(PlayerDAO.class).updateDeletionTime(accData.getPlayerCommonData().getPlayerObjId(), accData.getDeletionDate());
 	}
 
 	/**
@@ -527,7 +524,7 @@ public class PlayerService
 	 */
 	public static void addMacro(Player player, int macroOrder, String macroXML)
 	{
-		if(player.getMacroList().addMacro(macroOrder, macroXML))
+		if (player.getMacroList().addMacro(macroOrder, macroXML))
 		{
 			DAOManager.getDAO(PlayerMacrossesDAO.class).addMacro(player.getObjectId(), macroOrder, macroXML);
 		}
@@ -543,7 +540,7 @@ public class PlayerService
 	 */
 	public static void removeMacro(Player player, int macroOrder)
 	{
-		if(player.getMacroList().removeMacro(macroOrder))
+		if (player.getMacroList().removeMacro(macroOrder))
 		{
 			DAOManager.getDAO(PlayerMacrossesDAO.class).deleteMacro(player.getObjectId(), macroOrder);
 		}

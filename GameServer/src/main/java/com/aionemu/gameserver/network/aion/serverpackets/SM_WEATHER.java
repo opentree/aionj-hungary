@@ -25,7 +25,7 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_WEATHER extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int					weatherCode;
+	private int	weatherCode;
 
 	public SM_WEATHER(int weatherCode)
 	{
@@ -36,6 +36,6 @@ public class SM_WEATHER extends AbstractAionServerPacket<AionChannelHandler>
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeH(this.weatherCode);
-		writeC( 0x0);
+		writeC(0x0);
 	}
 }

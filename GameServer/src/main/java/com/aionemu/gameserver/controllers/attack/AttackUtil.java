@@ -47,19 +47,19 @@ public class AttackUtil
 	public static List<AttackResult> calculateAttackResult(Creature attacker, Creature attacked)
 	{
 		int damage = StatFunctions.calculateBaseDamageToTarget(attacker, attacked);
-		
+
 		AttackStatus status = calculateAttackerPhysicalStatus(attacker);
-		
-		if(status == null)
+
+		if (status == null)
 			status = calculatePhysicalStatus(attacker, attacked);
 
 		CreatureGameStats<?> gameStats = attacker.getGameStats();
 
-		if(attacker instanceof Player && ((Player)attacker).getEquipment().getOffHandWeaponType() != null)
+		if (attacker instanceof Player && ((Player) attacker).getEquipment().getOffHandWeaponType() != null)
 		{
 			AttackStatus offHandStatus;
 
-			switch(status)
+			switch (status)
 			{
 				case BLOCK:
 					offHandStatus = AttackStatus.OFFHAND_BLOCK;
@@ -80,33 +80,32 @@ public class AttackUtil
 
 			int offHandDamage = StatFunctions.calculateOffHandPhysicDamageToTarget(attacker, attacked);
 
-			int mainHandHits = Rnd.get(1,gameStats.getCurrentStat(StatEnum.MAIN_HAND_HITS));
-			int offHandHits =  Rnd.get(1,gameStats.getCurrentStat(StatEnum.OFF_HAND_HITS));
+			int mainHandHits = Rnd.get(1, gameStats.getCurrentStat(StatEnum.MAIN_HAND_HITS));
+			int offHandHits = Rnd.get(1, gameStats.getCurrentStat(StatEnum.OFF_HAND_HITS));
 
 			List<AttackResult> attackList = new ArrayList<AttackResult>();
 			attackList.addAll(splitPhysicalDamage(attacker, attacked, mainHandHits, damage, status));
 			attackList.addAll(splitPhysicalDamage(attacker, attacked, offHandHits, offHandDamage, offHandStatus));
 			attacked.getObserveController().checkShieldStatus(attackList);
-			
+
 			return attackList;
 		}
 
-		int hitCount = Rnd.get(1,gameStats.getCurrentStat(StatEnum.MAIN_HAND_HITS));
+		int hitCount = Rnd.get(1, gameStats.getCurrentStat(StatEnum.MAIN_HAND_HITS));
 		List<AttackResult> attackList = splitPhysicalDamage(attacker, attacked, hitCount, damage, status);
 		attacked.getObserveController().checkShieldStatus(attackList);
 		return attackList;
 	}
 
-
 	public static List<AttackResult> splitPhysicalDamage(Creature attacker, Creature attacked, int hitCount, int damage, AttackStatus status)
 	{
 		List<AttackResult> attackList = new ArrayList<AttackResult>();
 
-		for (int i=0; i < hitCount; i++) 
+		for (int i = 0; i < hitCount; i++)
 		{
 			int damages = damage;
 
-			if (i!=0)
+			if (i != 0)
 			{
 				damages = Math.round(damage * 0.1f);
 			}
@@ -114,11 +113,11 @@ public class AttackUtil
 			WeaponType weaponType;
 
 			//TODO this is very basic calcs, for initial testing only
-			switch(status)
+			switch (status)
 			{
 				case BLOCK:
 				case OFFHAND_BLOCK:
-					int shieldDamageReduce = ((Player)attacked).getGameStats().getCurrentStat(StatEnum.DAMAGE_REDUCE);
+					int shieldDamageReduce = ((Player) attacked).getGameStats().getCurrentStat(StatEnum.DAMAGE_REDUCE);
 					damages -= Math.round((damages * shieldDamageReduce) / 100);
 					break;
 
@@ -128,12 +127,12 @@ public class AttackUtil
 					break;
 
 				case CRITICAL:
-					weaponType = ((Player)attacker).getEquipment().getMainHandWeaponType();
+					weaponType = ((Player) attacker).getEquipment().getMainHandWeaponType();
 					damages = calculateWeaponCritical(damages, weaponType);
 					break;
 
 				case OFFHAND_CRITICAL:
-					weaponType = ((Player)attacker).getEquipment().getOffHandWeaponType();
+					weaponType = ((Player) attacker).getEquipment().getOffHandWeaponType();
 					damages = calculateWeaponCritical(damages, weaponType);
 					break;
 
@@ -168,7 +167,7 @@ public class AttackUtil
 	 */
 	private static int calculateWeaponCritical(int damages, WeaponType weaponType)
 	{
-		switch(weaponType)
+		switch (weaponType)
 		{
 			case DAGGER_1H:
 				damages = Math.round(damages * 2.3f);
@@ -193,7 +192,7 @@ public class AttackUtil
 		}
 		return damages;
 	}
-	
+
 	/**
 	 * 
 	 * @param effect
@@ -206,14 +205,14 @@ public class AttackUtil
 		int damage = StatFunctions.calculatePhysicDamageToTarget(effector, effected, skillDamage);
 
 		AttackStatus status = calculateAttackerPhysicalStatus(effector);
-		
-		if(status == null)
+
+		if (status == null)
 			status = calculatePhysicalStatus(effector, effected);
-		
-		switch(status)
+
+		switch (status)
 		{
 			case BLOCK:
-				int shieldDamageReduce = ((Player)effected).getGameStats().getCurrentStat(StatEnum.DAMAGE_REDUCE);
+				int shieldDamageReduce = ((Player) effected).getGameStats().getCurrentStat(StatEnum.DAMAGE_REDUCE);
 				damage -= Math.round((damage * shieldDamageReduce) / 100);
 				break;
 			case DODGE:
@@ -228,7 +227,7 @@ public class AttackUtil
 			default:
 				break;
 		}
-		
+
 		calculateEffectResult(effect, effected, damage, status);
 	}
 
@@ -240,11 +239,10 @@ public class AttackUtil
 	 */
 	private static AttackStatus calculateAttackerPhysicalStatus(Creature effector)
 	{
-		if(effector.getObserveController().checkAttackerStatus(AttackStatus.DODGE))
+		if (effector.getObserveController().checkAttackerStatus(AttackStatus.DODGE))
 			return AttackStatus.DODGE;
 		return null;
 	}
-
 
 	/**
 	 * 
@@ -272,11 +270,11 @@ public class AttackUtil
 	{
 		Creature effector = effect.getEffector();
 		Creature effected = effect.getEffected();
-		
-		int damage = StatFunctions.calculateMagicDamageToTarget(effector, effected, skillDamage, element);  //TODO SkillElement
+
+		int damage = StatFunctions.calculateMagicDamageToTarget(effector, effected, skillDamage, element); //TODO SkillElement
 
 		AttackStatus status = calculateMagicalStatus(effector, effected);
-		switch(status)
+		switch (status)
 		{
 			case RESIST:
 				damage = 0;
@@ -284,7 +282,7 @@ public class AttackUtil
 			default:
 				break;
 		}
-		
+
 		calculateEffectResult(effect, effected, damage, status);
 	}
 
@@ -294,30 +292,28 @@ public class AttackUtil
 	 * @return AttackStatus
 	 */
 	public static AttackStatus calculatePhysicalStatus(Creature attacker, Creature attacked)
-	{		
-		if( Rnd.get( 0, 100 ) < StatFunctions.calculatePhysicalDodgeRate(attacker, attacked) )
+	{
+		if (Rnd.get(0, 100) < StatFunctions.calculatePhysicalDodgeRate(attacker, attacked))
 			return AttackStatus.DODGE;
 
-		if( attacked instanceof Player && ((Player)attacked).getEquipment().getMainHandWeaponType() != null                  // PARRY can only be done with weapon, also weapon can have humanoid mobs,
-			&& Rnd.get( 0, 100 ) < StatFunctions.calculatePhysicalParryRate(attacker, attacked) ) // but for now there isnt implementation of monster category
+		if (attacked instanceof Player && ((Player) attacked).getEquipment().getMainHandWeaponType() != null // PARRY can only be done with weapon, also weapon can have humanoid mobs,
+				&& Rnd.get(0, 100) < StatFunctions.calculatePhysicalParryRate(attacker, attacked)) // but for now there isnt implementation of monster category
 			return AttackStatus.PARRY;
 
-		if( attacked instanceof Player && ((Player) attacked).getEquipment().isShieldEquipped()
-			&& Rnd.get( 0, 100 ) < StatFunctions.calculatePhysicalBlockRate(attacker, attacked) )
+		if (attacked instanceof Player && ((Player) attacked).getEquipment().isShieldEquipped()
+				&& Rnd.get(0, 100) < StatFunctions.calculatePhysicalBlockRate(attacker, attacked))
 			return AttackStatus.BLOCK;
 
-
-		if( attacker instanceof Player && ((Player)attacker).getEquipment().getMainHandWeaponType() != null           // CRITICAL can only be done with weapon, weapon can have humanoid mobs also,
-			&& Rnd.get( 0, 100 ) < StatFunctions.calculatePhysicalCriticalRate(attacker, attacked) ) // but for now there isnt implementation of monster category
+		if (attacker instanceof Player && ((Player) attacker).getEquipment().getMainHandWeaponType() != null // CRITICAL can only be done with weapon, weapon can have humanoid mobs also,
+				&& Rnd.get(0, 100) < StatFunctions.calculatePhysicalCriticalRate(attacker, attacked)) // but for now there isnt implementation of monster category
 			return AttackStatus.CRITICAL;
 
 		return AttackStatus.NORMALHIT;
 	}
 
-
 	public static AttackStatus calculateMagicalStatus(Creature attacker, Creature attacked)
 	{
-		if(Rnd.get( 0, 100 ) < StatFunctions.calculateMagicalResistRate(attacker, attacked))
+		if (Rnd.get(0, 100) < StatFunctions.calculateMagicalResistRate(attacker, attacked))
 			return AttackStatus.RESIST;
 
 		return AttackStatus.NORMALHIT;

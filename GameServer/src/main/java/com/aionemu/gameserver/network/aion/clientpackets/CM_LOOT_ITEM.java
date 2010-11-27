@@ -27,9 +27,9 @@ import com.aionemu.gameserver.services.DropService;
  */
 public class CM_LOOT_ITEM extends AbstractClientPacket<AionChannelHandler>
 {
-	private int					targetObjectId;
-	private int					index;
-	
+	private int	targetObjectId;
+	private int	index;
+
 	public CM_LOOT_ITEM(int opcode)
 	{
 		super(opcode);

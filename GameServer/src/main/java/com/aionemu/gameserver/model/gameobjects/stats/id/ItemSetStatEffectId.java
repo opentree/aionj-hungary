@@ -25,15 +25,15 @@ import com.aionemu.gameserver.model.gameobjects.stats.StatEffectType;
 public class ItemSetStatEffectId extends StatEffectId
 {
 	// Effect for the number of item set parts equipped
-	private int setpart;
-	
+	private int	setpart;
+
 	private ItemSetStatEffectId(int id, int setpart)
 	{
-		super(id,StatEffectType.ITEM_SET_EFFECT);
+		super(id, StatEffectType.ITEM_SET_EFFECT);
 		this.setpart = setpart;
 	}
-	
-	public static ItemSetStatEffectId getInstance (int id, int setpart)
+
+	public static ItemSetStatEffectId getInstance(int id, int setpart)
 	{
 		return new ItemSetStatEffectId(id, setpart);
 	}
@@ -42,9 +42,9 @@ public class ItemSetStatEffectId extends StatEffectId
 	public boolean equals(Object o)
 	{
 		boolean result = super.equals(o);
-		result = (result)&&(o != null);
-		result = (result)&&(o instanceof ItemSetStatEffectId);
-		result = (result)&&(((ItemSetStatEffectId) o).setpart == setpart);
+		result = (result) && (o != null);
+		result = (result) && (o instanceof ItemSetStatEffectId);
+		result = (result) && (((ItemSetStatEffectId) o).setpart == setpart);
 		return result;
 	}
 

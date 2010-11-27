@@ -29,25 +29,25 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_GROUP_INFO extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int groupid;
-	private int leaderid;
-	private LootRuleType lootruletype; //0-free-for-all, 1-round-robin 2-leader
-	private LootDistribution autodistribution;
+	private int					groupid;
+	private int					leaderid;
+	private LootRuleType		lootruletype;			//0-free-for-all, 1-round-robin 2-leader
+	private LootDistribution	autodistribution;
 	//rare item distribution
 	//0-normal, 2-Roll-dice,3-bid
-	private int common_item_above;
-	private int superior_item_above;
-	private int heroic_item_above;
-	private int fabled_item_above;
-	private int ethernal_item_above;
-	private int over_ethernal;
-	private int over_over_ethernal;
+	private int					common_item_above;
+	private int					superior_item_above;
+	private int					heroic_item_above;
+	private int					fabled_item_above;
+	private int					ethernal_item_above;
+	private int					over_ethernal;
+	private int					over_over_ethernal;
 
 	public SM_GROUP_INFO(PlayerGroup group) //need a group class whit this parameters
 	{
 		this.groupid = group.getGroupId();
 		this.leaderid = group.getGroupLeader().getObjectId();
-		
+
 		LootGroupRules lootRules = group.getLootGroupRules();
 		this.lootruletype = lootRules.getLootRule();
 		this.autodistribution = lootRules.getAutodistribution();
@@ -76,6 +76,6 @@ public class SM_GROUP_INFO extends AbstractAionServerPacket<AionChannelHandler>
 		writeD(this.over_over_ethernal);
 		writeD(0x00);
 		writeH(0x00);
-		writeC( 0x00);
+		writeC(0x00);
 	}
 }

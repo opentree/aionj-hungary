@@ -30,11 +30,11 @@ import com.aionemu.gameserver.world.World;
  */
 public class CM_GODSTONE_SOCKET extends AbstractClientPacket<AionChannelHandler>
 {
-	
-	private int npcId;
-	private int weaponId;
-	private int stoneId;
-	
+
+	private int	npcId;
+	private int	weaponId;
+	private int	stoneId;
+
 	public CM_GODSTONE_SOCKET(int opcode)
 	{
 		super(opcode);
@@ -52,14 +52,14 @@ public class CM_GODSTONE_SOCKET extends AbstractClientPacket<AionChannelHandler>
 	protected void runImpl()
 	{
 		Player activePlayer = getChannelHandler().getActivePlayer();
-		
+
 		Npc npc = (Npc) World.getInstance().findAionObject(npcId);
-		if(npc == null)
+		if (npc == null)
 			return;
-		
-		if(!MathUtil.isInRange(activePlayer, npc, 15))
+
+		if (!MathUtil.isInRange(activePlayer, npc, 15))
 			return;
-		
+
 		ItemService.socketGodstone(activePlayer, weaponId, stoneId);
 	}
 }

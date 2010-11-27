@@ -25,7 +25,7 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_TARGET_UPDATE extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private Player	 player;
+	private Player	player;
 
 	public SM_TARGET_UPDATE(Player player)
 	{

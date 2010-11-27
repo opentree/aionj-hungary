@@ -32,14 +32,13 @@ public class CM_SHOW_BLOCKLIST extends AbstractClientPacket<AionChannelHandler>
 	{
 		super(opcode);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	protected void readImpl()
 	{
-		
 
 	}
 

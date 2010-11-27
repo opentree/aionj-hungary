@@ -29,6 +29,6 @@ public class NpcEquipmentList
 {
 	@XmlElement(name = "item")
 	@XmlIDREF
-	public ItemTemplate[] items;
+	public ItemTemplate[]	items;
 
 }

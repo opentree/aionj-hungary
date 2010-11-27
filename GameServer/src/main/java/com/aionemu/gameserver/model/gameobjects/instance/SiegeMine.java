@@ -47,29 +47,30 @@ public class SiegeMine extends SiegeNpc
 	public SiegeMine(int objId, SpawnTemplate spawnTemplate)
 	{
 		super(objId, spawnTemplate);
-		NpcTemplate npcTemplate = (NpcTemplate)objectTemplate;
-		if (getSiegeRace()==SiegeRace.ELYOS)
+		NpcTemplate npcTemplate = (NpcTemplate) objectTemplate;
+		if (getSiegeRace() == SiegeRace.ELYOS)
 		{
 			npcTemplate.setRace(Race.ELYOS);
 			npcTemplate.setTribe(TribeClass.GUARD);
 		}
-		else if (getSiegeRace()==SiegeRace.ASMODIANS)
+		else if (getSiegeRace() == SiegeRace.ASMODIANS)
 		{
 			npcTemplate.setRace(Race.ASMODIANS);
 			npcTemplate.setTribe(TribeClass.GUARD_DARK);
 		}
-		else // BALAUR
+		else
+		// BALAUR
 		{
 			npcTemplate.setRace(Race.DRAKAN);
 			npcTemplate.setTribe(TribeClass.AGGRESSIVESINGLEMONSTER);
 		}
 	}
-	
+
 	public void see(VisibleObject object)
 	{
 		if (object instanceof Player)
 		{
-			if ( ((Player) object).getCommonData().getRace().getRaceId()!=getObjectTemplate().getRace().getRaceId())
+			if (((Player) object).getCommonData().getRace().getRaceId() != getObjectTemplate().getRace().getRaceId())
 			{
 				//super.useSkill(owner.getNpcSkillList().getNpcSkills().get(0).getSkillid()); //all mines have only one skill
 				useSkill(18406);
@@ -78,8 +79,7 @@ public class SiegeMine extends SiegeNpc
 				setState(CreatureState.DEAD);
 				addTask(TaskId.DECAY, RespawnService.scheduleDecayTask(this));
 				scheduleRespawn();
-				PacketSendUtility.broadcastPacket(this,
-					new SM_EMOTION(this, EmotionType.DIE, 0, object == null ? 0 : object.getObjectId()));
+				PacketSendUtility.broadcastPacket(this, new SM_EMOTION(this, EmotionType.DIE, 0, object == null ? 0 : object.getObjectId()));
 				setTarget(null);
 				PacketSendUtility.broadcastPacket(this, new SM_LOOKATOBJECT(this));
 			}

@@ -67,15 +67,16 @@ public class ProvokerEffect extends EffectTemplate
 	{
 		ActionObserver observer = null;
 		final Creature effector = effect.getEffector();
-		switch(provokeType)
+		switch (provokeType)
 		{
 			case ATTACK:
-				observer = new ActionObserver(ObserverType.ATTACK){
+				observer = new ActionObserver(ObserverType.ATTACK)
+				{
 
 					@Override
 					public void attack(Creature creature)
 					{
-						if(Rnd.get(0, 100) <= prob2)
+						if (Rnd.get(0, 100) <= prob2)
 						{
 							Creature target = getProvokeTarget(provokeTarget, effector, creature);
 							createProvokedEffect(effector, target);
@@ -85,12 +86,13 @@ public class ProvokerEffect extends EffectTemplate
 				};
 				break;
 			case ATTACKED:
-				observer = new ActionObserver(ObserverType.ATTACKED){
+				observer = new ActionObserver(ObserverType.ATTACKED)
+				{
 
 					@Override
 					public void attacked(Creature creature)
 					{
-						if(Rnd.get(0, 100) <= prob2)
+						if (Rnd.get(0, 100) <= prob2)
 						{
 							Creature target = getProvokeTarget(provokeTarget, effector, creature);
 							createProvokedEffect(effector, target);
@@ -100,7 +102,7 @@ public class ProvokerEffect extends EffectTemplate
 				break;
 		}
 
-		if(observer == null)
+		if (observer == null)
 			return;
 
 		effect.setActionObserver(observer, position);
@@ -129,7 +131,7 @@ public class ProvokerEffect extends EffectTemplate
 	 */
 	private Creature getProvokeTarget(ProvokeTarget provokeTarget, Creature effector, Creature target)
 	{
-		switch(provokeTarget)
+		switch (provokeTarget)
 		{
 			case ME:
 				return effector;
@@ -143,7 +145,7 @@ public class ProvokerEffect extends EffectTemplate
 	public void endEffect(Effect effect)
 	{
 		ActionObserver observer = effect.getActionObserver(position);
-		if(observer != null)
+		if (observer != null)
 			effect.getEffected().getObserveController().removeObserver(observer);
 	}
 }

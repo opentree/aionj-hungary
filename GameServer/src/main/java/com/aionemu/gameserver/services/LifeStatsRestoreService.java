@@ -45,7 +45,7 @@ public class LifeStatsRestoreService
 	{
 		return ThreadPoolManager.getInstance().scheduleAtFixedRate(new HpMpRestoreTask(lifeStats), 1700, DEFAULT_DELAY);
 	}
-	
+
 	/**
 	 * HP restoring task
 	 * 
@@ -64,8 +64,7 @@ public class LifeStatsRestoreService
 	 */
 	public Future<?> scheduleFpReduceTask(final PlayerLifeStats lifeStats)
 	{
-		return ThreadPoolManager.getInstance().scheduleAtFixedRate(new FpReduceTask(lifeStats), 2000,
-			DEFAULT_FPREDUCE_DELAY);
+		return ThreadPoolManager.getInstance().scheduleAtFixedRate(new FpReduceTask(lifeStats), 2000, DEFAULT_FPREDUCE_DELAY);
 	}
 
 	/**
@@ -75,8 +74,7 @@ public class LifeStatsRestoreService
 	 */
 	public Future<?> scheduleFpRestoreTask(PlayerLifeStats lifeStats)
 	{
-		return ThreadPoolManager.getInstance().scheduleAtFixedRate(new FpRestoreTask(lifeStats), 2000,
-			DEFAULT_FPRESTORE_DELAY);
+		return ThreadPoolManager.getInstance().scheduleAtFixedRate(new FpRestoreTask(lifeStats), 2000, DEFAULT_FPRESTORE_DELAY);
 	}
 
 	public static LifeStatsRestoreService getInstance()
@@ -96,7 +94,7 @@ public class LifeStatsRestoreService
 		@Override
 		public void run()
 		{
-			if(lifeStats.isAlreadyDead() || lifeStats.isFullyRestoredHp())
+			if (lifeStats.isAlreadyDead() || lifeStats.isFullyRestoredHp())
 			{
 				lifeStats.cancelRestoreTask();
 			}
@@ -119,7 +117,7 @@ public class LifeStatsRestoreService
 		@Override
 		public void run()
 		{
-			if(lifeStats.isAlreadyDead() || lifeStats.isFullyRestoredHpMp())
+			if (lifeStats.isAlreadyDead() || lifeStats.isFullyRestoredHpMp())
 			{
 				lifeStats.cancelRestoreTask();
 			}
@@ -143,12 +141,12 @@ public class LifeStatsRestoreService
 		@Override
 		public void run()
 		{
-			if(lifeStats.isAlreadyDead())
+			if (lifeStats.isAlreadyDead())
 				lifeStats.cancelFpReduce();
 
-			if(lifeStats.getCurrentFp() == 0)
+			if (lifeStats.getCurrentFp() == 0)
 			{
-				if(lifeStats.getOwner().getFlyState() > 0)
+				if (lifeStats.getOwner().getFlyState() > 0)
 				{
 					lifeStats.getOwner().getFlyController().endFly();
 				}
@@ -176,7 +174,7 @@ public class LifeStatsRestoreService
 		@Override
 		public void run()
 		{
-			if(lifeStats.isAlreadyDead() || lifeStats.isFlyTimeFullyRestored())
+			if (lifeStats.isAlreadyDead() || lifeStats.isFlyTimeFullyRestored())
 			{
 				lifeStats.cancelFpRestore();
 			}

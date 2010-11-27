@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Luno
  * 
  */
-@XmlRootElement(name="player_experience_table")
+@XmlRootElement(name = "player_experience_table")
 @XmlAccessorType(XmlAccessType.NONE)
 public class PlayerExperienceTable
 {
@@ -45,7 +45,7 @@ public class PlayerExperienceTable
 	 */
 	public long getStartExpForLevel(int level)
 	{
-		if(level > experience.length)
+		if (level > experience.length)
 			throw new IllegalArgumentException("The given level is higher than possible max");
 
 		return level > experience.length ? 0 : experience[level - 1];

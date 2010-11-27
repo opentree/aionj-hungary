@@ -5,24 +5,24 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.skillengine.model.SkillTemplate;
+
 /**
  * @author Lyahim, alexa026
  * @author Lyahim, rhys2002
  */
 public class CM_CASTSPELL extends AbstractClientPacket<AionChannelHandler>
 {
-	private int					spellid;
-	private int					targetType; // 0 - obj id, 1 - point location
-    private float 				x, y, z;
-	
-    @SuppressWarnings("unused")
-	private int					targetObjectId;
+	private int		spellid;
+	private int		targetType;	// 0 - obj id, 1 - point location
+	private float	x, y, z;
+
 	@SuppressWarnings("unused")
-	private int					time;
+	private int		targetObjectId;
 	@SuppressWarnings("unused")
-	private int					level;
-	
-	
+	private int		time;
+	@SuppressWarnings("unused")
+	private int		level;
+
 	/**
 	 * Constructs new instance of <tt>CM_CM_REQUEST_DIALOG </tt> packet
 	 * @param opcode
@@ -40,10 +40,10 @@ public class CM_CASTSPELL extends AbstractClientPacket<AionChannelHandler>
 	{
 		spellid = readH();
 		level = readC();
-		
+
 		targetType = readC();
-		
-		switch(targetType)
+
+		switch (targetType)
 		{
 			case 0:
 				targetObjectId = readD();
@@ -56,7 +56,7 @@ public class CM_CASTSPELL extends AbstractClientPacket<AionChannelHandler>
 			default:
 				break;
 		}
-		
+
 		time = readH();
 	}
 
@@ -67,13 +67,13 @@ public class CM_CASTSPELL extends AbstractClientPacket<AionChannelHandler>
 	protected void runImpl()
 	{
 		Player player = getChannelHandler().getActivePlayer();
-		
-		if(player.isProtectionActive())
+
+		if (player.isProtectionActive())
 		{
 			player.stopProtectionActiveTask();
 		}
-		
-		if(!player.getLifeStats().isAlreadyDead())
+
+		if (!player.getLifeStats().isAlreadyDead())
 		{
 			SkillTemplate template = DataManager.SKILL_DATA.getSkillTemplate(spellid);
 			if (template == null || template.isPassive())

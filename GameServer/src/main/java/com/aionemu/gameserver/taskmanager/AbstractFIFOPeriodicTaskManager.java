@@ -66,7 +66,7 @@ public abstract class AbstractFIFOPeriodicTaskManager<T> extends AbstractPeriodi
 			writeUnlock();
 		}
 
-		for(T task; (task = activeTasks.removeFirst()) != null;)
+		for (T task; (task = activeTasks.removeFirst()) != null;)
 		{
 			final long begin = System.nanoTime();
 
@@ -74,7 +74,7 @@ public abstract class AbstractFIFOPeriodicTaskManager<T> extends AbstractPeriodi
 			{
 				callTask(task);
 			}
-			catch(RuntimeException e)
+			catch (RuntimeException e)
 			{
 				log.warn("", e);
 			}

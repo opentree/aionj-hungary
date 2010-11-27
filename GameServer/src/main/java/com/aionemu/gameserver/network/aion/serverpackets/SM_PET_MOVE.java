@@ -25,35 +25,34 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_PET_MOVE extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int actionId;
-	private ToyPet pet;
-	
+	private int		actionId;
+	private ToyPet	pet;
+
 	public SM_PET_MOVE(int actionId, ToyPet pet)
 	{
 		this.actionId = actionId;
 		this.pet = pet;
 	}
-	
 
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(pet.getDatabaseIndex());
-		writeC( actionId);
-		switch(actionId)
+		writeC(actionId);
+		switch (actionId)
 		{
 			case 12:
 				// move
 				writeF(pet.getX1());
 				writeF(pet.getY1());
 				writeF(pet.getZ1());
-				writeC( pet.getH());
+				writeC(pet.getH());
 				writeF(pet.getX2());
 				writeF(pet.getY2());
 				writeF(pet.getZ2());
 				break;
 			default:
-				break;					
+				break;
 		}
 	}
 }

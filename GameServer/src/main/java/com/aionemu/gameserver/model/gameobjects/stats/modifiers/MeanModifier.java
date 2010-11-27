@@ -32,27 +32,27 @@ import com.aionemu.gameserver.model.gameobjects.stats.StatModifierPriority;
 public class MeanModifier extends StatModifier
 {
 	@XmlAttribute
-	private int min;
-	
+	private int	min;
+
 	@XmlAttribute
-	private int max;
-	
+	private int	max;
+
 	@Override
 	public int apply(int baseStat, int currentStat)
 	{
-		return baseStat + Math.round((min+max)/2.0f);
+		return baseStat + Math.round((min + max) / 2.0f);
 	}
-	
+
 	@Override
 	public StatModifierPriority getPriority()
 	{
 		return StatModifierPriority.HIGH;
 	}
-	
+
 	@Override
 	public String toString()
 	{
-		String s = super.toString()+",m:"+min+",M:"+max;
+		String s = super.toString() + ",m:" + min + ",M:" + max;
 		return s;
 	}
 }

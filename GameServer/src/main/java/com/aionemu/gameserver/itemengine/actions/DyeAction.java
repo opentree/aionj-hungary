@@ -37,17 +37,16 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "DyeAction")
-
 public class DyeAction extends AbstractItemAction
 {
 
 	@XmlAttribute(name = "color")
-	protected String color;
+	protected String	color;
 
 	@Override
 	public boolean canAct(Player player, Item parentItem, Item targetItem)
 	{
-		if(targetItem == null)
+		if (targetItem == null)
 		{ // no item selected.
 			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_ITEM_ERROR);
 			return false;
@@ -75,10 +74,11 @@ public class DyeAction extends AbstractItemAction
 			// item is equipped, so need broadcast packet
 			if (player.getEquipment().getEquippedItemByObjId(targetItem.getObjectId()) != null)
 			{
-				PacketSendUtility.broadcastPacket(player, new SM_UPDATE_PLAYER_APPEARANCE(player.getObjectId(), player.getEquipment().getEquippedItemsWithoutStigma()), true);
+				PacketSendUtility.broadcastPacket(player, new SM_UPDATE_PLAYER_APPEARANCE(player.getObjectId(), player.getEquipment()
+						.getEquippedItemsWithoutStigma()), true);
 				player.getEquipment().setPersistentState(PersistentState.UPDATE_REQUIRED);
 			}
-			
+
 			// item is not equipped
 			else
 				player.getInventory().setPersistentState(PersistentState.UPDATE_REQUIRED);

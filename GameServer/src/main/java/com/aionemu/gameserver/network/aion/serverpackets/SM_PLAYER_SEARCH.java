@@ -33,11 +33,11 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_PLAYER_SEARCH extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private static final Logger log = Logger.getLogger(SM_PLAYER_SEARCH.class);
-	
-	private List<Player> players;
-	private int region;
-	
+	private static final Logger	log	= Logger.getLogger(SM_PLAYER_SEARCH.class);
+
+	private List<Player>		players;
+	private int					region;
+
 	/**
 	 * Constructs a new packet that will send these players
 	 * @param players List of players to show
@@ -50,7 +50,7 @@ public class SM_PLAYER_SEARCH extends AbstractAionServerPacket<AionChannelHandle
 		this.players = new ArrayList<Player>(players);
 		this.region = region;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -60,10 +60,9 @@ public class SM_PLAYER_SEARCH extends AbstractAionServerPacket<AionChannelHandle
 		writeH(players.size());
 		for (Player player : players)
 		{
-			if(player.getActiveRegion() == null)
+			if (player.getActiveRegion() == null)
 			{
-				log.warn("CHECKPOINT: null active region for " + player.getObjectId() 
-					+ "-" + player.getX() + "-" + player.getY() + "-" + player.getZ());
+				log.warn("CHECKPOINT: null active region for " + player.getObjectId() + "-" + player.getX() + "-" + player.getY() + "-" + player.getZ());
 			}
 			writeD(player.getActiveRegion() == null ? region : player.getActiveRegion().getMapId());
 			writeF(player.getPosition().getX());
@@ -73,12 +72,12 @@ public class SM_PLAYER_SEARCH extends AbstractAionServerPacket<AionChannelHandle
 			writeC(player.getGender().getGenderId());
 			writeC(player.getLevel());
 			//TODO: When groups finish, send 3 here if in group
-			writeC( player.isLookingForGroup() ? 0x02 : 0x00); // Status. 2 = LFG, 3 = In group, others = solo
+			writeC(player.isLookingForGroup() ? 0x02 : 0x00); // Status. 2 = LFG, 3 = In group, others = solo
 			writeS(player.getName());
-			byte[] unknown = new byte[44 - (player.getName().length()*2 +2)]; // What on earth is this nonsense?
+			byte[] unknown = new byte[44 - (player.getName().length() * 2 + 2)]; // What on earth is this nonsense?
 			writeB(unknown);
-			
+
 		}
 	}
-	
+
 }

@@ -45,30 +45,30 @@ public class TaskManagerFromDB
 	/**
 	 * Logger for gameserver
 	 */
-	private static final Logger						log	= Logger.getLogger(TaskManagerFromDB.class);
-	
-	private ArrayList<TaskFromDB>					tasksList;
-	private HashMap<String, TaskFromDBHandler>		handlers;
-	
+	private static final Logger					log	= Logger.getLogger(TaskManagerFromDB.class);
+
+	private ArrayList<TaskFromDB>				tasksList;
+	private HashMap<String, TaskFromDBHandler>	handlers;
+
 	public TaskManagerFromDB()
 	{
 		this.handlers = new HashMap<String, TaskFromDBHandler>();
-		
+
 		tasksList = getDAO().getAllTasks();
 		log.info("Loaded " + tasksList.size() + " task" + (tasksList.size() > 1 ? "s" : "") + " from the database");
 		addTasks();
-		
+
 		registerHandlers();
 		registerTasks();
 	}
-	
+
 	/**
 	 * Add tasks without any possibility to an admin to edit it in the database.
 	 */
 	private void addTasks()
 	{
-		int maxId = tasksList.size() > 0 ? tasksList.get(tasksList.size()-1).getId() : 0;
-		
+		int maxId = tasksList.size() > 0 ? tasksList.get(tasksList.size() - 1).getId() : 0;
+
 		tasksList.add(new TaskFromDB(maxId + 1, "update_abyss_rank", "FIXED_IN_TIME", new Timestamp(System.currentTimeMillis()), "00:00:00", 0, null));
 	}
 
@@ -91,10 +91,10 @@ public class TaskManagerFromDB
 	{
 		if (handlers.get(task.getTaskName()) != null)
 			log.error("Can't override a task with name : " + task.getTaskName());
-		
+
 		handlers.put(task.getTaskName(), task);
 	}
-	
+
 	/**
 	 * Launching & checking task process
 	 */
@@ -106,33 +106,33 @@ public class TaskManagerFromDB
 			// If the task name exist
 			if (handlers.get(task.getName()) != null)
 			{
-				Class<? extends TaskFromDBHandler>	tmpClass		= handlers.get(task.getName()).getClass();
-				TaskFromDBHandler					currentTask		= null;
-				
+				Class<? extends TaskFromDBHandler> tmpClass = handlers.get(task.getName()).getClass();
+				TaskFromDBHandler currentTask = null;
+
 				try
 				{
 					// Create new instance of the task
 					currentTask = tmpClass.newInstance();
 				}
-				catch(InstantiationException e)
+				catch (InstantiationException e)
 				{
 					log.error(e.getMessage(), e);
 				}
-				catch(IllegalAccessException e)
+				catch (IllegalAccessException e)
 				{
 					log.error(e.getMessage(), e);
 				}
-				
+
 				// Set informations for the task
 				currentTask.setId(task.getId());
 				currentTask.setParam(task.getParams());
-				
+
 				if (!currentTask.isValid())
 				{
 					log.error("Invalid parameter for task ID: " + task.getId());
 					continue;
 				}
-				
+
 				if (task.getType().equals("FIXED_IN_TIME"))
 				{
 					runFixedInTimeTask(currentTask, task);
@@ -144,7 +144,7 @@ public class TaskManagerFromDB
 				log.error("Unknow task's name with ID : " + task.getName());
 		}
 	}
-	
+
 	/**
 	 * Run a fixed in the time (HH:MM:SS) task
 	 * 
@@ -152,21 +152,21 @@ public class TaskManagerFromDB
 	 */
 	private void runFixedInTimeTask(TaskFromDBHandler handler, TaskFromDB dbTask)
 	{
-		String	time[]	= dbTask.getStartTime().split(":");
-		int		hour	= Integer.parseInt(time[0]);
-		int		minute	= Integer.parseInt(time[1]);
-		int		second	= Integer.parseInt(time[2]);
-		
+		String time[] = dbTask.getStartTime().split(":");
+		int hour = Integer.parseInt(time[0]);
+		int minute = Integer.parseInt(time[1]);
+		int second = Integer.parseInt(time[2]);
+
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.HOUR_OF_DAY, hour);
 		calendar.set(Calendar.MINUTE, minute);
 		calendar.set(Calendar.SECOND, second);
-		
+
 		long delay = calendar.getTimeInMillis() - System.currentTimeMillis();
-		
+
 		if (delay < 0)
 			delay += 1 * 24 * 60 * 60 * 1000;
-		
+
 		ThreadPoolManager.getInstance().scheduleAtFixedRate(handler, delay, 1 * 24 * 60 * 60 * 1000);
 	}
 
@@ -179,7 +179,7 @@ public class TaskManagerFromDB
 	{
 		return DAOManager.getDAO(TaskFromDBDAO.class);
 	}
-	
+
 	/**
 	 * Get the instance
 	 * 
@@ -189,12 +189,12 @@ public class TaskManagerFromDB
 	{
 		return SingletonHolder.instance;
 	}
-	
+
 	/**
 	 * SingletonHolder
 	 */
 	private static class SingletonHolder
 	{
-		protected static final TaskManagerFromDB instance = new TaskManagerFromDB();
+		protected static final TaskManagerFromDB	instance	= new TaskManagerFromDB();
 	}
 }

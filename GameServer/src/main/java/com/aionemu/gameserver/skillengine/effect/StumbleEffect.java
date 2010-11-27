@@ -44,18 +44,18 @@ public class StumbleEffect extends EffectTemplate
 	@Override
 	public void calculate(Effect effect)
 	{
-		if (calculateEffectResistRate(effect, StatEnum.STUMBLE_RESISTANCE)) 
-		{ 
+		if (calculateEffectResistRate(effect, StatEnum.STUMBLE_RESISTANCE))
+		{
 			effect.addSucessEffect(this);
 			effect.setSpellStatus(SpellStatus.STUMBLE);
- 	    }
+		}
 	}
 
 	@Override
 	public void startEffect(Effect effect)
 	{
 		final Creature effected = effect.getEffected();
-		effected.cancelCurrentSkill(); 
+		effected.cancelCurrentSkill();
 		effected.getEffectController().setAbnormal(EffectId.STUMBLE.getEffectId());
 		PacketSendUtility.broadcastPacketAndReceive(effected, new SM_FORCED_MOVE(effect.getEffector(), effected));
 	}

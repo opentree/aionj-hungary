@@ -25,12 +25,11 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_GATHER_STATUS extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int status;
-	private int playerobjid;
-	private int gatherableobjid;
+	private int	status;
+	private int	playerobjid;
+	private int	gatherableobjid;
 
-
-	public SM_GATHER_STATUS(int playerobjid , int gatherableobjid, int status)
+	public SM_GATHER_STATUS(int playerobjid, int gatherableobjid, int status)
 	{
 		this.playerobjid = playerobjid;
 		this.gatherableobjid = gatherableobjid;
@@ -41,14 +40,14 @@ public class SM_GATHER_STATUS extends AbstractAionServerPacket<AionChannelHandle
 	 * {@inheritDoc}
 	 */
 
-	 @Override
-	 protected void writeImpl(AionChannelHandler cHandler)
-	 {              
+	@Override
+	protected void writeImpl(AionChannelHandler cHandler)
+	{
 
-		 writeD(playerobjid);
-		 writeD(gatherableobjid);
-		 writeH(0); //unk
-		 writeC( status);
+		writeD(playerobjid);
+		writeD(gatherableobjid);
+		writeH(0); //unk
+		writeC(status);
 
-	 }       
+	}
 }

@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlType;
 public class SubEffect
 {
 	@XmlAttribute(name = "skill_id")
-	private int skillId;
+	private int	skillId;
 
 	/**
 	 * @return the skillId

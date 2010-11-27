@@ -50,22 +50,23 @@ public class Mailbox
 	 */
 	public Collection<Letter> getLetters()
 	{
-		SortedSet<Letter> letters = new TreeSet<Letter>(new Comparator<Letter>(){
+		SortedSet<Letter> letters = new TreeSet<Letter>(new Comparator<Letter>()
+		{
 
 			@Override
 			public int compare(Letter o1, Letter o2)
 			{
-				if(o1.getTimeStamp().getTime() > o2.getTimeStamp().getTime())
+				if (o1.getTimeStamp().getTime() > o2.getTimeStamp().getTime())
 					return 1;
-				if(o1.getTimeStamp().getTime() < o2.getTimeStamp().getTime())
+				if (o1.getTimeStamp().getTime() < o2.getTimeStamp().getTime())
 					return -1;
 
 				return o1.getObjectId() > o2.getObjectId() ? 1 : -1;
 			}
 
 		});
-		
-		for(Letter letter : mails.values())
+
+		for (Letter letter : mails.values())
 		{
 			letters.add(letter);
 		}
@@ -90,9 +91,9 @@ public class Mailbox
 	 */
 	public boolean haveUnread()
 	{
-		for(Letter letter : mails.values())
+		for (Letter letter : mails.values())
 		{
-			if(letter.isUnread())
+			if (letter.isUnread())
 				return true;
 		}
 
@@ -107,7 +108,7 @@ public class Mailbox
 	{
 		return 65536 - mails.size();
 	}
-	
+
 	/**
 	 * 
 	 * @return

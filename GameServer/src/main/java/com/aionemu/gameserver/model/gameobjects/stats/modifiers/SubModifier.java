@@ -27,7 +27,7 @@ public class SubModifier extends SimpleModifier
 	@Override
 	public int apply(int baseStat, int currentStat)
 	{
-		if(isBonus())
+		if (isBonus())
 		{
 			return Math.round(-1 * value);
 		}
@@ -36,7 +36,7 @@ public class SubModifier extends SimpleModifier
 			return Math.round(baseStat - value);
 		}
 	}
-	
+
 	@Override
 	public StatModifierPriority getPriority()
 	{

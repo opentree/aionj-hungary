@@ -28,7 +28,8 @@ import javax.xml.bind.annotation.XmlEnum;
  *
  */
 @XmlEnum
-public enum TribeClass {
+public enum TribeClass
+{
 
 	PC,
 	LIGHT_SUR_MOB,
@@ -340,8 +341,8 @@ public enum TribeClass {
 	NONE,
 	GUARD_LIGHT(true),
 	FIELD_OBJECT_DARK;
-	
-	private boolean isGuard;
+
+	private boolean	isGuard;
 
 	private TribeClass()
 	{

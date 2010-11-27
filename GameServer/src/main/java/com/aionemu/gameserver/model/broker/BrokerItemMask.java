@@ -109,7 +109,11 @@ public enum BrokerItemMask
 	SKILL_RELATED_SKILL_MANUAL_ASSASSIN(6022, new BrokerPlayerClassExtraFilter(1695, PlayerClass.ASSASSIN), BrokerItemMask.SKILL_RELATED_SKILL_MANUAL, false),
 	SKILL_RELATED_SKILL_MANUAL_RANGER(6023, new BrokerPlayerClassExtraFilter(1695, PlayerClass.RANGER), BrokerItemMask.SKILL_RELATED_SKILL_MANUAL, false),
 	SKILL_RELATED_SKILL_MANUAL_SORCERER(6024, new BrokerPlayerClassExtraFilter(1695, PlayerClass.SORCERER), BrokerItemMask.SKILL_RELATED_SKILL_MANUAL, false),
-	SKILL_RELATED_SKILL_MANUAL_SPIRITMASTER(6025, new BrokerPlayerClassExtraFilter(1695, PlayerClass.SPIRIT_MASTER), BrokerItemMask.SKILL_RELATED_SKILL_MANUAL, false),
+	SKILL_RELATED_SKILL_MANUAL_SPIRITMASTER(
+			6025,
+			new BrokerPlayerClassExtraFilter(1695, PlayerClass.SPIRIT_MASTER),
+			BrokerItemMask.SKILL_RELATED_SKILL_MANUAL,
+			false),
 	SKILL_RELATED_SKILL_MANUAL_CLERIC(6026, new BrokerPlayerClassExtraFilter(1695, PlayerClass.CLERIC), BrokerItemMask.SKILL_RELATED_SKILL_MANUAL, false),
 	SKILL_RELATED_SKILL_MANUAL_CHANTER(6027, new BrokerPlayerClassExtraFilter(1695, PlayerClass.CHANTER), BrokerItemMask.SKILL_RELATED_SKILL_MANUAL, false),
 
@@ -153,7 +157,7 @@ public enum BrokerItemMask
 	private int				typeId;
 	private BrokerFilter	filter;
 	private BrokerItemMask	parent;
-	private boolean 		childrenExist;
+	private boolean			childrenExist;
 
 	/**
 	 * 
@@ -195,9 +199,9 @@ public enum BrokerItemMask
 	 */
 	public boolean isChildrenMask(int maskId)
 	{
-		for(BrokerItemMask p = parent; p != null; p = p.parent)
+		for (BrokerItemMask p = parent; p != null; p = p.parent)
 		{
-			if(p.typeId == maskId)
+			if (p.typeId == maskId)
 				return true;
 		}
 		return false;
@@ -211,9 +215,9 @@ public enum BrokerItemMask
 	 */
 	public static BrokerItemMask getBrokerMaskById(int id)
 	{
-		for(BrokerItemMask mt : values())
+		for (BrokerItemMask mt : values())
 		{
-			if(mt.typeId == id)
+			if (mt.typeId == id)
 				return mt;
 		}
 		return UNKNOWN;
@@ -225,5 +229,5 @@ public enum BrokerItemMask
 	public boolean hasChildren()
 	{
 		return childrenExist;
-	}	
+	}
 }

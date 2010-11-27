@@ -40,7 +40,7 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 public class HideEffect extends BufEffect
 {
 	@XmlAttribute
-	protected int value;
+	protected int	value;
 
 	@Override
 	public void applyEffect(Effect effect)
@@ -52,20 +52,20 @@ public class HideEffect extends BufEffect
 	public void calculate(Effect effect)
 	{
 		//TODO calc probability
-		effect.addSucessEffect(this);	
+		effect.addSucessEffect(this);
 	}
 
 	@Override
 	public void endEffect(Effect effect)
 	{
 		super.endEffect(effect);
-		
+
 		Creature effected = effect.getEffected();
 		effected.getEffectController().unsetAbnormal(EffectId.INVISIBLE_RELATED.getEffectId());
 
 		CreatureVisualState visualState;
 
-		switch(value)
+		switch (value)
 		{
 			case 1:
 				visualState = CreatureVisualState.HIDE1;
@@ -91,9 +91,9 @@ public class HideEffect extends BufEffect
 		}
 		effected.unsetVisualState(visualState);
 
-		if(effected instanceof Player)
+		if (effected instanceof Player)
 		{
-			PacketSendUtility.broadcastPacket((Player)effected, new SM_PLAYER_STATE((Player)effected), true);
+			PacketSendUtility.broadcastPacket((Player) effected, new SM_PLAYER_STATE((Player) effected), true);
 		}
 	}
 
@@ -101,13 +101,13 @@ public class HideEffect extends BufEffect
 	public void startEffect(final Effect effect)
 	{
 		super.startEffect(effect);
-		
+
 		final Creature effected = effect.getEffected();
 		effected.getEffectController().setAbnormal(EffectId.INVISIBLE_RELATED.getEffectId());
 
 		CreatureVisualState visualState;
 
-		switch(value)
+		switch (value)
 		{
 			case 1:
 				visualState = CreatureVisualState.HIDE1;
@@ -133,45 +133,39 @@ public class HideEffect extends BufEffect
 		}
 		effected.setVisualState(visualState);
 
-		if(effected instanceof Player)
+		if (effected instanceof Player)
 		{
-			PacketSendUtility.broadcastPacket((Player)effected, new SM_PLAYER_STATE((Player)effected), true);
+			PacketSendUtility.broadcastPacket((Player) effected, new SM_PLAYER_STATE((Player) effected), true);
 		}
-		
+
 		//Remove Hide when use skill
-		effected.getObserveController().attach(
-			new ActionObserver(ObserverType.SKILLUSE)
+		effected.getObserveController().attach(new ActionObserver(ObserverType.SKILLUSE)
+		{
+			@Override
+			public void skilluse(Skill skill)
 			{
-				@Override
-				public void skilluse(Skill skill)
-				{
-					effected.getEffectController().removeEffect(effect.getSkillId());
-				}
+				effected.getEffectController().removeEffect(effect.getSkillId());
 			}
-		);
-		
+		});
+
 		// Remove Hide when attacked
-		effected.getObserveController().attach(
-			new ActionObserver(ObserverType.ATTACKED)
+		effected.getObserveController().attach(new ActionObserver(ObserverType.ATTACKED)
+		{
+			@Override
+			public void attacked(Creature creature)
 			{
-				@Override
-				public void attacked(Creature creature)
-				{
-					effected.getEffectController().removeEffect(effect.getSkillId());
-				}
+				effected.getEffectController().removeEffect(effect.getSkillId());
 			}
-		);
-		
+		});
+
 		// Remove Hide when attacking
-		effected.getObserveController().attach(
-			new ActionObserver(ObserverType.ATTACK)
+		effected.getObserveController().attach(new ActionObserver(ObserverType.ATTACK)
+		{
+			@Override
+			public void attack(Creature creature)
 			{
-				@Override
-				public void attack(Creature creature)
-				{
-					effected.getEffectController().removeEffect(effect.getSkillId());
-				}			
+				effected.getEffectController().removeEffect(effect.getSkillId());
 			}
-		);
+		});
 	}
 }

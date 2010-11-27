@@ -55,33 +55,33 @@ public class TargetRelationProperty extends Property
 		List<Creature> effectedList = skill.getEffectedList();
 		Creature effector = skill.getEffector();
 
-		switch(value)
+		switch (value)
 		{
 			case ALL:
 				break;
 			case ENEMY:
-				for(Iterator<Creature> iter = effectedList.iterator(); iter.hasNext();)
+				for (Iterator<Creature> iter = effectedList.iterator(); iter.hasNext();)
 				{
 					Creature nextEffected = iter.next();
 
-					if(effector.isEnemy(nextEffected))
+					if (effector.isEnemy(nextEffected))
 						continue;
 
 					iter.remove();
 				}
 				break;
 			case FRIEND:
-				for(Iterator<Creature> iter = effectedList.iterator(); iter.hasNext();)
+				for (Iterator<Creature> iter = effectedList.iterator(); iter.hasNext();)
 				{
 					Creature nextEffected = iter.next();
 
-					if(!effector.isEnemy(nextEffected))
+					if (!effector.isEnemy(nextEffected))
 						continue;
 
 					iter.remove();
 				}
 
-				if(effectedList.size() == 0)
+				if (effectedList.size() == 0)
 				{
 					skill.setFirstTarget(skill.getEffector());
 					effectedList.add(skill.getEffector());

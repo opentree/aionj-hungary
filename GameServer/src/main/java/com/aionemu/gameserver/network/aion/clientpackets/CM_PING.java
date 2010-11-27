@@ -58,16 +58,16 @@ public class CM_PING extends AbstractClientPacket<AionChannelHandler>
 	protected void runImpl()
 	{
 		long lastMS = getChannelHandler().getLastPingTimeMS();
-		
-		if(lastMS > 0)
+
+		if (lastMS > 0)
 		{
 			long pingInterval = System.currentTimeMillis() - lastMS;
 			// PingInterval should be 3min (180000ms)
-			if(pingInterval < 100000)// client timer cheat
+			if (pingInterval < 100000)// client timer cheat
 			{
 				String ip = getChannelHandler().getIP();
 				String name = "[unknown]";
-				if(getChannelHandler().getActivePlayer() != null)
+				if (getChannelHandler().getActivePlayer() != null)
 					name = getChannelHandler().getActivePlayer().getName();
 				log.info("[AUDIT] possible client timer cheat: " + pingInterval + " by " + name + ", ip=" + ip);
 				//getChannelHandler().close(new SM_QUIT_RESPONSE(), true);

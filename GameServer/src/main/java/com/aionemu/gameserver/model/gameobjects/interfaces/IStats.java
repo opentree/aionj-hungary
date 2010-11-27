@@ -25,6 +25,8 @@ package com.aionemu.gameserver.model.gameobjects.interfaces;
 public interface IStats
 {
 	public int getMaxHp();
+
 	public int getCurrentHp();
+
 	public int getMovementSpeed();
 }

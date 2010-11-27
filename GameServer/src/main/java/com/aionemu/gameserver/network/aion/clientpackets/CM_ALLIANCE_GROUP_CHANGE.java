@@ -29,15 +29,15 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class CM_ALLIANCE_GROUP_CHANGE extends AbstractClientPacket<AionChannelHandler>
 {
-	private int allianceGroupId;
-	private int playerObjectId;
-	private int secondObjectId;
-	
+	private int	allianceGroupId;
+	private int	playerObjectId;
+	private int	secondObjectId;
+
 	public CM_ALLIANCE_GROUP_CHANGE(int opcode)
 	{
 		super(opcode);
 	}
-	
+
 	@Override
 	protected void readImpl()
 	{
@@ -45,27 +45,27 @@ public class CM_ALLIANCE_GROUP_CHANGE extends AbstractClientPacket<AionChannelHa
 		allianceGroupId = readD();
 		secondObjectId = readD();
 	}
-	
+
 	@Override
 	protected void runImpl()
 	{
 		Player player = getChannelHandler().getActivePlayer();
 		PlayerAlliance alliance = player.getPlayerAlliance();
-		
+
 		if (alliance == null)
 		{
 			// Huh... packet spoofing?
 			PacketSendUtility.sendMessage(player, "You are not in an alliance.");
 			return;
 		}
-		
+
 		if (!alliance.hasAuthority(player.getObjectId()))
 		{
 			// You are not the leader!
 			PacketSendUtility.sendMessage(player, "You do not have the authority for that.");
 			return;
 		}
-		
+
 		AllianceService.getInstance().handleGroupChange(alliance, playerObjectId, allianceGroupId, secondObjectId);
 	}
 }

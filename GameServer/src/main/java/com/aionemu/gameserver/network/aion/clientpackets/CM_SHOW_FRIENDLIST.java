@@ -32,14 +32,13 @@ public class CM_SHOW_FRIENDLIST extends AbstractClientPacket<AionChannelHandler>
 	{
 		super(opcode);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	protected void readImpl()
 	{
-		
 
 	}
 

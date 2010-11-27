@@ -25,21 +25,21 @@ import com.aionemu.gameserver.model.gameobjects.stats.StatEffectType;
 public class StoneStatEffectId extends StatEffectId
 {
 
-	private int slot;
+	private int	slot;
 
 	private StoneStatEffectId(int id, int slot)
 	{
 		super(id, StatEffectType.STONE_EFFECT);
 		this.slot = slot;
 	}
-	
+
 	/**
 	 * 
 	 * @param id
 	 * @param slot
 	 * @return StoneStatEffectId
 	 */
-	public static StoneStatEffectId getInstance (int id, int slot)
+	public static StoneStatEffectId getInstance(int id, int slot)
 	{
 		return new StoneStatEffectId(id, slot);
 	}
@@ -48,9 +48,9 @@ public class StoneStatEffectId extends StatEffectId
 	public boolean equals(Object o)
 	{
 		boolean result = super.equals(o);
-		result = (result)&&(o != null);
-		result = (result)&&(o instanceof StoneStatEffectId);
-		result = (result)&&(((StoneStatEffectId) o).slot == slot);
+		result = (result) && (o != null);
+		result = (result) && (o instanceof StoneStatEffectId);
+		result = (result) && (((StoneStatEffectId) o).slot == slot);
 		return result;
 	}
 

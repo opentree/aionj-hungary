@@ -33,15 +33,14 @@ import com.aionemu.gameserver.network.loginserver.serverpackets.SM_GS_AUTH;
  */
 public class LoginServerChannelHandler extends AbstractChannelHandler
 {
-	
+
 	private static final Logger	log	= Logger.getLogger(LoginServerChannelHandler.class);
 
-	
 	public LoginServerChannelHandler(AbstractPacketHandlerFactory<LoginServerChannelHandler> acphf)
 	{
 		super(acphf);
 	}
-	
+
 	@Override
 	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception
 	{
@@ -50,19 +49,19 @@ public class LoginServerChannelHandler extends AbstractChannelHandler
 		LoginServer.getInstance().setChannelHandler(this);
 		sendPacket(new SM_GS_AUTH());
 	}
-	
+
 	@Override
-    public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception
-    {
-		if(e.getCause().getClass().equals(ConnectException.class))
+	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception
+	{
+		if (e.getCause().getClass().equals(ConnectException.class))
 		{
 			log.info("Can't connect to LoginServer: " + e.getCause().getMessage());
 			e.getChannel().close();
 		}
 		else
 			super.exceptionCaught(ctx, e);
-    }
-    
+	}
+
 	@Override
 	public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception
 	{

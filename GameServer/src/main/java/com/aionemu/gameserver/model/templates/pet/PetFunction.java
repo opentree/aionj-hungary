@@ -30,25 +30,25 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class PetFunction
 {
 	@XmlAttribute(name = "type")
-	private PetFunctionType type;
+	private PetFunctionType	type;
 	@XmlAttribute(name = "id")
-	private int id;
+	private int				id;
 	@XmlAttribute(name = "slots")
-	private int slots;
-	
+	private int				slots;
+
 	public PetFunctionType getPetFunctionType()
 	{
 		return type;
 	}
-	
+
 	public int getId()
 	{
 		return id;
 	}
-	
+
 	public int getSlots()
 	{
 		return slots;
 	}
-	
+
 }

@@ -31,7 +31,7 @@ public class BrokerPlayerCache
 	private int				brokerMaskCache;
 	private int				brokerSoftTypeCache;
 	private int				brokerStartPageCache;
-	private List<Integer> searchItemsId = new ArrayList<Integer>();
+	private List<Integer>	searchItemsId	= new ArrayList<Integer>();
 
 	/**
 	 * @return the brokerListCache
@@ -100,16 +100,16 @@ public class BrokerPlayerCache
 	{
 		this.brokerStartPageCache = brokerStartPageCache;
 	}
-	
-	public void setSearchItemsId(List<Integer> searchItemsId)
-    {
-        this.searchItemsId = searchItemsId;
-    }
 
-    public List<Integer> getSearchItemsId()
-    {
-        if(this.searchItemsId.isEmpty())
-            return null;
-        return this.searchItemsId;
-    }
+	public void setSearchItemsId(List<Integer> searchItemsId)
+	{
+		this.searchItemsId = searchItemsId;
+	}
+
+	public List<Integer> getSearchItemsId()
+	{
+		if (this.searchItemsId.isEmpty())
+			return null;
+		return this.searchItemsId;
+	}
 }

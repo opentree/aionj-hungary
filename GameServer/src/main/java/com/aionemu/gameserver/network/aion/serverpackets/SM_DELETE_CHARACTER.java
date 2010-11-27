@@ -27,8 +27,8 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_DELETE_CHARACTER extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int playerObjId;
-	private int deletionTime;
+	private int	playerObjId;
+	private int	deletionTime;
 
 	/**
 	 * Constructs new <tt>SM_DELETE_CHARACTER </tt> packet
@@ -45,7 +45,7 @@ public class SM_DELETE_CHARACTER extends AbstractAionServerPacket<AionChannelHan
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
-		if(playerObjId != 0)
+		if (playerObjId != 0)
 		{
 			writeD(0x00);// unk
 			writeD(playerObjId);

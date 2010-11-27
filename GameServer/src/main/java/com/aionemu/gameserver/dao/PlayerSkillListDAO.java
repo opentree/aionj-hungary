@@ -21,7 +21,6 @@ import com.aionemu.commons.database.dao.DAO;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.SkillList;
 
-
 /**
  * Created on: 15.07.2009 19:33:07
  * Edited On:  13.09.2009 19:48:00
@@ -32,14 +31,14 @@ import com.aionemu.gameserver.model.gameobjects.player.SkillList;
 public abstract class PlayerSkillListDAO implements DAO
 {
 	/**
-     * Returns unique identifier for PlayerSkillListDAO
-     *
-     * @return unique identifier for PlayerSkillListDAO
-     */
+	 * Returns unique identifier for PlayerSkillListDAO
+	 *
+	 * @return unique identifier for PlayerSkillListDAO
+	 */
 	@Override
 	public final String getClassName()
 	{
-		 return PlayerSkillListDAO.class.getName();
+		return PlayerSkillListDAO.class.getName();
 	}
 
 	/**
@@ -48,7 +47,7 @@ public abstract class PlayerSkillListDAO implements DAO
 	 * @return a list of skilllist for player
 	 */
 	public abstract SkillList loadSkillList(int playerId);
-	
+
 	/**
 	 *  Updates skill with new information
 	 *  

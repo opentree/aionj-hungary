@@ -45,25 +45,25 @@ import com.aionemu.gameserver.world.World;
 public class SiegeService
 {
 	private static Logger	log	= Logger.getLogger(SiegeService.class);
-	
+
 	public static final SiegeService getInstance()
 	{
 		return SingletonHolder.instance;
 	}
 
-	private FastMap<Integer, SiegeLocation> locations;
-	private long lastCalcTime;
+	private FastMap<Integer, SiegeLocation>	locations;
+	private long							lastCalcTime;
 
 	public SiegeService()
 	{
 		if (SiegeConfig.SIEGE_ENABLED)
 		{
 			log.info("Loading Siege Location Data...");
-			
+
 			locations = DataManager.SIEGE_LOCATION_DATA.getSiegeLocations();
-			
+
 			DAOManager.getDAO(SiegeDAO.class).loadSiegeLocations(locations);
-			for(SiegeLocation loc : locations.values())
+			for (SiegeLocation loc : locations.values())
 			{
 				if (loc instanceof Fortress)
 				{
@@ -90,14 +90,13 @@ public class SiegeService
 			{
 				public void run()
 				{
-					for(SiegeLocation sLoc : locations.values())
+					for (SiegeLocation sLoc : locations.values())
 						if (sLoc instanceof Fortress && sLoc.isVulnerable())
 							sLoc.setVulnerable(false);
 
 					mapUpdate();
 				}
-			}
-			, SiegeConfig.SIEGE_INVUL_INTERVAL * 1000);
+			}, SiegeConfig.SIEGE_INVUL_INTERVAL * 1000);
 
 			lastCalcTime = System.currentTimeMillis();
 			ThreadPoolManager.getInstance().scheduleAtFixedRate(new Runnable()
@@ -107,10 +106,10 @@ public class SiegeService
 					lastCalcTime = System.currentTimeMillis();
 					log.debug("Processing vulnerability: " + locations.size() + " locations");
 
-					for(SiegeLocation loc : locations.values())
+					for (SiegeLocation loc : locations.values())
 					{
 						if (loc instanceof Fortress)
-						log.debug("Processing siege #" + loc.getLocationId());
+							log.debug("Processing siege #" + loc.getLocationId());
 
 						if (loc instanceof Fortress)
 						{
@@ -145,28 +144,26 @@ public class SiegeService
 					{
 						public void run()
 						{
-							for(SiegeLocation sLoc : locations.values())
+							for (SiegeLocation sLoc : locations.values())
 								if (sLoc instanceof Fortress && sLoc.isVulnerable())
 									sLoc.setVulnerable(false);
 
 							mapUpdate();
 						}
-					}
-					, SiegeConfig.SIEGE_INVUL_INTERVAL * 1000);
+					}, SiegeConfig.SIEGE_INVUL_INTERVAL * 1000);
 
 					mapUpdate();
 				}
-			}
-			, SiegeConfig.SIEGE_TIMER_INTERVAL * 1000, SiegeConfig.SIEGE_TIMER_INTERVAL * 1000);
+			}, SiegeConfig.SIEGE_TIMER_INTERVAL * 1000, SiegeConfig.SIEGE_TIMER_INTERVAL * 1000);
 		}
 		else
 		{
 			log.info("Siege Disabled by Config.");
-			
+
 			locations = new FastMap<Integer, SiegeLocation>();
 		}
 
-		log.info("SiegeService successfully started.");	
+		log.info("SiegeService successfully started.");
 	}
 
 	public FastMap<Integer, SiegeLocation> getSiegeLocations()
@@ -181,7 +178,7 @@ public class SiegeService
 	{
 		long remainTime = getLastCalcTime() + SiegeConfig.SIEGE_TIMER_INTERVAL * 1000 - System.currentTimeMillis();
 		long GlobalTimer = remainTime / 1000;
-		return (int)GlobalTimer;
+		return (int) GlobalTimer;
 	}
 
 	public long getLastCalcTime()
@@ -226,22 +223,22 @@ public class SiegeService
 		SiegeLocation sLoc = locations.get(locationId);
 		sLoc.setRace(race);
 		sLoc.setLegionId(legionId);
-		
+
 		if (sLoc instanceof Fortress)
 			sLoc.setVulnerable(false);
-		
+
 		DAOManager.getDAO(SiegeDAO.class).updateSiegeLocation(sLoc);
-		
+
 		broadcastUpdate(sLoc);
 		Influence.getInstance().recalculateInfluence();
-		deSpawnLocation(locationId);	//despawning old siege spawns
-		spawnLocation(locationId,race); //spawning new siege spawns
+		deSpawnLocation(locationId); //despawning old siege spawns
+		spawnLocation(locationId, race); //spawning new siege spawns
 	}
 
 	/**
 	 * Spawns SiegeNpc by siegeId and raceId
 	 */
-	public void spawnLocation(int siegeId,SiegeRace race)
+	public void spawnLocation(int siegeId, SiegeRace race)
 	{
 		/*
 		List<SpawnGroup> spawnsGroup = DataManager.SPAWNS_DATA.getSpawnsForWorld(400010000);
@@ -261,9 +258,9 @@ public class SiegeService
 	 */
 	public void deSpawnLocation(int siegeId)
 	{
-		for(SiegeNpc siegeNpcToDespawn : World.getInstance().getSiegeNpcs())
+		for (SiegeNpc siegeNpcToDespawn : World.getInstance().getSiegeNpcs())
 		{
-			if (siegeNpcToDespawn.getSiegeId()==siegeId ) 
+			if (siegeNpcToDespawn.getSiegeId() == siegeId)
 				siegeNpcToDespawn.onDespawn(true);
 		}
 	}
@@ -285,7 +282,7 @@ public class SiegeService
 
 	private void broadcast(SM_SIEGE_LOCATION_INFO pkt)
 	{
-		for(Player player : World.getInstance().getAllPlayers())
+		for (Player player : World.getInstance().getAllPlayers())
 		{
 			PacketSendUtility.sendPacket(player, pkt);
 		}
@@ -293,7 +290,7 @@ public class SiegeService
 
 	public void mapUpdate()
 	{
-		for(Player player : World.getInstance().getAllPlayers())
+		for (Player player : World.getInstance().getAllPlayers())
 		{
 			PacketSendUtility.sendPacket(player, new SM_INFLUENCE_RATIO());
 			PacketSendUtility.sendPacket(player, new SM_SIEGE_LOCATION_INFO());
@@ -303,6 +300,6 @@ public class SiegeService
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
-		protected static final SiegeService instance = new SiegeService();
+		protected static final SiegeService	instance	= new SiegeService();
 	}
 }

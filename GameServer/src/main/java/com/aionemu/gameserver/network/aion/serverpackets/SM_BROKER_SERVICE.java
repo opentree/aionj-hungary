@@ -37,59 +37,55 @@ public class SM_BROKER_SERVICE extends AbstractAionServerPacket<AionChannelHandl
 {
 	private enum BrokerPacketType
 	{
-		SEARCHED_ITEMS(0),
-		REGISTERED_ITEMS(1),
-		REGISTER_ITEM(3),
-		SHOW_SETTLED_ICON(5),
-		SETTLED_ITEMS(5),
-		REMOVE_SETTLED_ICON(6);
-		
-		private int id;
-		
+		SEARCHED_ITEMS(0), REGISTERED_ITEMS(1), REGISTER_ITEM(3), SHOW_SETTLED_ICON(5), SETTLED_ITEMS(5), REMOVE_SETTLED_ICON(6);
+
+		private int	id;
+
 		private BrokerPacketType(int id)
 		{
 			this.id = id;
 		}
-		
+
 		private int getId()
 		{
 			return id;
 		}
 	}
-	
-	private BrokerPacketType type;
-	private BrokerItem[] brokerItems;
-	private int itemsCount;
-	private int startPage;
-	private int message;
-	private long settled_kinah;
-	
+
+	private BrokerPacketType	type;
+	private BrokerItem[]		brokerItems;
+	private int					itemsCount;
+	private int					startPage;
+	private int					message;
+	private long				settled_kinah;
+
 	public SM_BROKER_SERVICE(BrokerItem brokerItem, int message)
 	{
 		this.type = BrokerPacketType.REGISTER_ITEM;
-		this.brokerItems = new BrokerItem[] {brokerItem};
+		this.brokerItems = new BrokerItem[]
+		{ brokerItem };
 		this.message = message;
 	}
-	
+
 	public SM_BROKER_SERVICE(int message)
 	{
 		this.type = BrokerPacketType.REGISTER_ITEM;
 		this.message = message;
 	}
-	
+
 	public SM_BROKER_SERVICE(BrokerItem[] brokerItems)
 	{
 		this.type = BrokerPacketType.REGISTERED_ITEMS;
 		this.brokerItems = brokerItems;
 	}
-	
+
 	public SM_BROKER_SERVICE(BrokerItem[] brokerItems, long settled_kinah)
 	{
 		this.type = BrokerPacketType.SETTLED_ITEMS;
 		this.brokerItems = brokerItems;
 		this.settled_kinah = settled_kinah;
 	}
-	
+
 	public SM_BROKER_SERVICE(BrokerItem[] brokerItems, int itemsCount, int startPage)
 	{
 		this.type = BrokerPacketType.SEARCHED_ITEMS;
@@ -97,16 +93,16 @@ public class SM_BROKER_SERVICE extends AbstractAionServerPacket<AionChannelHandl
 		this.itemsCount = itemsCount;
 		this.startPage = startPage;
 	}
-	
+
 	public SM_BROKER_SERVICE(boolean showSettledIcon, long settled_kinah)
 	{
 		this.type = showSettledIcon ? BrokerPacketType.SHOW_SETTLED_ICON : BrokerPacketType.REMOVE_SETTLED_ICON;
 		this.settled_kinah = settled_kinah;
 	}
-	
+
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
-	{	
+	{
 		switch (type)
 		{
 			case SEARCHED_ITEMS:
@@ -128,31 +124,31 @@ public class SM_BROKER_SERVICE extends AbstractAionServerPacket<AionChannelHandl
 				writeShowSettledItems();
 				break;
 		}
-			
+
 	}
-	
+
 	private void writeSearchedItems()
 	{
-		writeC( type.getId());
+		writeC(type.getId());
 		writeD(itemsCount);
-		writeC( 0);
+		writeC(0);
 		writeH(startPage);
 		writeH(brokerItems.length);
-		for(BrokerItem item : brokerItems)
+		for (BrokerItem item : brokerItems)
 		{
-			if(item.getItem().getItemTemplate().isArmor() || item.getItem().getItemTemplate().isWeapon())
+			if (item.getItem().getItemTemplate().isArmor() || item.getItem().getItemTemplate().isWeapon())
 				writeArmorWeaponInfo(item);
 			else
 				writeCommonInfo(item);
 		}
 	}
-	
+
 	private void writeRegisteredItems()
 	{
-		writeC( type.getId());
+		writeC(type.getId());
 		writeD(0x00);
 		writeH(brokerItems.length); //you can register a max of 15 items, so 0x0F
-		for(BrokerItem item : brokerItems)
+		for (BrokerItem item : brokerItems)
 		{
 			writeD(item.getItemUniqueId());
 			writeD(item.getItemId());
@@ -162,7 +158,7 @@ public class SM_BROKER_SERVICE extends AbstractAionServerPacket<AionChannelHandl
 			Timestamp currentTime = new Timestamp(Calendar.getInstance().getTimeInMillis());
 			int daysLeft = Math.round((item.getExpireTime().getTime() - currentTime.getTime()) / 86400000);
 			writeH(daysLeft);
-			writeC( 0);
+			writeC(0);
 			writeD(item.getItemId());
 			writeD(0);
 			writeD(0);
@@ -175,12 +171,12 @@ public class SM_BROKER_SERVICE extends AbstractAionServerPacket<AionChannelHandl
 			writeH(0);
 		}
 	}
-	
+
 	private void writeRegisterItem()
 	{
-		writeC( type.getId());
+		writeC(type.getId());
 		writeH(message);
-		if(message == 0)
+		if (message == 0)
 		{
 			BrokerItem itemForRegistration = brokerItems[0];
 			writeD(itemForRegistration.getItemUniqueId());
@@ -189,7 +185,7 @@ public class SM_BROKER_SERVICE extends AbstractAionServerPacket<AionChannelHandl
 			writeQ(itemForRegistration.getItem().getItemCount());
 			writeQ(itemForRegistration.getItem().getItemCount());
 			writeH(8); //days left
-			writeC( 0);
+			writeC(0);
 			writeD(itemForRegistration.getItemId());
 			writeD(0);
 			writeD(0);
@@ -202,42 +198,42 @@ public class SM_BROKER_SERVICE extends AbstractAionServerPacket<AionChannelHandl
 			writeH(0);
 		}
 	}
-	
+
 	private void writeShowSettledIcon()
 	{
-		writeC( type.getId());
+		writeC(type.getId());
 		writeQ(settled_kinah);
 		writeD(0x00);
 		writeH(0x00);
 		writeH(0x01);
-		writeC( 0x00);
+		writeC(0x00);
 	}
-	
+
 	private void writeRemoveSettledIcon()
 	{
 		writeH(type.getId());
 	}
-	
+
 	private void writeShowSettledItems()
 	{
-		writeC( type.getId());
+		writeC(type.getId());
 		writeQ(settled_kinah);
-        
+
 		writeH(brokerItems.length);
-        writeD(0x00); 
-        writeC(0x00);
-        
+		writeD(0x00);
+		writeC(0x00);
+
 		writeH(brokerItems.length);
-		for(BrokerItem settledItem : brokerItems)
+		for (BrokerItem settledItem : brokerItems)
 		{
 			writeD(settledItem.getItemId());
-			if(settledItem.isSold())
+			if (settledItem.isSold())
 				writeQ(settledItem.getPrice());
 			else
 				writeQ(0);
 			writeQ(settledItem.getItemCount());
 			writeQ(settledItem.getItemCount());
-			writeD((int)settledItem.getSettleTime().getTime() / 60000);
+			writeD((int) settledItem.getSettleTime().getTime() / 60000);
 			writeH(0);
 			writeD(settledItem.getItemId());
 			writeD(0);
@@ -251,66 +247,66 @@ public class SM_BROKER_SERVICE extends AbstractAionServerPacket<AionChannelHandl
 			writeH(0);
 		}
 	}
-	
+
 	private void writeArmorWeaponInfo(BrokerItem item)
 	{
 		writeD(item.getItem().getObjectId());
 		writeD(item.getItem().getItemTemplate().getTemplateId());
 		writeQ(item.getPrice());
 		writeQ(item.getItem().getItemCount());
-		writeC( 0);
-		writeC( item.getItem().getEnchantLevel());
+		writeC(0);
+		writeC(item.getItem().getEnchantLevel());
 		writeD(item.getItem().getItemSkinTemplate().getTemplateId());
-		writeC( 0);
-		
+		writeC(0);
+
 		writeItemStones(item.getItem());
-		
+
 		ItemStone god = item.getItem().getGodStone();
 		writeD(god == null ? 0 : god.getItemId());
-		
-		writeC( 0);
+
+		writeC(0);
 		writeD(0);
 		writeD(0);
 		writeS(item.getSeller());
 		writeS(""); //creator
-		
+
 	}
-	
+
 	private void writeItemStones(Item item)
 	{
 		int count = 0;
-		
-		if(item.hasManaStones())
+
+		if (item.hasManaStones())
 		{
 			Set<ManaStone> itemStones = item.getItemStones();
-			
-			for(ManaStone itemStone : itemStones)
+
+			for (ManaStone itemStone : itemStones)
 			{
-				if(count == 6)
+				if (count == 6)
 					break;
 
 				StatModifier modifier = itemStone.getFirstModifier();
-				if(modifier != null)
+				if (modifier != null)
 				{
 					count++;
-					writeC( modifier.getStat().getItemStoneMask());
+					writeC(modifier.getStat().getItemStoneMask());
 				}
 			}
-			writeB(new byte[(6-count)]);
+			writeB(new byte[(6 - count)]);
 			count = 0;
-			for(ManaStone itemStone : itemStones)
+			for (ManaStone itemStone : itemStones)
 			{
-				if(count == 6)
+				if (count == 6)
 					break;
 
 				StatModifier modifier = itemStone.getFirstModifier();
-				if(modifier != null)
+				if (modifier != null)
 				{
 					count++;
-					writeH(((SimpleModifier)modifier).getValue());
+					writeH(((SimpleModifier) modifier).getValue());
 				}
 			}
-			writeB(new byte[(6-count)*2]);
+			writeB(new byte[(6 - count) * 2]);
 		}
 		else
 		{
@@ -319,7 +315,7 @@ public class SM_BROKER_SERVICE extends AbstractAionServerPacket<AionChannelHandl
 
 		//for now max 6 stones - write some junk
 	}
-	
+
 	private void writeCommonInfo(BrokerItem item)
 	{
 		writeD(item.getItem().getObjectId());

@@ -110,59 +110,59 @@ public class SpawnEngine
 		int objectId = spawn.getTemplateId();
 		NpcInfo npcInfo = DataManager.OBJECT_INFOS_DATA.getNpcInfoByTemplateId(spawn.getTemplateId());
 		Class<?> clazz;
-		if(objectId > 400000 && objectId < 499999)// gatherable
-        {
-                try
-                {
-                        clazz = Class.forName("com.aionemu.gameserver.model.gameobjects.instance.Gatherable");
-                }
-                catch (ClassNotFoundException e)
-                {
-                        log.warn(e);
-                        return null;
-                }
-                gatherableCounter++;
-        }
-        else
-        // npc
-        {
-        	if (DataManager.NPC_DATA.getNpcTemplate(spawn.getTemplateId()) == null)
-        	{
-        		log.warn("Missing npc template!! Template id: "+spawn.getTemplateId());
-        		return null;
-        	}
-                try
-                {
-                	if (npcInfo == null)
-                        clazz = Class.forName("com.aionemu.gameserver.model.gameobjects.instance.SpawnedObject");
-                	else
-                		clazz = Class.forName("com.aionemu.gameserver.model.gameobjects.instance."+npcInfo.getClassName());
-                }
-                catch (ClassNotFoundException e)
-                {
-                        log.warn(e);
-                        return null;
-                }
-                npcCounter++;
-        }
-        IDFactory iDFactory = IDFactory.getInstance();
-        
-        VisibleObject object;
-        try
-        {
-                Object[] parameters =
-                {iDFactory.nextId(), spawn};
-                Constructor<?> constructor = clazz.getConstructor(Integer.TYPE, SpawnTemplate.class);
-                object = (VisibleObject) constructor.newInstance(parameters);
-        }
-        catch (Exception e)
-        {
-        	 log.error("Spawn error create class: "+npcInfo.getClassName(),e);
-        	 return null;
-        }
-        object.onRespawn();
+		if (objectId > 400000 && objectId < 499999)// gatherable
+		{
+			try
+			{
+				clazz = Class.forName("com.aionemu.gameserver.model.gameobjects.instance.Gatherable");
+			}
+			catch (ClassNotFoundException e)
+			{
+				log.warn(e);
+				return null;
+			}
+			gatherableCounter++;
+		}
+		else
+		// npc
+		{
+			if (DataManager.NPC_DATA.getNpcTemplate(spawn.getTemplateId()) == null)
+			{
+				log.warn("Missing npc template!! Template id: " + spawn.getTemplateId());
+				return null;
+			}
+			try
+			{
+				if (npcInfo == null)
+					clazz = Class.forName("com.aionemu.gameserver.model.gameobjects.instance.SpawnedObject");
+				else
+					clazz = Class.forName("com.aionemu.gameserver.model.gameobjects.instance." + npcInfo.getClassName());
+			}
+			catch (ClassNotFoundException e)
+			{
+				log.warn(e);
+				return null;
+			}
+			npcCounter++;
+		}
+		IDFactory iDFactory = IDFactory.getInstance();
+
+		VisibleObject object;
+		try
+		{
+			Object[] parameters =
+			{ iDFactory.nextId(), spawn };
+			Constructor<?> constructor = clazz.getConstructor(Integer.TYPE, SpawnTemplate.class);
+			object = (VisibleObject) constructor.newInstance(parameters);
+		}
+		catch (Exception e)
+		{
+			log.error("Spawn error create class: " + npcInfo.getClassName(), e);
+			return null;
+		}
+		object.onRespawn();
 		bringIntoWorld(object, spawn, instanceIndex);
-        return object;
+		return object;
 	}
 
 	/**

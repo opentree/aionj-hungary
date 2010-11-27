@@ -39,9 +39,9 @@ import com.aionemu.gameserver.model.templates.stats.SummonStatsTemplate;
 public class SummonStatsData
 {
 	@XmlElement(name = "summon_stats", required = true)
-	private List<SummonStatsType> summonTemplatesList = new ArrayList<SummonStatsType>();
-	
-	private final TIntObjectHashMap<SummonStatsTemplate> summonTemplates = new TIntObjectHashMap<SummonStatsTemplate>();
+	private List<SummonStatsType>							summonTemplatesList	= new ArrayList<SummonStatsType>();
+
+	private final TIntObjectHashMap<SummonStatsTemplate>	summonTemplates		= new TIntObjectHashMap<SummonStatsTemplate>();
 
 	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
@@ -51,9 +51,9 @@ public class SummonStatsData
 			summonTemplates.put(code1, st.getTemplate());
 			int code2 = makeHash(st.getNpcIdLight(), st.getRequiredLevel());
 			summonTemplates.put(code2, st.getTemplate());
-		}		
+		}
 	}
-	
+
 	/**
 	 * 
 	 * @param npcId
@@ -62,12 +62,12 @@ public class SummonStatsData
 	 */
 	public SummonStatsTemplate getSummonTemplate(int npcId, int level)
 	{
-		SummonStatsTemplate template =  summonTemplates.get(makeHash(npcId, level));
-		if(template == null)
+		SummonStatsTemplate template = summonTemplates.get(makeHash(npcId, level));
+		if (template == null)
 			template = summonTemplates.get(makeHash(201022, 10));//TEMP till all templates are done
 		return template;
 	}
-	
+
 	/**
 	 * Size of summon templates
 	 * 
@@ -77,19 +77,19 @@ public class SummonStatsData
 	{
 		return summonTemplates.size();
 	}
-	
-	@XmlRootElement(name="summonStatsTemplateType")
+
+	@XmlRootElement(name = "summonStatsTemplateType")
 	private static class SummonStatsType
 	{
 		@XmlAttribute(name = "npc_id_dark", required = true)
-		private int npcIdDark;
+		private int					npcIdDark;
 		@XmlAttribute(name = "npc_id_light", required = true)
-		private int npcIdLight;
+		private int					npcIdLight;
 		@XmlAttribute(name = "level", required = true)
-		private int requiredLevel;
+		private int					requiredLevel;
 
-		@XmlElement(name="stats_template")
-		private SummonStatsTemplate template;
+		@XmlElement(name = "stats_template")
+		private SummonStatsTemplate	template;
 
 		/**
 		 * @return the npcIdDark
@@ -125,7 +125,7 @@ public class SummonStatsData
 			return template;
 		}
 	}
-	
+
 	/**
 	 *  Note:<br>
 	 *  max level is 255

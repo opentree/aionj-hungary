@@ -100,16 +100,16 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1370002, _exp);
 	}
-	
+
 	public static SM_SYSTEM_MESSAGE STR_MSG_COMBAT_FRIENDLY_DEATH_TO_B(String nameA, String nameB)
 	{
 		return new SM_SYSTEM_MESSAGE(1350001, nameA, nameB);
 	}
-	
+
 	/**
 	 * Gather-related
 	 */
-	
+
 	public static SM_SYSTEM_MESSAGE GATHER_SKILL_POINT_UP(String skillName, int newLevel)
 	{
 		return new SM_SYSTEM_MESSAGE(1330005, skillName, newLevel);
@@ -119,32 +119,32 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1330058);
 	}
-	
+
 	public static SM_SYSTEM_MESSAGE EXTRACT_GATHER_START_1_BASIC(DescriptionId nameId)
 	{
 		return new SM_SYSTEM_MESSAGE(1330077, nameId);
 	}
-	
+
 	public static SM_SYSTEM_MESSAGE EXTRACT_GATHER_SUCCESS_1_BASIC(DescriptionId nameId)
 	{
 		return new SM_SYSTEM_MESSAGE(1330078, nameId);
 	}
-	
+
 	public static SM_SYSTEM_MESSAGE EXTRACT_GATHER_FAIL_1_BASIC(DescriptionId nameId)
 	{
 		return new SM_SYSTEM_MESSAGE(1330079, nameId);
 	}
-	
+
 	public static SM_SYSTEM_MESSAGE EXTRACT_GATHER_CANCEL_1_BASIC()
 	{
 		return new SM_SYSTEM_MESSAGE(1330080);
 	}
-	
+
 	public static SM_SYSTEM_MESSAGE EXTRACT_GATHER_INVENTORY_IS_FULL()
 	{
 		return new SM_SYSTEM_MESSAGE(1330081);
 	}
-	
+
 	public static SM_SYSTEM_MESSAGE EXTRACT_GATHER_SUCCESS_GETEXP()
 	{
 		return new SM_SYSTEM_MESSAGE(1330082);
@@ -187,31 +187,31 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	 * The character is not blocked.
 	 */
 	public static SM_SYSTEM_MESSAGE	BLOCKLIST_NOT_BLOCKED		= new SM_SYSTEM_MESSAGE(1300897);
-	
+
 	/**
 	 * You must level up to raise your skill level.
 	 */
 	public static SM_SYSTEM_MESSAGE	STR_CRAFT_INFO_MAXPOINT_UP	= new SM_SYSTEM_MESSAGE(1300898);
-	
+
 	/**
 	 * You do not have enough Kinah.
 	 */
 	public static SM_SYSTEM_MESSAGE	STR_NOT_ENOUGH_MONEY		= new SM_SYSTEM_MESSAGE(1300388);
-	
+
 	/**
 	 * You have crafted %0.
 	 */
-	
+
 	public static SM_SYSTEM_MESSAGE STR_COMBINE_SUCCESS(DescriptionId nameId)
 	{
 		return new SM_SYSTEM_MESSAGE(1330049, nameId);
 	}
-	
+
 	/**
 	 * You have crafted successfully.
 	 */
 	public static SM_SYSTEM_MESSAGE	STR_CRAFT_SUCCESS_GETEXP	= new SM_SYSTEM_MESSAGE(1330059);
-	
+
 	/**
 	 * You have failed to craft %0.
 	 */
@@ -219,7 +219,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1330050, nameId);
 	}
-	
+
 	/**
 	 * %0 has blocked you.
 	 */
@@ -315,61 +315,72 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	/**
 	 * You have successfully soul-bound %0.
 	 */
-	public static SM_SYSTEM_MESSAGE SOUL_BOUND_ITEM_SUCCEED(DescriptionId itemDescId) {
+	public static SM_SYSTEM_MESSAGE SOUL_BOUND_ITEM_SUCCEED(DescriptionId itemDescId)
+	{
 		return new SM_SYSTEM_MESSAGE(1300485, itemDescId);
 	}
 
 	/**
 	 * You cancelled the soul-binding of %0.
 	 */
-	public static SM_SYSTEM_MESSAGE SOUL_BOUND_ITEM_CANCELED(DescriptionId itemDescId) {
+	public static SM_SYSTEM_MESSAGE SOUL_BOUND_ITEM_CANCELED(DescriptionId itemDescId)
+	{
 		return new SM_SYSTEM_MESSAGE(1300487, itemDescId);
 	}
 
 	/*
 	 * You cannot attack because you have no arrow.
 	 */
-	public static SM_SYSTEM_MESSAGE STR_CANT_ATTACK_NO_ARROW = new SM_SYSTEM_MESSAGE(1300397);
-	
+	public static SM_SYSTEM_MESSAGE	STR_CANT_ATTACK_NO_ARROW	= new SM_SYSTEM_MESSAGE(1300397);
+
 	/** 
 	 * Group System Messages
 	 */
-	public static SM_SYSTEM_MESSAGE STR_MSG_DICE_RESULT_ME(int dice) 
+	public static SM_SYSTEM_MESSAGE STR_MSG_DICE_RESULT_ME(int dice)
 	{
-		return new SM_SYSTEM_MESSAGE(1390162, dice);	
+		return new SM_SYSTEM_MESSAGE(1390162, dice);
 	}
-	public static SM_SYSTEM_MESSAGE STR_MSG_DICE_RESULT_OTHER(String player, int dice) 
+
+	public static SM_SYSTEM_MESSAGE STR_MSG_DICE_RESULT_OTHER(String player, int dice)
 	{
-		return new SM_SYSTEM_MESSAGE(1390163, player, dice);	
-	}	
-	public static SM_SYSTEM_MESSAGE STR_MSG_DICE_GIVEUP_ME() 
-	{
-		return new SM_SYSTEM_MESSAGE(1390164);	
-	}	
-	public static SM_SYSTEM_MESSAGE STR_MSG_DICE_GIVEUP_OTHER(String player) 
-	{
-		return new SM_SYSTEM_MESSAGE(1390165, player);	
-	}	
-	public static SM_SYSTEM_MESSAGE STR_MSG_LOOT_GET_ITEM_ME(DescriptionId itemDesc) 
-	{
-		return new SM_SYSTEM_MESSAGE(1390180, itemDesc);	
+		return new SM_SYSTEM_MESSAGE(1390163, player, dice);
 	}
-	public static SM_SYSTEM_MESSAGE STR_MSG_LOOT_GET_ITEM_OTHER(String player, DescriptionId itemDesc) 
+
+	public static SM_SYSTEM_MESSAGE STR_MSG_DICE_GIVEUP_ME()
 	{
-		return new SM_SYSTEM_MESSAGE(1390181, player, itemDesc);	
+		return new SM_SYSTEM_MESSAGE(1390164);
 	}
-	public static SM_SYSTEM_MESSAGE STR_MSG_PAY_ACCOUNT_ME(long kinah) 
+
+	public static SM_SYSTEM_MESSAGE STR_MSG_DICE_GIVEUP_OTHER(String player)
 	{
-		return new SM_SYSTEM_MESSAGE(1390185, kinah);	
+		return new SM_SYSTEM_MESSAGE(1390165, player);
 	}
-	public static SM_SYSTEM_MESSAGE STR_MSG_PAY_ACCOUNT_OTHER(String player, long kinah) 
+
+	public static SM_SYSTEM_MESSAGE STR_MSG_LOOT_GET_ITEM_ME(DescriptionId itemDesc)
 	{
-		return new SM_SYSTEM_MESSAGE(1390186, player, kinah);	
+		return new SM_SYSTEM_MESSAGE(1390180, itemDesc);
 	}
-	public static SM_SYSTEM_MESSAGE STR_MSG_PAY_DISTRIBUTE(long kinah, int count, long Kinah) 
+
+	public static SM_SYSTEM_MESSAGE STR_MSG_LOOT_GET_ITEM_OTHER(String player, DescriptionId itemDesc)
 	{
-		return new SM_SYSTEM_MESSAGE(1390187, kinah, count, Kinah);	
-	}	
+		return new SM_SYSTEM_MESSAGE(1390181, player, itemDesc);
+	}
+
+	public static SM_SYSTEM_MESSAGE STR_MSG_PAY_ACCOUNT_ME(long kinah)
+	{
+		return new SM_SYSTEM_MESSAGE(1390185, kinah);
+	}
+
+	public static SM_SYSTEM_MESSAGE STR_MSG_PAY_ACCOUNT_OTHER(String player, long kinah)
+	{
+		return new SM_SYSTEM_MESSAGE(1390186, player, kinah);
+	}
+
+	public static SM_SYSTEM_MESSAGE STR_MSG_PAY_DISTRIBUTE(long kinah, int count, long Kinah)
+	{
+		return new SM_SYSTEM_MESSAGE(1390187, kinah, count, Kinah);
+	}
+
 	public static SM_SYSTEM_MESSAGE REQUEST_GROUP_INVITE(String player)
 	{
 		return new SM_SYSTEM_MESSAGE(1300173, player);
@@ -479,11 +490,11 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300682);
 	}
-		
+
 	/**
 	 * Alliance Messages
 	 */
-	
+
 	/**
 	 * You have invited %0's group to the alliance.
 	 */
@@ -491,6 +502,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300189, name);
 	}
+
 	/**
 	 * %0 has promoted %1. From now on, %1 is the alliance captain.
 	 */
@@ -498,6 +510,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300986, name, name2);
 	}
+
 	/**
 	 * %0 is now vice Captain of the alliance.
 	 */
@@ -505,6 +518,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300984, name);
 	}
+
 	/**
 	 * %0 has been demoted to member from vice Captain.
 	 */
@@ -512,6 +526,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300985, name);
 	}
+
 	/**
 	 * You cannot invite yourself to the alliance.
 	 */
@@ -519,6 +534,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1301006);
 	}
+
 	/**
 	 * %0 has declined your invitation to join the alliance.
 	 */
@@ -526,6 +542,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300190, name);
 	}
+
 	/**
 	 * Currently, %0 cannot accept your invitation to join the alliance.
 	 */
@@ -533,6 +550,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300191, name);
 	}
+
 	/**
 	 * %0 is already a member of another alliance.
 	 */
@@ -540,6 +558,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300192, name);
 	}
+
 	/**
 	 * %0 is already a member of your alliance.
 	 */
@@ -547,6 +566,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300193, name);
 	}
+
 	/**
 	 * You cannot invite %0 to the alliance as he or she is not a group leader.
 	 */
@@ -554,6 +574,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300194, name);
 	}
+
 	/**
 	 * You cannot invite %0 to the alliance.
 	 */
@@ -561,6 +582,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300195, name);
 	}
+
 	/**
 	 * You cannot invite any more as the alliance is full.
 	 */
@@ -568,6 +590,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300196);
 	}
+
 	/**
 	 * Only the group leader can leave the alliance.
 	 */
@@ -575,6 +598,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300197);
 	}
+
 	/**
 	 * Your group is not part of an alliance.
 	 */
@@ -582,6 +606,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300198);
 	}
+
 	/**
 	 * %0's group has left the alliance.
 	 */
@@ -589,6 +614,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300199, name);
 	}
+
 	/**
 	 * Your group has left the alliance.
 	 */
@@ -596,6 +622,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300200);
 	}
+
 	/**
 	 * The alliance has been disbanded.
 	 */
@@ -603,6 +630,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300201);
 	}
+
 	/**
 	 * %0 has left the alliance.
 	 */
@@ -610,6 +638,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300202, name);
 	}
+
 	/**
 	 * %0 has been offline for too long and has been automatically kicked out of the group and the alliance.
 	 */
@@ -617,6 +646,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300203, name);
 	}
+
 	/**
 	 * %0 has been kicked out of the group and thus the alliance.
 	 */
@@ -624,6 +654,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300204, name);
 	}
+
 	/**
 	 * %0 has become the new group leader.
 	 */
@@ -631,6 +662,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300205, name);
 	}
+
 	/**
 	 * You have joined the alliance.
 	 */
@@ -638,6 +670,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1390263);
 	}
+
 	/**
 	 * You have invited %0 to join the alliance.
 	 */
@@ -645,6 +678,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1301017, name);
 	}
+
 	/**
 	 * %0 has joined the alliance.
 	 */
@@ -652,6 +686,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1400013, name);
 	}
+
 	/**
 	 * %0 has kicked you out of the alliance.
 	 */
@@ -659,6 +694,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300979, name);
 	}
+
 	/**
 	 * %0 has kicked out %1 of the alliance.
 	 */
@@ -666,6 +702,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300980, name, name2);
 	}
+
 	/**
 	 * The selected alliance member is currently offline.
 	 */
@@ -673,6 +710,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1301008);
 	}
+
 	/**
 	 * There is no target to invite to the alliance.
 	 */
@@ -680,6 +718,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1301003);
 	}
+
 	/**
 	 * You cannot issue invitations while you are dead.
 	 */
@@ -687,6 +726,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1301007);
 	}
+
 	/**
 	 * The leader of %0's group is %1.
 	 */
@@ -694,6 +734,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300969, s0, s1);
 	}
+
 	/**
 	 * %0 is already a member of another alliance.
 	 */
@@ -701,6 +742,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300974, name);
 	}
+
 	/**
 	 * There is not enough room in the alliance.
 	 */
@@ -708,6 +750,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300975);
 	}
+
 	/**
 	 * You have invited %0's group to the alliance. %0's group has a total of %1 members.
 	 */
@@ -715,6 +758,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300968, s0, s1);
 	}
+
 	/**
 	 * %0 has been disconnected.
 	 */
@@ -722,6 +766,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1301019, s0);
 	}
+
 	/**
 	 * %0 has been offline for too long and had been automatically kicked out of the alliance.
 	 */
@@ -729,7 +774,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1300981, s0);
 	}
-		
+
 	/**
 	 * Legion messages.
 	 */
@@ -1044,24 +1089,24 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	/**
 	 * You cannot use an item while running a Private Store.
 	 */
-	public static SM_SYSTEM_MESSAGE STR_MSG_CANNOT_USE_ITEM_WHILE_PRIVATE_STORE	= new SM_SYSTEM_MESSAGE(1300048, new DescriptionId(2800123));
+	public static SM_SYSTEM_MESSAGE	STR_MSG_CANNOT_USE_ITEM_WHILE_PRIVATE_STORE	= new SM_SYSTEM_MESSAGE(1300048, new DescriptionId(2800123));
 
 	/**
 	 * You can use this skill only while flying.
 	 */
-	public static SM_SYSTEM_MESSAGE STR_SKILL_RESTRICTION_FLY_ONLY		= new SM_SYSTEM_MESSAGE(1300113);
+	public static SM_SYSTEM_MESSAGE	STR_SKILL_RESTRICTION_FLY_ONLY				= new SM_SYSTEM_MESSAGE(1300113);
 
-	public static SM_SYSTEM_MESSAGE	STR_ITEM_ERROR						= new SM_SYSTEM_MESSAGE(1300514);
+	public static SM_SYSTEM_MESSAGE	STR_ITEM_ERROR								= new SM_SYSTEM_MESSAGE(1300514);
 
 	/**
 	 * You cannot use the item as its cooldown time has not expired yet.
 	 */
-	public static SM_SYSTEM_MESSAGE	STR_ITEM_CANT_USE_UNTIL_DELAY_TIME	= new SM_SYSTEM_MESSAGE(1300494);
-	
+	public static SM_SYSTEM_MESSAGE	STR_ITEM_CANT_USE_UNTIL_DELAY_TIME			= new SM_SYSTEM_MESSAGE(1300494);
+
 	/**
 	 * You cannot destroy %0 because it is used in the "%1" quest which cannot be abandoned once started.
 	 */
-	public static SM_SYSTEM_MESSAGE	STR_QUEST_GIVEUP_WHEN_DELETE_QUEST_ITEM_IMPOSSIBLE(DescriptionId nameId, DescriptionId questNameId)
+	public static SM_SYSTEM_MESSAGE STR_QUEST_GIVEUP_WHEN_DELETE_QUEST_ITEM_IMPOSSIBLE(DescriptionId nameId, DescriptionId questNameId)
 	{
 		return new SM_SYSTEM_MESSAGE(1300604, nameId, questNameId);
 	}
@@ -1069,12 +1114,12 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	/**
 	 * You cannot fly in this area.
 	 */
-	public static SM_SYSTEM_MESSAGE	STR_FLYING_FORBIDDEN_HERE			= new SM_SYSTEM_MESSAGE(1300960);
+	public static SM_SYSTEM_MESSAGE	STR_FLYING_FORBIDDEN_HERE				= new SM_SYSTEM_MESSAGE(1300960);
 
 	/**
 	 * You cannot use teleport services when you flying
 	 */
-	public static SM_SYSTEM_MESSAGE	STR_CANNOT_USE_AIRPORT_WHEN_FLYING	= new SM_SYSTEM_MESSAGE(1300696);
+	public static SM_SYSTEM_MESSAGE	STR_CANNOT_USE_AIRPORT_WHEN_FLYING		= new SM_SYSTEM_MESSAGE(1300696);
 
 	/**
 	 * The NPC you selected does not have the ability to teleport you.
@@ -1084,7 +1129,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	/**
 	 * You cannot move to that destination.
 	 */
-	public static SM_SYSTEM_MESSAGE	STR_CANNOT_MOVE_TO_AIRPORT_NO_ROUTE	= new SM_SYSTEM_MESSAGE(1300691);
+	public static SM_SYSTEM_MESSAGE	STR_CANNOT_MOVE_TO_AIRPORT_NO_ROUTE		= new SM_SYSTEM_MESSAGE(1300691);
 
 	/**
 	 * Binding Point Messages
@@ -1167,7 +1212,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 		return new SM_SYSTEM_MESSAGE(901285, kinah);
 	}
 
-	public static final SM_SYSTEM_MESSAGE	MSG_FULL_INVENTORY			= new SM_SYSTEM_MESSAGE(1300762);
+	public static final SM_SYSTEM_MESSAGE								MSG_FULL_INVENTORY			= new SM_SYSTEM_MESSAGE(1300762);
 
 	public static final AbstractAionServerPacket<AionChannelHandler>	CUBEEXPAND_NOT_ENOUGH_KINAH	= new SM_SYSTEM_MESSAGE(1300831);
 
@@ -1200,8 +1245,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	/**
 	 * cannot equip items if require level higher than character level
 	 */
-	public static SM_SYSTEM_MESSAGE STR_CANNOT_USE_ITEM_TOO_LOW_LEVEL_MUST_BE_THIS_LEVEL(int itemLevel,
-		DescriptionId itemDescId)
+	public static SM_SYSTEM_MESSAGE STR_CANNOT_USE_ITEM_TOO_LOW_LEVEL_MUST_BE_THIS_LEVEL(int itemLevel, DescriptionId itemDescId)
 	{
 		return new SM_SYSTEM_MESSAGE(1300372, itemLevel, itemDescId);
 	}
@@ -1281,8 +1325,8 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		// You do not have the ownership of this item.
 		return new SM_SYSTEM_MESSAGE(1390220);
-	}	
-	
+	}
+
 	public static SM_SYSTEM_MESSAGE CRAFT_RECIPE_LEARN(DescriptionId nameId)
 	{
 		return new SM_SYSTEM_MESSAGE(1330061, nameId);
@@ -1330,49 +1374,49 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	{
 		return new SM_SYSTEM_MESSAGE(1390120, charName);
 	}
-	
+
 	/**
 	 * Item Remodel (Thanks wylovech)
 	 */
-	public static final SM_SYSTEM_MESSAGE STR_CHANGE_ITEM_SKIN_FAR_FROM_NPC = new SM_SYSTEM_MESSAGE(1300475);
-	public static final SM_SYSTEM_MESSAGE STR_CHANGE_ITEM_SKIN_PC_LEVEL_LIMIT = new SM_SYSTEM_MESSAGE(1300476);
-	public static final SM_SYSTEM_MESSAGE STR_CHANGE_ITEM_SKIN_NO_TARGET_ITEM = new SM_SYSTEM_MESSAGE(1300477);
-	
+	public static final SM_SYSTEM_MESSAGE	STR_CHANGE_ITEM_SKIN_FAR_FROM_NPC	= new SM_SYSTEM_MESSAGE(1300475);
+	public static final SM_SYSTEM_MESSAGE	STR_CHANGE_ITEM_SKIN_PC_LEVEL_LIMIT	= new SM_SYSTEM_MESSAGE(1300476);
+	public static final SM_SYSTEM_MESSAGE	STR_CHANGE_ITEM_SKIN_NO_TARGET_ITEM	= new SM_SYSTEM_MESSAGE(1300477);
+
 	public static SM_SYSTEM_MESSAGE STR_CHANGE_ITEM_SKIN_NOT_SKIN_CHANGABLE_ITEM(DescriptionId nameId)
 	{
 		return new SM_SYSTEM_MESSAGE(1300478, nameId);
 	}
-	
+
 	public static SM_SYSTEM_MESSAGE STR_CHANGE_ITEM_SKIN_NOT_SAME_EQUIP_SLOT(DescriptionId keepNameId, DescriptionId skinNameId)
 	{
 		return new SM_SYSTEM_MESSAGE(1300479, keepNameId, skinNameId);
 	}
-	
+
 	public static SM_SYSTEM_MESSAGE STR_CHANGE_ITEM_SKIN_NOT_COMPATIBLE(DescriptionId keepNameId, DescriptionId skinNameId)
 	{
 		return new SM_SYSTEM_MESSAGE(1300480, keepNameId, skinNameId);
 	}
-	
+
 	public static SM_SYSTEM_MESSAGE STR_CHANGE_ITEM_SKIN_NOT_ENOUGH_GOLD(DescriptionId nameId)
 	{
 		return new SM_SYSTEM_MESSAGE(1300481, nameId);
 	}
-	
+
 	public static SM_SYSTEM_MESSAGE STR_CHANGE_ITEM_SKIN_CAN_NOT_REMOVE_SKIN_ITEM(DescriptionId nameId)
 	{
 		return new SM_SYSTEM_MESSAGE(1300482, nameId);
 	}
-	
+
 	public static SM_SYSTEM_MESSAGE STR_CHANGE_ITEM_SKIN_SUCCEED(DescriptionId nameId)
 	{
 		return new SM_SYSTEM_MESSAGE(1300483, nameId);
 	}
-	
+
 	public static SM_SYSTEM_MESSAGE STR_CHANGE_ITEM_SKIN_INVALID_STANCE(DescriptionId nameId)
 	{
 		return new SM_SYSTEM_MESSAGE(1300484, nameId);
 	}
-	
+
 	/**
 	 * Example npc shout
 	 */
@@ -1381,13 +1425,13 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 		// Leave the crops alone!
 		return new SM_SYSTEM_MESSAGE(390270, true);
 	}
-	
+
 	public static SM_SYSTEM_MESSAGE STR_CHAT_FARMER_002()
 	{
 		// I spent so much time and effort to grow these crops!
 		return new SM_SYSTEM_MESSAGE(390271, true);
 	}
-	
+
 	public static SM_SYSTEM_MESSAGE STR_CHAT_FARMER_003()
 	{
 		// "Darn, those wretched Kerubs!"
@@ -1397,87 +1441,94 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	public static final SM_SYSTEM_MESSAGE	STR_MOVE_PORTAL_ERROR_INVALID_RACE	= new SM_SYSTEM_MESSAGE(901354);
 	public static final SM_SYSTEM_MESSAGE	STR_MSG_CANT_INSTANCE_ENTER_LEVEL	= new SM_SYSTEM_MESSAGE(1400179);
 	public static final SM_SYSTEM_MESSAGE	STR_MSG_ENTER_ONLY_PARTY_DON		= new SM_SYSTEM_MESSAGE(1390256);
-	
+
 	//You may enter %WORLDNAME0 again after %1 minutes.
 	public static SM_SYSTEM_MESSAGE STR_MSG_CANNOT_ENTER_INSTANCE_COOL_TIME_MIN(int worldDescId, int time)
 	{
 		return new SM_SYSTEM_MESSAGE(1400030, new DescriptionId(worldDescId * 2 + 1), time);
 	}
+
 	//You may enter %WORLDNAME0 again after %1 hours
 	public static SM_SYSTEM_MESSAGE STR_MSG_CANNOT_ENTER_INSTANCE_COOL_TIME_HOUR(int worldDescId, int time)
 	{
 		return new SM_SYSTEM_MESSAGE(1400029, new DescriptionId(worldDescId * 2 + 1), time);
 	}
-	
 
-	public static final SM_SYSTEM_MESSAGE	STR_GIVE_ITEM_PROC_NO_PROC_GIVE_ITEM	= new SM_SYSTEM_MESSAGE(1300505);
+	public static final SM_SYSTEM_MESSAGE	STR_GIVE_ITEM_PROC_NO_PROC_GIVE_ITEM					= new SM_SYSTEM_MESSAGE(1300505);
 	public static final SM_SYSTEM_MESSAGE	STR_GIVE_ITEM_PROC_CANNOT_GIVE_PROC_TO_EQUIPPED_ITEM	= new SM_SYSTEM_MESSAGE(1300503);
+
 	public static SM_SYSTEM_MESSAGE STR_GIVE_ITEM_PROC_ENCHANTED_TARGET_ITEM(DescriptionId itemDescId)
 	{
 		return new SM_SYSTEM_MESSAGE(1300508, itemDescId);
 	}
 
-	public static final SM_SYSTEM_MESSAGE	STR_MSG_DICE_INVEN_ERROR	= new SM_SYSTEM_MESSAGE(1390182);
-	public static final SM_SYSTEM_MESSAGE	COMBINE_INVENTORY_IS_FULL	= new SM_SYSTEM_MESSAGE(1330037);
-	
+	public static final SM_SYSTEM_MESSAGE	STR_MSG_DICE_INVEN_ERROR						= new SM_SYSTEM_MESSAGE(1390182);
+	public static final SM_SYSTEM_MESSAGE	COMBINE_INVENTORY_IS_FULL						= new SM_SYSTEM_MESSAGE(1330037);
+
 	/***
 	 *  Kisks
 	 *  - Sarynth, Master
 	 */
 
 	public static final SM_SYSTEM_MESSAGE	STR_CANNOT_REGISTER_BINDSTONE_HAVE_NO_AUTHORITY	= new SM_SYSTEM_MESSAGE(1300799);
-	public static final SM_SYSTEM_MESSAGE	STR_CANNOT_REGISTER_BINDSTONE_FAR_FROM_NPC	= new SM_SYSTEM_MESSAGE(1300800);
-	public static final SM_SYSTEM_MESSAGE	STR_BINDSTONE_IS_DESTROYED			= new SM_SYSTEM_MESSAGE(1300802);
-	public static final SM_SYSTEM_MESSAGE	STR_BINDSTONE_IS_REMOVED			= new SM_SYSTEM_MESSAGE(1300803);
-	public static final SM_SYSTEM_MESSAGE	STR_CANNOT_USE_BINDSTONE_ITEM_NOT_PROPER_AREA = new SM_SYSTEM_MESSAGE(1300804);
-	public static final SM_SYSTEM_MESSAGE	STR_CANNOT_USE_BINDSTONE_ITEM_WHILE_FLYING	= new SM_SYSTEM_MESSAGE(1300806);
-	public static final SM_SYSTEM_MESSAGE	STR_BINDSTONE_DESTROYED				= new SM_SYSTEM_MESSAGE(1390158);
-	public static final SM_SYSTEM_MESSAGE	STR_BINDSTONE_REGISTER				= new SM_SYSTEM_MESSAGE(1390159);
-	public static final SM_SYSTEM_MESSAGE	STR_BINDSTONE_ALREADY_INSTALLED			= new SM_SYSTEM_MESSAGE(1390160);
-	public static final SM_SYSTEM_MESSAGE	STR_BINDSTONE_ALREADY_REGISTERED		= new SM_SYSTEM_MESSAGE(1390161);
-	public static final SM_SYSTEM_MESSAGE   STR_BINDSTONE_IS_ATTACKED			= new SM_SYSTEM_MESSAGE(1390166);
-	public static final SM_SYSTEM_MESSAGE	STR_CANNOT_REGISTER_BINDSTONE_FULL		= new SM_SYSTEM_MESSAGE(1400247);
+	public static final SM_SYSTEM_MESSAGE	STR_CANNOT_REGISTER_BINDSTONE_FAR_FROM_NPC		= new SM_SYSTEM_MESSAGE(1300800);
+	public static final SM_SYSTEM_MESSAGE	STR_BINDSTONE_IS_DESTROYED						= new SM_SYSTEM_MESSAGE(1300802);
+	public static final SM_SYSTEM_MESSAGE	STR_BINDSTONE_IS_REMOVED						= new SM_SYSTEM_MESSAGE(1300803);
+	public static final SM_SYSTEM_MESSAGE	STR_CANNOT_USE_BINDSTONE_ITEM_NOT_PROPER_AREA	= new SM_SYSTEM_MESSAGE(1300804);
+	public static final SM_SYSTEM_MESSAGE	STR_CANNOT_USE_BINDSTONE_ITEM_WHILE_FLYING		= new SM_SYSTEM_MESSAGE(1300806);
+	public static final SM_SYSTEM_MESSAGE	STR_BINDSTONE_DESTROYED							= new SM_SYSTEM_MESSAGE(1390158);
+	public static final SM_SYSTEM_MESSAGE	STR_BINDSTONE_REGISTER							= new SM_SYSTEM_MESSAGE(1390159);
+	public static final SM_SYSTEM_MESSAGE	STR_BINDSTONE_ALREADY_INSTALLED					= new SM_SYSTEM_MESSAGE(1390160);
+	public static final SM_SYSTEM_MESSAGE	STR_BINDSTONE_ALREADY_REGISTERED				= new SM_SYSTEM_MESSAGE(1390161);
+	public static final SM_SYSTEM_MESSAGE	STR_BINDSTONE_IS_ATTACKED						= new SM_SYSTEM_MESSAGE(1390166);
+	public static final SM_SYSTEM_MESSAGE	STR_CANNOT_REGISTER_BINDSTONE_FULL				= new SM_SYSTEM_MESSAGE(1400247);
 
-	public static final SM_SYSTEM_MESSAGE	STR_CANNOT_USE_MAGIC_PASSAGE		= new SM_SYSTEM_MESSAGE(1300150);
+	public static final SM_SYSTEM_MESSAGE	STR_CANNOT_USE_MAGIC_PASSAGE					= new SM_SYSTEM_MESSAGE(1300150);
 
 	/***
 	 *  fusion/break  Weapons
 	 *  - Master,wylovech
 	 */
-	public static final SM_SYSTEM_MESSAGE	STR_COMPOUND_ERROR_MAIN_REQUIRE_HIGHER_LEVEL = new SM_SYSTEM_MESSAGE(1400288);
+	public static final SM_SYSTEM_MESSAGE	STR_COMPOUND_ERROR_MAIN_REQUIRE_HIGHER_LEVEL	= new SM_SYSTEM_MESSAGE(1400288);
+
 	public static final SM_SYSTEM_MESSAGE STR_COMPOUND_ERROR_NOT_AVAILABLE(int nameId)
 	{
 		return new SM_SYSTEM_MESSAGE(1400289, new DescriptionId(nameId));
-	}	
+	}
+
 	public static final SM_SYSTEM_MESSAGE STR_COMPOUNDED_ITEM_DECOMPOUND_SUCCESS(int nameId)
 	{
 		return new SM_SYSTEM_MESSAGE(1400335, new DescriptionId(nameId));
 	}
+
 	public static final SM_SYSTEM_MESSAGE STR_COMPOUND_SUCCESS(int nameId, int nameId2)
 	{
 		return new SM_SYSTEM_MESSAGE(1400336, new DescriptionId(nameId), new DescriptionId(nameId2));
 	}
+
 	public static final SM_SYSTEM_MESSAGE STR_COMPOUND_ERROR_NOT_ENOUGH_MONEY(int nameId, int nameId2)
 	{
 		return new SM_SYSTEM_MESSAGE(1400337, new DescriptionId(nameId), new DescriptionId(nameId2));
 	}
-	public static final SM_SYSTEM_MESSAGE	STR_COMPOUND_ERROR_DIFFERENT_TYPE = new SM_SYSTEM_MESSAGE(1400364);
+
+	public static final SM_SYSTEM_MESSAGE	STR_COMPOUND_ERROR_DIFFERENT_TYPE	= new SM_SYSTEM_MESSAGE(1400364);
+
 	public static final SM_SYSTEM_MESSAGE STR_DECOMPOUND_ERROR_NOT_AVAILABLE(int nameId)
 	{
 		return new SM_SYSTEM_MESSAGE(1400373, new DescriptionId(nameId));
 	}
-	
+
 	/**
 	 * Broker
 	 *  - IlBuono
 	 */
 	// You cannot buy an item you have registered yourself.
-	public static final SM_SYSTEM_MESSAGE	STR_BROKER_CANNOT_BUY_YOURSELF_ITEMS		= new SM_SYSTEM_MESSAGE(1400750);
-	
+	public static final SM_SYSTEM_MESSAGE	STR_BROKER_CANNOT_BUY_YOURSELF_ITEMS	= new SM_SYSTEM_MESSAGE(1400750);
+
 	private final int						code;
 	private final Object[]					params;
-	private boolean							npcShout = false;
-	private int								npcObjId = 0;
+	private boolean							npcShout								= false;
+	private int								npcObjId								= 0;
 
 	/**
 	 * Constructs new <tt>SM_SYSTEM_MESSAGE </tt> packet
@@ -1491,7 +1542,7 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 		this.code = code;
 		this.params = params;
 	}
-	
+
 	public SM_SYSTEM_MESSAGE(int code, boolean npcShout, int npcObjId, Object... params)
 	{
 		this.code = code;
@@ -1512,24 +1563,24 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
-		if(!npcShout)
+		if (!npcShout)
 		{
 			writeH(0x13); // unk
 			writeD(0x00);
 		}
 		else
 		{
-			writeC( 0x01);
-			writeC( 0x00);
+			writeC(0x01);
+			writeC(0x00);
 			writeD(npcObjId); // unk
 		}
-		
-		writeD(code); // msg id
-		writeC( params.length); // count
 
-		for(Object param : params)
+		writeD(code); // msg id
+		writeC(params.length); // count
+
+		for (Object param : params)
 		{
-			if(param instanceof DescriptionId)
+			if (param instanceof DescriptionId)
 			{
 				writeH(0x24);
 				writeD(((DescriptionId) param).getValue());
@@ -1538,9 +1589,9 @@ public class SM_SYSTEM_MESSAGE extends AbstractAionServerPacket<AionChannelHandl
 			else
 				writeS(String.valueOf(param));
 		}
-		if(npcShout)
-			writeC( 0x01);
+		if (npcShout)
+			writeC(0x01);
 		else
-			writeC( 0x00);
+			writeC(0x00);
 	}
 }

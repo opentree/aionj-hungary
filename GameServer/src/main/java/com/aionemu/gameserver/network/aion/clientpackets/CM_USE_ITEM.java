@@ -36,14 +36,16 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 /**
  * @author Lyahim, Avol
  */
-public class CM_USE_ITEM extends AbstractClientPacket<AionChannelHandler> {
+public class CM_USE_ITEM extends AbstractClientPacket<AionChannelHandler>
+{
 
-	public int uniqueItemId;
-	public int type, targetItemId;
+	public int					uniqueItemId;
+	public int					type, targetItemId;
 
-	private static final Logger log = Logger.getLogger(CM_USE_ITEM.class);
+	private static final Logger	log	= Logger.getLogger(CM_USE_ITEM.class);
 
-	public CM_USE_ITEM(int opcode) {
+	public CM_USE_ITEM(int opcode)
+	{
 		super(opcode);
 	}
 
@@ -51,7 +53,8 @@ public class CM_USE_ITEM extends AbstractClientPacket<AionChannelHandler> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void readImpl() {
+	protected void readImpl()
+	{
 		uniqueItemId = readD();
 		type = readC();
 		if (type == 2)
@@ -64,49 +67,49 @@ public class CM_USE_ITEM extends AbstractClientPacket<AionChannelHandler> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void runImpl() 
+	protected void runImpl()
 	{
 		Player player = getChannelHandler().getActivePlayer();
 		Item item = player.getInventory().getItemByObjId(uniqueItemId);
-		
-		if(item == null)
+
+		if (item == null)
 		{
 			log.warn(String.format("CHECKPOINT: null item use action: %d %d", player.getObjectId(), uniqueItemId));
 			return;
 		}
-		
-		if(!RestrictionsManager.canUseItem(player))
+
+		if (!RestrictionsManager.canUseItem(player))
 			return;
-		
+
 		//check item race
-		switch(item.getItemTemplate().getRace())
+		switch (item.getItemTemplate().getRace())
 		{
 			case ASMODIANS:
-				if(player.getCommonData().getRace() != Race.ASMODIANS)
+				if (player.getCommonData().getRace() != Race.ASMODIANS)
 					return;
 				break;
 			case ELYOS:
-				if(player.getCommonData().getRace() != Race.ELYOS)
+				if (player.getCommonData().getRace() != Race.ELYOS)
 					return;
 				break;
-		}	
-		
+		}
+
 		//TODO message? you are not allowed to use?
-		if(!item.getItemTemplate().isAllowedFor(player.getCommonData().getPlayerClass(), player.getLevel()))
+		if (!item.getItemTemplate().isAllowedFor(player.getCommonData().getPlayerClass(), player.getLevel()))
 			return;
-		
+
 		if (QuestEngine.getInstance().onItemUseEvent(new QuestEnv(null, player, 0, 0), item))
 			return;
 
 		//check use item multicast delay exploit cast (spam)
-		if(player.isCasting())
+		if (player.isCasting())
 		{
 			//PacketSendUtility.sendMessage(this.getOwner(), "You must wait until cast time finished to use skill again.");
 			return;
 		}
 
 		Item targetItem = player.getInventory().getItemByObjId(targetItemId);
-		if(targetItem == null)
+		if (targetItem == null)
 			targetItem = player.getEquipment().getEquippedItemByObjId(targetItemId);
 
 		ItemActions itemActions = item.getItemTemplate().getActions();
@@ -114,17 +117,17 @@ public class CM_USE_ITEM extends AbstractClientPacket<AionChannelHandler> {
 
 		if (itemActions == null)
 			return;
-		
+
 		for (AbstractItemAction itemAction : itemActions.getItemActions())
 		{
 			// check if the item can be used before placing it on the cooldown list.
 			if (itemAction.canAct(player, item, targetItem))
 				actions.add(itemAction);
 		}
-		
-		if(actions.size() == 0)
+
+		if (actions.size() == 0)
 			return;
-		
+
 		// Store Item CD in server Player variable.
 		// Prevents potion spamming, and relogging to use kisks/aether jelly/long CD items.
 		if (player.isItemUseDisabled(item.getItemTemplate().getDelayId()))
@@ -132,7 +135,7 @@ public class CM_USE_ITEM extends AbstractClientPacket<AionChannelHandler> {
 			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_ITEM_CANT_USE_UNTIL_DELAY_TIME);
 			return;
 		}
-		
+
 		int useDelay = item.getItemTemplate().getDelayTime();
 		player.addItemCoolDown(item.getItemTemplate().getDelayId(), System.currentTimeMillis() + useDelay, useDelay / 1000);
 

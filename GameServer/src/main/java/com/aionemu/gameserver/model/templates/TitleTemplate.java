@@ -39,16 +39,16 @@ public class TitleTemplate
 {
 	@XmlAttribute(name = "id", required = true)
 	@XmlID
-	private String		id;
+	private String				id;
 
 	@XmlElement(name = "modifiers", required = false)
 	protected ModifiersTemplate	modifiers;
 
 	@XmlAttribute(name = "race", required = true)
-	private int			race;
+	private int					race;
 
-	private int			titleId;
-	
+	private int					titleId;
+
 	public int getTitleId()
 	{
 		return titleId;
@@ -61,7 +61,7 @@ public class TitleTemplate
 
 	public TreeSet<StatModifier> getModifiers()
 	{
-		if (modifiers!=null)
+		if (modifiers != null)
 		{
 			return modifiers.getModifiers();
 		}
@@ -70,8 +70,8 @@ public class TitleTemplate
 			return null;
 		}
 	}
-	
-	void afterUnmarshal (Unmarshaller u, Object parent)
+
+	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
 		this.titleId = Integer.parseInt(id);
 	}

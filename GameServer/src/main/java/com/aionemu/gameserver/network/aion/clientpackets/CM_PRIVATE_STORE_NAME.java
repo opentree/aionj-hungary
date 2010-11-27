@@ -26,7 +26,7 @@ import com.aionemu.gameserver.services.PrivateStoreService;
  */
 public class CM_PRIVATE_STORE_NAME extends AbstractClientPacket<AionChannelHandler>
 {
-	private String		name;
+	private String	name;
 
 	/**
 	 * Constructs new instance of <tt>CM_PRIVATE_STORE </tt> packet

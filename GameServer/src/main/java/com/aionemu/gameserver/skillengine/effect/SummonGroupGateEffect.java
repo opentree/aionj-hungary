@@ -27,39 +27,41 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 @XmlType(name = "SummonGroupGateEffect")
 public class SummonGroupGateEffect extends SummonEffect
 {
-    @XmlAttribute(name = "time", required = true)
-    protected int   time;
+	@XmlAttribute(name = "time", required = true)
+	protected int	time;
 
-    @Override
-    public void applyEffect(Effect effect)
-    {
+	@Override
+	public void applyEffect(Effect effect)
+	{
 
-	    Creature effector = effect.getEffector();
-        SpawnEngine spawnEngine = SpawnEngine.getInstance();
-        float x = effector.getX();
-        float y = effector.getY();
-        float z = effector.getZ();
-        byte heading = effector.getHeading();
-        int worldId = effector.getWorldId();
-        int instanceId = effector.getInstanceId();
+		Creature effector = effect.getEffector();
+		SpawnEngine spawnEngine = SpawnEngine.getInstance();
+		float x = effector.getX();
+		float y = effector.getY();
+		float z = effector.getZ();
+		byte heading = effector.getHeading();
+		int worldId = effector.getWorldId();
+		int instanceId = effector.getInstanceId();
 
-        SpawnTemplate spawn = spawnEngine.addNewSpawn(worldId, instanceId, npcId, x, y, z, heading, 0, 0, true, true);
-        final GroupGate groupgate = spawnEngine.spawnGroupGate(spawn, instanceId, effector);
+		SpawnTemplate spawn = spawnEngine.addNewSpawn(worldId, instanceId, npcId, x, y, z, heading, 0, 0, true, true);
+		final GroupGate groupgate = spawnEngine.spawnGroupGate(spawn, instanceId, effector);
 
-        Future<?> task = ThreadPoolManager.getInstance().schedule(new Runnable(){
+		Future<?> task = ThreadPoolManager.getInstance().schedule(new Runnable()
+		{
 
-	        @Override
-            public void run()
-            {
-		
-                groupgate.onDespawn(true);
-            }
-        }, time * 1000);
-        groupgate.addTask(TaskId.DESPAWN, task);
-    }
-    @Override
-    public void calculate(Effect effect)
-    {
-        super.calculate(effect);
-    }
+			@Override
+			public void run()
+			{
+
+				groupgate.onDespawn(true);
+			}
+		}, time * 1000);
+		groupgate.addTask(TaskId.DESPAWN, task);
+	}
+
+	@Override
+	public void calculate(Effect effect)
+	{
+		super.calculate(effect);
+	}
 }

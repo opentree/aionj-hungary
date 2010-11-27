@@ -34,14 +34,14 @@ public enum HEALTH
 	PRIEST(95),
 	CLERIC(110),
 	CHANTER(105);
-	
-	private int value;
-	
+
+	private int	value;
+
 	private HEALTH(int value)
 	{
 		this.value = value;
 	}
-	
+
 	public int getValue()
 	{
 		return value;

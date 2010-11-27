@@ -48,7 +48,6 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 public class SiegeGeneral extends SiegeNpc
 {
 
-	
 	/**
 	 * @param objId
 	 * @param controller
@@ -59,7 +58,7 @@ public class SiegeGeneral extends SiegeNpc
 		super(objId, spawnTemplate);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Override
 	public void onDie(Creature lastAttacker)
 	{
@@ -68,8 +67,7 @@ public class SiegeGeneral extends SiegeNpc
 		setState(CreatureState.DEAD);
 		addTask(TaskId.DECAY, RespawnService.scheduleDecayTask(this));
 		scheduleRespawn();
-		PacketSendUtility.broadcastPacket(this,
-				new SM_EMOTION(this, EmotionType.DIE, 0, lastAttacker == null ? 0 : lastAttacker.getObjectId()));
+		PacketSendUtility.broadcastPacket(this, new SM_EMOTION(this, EmotionType.DIE, 0, lastAttacker == null ? 0 : lastAttacker.getObjectId()));
 		this.setTarget(null);
 		PacketSendUtility.broadcastPacket(this, new SM_LOOKATOBJECT(this));
 		//runnig capture and despawn all npcs for this fort/artefact
@@ -96,8 +94,8 @@ public class SiegeGeneral extends SiegeNpc
 	{
 		super.doReward();
 		FastMap<Legion, Integer> legionByDmg = new FastMap<Legion, Integer>();
-		ArrayList<Player> aDmg = new ArrayList<Player>(); 
-		ArrayList<Player> eDmg = new ArrayList<Player>(); 
+		ArrayList<Player> aDmg = new ArrayList<Player>();
+		ArrayList<Player> eDmg = new ArrayList<Player>();
 		int asmoDmg = 0;
 		int elyosDmg = 0;
 		for (AggroInfo ai : getAggroList().getList())
@@ -106,15 +104,15 @@ public class SiegeGeneral extends SiegeNpc
 				continue;
 
 			// Check to see if this is a summon, if so add the damage to the group. 
-			
-			Creature master = ((Creature)ai.getAttacker()).getActingCreature();
-			
+
+			Creature master = ((Creature) ai.getAttacker()).getActingCreature();
+
 			if (master == null)
 				continue;
 
 			if (master instanceof Player)
 			{
-				Player player = (Player)master;
+				Player player = (Player) master;
 				Legion legion = player.getLegion();
 
 				if (legion != null)
@@ -135,13 +133,13 @@ public class SiegeGeneral extends SiegeNpc
 			}
 
 			//Medal award system (block 1)
-			Creature winer = (Creature)ai.getAttacker();
+			Creature winer = (Creature) ai.getAttacker();
 			if (winer instanceof Player)
 			{
-				if (((Player)winer).getCommonData().getRace() == Race.ASMODIANS)
-					aDmg.add(((Player)winer));
+				if (((Player) winer).getCommonData().getRace() == Race.ASMODIANS)
+					aDmg.add(((Player) winer));
 				else
-					eDmg.add(((Player)winer));
+					eDmg.add(((Player) winer));
 			}
 		}
 
@@ -149,7 +147,7 @@ public class SiegeGeneral extends SiegeNpc
 		Legion winnerLegion = null;
 		if (!legionByDmg.isEmpty())
 		{
-			for(FastMap.Entry<Legion, Integer> e = legionByDmg.head(), end = legionByDmg.tail(); (e = e.getNext()) != end;)
+			for (FastMap.Entry<Legion, Integer> e = legionByDmg.head(), end = legionByDmg.tail(); (e = e.getNext()) != end;)
 			{
 				if (maxDmg < e.getValue())
 				{
@@ -162,40 +160,46 @@ public class SiegeGeneral extends SiegeNpc
 		if (maxDmg <= asmoDmg && asmoDmg > elyosDmg)
 		{
 			winnerLegion = null;
-			SiegeService.getInstance().capture(getSiegeId(), SiegeRace.ASMODIANS , 0);
+			SiegeService.getInstance().capture(getSiegeId(), SiegeRace.ASMODIANS, 0);
 		}
 		else if (maxDmg <= elyosDmg && asmoDmg < elyosDmg)
 		{
 			winnerLegion = null;
-			SiegeService.getInstance().capture(getSiegeId(), SiegeRace.ELYOS , 0);
+			SiegeService.getInstance().capture(getSiegeId(), SiegeRace.ELYOS, 0);
 		}
 
 		if (winnerLegion != null)
 		{
 			Race race = winnerLegion.getOnlineLegionMembers().get(0).getCommonData().getRace();
-			SiegeService.getInstance().capture(getSiegeId(), race == Race.ASMODIANS ? SiegeRace.ASMODIANS : SiegeRace.ELYOS , winnerLegion.getLegionId());
+			SiegeService.getInstance().capture(getSiegeId(), race == Race.ASMODIANS ? SiegeRace.ASMODIANS : SiegeRace.ELYOS, winnerLegion.getLegionId());
 		}
 
 		//Medal award system (block 2)
 		SiegeLocation loc = SiegeService.getInstance().getSiegeLocation(getSiegeId());
 		if (loc.getType() == SiegeType.FORTRESS)
 		{
-		    if (loc.getRace() == SiegeRace.ASMODIANS)
-		    {
+			if (loc.getRace() == SiegeRace.ASMODIANS)
+			{
 				for (Player aWin : aDmg)
 				{
-				   SystemMailService.getInstance().sendMail("SiegeService", aWin.getName(), "Siegereward", "SilverMedal", 186000031, SiegeConfig.SIEGE_SMEDAL_AMOUNT, 0, false);
-				   SystemMailService.getInstance().sendMail("SiegeService", aWin.getName(), "Siegereward", "GoldMedal", 186000030, SiegeConfig.SIEGE_GMEDAL_AMOUNT, 0, false);
-				   SystemMailService.getInstance().sendMail("SiegeService", aWin.getName(), "Siegereward", "PlatinumMedal", 186000096, SiegeConfig.SIEGE_PMEDAL_AMOUNT, 0, false);
-		        }
+					SystemMailService.getInstance().sendMail("SiegeService", aWin.getName(), "Siegereward", "SilverMedal", 186000031,
+							SiegeConfig.SIEGE_SMEDAL_AMOUNT, 0, false);
+					SystemMailService.getInstance().sendMail("SiegeService", aWin.getName(), "Siegereward", "GoldMedal", 186000030,
+							SiegeConfig.SIEGE_GMEDAL_AMOUNT, 0, false);
+					SystemMailService.getInstance().sendMail("SiegeService", aWin.getName(), "Siegereward", "PlatinumMedal", 186000096,
+							SiegeConfig.SIEGE_PMEDAL_AMOUNT, 0, false);
+				}
 			}
 			else if (loc.getRace() == SiegeRace.ELYOS)
 			{
 				for (Player eWin : eDmg)
 				{
-				   SystemMailService.getInstance().sendMail("SiegeService", eWin.getName(), "Siegereward", "SilverMedal", 186000031, SiegeConfig.SIEGE_SMEDAL_AMOUNT, 0, false);
-				   SystemMailService.getInstance().sendMail("SiegeService", eWin.getName(), "Siegereward", "GoldMedal", 186000030, SiegeConfig.SIEGE_GMEDAL_AMOUNT, 0, false);
-				   SystemMailService.getInstance().sendMail("SiegeService", eWin.getName(), "Siegereward", "PlatinumMedal", 186000096, SiegeConfig.SIEGE_PMEDAL_AMOUNT, 0, false);
+					SystemMailService.getInstance().sendMail("SiegeService", eWin.getName(), "Siegereward", "SilverMedal", 186000031,
+							SiegeConfig.SIEGE_SMEDAL_AMOUNT, 0, false);
+					SystemMailService.getInstance().sendMail("SiegeService", eWin.getName(), "Siegereward", "GoldMedal", 186000030,
+							SiegeConfig.SIEGE_GMEDAL_AMOUNT, 0, false);
+					SystemMailService.getInstance().sendMail("SiegeService", eWin.getName(), "Siegereward", "PlatinumMedal", 186000096,
+							SiegeConfig.SIEGE_PMEDAL_AMOUNT, 0, false);
 				}
 			}
 		}

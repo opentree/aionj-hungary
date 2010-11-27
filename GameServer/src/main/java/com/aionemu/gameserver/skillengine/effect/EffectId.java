@@ -22,12 +22,7 @@ package com.aionemu.gameserver.skillengine.effect;
  */
 public enum EffectId
 {
-	BUFF(0),
-	POISON(1),
-	BLEED(2),
-	PARALYZE(4),
-	SLEEP(8),
-	ROOT(16), // ?? cannot move ?
+	BUFF(0), POISON(1), BLEED(2), PARALYZE(4), SLEEP(8), ROOT(16), // ?? cannot move ?
 	BLIND(32),
 	UNKNOWN(64),
 	DISEASE(128),
@@ -48,31 +43,23 @@ public enum EffectId
 	CANNOT_MOVE(4194304), //(Inescapable Judgment I)
 	SHAPECHANGE(8388608), //cannot fly
 	KNOCKBACK(16777216),
-	INVISIBLE_RELATED(536870912),//hide 33554432
-	
+	INVISIBLE_RELATED(536870912), //hide 33554432
+
 	/**
 	 * Compound abnormal states
 	 */
-	CANT_ATTACK_STATE(
-		SPIN.effectId |
-		SLEEP.effectId |
-		STUN.effectId |
-		STUMBLE.effectId |
-		STAGGER.effectId |
-		OPENAERIAL.effectId |
-		PARALYZE.effectId |
-		FEAR.effectId |
-	  	CANNOT_MOVE.effectId
-	),
-	CANT_MOVE_STATE(SPIN.effectId | ROOT.effectId | SLEEP.effectId | STUMBLE.effectId | STUN.effectId | STAGGER.effectId | OPENAERIAL.effectId | PARALYZE.effectId | CANNOT_MOVE.effectId);
-	
-	private int effectId;
-	
+	CANT_ATTACK_STATE(SPIN.effectId | SLEEP.effectId | STUN.effectId | STUMBLE.effectId | STAGGER.effectId | OPENAERIAL.effectId | PARALYZE.effectId
+			| FEAR.effectId | CANNOT_MOVE.effectId),
+	CANT_MOVE_STATE(SPIN.effectId | ROOT.effectId | SLEEP.effectId | STUMBLE.effectId | STUN.effectId | STAGGER.effectId | OPENAERIAL.effectId
+			| PARALYZE.effectId | CANNOT_MOVE.effectId);
+
+	private int	effectId;
+
 	private EffectId(int effectId)
 	{
 		this.effectId = effectId;
 	}
-	
+
 	public int getEffectId()
 	{
 		return effectId;

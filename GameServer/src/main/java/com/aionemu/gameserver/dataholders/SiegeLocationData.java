@@ -40,19 +40,19 @@ import com.aionemu.gameserver.model.templates.siegelocation.SiegeLocationTemplat
 public class SiegeLocationData
 {
 	@XmlElement(name = "siege_location")
-	private List<SiegeLocationTemplate> siegeLocationTemplates;
-	
+	private List<SiegeLocationTemplate>		siegeLocationTemplates;
+
 	/**
 	 *  Map that contains skillId - SkillTemplate key-value pair
 	 */
-	private FastMap<Integer, SiegeLocation> siegeLocations = new FastMap<Integer, SiegeLocation>();
+	private FastMap<Integer, SiegeLocation>	siegeLocations	= new FastMap<Integer, SiegeLocation>();
 
 	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
 		siegeLocations.clear();
 		for (SiegeLocationTemplate template : siegeLocationTemplates)
 		{
-			switch(template.getType())
+			switch (template.getType())
 			{
 				case FORTRESS:
 					siegeLocations.put(template.getId(), new Fortress(template));
@@ -69,12 +69,12 @@ public class SiegeLocationData
 			}
 		}
 	}
-	
+
 	public int size()
 	{
 		return siegeLocations.size();
 	}
-	
+
 	public FastMap<Integer, SiegeLocation> getSiegeLocations()
 	{
 		return siegeLocations;

@@ -30,19 +30,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class RouteStep
 {
 	@XmlAttribute(name = "step", required = true)
-	private int step;
-	
+	private int		step;
+
 	@XmlAttribute(name = "loc_x", required = true)
-	private float locX;
+	private float	locX;
 
 	@XmlAttribute(name = "loc_y", required = true)
-	private float locY;
-	
+	private float	locY;
+
 	@XmlAttribute(name = "loc_z", required = true)
-	private float locZ;
-	
+	private float	locZ;
+
 	@XmlAttribute(name = "rest_time", required = true)
-	private int time;
+	private int		time;
 
 	public RouteStep()
 	{
@@ -64,17 +64,17 @@ public class RouteStep
 	{
 		return locY;
 	}
-	
+
 	public float getZ()
 	{
 		return locZ;
 	}
-	
+
 	public int getRouteStep()
 	{
 		return step;
 	}
-	
+
 	public int getRestTime()
 	{
 		return time;

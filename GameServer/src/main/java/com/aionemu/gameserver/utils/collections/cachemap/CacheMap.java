@@ -43,14 +43,14 @@ public interface CacheMap<K, V>
 	 * @return V
 	 */
 	public V get(K key);
-	
+
 	/**
 	 * Checks whether this map contains a value related to given key.
 	 * @param key
 	 * @return true or false
 	 */
 	public boolean contains(K key);
-	
+
 	/**
 	 * Removes an entry from the map, that has given key.
 	 * @param key

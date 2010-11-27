@@ -33,9 +33,9 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_LOOT_ITEMLIST extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int	targetObjectId;
-	private DropItem[] dropItems;
-	private int size;
+	private int			targetObjectId;
+	private DropItem[]	dropItems;
+	private int			size;
 
 	public SM_LOOT_ITEMLIST(int targetObjectId, Set<DropItem> dropItems, Player player)
 	{
@@ -54,14 +54,14 @@ public class SM_LOOT_ITEMLIST extends AbstractAionServerPacket<AionChannelHandle
 	 * {@inheritDoc} dc
 	 */
 	@Override
-	protected void writeImpl(AionChannelHandler cHandler) 
+	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(targetObjectId);
-		writeC( size);
+		writeC(size);
 
-		for(DropItem dropItem : dropItems)
+		for (DropItem dropItem : dropItems)
 		{
-			writeC( dropItem.getIndex()); // index in droplist
+			writeC(dropItem.getIndex()); // index in droplist
 			writeD(dropItem.getDropTemplate().getItemId());
 			writeH((int) dropItem.getCount());
 			writeD(0);

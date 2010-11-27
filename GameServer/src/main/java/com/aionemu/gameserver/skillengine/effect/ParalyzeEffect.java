@@ -51,19 +51,17 @@ public class ParalyzeEffect extends EffectTemplate
 	@Override
 	public void startEffect(Effect effect)
 	{
-		final Creature effected = effect.getEffected(); 
-		effected.cancelCurrentSkill(); 
+		final Creature effected = effect.getEffected();
+		effected.cancelCurrentSkill();
 		effect.getEffected().getEffectController().setAbnormal(EffectId.PARALYZE.getEffectId());
 		PacketSendUtility.broadcastPacketAndReceive(effect.getEffected(), new SM_TARGET_IMMOBILIZE(effect.getEffected()));
-	
-	
+
 	}
-	
+
 	@Override
 	public void endEffect(Effect effect)
 	{
 		effect.getEffected().getEffectController().unsetAbnormal(EffectId.PARALYZE.getEffectId());
 	}
-	
-	
+
 }

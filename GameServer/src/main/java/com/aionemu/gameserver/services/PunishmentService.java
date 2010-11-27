@@ -41,16 +41,17 @@ public class PunishmentService
 	public static void setIsInPrison(Player player, boolean state, long delayInMinutes)
 	{
 		stopPrisonTask(player, false);
-		if(state)
+		if (state)
 		{
 			long prisonTimer = player.getPrisonTimer();
-			if(delayInMinutes > 0)
+			if (delayInMinutes > 0)
 			{
 				prisonTimer = delayInMinutes * 60000L;
 				schedulePrisonTask(player, prisonTimer);
-				PacketSendUtility.sendMessage(player, "You are in prison for " + delayInMinutes + " minutes.\nIf you disconnect, the countdown will be stopped.");
+				PacketSendUtility.sendMessage(player, "You are in prison for " + delayInMinutes
+						+ " minutes.\nIf you disconnect, the countdown will be stopped.");
 			}
-			
+
 			player.setStartPrison(System.currentTimeMillis());
 			TeleportService.teleportToPrison(player);
 			DAOManager.getDAO(PlayerPunishmentsDAO.class).punishPlayer(player, 1);
@@ -73,12 +74,12 @@ public class PunishmentService
 	public static void stopPrisonTask(Player player, boolean save)
 	{
 		Future<?> prisonTask = player.getTask(TaskId.PRISON);
-		if(prisonTask != null)
+		if (prisonTask != null)
 		{
-			if(save)
+			if (save)
 			{
 				long delay = player.getPrisonTimer();
-				if(delay < 0)
+				if (delay < 0)
 					delay = 0;
 				player.setPrisonTimer(delay);
 			}
@@ -92,20 +93,19 @@ public class PunishmentService
 	 */
 	public static void updatePrisonStatus(Player player)
 	{
-		if(player.isInPrison())
+		if (player.isInPrison())
 		{
 			long prisonTimer = player.getPrisonTimer();
-			if(prisonTimer > 0)
+			if (prisonTimer > 0)
 			{
 				schedulePrisonTask(player, prisonTimer);
 				int timeInPrison = Math.round(prisonTimer / 60000);
-				
+
 				if (timeInPrison <= 0)
 					timeInPrison = 1;
-					
-				PacketSendUtility.sendMessage(player, "You are still in prison for "
-					+ timeInPrison + " minute" + (timeInPrison > 1 ? "s" : "") + ".");
-					
+
+				PacketSendUtility.sendMessage(player, "You are still in prison for " + timeInPrison + " minute" + (timeInPrison > 1 ? "s" : "") + ".");
+
 				player.setStartPrison(System.currentTimeMillis());
 			}
 			if (player.getWorldId() != WorldMapType.PRISON.getId())
@@ -121,7 +121,8 @@ public class PunishmentService
 	private static void schedulePrisonTask(final Player player, long prisonTimer)
 	{
 		player.setPrisonTimer(prisonTimer);
-		player.addTask(TaskId.PRISON, ThreadPoolManager.getInstance().schedule(new Runnable(){
+		player.addTask(TaskId.PRISON, ThreadPoolManager.getInstance().schedule(new Runnable()
+		{
 			@Override
 			public void run()
 			{

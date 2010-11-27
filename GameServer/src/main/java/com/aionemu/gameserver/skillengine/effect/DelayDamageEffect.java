@@ -34,9 +34,9 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 @XmlType(name = "DelayDamageEffect")
 public class DelayDamageEffect extends DamageEffect
 {
-	
+
 	@XmlAttribute
-	protected int delay;
+	protected int	delay;
 
 	@Override
 	public void calculate(Effect effect)
@@ -47,13 +47,13 @@ public class DelayDamageEffect extends DamageEffect
 	@Override
 	public void applyEffect(final Effect effect)
 	{
-		ThreadPoolManager.getInstance().schedule(new Runnable(){		
+		ThreadPoolManager.getInstance().schedule(new Runnable()
+		{
 			@Override
 			public void run()
-			{				
-				effect.getEffected().onAttack(effect.getEffector(), 
-					effect.getSkillId(), TYPE.REGULAR, effect.getReserved1());
+			{
+				effect.getEffected().onAttack(effect.getEffector(), effect.getSkillId(), TYPE.REGULAR, effect.getReserved1());
 			}
-		}, delay);	
+		}, delay);
 	}
 }

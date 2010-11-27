@@ -54,28 +54,27 @@ public enum EmotionType
 	END_LOOT(41),
 	START_QUESTLOOT(42),
 	END_QUESTLOOT(43);
-	
-	private int id;
-	
+
+	private int	id;
+
 	private EmotionType(int id)
 	{
 		this.id = id;
 	}
-	
+
 	public int getTypeId()
 	{
 		return id;
 	}
-	
-	
+
 	public static EmotionType getEmotionTypeById(int id)
 	{
-		for(EmotionType emotionType : values())
+		for (EmotionType emotionType : values())
 		{
-			if(emotionType.getTypeId() == id)
+			if (emotionType.getTypeId() == id)
 				return emotionType;
 		}
 		return UNK;
 	}
-	
+
 }

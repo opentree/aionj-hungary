@@ -33,8 +33,7 @@ public class SummonLifeStats extends CreatureLifeStats<Summon>
 
 	public SummonLifeStats(Summon owner)
 	{
-		super(owner, owner.getGameStats().getCurrentStat(StatEnum.MAXHP), owner.getGameStats().getCurrentStat(
-			StatEnum.MAXMP));
+		super(owner, owner.getGameStats().getCurrentStat(StatEnum.MAXHP), owner.getGameStats().getCurrentStat(StatEnum.MAXMP));
 	}
 
 	@Override
@@ -42,8 +41,8 @@ public class SummonLifeStats extends CreatureLifeStats<Summon>
 	{
 		Creature master = getOwner().getMaster();
 		sendAttackStatusPacketUpdate(type, value);
-		
-		if(master instanceof Player)
+
+		if (master instanceof Player)
 		{
 			PacketSendUtility.sendPacket((Player) master, new SM_SUMMON_UPDATE(getOwner()));
 		}
@@ -72,11 +71,11 @@ public class SummonLifeStats extends CreatureLifeStats<Summon>
 	{
 		return (Summon) super.getOwner();
 	}
-	
+
 	@Override
 	protected void triggerRestoreTask()
 	{
-		if(lifeRestoreTask == null && !alreadyDead)
+		if (lifeRestoreTask == null && !alreadyDead)
 		{
 			this.lifeRestoreTask = LifeStatsRestoreService.getInstance().scheduleHpRestoreTask(this);
 		}

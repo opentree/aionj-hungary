@@ -29,11 +29,11 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_TRADELIST extends AbstractAionServerPacket<AionChannelHandler>
 {
-	
-	private int	targetObjectId;
-	private TradeListTemplate tlist;
-	private int buyPriceModifier;
-	
+
+	private int					targetObjectId;
+	private TradeListTemplate	tlist;
+	private int					buyPriceModifier;
+
 	public SM_TRADELIST(Npc npc, TradeListTemplate tlist, int buyPriceModifier)
 	{
 		this.targetObjectId = npc.getObjectId();
@@ -43,17 +43,17 @@ public class SM_TRADELIST extends AbstractAionServerPacket<AionChannelHandler>
 
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
-	{		
-		if ((tlist != null)&&(tlist.getNpcId()!=0)&&(tlist.getCount()!=0))
+	{
+		if ((tlist != null) && (tlist.getNpcId() != 0) && (tlist.getCount() != 0))
 		{
 			writeD(targetObjectId);
-			writeC( tlist.isAbyss() ? 2 : 1); //abyss or normal
-            writeD(buyPriceModifier); // Vendor Buy Price Modifier
+			writeC(tlist.isAbyss() ? 2 : 1); //abyss or normal
+			writeD(buyPriceModifier); // Vendor Buy Price Modifier
 			writeH(tlist.getCount());
-			for(TradeTab tradeTabl : tlist.getTradeTablist())
+			for (TradeTab tradeTabl : tlist.getTradeTablist())
 			{
 				writeD(tradeTabl.getId());
 			}
 		}
-	}	
+	}
 }

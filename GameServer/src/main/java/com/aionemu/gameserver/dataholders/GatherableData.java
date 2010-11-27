@@ -36,24 +36,25 @@ import com.aionemu.gameserver.model.templates.GatherableTemplate;
 public class GatherableData
 {
 	@XmlElement(name = "gatherable_template")
-	private List<GatherableTemplate> gatherables;
-	
+	private List<GatherableTemplate>				gatherables;
+
 	/** A map containing all npc templates */
-	private TIntObjectHashMap<GatherableTemplate> gatherableData	= new TIntObjectHashMap<GatherableTemplate>();
+	private TIntObjectHashMap<GatherableTemplate>	gatherableData	= new TIntObjectHashMap<GatherableTemplate>();
 
 	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
-		for(GatherableTemplate gatherable: gatherables)
+		for (GatherableTemplate gatherable : gatherables)
 		{
 			gatherableData.put(gatherable.getTemplateId(), gatherable);
 		}
 		gatherables = null;
 	}
-	
+
 	public int size()
 	{
 		return gatherableData.size();
 	}
+
 	/**
 
 	/**

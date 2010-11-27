@@ -25,21 +25,21 @@ import com.aionemu.gameserver.services.DropService;
  * @author Lyahim, Rhys2002
  */
 public class CM_GROUP_LOOT extends AbstractClientPacket<AionChannelHandler>
-{	
+{
 	@SuppressWarnings("unused")
-	private int groupId;
+	private int		groupId;
 	@SuppressWarnings("unused")
-	private int unk1;
+	private int		unk1;
 	@SuppressWarnings("unused")
-	private int unk2;
-	private int itemId;
+	private int		unk2;
+	private int		itemId;
 	@SuppressWarnings("unused")
-	private int unk3;
-	private int npcId;
-	private int distributionId;
-	private int roll;	
-	private long bid;
-	
+	private int		unk3;
+	private int		npcId;
+	private int		distributionId;
+	private int		roll;
+	private long	bid;
+
 	public CM_GROUP_LOOT(int opcode)
 	{
 		super(opcode);
@@ -66,17 +66,17 @@ public class CM_GROUP_LOOT extends AbstractClientPacket<AionChannelHandler>
 	protected void runImpl()
 	{
 		Player player = getChannelHandler().getActivePlayer();
-		if(player == null)
+		if (player == null)
 			return;
-		
-		switch(distributionId)
+
+		switch (distributionId)
 		{
 			case 2:
 				DropService.getInstance().handleRoll(player, roll, itemId, npcId);
 				break;
 			case 3:
 				DropService.getInstance().handleBid(player, bid, itemId, npcId);
-				break;				
+				break;
 		}
 	}
 }

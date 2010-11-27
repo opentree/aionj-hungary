@@ -40,12 +40,12 @@ import com.aionemu.gameserver.model.templates.portal.PortalTemplate;
 public class PortalData
 {
 	@XmlElement(name = "portal")
-	private List<PortalTemplate> portals;
-	
+	private List<PortalTemplate>							portals;
+
 	/** A map containing all npc templates */
-	private TIntObjectHashMap<PortalTemplate> portalData	= new TIntObjectHashMap<PortalTemplate>();
-	private TIntObjectHashMap<ArrayList<PortalTemplate>> instancesMap = new TIntObjectHashMap<ArrayList<PortalTemplate>>();
-	private THashMap<String, PortalTemplate> namedPortals = new THashMap<String, PortalTemplate>();
+	private TIntObjectHashMap<PortalTemplate>				portalData		= new TIntObjectHashMap<PortalTemplate>();
+	private TIntObjectHashMap<ArrayList<PortalTemplate>>	instancesMap	= new TIntObjectHashMap<ArrayList<PortalTemplate>>();
+	private THashMap<String, PortalTemplate>				namedPortals	= new THashMap<String, PortalTemplate>();
 
 	/**
 	 *  - Inititialize all maps for subsequent use
@@ -58,31 +58,31 @@ public class PortalData
 		portalData.clear();
 		instancesMap.clear();
 		namedPortals.clear();
-		
-		for(PortalTemplate portal : portals)
+
+		for (PortalTemplate portal : portals)
 		{
 			portalData.put(portal.getNpcId(), portal);
-			if(portal.isInstance())
+			if (portal.isInstance())
 			{
 				int mapId = portal.getExitPoint().getMapId();
 				ArrayList<PortalTemplate> templates = instancesMap.get(mapId);
-				if(templates == null)
+				if (templates == null)
 				{
 					templates = new ArrayList<PortalTemplate>();
 					instancesMap.put(mapId, templates);
 				}
 				templates.add(portal);
 			}
-			if(portal.getName() != null && !portal.getName().isEmpty())
+			if (portal.getName() != null && !portal.getName().isEmpty())
 				namedPortals.put(portal.getName(), portal);
 		}
 	}
-	
+
 	public int size()
 	{
 		return portalData.size();
 	}
-	
+
 	/**
 	 * 
 	 * @param npcId
@@ -92,7 +92,7 @@ public class PortalData
 	{
 		return portalData.get(npcId);
 	}
-	
+
 	/**
 	 * 
 	 * @param worldId
@@ -102,22 +102,22 @@ public class PortalData
 	public PortalTemplate getInstancePortalTemplate(int worldId, Race race)
 	{
 		List<PortalTemplate> portals = instancesMap.get(worldId);
-		
+
 		if (portals == null)
 		{
 			// No Instances for World that should be Instanced
 			return null;
 		}
-		
-		for(PortalTemplate portal : portals)
+
+		for (PortalTemplate portal : portals)
 		{
-			if(portal.getRace() == null || portal.getRace().equals(race))
+			if (portal.getRace() == null || portal.getRace().equals(race))
 				return portal;
 		}
-		
-		throw new IllegalArgumentException("There is no portal template for: " + worldId + " " + race);	
+
+		throw new IllegalArgumentException("There is no portal template for: " + worldId + " " + race);
 	}
-	
+
 	/**
 	 * 
 	 * @param worldId
@@ -127,10 +127,10 @@ public class PortalData
 	public PortalTemplate getTemplateByNameAndWorld(int worldId, String name)
 	{
 		PortalTemplate portal = namedPortals.get(name);
-		
-		if(portal != null && portal.getExitPoint().getMapId() != worldId)
-			throw new IllegalArgumentException("Invalid combination of world and name: " + worldId + " " + name);	
-			
+
+		if (portal != null && portal.getExitPoint().getMapId() != worldId)
+			throw new IllegalArgumentException("Invalid combination of world and name: " + worldId + " " + name);
+
 		return portal;
 	}
 

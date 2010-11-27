@@ -16,14 +16,13 @@
  */
 package com.aionemu.gameserver.controllers.movement;
 
-
 /**
  * @author ATracer
  *
  */
 public class StartMovingListener extends ActionObserver
 {
-	private boolean effectorMoved = false;
+	private boolean	effectorMoved	= false;
 
 	public StartMovingListener()
 	{

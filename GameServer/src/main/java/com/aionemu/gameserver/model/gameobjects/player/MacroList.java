@@ -67,7 +67,7 @@ public class MacroList
 	 */
 	public synchronized boolean addMacro(int macroPosition, String macroXML)
 	{
-		if(macrosses.containsKey(macroPosition))
+		if (macrosses.containsKey(macroPosition))
 		{
 			logger.warn("Trying to add macro with already existing order.");
 			return false;
@@ -87,7 +87,7 @@ public class MacroList
 	public synchronized boolean removeMacro(int macroPosition)
 	{
 		String m = macrosses.remove(macroPosition);
-		if(m == null)//
+		if (m == null)//
 		{
 			logger.warn("Trying to remove non existing macro.");
 			return false;

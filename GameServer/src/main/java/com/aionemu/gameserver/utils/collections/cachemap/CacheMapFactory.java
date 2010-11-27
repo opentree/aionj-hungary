@@ -38,7 +38,7 @@ public class CacheMapFactory
 	 */
 	public static <K, V> CacheMap<K, V> createCacheMap(String cacheName, String valueName)
 	{
-		if(CacheConfig.SOFT_CACHE_MAP)
+		if (CacheConfig.SOFT_CACHE_MAP)
 			return createSoftCacheMap(cacheName, valueName);
 		else
 			return createWeakCacheMap(cacheName, valueName);
@@ -56,9 +56,9 @@ public class CacheMapFactory
 	 */
 	public static <K, V> CacheMap<K, V> createSoftCacheMap(String cacheName, String valueName)
 	{
-		return new SoftCacheMap<K,V>(cacheName, valueName);
+		return new SoftCacheMap<K, V>(cacheName, valueName);
 	}
-	
+
 	/**
 	 * Creates and returns an instance of {@link WeakCacheMap}
 	 * 
@@ -71,6 +71,6 @@ public class CacheMapFactory
 	 */
 	public static <K, V> CacheMap<K, V> createWeakCacheMap(String cacheName, String valueName)
 	{
-		return new WeakCacheMap<K,V>(cacheName, valueName);
+		return new WeakCacheMap<K, V>(cacheName, valueName);
 	}
 }

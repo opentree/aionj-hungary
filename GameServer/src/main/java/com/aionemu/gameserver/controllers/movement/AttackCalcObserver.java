@@ -21,7 +21,6 @@ import java.util.List;
 import com.aionemu.gameserver.controllers.attack.AttackResult;
 import com.aionemu.gameserver.controllers.attack.AttackStatus;
 
-
 /**
  * @author ATracer
  *
@@ -36,14 +35,14 @@ public class AttackCalcObserver
 	{
 		return false;
 	}
-	
+
 	/**
 	 * @param value
 	 * @return value
 	 */
 	public void checkShield(List<AttackResult> attackList)
 	{
-		
+
 	}
 
 	/**

@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author orz
  * 
  */
-@XmlRootElement(name="teleloc_template")
+@XmlRootElement(name = "teleloc_template")
 @XmlAccessorType(XmlAccessType.NONE)
 public class TelelocationTemplate
 {
@@ -33,28 +33,27 @@ public class TelelocationTemplate
 	 * Location Id.
 	 */
 	@XmlAttribute(name = "loc_id", required = true)
-	private int locId;
+	private int		locId;
 
 	@XmlAttribute(name = "mapid", required = true)
-	private int mapid = 0;
+	private int		mapid	= 0;
 	/**
 	 * location name.
 	 */
 	@XmlAttribute(name = "name", required = true)
-	private String name = "";
-
+	private String	name	= "";
 
 	@XmlAttribute(name = "posX")
-	private float x = 0;
+	private float	x		= 0;
 
 	@XmlAttribute(name = "posY")
-	private float y = 0;
+	private float	y		= 0;
 
 	@XmlAttribute(name = "posZ")
-	private float z = 0;
+	private float	z		= 0;
 
 	@XmlAttribute(name = "heading")
-	private int	 heading = 0;
+	private int		heading	= 0;
 
 	public int getLocId()
 	{
@@ -70,7 +69,6 @@ public class TelelocationTemplate
 	{
 		return name;
 	}
-
 
 	public float getX()
 	{

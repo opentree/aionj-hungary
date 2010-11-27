@@ -29,11 +29,11 @@ public class SM_BLOCK_RESPONSE extends AbstractAionServerPacket<AionChannelHandl
 	/**
 	 * You have blocked %0
 	 */
-	public static final int BLOCK_SUCCESSFUL	= 0;
+	public static final int	BLOCK_SUCCESSFUL	= 0;
 	/**
 	 * You have unblocked %0
 	 */
-	public static final int UNBLOCK_SUCCESSFUL	= 1;
+	public static final int	UNBLOCK_SUCCESSFUL	= 1;
 	/**
 	 * That character does not exist.
 	 */
@@ -41,15 +41,15 @@ public class SM_BLOCK_RESPONSE extends AbstractAionServerPacket<AionChannelHandl
 	/**
 	 * Your Block List is full.
 	 */
-	public static final int LIST_FULL			= 3;
+	public static final int	LIST_FULL			= 3;
 	/**
 	 * You cannot block yourself.
 	 */
-	public static final int CANT_BLOCK_SELF		= 4;
-	
-	private int			code;
-	private String 		playerName;
-	
+	public static final int	CANT_BLOCK_SELF		= 4;
+
+	private int				code;
+	private String			playerName;
+
 	/**
 	 * Constructs a new block request response packet
 	 * @param code
@@ -62,12 +62,12 @@ public class SM_BLOCK_RESPONSE extends AbstractAionServerPacket<AionChannelHandl
 		this.code = code;
 		this.playerName = playerName;
 	}
-	
+
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeS(playerName);
 		writeD(code);
-		
+
 	}
 }

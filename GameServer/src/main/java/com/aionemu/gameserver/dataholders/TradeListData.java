@@ -43,24 +43,23 @@ import com.aionemu.gameserver.model.templates.TradeListTemplate;
 public class TradeListData
 {
 	@XmlElement(name = "tradelist_template")
-	private List<TradeListTemplate> tlist;
-	
+	private List<TradeListTemplate>					tlist;
+
 	/** A map containing all trade list templates */
 	private TIntObjectHashMap<TradeListTemplate>	npctlistData	= new TIntObjectHashMap<TradeListTemplate>();
 
 	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
-		for(TradeListTemplate npc: tlist)
+		for (TradeListTemplate npc : tlist)
 		{
 			npctlistData.put(npc.getNpcId(), npc);
 		}
 	}
-	
+
 	public int size()
 	{
 		return npctlistData.size();
 	}
-
 
 	/**
 	 * Returns an {@link NpcTemplate} object with given id.

@@ -43,7 +43,7 @@ public class CM_EMOTION extends AbstractClientPacket<AionChannelHandler>
 	/**
 	 * Emotion number
 	 */
-	EmotionType							emotionType;
+	EmotionType					emotionType;
 
 	/**
 	 * Emotion number
@@ -77,8 +77,8 @@ public class CM_EMOTION extends AbstractClientPacket<AionChannelHandler>
 		int et;
 		et = readC();
 		emotionType = EmotionType.getEmotionTypeById(et);
-				
-		switch(emotionType)
+
+		switch (emotionType)
 		{
 			case SELECT_TARGET:// select target
 			case JUMP: // jump
@@ -107,8 +107,8 @@ public class CM_EMOTION extends AbstractClientPacket<AionChannelHandler>
 				x = readF();
 				y = readF();
 				z = readF();
-				heading = (byte)readC();
-				break;				
+				heading = (byte) readC();
+				break;
 			default:
 				log.error("Unknown emotion type? 0x" + Integer.toHexString(et/*!!!!!*/).toUpperCase());
 				break;
@@ -122,8 +122,8 @@ public class CM_EMOTION extends AbstractClientPacket<AionChannelHandler>
 	protected void runImpl()
 	{
 		Player player = getChannelHandler().getActivePlayer();
-		
-		switch(emotionType)
+
+		switch (emotionType)
 		{
 			case SELECT_TARGET:
 				return;
@@ -147,10 +147,10 @@ public class CM_EMOTION extends AbstractClientPacket<AionChannelHandler>
 			case FLY:
 				// TODO move to player controller? but after states working
 				ZoneInstance currentZone = player.getZoneInstance();
-				if(currentZone != null)
+				if (currentZone != null)
 				{
 					boolean flightAllowed = currentZone.getTemplate().isFlightAllowed();
-					if(!flightAllowed)
+					if (!flightAllowed)
 					{
 						PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_FLYING_FORBIDDEN_HERE);
 						return;
@@ -171,7 +171,7 @@ public class CM_EMOTION extends AbstractClientPacket<AionChannelHandler>
 				break;
 			case WALK:
 				// cannot toggle walk when you flying or gliding
-				if(player.getFlyState() > 0)
+				if (player.getFlyState() > 0)
 					return;
 				player.setState(CreatureState.WALKING);
 				break;
@@ -180,9 +180,9 @@ public class CM_EMOTION extends AbstractClientPacket<AionChannelHandler>
 				break;
 			case SWITCH_DOOR:
 				// TODO: Store door id in GroupService or InstanceService and broadcast to all members
-				break;				
+				break;
 			case POWERSHARD_ON:
-				if(!player.getEquipment().isPowerShardEquipped())
+				if (!player.getEquipment().isPowerShardEquipped())
 				{
 					PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.NO_POWER_SHARD_EQUIPPED());
 					return;
@@ -195,7 +195,7 @@ public class CM_EMOTION extends AbstractClientPacket<AionChannelHandler>
 				player.unsetState(CreatureState.POWERSHARD);
 				break;
 		}
-		PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, emotionType, emotion, x, y, z, heading,
-			player.getTarget() == null ? 0 : player.getTarget().getObjectId()), true);
+		PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, emotionType, emotion, x, y, z, heading, player.getTarget() == null ? 0 : player
+				.getTarget().getObjectId()), true);
 	}
 }

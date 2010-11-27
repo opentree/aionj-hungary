@@ -22,12 +22,12 @@ package com.aionemu.gameserver.controllers.attack;
  */
 public class AttackResult
 {
-	private int damage;
-	
-	private AttackStatus attackStatus;
-	
-	private int shieldType;
-	
+	private int				damage;
+
+	private AttackStatus	attackStatus;
+
+	private int				shieldType;
+
 	public AttackResult(int damage, AttackStatus attackStatus)
 	{
 		this.damage = damage;

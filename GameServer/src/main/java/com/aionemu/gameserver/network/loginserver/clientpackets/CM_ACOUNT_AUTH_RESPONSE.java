@@ -54,7 +54,7 @@ public class CM_ACOUNT_AUTH_RESPONSE extends AbstractClientPacket<LoginServerCha
 	 * Membership - regular/premium
 	 */
 	private byte		membership;
-	
+
 	/**
 	 * Constructs new instance of <tt>CM_ACOUNT_AUTH_RESPONSE </tt> packet.
 	 * @param opcode
@@ -73,14 +73,14 @@ public class CM_ACOUNT_AUTH_RESPONSE extends AbstractClientPacket<LoginServerCha
 		accountId = readD();
 		result = readC() == 1;
 
-		if(result)
+		if (result)
 		{
 			accountName = readS();
 			accountTime = new AccountTime();
 
 			accountTime.setAccumulatedOnlineTime(readQ());
 			accountTime.setAccumulatedRestTime(readQ());
-			
+
 			accessLevel = (byte) readC();
 			membership = (byte) readC();
 		}

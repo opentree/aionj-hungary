@@ -24,7 +24,7 @@ import com.aionemu.gameserver.model.gameobjects.stats.StatModifierPriority;
  * 
  */
 public class SetModifier extends SimpleModifier
-{	
+{
 	@Override
 	public int apply(int baseStat, int currentStat)
 	{
@@ -36,8 +36,8 @@ public class SetModifier extends SimpleModifier
 	{
 		return StatModifierPriority.HIGH;
 	}
-	
-	public static SetModifier newInstance (StatEnum stat, int value, boolean isBonus)
+
+	public static SetModifier newInstance(StatEnum stat, int value, boolean isBonus)
 	{
 		SetModifier m = new SetModifier();
 		m.setStat(stat);

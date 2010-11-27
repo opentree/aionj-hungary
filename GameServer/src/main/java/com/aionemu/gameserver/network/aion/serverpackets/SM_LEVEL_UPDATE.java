@@ -29,24 +29,24 @@ public class SM_LEVEL_UPDATE extends AbstractAionServerPacket<AionChannelHandler
 	private int	targetObjectId;
 	private int	effect;
 	private int	level;
-	
+
 	public SM_LEVEL_UPDATE(int targetObjectId, int effect, int level)
 	{
 		this.targetObjectId = targetObjectId;
-		this.effect = effect;	
-		this.level = level;	
+		this.effect = effect;
+		this.level = level;
 	}
 
 	/**
 	 * {@inheritDoc} dc
 	 */
-	
+
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
-	{	
+	{
 		writeD(targetObjectId);
 		writeH(effect); //unk
-		writeH(level); 
+		writeH(level);
 		writeH(0x00); //unk
-	}	
+	}
 }

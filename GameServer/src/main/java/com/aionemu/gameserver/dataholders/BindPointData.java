@@ -22,15 +22,15 @@ import com.aionemu.gameserver.model.templates.BindPointTemplate;
 public class BindPointData
 {
 	@XmlElement(name = "bind_point")
-	private List<BindPointTemplate> bplist;
-	
+	private List<BindPointTemplate>					bplist;
+
 	/** A map containing all bind point location templates */
 	private TIntObjectHashMap<BindPointTemplate>	bindplistData	= new TIntObjectHashMap<BindPointTemplate>();
 	private TIntObjectHashMap<BindPointTemplate>	bindplistData2	= new TIntObjectHashMap<BindPointTemplate>();
 
 	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
-		for(BindPointTemplate bind: bplist)
+		for (BindPointTemplate bind : bplist)
 		{
 			bindplistData.put(bind.getNpcId(), bind);
 			bindplistData2.put(bind.getBindId(), bind);

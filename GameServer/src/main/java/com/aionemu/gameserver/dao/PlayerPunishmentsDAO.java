@@ -30,12 +30,12 @@ public abstract class PlayerPunishmentsDAO implements DAO
 	{
 		return PlayerPunishmentsDAO.class.getName();
 	}
-	
+
 	public abstract void loadPlayerPunishments(final Player player);
-	
+
 	public abstract void storePlayerPunishments(final Player player);
-	
+
 	public abstract void punishPlayer(final Player player, final int mode);
-	
+
 	public abstract void unpunishPlayer(final Player player);
 }

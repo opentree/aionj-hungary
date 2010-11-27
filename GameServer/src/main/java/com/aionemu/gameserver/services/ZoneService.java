@@ -42,13 +42,13 @@ import com.aionemu.gameserver.world.zone.ZoneName;
  */
 public final class ZoneService extends AbstractFIFOPeriodicTaskManager<Player>
 {
-	private Map<ZoneName, ZoneInstance> zoneMap;
-	private Map<Integer, Collection<ZoneInstance>> zoneByMapIdMap;
-	
-	private ZoneData zoneData;
-	
-	private static final long DROWN_PERIOD = 2000;
-	
+	private Map<ZoneName, ZoneInstance>				zoneMap;
+	private Map<Integer, Collection<ZoneInstance>>	zoneByMapIdMap;
+
+	private ZoneData								zoneData;
+
+	private static final long						DROWN_PERIOD	= 2000;
+
 	public static final ZoneService getInstance()
 	{
 		return SingletonHolder.instance;
@@ -62,31 +62,31 @@ public final class ZoneService extends AbstractFIFOPeriodicTaskManager<Player>
 		this.zoneByMapIdMap = new HashMap<Integer, Collection<ZoneInstance>>();
 		initializeZones();
 	}
-	
 
 	@Override
 	protected void callTask(Player player)
 	{
-		if(player != null)
+		if (player != null)
 		{
-			for(byte mask; (mask = player.getZoneUpdateMask()) != 0;)
+			for (byte mask; (mask = player.getZoneUpdateMask()) != 0;)
 			{
-				for(ZoneUpdateMode mode : VALUES)
+				for (ZoneUpdateMode mode : VALUES)
 				{
 					mode.tryUpdateZone(player, mask);
 				}
 			}
 		}
 	}
-	
+
 	private static final ZoneUpdateMode[]	VALUES	= ZoneUpdateMode.values();
-	
+
 	/**
 	 *  Zone update can be either partial (ZONE_UPDATE) or complete (ZONE_REFRESH)
 	 */
 	public static enum ZoneUpdateMode
 	{
-		ZONE_UPDATE {
+		ZONE_UPDATE
+		{
 			@Override
 			public void zoneTask(Player player)
 			{
@@ -94,14 +94,14 @@ public final class ZoneService extends AbstractFIFOPeriodicTaskManager<Player>
 				player.checkWaterLevel();
 			}
 		},
-		ZONE_REFRESH {
+		ZONE_REFRESH
+		{
 			@Override
 			public void zoneTask(Player player)
 			{
 				player.refreshZoneImpl();
 			}
-		}
-		;
+		};
 
 		private final byte	MASK;
 
@@ -119,14 +119,13 @@ public final class ZoneService extends AbstractFIFOPeriodicTaskManager<Player>
 
 		protected final void tryUpdateZone(final Player player, byte mask)
 		{
-			if((mask & mask()) == mask())
+			if ((mask & mask()) == mask())
 			{
-				zoneTask(player);		
+				zoneTask(player);
 				player.removeZoneUpdateMask(this);
 			}
 		}
 	}
-
 
 	/**
 	 *  Initializes zone instances using zone templates from xml
@@ -135,14 +134,14 @@ public final class ZoneService extends AbstractFIFOPeriodicTaskManager<Player>
 	private void initializeZones()
 	{
 		Iterator<ZoneTemplate> iterator = zoneData.iterator();
-		while(iterator.hasNext())
+		while (iterator.hasNext())
 		{
 			ZoneTemplate template = iterator.next();
 			ZoneInstance instance = new ZoneInstance(template);
 			zoneMap.put(template.getName(), instance);
 
 			Collection<ZoneInstance> zoneListForMap = zoneByMapIdMap.get(template.getMapid());
-			if(zoneListForMap == null)
+			if (zoneListForMap == null)
 			{
 				zoneListForMap = createZoneSetCollection();
 				zoneByMapIdMap.put(template.getMapid(), zoneListForMap);
@@ -150,12 +149,12 @@ public final class ZoneService extends AbstractFIFOPeriodicTaskManager<Player>
 			zoneListForMap.add(instance);
 		}
 
-		for(ZoneInstance zoneInstance : zoneMap.values())
+		for (ZoneInstance zoneInstance : zoneMap.values())
 		{
 			ZoneTemplate template = zoneInstance.getTemplate();
-			
+
 			Collection<ZoneInstance> neighbors = createZoneSetCollection();
-			for(ZoneName zone : template.getLink())
+			for (ZoneName zone : template.getLink())
 			{
 				neighbors.add(zoneMap.get(zone));
 			}
@@ -171,18 +170,19 @@ public final class ZoneService extends AbstractFIFOPeriodicTaskManager<Player>
 	 */
 	private Collection<ZoneInstance> createZoneSetCollection()
 	{
-		SortedSet<ZoneInstance> collection = new TreeSet<ZoneInstance>(new Comparator<ZoneInstance>(){
+		SortedSet<ZoneInstance> collection = new TreeSet<ZoneInstance>(new Comparator<ZoneInstance>()
+		{
 
 			@Override
 			public int compare(ZoneInstance o1, ZoneInstance o2)
 			{
 				return o1.getPriority() > o2.getPriority() ? 1 : -1;
 			}
-			
+
 		});
 		return collection;
 	}
-	
+
 	/**
 	 *  Will check current zone of player and call corresponding controller methods
 	 *  
@@ -191,18 +191,18 @@ public final class ZoneService extends AbstractFIFOPeriodicTaskManager<Player>
 	public void checkZone(Player player)
 	{
 		ZoneInstance currentInstance = player.getZoneInstance();
-		if(currentInstance == null)
+		if (currentInstance == null)
 		{
 			return;
 		}
 
 		Collection<ZoneInstance> neighbors = currentInstance.getNeighbors();
-		if(neighbors == null)
+		if (neighbors == null)
 			return;
-		
-		for(ZoneInstance zone : neighbors)
+
+		for (ZoneInstance zone : neighbors)
 		{
-			if(checkPointInZone(zone, player.getPosition()))
+			if (checkPointInZone(zone, player.getPosition()))
 			{
 				player.setZoneInstance(zone);
 				player.onEnterZone(zone);
@@ -218,19 +218,19 @@ public final class ZoneService extends AbstractFIFOPeriodicTaskManager<Player>
 	public void findZoneInCurrentMap(Player player)
 	{
 		MapRegion mapRegion = player.getActiveRegion();
-		if(mapRegion == null)
+		if (mapRegion == null)
 			return;
-		
+
 		Collection<ZoneInstance> zones = zoneByMapIdMap.get(mapRegion.getMapId());
-		if(zones == null)
+		if (zones == null)
 		{
 			player.resetZone();
 			return;
-		}			
-		
-		for(ZoneInstance zone : zones)
+		}
+
+		for (ZoneInstance zone : zones)
 		{
-			if(checkPointInZone(zone, player.getPosition()))
+			if (checkPointInZone(zone, player.getPosition()))
 			{
 				player.setZoneInstance(zone);
 				player.onEnterZone(zone);
@@ -238,7 +238,7 @@ public final class ZoneService extends AbstractFIFOPeriodicTaskManager<Player>
 			}
 		}
 	}
-	
+
 	/**
 	 *  Checks whether player is inside specific zone
 	 *  
@@ -249,9 +249,9 @@ public final class ZoneService extends AbstractFIFOPeriodicTaskManager<Player>
 	public boolean isInsideZone(Player player, ZoneName zoneName)
 	{
 		ZoneInstance zoneInstance = zoneMap.get(zoneName);
-		if(zoneInstance == null)
+		if (zoneInstance == null)
 			return false;
-		
+
 		return checkPointInZone(zoneInstance, player.getPosition());
 	}
 
@@ -267,34 +267,34 @@ public final class ZoneService extends AbstractFIFOPeriodicTaskManager<Player>
 		int corners = zone.getCorners();
 		float[] xCoords = zone.getxCoordinates();
 		float[] yCoords = zone.getyCoordinates();
-		
+
 		float top = zone.getTop();
 		float bottom = zone.getBottom();
-		
+
 		float x = position.getX();
 		float y = position.getY();
 		float z = position.getZ();
-		
+
 		//first z coordinate is checked
-		if(top != 0 || bottom != 0)//not defined
+		if (top != 0 || bottom != 0)//not defined
 		{
-			if(z > top || z < bottom)
+			if (z > top || z < bottom)
 				return false;
 		}
-		
-		int i, j = corners-1;
-		boolean  inside = false;
 
-		for (i=0; i<corners; i++) 
+		int i, j = corners - 1;
+		boolean inside = false;
+
+		for (i = 0; i < corners; i++)
 		{
-			if (yCoords[i] < y && yCoords[j] >= y || yCoords[j] < y && yCoords[i] >= y) 
+			if (yCoords[i] < y && yCoords[j] >= y || yCoords[j] < y && yCoords[i] >= y)
 			{
-				if (xCoords[i]+(y-yCoords[i])/(yCoords[j]-yCoords[i])*(xCoords[j]-xCoords[i])<x) 
+				if (xCoords[i] + (y - yCoords[i]) / (yCoords[j] - yCoords[i]) * (xCoords[j] - xCoords[i]) < x)
 				{
-					inside = !inside; 
+					inside = !inside;
 				}
 			}
-			j=i; 
+			j = i;
 		}
 
 		return inside;
@@ -303,30 +303,30 @@ public final class ZoneService extends AbstractFIFOPeriodicTaskManager<Player>
 	/**
 	 * Drowning / immediate death in maps related functionality
 	 */
-	
+
 	/**
 	 * 
 	 * @param player
 	 */
 	public void startDrowning(Player player)
 	{
-		if(!isDrowning(player))
+		if (!isDrowning(player))
 			scheduleDrowningTask(player);
 	}
-	
+
 	/**
 	 * 
 	 * @param player
 	 */
 	public void stopDrowning(Player player)
 	{
-		if(isDrowning(player))
+		if (isDrowning(player))
 		{
 			player.cancelTask(TaskId.DROWN);
 		}
-		
+
 	}
-	
+
 	/**
 	 * 
 	 * @param player
@@ -336,20 +336,21 @@ public final class ZoneService extends AbstractFIFOPeriodicTaskManager<Player>
 	{
 		return player.getTask(TaskId.DROWN) == null ? false : true;
 	}
-	
+
 	/**
 	 * 
 	 * @param player
 	 */
 	private void scheduleDrowningTask(final Player player)
 	{
-		player.addTask(TaskId.DROWN, ThreadPoolManager.getInstance().scheduleAtFixedRate(new Runnable(){
+		player.addTask(TaskId.DROWN, ThreadPoolManager.getInstance().scheduleAtFixedRate(new Runnable()
+		{
 			@Override
 			public void run()
 			{
 				int value = Math.round(player.getLifeStats().getMaxHp() / 10);
 				//TODO retail emotion, attack_status packets sending
-				if(!player.getLifeStats().isAlreadyDead())
+				if (!player.getLifeStats().isAlreadyDead())
 				{
 					player.getLifeStats().reduceHp(value, null);
 					player.getLifeStats().sendHpPacketUpdate();
@@ -362,7 +363,6 @@ public final class ZoneService extends AbstractFIFOPeriodicTaskManager<Player>
 		}, 0, DROWN_PERIOD));
 	}
 
-
 	/* (non-Javadoc)
 	 * @see com.aionemu.gameserver.taskmanager.AbstractFIFOPeriodicTaskManager#getCalledMethodName()
 	 */
@@ -371,10 +371,10 @@ public final class ZoneService extends AbstractFIFOPeriodicTaskManager<Player>
 	{
 		return "zoneService()";
 	}
-	
+
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
-		protected static final ZoneService instance = new ZoneService();
+		protected static final ZoneService	instance	= new ZoneService();
 	}
 }

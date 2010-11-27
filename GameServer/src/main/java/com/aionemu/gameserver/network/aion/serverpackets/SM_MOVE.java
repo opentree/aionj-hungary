@@ -31,14 +31,14 @@ public class SM_MOVE extends AbstractAionServerPacket<AionChannelHandler>
 	/**
 	 * Object that is moving.
 	 */
-	private final int				movingCreatureId;
-	private final float				x, y, z, x2, y2, z2;
-	private final byte				heading;
-	private final MovementType		moveType;
-	private final byte				glideFlag;
+	private final int			movingCreatureId;
+	private final float			x, y, z, x2, y2, z2;
+	private final byte			heading;
+	private final MovementType	moveType;
+	private final byte			glideFlag;
 
-	private boolean					hasDirection;
-	private boolean					hasGlideFlag;
+	private boolean				hasDirection;
+	private boolean				hasGlideFlag;
 
 	/**
 	 * Constructs new <tt>SM_MOVE</tt> packet
@@ -54,8 +54,7 @@ public class SM_MOVE extends AbstractAionServerPacket<AionChannelHandler>
 	 * @param glideFlag
 	 * @param moveType
 	 */
-	public SM_MOVE(int movingCreatureId, float x, float y, float z, float x2, float y2, float z2,
-		byte heading, byte glideFlag, MovementType moveType)
+	public SM_MOVE(int movingCreatureId, float x, float y, float z, float x2, float y2, float z2, byte heading, byte glideFlag, MovementType moveType)
 	{
 		this.movingCreatureId = movingCreatureId;
 		this.x = x;
@@ -72,24 +71,21 @@ public class SM_MOVE extends AbstractAionServerPacket<AionChannelHandler>
 		this.hasGlideFlag = true;
 	}
 
-	public SM_MOVE(int movingCreatureId, float x, float y, float z, float x2, float y2, float z2,
-		byte heading, MovementType moveType)
+	public SM_MOVE(int movingCreatureId, float x, float y, float z, float x2, float y2, float z2, byte heading, MovementType moveType)
 	{
-		this(movingCreatureId, x, y, z, x2, y2, z2, heading, (byte)0, moveType);
+		this(movingCreatureId, x, y, z, x2, y2, z2, heading, (byte) 0, moveType);
 		this.hasDirection = true;
 		this.hasGlideFlag = false;
 	}
 
-	public SM_MOVE(int movingCreatureId, float x, float y, float z, byte heading,
-		MovementType moveType)
+	public SM_MOVE(int movingCreatureId, float x, float y, float z, byte heading, MovementType moveType)
 	{
-		this(movingCreatureId, x, y, z, 0, 0, 0, heading, (byte)0, moveType);
+		this(movingCreatureId, x, y, z, 0, 0, 0, heading, (byte) 0, moveType);
 		this.hasDirection = false;
 		this.hasGlideFlag = false;
 	}
 
-	public SM_MOVE(int movingCreatureId, float x, float y, float z, byte heading,
-		byte glideFlag, MovementType moveType)
+	public SM_MOVE(int movingCreatureId, float x, float y, float z, byte heading, byte glideFlag, MovementType moveType)
 	{
 		this(movingCreatureId, x, y, z, 0, 0, 0, heading, glideFlag, moveType);
 		this.hasDirection = false;
@@ -106,19 +102,19 @@ public class SM_MOVE extends AbstractAionServerPacket<AionChannelHandler>
 		writeF(x);
 		writeF(y);
 		writeF(z);
-		writeC( heading);
-		writeC( moveType.getMovementTypeId());
+		writeC(heading);
+		writeC(moveType.getMovementTypeId());
 
-		if(this.hasDirection)
+		if (this.hasDirection)
 		{
 			writeF(x2);
 			writeF(y2);
 			writeF(z2);
 		}
 
-		if(this.hasGlideFlag)
+		if (this.hasGlideFlag)
 		{
-			writeC( glideFlag);
+			writeC(glideFlag);
 		}
 	}
 }

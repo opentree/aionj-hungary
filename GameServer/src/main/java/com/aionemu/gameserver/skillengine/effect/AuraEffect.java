@@ -72,11 +72,11 @@ public class AuraEffect extends EffectTemplate
 				}
 			}
 		}
-		else if(effector.isInGroup())
+		else if (effector.isInGroup())
 		{
-			for(Player member : effector.getPlayerGroup().getMembers())
+			for (Player member : effector.getPlayerGroup().getMembers())
 			{
-				if(MathUtil.isIn3dRange(effector, member, distance + 4))
+				if (MathUtil.isIn3dRange(effector, member, distance + 4))
 				{
 					applyAuraTo(member);
 				}
@@ -87,7 +87,7 @@ public class AuraEffect extends EffectTemplate
 			applyAuraTo(effector);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param effector
@@ -104,7 +104,8 @@ public class AuraEffect extends EffectTemplate
 	@Override
 	public void startEffect(final Effect effect)
 	{
-		Future<?> task = ThreadPoolManager.getInstance().scheduleEffectAtFixedRate(new Runnable(){
+		Future<?> task = ThreadPoolManager.getInstance().scheduleEffectAtFixedRate(new Runnable()
+		{
 
 			@Override
 			public void run()

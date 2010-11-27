@@ -47,7 +47,7 @@ public class LoginServer
 	/**
 	 * Logger for this class.
 	 */
-	private static final Logger				log					= Logger.getLogger(LoginServer.class);
+	private static final Logger					log					= Logger.getLogger(LoginServer.class);
 
 	/**
 	 * Map<accountId,Connection> for waiting request. This request is send to LoginServer and GameServer is waiting for
@@ -63,8 +63,8 @@ public class LoginServer
 	/**
 	 * Connection to LoginServer.
 	 */
-	private LoginServerChannelHandler		loginServer;
-	
+	private LoginServerChannelHandler			loginServer;
+
 	public static final LoginServer getInstance()
 	{
 		return SingletonHolder.instance;
@@ -72,7 +72,7 @@ public class LoginServer
 
 	private LoginServer()
 	{
-		
+
 	}
 
 	public void setChannelHandler(LoginServerChannelHandler lsch)
@@ -89,13 +89,13 @@ public class LoginServer
 		log.warn("Connection with LoginServer lost...");
 
 		loginServer = null;
-		synchronized(this)
+		synchronized (this)
 		{
 			/**
 			 * We lost connection for LoginServer so client pending authentication should be disconnected [cuz
 			 * authentication will never ends]
 			 */
-			for(AionChannelHandler client : loginRequests.values())
+			for (AionChannelHandler client : loginRequests.values())
 			{
 				// TODO! somme error packet!
 				client.close();
@@ -112,14 +112,14 @@ public class LoginServer
 	 */
 	public void aionClientDisconnected(int accountId)
 	{
-		synchronized(this)
+		synchronized (this)
 		{
 			loginRequests.remove(accountId);
 			loggedInAccounts.remove(accountId);
 		}
 		sendAccountDisconnected(accountId);
 	}
-	
+
 	/**
 	 * 
 	 * @param accountId
@@ -127,7 +127,7 @@ public class LoginServer
 	private void sendAccountDisconnected(int accountId)
 	{
 		log.info("Sending account disconnected " + accountId);
-		if(loginServer != null && loginServer.getState() == State.AUTHED)
+		if (loginServer != null && loginServer.getState() == State.AUTHED)
 			loginServer.sendPacket(new SM_ACCOUNT_DISCONNECTED(accountId));
 	}
 
@@ -147,7 +147,7 @@ public class LoginServer
 		 * There are no connection to LoginServer. We should disconnect this client since authentication is not
 		 * possible.
 		 */
-		if(loginServer == null || loginServer.getState() != State.AUTHED)
+		if (loginServer == null || loginServer.getState() != State.AUTHED)
 		{
 			log.warn("LS !!! " + (loginServer == null ? "NULL" : loginServer.getState()));
 			// TODO! somme error packet!
@@ -155,9 +155,9 @@ public class LoginServer
 			return;
 		}
 
-		synchronized(this)
+		synchronized (this)
 		{
-			if(loginRequests.containsKey(accountId))
+			if (loginRequests.containsKey(accountId))
 				return;
 			loginRequests.put(accountId, client);
 		}
@@ -177,10 +177,10 @@ public class LoginServer
 	{
 		AionChannelHandler client = loginRequests.remove(accountId);
 
-		if(client == null)
+		if (client == null)
 			return;
 
-		if(result)
+		if (result)
 		{
 			client.setState(State.AUTHED);
 			loggedInAccounts.put(accountId, client);
@@ -206,16 +206,16 @@ public class LoginServer
 		 * There are no connection to LoginServer. We should disconnect this client since authentication is not
 		 * possible.
 		 */
-		if(loginServer == null || loginServer.getState() != State.AUTHED)
+		if (loginServer == null || loginServer.getState() != State.AUTHED)
 		{
 			// TODO! somme error packet!
 			client.close();
 			return;
 		}
 
-		synchronized(this)
+		synchronized (this)
 		{
-			if(loginRequests.containsKey(client.getAccount().getId()))
+			if (loginRequests.containsKey(client.getAccount().getId()))
 				return;
 			loginRequests.put(client.getAccount().getId(), client);
 
@@ -234,7 +234,7 @@ public class LoginServer
 	{
 		AionChannelHandler client = loginRequests.remove(accountId);
 
-		if(client == null)
+		if (client == null)
 			return;
 
 		log.info("Account reconnectimg: " + accountId + " = " + client.getAccount().getName());
@@ -249,10 +249,10 @@ public class LoginServer
 	 */
 	public void kickAccount(int accountId)
 	{
-		synchronized(this)
+		synchronized (this)
 		{
 			AionChannelHandler client = loggedInAccounts.get(accountId);
-			if(client != null)
+			if (client != null)
 			{
 				closeClientWithCheck(client, accountId);
 			}
@@ -263,18 +263,19 @@ public class LoginServer
 			}
 		}
 	}
-	
+
 	private void closeClientWithCheck(AionChannelHandler client, final int accountId)
 	{
 		log.info("Closing client connection " + accountId);
 		client.close();
-		ThreadPoolManager.getInstance().schedule(new Runnable(){
-			
+		ThreadPoolManager.getInstance().schedule(new Runnable()
+		{
+
 			@Override
 			public void run()
 			{
 				AionChannelHandler client = loggedInAccounts.get(accountId);
-				if(client != null)
+				if (client != null)
 				{
 					log.warn("Removing client from server because of stalled connection");
 					client.close();
@@ -301,39 +302,38 @@ public class LoginServer
 	 */
 	public void gameServerDisconnected()
 	{
-		synchronized(this)
+		synchronized (this)
 		{
 			/**
 			 * GameServer shutting down, must close all pending login requests
 			 */
-			for(AionChannelHandler client : loginRequests.values())
+			for (AionChannelHandler client : loginRequests.values())
 			{
 				// TODO! somme error packet!
 				client.close();
 			}
 			loginRequests.clear();
-			
+
 			loginServer.close();
 		}
 
 		log.info("GameServer disconnected from the Login Server...");
 	}
 
-
 	public void sendLsControlPacket(String accountName, String playerName, String adminName, int param, int type)
 	{
-		if(loginServer != null && loginServer.getState() == State.AUTHED)
+		if (loginServer != null && loginServer.getState() == State.AUTHED)
 			loginServer.sendPacket(new SM_LS_CONTROL(accountName, playerName, adminName, param, type));
 	}
 
 	public void accountUpdate(int accountId, byte param, int type)
 	{
-		synchronized(this)
+		synchronized (this)
 		{
 			AionChannelHandler client = loggedInAccounts.get(accountId);
 			if (client != null)
 			{
-				Account account =client.getAccount();
+				Account account = client.getAccount();
 				if (type == 1)
 					account.setAccessLevel(param);
 				if (type == 2)
@@ -341,16 +341,16 @@ public class LoginServer
 			}
 		}
 	}
-	
+
 	public void sendBanPacket(byte type, int accountId, String ip, int time, int adminObjId)
 	{
-		if(loginServer != null && loginServer.getState() == State.AUTHED)
+		if (loginServer != null && loginServer.getState() == State.AUTHED)
 			loginServer.sendPacket(new SM_BAN(type, accountId, ip, time, adminObjId));
 	}
-	
+
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
-		protected static final LoginServer instance = new LoginServer();
+		protected static final LoginServer	instance	= new LoginServer();
 	}
 }

@@ -34,14 +34,14 @@ public enum KNOWLEDGE
 	PRIEST(100),
 	CLERIC(105),
 	CHANTER(105);
-	
-	private int value;
-	
+
+	private int	value;
+
 	private KNOWLEDGE(int value)
 	{
 		this.value = value;
 	}
-	
+
 	public int getValue()
 	{
 		return value;

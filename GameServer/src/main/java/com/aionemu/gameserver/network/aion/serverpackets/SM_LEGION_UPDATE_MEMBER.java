@@ -44,11 +44,11 @@ public class SM_LEGION_UPDATE_MEMBER extends AbstractAionServerPacket<AionChanne
 	public void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(player.getObjectId());
-		writeC( player.getLegionMember().getRank().getRankId());
-		writeC( player.getCommonData().getPlayerClass().getClassId());
-		writeC( player.getLevel());
+		writeC(player.getLegionMember().getRank().getRankId());
+		writeC(player.getCommonData().getPlayerClass().getClassId());
+		writeC(player.getLevel());
 		writeD(player.getPosition().getMapId());
-		writeC( player.isOnline() ? ONLINE : OFFLINE);
+		writeC(player.isOnline() ? ONLINE : OFFLINE);
 		writeD(player.getLastOnline());
 		writeD(msgId);
 		writeS(text);

@@ -26,8 +26,8 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_DP_INFO extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int		playerObjectId;
-	private int		currentDp;
+	private int	playerObjectId;
+	private int	currentDp;
 
 	public SM_DP_INFO(int playerObjectId, int currentDp)
 	{

@@ -15,7 +15,6 @@
  * along with aion-unique.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
@@ -27,9 +26,8 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_DELETE_WAREHOUSE_ITEM extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int warehouseType;
-	private int itemObjId;
-
+	private int	warehouseType;
+	private int	itemObjId;
 
 	public SM_DELETE_WAREHOUSE_ITEM(int warehouseType, int itemObjId)
 	{
@@ -37,13 +35,12 @@ public class SM_DELETE_WAREHOUSE_ITEM extends AbstractAionServerPacket<AionChann
 		this.itemObjId = itemObjId;
 	}
 
-
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
-		writeC( warehouseType);
+		writeC(warehouseType);
 		writeD(itemObjId);
-		writeC( 14);
+		writeC(14);
 	}
 
 }

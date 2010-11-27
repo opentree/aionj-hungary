@@ -20,26 +20,27 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.MailService;
+
 /**
  * @author Lyahim, kosyachok
  *
  */
 public class CM_SEND_MAIL extends AbstractClientPacket<AionChannelHandler>
-{	
+{
 
-	private String recipientName;
-	private String title;
-	private String message;
-	private int itemObjId;
-	private int itemCount;
-	private int kinahCount;
-	private int express;
-	
+	private String	recipientName;
+	private String	title;
+	private String	message;
+	private int		itemObjId;
+	private int		itemCount;
+	private int		kinahCount;
+	private int		express;
+
 	public CM_SEND_MAIL(int opcode)
 	{
 		super(opcode);
 	}
-	
+
 	@Override
 	protected void readImpl()
 	{
@@ -53,17 +54,17 @@ public class CM_SEND_MAIL extends AbstractClientPacket<AionChannelHandler>
 		readD();
 		express = readC();
 	}
-	
+
 	@Override
 	protected void runImpl()
 	{
 		Player player = getChannelHandler().getActivePlayer();
-		if(!player.isTrading())
+		if (!player.isTrading())
 		{
-			
-			if(express == 0)
+
+			if (express == 0)
 				MailService.getInstance().sendMail(player, recipientName, title, message, itemObjId, itemCount, kinahCount, false);
-			if(express == 1)
+			if (express == 1)
 				MailService.getInstance().sendMail(player, recipientName, title, message, itemObjId, itemCount, kinahCount, true);
 		}
 	}

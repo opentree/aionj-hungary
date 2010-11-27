@@ -24,8 +24,8 @@ import com.aionemu.gameserver.network.chatserver.ChatServerChannelHandler;
  */
 public class SM_CS_PLAYER_LOGOUT extends AbstractServerPacket<ChatServerChannelHandler>
 {
-	private int playerId;
-	
+	private int	playerId;
+
 	public SM_CS_PLAYER_LOGOUT(int playerId)
 	{
 		this.playerId = playerId;

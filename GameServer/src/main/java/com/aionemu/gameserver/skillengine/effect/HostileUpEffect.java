@@ -32,17 +32,17 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "HostileUpEffect")
 public class HostileUpEffect extends EffectTemplate
-{	
+{
 	@XmlAttribute
-	protected int value;
+	protected int	value;
 	@XmlAttribute
-	protected int delta;
-	
+	protected int	delta;
+
 	@Override
 	public void applyEffect(Effect effect)
 	{
 		Creature effected = effect.getEffected();
-		if(effected instanceof Npc)
+		if (effected instanceof Npc)
 		{
 			((Npc) effected).getAggroList().addHate(effect.getEffector(), effect.getTauntHate());
 		}

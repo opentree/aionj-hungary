@@ -47,7 +47,7 @@ public abstract class PlayerLifeStatsDAO implements DAO
 	 * @param player
 	 */
 	public abstract void insertPlayerLifeStat(Player player);
-	
+
 	/**
 	 * 
 	 * @param player

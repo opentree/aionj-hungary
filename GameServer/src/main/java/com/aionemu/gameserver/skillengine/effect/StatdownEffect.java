@@ -33,7 +33,7 @@ public class StatdownEffect extends BufEffect
 	@Override
 	public void calculate(Effect effect)
 	{
-		if (calculateEffectResistRate(effect, null)) 
+		if (calculateEffectResistRate(effect, null))
 			effect.addSucessEffect(this);
 	}
 }

@@ -9,15 +9,15 @@ import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.items.ItemId;
 import com.aionemu.gameserver.model.templates.item.ItemTemplate;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
+
 /**
  *
  * @author Lyahim, kosyachok
  */
 public class SM_WAREHOUSE_UPDATE extends _InventoryPacket
 {
-	private int warehouseType;
-	private Item item;
-
+	private int		warehouseType;
+	private Item	item;
 
 	public SM_WAREHOUSE_UPDATE(Item item, int warehouseType)
 	{
@@ -28,7 +28,7 @@ public class SM_WAREHOUSE_UPDATE extends _InventoryPacket
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
-		writeC( warehouseType);
+		writeC(warehouseType);
 		writeH(13);
 		writeH(1);
 
@@ -36,7 +36,7 @@ public class SM_WAREHOUSE_UPDATE extends _InventoryPacket
 
 		ItemTemplate itemTemplate = item.getItemTemplate();
 
-		if(itemTemplate.getTemplateId() == ItemId.KINAH.value())
+		if (itemTemplate.getTemplateId() == ItemId.KINAH.value())
 		{
 			writeKinah(item, false);
 		}
@@ -61,7 +61,7 @@ public class SM_WAREHOUSE_UPDATE extends _InventoryPacket
 		writeD(item.getObjectId());
 		ItemTemplate itemTemplate = item.getItemTemplate();
 		writeD(itemTemplate.getTemplateId());
-		writeC( 0); //some item info (4 - weapon, 7 - armor, 8 - rings, 17 - bottles)
+		writeC(0); //some item info (4 - weapon, 7 - armor, 8 - rings, 17 - bottles)
 		writeH(0x24);
 		writeD(itemTemplate.getNameId());
 		writeH(0);

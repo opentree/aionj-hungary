@@ -38,49 +38,50 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class StigmaService
 {
-	private static final Logger	log			= Logger.getLogger(StigmaService.class);
+	private static final Logger	log	= Logger.getLogger(StigmaService.class);
+
 	/**
 	 * @param resultItem
 	 */
 	public static boolean notifyEquipAction(Player player, Item resultItem)
 	{
-		if(resultItem.getItemTemplate().isStigma())
+		if (resultItem.getItemTemplate().isStigma())
 		{
 			int currentStigmaCount = player.getEquipment().getEquippedItemsStigma().size();
-			
+
 			int lvl = player.getLevel();
-			
-			if ((lvl/10)+player.getCommonData().getAdvencedStigmaSlotSize() <= currentStigmaCount)
+
+			if ((lvl / 10) + player.getCommonData().getAdvencedStigmaSlotSize() <= currentStigmaCount)
 			{
-				log.info("[AUDIT]Possible client hack stigma count big :O player: "+player.getName());
+				log.info("[AUDIT]Possible client hack stigma count big :O player: " + player.getName());
 				return false;
 			}
-			
+
 			if (resultItem.getItemTemplate().isClassSpecific(player.getCommonData().getPlayerClass()) == false)
 			{
-				log.info("[AUDIT]Possible client hack not valid for class. player: "+player.getName());
+				log.info("[AUDIT]Possible client hack not valid for class. player: " + player.getName());
 				return false;
 			}
 
 			Stigma stigmaInfo = resultItem.getItemTemplate().getStigma();
-			
-			if(stigmaInfo == null)
+
+			if (stigmaInfo == null)
 			{
 				log.warn("Stigma info missing for item: " + resultItem.getItemTemplate().getTemplateId());
 				return false;
 			}
-			
+
 			int skillId = stigmaInfo.getSkillid();
 			int shardCount = stigmaInfo.getShard();
 			if (player.getInventory().getItemCountByItemId(141000001) < shardCount)
 			{
-				log.info("[AUDIT]Possible client hack stigma shard count low player: "+player.getName());
+				log.info("[AUDIT]Possible client hack stigma shard count low player: " + player.getName());
 				return false;
 			}
 			int needSkill = stigmaInfo.getRequireSkill().size();
 			for (RequireSkill rs : stigmaInfo.getRequireSkill())
 			{
-				for(int id : rs.getSkillId())
+				for (int id : rs.getSkillId())
 				{
 					if (player.getSkillList().isSkillPresent(id))
 						needSkill--;
@@ -89,7 +90,7 @@ public class StigmaService
 			}
 			if (needSkill != 0)
 			{
-				log.info("[AUDIT]Possible client hack advenced stigma skill player: "+player.getName());
+				log.info("[AUDIT]Possible client hack advenced stigma skill player: " + player.getName());
 			}
 
 			ItemService.decreaseItemCountByItemId(player, 141000001, shardCount);
@@ -99,15 +100,15 @@ public class StigmaService
 		}
 		return true;
 	}
-	
+
 	/**
 	 * @param resultItem
 	 */
 	public static boolean notifyUnequipAction(Player player, Item resultItem)
 	{
-		if(resultItem.getItemTemplate().isStigma())
+		if (resultItem.getItemTemplate().isStigma())
 		{
-			
+
 			Stigma stigmaInfo = resultItem.getItemTemplate().getStigma();
 			int skillId = stigmaInfo.getSkillid();
 			for (Item item : player.getEquipment().getEquippedItemsStigma())
@@ -119,7 +120,8 @@ public class StigmaService
 				{
 					if (rs.getSkillId().contains(skillId))
 					{
-						PacketSendUtility.sendPacket(player, new SM_SYSTEM_MESSAGE(1300410, new DescriptionId(resultItem.getItemTemplate().getNameId()), new DescriptionId(item.getItemTemplate().getNameId())));
+						PacketSendUtility.sendPacket(player, new SM_SYSTEM_MESSAGE(1300410, new DescriptionId(resultItem.getItemTemplate().getNameId()),
+								new DescriptionId(item.getItemTemplate().getNameId())));
 						return false;
 					}
 				}
@@ -130,7 +132,7 @@ public class StigmaService
 		}
 		return true;
 	}
-	
+
 	/**
 	 * 
 	 * @param player
@@ -138,13 +140,13 @@ public class StigmaService
 	public static void onPlayerLogin(Player player)
 	{
 		List<Item> equippedItems = player.getEquipment().getEquippedItemsStigma();
-		for(Item item : equippedItems)
+		for (Item item : equippedItems)
 		{
-			if(item.getItemTemplate().isStigma())
+			if (item.getItemTemplate().isStigma())
 			{
 				Stigma stigmaInfo = item.getItemTemplate().getStigma();
-				
-				if(stigmaInfo == null)
+
+				if (stigmaInfo == null)
 				{
 					log.warn("Stigma info missing for item: " + item.getItemTemplate().getTemplateId());
 					return;
@@ -155,34 +157,34 @@ public class StigmaService
 			}
 		}
 
-		for(Item item : equippedItems)
+		for (Item item : equippedItems)
 		{
-			if(item.getItemTemplate().isStigma())
+			if (item.getItemTemplate().isStigma())
 			{
 				int currentStigmaCount = player.getEquipment().getEquippedItemsStigma().size();
-				
+
 				int lvl = player.getLevel();
-				
-				if ((lvl/10)+player.getCommonData().getAdvencedStigmaSlotSize() < currentStigmaCount)
+
+				if ((lvl / 10) + player.getCommonData().getAdvencedStigmaSlotSize() < currentStigmaCount)
 				{
-					log.info("[AUDIT]Possible client hack stigma count big :O player: "+player.getName());
+					log.info("[AUDIT]Possible client hack stigma count big :O player: " + player.getName());
 					player.getEquipment().unEquipItem(item.getObjectId(), 0);
 					continue;
 				}
-				
+
 				Stigma stigmaInfo = item.getItemTemplate().getStigma();
-				
-				if(stigmaInfo == null)
+
+				if (stigmaInfo == null)
 				{
 					log.warn("Stigma info missing for item: " + item.getItemTemplate().getTemplateId());
 					player.getEquipment().unEquipItem(item.getObjectId(), 0);
 					continue;
 				}
-				
+
 				int needSkill = stigmaInfo.getRequireSkill().size();
 				for (RequireSkill rs : stigmaInfo.getRequireSkill())
 				{
-					for(int id : rs.getSkillId())
+					for (int id : rs.getSkillId())
 					{
 						if (player.getSkillList().isSkillPresent(id))
 						{
@@ -193,13 +195,13 @@ public class StigmaService
 				}
 				if (needSkill != 0)
 				{
-					log.info("[AUDIT]Possible client hack advenced stigma skill player: "+player.getName());
+					log.info("[AUDIT]Possible client hack advenced stigma skill player: " + player.getName());
 					player.getEquipment().unEquipItem(item.getObjectId(), 0);
 					continue;
 				}
 				if (item.getItemTemplate().isClassSpecific(player.getCommonData().getPlayerClass()) == false)
 				{
-					log.info("[AUDIT]Possible client hack not valid for class. player: "+player.getName());
+					log.info("[AUDIT]Possible client hack not valid for class. player: " + player.getName());
 					player.getEquipment().unEquipItem(item.getObjectId(), 0);
 					continue;
 				}

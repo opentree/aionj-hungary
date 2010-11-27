@@ -18,116 +18,115 @@ package com.aionemu.gameserver.questEngine.model;
 
 import com.aionemu.gameserver.model.gameobjects.PersistentState;
 
-
 /**
  * @author MrPoke
  */
 public class QuestState
 {
-       private final int questId;
-       private QuestVars questVars;
-       private QuestStatus status;
-       private int completeCount;
-       private PersistentState persistentState;
+	private final int		questId;
+	private QuestVars		questVars;
+	private QuestStatus		status;
+	private int				completeCount;
+	private PersistentState	persistentState;
 
-       public QuestState(int questId)
-       {
-               this.questId = questId;
-               status = QuestStatus.START;
-               questVars = new QuestVars();
-               completeCount = 0;
-               persistentState = PersistentState.NEW;
-       }
+	public QuestState(int questId)
+	{
+		this.questId = questId;
+		status = QuestStatus.START;
+		questVars = new QuestVars();
+		completeCount = 0;
+		persistentState = PersistentState.NEW;
+	}
 
-       public QuestState(int questId, QuestStatus status, int questVars, int completeCount)
-       {
-               this.questId = questId;
-               this.status = status;
-               this.questVars = new QuestVars(questVars);
-               this.completeCount = completeCount;
-               this.persistentState = PersistentState.NEW;
-       }
+	public QuestState(int questId, QuestStatus status, int questVars, int completeCount)
+	{
+		this.questId = questId;
+		this.status = status;
+		this.questVars = new QuestVars(questVars);
+		this.completeCount = completeCount;
+		this.persistentState = PersistentState.NEW;
+	}
 
-       public QuestVars getQuestVars()
-       {
-    	   return questVars;
-       }
+	public QuestVars getQuestVars()
+	{
+		return questVars;
+	}
 
-       /**
-        * @param id
-        * @param var
-        */
-       public void setQuestVarById(int id, int var)
-       {
-    	   questVars.setVarById(id, var);
-    	   setPersistentState(PersistentState.UPDATE_REQUIRED);
-       }
+	/**
+	 * @param id
+	 * @param var
+	 */
+	public void setQuestVarById(int id, int var)
+	{
+		questVars.setVarById(id, var);
+		setPersistentState(PersistentState.UPDATE_REQUIRED);
+	}
 
-       /**
-        * @param id
-        * @return Quest var by id.
-        */
-       public int getQuestVarById(int id)
-       {
-    	   return questVars.getVarById(id);
-       }
-       
-       public void setQuestVar(int var)
-       {
-    	   questVars.setVar(var);
-    	   setPersistentState(PersistentState.UPDATE_REQUIRED);
-       }
+	/**
+	 * @param id
+	 * @return Quest var by id.
+	 */
+	public int getQuestVarById(int id)
+	{
+		return questVars.getVarById(id);
+	}
 
-       public QuestStatus getStatus()
-       {
-    	   return status;
-       }
+	public void setQuestVar(int var)
+	{
+		questVars.setVar(var);
+		setPersistentState(PersistentState.UPDATE_REQUIRED);
+	}
 
-       public void setStatus(QuestStatus status)
-       {
-    	   this.status = status;
-    	   setPersistentState(PersistentState.UPDATE_REQUIRED);
-       }
+	public QuestStatus getStatus()
+	{
+		return status;
+	}
 
-       public int getQuestId()
-       {
-    	   return questId;
-       }
+	public void setStatus(QuestStatus status)
+	{
+		this.status = status;
+		setPersistentState(PersistentState.UPDATE_REQUIRED);
+	}
 
-       public void setCompliteCount(int completeCount)
-       {
-    	   this.completeCount = completeCount;
-    	   setPersistentState(PersistentState.UPDATE_REQUIRED);
-       }
+	public int getQuestId()
+	{
+		return questId;
+	}
 
-       public int getCompliteCount()
-       {
-    	   return completeCount;
-       }
-       
-   	/**
-   	 * @return the pState
-   	 */
-   	public PersistentState getPersistentState()
-   	{
-   		return persistentState;
-   	}
+	public void setCompliteCount(int completeCount)
+	{
+		this.completeCount = completeCount;
+		setPersistentState(PersistentState.UPDATE_REQUIRED);
+	}
 
-   	/**
-   	 * @param persistentState the pState to set
-   	 */
-   	public void setPersistentState(PersistentState persistentState)
-   	{
-		switch(persistentState)
+	public int getCompliteCount()
+	{
+		return completeCount;
+	}
+
+	/**
+	 * @return the pState
+	 */
+	public PersistentState getPersistentState()
+	{
+		return persistentState;
+	}
+
+	/**
+	 * @param persistentState the pState to set
+	 */
+	public void setPersistentState(PersistentState persistentState)
+	{
+		switch (persistentState)
 		{
 			case DELETED:
-				if(this.persistentState == PersistentState.NEW)
+				if (this.persistentState == PersistentState.NEW)
 					throw new IllegalArgumentException("Cannot change state to DELETED from NEW");
 			case UPDATE_REQUIRED:
-				if(this.persistentState == PersistentState.NEW)
+				if (this.persistentState == PersistentState.NEW)
 					break;
 			default:
 				this.persistentState = persistentState;
 		}
-   	}
+	}
 }

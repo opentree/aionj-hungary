@@ -35,7 +35,7 @@ public class Exchange
 
 	private long						kinahCount;
 
-	private Map<Integer, ExchangeItem>	items			= new HashMap<Integer, ExchangeItem>();
+	private Map<Integer, ExchangeItem>	items	= new HashMap<Integer, ExchangeItem>();
 
 	public Exchange(Player activeplayer, Player targetPlayer)
 	{
@@ -121,7 +121,7 @@ public class Exchange
 	{
 		return items.size() > 18;
 	}
-	
+
 	public void clear()
 	{
 		activeplayer = null;

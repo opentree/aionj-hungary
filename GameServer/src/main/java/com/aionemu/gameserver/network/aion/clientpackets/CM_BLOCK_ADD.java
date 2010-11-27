@@ -32,15 +32,16 @@ import com.aionemu.gameserver.world.World;
  */
 public class CM_BLOCK_ADD extends AbstractClientPacket<AionChannelHandler>
 {
-	private static Logger	log				= Logger.getLogger(CM_BLOCK_ADD.class);
-	
-	private String 			targetName;
+	private static Logger	log	= Logger.getLogger(CM_BLOCK_ADD.class);
+
+	private String			targetName;
 	private String			reason;
-	
+
 	public CM_BLOCK_ADD(int opcode)
 	{
 		super(opcode);
 	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -57,48 +58,47 @@ public class CM_BLOCK_ADD extends AbstractClientPacket<AionChannelHandler>
 	@Override
 	protected void runImpl()
 	{
-		
+
 		Player activePlayer = getChannelHandler().getActivePlayer();
-		
+
 		Player targetPlayer = World.getInstance().findPlayer(targetName);
-		
+
 		//Trying to block self
 		if (activePlayer.getName().equalsIgnoreCase(targetName))
 		{
 			sendPacket(new SM_BLOCK_RESPONSE(SM_BLOCK_RESPONSE.CANT_BLOCK_SELF, targetName));
 		}
-		
+
 		//List full
 		else if (activePlayer.getBlockList().isFull())
 		{
 			sendPacket(new SM_BLOCK_RESPONSE(SM_BLOCK_RESPONSE.LIST_FULL, targetName));
 		}
-		
+
 		//Player offline
 		else if (targetPlayer == null)
 		{
 			sendPacket(new SM_BLOCK_RESPONSE(SM_BLOCK_RESPONSE.TARGET_NOT_FOUND, targetName));
 		}
-		
+
 		//Player is your friend
 		else if (activePlayer.getFriendList().getFriend(targetPlayer.getObjectId()) != null)
 		{
 			sendPacket(SM_SYSTEM_MESSAGE.BLOCKLIST_NO_BUDDY);
 		}
-		
+
 		//Player already blocked
 		else if (activePlayer.getBlockList().contains(targetPlayer.getObjectId()))
 		{
 			sendPacket(SM_SYSTEM_MESSAGE.BLOCKLIST_ALREADY_BLOCKED);
 		}
-		
+
 		//Try and block player
 		else if (!SocialService.addBlockedUser(activePlayer, targetPlayer, reason))
 		{
 			log.error("Failed to add " + targetPlayer.getName() + " to the block list for " + activePlayer.getName() + " - check database setup.");
 		}
-		
-		
+
 	}
 
 }

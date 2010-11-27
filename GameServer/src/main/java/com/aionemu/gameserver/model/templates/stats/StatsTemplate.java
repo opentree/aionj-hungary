@@ -33,36 +33,36 @@ import javax.xml.bind.annotation.XmlRootElement;
 public abstract class StatsTemplate
 {
 	@XmlAttribute(name = "maxHp")
-	private int maxHp;
+	private int		maxHp;
 	@XmlAttribute(name = "maxMp")
-	private int maxMp;
+	private int		maxMp;
 
 	@XmlAttribute(name = "walk_speed")
-	private float walkSpeed;
+	private float	walkSpeed;
 	@XmlAttribute(name = "run_speed")
-	private float runSpeed;
+	private float	runSpeed;
 	@XmlAttribute(name = "fly_speed")
-	private float flySpeed;
+	private float	flySpeed;
 
 	@XmlAttribute(name = "attack_speed")
-	private float attackSpeed;
+	private float	attackSpeed;
 
 	@XmlAttribute(name = "evasion")
-	private int evasion;
+	private int		evasion;
 	@XmlAttribute(name = "block")
-	private int block;
+	private int		block;
 	@XmlAttribute(name = "parry")
-	private int parry;
+	private int		parry;
 
 	@XmlAttribute(name = "main_hand_attack")
-	private int mainHandAttack;
+	private int		mainHandAttack;
 	@XmlAttribute(name = "main_hand_accuracy")
-	private int mainHandAccuracy;
+	private int		mainHandAccuracy;
 	@XmlAttribute(name = "main_hand_crit_rate")
-	private int mainHandCritRate;
+	private int		mainHandCritRate;
 
 	@XmlAttribute(name = "magic_accuracy")
-	private int magicAccuracy;
+	private int		magicAccuracy;
 
 	/* ======================================= */
 
@@ -75,7 +75,6 @@ public abstract class StatsTemplate
 	{
 		return maxMp;
 	}
-
 
 	/* ======================================= */
 

@@ -22,8 +22,7 @@ package com.aionemu.gameserver.skillengine.model.learn;
  */
 public enum SkillUsageType
 {
-	ACTIVE,
-	PASSIVE,
-	TOGGLE, // 5 occurances
-	MAINTAIN //1 occurance
+	ACTIVE, PASSIVE, TOGGLE, // 5 occurances
+	MAINTAIN
+	//1 occurance
 }

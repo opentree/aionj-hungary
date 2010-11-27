@@ -29,57 +29,56 @@ public class PlayerAppearance implements Cloneable
 	/**
 	 * Player's face
 	 */
-	private int	face;
-	private int	hair;
-	private int	deco;
-	private int	tattoo;
-	private int	skinRGB;
-	private int	hairRGB;
-	private int	lipRGB;
-	private int	eyeRGB;
-	private int	faceShape;
-	private int	forehead;
-	private int	eyeHeight;
-	private int	eyeSpace;
-	private int	eyeWidth;
-	private int	eyeSize;
-	private int	eyeShape;
-	private int	eyeAngle;
-	private int	browHeight;
-	private int	browAngle;
-	private int	browShape;
-	private int	nose;
-	private int	noseBridge;
-	private int	noseWidth;
-	private int	noseTip;
-	private int	cheek;
-	private int	lipHeight;
-	private int	mouthSize;
-	private int	lipSize;
-	private int	smile;
-	private int	lipShape;
-	private int	jawHeigh;
-	private int	chinJut;
-	private int	earShape;
-	private int	headSize;
-	private int	neck;
-	private int	neckLength;
-	private int	shoulders;
-	private int	shoulderSize;
-	private int	torso;
-	private int	chest;
-	private int	waist;
-	private int	hips;
-	private int	armThickness;
-	private int	armLength;
-	private int	handSize;
-	private int	legThicnkess;
-	private int	legLength;
-	private int	footSize;
-	private int	facialRate;
-	private int	voice;
+	private int		face;
+	private int		hair;
+	private int		deco;
+	private int		tattoo;
+	private int		skinRGB;
+	private int		hairRGB;
+	private int		lipRGB;
+	private int		eyeRGB;
+	private int		faceShape;
+	private int		forehead;
+	private int		eyeHeight;
+	private int		eyeSpace;
+	private int		eyeWidth;
+	private int		eyeSize;
+	private int		eyeShape;
+	private int		eyeAngle;
+	private int		browHeight;
+	private int		browAngle;
+	private int		browShape;
+	private int		nose;
+	private int		noseBridge;
+	private int		noseWidth;
+	private int		noseTip;
+	private int		cheek;
+	private int		lipHeight;
+	private int		mouthSize;
+	private int		lipSize;
+	private int		smile;
+	private int		lipShape;
+	private int		jawHeigh;
+	private int		chinJut;
+	private int		earShape;
+	private int		headSize;
+	private int		neck;
+	private int		neckLength;
+	private int		shoulders;
+	private int		shoulderSize;
+	private int		torso;
+	private int		chest;
+	private int		waist;
+	private int		hips;
+	private int		armThickness;
+	private int		armLength;
+	private int		handSize;
+	private int		legThicnkess;
+	private int		legLength;
+	private int		footSize;
+	private int		facialRate;
+	private int		voice;
 	private float	height;
-
 
 	/**
 	 * Returns character face
@@ -207,6 +206,7 @@ public class PlayerAppearance implements Cloneable
 	{
 		this.hairRGB = hairRGB;
 	}
+
 	/**
 	 * Eye colour
 	 */
@@ -214,13 +214,13 @@ public class PlayerAppearance implements Cloneable
 	{
 		this.eyeRGB = eyeRGB;
 	}
-	
+
 	/**
 	 * Sets eye colour
 	 */
 	public int getEyeRGB()
 	{
-	return eyeRGB;
+		return eyeRGB;
 	}
 
 	/**
@@ -243,7 +243,6 @@ public class PlayerAppearance implements Cloneable
 	{
 		this.lipRGB = lipRGB;
 	}
-
 
 	/**
 	 * Returns face shape
@@ -856,7 +855,6 @@ public class PlayerAppearance implements Cloneable
 		this.shoulderSize = shoulderSize;
 	}
 
-
 	/**
 	 * Torso
 	 * 
@@ -1138,16 +1136,16 @@ public class PlayerAppearance implements Cloneable
 	public Object clone()
 	{
 		Object newObject = null;
-		
+
 		try
 		{
 			newObject = super.clone();
 		}
-		catch(CloneNotSupportedException e)
+		catch (CloneNotSupportedException e)
 		{
 			e.printStackTrace();
 		}
-		
+
 		return newObject;
 	}
 }

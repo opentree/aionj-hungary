@@ -39,28 +39,28 @@ import com.aionemu.gameserver.model.templates.npcskill.NpcSkillList;
 public class NpcSkillData
 {
 	@XmlElement(name = "npcskills")
-	private List<NpcSkillList> npcSkills;
-	
+	private List<NpcSkillList>				npcSkills;
+
 	/** A map containing all npc skill templates */
 	private TIntObjectHashMap<NpcSkillList>	npcSkillData	= new TIntObjectHashMap<NpcSkillList>();
 
 	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
-		for(NpcSkillList npcSkill : npcSkills)
+		for (NpcSkillList npcSkill : npcSkills)
 		{
 			npcSkillData.put(npcSkill.getNpcId(), npcSkill);
-			
-			if(npcSkill.getNpcSkills() == null)
+
+			if (npcSkill.getNpcSkills() == null)
 				Logger.getLogger(NpcSkillData.class).error("NO SKILL");
 		}
-		
+
 	}
-	
+
 	public int size()
 	{
 		return npcSkillData.size();
 	}
-	
+
 	public NpcSkillList getNpcSkillList(int id)
 	{
 		return npcSkillData.get(id);

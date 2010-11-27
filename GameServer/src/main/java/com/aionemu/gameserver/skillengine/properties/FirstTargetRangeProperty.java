@@ -44,31 +44,31 @@ public class FirstTargetRangeProperty extends Property
 	private static final Logger	log	= Logger.getLogger(FirstTargetRangeProperty.class);
 
 	@XmlAttribute(required = true)
-	protected int value;
+	protected int				value;
 
 	@Override
 	public boolean set(Skill skill)
 	{
-		if(!skill.isFirstTargetRangeCheck())
+		if (!skill.isFirstTargetRangeCheck())
 			return true;
-		
+
 		Creature effector = skill.getEffector();
 		Creature firstTarget = skill.getFirstTarget();
-		if(firstTarget == null)
+		if (firstTarget == null)
 			return false;
-		
+
 		if (firstTarget.getPosition().getMapId() == 0)
 			log.warn("FirstTarget has mapId of 0. (" + firstTarget.getName() + ")");
-		
+
 		skill.setFirstTargetRange(value);
 		//here value +4 till better move controller developed
-		if(MathUtil.isIn3dRange(effector, firstTarget, value + 4))
+		if (MathUtil.isIn3dRange(effector, firstTarget, value + 4))
 		{
 			return true;
 		}
 		else
 		{
-			if(effector instanceof Player)
+			if (effector instanceof Player)
 			{
 				PacketSendUtility.sendPacket((Player) effector, SM_SYSTEM_MESSAGE.STR_ATTACK_TOO_FAR_FROM_TARGET());
 			}

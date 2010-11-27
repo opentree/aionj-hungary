@@ -47,7 +47,7 @@ import com.aionemu.gameserver.utils.collections.cachemap.CacheMapFactory;
  */
 public class AccountService
 {
-	private static final Logger			log			= Logger.getLogger(AccountService.class);
+	private static final Logger					log			= Logger.getLogger(AccountService.class);
 
 	private static CacheMap<Integer, Account>	accountsMap	= CacheMapFactory.createSoftCacheMap("Account", "account");
 
@@ -61,17 +61,16 @@ public class AccountService
 	 * @param membership
 	 * @return Account
 	 */
-	public static Account getAccount(int accountId, String accountName, AccountTime accountTime, byte accessLevel,
-		byte membership)
+	public static Account getAccount(int accountId, String accountName, AccountTime accountTime, byte accessLevel, byte membership)
 	{
 		log.debug("[AS] request for account: " + accountId);
 
 		Account account = accountsMap.get(accountId);
-		if(account == null)
+		if (account == null)
 		{
 			account = loadAccount(accountId);
 
-			if(CacheConfig.CACHE_ACCOUNTS)
+			if (CacheConfig.CACHE_ACCOUNTS)
 				accountsMap.put(accountId, account);
 		}
 
@@ -94,11 +93,11 @@ public class AccountService
 	{
 		/* Removes chars that should be removed */
 		Iterator<PlayerAccountData> it = account.iterator();
-		while(it.hasNext())
+		while (it.hasNext())
 		{
 			PlayerAccountData pad = it.next();
 			int deletionTime = pad.getDeletionTimeInSeconds() * 1000;
-			if(deletionTime != 0 && deletionTime <= System.currentTimeMillis())
+			if (deletionTime != 0 && deletionTime <= System.currentTimeMillis())
 			{
 				it.remove();
 				PlayerService.deletePlayerFromDB(pad.getPlayerCommonData().getPlayerObjId());
@@ -122,29 +121,27 @@ public class AccountService
 
 		List<Integer> playerOids = playerDAO.getPlayerOidsOnAccount(accountId);
 
-		for(int playerOid : playerOids)
+		for (int playerOid : playerOids)
 		{
 			PlayerCommonData playerCommonData = playerDAO.loadPlayerCommonData(playerOid);
 			PlayerAppearance appereance = appereanceDAO.load(playerOid);
 
-			
 			LegionMember legionMember = DAOManager.getDAO(LegionMemberDAO.class).loadLegionMember(playerOid);
-			
+
 			/**
 			 * Load only equipment and its stones to display on character selection screen
 			 */
 			List<Item> equipment = DAOManager.getDAO(InventoryDAO.class).loadEquipment(playerOid);
-			
-			PlayerAccountData acData = new PlayerAccountData(playerCommonData, appereance, equipment,
-				legionMember);
+
+			PlayerAccountData acData = new PlayerAccountData(playerCommonData, appereance, equipment, legionMember);
 			playerDAO.setCreationDeletionTime(acData);
 
 			account.addPlayerAccountData(acData);
 		}
-		
+
 		/**
 		 * load account warehouse only once
-		 */	
+		 */
 		Storage accWarehouse = DAOManager.getDAO(InventoryDAO.class).loadStorage(null, account.getId(), StorageType.ACCOUNT_WAREHOUSE);
 		ItemService.loadItemStones(accWarehouse.getStorageItems());
 		account.setAccountWarehouse(accWarehouse);
@@ -152,7 +149,7 @@ public class AccountService
 		/**
 		 * For new accounts - create empty account warehouse
 		 */
-		if(account.getAccountWarehouse() == null)
+		if (account.getAccountWarehouse() == null)
 		{
 			account.setAccountWarehouse(new Storage(StorageType.ACCOUNT_WAREHOUSE));
 			account.getAccountWarehouse().setOwnerId(account.getId());

@@ -34,10 +34,10 @@ public enum XPLossEnum
 	LEVEL_41(41, 1.369142798),
 	LEVEL_44(44, 1.081953696),
 	LEVEL_50(50, 1.041314239);
-	
-	private int level;
-	private double param;
-	
+
+	private int		level;
+	private double	param;
+
 	private XPLossEnum(int level, double param)
 	{
 		this.level = level;
@@ -59,7 +59,7 @@ public enum XPLossEnum
 	{
 		return param;
 	}
-	
+
 	/**
 	 * 
 	 * @param level
@@ -68,15 +68,15 @@ public enum XPLossEnum
 	 */
 	public static long getExpLoss(int level, long expNeed)
 	{
-		if(level < 8)
+		if (level < 8)
 			return 0;
-		
-		for(XPLossEnum xpLossEnum : values())
+
+		for (XPLossEnum xpLossEnum : values())
 		{
-			if(level <= xpLossEnum.getLevel())
+			if (level <= xpLossEnum.getLevel())
 				return Math.round(expNeed / 100 * xpLossEnum.getParam());
 		}
 		return 0;
-	}	
-	
+	}
+
 }

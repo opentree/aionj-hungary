@@ -52,7 +52,7 @@ public class BindEffect extends EffectTemplate
 		if (effected.getCastingSkill() != null && effected.getCastingSkill().getSkillTemplate().getType() == SkillType.PHYSICAL)
 			effected.cancelCurrentSkill();
 	}
-	
+
 	@Override
 	public void endEffect(Effect effect)
 	{

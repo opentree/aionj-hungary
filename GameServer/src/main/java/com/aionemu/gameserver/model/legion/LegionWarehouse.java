@@ -50,6 +50,5 @@ public class LegionWarehouse extends Storage
 	{
 		this.legion = legion;
 	}
-	
-	
+
 }

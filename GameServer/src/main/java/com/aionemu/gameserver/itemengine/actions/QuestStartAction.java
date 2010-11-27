@@ -15,10 +15,11 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "QuestStartAction")
-public class QuestStartAction extends AbstractItemAction {
+public class QuestStartAction extends AbstractItemAction
+{
 
-    @XmlAttribute
-	protected int questid;
+	@XmlAttribute
+	protected int	questid;
 
 	@Override
 	public boolean canAct(Player player, Item parentItem, Item targetItem)
@@ -26,9 +27,9 @@ public class QuestStartAction extends AbstractItemAction {
 		return true;
 	}
 
-    @Override
+	@Override
 	public void act(Player player, Item parentItem, Item targetItem)
 	{
-		
+
 	}
 }

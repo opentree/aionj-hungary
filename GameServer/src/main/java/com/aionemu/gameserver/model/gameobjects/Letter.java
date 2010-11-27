@@ -24,18 +24,18 @@ import java.sql.Timestamp;
  */
 public class Letter
 {
-	private int objectId;
-	private int recipientId;
-	private Item attachedItem;
-	private long attachedKinahCount;
-	private String senderName;
-	private String title;
-	private String message;
-	private boolean unread;
-	private boolean express;
-	private Timestamp timeStamp;
-	private PersistentState persistentState;
-	
+	private int				objectId;
+	private int				recipientId;
+	private Item			attachedItem;
+	private long			attachedKinahCount;
+	private String			senderName;
+	private String			title;
+	private String			message;
+	private boolean			unread;
+	private boolean			express;
+	private Timestamp		timeStamp;
+	private PersistentState	persistentState;
+
 	/**
 	 * @param objId
 	 * @param attachedItem
@@ -47,8 +47,8 @@ public class Letter
 	 * @param timeStamp
 	 * 	new letter constructor
 	 */
-	public Letter(int objId, int recipientId, Item attachedItem, long attachedKinahCount, String title, String message,
-		String senderName, Timestamp timeStamp, boolean unread, boolean express)
+	public Letter(int objId, int recipientId, Item attachedItem, long attachedKinahCount, String title, String message, String senderName, Timestamp timeStamp,
+			boolean unread, boolean express)
 	{
 		this.objectId = objId;
 		this.recipientId = recipientId;
@@ -63,7 +63,7 @@ public class Letter
 		this.persistentState = PersistentState.NEW;
 
 	}
-	
+
 	/**
 	 * @return Returns the objectId.
 	 */
@@ -76,70 +76,70 @@ public class Letter
 	{
 		return recipientId;
 	}
-	
+
 	public Item getAttachedItem()
 	{
 		return attachedItem;
 	}
-	
+
 	public long getAttachedKinah()
 	{
 		return attachedKinahCount;
 	}
-	
+
 	public String getTitle()
 	{
 		return title;
 	}
-	
+
 	public String getMessage()
 	{
 		return message;
 	}
-	
+
 	public String getSenderName()
 	{
 		return senderName;
 	}
-	
+
 	public boolean isUnread()
 	{
 		return unread;
 	}
-	
+
 	public void setReadLetter()
 	{
 		this.unread = false;
 		this.persistentState = PersistentState.UPDATE_REQUIRED;
 	}
-	
+
 	public boolean isExpress()
 	{
 		return express;
 	}
-	
+
 	public PersistentState getLetterPersistentState()
 	{
 		return persistentState;
 	}
-	
+
 	public void removeAttachedItem()
 	{
 		this.attachedItem = null;
 		this.persistentState = PersistentState.UPDATE_REQUIRED;
 	}
-	
+
 	public void removeAttachedKinah()
 	{
 		this.attachedKinahCount = 0;
 		this.persistentState = PersistentState.UPDATE_REQUIRED;
 	}
-	
+
 	public void delete()
 	{
 		this.persistentState = PersistentState.DELETED;
 	}
-	
+
 	public void setPersistState(PersistentState state)
 	{
 		this.persistentState = state;

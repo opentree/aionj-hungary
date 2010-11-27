@@ -24,8 +24,8 @@ import com.aionemu.gameserver.model.gameobjects.VisibleObject;
  */
 public class PositionUtil
 {
-	private static final float MAX_ANGLE_DIFF = 90f;
-	
+	private static final float	MAX_ANGLE_DIFF	= 90f;
+
 	/**
 	 * 
 	 * @param object1
@@ -37,12 +37,14 @@ public class PositionUtil
 		float angleObject1 = MathUtil.calculateAngleFrom(object1, object2);
 		float angleObject2 = MathUtil.convertHeadingToDegree(object2.getHeading());
 		float angleDiff = angleObject1 - angleObject2;
-		
-		if (angleDiff <= -360 + MAX_ANGLE_DIFF) angleDiff += 360;
-        if (angleDiff >= 360 - MAX_ANGLE_DIFF) angleDiff -= 360;
-        return Math.abs(angleDiff) <= MAX_ANGLE_DIFF;
+
+		if (angleDiff <= -360 + MAX_ANGLE_DIFF)
+			angleDiff += 360;
+		if (angleDiff >= 360 - MAX_ANGLE_DIFF)
+			angleDiff -= 360;
+		return Math.abs(angleDiff) <= MAX_ANGLE_DIFF;
 	}
-	
+
 	/**
 	 * 
 	 * @param object1
@@ -54,9 +56,11 @@ public class PositionUtil
 		float angleObject2 = MathUtil.calculateAngleFrom(object2, object1);
 		float angleObject1 = MathUtil.convertHeadingToDegree(object2.getHeading());
 		float angleDiff = angleObject1 - angleObject2;
-		
-		if (angleDiff <= -360 + MAX_ANGLE_DIFF) angleDiff += 360;
-		if (angleDiff >= 360 - MAX_ANGLE_DIFF) angleDiff -= 360;
+
+		if (angleDiff <= -360 + MAX_ANGLE_DIFF)
+			angleDiff += 360;
+		if (angleDiff >= 360 - MAX_ANGLE_DIFF)
+			angleDiff -= 360;
 		return Math.abs(angleDiff) <= MAX_ANGLE_DIFF;
 	}
 }

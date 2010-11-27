@@ -44,9 +44,9 @@ public class SM_QUEST_STEP extends AbstractAionServerPacket<AionChannelHandler>
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeH(questId);
-		writeC( status);
+		writeC(status);
 		writeD(vars);
-		writeC( 0);
+		writeC(0);
 	}
 
 }

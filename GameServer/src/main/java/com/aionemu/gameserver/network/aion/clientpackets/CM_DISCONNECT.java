@@ -28,9 +28,9 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
 public class CM_DISCONNECT extends AbstractClientPacket<AionChannelHandler>
 {
 
-    boolean unk;
+	boolean	unk;
 
-    /**
+	/**
 	 * Constructs new instance of <tt>CM_DISCONNECT </tt> packet
 	 * @param opcode
 	 */
@@ -39,7 +39,7 @@ public class CM_DISCONNECT extends AbstractClientPacket<AionChannelHandler>
 		super(opcode);
 	}
 
-    /**
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -55,13 +55,13 @@ public class CM_DISCONNECT extends AbstractClientPacket<AionChannelHandler>
 	protected void runImpl()
 	{
 
-        if (unk)
-        {
-        	AionChannelHandler client = getChannelHandler();
-            /**
-             * We should close connection but not forced
-             */
-            client.close();
-        }
+		if (unk)
+		{
+			AionChannelHandler client = getChannelHandler();
+			/**
+			 * We should close connection but not forced
+			 */
+			client.close();
+		}
 	}
 }

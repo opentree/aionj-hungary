@@ -28,8 +28,8 @@ import com.aionemu.gameserver.services.BrokerService;
 public class CM_BROKER_REGISTERED extends AbstractClientPacket<AionChannelHandler>
 {
 	@SuppressWarnings("unused")
-	private int npcId;
-	
+	private int	npcId;
+
 	/**
 	 * 
 	 */
@@ -37,18 +37,18 @@ public class CM_BROKER_REGISTERED extends AbstractClientPacket<AionChannelHandle
 	{
 		super(opcode);
 	}
-	
+
 	@Override
 	protected void readImpl()
 	{
 		npcId = readD();
 	}
-	
+
 	@Override
 	protected void runImpl()
 	{
 		Player player = getChannelHandler().getActivePlayer();
-		
+
 		BrokerService.getInstance().showRegisteredItems(player);
 	}
 }

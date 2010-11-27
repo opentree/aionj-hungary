@@ -175,19 +175,19 @@ public class CM_CREATE_CHARACTER extends AbstractClientPacket<AionChannelHandler
 		AionChannelHandler client = getChannelHandler();
 
 		/* Some reasons why player can' be created */
-		if(!PlayerService.isValidName(playerCommonData.getName()))
+		if (!PlayerService.isValidName(playerCommonData.getName()))
 		{
 			client.sendPacket(new SM_CREATE_CHARACTER(null, SM_CREATE_CHARACTER.RESPONSE_INVALID_NAME));
 			IDFactory.getInstance().releaseId(playerCommonData.getPlayerObjId());
 			return;
 		}
-		if(!PlayerService.isFreeName(playerCommonData.getName()))
+		if (!PlayerService.isFreeName(playerCommonData.getName()))
 		{
 			client.sendPacket(new SM_CREATE_CHARACTER(null, SM_CREATE_CHARACTER.RESPONSE_NAME_ALREADY_USED));
 			IDFactory.getInstance().releaseId(playerCommonData.getPlayerObjId());
 			return;
 		}
-		if(!playerCommonData.getPlayerClass().isStartingClass())
+		if (!playerCommonData.getPlayerClass().isStartingClass())
 		{
 			client.sendPacket(new SM_CREATE_CHARACTER(null, SM_CREATE_CHARACTER.FAILED_TO_CREATE_THE_CHARACTER));
 			IDFactory.getInstance().releaseId(playerCommonData.getPlayerObjId());
@@ -198,7 +198,7 @@ public class CM_CREATE_CHARACTER extends AbstractClientPacket<AionChannelHandler
 
 		Account account = client.getAccount();
 
-		if(!PlayerService.storeNewPlayer(player, account.getName(), account.getId()))
+		if (!PlayerService.storeNewPlayer(player, account.getName(), account.getId()))
 		{
 			client.sendPacket(new SM_CREATE_CHARACTER(null, SM_CREATE_CHARACTER.RESPONSE_DB_ERROR));
 		}

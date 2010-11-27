@@ -22,21 +22,21 @@ import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
  */
 public final class Position
 {
-	
-	public final float x;
-	public final float y;
-	public final float z;
-	public final byte heading;
-	
+
+	public final float	x;
+	public final float	y;
+	public final float	z;
+	public final byte	heading;
+
 	public Position(SpawnTemplate spawn)
 	{
-		
+
 		x = spawn.getX();
 		y = spawn.getY();
 		z = spawn.getZ();
 		heading = spawn.getHeading();
 	}
-	
+
 	public Position(float x, float y, float z, byte heading)
 	{
 		this.x = x;

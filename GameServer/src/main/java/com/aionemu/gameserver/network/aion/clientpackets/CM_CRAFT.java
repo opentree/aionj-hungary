@@ -26,13 +26,13 @@ import com.aionemu.gameserver.services.CraftService;
  *
  */
 public class CM_CRAFT extends AbstractClientPacket<AionChannelHandler>
-{	
+{
 	@SuppressWarnings("unused")
-	private int unk;
-	private int targetTemplateId;
-	private int recipeId;
-	private int targetObjId;
-	
+	private int	unk;
+	private int	targetTemplateId;
+	private int	recipeId;
+	private int	targetObjId;
+
 	/**
 	 * @param opcode
 	 */
@@ -50,21 +50,21 @@ public class CM_CRAFT extends AbstractClientPacket<AionChannelHandler>
 		unk = readC();
 		targetTemplateId = readD();
 		recipeId = readD();
-		targetObjId = readD();		
+		targetObjId = readD();
 	}
-	
+
 	@Override
 	protected void runImpl()
 	{
 		Player player = getChannelHandler().getActivePlayer();
-		
-		if(player == null || !player.isSpawned())
+
+		if (player == null || !player.isSpawned())
 			return;
 
 		//disallow crafting in shutdown progress..
-		if(player.isInShutdownProgress())
+		if (player.isInShutdownProgress())
 			return;
-			
-		CraftService.startCrafting(player, targetTemplateId, recipeId, targetObjId);				
+
+		CraftService.startCrafting(player, targetTemplateId, recipeId, targetObjId);
 	}
 }

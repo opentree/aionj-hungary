@@ -122,7 +122,7 @@ public class RectangleArea extends AbstractArea
 	@Override
 	public double getDistance2D(int x, int y)
 	{
-		if(isInside2D(x, y))
+		if (isInside2D(x, y))
 		{
 			return 0;
 		}
@@ -139,11 +139,11 @@ public class RectangleArea extends AbstractArea
 	@Override
 	public double getDistance3D(int x, int y, int z)
 	{
-		if(isInside3D(x, y, z))
+		if (isInside3D(x, y, z))
 		{
 			return 0;
 		}
-		else if(isInsideZ(z))
+		else if (isInsideZ(z))
 		{
 			return getDistance2D(x, y);
 		}
@@ -161,7 +161,7 @@ public class RectangleArea extends AbstractArea
 	public Point getClosestPoint(int x, int y)
 	{
 
-		if(isInside2D(x, y))
+		if (isInside2D(x, y))
 		{
 			return new Point(x, y);
 		}
@@ -174,7 +174,7 @@ public class RectangleArea extends AbstractArea
 			// top edge
 			Point cp = MathUtil.getClosestPointOnSegment(minX, maxY, maxX, maxY, x, y);
 			double d = MathUtil.getDistance(x, y, cp.x, cp.y);
-			if(d < distance)
+			if (d < distance)
 			{
 				closestPoint = cp;
 				distance = d;
@@ -183,7 +183,7 @@ public class RectangleArea extends AbstractArea
 			// left edge
 			cp = MathUtil.getClosestPointOnSegment(minX, minY, minX, maxY, x, y);
 			d = MathUtil.getDistance(x, y, cp.x, cp.y);
-			if(d < distance)
+			if (d < distance)
 			{
 				closestPoint = cp;
 				distance = d;
@@ -192,7 +192,7 @@ public class RectangleArea extends AbstractArea
 			// Right edge
 			cp = MathUtil.getClosestPointOnSegment(maxX, minY, maxX, maxY, x, y);
 			d = MathUtil.getDistance(x, y, cp.x, cp.y);
-			if(d < distance)
+			if (d < distance)
 			{
 				closestPoint = cp;
 				// distance = d;

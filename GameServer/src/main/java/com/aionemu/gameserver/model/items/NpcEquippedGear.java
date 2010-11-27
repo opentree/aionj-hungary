@@ -37,8 +37,9 @@ public class NpcEquippedGear
 {
 	private Map<ItemSlot, ItemTemplate>	items;
 	private short						mask;
-	
-	private NpcEquipmentList	v;
+
+	private NpcEquipmentList			v;
+
 	public NpcEquippedGear(NpcEquipmentList v)
 	{
 		this.v = v;
@@ -49,17 +50,17 @@ public class NpcEquippedGear
 	 */
 	public short getItemsMask()
 	{
-		if(items == null) 
+		if (items == null)
 			init();
-		
+
 		return mask;
 	}
-	
+
 	public Collection<Entry<ItemSlot, ItemTemplate>> getItems()
 	{
-		if(items == null) 
+		if (items == null)
 			init();
-		
+
 		return items.entrySet();
 	}
 
@@ -69,29 +70,29 @@ public class NpcEquippedGear
 	 */
 	public void init()
 	{
-		synchronized(this)
+		synchronized (this)
 		{
-			if(items == null)
+			if (items == null)
 			{
 				items = new TreeMap<ItemSlot, ItemTemplate>();
-				for(ItemTemplate item : v.items)
+				for (ItemTemplate item : v.items)
 				{
 					List<ItemSlot> itemSlots = ItemSlot.getSlotsFor(item.getItemSlot());
-					for(ItemSlot itemSlot : itemSlots)
+					for (ItemSlot itemSlot : itemSlots)
 					{
-						if(items.get(itemSlot) == null)
+						if (items.get(itemSlot) == null)
 						{
 							items.put(itemSlot, item);
 							mask |= itemSlot.getSlotIdMask();
 							break;
 						}
-					}	
+					}
 				}
 			}
 			v = null;
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param itemSlot

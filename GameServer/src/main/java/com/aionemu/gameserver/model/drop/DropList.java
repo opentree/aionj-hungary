@@ -24,26 +24,26 @@ import java.util.Set;
 /**
  *  @author ATracer
  */
-public class DropList 
-{	
-	private TIntObjectHashMap<Set<DropTemplate>> templatesMap = new TIntObjectHashMap<Set<DropTemplate>>();
-	
+public class DropList
+{
+	private TIntObjectHashMap<Set<DropTemplate>>	templatesMap	= new TIntObjectHashMap<Set<DropTemplate>>();
+
 	public void addDropTemplate(int mobId, DropTemplate dropTemplate)
 	{
 		Set<DropTemplate> dropTemplates = templatesMap.get(mobId);
-		if(dropTemplates == null)
+		if (dropTemplates == null)
 		{
 			dropTemplates = new HashSet<DropTemplate>();
 			templatesMap.put(mobId, dropTemplates);
 		}
 		dropTemplates.add(dropTemplate);
 	}
-	
+
 	public Set<DropTemplate> getDropsFor(int mobId)
 	{
 		return templatesMap.get(mobId);
 	}
-	
+
 	public int getSize()
 	{
 		return templatesMap.size();

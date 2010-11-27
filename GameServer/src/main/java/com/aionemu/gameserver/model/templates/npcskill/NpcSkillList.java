@@ -33,9 +33,9 @@ import javax.xml.bind.annotation.XmlType;
 public class NpcSkillList
 {
 	@XmlAttribute(name = "npcid")
-	protected int				npcId;
+	protected int						npcId;
 	@XmlAttribute(name = "skill_count")
-	protected int				count;
+	protected int						count;
 	@XmlElement(name = "npcskill")
 	protected List<NpcSkillTemplate>	npcSkills;
 

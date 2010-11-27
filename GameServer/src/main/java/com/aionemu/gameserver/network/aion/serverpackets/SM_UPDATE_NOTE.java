@@ -25,13 +25,15 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_UPDATE_NOTE extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int targetObjId;
-	private String note;
-	
-	public SM_UPDATE_NOTE (int targetObjId, String note) {
+	private int		targetObjId;
+	private String	note;
+
+	public SM_UPDATE_NOTE(int targetObjId, String note)
+	{
 		this.targetObjId = targetObjId;
 		this.note = note;
 	}
+
 	/**
 	 * {@inheritDoc}
 	 */

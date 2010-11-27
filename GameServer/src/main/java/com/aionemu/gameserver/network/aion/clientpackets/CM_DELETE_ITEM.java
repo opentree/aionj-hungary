@@ -29,7 +29,7 @@ import com.aionemu.gameserver.services.ItemService;
  */
 public class CM_DELETE_ITEM extends AbstractClientPacket<AionChannelHandler>
 {
-	public int objId;
+	public int	objId;
 
 	public CM_DELETE_ITEM(int opcode)
 	{

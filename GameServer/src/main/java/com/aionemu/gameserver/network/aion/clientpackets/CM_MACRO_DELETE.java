@@ -46,7 +46,7 @@ public class CM_MACRO_DELETE extends AbstractClientPacket<AionChannelHandler>
 	 * Macro id that has to be deleted
 	 */
 	private int					macroPosition;
-	
+
 	/**
 	 * Constructs new client packet instance.
 	 * @param opcode
@@ -74,7 +74,7 @@ public class CM_MACRO_DELETE extends AbstractClientPacket<AionChannelHandler>
 		log.debug("Request to delete macro #" + macroPosition);
 
 		PlayerService.removeMacro(getChannelHandler().getActivePlayer(), macroPosition);
-		
+
 		sendPacket(SM_MACRO_RESULT.SM_MACRO_DELETED);
 	}
 }

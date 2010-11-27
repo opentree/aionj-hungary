@@ -39,13 +39,13 @@ public class PulledEffect extends EffectTemplate
 	@Override
 	public void applyEffect(Effect effect)
 	{
-		effect.addToEffectedController(); 
+		effect.addToEffectedController();
 	}
 
 	@Override
 	public void calculate(Effect effect)
 	{
-		if(effect.getEffector() instanceof Player && effect.getEffected() != null)
+		if (effect.getEffector() instanceof Player && effect.getEffected() != null)
 		{
 			effect.addSucessEffect(this);
 		}
@@ -58,16 +58,12 @@ public class PulledEffect extends EffectTemplate
 		final Creature effector = effect.getEffector();
 		final Creature effected = effect.getEffected();
 		effected.getEffectController().setAbnormal(EffectId.CANNOT_MOVE.getEffectId());
-		ThreadPoolManager.getInstance().schedule(new Runnable() {
+		ThreadPoolManager.getInstance().schedule(new Runnable()
+		{
 			@Override
 			public void run()
 			{
-				World.getInstance().updatePosition(
-					effected,
-					effector.getX(),
-					effector.getY(),
-					effector.getZ() + 0.25F,
-					effected.getHeading());
+				World.getInstance().updatePosition(effected, effector.getX(), effector.getY(), effector.getZ() + 0.25F, effected.getHeading());
 				PacketSendUtility.broadcastPacketAndReceive(effected, new SM_FORCED_MOVE(effector, effected));
 			}
 		}, 1000);

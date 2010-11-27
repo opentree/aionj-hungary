@@ -44,6 +44,6 @@ public class SM_LEGION_UPDATE_TITLE extends AbstractAionServerPacket<AionChannel
 		writeD(objectId);
 		writeD(legionId);
 		writeS(legionName);
-		writeC( rank); // 0: commander(?), 1: centurion, 2: soldier
+		writeC(rank); // 0: commander(?), 1: centurion, 2: soldier
 	}
 }

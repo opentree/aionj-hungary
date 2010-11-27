@@ -43,7 +43,7 @@ public class HealFpEffect extends AbstractHealEffect
 		super.calculate(effect);
 		effect.addSucessEffect(this);
 	}
-	
+
 	@Override
 	protected int getCurrentStatValue(Effect effect)
 	{

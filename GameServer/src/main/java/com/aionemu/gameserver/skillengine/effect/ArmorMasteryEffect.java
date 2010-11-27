@@ -51,12 +51,12 @@ public class ArmorMasteryEffect extends BufEffect
 		Player player = (Player) effect.getEffector();
 		// check best mastery skill
 		Integer skillId = player.getSkillList().getArmorMasterySkill(armorType);
-		if(skillId != null && skillId != effect.getSkillId())
+		if (skillId != null && skillId != effect.getSkillId())
 			return;
 		// check weather already skill applied and weapon isEquipeed
 		boolean armorMasterySet = player.getEffectController().isArmorMasterySet(skillId);
 		boolean isArmorEquiped = player.getEquipment().isArmorEquipped(armorType);
-		if(!armorMasterySet && isArmorEquiped)
+		if (!armorMasterySet && isArmorEquiped)
 			effect.addSucessEffect(this);
 	}
 

@@ -23,16 +23,7 @@ package com.aionemu.gameserver.skillengine.model.learn;
 public enum SkillClass
 {
 	/** Positioning in enum should correspond to com.aionemu.gameserver.model.PlayerClass **/
-	WARRIOR,
-	FIGHTER,
-	KNIGHT, 
-	SCOUT,
-	ASSASSIN,
-	RANGER,
-	MAGE,
-	WIZARD,
-	ELEMENTALLIST,
-	CLERIC, //in reality priest
+	WARRIOR, FIGHTER, KNIGHT, SCOUT, ASSASSIN, RANGER, MAGE, WIZARD, ELEMENTALLIST, CLERIC, //in reality priest
 	PRIEST, //in reality cleric
 	CHANTER,
 	ALL

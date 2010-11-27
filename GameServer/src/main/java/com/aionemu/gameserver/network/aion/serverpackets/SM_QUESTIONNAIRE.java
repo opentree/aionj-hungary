@@ -45,8 +45,8 @@ public class SM_QUESTIONNAIRE extends AbstractAionServerPacket<AionChannelHandle
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(messageId);
-		writeC( chunk);
-		writeC( count);
+		writeC(chunk);
+		writeC(count);
 		writeH(html.length() * 2);
 		writeS(html);
 	}

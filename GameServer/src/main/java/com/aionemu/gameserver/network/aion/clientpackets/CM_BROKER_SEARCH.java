@@ -31,12 +31,12 @@ import com.aionemu.gameserver.services.BrokerService;
 public class CM_BROKER_SEARCH extends AbstractClientPacket<AionChannelHandler>
 {
 	@SuppressWarnings("unused")
-	private int brokerId;
-	private int sortType;
-    private int page;
-	private int mask;
-	private int items_length;
-    private List<Integer> items_id;
+	private int				brokerId;
+	private int				sortType;
+	private int				page;
+	private int				mask;
+	private int				items_length;
+	private List<Integer>	items_id;
 
 	public CM_BROKER_SEARCH(int opcode)
 	{
@@ -49,11 +49,11 @@ public class CM_BROKER_SEARCH extends AbstractClientPacket<AionChannelHandler>
 		this.brokerId = readD();
 		this.sortType = readC(); // 1 - name; 2 - level; 4 - totalPrice; 6 - price for piece
 		this.page = readH();
-        this.mask = readH();
+		this.mask = readH();
 		this.items_length = readH();
-        this.items_id = new ArrayList<Integer>();
-        for (int i = 0; i<this.items_length; i++)
-            this.items_id.add(readD());
+		this.items_id = new ArrayList<Integer>();
+		for (int i = 0; i < this.items_length; i++)
+			this.items_id.add(readD());
 	}
 
 	@Override

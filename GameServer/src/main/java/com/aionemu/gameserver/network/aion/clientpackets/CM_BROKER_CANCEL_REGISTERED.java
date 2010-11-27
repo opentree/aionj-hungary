@@ -28,26 +28,26 @@ import com.aionemu.gameserver.services.BrokerService;
 public class CM_BROKER_CANCEL_REGISTERED extends AbstractClientPacket<AionChannelHandler>
 {
 	@SuppressWarnings("unused")
-	private int npcId;
-	private int brokerItemId;
-	
+	private int	npcId;
+	private int	brokerItemId;
+
 	public CM_BROKER_CANCEL_REGISTERED(int opcode)
 	{
 		super(opcode);
 	}
-	
+
 	@Override
 	protected void readImpl()
 	{
 		npcId = readD();
 		brokerItemId = readD();
 	}
-	
+
 	@Override
 	protected void runImpl()
 	{
 		Player player = getChannelHandler().getActivePlayer();
-		
+
 		BrokerService.getInstance().cancelRegisteredItem(player, brokerItemId);
 	}
 }

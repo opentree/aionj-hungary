@@ -29,14 +29,14 @@ public enum MailMessage
 	YOU_ARE_IN_RECIPIENT_IGNORE_LIST(4),
 	RECIPIENT_IGNORING_MAIL_FROM_PLAYERS_LOWER_206_LVL(5), //WTF??
 	MAILSPAM_WAIT_FOR_SOME_TIME(6);
-	
-	private int id;
-	
+
+	private int	id;
+
 	private MailMessage(int id)
 	{
 		this.id = id;
 	}
-	
+
 	public int getId()
 	{
 		return id;

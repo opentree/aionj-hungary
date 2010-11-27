@@ -5,7 +5,6 @@
 // Generated on: 2010.07.27 at 07:18:33 DU CEST 
 //
 
-
 package com.aionemu.gameserver.model.templates.item;
 
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for RequireSkill complex type.
@@ -39,55 +37,58 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "RequireSkill", propOrder = {
-    "skillId"
-})
-public class RequireSkill {
+@XmlType(name = "RequireSkill", propOrder =
+{ "skillId" })
+public class RequireSkill
+{
 
-    @XmlElement(type = Integer.class)
-    protected List<Integer> skillId;
-    @XmlAttribute
-    protected Integer skilllvl;
+	@XmlElement(type = Integer.class)
+	protected List<Integer>	skillId;
+	@XmlAttribute
+	protected Integer		skilllvl;
 
-    /**
-     * Gets the value of the skillId property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the skillId property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getSkillId().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Integer }
-     * 
-     * 
-     */
-    public List<Integer> getSkillId() {
-        if (skillId == null) {
-            skillId = new ArrayList<Integer>();
-        }
-        return this.skillId;
-    }
+	/**
+	 * Gets the value of the skillId property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list,
+	 * not a snapshot. Therefore any modification you make to the
+	 * returned list will be present inside the JAXB object.
+	 * This is why there is not a <CODE>set</CODE> method for the skillId property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getSkillId().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link Integer }
+	 * 
+	 * 
+	 */
+	public List<Integer> getSkillId()
+	{
+		if (skillId == null)
+		{
+			skillId = new ArrayList<Integer>();
+		}
+		return this.skillId;
+	}
 
-    /**
-     * Gets the value of the skilllvl property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getSkilllvl() {
-        return skilllvl;
-    }
+	/**
+	 * Gets the value of the skilllvl property.
+	 * 
+	 * @return
+	 *     possible object is
+	 *     {@link Integer }
+	 *     
+	 */
+	public Integer getSkilllvl()
+	{
+		return skilllvl;
+	}
 
 }

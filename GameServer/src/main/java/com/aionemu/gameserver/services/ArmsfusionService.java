@@ -34,76 +34,75 @@ public class ArmsfusionService
 	public static void fusionWeapons(Player player, int firstItemUniqueId, int secondItemUniqueId, int price)
 	{
 		Item firstItem = player.getInventory().getItemByObjId(firstItemUniqueId);
-		if(firstItem == null)
+		if (firstItem == null)
 			firstItem = player.getEquipment().getEquippedItemByObjId(firstItemUniqueId);
-		
+
 		Item secondItem = player.getInventory().getItemByObjId(secondItemUniqueId);
-		if(secondItem == null)
+		if (secondItem == null)
 			secondItem = player.getEquipment().getEquippedItemByObjId(secondItemUniqueId);
-		
+
 		/*
 		 * Need to have items in bag, and target the fusion NPC
 		 */
-		if(firstItem == null || secondItem == null || !(player.getTarget() instanceof Npc))
+		if (firstItem == null || secondItem == null || !(player.getTarget() instanceof Npc))
 			return;
-		
-		
-		if(player.getInventory().getKinahItem().getItemCount() < price)
+
+		if (player.getInventory().getKinahItem().getItemCount() < price)
 		{
 			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_COMPOUND_ERROR_NOT_ENOUGH_MONEY(firstItem.getNameID(), secondItem.getNameID()));
 			return;
 		}
-		
+
 		/*
 		 * Fusioned weapons must have same type
-		 */		
-		if(firstItem.getItemTemplate().getWeaponType() != secondItem.getItemTemplate().getWeaponType())
+		 */
+		if (firstItem.getItemTemplate().getWeaponType() != secondItem.getItemTemplate().getWeaponType())
 		{
 			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_COMPOUND_ERROR_DIFFERENT_TYPE);
 			return;
 		}
-		
+
 		/*
 		 * Second weapon must have inferior or equal lvl. in relation to first weapon
 		 */
-		if(secondItem.getItemTemplate().getLevel() > firstItem.getItemTemplate().getLevel())
+		if (secondItem.getItemTemplate().getLevel() > firstItem.getItemTemplate().getLevel())
 		{
 			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_COMPOUND_ERROR_MAIN_REQUIRE_HIGHER_LEVEL);
 			return;
 		}
-		
+
 		// TODO: Transfer Manastones
-		
+
 		firstItem.setFusionedItem(secondItem.getItemTemplate().getTemplateId());
 		ItemService.decreaseItemCount(player, secondItem, 1);
-		
+
 		PacketSendUtility.sendPacket(player, new SM_UPDATE_ITEM(firstItem));
-		
+
 		PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_COMPOUND_SUCCESS(firstItem.getNameID(), secondItem.getNameID()));
-		
+
 	}
-	
+
 	public static void breakWeapons(Player player, int weaponToBreakUniqueId)
 	{
 		Item weaponToBreak = player.getInventory().getItemByObjId(weaponToBreakUniqueId);
-		if(weaponToBreak == null)
+		if (weaponToBreak == null)
 			weaponToBreak = player.getEquipment().getEquippedItemByObjId(weaponToBreakUniqueId);
-		
-		if(weaponToBreak == null || (player.getTarget() instanceof Npc))
+
+		if (weaponToBreak == null || (player.getTarget() instanceof Npc))
 			return;
 
-		if(!weaponToBreak.hasFusionedItem())
+		if (!weaponToBreak.hasFusionedItem())
 		{
 			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_DECOMPOUND_ERROR_NOT_AVAILABLE(weaponToBreak.getNameID()));
 			return;
 		}
-	
+
 		weaponToBreak.setFusionedItem(0);
-		
+
 		PacketSendUtility.sendPacket(player, new SM_UPDATE_ITEM(weaponToBreak));
-		
+
 		PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_COMPOUNDED_ITEM_DECOMPOUND_SUCCESS(weaponToBreak.getNameID()));
-		
+
 	}
-	
+
 }

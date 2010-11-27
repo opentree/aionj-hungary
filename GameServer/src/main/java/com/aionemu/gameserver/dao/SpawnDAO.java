@@ -34,6 +34,6 @@ public abstract class SpawnDAO implements DAO
 	{
 		return SpawnDAO.class.getName();
 	}
-	
+
 	public abstract void load();
 }

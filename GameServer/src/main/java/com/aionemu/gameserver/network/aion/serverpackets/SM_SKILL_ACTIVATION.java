@@ -25,9 +25,9 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
 public class SM_SKILL_ACTIVATION extends AbstractAionServerPacket<AionChannelHandler>
 {
 
-	private boolean isActive;
-	private int unk;
-	private int skillId;
+	private boolean	isActive;
+	private int		unk;
+	private int		skillId;
 
 	/**
 	 *  For toggle skills
@@ -41,7 +41,7 @@ public class SM_SKILL_ACTIVATION extends AbstractAionServerPacket<AionChannelHan
 		this.isActive = isActive;
 		this.unk = 0;
 	}
-	
+
 	/**
 	 * For stigma remove should work in 1.5.1.15
 	 * @param skillId
@@ -61,6 +61,6 @@ public class SM_SKILL_ACTIVATION extends AbstractAionServerPacket<AionChannelHan
 	{
 		writeH(skillId);
 		writeD(unk);
-		writeC( isActive ? 1 : 0);
+		writeC(isActive ? 1 : 0);
 	}
 }

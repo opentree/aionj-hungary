@@ -37,24 +37,24 @@ public abstract class ItemStoneListDAO implements DAO
 	 * @param item
 	 */
 	public abstract void load(List<Item> items);
-	
+
 	/**
 	 * @param itemStones
 	 */
 	public abstract void store(Set<ManaStone> itemStones);
-	
+
 	/**
 	 *  Saves stones of player
 	 *  
 	 * @param itemStoneList
 	 */
 	public abstract void save(Player player);
-	
+
 	/**
 	 * @param godStone
 	 */
 	public abstract void store(GodStone godStone);
-	
+
 	@Override
 	public String getClassName()
 	{

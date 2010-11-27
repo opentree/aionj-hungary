@@ -93,7 +93,7 @@ public abstract class PlayerDAO implements IDFactoryAwareDAO
 	 * @param lastOnline Last online time of player to store
 	 */
 	public abstract void storeLastOnlineTime(final int objectId, final Timestamp lastOnline);
-	
+
 	/**
 	 * Store online or offline player status
 	 * 
@@ -101,36 +101,36 @@ public abstract class PlayerDAO implements IDFactoryAwareDAO
 	 * @param online
 	 */
 	public abstract void onlinePlayer(final Player player, final boolean online);
-	
+
 	/**
 	 * Set all players offline status
 	 * 
 	 * @param online
 	 */
 	public abstract void setPlayersOffline(final boolean online);
-	
+
 	/**
 	 * get commondata by name for MailService
 	 * @param name
 	 * @return
 	 */
 	public abstract PlayerCommonData loadPlayerCommonDataByName(String name);
-	
+
 	/**
 	 * Returns Player's Account ID
 	 * @param name
 	 * @return
 	 */
 	public abstract int getAccountIdByName(final String name);
-	
+
 	/**
 	 * Identifier name for all PlayerDAO classes
 	 * 
 	 * @return PlayerDAO.class.getName()
 	 */
-	
+
 	public abstract String getPlayerNameByObjId(final int playerObjId);
-	
+
 	@Override
 	public final String getClassName()
 	{

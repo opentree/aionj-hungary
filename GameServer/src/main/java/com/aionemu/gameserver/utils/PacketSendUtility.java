@@ -65,7 +65,7 @@ public class PacketSendUtility
 	 */
 	public static void sendPacket(Player player, AbstractAionServerPacket<AionChannelHandler> packet)
 	{
-		if(player.getClientConnection() != null)
+		if (player.getClientConnection() != null)
 			player.getClientConnection().sendPacket(packet);
 	}
 
@@ -81,7 +81,7 @@ public class PacketSendUtility
 	 */
 	public static void broadcastPacket(Player player, AbstractAionServerPacket<AionChannelHandler> packet, boolean toSelf)
 	{
-		if(toSelf)
+		if (toSelf)
 			sendPacket(player, packet);
 
 		broadcastPacket(player, packet);
@@ -95,8 +95,8 @@ public class PacketSendUtility
 	 */
 	public static void broadcastPacketAndReceive(VisibleObject visibleObject, AbstractAionServerPacket<AionChannelHandler> packet)
 	{
-		if(visibleObject instanceof Player)
-			sendPacket((Player)visibleObject, packet);
+		if (visibleObject instanceof Player)
+			sendPacket((Player) visibleObject, packet);
 
 		broadcastPacket(visibleObject, packet);
 	}
@@ -109,9 +109,9 @@ public class PacketSendUtility
 	 */
 	public static void broadcastPacket(VisibleObject visibleObject, AbstractAionServerPacket<AionChannelHandler> packet)
 	{
-		for(VisibleObject obj : visibleObject.getKnownList().getKnownObjects().values())
+		for (VisibleObject obj : visibleObject.getKnownList().getKnownObjects().values())
 		{
-			if(obj instanceof Player)
+			if (obj instanceof Player)
 				sendPacket(((Player) obj), packet);
 		}
 	}
@@ -128,20 +128,19 @@ public class PacketSendUtility
 	 * @param filter
 	 *            filter determining who should be messaged
 	 */
-	public static void broadcastPacket(Player player, AbstractAionServerPacket<AionChannelHandler> packet, boolean toSelf,
-		ObjectFilter<Player> filter)
+	public static void broadcastPacket(Player player, AbstractAionServerPacket<AionChannelHandler> packet, boolean toSelf, ObjectFilter<Player> filter)
 	{
-		if(toSelf)
+		if (toSelf)
 		{
 			sendPacket(player, packet);
 		}
 
-		for(VisibleObject obj : player.getKnownList().getKnownObjects().values())
+		for (VisibleObject obj : player.getKnownList().getKnownObjects().values())
 		{
-			if(obj instanceof Player)
+			if (obj instanceof Player)
 			{
 				Player target = (Player) obj;
-				if(filter.acceptObject(target))
+				if (filter.acceptObject(target))
 					sendPacket(target, packet);
 			}
 		}
@@ -157,7 +156,7 @@ public class PacketSendUtility
 	 */
 	public static void broadcastPacketToLegion(Legion legion, AbstractAionServerPacket<AionChannelHandler> packet)
 	{
-		for(Player onlineLegionMember : legion.getOnlineLegionMembers())
+		for (Player onlineLegionMember : legion.getOnlineLegionMembers())
 		{
 			sendPacket(onlineLegionMember, packet);
 		}
@@ -165,9 +164,9 @@ public class PacketSendUtility
 
 	public static void broadcastPacketToLegion(Legion legion, AbstractAionServerPacket<AionChannelHandler> packet, int playerObjId)
 	{
-		for(Player onlineLegionMember : legion.getOnlineLegionMembers())
+		for (Player onlineLegionMember : legion.getOnlineLegionMembers())
 		{
-			if(onlineLegionMember.getObjectId() != playerObjId)
+			if (onlineLegionMember.getObjectId() != playerObjId)
 				sendPacket(onlineLegionMember, packet);
 		}
 	}

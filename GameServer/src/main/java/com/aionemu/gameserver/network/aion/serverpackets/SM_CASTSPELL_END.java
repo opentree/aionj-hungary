@@ -36,15 +36,15 @@ public class SM_CASTSPELL_END extends AbstractAionServerPacket<AionChannelHandle
 	private int				level;
 	private int				cooldown;
 	private List<Effect>	effects;
-	private int 			spellStatus;
+	private int				spellStatus;
 	private float			x;
 	private float			y;
 	private float			z;
 	private int				targetType;
 	private boolean			chainSuccess;
 
-	public SM_CASTSPELL_END(Creature attacker, Creature target, List<Effect> effects,
-		int spellid, int level, int cooldown, boolean chainSuccess, int spellStatus)
+	public SM_CASTSPELL_END(Creature attacker, Creature target, List<Effect> effects, int spellid, int level, int cooldown, boolean chainSuccess,
+			int spellStatus)
 	{
 		// TODO: Pass Skill type instead?
 		this.attacker = attacker;
@@ -57,9 +57,9 @@ public class SM_CASTSPELL_END extends AbstractAionServerPacket<AionChannelHandle
 		this.chainSuccess = chainSuccess;
 		this.targetType = 0;
 	}
-	
-	public SM_CASTSPELL_END(Creature attacker, Creature target, List<Effect> effects,
-		int spellid, int level, int cooldown, boolean chainSuccess, int spellStatus, float x, float y, float z)
+
+	public SM_CASTSPELL_END(Creature attacker, Creature target, List<Effect> effects, int spellid, int level, int cooldown, boolean chainSuccess,
+			int spellStatus, float x, float y, float z)
 	{
 		this(attacker, target, effects, spellid, level, cooldown, chainSuccess, spellStatus);
 		this.x = x;
@@ -76,8 +76,8 @@ public class SM_CASTSPELL_END extends AbstractAionServerPacket<AionChannelHandle
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
 		writeD(attacker.getObjectId());
-		writeC( targetType);
-		switch(targetType)
+		writeC(targetType);
+		switch (targetType)
 		{
 			case 0:
 				writeD(target.getObjectId());
@@ -89,10 +89,10 @@ public class SM_CASTSPELL_END extends AbstractAionServerPacket<AionChannelHandle
 				break;
 		}
 		writeH(spellid);
-		writeC( level);
+		writeC(level);
 		writeD(cooldown);
 		writeH(560); // time?
-		writeC( 0); // unk
+		writeC(0); // unk
 
 		/**
 		 * 0 : chain skill (counter too)
@@ -103,7 +103,7 @@ public class SM_CASTSPELL_END extends AbstractAionServerPacket<AionChannelHandle
 			writeH(32);
 		else
 			writeH(0);
-			
+
 		/**
 		 * Dash Type
 		 * 
@@ -111,38 +111,37 @@ public class SM_CASTSPELL_END extends AbstractAionServerPacket<AionChannelHandle
 		 * 2 : dash (816)
 		 * 4 : assault (803)
 		 */
-		writeC( 0);
+		writeC(0);
 
-	// TODO refactor skill engine
-	/*	switch(attacker.getDashType().getId())
-		{
-			case 1:
-			case 2:
-			case 4:
-				writeC( heading);
-				writeF(x);
-				writeF(y);
-				writeF(z);
-				break;
-			default:
-				break;
-		}*/
+		// TODO refactor skill engine
+		/*	switch(attacker.getDashType().getId())
+			{
+				case 1:
+				case 2:
+				case 4:
+					writeC( heading);
+					writeF(x);
+					writeF(y);
+					writeF(z);
+					break;
+				default:
+					break;
+			}*/
 
 		writeH(effects.size());
-		for(Effect effect : effects)
+		for (Effect effect : effects)
 		{
 			writeD(effect.getEffected().getObjectId());
-			writeC( 0); // unk
+			writeC(0); // unk
 
 			int attackerMaxHp = attacker.getLifeStats().getMaxHp();
 			int attackerCurrHp = attacker.getLifeStats().getCurrentHp();
 			int targetMaxHp = target.getLifeStats().getMaxHp();
 			int targetCurrHp = target.getLifeStats().getCurrentHp();
 
-			writeC( 100 * targetCurrHp / targetMaxHp); // target %hp
-			writeC( 100 * attackerCurrHp / attackerMaxHp); // attacker %hp
-			
-			
+			writeC(100 * targetCurrHp / targetMaxHp); // target %hp
+			writeC(100 * attackerCurrHp / attackerMaxHp); // attacker %hp
+
 			/**
 			 * Spell Status
 			 * 
@@ -156,9 +155,9 @@ public class SM_CASTSPELL_END extends AbstractAionServerPacket<AionChannelHandle
 			 * 128 : dodge
 			 * 256 : resist
 			 */
-			writeC( this.spellStatus);
+			writeC(this.spellStatus);
 
-			switch(this.spellStatus)
+			switch (this.spellStatus)
 			{
 				case 1:
 				case 2:
@@ -169,22 +168,22 @@ public class SM_CASTSPELL_END extends AbstractAionServerPacket<AionChannelHandle
 					writeF(target.getZ() + 0.4f);
 					break;
 				case 16:
-					writeC( target.getHeading());
+					writeC(target.getHeading());
 					break;
 				default:
 					break;
 			}
 
-			writeC( 16); // unk
-			writeC( 0); // current carve signet count
+			writeC(16); // unk
+			writeC(0); // current carve signet count
 
-			writeC( 1); // unk always 1
-			writeC( 0); // be 1 - when use Mana Treatment
+			writeC(1); // unk always 1
+			writeC(0); // be 1 - when use Mana Treatment
 			writeD(effect.getReserved1()); // damage
-			writeC( effect.getAttackStatus().getId());
-			writeC( effect.getShieldDefense());
+			writeC(effect.getAttackStatus().getId());
+			writeC(effect.getShieldDefense());
 
-			switch(effect.getShieldDefense())
+			switch (effect.getShieldDefense())
 			{
 				case 1: // reflect shield
 					writeD(0x00);

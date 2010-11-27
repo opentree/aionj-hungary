@@ -42,7 +42,7 @@ public class ResurrectEffect extends EffectTemplate
 	@Override
 	public void calculate(Effect effect)
 	{
-		if(effect.getEffected() instanceof Player && effect.getEffected().getLifeStats().isAlreadyDead())
+		if (effect.getEffected() instanceof Player && effect.getEffected().getLifeStats().isAlreadyDead())
 			effect.addSucessEffect(this);
 	}
 }

@@ -25,7 +25,7 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
 public class CM_QUESTIONNAIRE extends AbstractClientPacket<AionChannelHandler>
 {
 	@SuppressWarnings("unused")
-	private int objectId;
+	private int	objectId;
 
 	public CM_QUESTIONNAIRE(int opcode)
 	{

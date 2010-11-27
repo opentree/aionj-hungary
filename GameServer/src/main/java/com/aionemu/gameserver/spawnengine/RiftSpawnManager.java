@@ -39,16 +39,15 @@ import com.aionemu.gameserver.world.World;
  */
 public class RiftSpawnManager
 {
-	private static final Logger log = Logger.getLogger(RiftSpawnManager.class);
-	
-	private static final ConcurrentLinkedQueue<Rift> rifts = new ConcurrentLinkedQueue<Rift>();
-	
-	
-	private static final int RIFT_RESPAWN_DELAY = 100 * 60 * 1000;
-	private static final int RIFT_LIFETIME = 26 * 60 * 1000;
-	
-	private static final Map<String, SpawnTemplate> spawnTemplates = new HashMap<String, SpawnTemplate>();
-	
+	private static final Logger							log					= Logger.getLogger(RiftSpawnManager.class);
+
+	private static final ConcurrentLinkedQueue<Rift>	rifts				= new ConcurrentLinkedQueue<Rift>();
+
+	private static final int							RIFT_RESPAWN_DELAY	= 100 * 60 * 1000;
+	private static final int							RIFT_LIFETIME		= 26 * 60 * 1000;
+
+	private static final Map<String, SpawnTemplate>		spawnTemplates		= new HashMap<String, SpawnTemplate>();
+
 	public static void addRiftSpawnTemplate(SpawnTemplate spawnTemplate, String anchor)
 	{
 		spawnTemplates.put(anchor, spawnTemplate);
@@ -56,8 +55,9 @@ public class RiftSpawnManager
 
 	public static void startRiftPool()
 	{
-		ThreadPoolManager.getInstance().scheduleAtFixedRate(new Runnable(){
-			
+		ThreadPoolManager.getInstance().scheduleAtFixedRate(new Runnable()
+		{
+
 			@Override
 			public void run()
 			{
@@ -65,7 +65,7 @@ public class RiftSpawnManager
 				RiftEnum rift2 = RiftEnum.values()[Rnd.get(7, 13)];
 				RiftEnum rift3 = RiftEnum.values()[Rnd.get(14, 20)];
 				RiftEnum rift4 = RiftEnum.values()[Rnd.get(21, 27)];
-				
+
 				spawnRift(rift1);
 				spawnRift(rift2);
 				spawnRift(rift3);
@@ -73,23 +73,23 @@ public class RiftSpawnManager
 			}
 		}, 10000, RIFT_RESPAWN_DELAY);
 	}
-	
+
 	/**
 	 * @param rift1
 	 */
 	private static void spawnRift(RiftEnum rift)
 	{
-		
+
 		log.info("Spawning rift : " + rift.name());
 		SpawnTemplate masterTemplate = spawnTemplates.get(rift.getMaster());
-		SpawnTemplate slaveTemplate= spawnTemplates.get(rift.getSlave());
-		
-		if(masterTemplate == null || slaveTemplate == null)
+		SpawnTemplate slaveTemplate = spawnTemplates.get(rift.getSlave());
+
+		if (masterTemplate == null || slaveTemplate == null)
 			return;
-		
+
 		int instanceCount = World.getInstance().getWorldMap(masterTemplate.getMapId()).getInstanceCount();
-		
-		for(int i = 1; i <= instanceCount; i++)
+
+		for (int i = 1; i <= instanceCount; i++)
 		{
 			Rift slave = spawnInstance(i, slaveTemplate, null, rift);
 			spawnInstance(i, masterTemplate, slave, rift);
@@ -103,14 +103,14 @@ public class RiftSpawnManager
 
 		World world = World.getInstance();
 		world.storeObject(riftObject);
-		world.setPosition(riftObject, spawnTemplate.getMapId(), instanceIndex, 
-			spawnTemplate.getX(), spawnTemplate.getY(), spawnTemplate.getZ(), spawnTemplate.getHeading());
+		world.setPosition(riftObject, spawnTemplate.getMapId(), instanceIndex, spawnTemplate.getX(), spawnTemplate.getY(), spawnTemplate.getZ(),
+				spawnTemplate.getHeading());
 		world.spawn(riftObject);
 		rifts.add(riftObject);
 
-		scheduleDespawn(riftObject);		
+		scheduleDespawn(riftObject);
 		riftObject.sendAnnounce();
-		
+
 		return riftObject;
 	}
 
@@ -124,11 +124,11 @@ public class RiftSpawnManager
 			@Override
 			public void run()
 			{
-				if(npc != null && npc.isSpawned())
+				if (npc != null && npc.isSpawned())
 				{
 					PacketSendUtility.broadcastPacket(npc, new SM_DELETE(npc, 15));
 					npc.onDespawn(true);
-				}	
+				}
 				rifts.remove(npc);
 			}
 		}, RIFT_LIFETIME);
@@ -143,7 +143,7 @@ public class RiftSpawnManager
 		ELTNEN_EM("ELTNEN_EM", "MORHEIM_ES", 45, 40, Race.ASMODIANS),
 		ELTNEN_FM("ELTNEN_FM", "MORHEIM_FS", 50, 40, Race.ASMODIANS),
 		ELTNEN_GM("ELTNEN_GM", "MORHEIM_GS", 50, 45, Race.ASMODIANS),
-		
+
 		HEIRON_AM("HEIRON_AM", "BELUSLAN_AS", 24, 35, Race.ASMODIANS),
 		HEIRON_BM("HEIRON_BM", "BELUSLAN_BS", 36, 35, Race.ASMODIANS),
 		HEIRON_CM("HEIRON_CM", "BELUSLAN_CS", 48, 46, Race.ASMODIANS),
@@ -151,7 +151,7 @@ public class RiftSpawnManager
 		HEIRON_EM("HEIRON_EM", "BELUSLAN_ES", 60, 50, Race.ASMODIANS),
 		HEIRON_FM("HEIRON_FM", "BELUSLAN_FS", 60, 50, Race.ASMODIANS),
 		HEIRON_GM("HEIRON_GM", "BELUSLAN_GS", 72, 50, Race.ASMODIANS),
-		
+
 		MORHEIM_AM("MORHEIM_AM", "ELTNEN_AS", 12, 28, Race.ELYOS),
 		MORHEIM_BM("MORHEIM_BM", "ELTNEN_BS", 20, 32, Race.ELYOS),
 		MORHEIM_CM("MORHEIM_CM", "ELTNEN_CS", 35, 36, Race.ELYOS),
@@ -159,7 +159,7 @@ public class RiftSpawnManager
 		MORHEIM_EM("MORHEIM_EM", "ELTNEN_ES", 45, 40, Race.ELYOS),
 		MORHEIM_FM("MORHEIM_FM", "ELTNEN_FS", 50, 40, Race.ELYOS),
 		MORHEIM_GM("MORHEIM_GM", "ELTNEN_GS", 50, 45, Race.ELYOS),
-		
+
 		BELUSLAN_AM("BELUSLAN_AM", "HEIRON_AS", 24, 35, Race.ELYOS),
 		BELUSLAN_BM("BELUSLAN_BM", "HEIRON_BS", 36, 35, Race.ELYOS),
 		BELUSLAN_CM("BELUSLAN_CM", "HEIRON_CS", 48, 46, Race.ELYOS),
@@ -167,13 +167,13 @@ public class RiftSpawnManager
 		BELUSLAN_EM("BELUSLAN_EM", "HEIRON_ES", 60, 50, Race.ELYOS),
 		BELUSLAN_FM("BELUSLAN_FM", "HEIRON_FS", 60, 50, Race.ELYOS),
 		BELUSLAN_GM("BELUSLAN_GM", "HEIRON_GS", 72, 50, Race.ELYOS);
-		
-		private String master;
-		private String slave;
-		private int entries;
-		private int maxLevel;
-		private Race destination;
-		
+
+		private String	master;
+		private String	slave;
+		private int		entries;
+		private int		maxLevel;
+		private Race	destination;
+
 		private RiftEnum(String master, String slave, int entries, int maxLevel, Race destination)
 		{
 			this.master = master;
@@ -229,9 +229,9 @@ public class RiftSpawnManager
 	 */
 	public static void sendRiftStatus(Player activePlayer)
 	{
-		for(Rift rift : rifts)
+		for (Rift rift : rifts)
 		{
-			if(rift.getWorldId() == activePlayer.getWorldId())
+			if (rift.getWorldId() == activePlayer.getWorldId())
 			{
 				rift.sendMessage(activePlayer);
 			}

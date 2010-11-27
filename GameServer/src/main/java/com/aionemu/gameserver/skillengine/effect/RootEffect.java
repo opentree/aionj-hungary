@@ -45,7 +45,7 @@ public class RootEffect extends EffectTemplate
 	@Override
 	public void calculate(Effect effect)
 	{
-		if (calculateEffectResistRate(effect, StatEnum.ROOT_RESISTANCE)) 
+		if (calculateEffectResistRate(effect, StatEnum.ROOT_RESISTANCE))
 			effect.addSucessEffect(this);
 	}
 
@@ -56,16 +56,14 @@ public class RootEffect extends EffectTemplate
 		effected.getEffectController().setAbnormal(EffectId.ROOT.getEffectId());
 		PacketSendUtility.broadcastPacketAndReceive(effected, new SM_TARGET_IMMOBILIZE(effected));
 
-		effected.getObserveController().attach(
-			new ActionObserver(ObserverType.ATTACKED)
+		effected.getObserveController().attach(new ActionObserver(ObserverType.ATTACKED)
+		{
+			@Override
+			public void attacked(Creature creature)
 			{
-				@Override
-				public void attacked(Creature creature)
-				{
-					effected.getEffectController().removeEffect(effect.getSkillId());
-				}
+				effected.getEffectController().removeEffect(effect.getSkillId());
 			}
-		);
+		});
 	}
 
 	@Override

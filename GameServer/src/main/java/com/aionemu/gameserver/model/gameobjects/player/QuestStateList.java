@@ -30,10 +30,10 @@ import com.aionemu.gameserver.questEngine.model.QuestState;
  */
 public class QuestStateList
 {
-	private static final Logger log = Logger.getLogger(QuestStateList.class);
-	
+	private static final Logger						log	= Logger.getLogger(QuestStateList.class);
+
 	private final SortedMap<Integer, QuestState>	_quests;
-	
+
 	/**
 	 * Creates an empty quests list
 	 */
@@ -42,7 +42,7 @@ public class QuestStateList
 		_quests = new TreeMap<Integer, QuestState>();
 	}
 
-	public synchronized boolean addQuest(int questId,  QuestState questState)
+	public synchronized boolean addQuest(int questId, QuestState questState)
 	{
 		if (_quests.containsKey(questId))
 		{
@@ -62,13 +62,13 @@ public class QuestStateList
 		}
 		return false;
 	}
-	
+
 	public QuestState getQuestState(int questId)
 	{
 		return _quests.get(questId);
 	}
 
-	public Collection <QuestState> getAllQuestState()
+	public Collection<QuestState> getAllQuestState()
 	{
 		return _quests.values();
 	}

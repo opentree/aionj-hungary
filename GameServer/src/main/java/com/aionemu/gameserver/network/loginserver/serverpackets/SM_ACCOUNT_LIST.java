@@ -48,7 +48,7 @@ public class SM_ACCOUNT_LIST extends AbstractServerPacket<LoginServerChannelHand
 	protected void writeImpl(LoginServerChannelHandler cHandler)
 	{
 		writeD(accounts.size());
-		for(AionChannelHandler ac : accounts.values())
+		for (AionChannelHandler ac : accounts.values())
 		{
 			writeS(ac.getAccount().getName());
 		}

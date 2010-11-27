@@ -31,14 +31,14 @@ import com.aionemu.gameserver.model.templates.item.ItemTemplate;
  */
 public class ItemStorage
 {
-	public static final int FIRST_AVAILABLE_SLOT = 65535;
+	public static final int	FIRST_AVAILABLE_SLOT	= 65535;
 
 	/**
 	 * LinkedList storageItems
 	 */
-	private FastList<Item> storageItems;
+	private FastList<Item>	storageItems;
 
-	private int limit = 0;
+	private int				limit					= 0;
 
 	public ItemStorage(int limit)
 	{
@@ -77,10 +77,10 @@ public class ItemStorage
 	 */
 	public Item getItemFromStorageByItemId(int itemId)
 	{
-		for(Item item : storageItems)
+		for (Item item : storageItems)
 		{
 			ItemTemplate itemTemplate = item.getItemTemplate();
-			if(itemTemplate.getTemplateId() == itemId)
+			if (itemTemplate.getTemplateId() == itemId)
 			{
 				return item;
 			}
@@ -88,7 +88,7 @@ public class ItemStorage
 
 		return null;
 	}
-	
+
 	/**
 	 * 
 	 * @param itemId
@@ -97,11 +97,11 @@ public class ItemStorage
 	public List<Item> getItemsFromStorageByItemId(int itemId)
 	{
 		List<Item> itemList = new ArrayList<Item>();
-		
-		for(Item item : storageItems)
+
+		for (Item item : storageItems)
 		{
 			ItemTemplate itemTemplate = item.getItemTemplate();
-			if(itemTemplate.getTemplateId() == itemId)
+			if (itemTemplate.getTemplateId() == itemId)
 			{
 				itemList.add(item);
 			}
@@ -109,16 +109,16 @@ public class ItemStorage
 
 		return itemList;
 	}
-	
+
 	/**
 	 * @param itemObjId
 	 * @return Item
 	 */
 	public Item getItemFromStorageByItemObjId(int itemObjId)
 	{
-		for(Item item : storageItems)
+		for (Item item : storageItems)
 		{
-			if(item.getObjectId() == itemObjId)
+			if (item.getObjectId() == itemObjId)
 			{
 				return item;
 			}
@@ -132,26 +132,26 @@ public class ItemStorage
 	 */
 	public int getSlotIdByItemId(int itemId)
 	{
-		for(Item item : storageItems)
+		for (Item item : storageItems)
 		{
 			ItemTemplate itemTemplate = item.getItemTemplate();
-			if(itemTemplate.getTemplateId() == itemId)
+			if (itemTemplate.getTemplateId() == itemId)
 			{
 				return item.getEquipmentSlot();
 			}
 		}
 		return -1;
 	}
-	
+
 	/**
 	 * @param objId
 	 * @return int
 	 */
 	public int getSlotIdByObjId(int objId)
 	{
-		for(Item item : storageItems)
+		for (Item item : storageItems)
 		{
-			if(item.getObjectId() == objId)
+			if (item.getObjectId() == objId)
 			{
 				return item.getEquipmentSlot();
 			}
@@ -169,7 +169,7 @@ public class ItemStorage
 	{
 		return FIRST_AVAILABLE_SLOT;
 	}
-	
+
 	/**
 	 * Put item logic:
 	 *  - If there is available slot - put item there and return it back
@@ -210,7 +210,7 @@ public class ItemStorage
 	{
 		return limit - storageItems.size();
 	}
-	
+
 	/**
 	 *  Number of items in storage
 	 *  

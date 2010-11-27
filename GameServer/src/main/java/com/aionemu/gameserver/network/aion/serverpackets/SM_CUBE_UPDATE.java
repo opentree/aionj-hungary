@@ -27,9 +27,9 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_CUBE_UPDATE extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private Player player;
-	private int cubeType;
-	private int advancedSlots;
+	private Player	player;
+	private int		cubeType;
+	private int		advancedSlots;
 
 	/**
 	 * Constructs new <tt>SM_CUBE_UPDATE</tt> packet
@@ -56,15 +56,15 @@ public class SM_CUBE_UPDATE extends AbstractAionServerPacket<AionChannelHandler>
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
 	{
-		writeC( cubeType);
-		writeC( advancedSlots);
-		switch(cubeType)
+		writeC(cubeType);
+		writeC(advancedSlots);
+		switch (cubeType)
 		{
 			case 0:
 				writeD(player.getInventory().size());
-				writeC( player.getCubeSize()); // cube size from npc (so max 5 for now)
-				writeC( 0); // cube size from quest (so max 2 for now)
-				writeC( 0); // unk
+				writeC(player.getCubeSize()); // cube size from npc (so max 5 for now)
+				writeC(0); // cube size from quest (so max 2 for now)
+				writeC(0); // unk
 				break;
 			case 6:
 				break;

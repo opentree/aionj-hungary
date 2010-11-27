@@ -32,7 +32,8 @@ import com.aionemu.gameserver.questEngine.model.QuestState;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "QuestDialog", propOrder = { "conditions", "operations" })
+@XmlType(name = "QuestDialog", propOrder =
+{ "conditions", "operations" })
 public class QuestDialog
 {
 
@@ -46,12 +47,12 @@ public class QuestDialog
 		if (env.getDialogId() != id)
 			return false;
 		if (conditions == null || conditions.checkConditionOfSet(env))
-        {
-                if (operations != null)
-                {
-                        return operations.operate(env);
-                }
-        }
+		{
+			if (operations != null)
+			{
+				return operations.operate(env);
+			}
+		}
 		return false;
 	}
 }

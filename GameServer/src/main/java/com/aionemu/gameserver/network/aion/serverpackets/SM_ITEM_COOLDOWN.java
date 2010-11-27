@@ -28,8 +28,8 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
 public class SM_ITEM_COOLDOWN extends AbstractAionServerPacket<AionChannelHandler>
 {
 
-	private Map<Integer, ItemCooldown> cooldowns;
-	
+	private Map<Integer, ItemCooldown>	cooldowns;
+
 	public SM_ITEM_COOLDOWN(Map<Integer, ItemCooldown> cooldowns)
 	{
 		this.cooldowns = cooldowns;
@@ -43,7 +43,7 @@ public class SM_ITEM_COOLDOWN extends AbstractAionServerPacket<AionChannelHandle
 	{
 		writeH(cooldowns.size());
 		long currentTime = System.currentTimeMillis();
-		for(Map.Entry<Integer, ItemCooldown> entry : cooldowns.entrySet())
+		for (Map.Entry<Integer, ItemCooldown> entry : cooldowns.entrySet())
 		{
 			writeH(entry.getKey());
 			int left = Math.round((entry.getValue().getReuseTime() - currentTime) / 1000);

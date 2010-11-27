@@ -33,25 +33,25 @@ import com.aionemu.gameserver.skillengine.model.Effect;
 public class SignetBurstEffect extends DamageEffect
 {
 	@XmlAttribute
-    protected int signetlvl;
+	protected int		signetlvl;
 	@XmlAttribute
-	protected String signet;
+	protected String	signet;
 
 	@Override
 	public void calculate(Effect effect)
 	{
 		Creature effected = effect.getEffected();
 		Effect signetEffect = effected.getEffectController().getAnormalEffect(signet);
-		if(signetEffect == null)
+		if (signetEffect == null)
 			return;
-		
+
 		int level = signetEffect.getSkillLevel();
 		int valueWithDelta = value + delta * effect.getSkillLevel();
 		int finalDamage = valueWithDelta * level / 5;
-		
-		effect.setReserved1(finalDamage);		
+
+		effect.setReserved1(finalDamage);
 		effect.addSucessEffect(this);
-		
+
 		signetEffect.endEffect();
 	}
 

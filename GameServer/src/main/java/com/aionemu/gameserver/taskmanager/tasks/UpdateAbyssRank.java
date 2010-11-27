@@ -34,8 +34,8 @@ public class UpdateAbyssRank extends TaskFromDBHandler
 	/**
 	 * Logger for gameserver
 	 */
-	private static final	Logger		log	= Logger.getLogger(UpdateAbyssRank.class);
-	
+	private static final Logger	log	= Logger.getLogger(UpdateAbyssRank.class);
+
 	@Override
 	public String getTaskName()
 	{
@@ -56,7 +56,7 @@ public class UpdateAbyssRank extends TaskFromDBHandler
 	{
 		log.info("Task[" + id + "] launched : updating abyss ranks for all online players !");
 		setLastActivation();
-		
+
 		for (Player player : World.getInstance().getAllPlayers())
 		{
 			player.getAbyssRank().doUpdate();

@@ -29,7 +29,7 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class FlyController
 {
-	private Player player;
+	private Player	player;
 
 	public FlyController(Player player)
 	{
@@ -38,11 +38,11 @@ public class FlyController
 
 	public void onStopGliding()
 	{
-		if(player.isInState(CreatureState.GLIDING))
+		if (player.isInState(CreatureState.GLIDING))
 		{
 			player.unsetState(CreatureState.GLIDING);
 
-			if(player.isInState(CreatureState.FLYING))
+			if (player.isInState(CreatureState.FLYING))
 			{
 				player.setFlyState(1);
 			}
@@ -65,7 +65,7 @@ public class FlyController
 	public void endFly()
 	{
 		// unset flying and gliding
-		if(player.isInState(CreatureState.FLYING) || player.isInState(CreatureState.GLIDING))
+		if (player.isInState(CreatureState.FLYING) || player.isInState(CreatureState.GLIDING))
 		{
 			PacketSendUtility.broadcastPacket(player, new SM_EMOTION(player, EmotionType.LAND, 0, 0), true);
 			player.unsetState(CreatureState.FLYING);
@@ -105,10 +105,10 @@ public class FlyController
 	 */
 	public void switchToGliding()
 	{
-		if(!player.isInState(CreatureState.GLIDING))
+		if (!player.isInState(CreatureState.GLIDING))
 		{
 			player.setState(CreatureState.GLIDING);
-			if(player.getFlyState() == 0)
+			if (player.getFlyState() == 0)
 				player.getLifeStats().triggerFpReduce();
 			player.setFlyState(2);
 

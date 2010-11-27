@@ -20,6 +20,7 @@ import java.sql.Timestamp;
 
 import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
+
 /**
  * I have no idea wtf is this
  * 
@@ -30,29 +31,29 @@ public class SM_TIME_CHECK extends AbstractAionServerPacket<AionChannelHandler>
 {
 	//Don't be fooled with empty class :D
 	//This packet is just sending opcode, without any content
-	
-		// 1.5.x sending 8 bytes
-	
-	private int	nanoTime;
-	private int time;
-	private  Timestamp	dateTime;
-	
+
+	// 1.5.x sending 8 bytes
+
+	private int			nanoTime;
+	private int			time;
+	private Timestamp	dateTime;
+
 	public SM_TIME_CHECK(int nanoTime)
 	{
-		this.dateTime = new Timestamp( (new java.util.Date()).getTime() );
+		this.dateTime = new Timestamp((new java.util.Date()).getTime());
 		this.nanoTime = nanoTime;
-		this.time = (int)dateTime.getTime();
+		this.time = (int) dateTime.getTime();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	
+
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
-	{		
+	{
 		writeD(time);
 		writeD(nanoTime);
-		
-	}	
+
+	}
 }

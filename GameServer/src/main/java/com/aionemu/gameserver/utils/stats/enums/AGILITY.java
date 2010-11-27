@@ -34,14 +34,14 @@ public enum AGILITY
 	PRIEST(100),
 	CLERIC(90),
 	CHANTER(90);
-	
-	private int value;
-	
+
+	private int	value;
+
 	private AGILITY(int value)
 	{
 		this.value = value;
 	}
-	
+
 	public int getValue()
 	{
 		return value;

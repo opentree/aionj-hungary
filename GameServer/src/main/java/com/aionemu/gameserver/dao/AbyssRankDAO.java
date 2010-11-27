@@ -29,11 +29,10 @@ public abstract class AbyssRankDAO implements DAO
 	@Override
 	public final String getClassName()
 	{
-		 return AbyssRankDAO.class.getName();
+		return AbyssRankDAO.class.getName();
 	}
 
 	public abstract void loadAbyssRank(Player player);
-	
 
 	public abstract boolean storeAbyssRank(Player player);
 }

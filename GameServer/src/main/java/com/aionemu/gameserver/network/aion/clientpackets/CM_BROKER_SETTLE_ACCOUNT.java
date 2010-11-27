@@ -28,24 +28,24 @@ import com.aionemu.gameserver.services.BrokerService;
 public class CM_BROKER_SETTLE_ACCOUNT extends AbstractClientPacket<AionChannelHandler>
 {
 	@SuppressWarnings("unused")
-	private int npcId;
-	
+	private int	npcId;
+
 	public CM_BROKER_SETTLE_ACCOUNT(int opcode)
 	{
 		super(opcode);
 	}
-	
+
 	@Override
 	protected void readImpl()
 	{
-		this.npcId = readD();	
+		this.npcId = readD();
 	}
-	
+
 	@Override
 	protected void runImpl()
 	{
 		Player player = getChannelHandler().getActivePlayer();
-		
+
 		BrokerService.getInstance().settleAccount(player);
 	}
 }

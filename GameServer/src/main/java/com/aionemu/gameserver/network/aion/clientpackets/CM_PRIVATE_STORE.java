@@ -61,7 +61,7 @@ public class CM_PRIVATE_STORE extends AbstractClientPacket<AionChannelHandler>
 		 */
 		itemCount = readH();
 		tradePSItems = new TradePSItem[itemCount];
-		for(int i = 0; i < itemCount; i++)
+		for (int i = 0; i < itemCount; i++)
 		{
 			tradePSItems[i] = new TradePSItem(readD(), readD(), readH(), readD());
 		}
@@ -80,7 +80,7 @@ public class CM_PRIVATE_STORE extends AbstractClientPacket<AionChannelHandler>
 		/**
 		 * Let PrivateStoreService handle everything
 		 */
-		if(itemCount > 0)
+		if (itemCount > 0)
 		{
 			PrivateStoreService.addItem(activePlayer, tradePSItems);
 		}

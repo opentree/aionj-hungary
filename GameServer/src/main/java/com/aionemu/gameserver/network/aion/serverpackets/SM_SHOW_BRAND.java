@@ -24,15 +24,14 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_SHOW_BRAND extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int brandId;
-	private int targetObjectId;
-	
+	private int	brandId;
+	private int	targetObjectId;
+
 	public SM_SHOW_BRAND(int brandId, int targetObjectId)
 	{
 		this.brandId = brandId;
 		this.targetObjectId = targetObjectId;
 	}
-
 
 	@Override
 	protected void writeImpl(AionChannelHandler cHandler)
@@ -41,6 +40,6 @@ public class SM_SHOW_BRAND extends AbstractAionServerPacket<AionChannelHandler>
 		writeH(0x01); //unk
 		writeD(brandId);
 		writeD(targetObjectId);
-		
+
 	}
 }

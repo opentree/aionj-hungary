@@ -30,19 +30,19 @@ public class ShutdownRestrictions extends AbstractRestrictions
 	@Override
 	public boolean isRestricted(Player player, Class<? extends Restrictions> callingRestriction)
 	{
-		if(isInShutdownProgress(player))
+		if (isInShutdownProgress(player))
 		{
 			PacketSendUtility.sendMessage(player, "You are in shutdown progress!");
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	@Override
 	public boolean canAttack(Player player, VisibleObject target)
 	{
-		if(isInShutdownProgress(player))
+		if (isInShutdownProgress(player))
 		{
 			PacketSendUtility.sendMessage(player, "You cannot attack in Shutdown progress!");
 			return false;
@@ -56,11 +56,11 @@ public class ShutdownRestrictions extends AbstractRestrictions
 	{
 		return true;
 	}
-	
+
 	@Override
 	public boolean canUseSkill(Player player, Skill skill)
 	{
-		if(isInShutdownProgress(player))
+		if (isInShutdownProgress(player))
 		{
 			PacketSendUtility.sendMessage(player, "You cannot use skills in Shutdown progress!");
 			return false;
@@ -72,7 +72,7 @@ public class ShutdownRestrictions extends AbstractRestrictions
 	@Override
 	public boolean canChat(Player player)
 	{
-		if(isInShutdownProgress(player))
+		if (isInShutdownProgress(player))
 		{
 			PacketSendUtility.sendMessage(player, "You cannot chat in Shutdown progress!");
 			return false;
@@ -84,7 +84,7 @@ public class ShutdownRestrictions extends AbstractRestrictions
 	@Override
 	public boolean canInviteToGroup(Player player, Player target)
 	{
-		if(isInShutdownProgress(player))
+		if (isInShutdownProgress(player))
 		{
 			PacketSendUtility.sendMessage(player, "You cannot invite members to group in Shutdown progress!");
 			return false;
@@ -96,7 +96,7 @@ public class ShutdownRestrictions extends AbstractRestrictions
 	@Override
 	public boolean canInviteToAlliance(Player player, Player target)
 	{
-		if(isInShutdownProgress(player))
+		if (isInShutdownProgress(player))
 		{
 			PacketSendUtility.sendMessage(player, "You cannot invite members to alliance in Shutdown progress!");
 			return false;
@@ -104,19 +104,19 @@ public class ShutdownRestrictions extends AbstractRestrictions
 
 		return true;
 	}
-	
+
 	@Override
 	public boolean canChangeEquip(Player player)
 	{
-		if(isInShutdownProgress(player))
+		if (isInShutdownProgress(player))
 		{
 			PacketSendUtility.sendMessage(player, "You cannot equip / unequip item in Shutdown progress!");
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	private boolean isInShutdownProgress(Player player)
 	{
 		return player.isInShutdownProgress();

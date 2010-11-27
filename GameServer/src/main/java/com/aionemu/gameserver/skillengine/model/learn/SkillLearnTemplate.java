@@ -30,25 +30,25 @@ import javax.xml.bind.annotation.XmlType;
 public class SkillLearnTemplate
 {
 
-	@XmlAttribute(name = "classId",  required = true)
-	private SkillClass classId;
+	@XmlAttribute(name = "classId", required = true)
+	private SkillClass		classId;
 	@XmlAttribute(name = "skillId", required = true)
-	private int skillId;
+	private int				skillId;
 	@XmlAttribute(name = "skillLevel", required = true)
-	private int skillLevel;
+	private int				skillLevel;
 	@XmlAttribute(name = "name", required = true)
-	private String name;
+	private String			name;
 	@XmlAttribute(name = "type", required = true)
-	private SkillUsageType type;
+	private SkillUsageType	type;
 	@XmlAttribute(name = "race", required = true)
-	private SkillRace race;
+	private SkillRace		race;
 	@XmlAttribute(name = "minLevel", required = true)
-	private int minLevel;
+	private int				minLevel;
 	@XmlAttribute
-	private boolean autolearn;
+	private boolean			autolearn;
 	@XmlAttribute
-	private boolean stigma = false;
-	
+	private boolean			stigma	= false;
+
 	/**
 	 * @return the classId
 	 */
@@ -56,6 +56,7 @@ public class SkillLearnTemplate
 	{
 		return classId;
 	}
+
 	/**
 	 * @return the skillId
 	 */
@@ -63,6 +64,7 @@ public class SkillLearnTemplate
 	{
 		return skillId;
 	}
+
 	/**
 	 * @return the skillLevel
 	 */
@@ -70,6 +72,7 @@ public class SkillLearnTemplate
 	{
 		return skillLevel;
 	}
+
 	/**
 	 * @return the name
 	 */
@@ -77,6 +80,7 @@ public class SkillLearnTemplate
 	{
 		return name;
 	}
+
 	/**
 	 * @return the type
 	 */
@@ -84,6 +88,7 @@ public class SkillLearnTemplate
 	{
 		return type;
 	}
+
 	/**
 	 * @return the minLevel
 	 */
@@ -91,6 +96,7 @@ public class SkillLearnTemplate
 	{
 		return minLevel;
 	}
+
 	/**
 	 * @return the race
 	 */
@@ -98,6 +104,7 @@ public class SkillLearnTemplate
 	{
 		return race;
 	}
+
 	/**
 	 * @return the autolearn
 	 */

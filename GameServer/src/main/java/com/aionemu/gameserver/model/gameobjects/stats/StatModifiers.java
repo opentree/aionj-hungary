@@ -27,13 +27,13 @@ import com.aionemu.gameserver.model.gameobjects.stats.modifiers.StatModifier;
  */
 public class StatModifiers
 {
-	private FastMap<StatModifierPriority,FastList<StatModifier>> modifiers;
-	
+	private FastMap<StatModifierPriority, FastList<StatModifier>>	modifiers;
+
 	public StatModifiers()
 	{
-		modifiers = new FastMap<StatModifierPriority,FastList<StatModifier>>();
+		modifiers = new FastMap<StatModifierPriority, FastList<StatModifier>>();
 	}
-	
+
 	public boolean add(StatModifier modifier)
 	{
 		if (!modifiers.containsKey(modifier.getPriority()))
@@ -42,7 +42,7 @@ public class StatModifiers
 		}
 		return modifiers.get(modifier.getPriority()).add(modifier);
 	}
-	
+
 	public FastList<StatModifier> getModifiers(StatModifierPriority priority)
 	{
 		if (!modifiers.containsKey(priority))

@@ -37,33 +37,33 @@ import com.aionemu.gameserver.model.templates.itemset.ItemSetTemplate;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ItemSetData
 {
-	@XmlElement(name="itemset")
-	protected List<ItemSetTemplate> itemsetList;
-	
-	private TIntObjectHashMap<ItemSetTemplate> sets;
-	
+	@XmlElement(name = "itemset")
+	protected List<ItemSetTemplate>				itemsetList;
+
+	private TIntObjectHashMap<ItemSetTemplate>	sets;
+
 	// key: item id, value: associated item set template
 	// This should provide faster search of the item template set by item id
-	private TIntObjectHashMap<ItemSetTemplate> setItems;
-	
+	private TIntObjectHashMap<ItemSetTemplate>	setItems;
+
 	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
 		sets = new TIntObjectHashMap<ItemSetTemplate>();
 		setItems = new TIntObjectHashMap<ItemSetTemplate>();
-		
-		for(ItemSetTemplate set: itemsetList)
+
+		for (ItemSetTemplate set : itemsetList)
 		{
 			sets.put(set.getId(), set);
-			
+
 			// Add reference to the ItemSetTemplate from  
-			for(ItemPart part : set.getItempart())
+			for (ItemPart part : set.getItempart())
 			{
 				setItems.put(part.getItemid(), set);
 			}
 		}
 		itemsetList = null;
 	}
-	
+
 	/**
 	 * 
 	 * @param itemSetId

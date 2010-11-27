@@ -27,9 +27,9 @@ import com.aionemu.gameserver.utils.stats.AbyssRankEnum;
  */
 public class SM_ABYSS_RANK extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private AbyssRank rank;
-	private int currentRankId;
-	
+	private AbyssRank	rank;
+	private int			currentRankId;
+
 	public SM_ABYSS_RANK(AbyssRank rank)
 	{
 		this.rank = rank;
@@ -44,7 +44,7 @@ public class SM_ABYSS_RANK extends AbstractAionServerPacket<AionChannelHandler>
 		writeD(rank.getTopRanking()); //curRating
 
 		int nextRankId = currentRankId < AbyssRankEnum.values().length ? currentRankId + 1 : currentRankId;
-		writeD(100 * rank.getAp()/AbyssRankEnum.getRankById(nextRankId).getRequired()); //exp %
+		writeD(100 * rank.getAp() / AbyssRankEnum.getRankById(nextRankId).getRequired()); //exp %
 
 		writeD(rank.getAllKill()); //allKill
 		writeD(rank.getMaxRank()); //maxRank
@@ -58,6 +58,6 @@ public class SM_ABYSS_RANK extends AbstractAionServerPacket<AionChannelHandler>
 		writeD(rank.getLastKill()); //laterKill
 		writeQ(rank.getLastAP()); //laterAP
 
-		writeC( 0x00); //unk
+		writeC(0x00); //unk
 	}
 }

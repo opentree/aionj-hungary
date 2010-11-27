@@ -35,8 +35,9 @@ import com.aionemu.gameserver.world.World;
 public class CM_INVITE_TO_GROUP extends AbstractClientPacket<AionChannelHandler>
 {
 
-	private String			name;
-	private int				inviteType;
+	private String	name;
+	private int		inviteType;
+
 	public CM_INVITE_TO_GROUP(int opcode)
 	{
 		super(opcode);
@@ -63,9 +64,9 @@ public class CM_INVITE_TO_GROUP extends AbstractClientPacket<AionChannelHandler>
 		final Player inviter = getChannelHandler().getActivePlayer();
 		final Player invited = World.getInstance().findPlayer(playerName);
 
-		if(invited != null)
+		if (invited != null)
 		{
-			if(invited.getPlayerSettings().isInDeniedStatus(DeniedStatus.GROUP))
+			if (invited.getPlayerSettings().isInDeniedStatus(DeniedStatus.GROUP))
 			{
 				sendPacket(SM_SYSTEM_MESSAGE.STR_MSG_REJECTED_INVITE_PARTY(invited.getName()));
 				return;

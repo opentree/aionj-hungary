@@ -18,7 +18,6 @@ package com.aionemu.gameserver.model.siege;
 
 import com.aionemu.gameserver.model.templates.siegelocation.SiegeLocationTemplate;
 
-
 /**
  * @author Sarynth
  *
@@ -26,29 +25,32 @@ import com.aionemu.gameserver.model.templates.siegelocation.SiegeLocationTemplat
 public class SiegeLocation
 {
 	public static final int	INVULNERABLE	= 0;
-	public static final int	VULNERABLE	= 1;
-	
+	public static final int	VULNERABLE		= 1;
+
 	/**
 	 * Unique id, defined by NCSoft
 	 */
-	private int locationId;
-	private SiegeType type;
-	private int worldId;
-	
-	private SiegeRace siegeRace = SiegeRace.BALAUR;
-	private int legionId = 0;
-	
-	private boolean isVulnerable = false;
-	private int nextState = 0;
-	
-	public SiegeLocation() {} // <3 Fastmap
+	private int				locationId;
+	private SiegeType		type;
+	private int				worldId;
+
+	private SiegeRace		siegeRace		= SiegeRace.BALAUR;
+	private int				legionId		= 0;
+
+	private boolean			isVulnerable	= false;
+	private int				nextState		= 0;
+
+	public SiegeLocation()
+	{
+	} // <3 Fastmap
+
 	public SiegeLocation(SiegeLocationTemplate template)
 	{
 		this.locationId = template.getId();
 		this.worldId = template.getWorldId();
 		this.type = template.getType();
 	}
-	
+
 	/**
 	 * Returns unique LocationId of Siege Location
 	 * @return Integer LocationId
@@ -57,32 +59,32 @@ public class SiegeLocation
 	{
 		return this.locationId;
 	}
-	
+
 	public int getWorldId()
 	{
 		return this.worldId;
 	}
-	
+
 	public SiegeType getType()
 	{
 		return this.type;
 	}
-	
+
 	public SiegeRace getRace()
 	{
 		return this.siegeRace;
 	}
-	
+
 	public void setRace(SiegeRace siegeRace)
 	{
 		this.siegeRace = siegeRace;
 	}
-	
+
 	public int getLegionId()
 	{
 		return this.legionId;
 	}
-	
+
 	public void setLegionId(int legionId)
 	{
 		this.legionId = legionId;
@@ -98,7 +100,7 @@ public class SiegeLocation
 	{
 		return this.nextState;
 	}
-	
+
 	/**
 	 * @param nextState
 	 */
@@ -106,7 +108,7 @@ public class SiegeLocation
 	{
 		this.nextState = nextState;
 	}
-	
+
 	/**
 	 * @return isVulnerable
 	 */
@@ -114,7 +116,7 @@ public class SiegeLocation
 	{
 		return this.isVulnerable;
 	}
-	
+
 	/**
 	 * @param new vulnerable value
 	 */
@@ -122,6 +124,7 @@ public class SiegeLocation
 	{
 		this.isVulnerable = value;
 	}
+
 	/**
 	 * @return
 	 */

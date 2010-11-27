@@ -37,8 +37,8 @@ public class CustomConfig
 	 */
 	@Property(key = "skill.autolearn", defaultValue = "false")
 	public static boolean	SKILL_AUTOLEARN;
-	
-	@Property(key = "stigma.autolearn", defaultValue = "false")		
+
+	@Property(key = "stigma.autolearn", defaultValue = "false")
 	public static boolean	STIGMA_AUTOLEARN;
 
 	/**
@@ -89,7 +89,7 @@ public class CustomConfig
 
 	@Property(key = "enable.html.welcome", defaultValue = "false")
 	public static boolean	ENABLE_HTML_WELCOME;
-	
+
 	@Property(key = "chat.whisper.level", defaultValue = "10")
 	public static int		LEVEL_TO_WHISPER;
 }

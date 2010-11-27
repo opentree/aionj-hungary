@@ -28,17 +28,17 @@ import com.aionemu.gameserver.services.BrokerService;
 public class CM_REGISTER_BROKER_ITEM extends AbstractClientPacket<AionChannelHandler>
 {
 	@SuppressWarnings("unused")
-	private int brokerId;
-	private int itemUniqueId;
-	private int price;
+	private int	brokerId;
+	private int	itemUniqueId;
+	private int	price;
 	@SuppressWarnings("unused")
-	private int itemCount;
-	
+	private int	itemCount;
+
 	public CM_REGISTER_BROKER_ITEM(int opcode)
 	{
 		super(opcode);
 	}
-	
+
 	@Override
 	protected void readImpl()
 	{
@@ -48,12 +48,12 @@ public class CM_REGISTER_BROKER_ITEM extends AbstractClientPacket<AionChannelHan
 		readD();
 		this.itemCount = readH();
 	}
-	
+
 	@Override
 	protected void runImpl()
 	{
 		Player player = getChannelHandler().getActivePlayer();
-		
+
 		BrokerService.getInstance().registerItem(player, itemUniqueId, price);
 	}
 }

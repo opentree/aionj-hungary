@@ -32,8 +32,8 @@ import com.aionemu.gameserver.questEngine.model.QuestEnv;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "QuestCondition")
-@XmlSeeAlso( { NpcIdCondition.class, DialogIdCondition.class, PcInventoryCondition.class, QuestVarCondition.class,
-	QuestStatusCondition.class })
+@XmlSeeAlso(
+{ NpcIdCondition.class, DialogIdCondition.class, PcInventoryCondition.class, QuestVarCondition.class, QuestStatusCondition.class })
 public abstract class QuestCondition
 {
 

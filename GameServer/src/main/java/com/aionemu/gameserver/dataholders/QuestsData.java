@@ -39,13 +39,13 @@ public class QuestsData
 {
 
 	@XmlElement(name = "quest", required = true)
-	protected List<QuestTemplate>		questsData;
+	protected List<QuestTemplate>				questsData;
 	private TIntObjectHashMap<QuestTemplate>	questData	= new TIntObjectHashMap<QuestTemplate>();
 
 	void afterUnmarshal(Unmarshaller u, Object parent)
 	{
 		questData.clear();
-		for(QuestTemplate quest : questsData)
+		for (QuestTemplate quest : questsData)
 		{
 			questData.put(quest.getId(), quest);
 		}
@@ -77,5 +77,5 @@ public class QuestsData
 		this.questsData = questsData;
 		afterUnmarshal(null, null);
 	}
-	
+
 }

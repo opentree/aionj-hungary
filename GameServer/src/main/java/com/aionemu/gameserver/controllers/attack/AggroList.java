@@ -30,11 +30,11 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
  *
  */
 public class AggroList
-{	
-	private Creature owner;
-	
-	private final Map<Creature, AggroInfo> aggroList = new SingletonMap<Creature, AggroInfo>().setShared();
-	
+{
+	private Creature						owner;
+
+	private final Map<Creature, AggroInfo>	aggroList	= new SingletonMap<Creature, AggroInfo>().setShared();
+
 	public AggroList(Creature owner)
 	{
 		this.owner = owner;
@@ -48,10 +48,9 @@ public class AggroList
 	 */
 	public void addDamage(Creature creature, int damage)
 	{
-		if (creature == null ||
-			!owner.isEnemy(creature))
+		if (creature == null || !owner.isEnemy(creature))
 			return;
-		
+
 		AggroInfo ai = getAggroInfo(creature);
 		ai.addDamage(damage);
 		/**
@@ -69,9 +68,7 @@ public class AggroList
 	 */
 	public void addHate(Creature creature, int hate)
 	{
-		if (creature == null ||
-			creature == owner ||
-			!owner.isEnemy(creature))
+		if (creature == null || creature == owner || !owner.isEnemy(creature))
 			return;
 
 		AggroInfo ai = getAggroInfo(creature);
@@ -85,22 +82,22 @@ public class AggroList
 	{
 		AionObject mostDamage = null;
 		int maxDamage = 0;
-		
+
 		for (AggroInfo ai : getFinalDamageList(true))
 		{
 			if (ai.getAttacker() == null)
 				continue;
-			
+
 			if (ai.getDamage() > maxDamage)
 			{
 				mostDamage = ai.getAttacker();
 				maxDamage = ai.getDamage();
 			}
 		}
-		
+
 		return mostDamage;
 	}
-	
+
 	/**
 	 * @return player with most damage
 	 */
@@ -108,20 +105,20 @@ public class AggroList
 	{
 		if (aggroList.isEmpty())
 			return null;
-		
+
 		Player mostDamage = null;
 		int maxDamage = 0;
-		
+
 		// Use final damage list to get pet damage as well.
 		for (AggroInfo ai : this.getFinalDamageList(false))
 		{
 			if (ai.getDamage() > maxDamage)
 			{
-				mostDamage = (Player)ai.getAttacker();
+				mostDamage = (Player) ai.getAttacker();
 				maxDamage = ai.getDamage();
 			}
 		}
-		
+
 		return mostDamage;
 	}
 
@@ -141,12 +138,11 @@ public class AggroList
 		{
 			if (ai == null)
 				continue;
-			
+
 			// aggroList will never contain anything but creatures
-			Creature attacker = (Creature)ai.getAttacker();
-			
-			if(attacker.getLifeStats().isAlreadyDead()
-				|| !owner.getKnownList().knowns(ai.getAttacker()))
+			Creature attacker = (Creature) ai.getAttacker();
+
+			if (attacker.getLifeStats().isAlreadyDead() || !owner.getKnownList().knowns(ai.getAttacker()))
 				ai.setHate(0);
 
 			if (ai.getHate() > maxHate)
@@ -157,8 +153,8 @@ public class AggroList
 		}
 
 		return mostHated;
-	}	
-	
+	}
+
 	/**
 	 * 
 	 * @param creature
@@ -166,13 +162,13 @@ public class AggroList
 	 */
 	public boolean isMostHated(Creature creature)
 	{
-		if(creature == null || creature.getLifeStats().isAlreadyDead())
+		if (creature == null || creature.getLifeStats().isAlreadyDead())
 			return false;
-		
+
 		Creature mostHated = getMostHated();
-		if(mostHated == null)
+		if (mostHated == null)
 			return false;
-		
+
 		return mostHated.equals(creature);
 	}
 
@@ -182,10 +178,10 @@ public class AggroList
 	 */
 	public void notifyHate(Creature creature, int value)
 	{
-		if(isHating(creature))
+		if (isHating(creature))
 			addHate(creature, value);
 	}
-	
+
 	/**
 	 * 
 	 * @param creature
@@ -193,10 +189,10 @@ public class AggroList
 	public void stopHating(Creature creature)
 	{
 		AggroInfo aggroInfo = aggroList.get(creature);
-		if(aggroInfo != null)
+		if (aggroInfo != null)
 			aggroInfo.setHate(0);
 	}
-	
+
 	/**
 	 * Remove completely creature from aggro list
 	 * 
@@ -206,7 +202,7 @@ public class AggroList
 	{
 		aggroList.remove(creature);
 	}
-	
+
 	/**
 	 * Clear aggroList
 	 */
@@ -214,7 +210,7 @@ public class AggroList
 	{
 		aggroList.clear();
 	}
-	
+
 	/**
 	 * 
 	 * @param creature
@@ -230,7 +226,7 @@ public class AggroList
 		}
 		return ai;
 	}
-	
+
 	/**
 	 * 
 	 * @param creature
@@ -255,7 +251,7 @@ public class AggroList
 	public int getTotalDamage()
 	{
 		int totalDamage = 0;
-		for(AggroInfo ai : this.aggroList.values())
+		for (AggroInfo ai : this.aggroList.values())
 		{
 			totalDamage += ai.getDamage();
 		}
@@ -270,32 +266,31 @@ public class AggroList
 	public Collection<AggroInfo> getFinalDamageList(boolean mergeGroupDamage)
 	{
 		final Map<AionObject, AggroInfo> list = new SingletonMap<AionObject, AggroInfo>().setShared();
-		
-		for(AggroInfo ai : this.aggroList.values())
+
+		for (AggroInfo ai : this.aggroList.values())
 		{
 			if (!(ai.getAttacker() instanceof Creature))
 				continue;
-			
+
 			// Check to see if this is a summon, if so add the damage to the group. 
-			
+
 			Creature master = (Creature) ai.getAttacker();
 			if (master instanceof ISummoned)
 				master = ((ISummoned) master).getMaster();
-			
+
 			if (!(master instanceof Player))
 				continue;
-			
-			Player player = (Player)master;
-			
-			
+
+			Player player = (Player) master;
+
 			// Don't include damage from players outside the known list.
 			if (!owner.getKnownList().knowns(player))
 				continue;
-			
+
 			if (mergeGroupDamage)
 			{
 				AionObject source;
-				
+
 				if (player.isInAlliance())
 				{
 					source = player.getPlayerAlliance();
@@ -308,7 +303,7 @@ public class AggroList
 				{
 					source = player;
 				}
-				
+
 				if (list.containsKey(source))
 				{
 					(list.get(source)).addDamage(ai.getDamage());
@@ -333,7 +328,7 @@ public class AggroList
 				list.put(player, aggro);
 			}
 		}
-		
+
 		return list.values();
 	}
 }

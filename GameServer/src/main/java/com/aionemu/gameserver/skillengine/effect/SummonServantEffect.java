@@ -59,8 +59,9 @@ public class SummonServantEffect extends SummonEffect
 
 		SpawnTemplate spawn = spawnEngine.addNewSpawn(worldId, instanceId, npcId, x, y, z, heading, 0, 0, true, true);
 		final Servant servant = spawnEngine.spawnServant(spawn, instanceId, effector, skillId, hpRatio);
-		
-		Future<?> task = ThreadPoolManager.getInstance().schedule(new Runnable(){
+
+		Future<?> task = ThreadPoolManager.getInstance().schedule(new Runnable()
+		{
 
 			@Override
 			public void run()

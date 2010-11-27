@@ -27,9 +27,5 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum NpcRank
 {
-	NORMAL,
-	ELITE,
-	JUNK,
-	HERO,
-	LEGENDARY
+	NORMAL, ELITE, JUNK, HERO, LEGENDARY
 }
