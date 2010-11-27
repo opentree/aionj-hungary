@@ -33,77 +33,70 @@ import com.aionemu.loginserver.model.AccountTime;
  * 
  * @author EvilSpirit
  */
-public class MySQL5AccountTimeDAO extends AccountTimeDAO {
+public class MySQL5AccountTimeDAO extends AccountTimeDAO
+{
 	/**
 	 * Logger
 	 */
-	private static final Logger log = Logger
-			.getLogger(MySQL5AccountTimeDAO.class);
+	private static final Logger	log	= Logger.getLogger(MySQL5AccountTimeDAO.class);
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean updateAccountTime(final int accountId,
-			final AccountTime accountTime) {
-		return DB
-				.insertUpdate(
-						"REPLACE INTO account_time (account_id, last_active, expiration_time, "
-								+ "session_duration, accumulated_online, accumulated_rest, penalty_end) values "
-								+ "(?,?,?,?,?,?,?)", new IUStH() {
-							@Override
-							public void handleInsertUpdate(
-									PreparedStatement preparedStatement)
-									throws SQLException {
-								preparedStatement.setLong(1, accountId);
-								preparedStatement.setTimestamp(2,
-										accountTime.getLastLoginTime());
-								preparedStatement.setTimestamp(3,
-										accountTime.getExpirationTime());
-								preparedStatement.setLong(4,
-										accountTime.getSessionDuration());
-								preparedStatement.setLong(5,
-										accountTime.getAccumulatedOnlineTime());
-								preparedStatement.setLong(6,
-										accountTime.getAccumulatedRestTime());
-								preparedStatement.setTimestamp(7,
-										accountTime.getPenaltyEnd());
-								preparedStatement.execute();
-							}
-						});
+	public boolean updateAccountTime(final int accountId, final AccountTime accountTime)
+	{
+		return DB.insertUpdate("REPLACE INTO account_time (account_id, last_active, expiration_time, "
+				+ "session_duration, accumulated_online, accumulated_rest, penalty_end) values " + "(?,?,?,?,?,?,?)", new IUStH()
+		{
+			@Override
+			public void handleInsertUpdate(PreparedStatement preparedStatement) throws SQLException
+			{
+				preparedStatement.setLong(1, accountId);
+				preparedStatement.setTimestamp(2, accountTime.getLastLoginTime());
+				preparedStatement.setTimestamp(3, accountTime.getExpirationTime());
+				preparedStatement.setLong(4, accountTime.getSessionDuration());
+				preparedStatement.setLong(5, accountTime.getAccumulatedOnlineTime());
+				preparedStatement.setLong(6, accountTime.getAccumulatedRestTime());
+				preparedStatement.setTimestamp(7, accountTime.getPenaltyEnd());
+				preparedStatement.execute();
+			}
+		});
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public AccountTime getAccountTime(int accountId) {
+	public AccountTime getAccountTime(int accountId)
+	{
 		AccountTime accountTime = null;
-		PreparedStatement st = DB
-				.prepareStatement("SELECT * FROM account_time WHERE account_id = ?");
+		PreparedStatement st = DB.prepareStatement("SELECT * FROM account_time WHERE account_id = ?");
 
-		try {
+		try
+		{
 			st.setLong(1, accountId);
 
 			ResultSet rs = st.executeQuery();
 
-			if (rs.next()) {
+			if (rs.next())
+			{
 				accountTime = new AccountTime();
 
 				accountTime.setLastLoginTime(rs.getTimestamp("last_active"));
 				accountTime.setSessionDuration(rs.getLong("session_duration"));
-				accountTime.setAccumulatedOnlineTime(rs
-						.getLong("accumulated_online"));
-				accountTime.setAccumulatedRestTime(rs
-						.getLong("accumulated_rest"));
+				accountTime.setAccumulatedOnlineTime(rs.getLong("accumulated_online"));
+				accountTime.setAccumulatedRestTime(rs.getLong("accumulated_rest"));
 				accountTime.setPenaltyEnd(rs.getTimestamp("penalty_end"));
-				accountTime.setExpirationTime(rs
-						.getTimestamp("expiration_time"));
+				accountTime.setExpirationTime(rs.getTimestamp("expiration_time"));
 			}
-		} catch (Exception e) {
-			log.error("Can't get account time for account with id: "
-					+ accountId, e);
-		} finally {
+		}
+		catch (Exception e)
+		{
+			log.error("Can't get account time for account with id: " + accountId, e);
+		}
+		finally
+		{
 			DB.close(st);
 		}
 
@@ -115,7 +108,8 @@ public class MySQL5AccountTimeDAO extends AccountTimeDAO {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean supports(String database, int majorVersion, int minorVersion) {
+	public boolean supports(String database, int majorVersion, int minorVersion)
+	{
 		return MySQL5DAOUtils.supports(database, majorVersion, minorVersion);
 	}
 }

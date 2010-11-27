@@ -26,17 +26,17 @@ import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
  * @author Watson, Lyahim
  * 
  */
-public class SM_BAN_RESPONSE extends
-		AbstractServerPacket<GameServerChannelHandler> {
-	private final byte type;
-	private final int accountId;
-	private final String ip;
-	private final int time;
-	private final int adminObjId;
-	private final boolean result;
+public class SM_BAN_RESPONSE extends AbstractServerPacket<GameServerChannelHandler>
+{
+	private final byte		type;
+	private final int		accountId;
+	private final String	ip;
+	private final int		time;
+	private final int		adminObjId;
+	private final boolean	result;
 
-	public SM_BAN_RESPONSE(byte type, int accountId, String ip, int time,
-			int adminObjId, boolean result) {
+	public SM_BAN_RESPONSE(byte type, int accountId, String ip, int time, int adminObjId, boolean result)
+	{
 		this.type = type;
 		this.accountId = accountId;
 		this.ip = ip;
@@ -49,7 +49,8 @@ public class SM_BAN_RESPONSE extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(GameServerChannelHandler cHandler) {
+	protected void writeImpl(GameServerChannelHandler cHandler)
+	{
 		writeC(type);
 		writeD(accountId);
 		writeS(ip);

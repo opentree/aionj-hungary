@@ -26,11 +26,12 @@ import com.aionemu.loginserver.network.aion.serverpackets.SM_LOGIN_FAIL;
 /**
  * @author -Nemesiss-, Lyahim
  */
-public class CM_AUTH_GG extends AbstractClientPacket<AionChannelHandler> {
+public class CM_AUTH_GG extends AbstractClientPacket<AionChannelHandler>
+{
 	/**
 	 * session id - its should match sessionId that was send in Init packet.
 	 */
-	private int sessionId;
+	private int	sessionId;
 
 	/*
 	 * private final int data1; private final int data2; private final int
@@ -43,7 +44,8 @@ public class CM_AUTH_GG extends AbstractClientPacket<AionChannelHandler> {
 	 * @param buf
 	 * @param client
 	 */
-	public CM_AUTH_GG(int opcode) {
+	public CM_AUTH_GG(int opcode)
+	{
 		super(opcode);
 	}
 
@@ -51,7 +53,8 @@ public class CM_AUTH_GG extends AbstractClientPacket<AionChannelHandler> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void readImpl() {
+	protected void readImpl()
+	{
 		sessionId = readD();
 
 		/* data1 = */readD();
@@ -64,12 +67,16 @@ public class CM_AUTH_GG extends AbstractClientPacket<AionChannelHandler> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void runImpl() {
+	protected void runImpl()
+	{
 		AionChannelHandler cHandler = getChannelHandler();
-		if (cHandler.getSessionId() == sessionId) {
+		if (cHandler.getSessionId() == sessionId)
+		{
 			cHandler.setState(State.AUTHED_GG);
 			cHandler.sendPacket(new SM_AUTH_GG(sessionId));
-		} else {
+		}
+		else
+		{
 			/**
 			 * Session id is not ok - inform client that smth went wrong - dc
 			 * client

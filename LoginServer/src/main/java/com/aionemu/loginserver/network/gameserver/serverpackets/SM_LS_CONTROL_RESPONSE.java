@@ -25,23 +25,23 @@ import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
  * @author Aionchs-Wylovech, Lyahim
  * 
  */
-public class SM_LS_CONTROL_RESPONSE extends
-		AbstractServerPacket<GameServerChannelHandler> {
+public class SM_LS_CONTROL_RESPONSE extends AbstractServerPacket<GameServerChannelHandler>
+{
 
-	private int type;
+	private int		type;
 
-	private boolean result;
+	private boolean	result;
 
-	private String playerName;
+	private String	playerName;
 
-	private int param;
+	private int		param;
 
-	private String adminName;
+	private String	adminName;
 
-	private int accountId;
+	private int		accountId;
 
-	public SM_LS_CONTROL_RESPONSE(int type, boolean result, String playerName,
-			int accountId, int param, String adminName) {
+	public SM_LS_CONTROL_RESPONSE(int type, boolean result, String playerName, int accountId, int param, String adminName)
+	{
 		this.type = type;
 		this.result = result;
 		this.playerName = playerName;
@@ -54,7 +54,8 @@ public class SM_LS_CONTROL_RESPONSE extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(GameServerChannelHandler cHandler) {
+	protected void writeImpl(GameServerChannelHandler cHandler)
+	{
 		writeC(type);
 		writeC(result ? 1 : 0);
 		writeS(adminName);

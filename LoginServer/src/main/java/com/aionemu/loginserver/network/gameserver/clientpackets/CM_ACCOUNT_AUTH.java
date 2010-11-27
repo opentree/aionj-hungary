@@ -29,13 +29,13 @@ import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
  * @author -Nemesiss-, Lyahim
  * 
  */
-public class CM_ACCOUNT_AUTH extends
-		AbstractClientPacket<GameServerChannelHandler> {
+public class CM_ACCOUNT_AUTH extends AbstractClientPacket<GameServerChannelHandler>
+{
 	/**
 	 * SessionKey that GameServer needs to check if is valid at Loginserver
 	 * side.
 	 */
-	private SessionKey sessionKey;
+	private SessionKey	sessionKey;
 
 	/**
 	 * Constructor.
@@ -43,7 +43,8 @@ public class CM_ACCOUNT_AUTH extends
 	 * @param buf
 	 * @param client
 	 */
-	public CM_ACCOUNT_AUTH(int opcode) {
+	public CM_ACCOUNT_AUTH(int opcode)
+	{
 		super(opcode);
 
 	}
@@ -52,7 +53,8 @@ public class CM_ACCOUNT_AUTH extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void readImpl() {
+	protected void readImpl()
+	{
 		int accountId = readD();
 		int loginOk = readD();
 		int playOk1 = readD();
@@ -65,8 +67,8 @@ public class CM_ACCOUNT_AUTH extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void runImpl() {
-		AccountController.getInstance().checkAuth(sessionKey,
-				getChannelHandler());
+	protected void runImpl()
+	{
+		AccountController.getInstance().checkAuth(sessionKey, getChannelHandler());
 	}
 }

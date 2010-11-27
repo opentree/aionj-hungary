@@ -32,27 +32,30 @@ import java.sql.SQLException;
  * 
  * @author SoulKeeper
  */
-public class MySQL5AccountDAO extends AccountDAO {
+public class MySQL5AccountDAO extends AccountDAO
+{
 	/**
 	 * Logger
 	 */
-	private static final Logger log = Logger.getLogger(MySQL5AccountDAO.class);
+	private static final Logger	log	= Logger.getLogger(MySQL5AccountDAO.class);
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Account getAccount(String name) {
+	public Account getAccount(String name)
+	{
 		Account account = null;
-		PreparedStatement st = DB
-				.prepareStatement("SELECT * FROM account_data WHERE `name` = ?");
+		PreparedStatement st = DB.prepareStatement("SELECT * FROM account_data WHERE `name` = ?");
 
-		try {
+		try
+		{
 			st.setString(1, name);
 
 			ResultSet rs = st.executeQuery();
 
-			if (rs.next()) {
+			if (rs.next())
+			{
 				account = new Account();
 
 				account.setId(rs.getInt("id"));
@@ -65,9 +68,13 @@ public class MySQL5AccountDAO extends AccountDAO {
 				account.setLastIp(rs.getString("last_ip"));
 				account.setIpForce(rs.getString("ip_force"));
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			log.error("Can't select account with name: " + name, e);
-		} finally {
+		}
+		finally
+		{
 			DB.close(st);
 		}
 
@@ -78,12 +85,13 @@ public class MySQL5AccountDAO extends AccountDAO {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getAccountId(String name) {
+	public int getAccountId(String name)
+	{
 		int id = -1;
-		PreparedStatement st = DB
-				.prepareStatement("SELECT `id` FROM account_data WHERE `name` = ?");
+		PreparedStatement st = DB.prepareStatement("SELECT `id` FROM account_data WHERE `name` = ?");
 
-		try {
+		try
+		{
 			st.setString(1, name);
 
 			ResultSet rs = st.executeQuery();
@@ -91,9 +99,13 @@ public class MySQL5AccountDAO extends AccountDAO {
 			rs.next();
 
 			id = rs.getInt("id");
-		} catch (SQLException e) {
+		}
+		catch (SQLException e)
+		{
 			log.error("Can't select id after account insertion", e);
-		} finally {
+		}
+		finally
+		{
 			DB.close(st);
 		}
 
@@ -104,18 +116,23 @@ public class MySQL5AccountDAO extends AccountDAO {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getAccountCount() {
-		PreparedStatement st = DB
-				.prepareStatement("SELECT count(*) AS c FROM account_data");
+	public int getAccountCount()
+	{
+		PreparedStatement st = DB.prepareStatement("SELECT count(*) AS c FROM account_data");
 		ResultSet rs = DB.executeQuerry(st);
 
-		try {
+		try
+		{
 			rs.next();
 
 			return rs.getInt("c");
-		} catch (SQLException e) {
+		}
+		catch (SQLException e)
+		{
 			log.error("Can't get account count", e);
-		} finally {
+		}
+		finally
+		{
 			DB.close(st);
 		}
 
@@ -126,12 +143,14 @@ public class MySQL5AccountDAO extends AccountDAO {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean insertAccount(Account account) {
+	public boolean insertAccount(Account account)
+	{
 		int result = 0;
 		PreparedStatement st = DB
 				.prepareStatement("INSERT INTO account_data(`name`, `password`, access_level, membership, activated, last_server, last_ip, ip_force) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
-		try {
+		try
+		{
 			st.setString(1, account.getName());
 			st.setString(2, account.getPasswordHash());
 			st.setByte(3, account.getAccessLevel());
@@ -142,13 +161,18 @@ public class MySQL5AccountDAO extends AccountDAO {
 			st.setString(8, account.getIpForce());
 
 			result = st.executeUpdate();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e)
+		{
 			log.error("Can't inser account", e);
-		} finally {
+		}
+		finally
+		{
 			DB.close(st);
 		}
 
-		if (result > 0) {
+		if (result > 0)
+		{
 			account.setId(getAccountId(account.getName()));
 		}
 
@@ -159,12 +183,14 @@ public class MySQL5AccountDAO extends AccountDAO {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean updateAccount(Account account) {
+	public boolean updateAccount(Account account)
+	{
 		int result = 0;
 		PreparedStatement st = DB
 				.prepareStatement("UPDATE account_data SET `name` = ?, `password` = ?, access_level = ?, membership = ?, last_server = ?, last_ip = ?, ip_force = ? WHERE `id` = ?");
 
-		try {
+		try
+		{
 			st.setString(1, account.getName());
 			st.setString(2, account.getPasswordHash());
 			st.setByte(3, account.getAccessLevel());
@@ -174,9 +200,13 @@ public class MySQL5AccountDAO extends AccountDAO {
 			st.setString(7, account.getIpForce());
 			st.setInt(8, account.getId());
 			st.executeUpdate();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e)
+		{
 			log.error("Can't update account");
-		} finally {
+		}
+		finally
+		{
 			DB.close(st);
 		}
 
@@ -187,59 +217,63 @@ public class MySQL5AccountDAO extends AccountDAO {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean updateLastServer(final int accountId, final byte lastServer) {
-		return DB.insertUpdate(
-				"UPDATE account_data SET last_server = ? WHERE id = ?",
-				new IUStH() {
-					@Override
-					public void handleInsertUpdate(
-							PreparedStatement preparedStatement)
-							throws SQLException {
-						preparedStatement.setByte(1, lastServer);
-						preparedStatement.setInt(2, accountId);
-						preparedStatement.execute();
-					}
-				});
+	public boolean updateLastServer(final int accountId, final byte lastServer)
+	{
+		return DB.insertUpdate("UPDATE account_data SET last_server = ? WHERE id = ?", new IUStH()
+		{
+			@Override
+			public void handleInsertUpdate(PreparedStatement preparedStatement) throws SQLException
+			{
+				preparedStatement.setByte(1, lastServer);
+				preparedStatement.setInt(2, accountId);
+				preparedStatement.execute();
+			}
+		});
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean updateLastIp(final int accountId, final String ip) {
-		return DB.insertUpdate(
-				"UPDATE account_data SET last_ip = ? WHERE id = ?",
-				new IUStH() {
-					@Override
-					public void handleInsertUpdate(
-							PreparedStatement preparedStatement)
-							throws SQLException {
-						preparedStatement.setString(1, ip);
-						preparedStatement.setInt(2, accountId);
-						preparedStatement.execute();
-					}
-				});
+	public boolean updateLastIp(final int accountId, final String ip)
+	{
+		return DB.insertUpdate("UPDATE account_data SET last_ip = ? WHERE id = ?", new IUStH()
+		{
+			@Override
+			public void handleInsertUpdate(PreparedStatement preparedStatement) throws SQLException
+			{
+				preparedStatement.setString(1, ip);
+				preparedStatement.setInt(2, accountId);
+				preparedStatement.execute();
+			}
+		});
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getLastIp(final int accountId) {
+	public String getLastIp(final int accountId)
+	{
 		String lastIp = "";
-		PreparedStatement st = DB
-				.prepareStatement("SELECT `last_ip` FROM `account_data` WHERE `id` = ?");
+		PreparedStatement st = DB.prepareStatement("SELECT `last_ip` FROM `account_data` WHERE `id` = ?");
 
-		try {
+		try
+		{
 			st.setInt(1, accountId);
 			ResultSet rs = st.executeQuery();
-			if (rs.next()) {
+			if (rs.next())
+			{
 				lastIp = rs.getString("last_ip");
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			log.error("Can't select last IP of account ID: " + accountId, e);
 			return "";
-		} finally {
+		}
+		finally
+		{
 			DB.close(st);
 		}
 
@@ -250,7 +284,8 @@ public class MySQL5AccountDAO extends AccountDAO {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean supports(String database, int majorVersion, int minorVersion) {
+	public boolean supports(String database, int majorVersion, int minorVersion)
+	{
 		return MySQL5DAOUtils.supports(database, majorVersion, minorVersion);
 	}
 }

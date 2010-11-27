@@ -26,16 +26,16 @@ import com.aionemu.loginserver.network.gameserver.GameServerChannelHandler;
  * @author -Nemesiss-, Lyahim
  * 
  */
-public class SM_ACCOUNT_RECONNECT_KEY extends
-		AbstractServerPacket<GameServerChannelHandler> {
+public class SM_ACCOUNT_RECONNECT_KEY extends AbstractServerPacket<GameServerChannelHandler>
+{
 	/**
 	 * accountId of account that will be reconnecting.
 	 */
-	private final int accountId;
+	private final int	accountId;
 	/**
 	 * ReconnectKey that will be used for authentication.
 	 */
-	private final int reconnectKey;
+	private final int	reconnectKey;
 
 	/**
 	 * Constructor.
@@ -43,7 +43,8 @@ public class SM_ACCOUNT_RECONNECT_KEY extends
 	 * @param accountId
 	 * @param reconnectKey
 	 */
-	public SM_ACCOUNT_RECONNECT_KEY(int accountId, int reconnectKey) {
+	public SM_ACCOUNT_RECONNECT_KEY(int accountId, int reconnectKey)
+	{
 		this.accountId = accountId;
 		this.reconnectKey = reconnectKey;
 	}
@@ -52,7 +53,8 @@ public class SM_ACCOUNT_RECONNECT_KEY extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(GameServerChannelHandler cHandler) {
+	protected void writeImpl(GameServerChannelHandler cHandler)
+	{
 		writeD(accountId);
 		writeD(reconnectKey);
 	}

@@ -24,11 +24,12 @@ import com.aionemu.loginserver.network.aion.AionChannelHandler;
  * @author -Nemesiss-, Lyahim
  * 
  */
-public class SM_PLAY_FAIL extends AbstractServerPacket<AionChannelHandler> {
+public class SM_PLAY_FAIL extends AbstractServerPacket<AionChannelHandler>
+{
 	/**
 	 * response - why play fail
 	 */
-	private AionAuthResponse response;
+	private AionAuthResponse	response;
 
 	/**
 	 * Constructs new instance of <tt>SM_PLAY_FAIL</tt> packet.
@@ -36,14 +37,16 @@ public class SM_PLAY_FAIL extends AbstractServerPacket<AionChannelHandler> {
 	 * @param response
 	 *            auth response
 	 */
-	public SM_PLAY_FAIL(AionAuthResponse response) {
+	public SM_PLAY_FAIL(AionAuthResponse response)
+	{
 		this.response = response;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	protected void writeImpl(AionChannelHandler cHandler) {
+	protected void writeImpl(AionChannelHandler cHandler)
+	{
 		writeD(response.getMessageId());
 	}
 }

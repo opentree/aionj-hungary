@@ -38,33 +38,35 @@ import com.aionemu.loginserver.network.gameserver.serverpackets.SM_REQUEST_KICK_
  * 
  * @author -Nemesiss-
  */
-public class GameServerTable {
+public class GameServerTable
+{
 	/**
 	 * Logger for this class.
 	 */
-	private static final Logger log = Logger.getLogger(GameServerTable.class);
+	private static final Logger					log	= Logger.getLogger(GameServerTable.class);
 
 	/**
 	 * Map<Id,GameServer>
 	 */
-	private static Map<Byte, GameServerInfo> gameservers;
+	private static Map<Byte, GameServerInfo>	gameservers;
 
 	/**
 	 * Return collection contains all registered [up/down] GameServers.
 	 * 
 	 * @return collection of GameServers.
 	 */
-	public static Collection<GameServerInfo> getGameServers() {
+	public static Collection<GameServerInfo> getGameServers()
+	{
 		return Collections.unmodifiableCollection(gameservers.values());
 	}
 
 	/**
 	 * Load GameServers from database.
 	 */
-	public static void load() {
+	public static void load()
+	{
 		gameservers = getDAO().getAllGameServers();
-		log.info("GameServerTable loaded " + gameservers.size()
-				+ " registered GameServers.");
+		log.info("GameServerTable loaded " + gameservers.size() + " registered GameServers.");
 	}
 
 	/**
@@ -88,18 +90,17 @@ public class GameServerTable {
 	 *            can auth on ls
 	 * @return GsAuthResponse
 	 */
-	public static GsAuthResponse registerGameServer(
-			GameServerChannelHandler gscHandler, byte requestedId,
-			byte[] defaultAddress, List<IPRange> ipRanges, int port,
-			int maxPlayers, String password) {
+	public static GsAuthResponse registerGameServer(GameServerChannelHandler gscHandler, byte requestedId, byte[] defaultAddress, List<IPRange> ipRanges,
+			int port, int maxPlayers, String password)
+	{
 		GameServerInfo gsi = gameservers.get(requestedId);
 
 		/**
 		 * This id is not Registered at LoginServer.
 		 */
-		if (gsi == null) {
-			log.info(gscHandler + " requestedID=" + requestedId
-					+ " not aviable!");
+		if (gsi == null)
+		{
+			log.info(gscHandler + " requestedID=" + requestedId + " not aviable!");
 			return GsAuthResponse.NOT_AUTHED;
 		}
 
@@ -112,9 +113,8 @@ public class GameServerTable {
 		/**
 		 * Check if password and ip are ok.
 		 */
-		if (!gsi.getPassword().equals(password)
-				|| !NetworkUtils.checkIPMatching(gsi.getIp(),
-						gscHandler.getIP())) {
+		if (!gsi.getPassword().equals(password) || !NetworkUtils.checkIPMatching(gsi.getIp(), gscHandler.getIP()))
+		{
 			log.info(gscHandler + " wrong ip or password!");
 			return GsAuthResponse.NOT_AUTHED;
 		}
@@ -135,7 +135,8 @@ public class GameServerTable {
 	 * @param gameServerId
 	 * @return GameSererInfo object for given gameserverId.
 	 */
-	public static GameServerInfo getGameServerInfo(byte gameServerId) {
+	public static GameServerInfo getGameServerInfo(byte gameServerId)
+	{
 		return gameservers.get(gameServerId);
 	}
 
@@ -147,9 +148,12 @@ public class GameServerTable {
 	 *            account to check
 	 * @return true is account is logged in on one of GameServers
 	 */
-	public static boolean isAccountOnAnyGameServer(Account acc) {
-		for (GameServerInfo gsi : getGameServers()) {
-			if (gsi.isAccountOnGameServer(acc.getId())) {
+	public static boolean isAccountOnAnyGameServer(Account acc)
+	{
+		for (GameServerInfo gsi : getGameServers())
+		{
+			if (gsi.isAccountOnGameServer(acc.getId()))
+			{
 				return true;
 			}
 		}
@@ -162,11 +166,13 @@ public class GameServerTable {
 	 * @param account
 	 *            account to kick
 	 */
-	public static void kickAccountFromGameServer(Account account) {
-		for (GameServerInfo gsi : getGameServers()) {
-			if (gsi.isAccountOnGameServer(account.getId())) {
-				gsi.getGschannelHandler().sendPacket(
-						new SM_REQUEST_KICK_ACCOUNT(account.getId()));
+	public static void kickAccountFromGameServer(Account account)
+	{
+		for (GameServerInfo gsi : getGameServers())
+		{
+			if (gsi.isAccountOnGameServer(account.getId()))
+			{
+				gsi.getGschannelHandler().sendPacket(new SM_REQUEST_KICK_ACCOUNT(account.getId()));
 				break;
 			}
 		}
@@ -178,7 +184,8 @@ public class GameServerTable {
 	 * 
 	 * @return {@link com.aionemu.loginserver.dao.GameServersDAO}
 	 */
-	private static GameServersDAO getDAO() {
+	private static GameServersDAO getDAO()
+	{
 		return DAOManager.getDAO(GameServersDAO.class);
 	}
 }

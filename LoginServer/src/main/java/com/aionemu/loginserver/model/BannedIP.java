@@ -23,30 +23,31 @@ import java.sql.Timestamp;
  * 
  * @author SoulKeeper
  */
-public class BannedIP {
+public class BannedIP
+{
 	/**
 	 * Returns id of ip ban
 	 */
-	private Integer id;
+	private Integer		id;
 
 	/**
 	 * Returns ip mask
 	 */
-	private String mask;
+	private String		mask;
 
 	/**
 	 * Returns expiration time
 	 */
-	private Timestamp timeEnd;
+	private Timestamp	timeEnd;
 
 	/**
 	 * Checks if ban is still active
 	 * 
 	 * @return true if ban is still active
 	 */
-	public boolean isActive() {
-		return timeEnd == null
-				|| timeEnd.getTime() > System.currentTimeMillis();
+	public boolean isActive()
+	{
+		return timeEnd == null || timeEnd.getTime() > System.currentTimeMillis();
 	}
 
 	/**
@@ -54,7 +55,8 @@ public class BannedIP {
 	 * 
 	 * @return ban id
 	 */
-	public Integer getId() {
+	public Integer getId()
+	{
 		return id;
 	}
 
@@ -64,7 +66,8 @@ public class BannedIP {
 	 * @param id
 	 *            ban id
 	 */
-	public void setId(Integer id) {
+	public void setId(Integer id)
+	{
 		this.id = id;
 	}
 
@@ -73,7 +76,8 @@ public class BannedIP {
 	 * 
 	 * @return ip mask
 	 */
-	public String getMask() {
+	public String getMask()
+	{
 		return mask;
 	}
 
@@ -83,7 +87,8 @@ public class BannedIP {
 	 * @param mask
 	 *            ip mask
 	 */
-	public void setMask(String mask) {
+	public void setMask(String mask)
+	{
 		this.mask = mask;
 	}
 
@@ -92,7 +97,8 @@ public class BannedIP {
 	 * 
 	 * @return expiration time of ban
 	 */
-	public Timestamp getTimeEnd() {
+	public Timestamp getTimeEnd()
+	{
 		return timeEnd;
 	}
 
@@ -102,7 +108,8 @@ public class BannedIP {
 	 * @param timeEnd
 	 *            expiration time of ban
 	 */
-	public void setTimeEnd(Timestamp timeEnd) {
+	public void setTimeEnd(Timestamp timeEnd)
+	{
 		this.timeEnd = timeEnd;
 	}
 
@@ -114,7 +121,8 @@ public class BannedIP {
 	 * @return true if ban's are equals
 	 */
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(Object o)
+	{
 		if (this == o)
 			return true;
 		if (!(o instanceof BannedIP))
@@ -122,8 +130,7 @@ public class BannedIP {
 
 		BannedIP bannedIP = (BannedIP) o;
 
-		return !(mask != null ? !mask.equals(bannedIP.mask)
-				: bannedIP.mask != null);
+		return !(mask != null ? !mask.equals(bannedIP.mask) : bannedIP.mask != null);
 	}
 
 	/**
@@ -132,7 +139,8 @@ public class BannedIP {
 	 * @return ban's hashcode
 	 */
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		return mask != null ? mask.hashCode() : 0;
 	}
 }

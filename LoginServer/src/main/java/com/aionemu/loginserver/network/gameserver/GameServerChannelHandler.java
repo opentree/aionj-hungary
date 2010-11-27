@@ -28,29 +28,29 @@ import com.aionemu.loginserver.GameServerInfo;
  * @author lyahim
  * 
  */
-public class GameServerChannelHandler extends AbstractChannelHandler {
+public class GameServerChannelHandler extends AbstractChannelHandler
+{
 	/**
 	 * Default logger
 	 */
-	private static final Logger log = Logger
-			.getLogger(GameServerChannelHandler.class);
-	private GameServerInfo gameServerInfo = null;
+	private static final Logger	log				= Logger.getLogger(GameServerChannelHandler.class);
+	private GameServerInfo		gameServerInfo	= null;
 
-	public GameServerChannelHandler(
-			AbstractPacketHandlerFactory<GameServerChannelHandler> aphf) {
+	public GameServerChannelHandler(AbstractPacketHandlerFactory<GameServerChannelHandler> aphf)
+	{
 		super(aphf);
 	}
 
 	@Override
-	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e)
-			throws Exception {
+	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception
+	{
 		super.channelConnected(ctx, e);
 		log.info("GameServer connected from " + inetAddress.getHostAddress());
 	}
 
 	@Override
-	public void channelDisconnected(ChannelHandlerContext ctx,
-			ChannelStateEvent e) throws Exception {
+	public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception
+	{
 		super.channelDisconnected(ctx, e);
 		log.info("GameServer disconnected! IP: " + inetAddress.getHostAddress());
 	}
@@ -59,7 +59,8 @@ public class GameServerChannelHandler extends AbstractChannelHandler {
 	 * @return GameServerInfo for this GsConnection or null if this GsConnection
 	 *         is not authenticated yet.
 	 */
-	public GameServerInfo getGameServerInfo() {
+	public GameServerInfo getGameServerInfo()
+	{
 		return gameServerInfo;
 	}
 
@@ -67,7 +68,8 @@ public class GameServerChannelHandler extends AbstractChannelHandler {
 	 * @param gameServerInfo
 	 *            Set GameServerInfo for this GsConnection.
 	 */
-	public void setGameServerInfo(GameServerInfo gameServerInfo) {
+	public void setGameServerInfo(GameServerInfo gameServerInfo)
+	{
 		this.gameServerInfo = gameServerInfo;
 	}
 }

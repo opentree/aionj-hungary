@@ -26,7 +26,8 @@ import com.aionemu.loginserver.GameServerInfo;
  * 
  * @author -Nemesiss-
  */
-public abstract class GameServersDAO implements DAO {
+public abstract class GameServersDAO implements DAO
+{
 	/**
 	 * Returns all gameservers from database.
 	 * 
@@ -41,7 +42,8 @@ public abstract class GameServersDAO implements DAO {
 	 * @return class name
 	 */
 	@Override
-	public final String getClassName() {
+	public final String getClassName()
+	{
 		return GameServersDAO.class.getName();
 	}
 }

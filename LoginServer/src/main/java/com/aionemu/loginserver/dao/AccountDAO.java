@@ -25,7 +25,8 @@ import com.aionemu.loginserver.model.Account;
  * 
  * @author SoulKeeper
  */
-public abstract class AccountDAO implements DAO {
+public abstract class AccountDAO implements DAO
+{
 	/**
 	 * Returns account by name or null
 	 * 
@@ -107,7 +108,8 @@ public abstract class AccountDAO implements DAO {
 	 * @return uniquire class name for all implementations
 	 */
 	@Override
-	public final String getClassName() {
+	public final String getClassName()
+	{
 		return AccountDAO.class.getName();
 	}
 }

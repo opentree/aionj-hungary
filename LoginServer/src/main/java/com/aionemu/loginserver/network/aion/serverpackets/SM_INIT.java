@@ -30,22 +30,23 @@ import com.aionemu.loginserver.network.aion.AionChannelHandler;
  *         : 0x80 bytes for the scrambled RSA public key 0x10 bytes at 0x00 d:
  *         unknow d: unknow d: unknow d: unknow s: blowfish key
  */
-public final class SM_INIT extends AbstractServerPacket<AionChannelHandler> {
+public final class SM_INIT extends AbstractServerPacket<AionChannelHandler>
+{
 
 	/**
 	 * Session Id of this connection
 	 */
-	private final int sessionId;
+	private final int		sessionId;
 
 	/**
 	 * public Rsa key that client will use to encrypt login and password that
 	 * will be send in RequestAuthLogin client packet.
 	 */
-	private final byte[] publicRsaKey;
+	private final byte[]	publicRsaKey;
 	/**
 	 * blowfish key for packet encryption/decryption.
 	 */
-	private final byte[] blowfishKey;
+	private final byte[]	blowfishKey;
 
 	/**
 	 * Constructor
@@ -53,9 +54,9 @@ public final class SM_INIT extends AbstractServerPacket<AionChannelHandler> {
 	 * @param client
 	 * @param blowfishKey
 	 */
-	public SM_INIT(AionChannelHandler client, SecretKey blowfishKey) {
-		this(client.getEncryptedModulus(), blowfishKey.getEncoded(), client
-				.getSessionId());
+	public SM_INIT(AionChannelHandler client, SecretKey blowfishKey)
+	{
+		this(client.getEncryptedModulus(), blowfishKey.getEncoded(), client.getSessionId());
 	}
 
 	/**
@@ -68,7 +69,8 @@ public final class SM_INIT extends AbstractServerPacket<AionChannelHandler> {
 	 * @param sessionId
 	 *            Session identifier
 	 */
-	private SM_INIT(byte[] publicRsaKey, byte[] blowfishKey, int sessionId) {
+	private SM_INIT(byte[] publicRsaKey, byte[] blowfishKey, int sessionId)
+	{
 		this.sessionId = sessionId;
 		this.publicRsaKey = publicRsaKey;
 		this.blowfishKey = blowfishKey;
@@ -78,7 +80,8 @@ public final class SM_INIT extends AbstractServerPacket<AionChannelHandler> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionChannelHandler cHandler) {
+	protected void writeImpl(AionChannelHandler cHandler)
+	{
 		writeD(sessionId); // session id
 		writeD(0x0000c621); // protocol revision
 		writeB(publicRsaKey); // RSA Public Key
@@ -99,9 +102,8 @@ public final class SM_INIT extends AbstractServerPacket<AionChannelHandler> {
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
-	public String toString() {
-		return "SM_INIT [blowfishKey=" + Arrays.toString(blowfishKey)
-				+ ", publicRsaKey=" + Arrays.toString(publicRsaKey)
-				+ ", sessionId=" + sessionId + "]";
+	public String toString()
+	{
+		return "SM_INIT [blowfishKey=" + Arrays.toString(blowfishKey) + ", publicRsaKey=" + Arrays.toString(publicRsaKey) + ", sessionId=" + sessionId + "]";
 	}
 }

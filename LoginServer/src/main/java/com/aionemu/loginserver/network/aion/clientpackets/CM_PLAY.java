@@ -29,19 +29,20 @@ import com.aionemu.loginserver.network.aion.serverpackets.SM_PLAY_OK;
 /**
  * @author -Nemesiss-, Lyahim
  */
-public class CM_PLAY extends AbstractClientPacket<AionChannelHandler> {
+public class CM_PLAY extends AbstractClientPacket<AionChannelHandler>
+{
 	/**
 	 * accountId is part of session key - its used for security purposes
 	 */
-	private int accountId;
+	private int		accountId;
 	/**
 	 * loginOk is part of session key - its used for security purposes
 	 */
-	private int loginOk;
+	private int		loginOk;
 	/**
 	 * Id of game server that this client is trying to play on.
 	 */
-	private byte servId;
+	private byte	servId;
 
 	/**
 	 * Constructs new instance of <tt>SM_PLAY_FAIL</tt> packet.
@@ -51,7 +52,8 @@ public class CM_PLAY extends AbstractClientPacket<AionChannelHandler> {
 	 * @param client
 	 *            client
 	 */
-	public CM_PLAY(int opcode) {
+	public CM_PLAY(int opcode)
+	{
 		super(opcode);
 	}
 
@@ -59,7 +61,8 @@ public class CM_PLAY extends AbstractClientPacket<AionChannelHandler> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void readImpl() {
+	protected void readImpl()
+	{
 		accountId = readD();
 		loginOk = readD();
 		servId = (byte) readC();
@@ -69,10 +72,12 @@ public class CM_PLAY extends AbstractClientPacket<AionChannelHandler> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void runImpl() {
+	protected void runImpl()
+	{
 		AionChannelHandler con = getChannelHandler();
 		SessionKey key = con.getSessionKey();
-		if (key.checkLogin(accountId, loginOk)) {
+		if (key.checkLogin(accountId, loginOk))
+		{
 			GameServerInfo gsi = GameServerTable.getGameServerInfo(servId);
 			if (gsi == null || !gsi.isOnline())
 				con.sendPacket(new SM_PLAY_FAIL(AionAuthResponse.SERVER_DOWN));
@@ -80,11 +85,13 @@ public class CM_PLAY extends AbstractClientPacket<AionChannelHandler> {
 			// con.sendPacket(new SM_PLAY_FAIL(AionAuthResponse.GM_ONLY));
 			else if (gsi.isFull())
 				con.sendPacket(new SM_PLAY_FAIL(AionAuthResponse.SERVER_FULL));
-			else {
+			else
+			{
 				con.setJoinedGs();
 				sendPacket(new SM_PLAY_OK(key));
 			}
-		} else
+		}
+		else
 			con.close(new SM_LOGIN_FAIL(AionAuthResponse.SYSTEM_ERROR));
 	}
 }

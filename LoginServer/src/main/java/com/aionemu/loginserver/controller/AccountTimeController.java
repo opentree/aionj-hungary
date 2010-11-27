@@ -31,7 +31,8 @@ import com.aionemu.loginserver.model.AccountTime;
  * 
  * @author EvilSpirit
  */
-public class AccountTimeController {
+public class AccountTimeController
+{
 	/**
 	 * Update account time when character logins. The following field are being
 	 * updated: - LastLoginTime (set to CurrentTime) - RestTime (set to
@@ -39,14 +40,16 @@ public class AccountTimeController {
 	 * 
 	 * @param account
 	 */
-	public static void updateOnLogin(Account account) {
+	public static void updateOnLogin(Account account)
+	{
 		AccountTime accountTime = account.getAccountTime();
 
 		/**
 		 * It seems the account was just created, so new accountTime should be
 		 * created too
 		 */
-		if (accountTime == null) {
+		if (accountTime == null)
+		{
 			accountTime = new AccountTime();
 		}
 
@@ -57,23 +60,22 @@ public class AccountTimeController {
 		 * The character from that account was online not today, so it's account
 		 * timings should be nulled.
 		 */
-		if (lastLoginDay < currentDay) {
+		if (lastLoginDay < currentDay)
+		{
 			accountTime.setAccumulatedOnlineTime(0);
 			accountTime.setAccumulatedRestTime(0);
-		} else {
-			long restTime = System.currentTimeMillis()
-					- accountTime.getLastLoginTime().getTime()
-					- accountTime.getSessionDuration();
+		}
+		else
+		{
+			long restTime = System.currentTimeMillis() - accountTime.getLastLoginTime().getTime() - accountTime.getSessionDuration();
 
-			accountTime.setAccumulatedRestTime(accountTime
-					.getAccumulatedRestTime() + restTime);
+			accountTime.setAccumulatedRestTime(accountTime.getAccumulatedRestTime() + restTime);
 
 		}
 
 		accountTime.setLastLoginTime(new Timestamp(System.currentTimeMillis()));
 
-		DAOManager.getDAO(AccountTimeDAO.class).updateAccountTime(
-				account.getId(), accountTime);
+		DAOManager.getDAO(AccountTimeDAO.class).updateAccountTime(account.getId(), accountTime);
 		account.setAccountTime(accountTime);
 	}
 
@@ -84,15 +86,13 @@ public class AccountTimeController {
 	 * 
 	 * @param account
 	 */
-	public static void updateOnLogout(Account account) {
+	public static void updateOnLogout(Account account)
+	{
 		AccountTime accountTime = account.getAccountTime();
 
-		accountTime.setSessionDuration(System.currentTimeMillis()
-				- accountTime.getLastLoginTime().getTime());
-		accountTime.setAccumulatedOnlineTime(accountTime
-				.getAccumulatedOnlineTime() + accountTime.getSessionDuration());
-		DAOManager.getDAO(AccountTimeDAO.class).updateAccountTime(
-				account.getId(), accountTime);
+		accountTime.setSessionDuration(System.currentTimeMillis() - accountTime.getLastLoginTime().getTime());
+		accountTime.setAccumulatedOnlineTime(accountTime.getAccumulatedOnlineTime() + accountTime.getSessionDuration());
+		DAOManager.getDAO(AccountTimeDAO.class).updateAccountTime(account.getId(), accountTime);
 		account.setAccountTime(accountTime);
 	}
 
@@ -102,13 +102,11 @@ public class AccountTimeController {
 	 * @param account
 	 * @return true, if account is expired, false otherwise
 	 */
-	public static boolean isAccountExpired(Account account) {
+	public static boolean isAccountExpired(Account account)
+	{
 		AccountTime accountTime = account.getAccountTime();
 
-		return accountTime != null
-				&& accountTime.getExpirationTime() != null
-				&& accountTime.getExpirationTime().getTime() < System
-						.currentTimeMillis();
+		return accountTime != null && accountTime.getExpirationTime() != null && accountTime.getExpirationTime().getTime() < System.currentTimeMillis();
 	}
 
 	/**
@@ -117,15 +115,13 @@ public class AccountTimeController {
 	 * @param account
 	 * @return true, is penalty is active, false otherwise
 	 */
-	public static boolean isAccountPenaltyActive(Account account) {
+	public static boolean isAccountPenaltyActive(Account account)
+	{
 		AccountTime accountTime = account.getAccountTime();
 
 		// 1000 is 'infinity' value
-		return accountTime != null
-				&& accountTime.getPenaltyEnd() != null
-				&& (accountTime.getPenaltyEnd().getTime() == 1000 || accountTime
-						.getPenaltyEnd().getTime() >= System
-						.currentTimeMillis());
+		return accountTime != null && accountTime.getPenaltyEnd() != null
+				&& (accountTime.getPenaltyEnd().getTime() == 1000 || accountTime.getPenaltyEnd().getTime() >= System.currentTimeMillis());
 	}
 
 	/**
@@ -135,7 +131,8 @@ public class AccountTimeController {
 	 *            time in ms
 	 * @return days
 	 */
-	public static int getDays(long millis) {
+	public static int getDays(long millis)
+	{
 		return (int) (millis / 1000 / 3600 / 24);
 	}
 }

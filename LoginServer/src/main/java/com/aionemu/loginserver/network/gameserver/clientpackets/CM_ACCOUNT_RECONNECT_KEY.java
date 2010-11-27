@@ -33,17 +33,16 @@ import com.aionemu.loginserver.network.gameserver.serverpackets.SM_ACCOUNT_RECON
  * @author -Nemesiss-, Lyahim
  * 
  */
-public class CM_ACCOUNT_RECONNECT_KEY extends
-		AbstractClientPacket<GameServerChannelHandler> {
+public class CM_ACCOUNT_RECONNECT_KEY extends AbstractClientPacket<GameServerChannelHandler>
+{
 	/**
 	 * Logger for this class.
 	 */
-	private static final Logger log = Logger
-			.getLogger(CM_ACCOUNT_RECONNECT_KEY.class);
+	private static final Logger	log	= Logger.getLogger(CM_ACCOUNT_RECONNECT_KEY.class);
 	/**
 	 * accoundId of account that will be reconnecting.
 	 */
-	private int accountId;
+	private int					accountId;
 
 	/**
 	 * Constructor.
@@ -51,7 +50,8 @@ public class CM_ACCOUNT_RECONNECT_KEY extends
 	 * @param buf
 	 * @param client
 	 */
-	public CM_ACCOUNT_RECONNECT_KEY(int opcode) {
+	public CM_ACCOUNT_RECONNECT_KEY(int opcode)
+	{
 		super(opcode);
 	}
 
@@ -59,7 +59,8 @@ public class CM_ACCOUNT_RECONNECT_KEY extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void readImpl() {
+	protected void readImpl()
+	{
 		accountId = readD();
 	}
 
@@ -67,15 +68,14 @@ public class CM_ACCOUNT_RECONNECT_KEY extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void runImpl() {
+	protected void runImpl()
+	{
 		int reconectKey = Rnd.nextInt();
-		Account acc = getChannelHandler().getGameServerInfo()
-				.removeAccountFromGameServer(accountId);
+		Account acc = getChannelHandler().getGameServerInfo().removeAccountFromGameServer(accountId);
 		if (acc == null)
 			log.info("This shouldnt happend! [Error]");
 		else
-			AccountController.getInstance().addReconnectingAccount(
-					new ReconnectingAccount(acc, reconectKey));
+			AccountController.getInstance().addReconnectingAccount(new ReconnectingAccount(acc, reconectKey));
 		sendPacket(new SM_ACCOUNT_RECONNECT_KEY(accountId, reconectKey));
 	}
 }

@@ -22,7 +22,8 @@ package com.aionemu.loginserver.network.aion;
  * 
  * @author KID
  */
-public enum AionAuthResponse {
+public enum AionAuthResponse
+{
 	/**
 	 * that one is not being sent to client, it's only for internal use.
 	 * Everything is OK
@@ -123,7 +124,7 @@ public enum AionAuthResponse {
 	/**
 	 * id of this enum that may be sent to client
 	 */
-	private int messageId;
+	private int	messageId;
 
 	/**
 	 * Constructor.
@@ -131,7 +132,8 @@ public enum AionAuthResponse {
 	 * @param msgId
 	 *            id of the message
 	 */
-	private AionAuthResponse(int msgId) {
+	private AionAuthResponse(int msgId)
+	{
 		messageId = msgId;
 	}
 
@@ -140,7 +142,8 @@ public enum AionAuthResponse {
 	 * 
 	 * @return message id
 	 */
-	public int getMessageId() {
+	public int getMessageId()
+	{
 		return messageId;
 	}
 }

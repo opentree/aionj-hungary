@@ -24,15 +24,16 @@ package com.aionemu.loginserver.model;
  * @author -Nemesiss-
  * 
  */
-public class ReconnectingAccount {
+public class ReconnectingAccount
+{
 	/**
 	 * Account object of account that will be reconnecting.
 	 */
-	private final Account account;
+	private final Account	account;
 	/**
 	 * Reconnection Key that will be used for authenticating
 	 */
-	private final int reconnectionKey;
+	private final int		reconnectionKey;
 
 	/**
 	 * Constructor.
@@ -40,7 +41,8 @@ public class ReconnectingAccount {
 	 * @param account
 	 * @param reconnectionKey
 	 */
-	public ReconnectingAccount(Account account, int reconnectionKey) {
+	public ReconnectingAccount(Account account, int reconnectionKey)
+	{
 		this.account = account;
 		this.reconnectionKey = reconnectionKey;
 	}
@@ -50,7 +52,8 @@ public class ReconnectingAccount {
 	 * 
 	 * @return account
 	 */
-	public Account getAccount() {
+	public Account getAccount()
+	{
 		return account;
 	}
 
@@ -59,7 +62,8 @@ public class ReconnectingAccount {
 	 * 
 	 * @return reconnectionKey
 	 */
-	public int getReconnectionKey() {
+	public int getReconnectionKey()
+	{
 		return reconnectionKey;
 	}
 }

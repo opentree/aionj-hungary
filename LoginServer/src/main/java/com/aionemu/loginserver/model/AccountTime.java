@@ -25,120 +25,134 @@ import java.sql.Timestamp;
  * 
  * @author EvilSpirit
  */
-public class AccountTime {
+public class AccountTime
+{
 	/**
 	 * Time the account has last logged in
 	 */
-	private Timestamp lastLoginTime;
+	private Timestamp	lastLoginTime;
 	/**
 	 * Time after the account will expired
 	 */
-	private Timestamp expirationTime;
+	private Timestamp	expirationTime;
 	/**
 	 * Time when the penalty will end
 	 */
-	private Timestamp penaltyEnd;
+	private Timestamp	penaltyEnd;
 	/**
 	 * The duration of the session
 	 */
-	private long sessionDuration;
+	private long		sessionDuration;
 	/**
 	 * Accumulated Online Time
 	 */
-	private long accumulatedOnlineTime;
+	private long		accumulatedOnlineTime;
 	/**
 	 * Accumulated Rest Time
 	 */
-	private long accumulatedRestTime;
+	private long		accumulatedRestTime;
 
 	/**
 	 * Default constructor. Set the lastLoginTime to current time
 	 */
-	public AccountTime() {
+	public AccountTime()
+	{
 		this.lastLoginTime = new Timestamp(System.currentTimeMillis());
 	}
 
 	/**
 	 * @return lastLoginTime
 	 */
-	public Timestamp getLastLoginTime() {
+	public Timestamp getLastLoginTime()
+	{
 		return lastLoginTime;
 	}
 
 	/**
 	 * @param lastLoginTime
 	 */
-	public void setLastLoginTime(Timestamp lastLoginTime) {
+	public void setLastLoginTime(Timestamp lastLoginTime)
+	{
 		this.lastLoginTime = lastLoginTime;
 	}
 
 	/**
 	 * @return sessionDuration
 	 */
-	public long getSessionDuration() {
+	public long getSessionDuration()
+	{
 		return sessionDuration;
 	}
 
 	/**
 	 * @param sessionDuration
 	 */
-	public void setSessionDuration(long sessionDuration) {
+	public void setSessionDuration(long sessionDuration)
+	{
 		this.sessionDuration = sessionDuration;
 	}
 
 	/**
 	 * @return accumulatedOnlineTime
 	 */
-	public long getAccumulatedOnlineTime() {
+	public long getAccumulatedOnlineTime()
+	{
 		return accumulatedOnlineTime;
 	}
 
 	/**
 	 * @param accumulatedOnlineTime
 	 */
-	public void setAccumulatedOnlineTime(long accumulatedOnlineTime) {
+	public void setAccumulatedOnlineTime(long accumulatedOnlineTime)
+	{
 		this.accumulatedOnlineTime = accumulatedOnlineTime;
 	}
 
 	/**
 	 * @return accumulatedRestTime
 	 */
-	public long getAccumulatedRestTime() {
+	public long getAccumulatedRestTime()
+	{
 		return accumulatedRestTime;
 	}
 
 	/**
 	 * @param accumulatedRestTime
 	 */
-	public void setAccumulatedRestTime(long accumulatedRestTime) {
+	public void setAccumulatedRestTime(long accumulatedRestTime)
+	{
 		this.accumulatedRestTime = accumulatedRestTime;
 	}
 
 	/**
 	 * @return expirationTime
 	 */
-	public Timestamp getExpirationTime() {
+	public Timestamp getExpirationTime()
+	{
 		return expirationTime;
 	}
 
 	/**
 	 * @param expirationTime
 	 */
-	public void setExpirationTime(Timestamp expirationTime) {
+	public void setExpirationTime(Timestamp expirationTime)
+	{
 		this.expirationTime = expirationTime;
 	}
 
 	/**
 	 * @return penaltyEnd
 	 */
-	public Timestamp getPenaltyEnd() {
+	public Timestamp getPenaltyEnd()
+	{
 		return penaltyEnd;
 	}
 
 	/**
 	 * @param penaltyEnd
 	 */
-	public void setPenaltyEnd(Timestamp penaltyEnd) {
+	public void setPenaltyEnd(Timestamp penaltyEnd)
+	{
 		this.penaltyEnd = penaltyEnd;
 	}
 }

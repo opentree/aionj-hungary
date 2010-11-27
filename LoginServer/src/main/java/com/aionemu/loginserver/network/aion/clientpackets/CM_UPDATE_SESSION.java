@@ -26,20 +26,21 @@ import com.aionemu.loginserver.network.aion.AionChannelHandler;
  * 
  * @author -Nemesiss-, Lyahim
  */
-public class CM_UPDATE_SESSION extends AbstractClientPacket<AionChannelHandler> {
+public class CM_UPDATE_SESSION extends AbstractClientPacket<AionChannelHandler>
+{
 	/**
 	 * accountId is part of session key - its used for security purposes
 	 */
-	private int accountId;
+	private int	accountId;
 	/**
 	 * loginOk is part of session key - its used for security purposes
 	 */
-	private int loginOk;
+	private int	loginOk;
 	/**
 	 * reconectKey is key that server sends to client for fast reconnection to
 	 * login server - we will check if this key is valid.
 	 */
-	private int reconnectKey;
+	private int	reconnectKey;
 
 	/**
 	 * Constructs new instance of <tt>CM_UPDATE_SESSION </tt> packet.
@@ -49,7 +50,8 @@ public class CM_UPDATE_SESSION extends AbstractClientPacket<AionChannelHandler> 
 	 * @param client
 	 *            client
 	 */
-	public CM_UPDATE_SESSION(int opcode) {
+	public CM_UPDATE_SESSION(int opcode)
+	{
 		super(opcode);
 	}
 
@@ -57,7 +59,8 @@ public class CM_UPDATE_SESSION extends AbstractClientPacket<AionChannelHandler> 
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void readImpl() {
+	protected void readImpl()
+	{
 		accountId = readD();
 		loginOk = readD();
 		reconnectKey = readD();
@@ -67,8 +70,8 @@ public class CM_UPDATE_SESSION extends AbstractClientPacket<AionChannelHandler> 
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void runImpl() {
-		AccountController.getInstance().authReconnectingAccount(accountId,
-				loginOk, reconnectKey, getChannelHandler());
+	protected void runImpl()
+	{
+		AccountController.getInstance().authReconnectingAccount(accountId, loginOk, reconnectKey, getChannelHandler());
 	}
 }

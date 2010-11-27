@@ -36,13 +36,14 @@ import com.aionemu.loginserver.network.aion.serverpackets.SM_UPDATE_SESSION;
  * @author lyahim
  * 
  */
-public class AionPacketHandlerFactory extends
-		AbstractPacketHandlerFactory<AionChannelHandler> {
+public class AionPacketHandlerFactory extends AbstractPacketHandlerFactory<AionChannelHandler>
+{
 
 	/**
 	 * Creates new instance of <tt>AionPacketHandlerFactory</tt><br>
 	 */
-	public AionPacketHandlerFactory() {
+	public AionPacketHandlerFactory()
+	{
 		super(null, null);
 		// Client Packets
 		addPacket(new CM_PLAY(0x02), State.AUTHED);

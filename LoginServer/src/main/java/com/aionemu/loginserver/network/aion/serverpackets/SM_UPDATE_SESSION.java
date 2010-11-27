@@ -26,15 +26,16 @@ import com.aionemu.loginserver.network.aion.SessionKey;
  * 
  * @author -Nemesiss-, Lyahim
  */
-public class SM_UPDATE_SESSION extends AbstractServerPacket<AionChannelHandler> {
+public class SM_UPDATE_SESSION extends AbstractServerPacket<AionChannelHandler>
+{
 	/**
 	 * accountId is part of session key - its used for security purposes
 	 */
-	private final int accountId;
+	private final int	accountId;
 	/**
 	 * loginOk is part of session key - its used for security purposes
 	 */
-	private final int loginOk;
+	private final int	loginOk;
 
 	/**
 	 * Constructs new instance of <tt>SM_UPDATE_SESSION </tt> packet.
@@ -42,7 +43,8 @@ public class SM_UPDATE_SESSION extends AbstractServerPacket<AionChannelHandler> 
 	 * @param key
 	 *            session key
 	 */
-	public SM_UPDATE_SESSION(SessionKey key) {
+	public SM_UPDATE_SESSION(SessionKey key)
+	{
 		this.accountId = key.accountId;
 		this.loginOk = key.loginOk;
 	}
@@ -51,7 +53,8 @@ public class SM_UPDATE_SESSION extends AbstractServerPacket<AionChannelHandler> 
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionChannelHandler cHandler) {
+	protected void writeImpl(AionChannelHandler cHandler)
+	{
 		writeD(accountId);
 		writeD(loginOk);
 		writeC(0x00);// sysmsg if smth is wrong

@@ -38,17 +38,20 @@ import com.aionemu.loginserver.utils.FloodProtector;
 /**
  * @author -Nemesiss-
  */
-public class LoginServer {
+public class LoginServer
+{
 	/**
 	 * Logger for this class.
 	 */
-	private static final Logger log = Logger.getLogger(LoginServer.class);
+	private static final Logger	log	= Logger.getLogger(LoginServer.class);
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		new LoginServer();
 	}
 
-	public LoginServer() throws Log4jInitializationError {
+	public LoginServer() throws Log4jInitializationError
+	{
 		long start = System.currentTimeMillis();
 
 		LoggingService.init();
@@ -59,23 +62,27 @@ public class LoginServer {
 		AEInfos.printSection("DataBase");
 		DatabaseFactory.init();
 
-		try {
+		try
+		{
 			File scripts = new File("data/scripts/scripts.cfg");
 			AionScriptEngineManager.getInstance().executeScriptList(scripts);
-		} catch (IOException ioe) {
+		}
+		catch (IOException ioe)
+		{
 			log.fatal("Failed loading scripts.cfg, no script going to be loaded");
 		}
 
 		/**
 		 * Initialize Key Generator
 		 */
-		try {
+		try
+		{
 			AEInfos.printSection("KeyGen");
 			KeyGen.init();
-		} catch (Exception e) {
-			log.fatal(
-					"Failed initializing Key Generator. Reason: "
-							+ e.getMessage(), e);
+		}
+		catch (Exception e)
+		{
+			log.fatal("Failed initializing Key Generator. Reason: " + e.getMessage(), e);
 			System.exit(ExitCode.CODE_ERROR);
 		}
 
@@ -99,7 +106,6 @@ public class LoginServer {
 		AEInfos.printAllInfos();
 
 		AEInfos.printSection("LoginServerLog");
-		log.info("Total Boot Time: " + (System.currentTimeMillis() - start)
-				/ 1000 + " seconds.");
+		log.info("Total Boot Time: " + (System.currentTimeMillis() - start) / 1000 + " seconds.");
 	}
 }

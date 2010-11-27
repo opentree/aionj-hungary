@@ -38,16 +38,17 @@ import com.aionemu.loginserver.utils.BruteForceProtector;
 /**
  * @author -Nemesiss-, KID, Lyahim
  */
-public class CM_LOGIN extends AbstractClientPacket<AionChannelHandler> {
+public class CM_LOGIN extends AbstractClientPacket<AionChannelHandler>
+{
 	/**
 	 * Logger for this class.
 	 */
-	private static final Logger log = Logger.getLogger(CM_LOGIN.class);
+	private static final Logger	log	= Logger.getLogger(CM_LOGIN.class);
 
 	/**
 	 * byte array contains encrypted login and password.
 	 */
-	private byte[] data;
+	private byte[]				data;
 
 	/**
 	 * Constructs new instance of <tt>CM_LOGIN </tt> packet.
@@ -55,7 +56,8 @@ public class CM_LOGIN extends AbstractClientPacket<AionChannelHandler> {
 	 * @param buf
 	 * @param client
 	 */
-	public CM_LOGIN(int opcode) {
+	public CM_LOGIN(int opcode)
+	{
 		super(opcode);
 	}
 
@@ -63,9 +65,11 @@ public class CM_LOGIN extends AbstractClientPacket<AionChannelHandler> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void readImpl() {
+	protected void readImpl()
+	{
 		readD();
-		if (getRemainingBytes() >= 128) {
+		if (getRemainingBytes() >= 128)
+		{
 			data = readB(128);
 		}
 	}
@@ -73,17 +77,20 @@ public class CM_LOGIN extends AbstractClientPacket<AionChannelHandler> {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected void runImpl() {
+	protected void runImpl()
+	{
 		if (data == null)
 			return;
 
 		byte[] decrypted;
-		try {
+		try
+		{
 			Cipher rsaCipher = Cipher.getInstance("RSA/ECB/nopadding");
-			rsaCipher.init(Cipher.DECRYPT_MODE, getChannelHandler()
-					.getRSAPrivateKey());
+			rsaCipher.init(Cipher.DECRYPT_MODE, getChannelHandler().getRSAPrivateKey());
 			decrypted = rsaCipher.doFinal(data, 0, 128);
-		} catch (GeneralSecurityException e) {
+		}
+		catch (GeneralSecurityException e)
+		{
 			log.warn("Error while decripting data on user auth." + e, e);
 			sendPacket(new SM_LOGIN_FAIL(AionAuthResponse.SYSTEM_ERROR));
 			return;
@@ -96,35 +103,34 @@ public class CM_LOGIN extends AbstractClientPacket<AionChannelHandler> {
 		ncotp |= decrypted[0x7e] << 16;
 		ncotp |= decrypted[0x7f] << 24;
 
-		log.debug("AuthLogin: " + user + " pass: " + password + " ncotp: "
-				+ ncotp);
+		log.debug("AuthLogin: " + user + " pass: " + password + " ncotp: " + ncotp);
 
 		AionChannelHandler client = getChannelHandler();
-		AionAuthResponse response = AccountController.getInstance().login(user,
-				password, client);
-		switch (response) {
-		case AUTHED:
-			client.setState(State.AUTHED);
-			client.setSessionKey(new SessionKey(client.getAccount()));
-			client.sendPacket(new SM_LOGIN_OK(client.getSessionKey()));
-			break;
-		case INVALID_PASSWORD:
-		case INVALID_PASSWORD2:
-		case INVALID_PASSWORD3:
-			String ip = client.getIP();
-			if (BruteForceProtector.getInstance().addFailedConnect(ip)) {
-				Timestamp newTime = new Timestamp(System.currentTimeMillis()
-						+ Config.WRONG_LOGIN_BAN_TIME * 60000);
-				BannedIpController.banIp(ip, newTime);
-				log.info("[AUDIT]BruteForceProtector:" + ip + " IP banned for "
-						+ Config.WRONG_LOGIN_BAN_TIME + " min");
-				client.close(new SM_LOGIN_FAIL(AionAuthResponse.BAN_IP));
-			} else
+		AionAuthResponse response = AccountController.getInstance().login(user, password, client);
+		switch (response)
+		{
+			case AUTHED:
+				client.setState(State.AUTHED);
+				client.setSessionKey(new SessionKey(client.getAccount()));
+				client.sendPacket(new SM_LOGIN_OK(client.getSessionKey()));
+				break;
+			case INVALID_PASSWORD:
+			case INVALID_PASSWORD2:
+			case INVALID_PASSWORD3:
+				String ip = client.getIP();
+				if (BruteForceProtector.getInstance().addFailedConnect(ip))
+				{
+					Timestamp newTime = new Timestamp(System.currentTimeMillis() + Config.WRONG_LOGIN_BAN_TIME * 60000);
+					BannedIpController.banIp(ip, newTime);
+					log.info("[AUDIT]BruteForceProtector:" + ip + " IP banned for " + Config.WRONG_LOGIN_BAN_TIME + " min");
+					client.close(new SM_LOGIN_FAIL(AionAuthResponse.BAN_IP));
+				}
+				else
+					client.sendPacket(new SM_LOGIN_FAIL(response));
+				break;
+			default:
 				client.sendPacket(new SM_LOGIN_FAIL(response));
-			break;
-		default:
-			client.sendPacket(new SM_LOGIN_FAIL(response));
-			break;
+				break;
 		}
 	}
 }

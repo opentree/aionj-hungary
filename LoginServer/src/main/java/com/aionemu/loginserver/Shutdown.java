@@ -24,15 +24,16 @@ import com.aionemu.loginserver.network.NettyLoginServer;
 /**
  * @author -Nemesiss-
  */
-public class Shutdown extends Thread {
+public class Shutdown extends Thread
+{
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger log = Logger.getLogger(Shutdown.class);
+	private static final Logger	log			= Logger.getLogger(Shutdown.class);
 	/**
 	 * Instance of Shutdown.
 	 */
-	private static Shutdown instance = new Shutdown();
+	private static Shutdown		instance	= new Shutdown();
 
 	/**
 	 * get the shutdown-hook instance the shutdown-hook instance is created by
@@ -40,7 +41,8 @@ public class Shutdown extends Thread {
 	 * 
 	 * @return instance of Shutdown, to be used as shutdown hook
 	 */
-	public static Shutdown getInstance() {
+	public static Shutdown getInstance()
+	{
 		return instance;
 	}
 
@@ -55,18 +57,25 @@ public class Shutdown extends Thread {
 	 * startServer.bat will restart the server.
 	 */
 	@Override
-	public void run() {
+	public void run()
+	{
 		/* Disconnecting all the clients */
-		try {
+		try
+		{
 			NettyLoginServer.getInstance().shutDown();
-		} catch (Throwable t) {
+		}
+		catch (Throwable t)
+		{
 			log.error("Can't shutdown IOServer", t);
 		}
 
 		/* Shuting down DB connections */
-		try {
+		try
+		{
 			DatabaseFactory.shutdown();
-		} catch (Throwable t) {
+		}
+		catch (Throwable t)
+		{
 			log.error("Can't shutdown DatabaseFactory", t);
 		}
 	}

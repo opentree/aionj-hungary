@@ -22,18 +22,20 @@ import com.aionemu.loginserver.network.aion.AionChannelHandler;
 /**
  * @author -Nemesiss-, Lyahim
  */
-public class SM_AUTH_GG extends AbstractServerPacket<AionChannelHandler> {
+public class SM_AUTH_GG extends AbstractServerPacket<AionChannelHandler>
+{
 	/**
 	 * Session Id of this connection
 	 */
-	private final int sessionId;
+	private final int	sessionId;
 
 	/**
 	 * Constructs new instance of <tt>SM_AUTH_GG</tt> packet
 	 * 
 	 * @param sessionId
 	 */
-	public SM_AUTH_GG(int sessionId) {
+	public SM_AUTH_GG(int sessionId)
+	{
 		this.sessionId = sessionId;
 	}
 
@@ -41,7 +43,8 @@ public class SM_AUTH_GG extends AbstractServerPacket<AionChannelHandler> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void writeImpl(AionChannelHandler cHandler) {
+	protected void writeImpl(AionChannelHandler cHandler)
+	{
 		writeD(sessionId);
 		writeD(0x00);
 		writeD(0x00);

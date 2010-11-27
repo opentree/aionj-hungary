@@ -22,63 +22,65 @@ package com.aionemu.loginserver.model;
  * 
  * @author SoulKeeper
  */
-public class Account {
+public class Account
+{
 	/**
 	 * Id of account, object if assigned, null if not
 	 */
-	private Integer id;
+	private Integer		id;
 
 	/**
 	 * Account name
 	 */
-	private String name;
+	private String		name;
 
 	/**
 	 * Password hash
 	 */
-	private String passwordHash;
+	private String		passwordHash;
 
 	/**
 	 * Access level of account 0 = regular user, > 0 = GM
 	 */
-	private byte accessLevel;
+	private byte		accessLevel;
 
 	/**
 	 * Membership of this account (regular, premium etc)
 	 */
-	private byte membership;
+	private byte		membership;
 
 	/**
 	 * Account activated
 	 */
-	private byte activated;
+	private byte		activated;
 
 	/**
 	 * last server visited by user -1 if none
 	 */
-	private byte lastServer;
+	private byte		lastServer;
 
 	/**
 	 * Last ip of user -1 if none
 	 */
-	private String lastIp;
+	private String		lastIp;
 
 	/**
 	 * The only ip that is allowed to this account
 	 */
-	private String ipForce;
+	private String		ipForce;
 
 	/**
 	 * AccountTime data
 	 */
-	private AccountTime accountTime;
+	private AccountTime	accountTime;
 
 	/**
 	 * Returns account id, null if not stored in DB
 	 * 
 	 * @return account id
 	 */
-	public Integer getId() {
+	public Integer getId()
+	{
 		return id;
 	}
 
@@ -88,7 +90,8 @@ public class Account {
 	 * @param id
 	 *            account id
 	 */
-	public void setId(Integer id) {
+	public void setId(Integer id)
+	{
 		this.id = id;
 	}
 
@@ -97,7 +100,8 @@ public class Account {
 	 * 
 	 * @return account name
 	 */
-	public String getName() {
+	public String getName()
+	{
 		return name;
 	}
 
@@ -107,7 +111,8 @@ public class Account {
 	 * @param name
 	 *            account name
 	 */
-	public void setName(String name) {
+	public void setName(String name)
+	{
 		this.name = name;
 	}
 
@@ -116,7 +121,8 @@ public class Account {
 	 * 
 	 * @return password hash
 	 */
-	public String getPasswordHash() {
+	public String getPasswordHash()
+	{
 		return passwordHash;
 	}
 
@@ -126,7 +132,8 @@ public class Account {
 	 * @param passwordHash
 	 *            password hash
 	 */
-	public void setPasswordHash(String passwordHash) {
+	public void setPasswordHash(String passwordHash)
+	{
 		this.passwordHash = passwordHash;
 	}
 
@@ -135,7 +142,8 @@ public class Account {
 	 * 
 	 * @return access level of account
 	 */
-	public byte getAccessLevel() {
+	public byte getAccessLevel()
+	{
 		return accessLevel;
 	}
 
@@ -145,14 +153,16 @@ public class Account {
 	 * @param accessLevel
 	 *            access level of account
 	 */
-	public void setAccessLevel(byte accessLevel) {
+	public void setAccessLevel(byte accessLevel)
+	{
 		this.accessLevel = accessLevel;
 	}
 
 	/**
 	 * @return the membership
 	 */
-	public byte getMembership() {
+	public byte getMembership()
+	{
 		return membership;
 	}
 
@@ -160,7 +170,8 @@ public class Account {
 	 * @param membership
 	 *            the membership to set
 	 */
-	public void setMembership(byte membership) {
+	public void setMembership(byte membership)
+	{
 		this.membership = membership;
 	}
 
@@ -169,7 +180,8 @@ public class Account {
 	 * 
 	 * @return access level of account
 	 */
-	public byte getActivated() {
+	public byte getActivated()
+	{
 		return activated;
 	}
 
@@ -179,7 +191,8 @@ public class Account {
 	 * @param activated
 	 *            access level of account
 	 */
-	public void setActivated(byte activated) {
+	public void setActivated(byte activated)
+	{
 		this.activated = activated;
 	}
 
@@ -188,7 +201,8 @@ public class Account {
 	 * 
 	 * @return last server that player visited
 	 */
-	public byte getLastServer() {
+	public byte getLastServer()
+	{
 		return lastServer;
 	}
 
@@ -198,7 +212,8 @@ public class Account {
 	 * @param lastServer
 	 *            last server that player visited
 	 */
-	public void setLastServer(byte lastServer) {
+	public void setLastServer(byte lastServer)
+	{
 		this.lastServer = lastServer;
 	}
 
@@ -207,7 +222,8 @@ public class Account {
 	 * 
 	 * @return last ip that player played from
 	 */
-	public String getLastIp() {
+	public String getLastIp()
+	{
 		return lastIp;
 	}
 
@@ -217,7 +233,8 @@ public class Account {
 	 * @param lastIp
 	 *            last ip that player played from
 	 */
-	public void setLastIp(String lastIp) {
+	public void setLastIp(String lastIp)
+	{
 		this.lastIp = lastIp;
 	}
 
@@ -226,7 +243,8 @@ public class Account {
 	 * 
 	 * @return ip that player is forsed to use with his account
 	 */
-	public String getIpForce() {
+	public String getIpForce()
+	{
 		return ipForce;
 	}
 
@@ -236,21 +254,24 @@ public class Account {
 	 * @param ipForce
 	 *            sets ip that players has to use with his account
 	 */
-	public void setIpForce(String ipForce) {
+	public void setIpForce(String ipForce)
+	{
 		this.ipForce = ipForce;
 	}
 
 	/**
 	 * @return accountTime
 	 */
-	public AccountTime getAccountTime() {
+	public AccountTime getAccountTime()
+	{
 		return accountTime;
 	}
 
 	/**
 	 * @param accountTime
 	 */
-	public void setAccountTime(AccountTime accountTime) {
+	public void setAccountTime(AccountTime accountTime)
+	{
 		this.accountTime = accountTime;
 	}
 
@@ -262,24 +283,27 @@ public class Account {
 	 * @return true if names and password hash matches
 	 */
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
+	public boolean equals(Object o)
+	{
+		if (this == o)
+		{
 			return true;
 		}
 
-		if (!(o instanceof Account)) {
+		if (!(o instanceof Account))
+		{
 			return false;
 		}
 
 		Account account = (Account) o;
 
 		// noinspection SimplifiableIfStatement
-		if (name != null ? !name.equals(account.name) : account.name != null) {
+		if (name != null ? !name.equals(account.name) : account.name != null)
+		{
 			return false;
 		}
 
-		return !(passwordHash != null ? !passwordHash
-				.equals(account.passwordHash) : account.passwordHash != null);
+		return !(passwordHash != null ? !passwordHash.equals(account.passwordHash) : account.passwordHash != null);
 
 	}
 
@@ -289,11 +313,11 @@ public class Account {
 	 * @return player hashcode
 	 */
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		int result = name != null ? name.hashCode() : 0;
 
-		result = 31 * result
-				+ (passwordHash != null ? passwordHash.hashCode() : 0);
+		result = 31 * result + (passwordHash != null ? passwordHash.hashCode() : 0);
 
 		return result;
 	}

@@ -22,5 +22,6 @@ import junit.framework.TestCase;
 /**
  * A test
  */
-public class SomeTest extends TestCase {
+public class SomeTest extends TestCase
+{
 }

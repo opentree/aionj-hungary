@@ -36,9 +36,10 @@ import com.aionemu.loginserver.network.gameserver.serverpackets.SM_REQUEST_KICK_
  * @author lyahim
  * 
  */
-public class GameServerPacketHandlerFactory extends
-		AbstractPacketHandlerFactory<GameServerChannelHandler> {
-	public GameServerPacketHandlerFactory() {
+public class GameServerPacketHandlerFactory extends AbstractPacketHandlerFactory<GameServerChannelHandler>
+{
+	public GameServerPacketHandlerFactory()
+	{
 		super(null, null);
 		// Client Packets
 		addPacket(new CM_GS_AUTH(0x00), State.CONNECTED);

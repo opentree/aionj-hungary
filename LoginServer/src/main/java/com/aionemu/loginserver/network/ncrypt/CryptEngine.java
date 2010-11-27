@@ -26,28 +26,44 @@ import com.aionemu.commons.utils.Rnd;
  * 
  * @author EvilSpirit
  */
-public class CryptEngine {
+public class CryptEngine
+{
 	/**
 	 * A key
 	 */
-	private byte[] key = { (byte) 0x6b, (byte) 0x60, (byte) 0xcb, (byte) 0x5b,
-			(byte) 0x82, (byte) 0xce, (byte) 0x90, (byte) 0xb1, (byte) 0xcc,
-			(byte) 0x2b, (byte) 0x6c, (byte) 0x55, (byte) 0x6c, (byte) 0x6c,
-			(byte) 0x6c, (byte) 0x6c };
+	private byte[]			key			=
+										{
+			(byte) 0x6b,
+			(byte) 0x60,
+			(byte) 0xcb,
+			(byte) 0x5b,
+			(byte) 0x82,
+			(byte) 0xce,
+			(byte) 0x90,
+			(byte) 0xb1,
+			(byte) 0xcc,
+			(byte) 0x2b,
+			(byte) 0x6c,
+			(byte) 0x55,
+			(byte) 0x6c,
+			(byte) 0x6c,
+			(byte) 0x6c,
+			(byte) 0x6c				};
 	/**
 	 * Tells you whether the key is updated or not
 	 */
-	private boolean updatedKey = false;
+	private boolean			updatedKey	= false;
 	/**
 	 * A secret blowfish cipher
 	 */
-	private BlowfishCipher cipher;
+	private BlowfishCipher	cipher;
 
 	/**
 	 * Default constructor. Initialize the Blowfish Cipher with an initial
 	 * static key to encrypt the first packet sent to the client
 	 */
-	public CryptEngine() {
+	public CryptEngine()
+	{
 		cipher = new BlowfishCipher(key);
 	}
 
@@ -57,7 +73,8 @@ public class CryptEngine {
 	 * @param newKey
 	 *            new Blowfish Key
 	 */
-	public void updateKey(byte[] newKey) {
+	public void updateKey(byte[] newKey)
+	{
 		this.key = newKey;
 	}
 
@@ -72,7 +89,8 @@ public class CryptEngine {
 	 *            byte array length
 	 * @return true, if decrypted packet has valid checksum, false overwise
 	 */
-	public boolean decrypt(byte[] data, int offset, int length) {
+	public boolean decrypt(byte[] data, int offset, int length)
+	{
 		cipher.decipher(data, offset, length);
 
 		return verifyChecksum(data, offset, length);
@@ -89,19 +107,23 @@ public class CryptEngine {
 	 *            byte array length
 	 * @return length of encrypted byte array
 	 */
-	public int encrypt(byte[] data, int offset, int length) {
+	public int encrypt(byte[] data, int offset, int length)
+	{
 		length += 4;
 
 		// the key is not updated, so the first packet should be encrypted with
 		// initial key
-		if (!updatedKey) {
+		if (!updatedKey)
+		{
 			length += 4;
 			length += 8 - length % 8;
 			encXORPass(data, offset, length, Rnd.nextInt());
 			cipher.cipher(data, offset, length);
 			cipher.updateKey(key);
 			updatedKey = true;
-		} else {
+		}
+		else
+		{
 			length += 8 - length % 8;
 			appendChecksum(data, offset, length);
 			cipher.cipher(data, offset, length);
@@ -121,8 +143,10 @@ public class CryptEngine {
 	 *            byte array size
 	 * @return true, if checksum is ok, false overwise
 	 */
-	private boolean verifyChecksum(byte[] data, int offset, int length) {
-		if ((length & 3) != 0 || (length <= 4)) {
+	private boolean verifyChecksum(byte[] data, int offset, int length)
+	{
+		if ((length & 3) != 0 || (length <= 4))
+		{
 			return false;
 		}
 
@@ -131,7 +155,8 @@ public class CryptEngine {
 		long check;
 		int i;
 
-		for (i = offset; i < count; i += 4) {
+		for (i = offset; i < count; i += 4)
+		{
 			check = data[i] & 0xff;
 			check |= data[i + 1] << 8 & 0xff00;
 			check |= data[i + 2] << 0x10 & 0xff0000;
@@ -161,13 +186,15 @@ public class CryptEngine {
 	 * @param length
 	 *            byte array size
 	 */
-	private void appendChecksum(byte[] raw, int offset, int length) {
+	private void appendChecksum(byte[] raw, int offset, int length)
+	{
 		long chksum = 0;
 		int count = length - 4;
 		long ecx;
 		int i;
 
-		for (i = offset; i < count; i += 4) {
+		for (i = offset; i < count; i += 4)
+		{
 			ecx = raw[i] & 0xff;
 			ecx |= raw[i + 1] << 8 & 0xff00;
 			ecx |= raw[i + 2] << 0x10 & 0xff0000;
@@ -197,13 +224,15 @@ public class CryptEngine {
 	 * @param key
 	 *            integer value as key
 	 */
-	private void encXORPass(byte[] data, int offset, int length, int key) {
+	private void encXORPass(byte[] data, int offset, int length, int key)
+	{
 		int stop = length - 8;
 		int pos = 4 + offset;
 		int edx;
 		int ecx = key;
 
-		while (pos < stop) {
+		while (pos < stop)
+		{
 			edx = (data[pos] & 0xFF);
 			edx |= (data[pos + 1] & 0xFF) << 8;
 			edx |= (data[pos + 2] & 0xFF) << 16;
