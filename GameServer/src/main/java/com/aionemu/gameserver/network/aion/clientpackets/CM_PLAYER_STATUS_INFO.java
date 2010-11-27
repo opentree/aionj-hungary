@@ -26,9 +26,9 @@ import com.aionemu.gameserver.world.World;
 /**
  * Called when entering the world and during group management
  * 
- * @author Lyahim, Lyahim
- * @author Lyahim, ATracer
- * @author Lyahim, Simple
+ * @author Lyahim
+ * @author ATracer
+ * @author Simple
  */
 
 public class CM_PLAYER_STATUS_INFO extends AbstractClientPacket<AionChannelHandler>

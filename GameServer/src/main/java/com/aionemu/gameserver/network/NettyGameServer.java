@@ -26,6 +26,7 @@ import org.jboss.netty.channel.group.DefaultChannelGroup;
 import com.aionemu.commons.network.netty.AbstractNettyServer;
 import com.aionemu.gameserver.configs.main.GSConfig;
 import com.aionemu.gameserver.configs.network.NetworkConfig;
+import com.aionemu.gameserver.network.aion.AionPacketHandlerFactory;
 import com.aionemu.gameserver.network.aion.AionPipeLineFactory;
 import com.aionemu.gameserver.network.chatserver.ChatServerPipeLineFactory;
 import com.aionemu.gameserver.network.loginserver.LoginServerPipeLineFactory;
@@ -44,23 +45,34 @@ public class NettyGameServer extends AbstractNettyServer
 	private final AionPipeLineFactory			gameToClientPipeLineFactory;
 	private final ChatServerPipeLineFactory		gameToChatPipelineFactory;
 	private final LoginServerPipeLineFactory	gameToLoginPipelineFactory;
-	
+
 	private ChannelFactory						gameToClientChannelFactory;
 	private ChannelFactory						gameToChatChannelFactory;
 	private ChannelFactory						gameToLoginChannelFactory;
-	
+
+	private AionPacketHandlerFactory			aionPacketHandlerFactory;
+
+	/**
+	 * @return Returns the aionPacketHandlerFactory.
+	 */
+	public AionPacketHandlerFactory getAionPacketHandlerFactory()
+	{
+		return aionPacketHandlerFactory;
+	}
+
 	public static final NettyGameServer getInstance()
 	{
 		return SingletonHolder.instance;
 	}
-	
+
 	public NettyGameServer()
 	{
-		gameToClientPipeLineFactory = new AionPipeLineFactory();
+		aionPacketHandlerFactory = new AionPacketHandlerFactory();
+		gameToClientPipeLineFactory = new AionPipeLineFactory(aionPacketHandlerFactory);
 		gameToChatPipelineFactory = new ChatServerPipeLineFactory();
 		gameToLoginPipelineFactory = new LoginServerPipeLineFactory();
-				
-		initialize();		
+
+		initialize();
 	}
 
 	@Override
@@ -69,43 +81,49 @@ public class NettyGameServer extends AbstractNettyServer
 		gameToClientChannelFactory = initServerChannelFactory();
 		gameToChatChannelFactory = initClientChannelFactory();
 		gameToLoginChannelFactory = initClientChannelFactory();
-		
-		channelGroup.add(initServerChannel(gameToClientChannelFactory,NetworkConfig.CLIENT_ADDRESS, gameToClientPipeLineFactory));		
 
-		if(!GSConfig.DISABLE_CHAT_SERVER)
+		channelGroup.add(initServerChannel(gameToClientChannelFactory, NetworkConfig.CLIENT_ADDRESS, gameToClientPipeLineFactory));
+
+		if (!GSConfig.DISABLE_CHAT_SERVER)
 		{
-			ThreadPoolManager.getInstance().scheduleAtFixedRate((new Runnable(){
+			ThreadPoolManager.getInstance().scheduleAtFixedRate((new Runnable()
+			{
 				@Override
 				public void run()
 				{
 					logger.info("Connecting to ChatServer: " + NetworkConfig.CHAT_ADDRESS);
 					try
 					{
-						ChannelFuture chat = initClientChannel(gameToChatChannelFactory,NetworkConfig.CHAT_ADDRESS, gameToChatPipelineFactory);		
+						ChannelFuture chat = initClientChannel(gameToChatChannelFactory, NetworkConfig.CHAT_ADDRESS, gameToChatPipelineFactory);
 						chat.getChannel().getCloseFuture().awaitUninterruptibly();
 					}
-					catch(Exception e){}
+					catch (Exception e)
+					{
+					}
 				}
 			}), 5000, 10000);
 		}
-		
-		ThreadPoolManager.getInstance().scheduleAtFixedRate((new Runnable(){
+
+		ThreadPoolManager.getInstance().scheduleAtFixedRate((new Runnable()
+		{
 			@Override
 			public void run()
 			{
 				logger.info("Connecting to LoginServer: " + NetworkConfig.LOGIN_ADDRESS);
 				try
 				{
-					ChannelFuture login = initClientChannel(gameToLoginChannelFactory,NetworkConfig.LOGIN_ADDRESS, gameToLoginPipelineFactory);
+					ChannelFuture login = initClientChannel(gameToLoginChannelFactory, NetworkConfig.LOGIN_ADDRESS, gameToLoginPipelineFactory);
 					login.getChannel().getCloseFuture().awaitUninterruptibly();
 				}
-				catch(Exception e){}
+				catch (Exception e)
+				{
+				}
 			}
 		}), 5000, 10000);
-		
+
 		logger.info("GameServer started");
 	}
-	
+
 	@Override
 	public void shutDown()
 	{
@@ -116,11 +134,11 @@ public class NettyGameServer extends AbstractNettyServer
 		gameToLoginChannelFactory.releaseExternalResources();
 		super.shutDown();
 	}
-	
+
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
-		protected static final NettyGameServer instance = new NettyGameServer();
+		protected static final NettyGameServer	instance	= new NettyGameServer();
 	}
 
 }

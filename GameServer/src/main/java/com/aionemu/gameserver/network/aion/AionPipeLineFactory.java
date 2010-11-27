@@ -35,9 +35,11 @@ import com.aionemu.commons.network.netty.coder.PacketFrameEncoder;
  */
 public class AionPipeLineFactory extends AbstractPipeLineFactory
 {
-	public AionPipeLineFactory()
+	AionPacketHandlerFactory aionPacketHandlerFactory;
+	public AionPipeLineFactory(AionPacketHandlerFactory aionPacketHandlerFactory)
 	{
 		super();
+		this.aionPacketHandlerFactory = aionPacketHandlerFactory;
 	}
 
 	@Override
@@ -52,7 +54,7 @@ public class AionPipeLineFactory extends AbstractPipeLineFactory
 		pipeline.addLast("packetdecoder", new PacketDecoder());
 		pipeline.addLast("packetencoder", new PacketEncoder());
 		pipeline.addLast("executor", new ExecutionHandler(pipelineExecutor));
-		pipeline.addLast("handler", new AionChannelHandler(new AionPacketHandlerFactory()));
+		pipeline.addLast("handler", new AionChannelHandler(aionPacketHandlerFactory));
 		
 		return pipeline;
 	}

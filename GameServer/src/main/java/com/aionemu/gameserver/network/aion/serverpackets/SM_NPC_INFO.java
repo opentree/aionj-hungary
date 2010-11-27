@@ -19,7 +19,6 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 import java.util.Map.Entry;
 
 import com.aionemu.gameserver.model.NpcType;
-import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.instance.GroupGate;
 import com.aionemu.gameserver.model.gameobjects.instance.Kisk;
 import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
@@ -62,13 +61,13 @@ public class SM_NPC_INFO extends AbstractAionServerPacket<AionChannelHandler>
 	 *            visible npc.
 	 * @param player 
 	 */
-	public SM_NPC_INFO(Npc npc, Player player)
+	public SM_NPC_INFO(StaticNpc npc, Player player)
 	{
 		this.npc = npc;
 		npcTemplate = npc.getObjectTemplate();
 		npcTypeId = (player.isAggroIconTo(npc) ?
 			NpcType.AGGRESSIVE.getId() : npcTemplate.getNpcType().getId());
-		npcId = npc.getNpcId();
+		npcId = npc.getObjectTemplate().getTemplateId();
 		
 	}
 	

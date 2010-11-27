@@ -56,6 +56,7 @@ import com.aionemu.gameserver.model.gameobjects.instance.GroupGate;
 import com.aionemu.gameserver.model.gameobjects.instance.Kisk;
 import com.aionemu.gameserver.model.gameobjects.instance.Monster;
 import com.aionemu.gameserver.model.gameobjects.instance.SiegeNpc;
+import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.instance.Summon;
 import com.aionemu.gameserver.model.gameobjects.instance.Summon.UnsummonType;
 import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
@@ -1225,18 +1226,18 @@ public class Player extends Creature
 	 * @param npcTribe
 	 * @return
 	 */
-	public boolean isAggroIconTo(Npc npc)
+	public boolean isAggroIconTo(StaticNpc npc)
 	{
 		switch(getCommonData().getRace())
 		{
 			case ELYOS:
-				if (npc.getTribe().isGuard() && npc.getObjectTemplate().getRace() == Race.ASMODIANS)
+				if (npc.getObjectTemplate().getTribe().isGuard() && npc.getObjectTemplate().getRace() == Race.ASMODIANS)
 					return true;
-				return DataManager.TRIBE_RELATIONS_DATA.isAggressiveRelation(npc.getTribe(), TribeClass.PC);
+				return DataManager.TRIBE_RELATIONS_DATA.isAggressiveRelation(npc.getObjectTemplate().getTribe(), TribeClass.PC);
 			case ASMODIANS:
-				if (npc.getTribe().isGuard() && npc.getObjectTemplate().getRace() == Race.ELYOS)
+				if (npc.getObjectTemplate().getTribe().isGuard() && npc.getObjectTemplate().getRace() == Race.ELYOS)
 					return true;
-				return DataManager.TRIBE_RELATIONS_DATA.isAggressiveRelation(npc.getTribe(), TribeClass.PC_DARK);
+				return DataManager.TRIBE_RELATIONS_DATA.isAggressiveRelation(npc.getObjectTemplate().getTribe(), TribeClass.PC_DARK);
 		}
 		return false;
 	}
@@ -1491,14 +1492,19 @@ public class Player extends Creature
 			GroupGate groupgate = ((GroupGate) object);
 			PacketSendUtility.sendPacket(this, new SM_NPC_INFO(this, groupgate));
 		}
-		else if(object instanceof Npc)
+		else if(object instanceof Summon)
+		{
+			Summon npc = ((Summon) object);		
+			PacketSendUtility.sendPacket(this, new SM_NPC_INFO(npc));
+		}
+		else if(object instanceof StaticNpc )
 		{
 			boolean update = false;
-			Npc npc = ((Npc) object);
+			StaticNpc npc = ((StaticNpc) object);
 
 			PacketSendUtility.sendPacket(this, new SM_NPC_INFO(npc, this));
 
-			for(int questId : QuestEngine.getInstance().getNpcQuestData(npc.getNpcId()).getOnQuestStart())
+			for(int questId : QuestEngine.getInstance().getNpcQuestData(npc.getObjectTemplate().getTemplateId()).getOnQuestStart())
 			{
 				if(QuestService.checkStartCondition(new QuestEnv(object, this, questId, 0)))
 				{
@@ -1511,11 +1517,6 @@ public class Player extends Creature
 			}
 			if(update)
 				updateNearbyQuestList();
-		}
-		else if(object instanceof Summon)
-		{
-			Summon npc = ((Summon) object);		
-			PacketSendUtility.sendPacket(this, new SM_NPC_INFO(npc));
 		}
 	}
 

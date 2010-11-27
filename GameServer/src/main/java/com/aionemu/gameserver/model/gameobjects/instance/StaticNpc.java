@@ -32,9 +32,7 @@ import com.aionemu.gameserver.model.gameobjects.state.CreatureVisualState;
 import com.aionemu.gameserver.model.gameobjects.stats.StaticNpcStats;
 import com.aionemu.gameserver.model.templates.NpcTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_NPC_INFO;
 import com.aionemu.gameserver.services.RespawnService;
-import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /**
  * @author Mr. Poke
@@ -167,19 +165,6 @@ public class StaticNpc extends VisibleObject implements IDialog
 	@Override
 	public void onDialogRequest(Player player)
 	{
-	}
-	
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.model.gameobjects.VisibleObject#see(com.aionemu.gameserver.model.gameobjects.VisibleObject)
-	 */
-	@Override
-	public void see(VisibleObject object)
-	{
-		super.see(object);
-		if (object instanceof Player)
-		{
-			PacketSendUtility.sendPacket((Player)object, new SM_NPC_INFO(this));
-		}
 	}
 	
 	/**
