@@ -31,8 +31,6 @@ import com.aionemu.commons.database.dao.DAOManager;
 import com.aionemu.gameserver.configs.main.OptionsConfig;
 import com.aionemu.gameserver.controllers.FlyController;
 import com.aionemu.gameserver.controllers.ReviveController;
-import com.aionemu.gameserver.controllers.attack.AttackResult;
-import com.aionemu.gameserver.controllers.attack.AttackUtil;
 import com.aionemu.gameserver.controllers.effect.PlayerEffectController;
 import com.aionemu.gameserver.dao.AbyssRankDAO;
 import com.aionemu.gameserver.dao.PlayerDAO;
@@ -73,7 +71,6 @@ import com.aionemu.gameserver.model.legion.LegionMember;
 import com.aionemu.gameserver.model.templates.quest.QuestItems;
 import com.aionemu.gameserver.model.templates.stats.PlayerStatsTemplate;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_DIE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
@@ -1689,12 +1686,6 @@ public class Player extends Creature
 	public void attackTarget(Creature target)
 	{
 
-		/**
-		 * Check all prerequisites
-		 */
-		if (target == null || !canAttack())
-			return;
-
 		PlayerGameStats gameStats = getGameStats();
 
 		// check player attack Z distance
@@ -1719,25 +1710,6 @@ public class Player extends Creature
 		 * notify attack observers
 		 */
 		super.attackTarget(target);
-
-		/**
-		 * Calculate and apply damage
-		 */
-		List<AttackResult> attackResult = AttackUtil.calculateAttackResult(this, target);
-
-		int damage = 0;
-		for (AttackResult result : attackResult)
-		{
-			damage += result.getDamage();
-		}
-
-		long time = System.currentTimeMillis();
-		int attackType = 0; // TODO investigate attack types
-		PacketSendUtility.broadcastPacket(this, new SM_ATTACK(this, target, gameStats.getAttackCounter(), (int) time, attackType, attackResult), true);
-
-		target.onAttack(this, damage);
-
-		gameStats.increaseAttackCounter();
 	}
 
 	@Override

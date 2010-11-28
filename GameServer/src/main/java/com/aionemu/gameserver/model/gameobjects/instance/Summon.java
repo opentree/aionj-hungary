@@ -16,10 +16,6 @@
  */
 package com.aionemu.gameserver.model.gameobjects.instance;
 
-import java.util.List;
-
-import com.aionemu.gameserver.controllers.attack.AttackResult;
-import com.aionemu.gameserver.controllers.attack.AttackUtil;
 import com.aionemu.gameserver.controllers.effect.EffectController;
 import com.aionemu.gameserver.model.EmotionType;
 import com.aionemu.gameserver.model.TaskId;
@@ -37,7 +33,6 @@ import com.aionemu.gameserver.model.templates.NpcTemplate;
 import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.model.templates.stats.SummonStatsTemplate;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SUMMON_OWNER_REMOVE;
@@ -208,9 +203,9 @@ public class Summon extends Creature implements ISummoned
 	 * @see com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned#setMaster(com.aionemu.gameserver.model.gameobjects.Creature)
 	 */
 	@Override
-	public void setMaster(Creature creature)
+	public void setMaster(Creature master)
 	{
-		this.master = (Player) creature;
+		this.master = (Player) master;
 	}
 
 	private long	lastAttackMilis	= 0;
@@ -330,13 +325,8 @@ public class Summon extends Creature implements ISummoned
 	public void attackTarget(Creature target)
 	{
 		Player master = getMaster();
-		if (!canAttack())
-			return;
 
 		if (!RestrictionsManager.canAttack(master, target))
-			return;
-
-		if (!isEnemy(target))
 			return;
 
 		int attackSpeed = getGameStats().getCurrentStat(StatEnum.ATTACK_SPEED);
@@ -350,25 +340,7 @@ public class Summon extends Creature implements ISummoned
 		}
 		lastAttackMilis = milis;
 
-		/**
-		 * notify attack observers
-		 */
 		super.attackTarget(target);
-
-		List<AttackResult> attackList = AttackUtil.calculateAttackResult(this, target);
-
-		int damage = 0;
-		for (AttackResult result : attackList)
-		{
-			damage += result.getDamage();
-		}
-
-		int attackType = 0;
-		PacketSendUtility.broadcastPacket(this, new SM_ATTACK(this, target, getGameStats().getAttackCounter(), 274, attackType, attackList));
-
-		target.onAttack(this, damage);
-		getGameStats().increaseAttackCounter();
-
 	}
 
 	@Override

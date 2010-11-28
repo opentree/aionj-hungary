@@ -139,9 +139,9 @@ public class Servant extends Npc implements ISummoned
 	 * @see com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned#setMaster(com.aionemu.gameserver.model.gameobjects.Creature)
 	 */
 	@Override
-	public void setMaster(Creature creature)
+	public void setMaster(Creature master)
 	{
-		this.creator = creature;
+		this.creator = master;
 	}
 
 	@Override

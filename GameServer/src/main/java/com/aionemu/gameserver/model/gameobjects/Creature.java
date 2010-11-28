@@ -16,6 +16,7 @@
  */
 package com.aionemu.gameserver.model.gameobjects;
 
+import java.util.List;
 import java.util.Map;
 
 import javolution.util.FastMap;
@@ -25,6 +26,8 @@ import org.apache.log4j.Logger;
 import com.aionemu.commons.utils.Rnd;
 import com.aionemu.gameserver.controllers.ObserveController;
 import com.aionemu.gameserver.controllers.attack.AggroList;
+import com.aionemu.gameserver.controllers.attack.AttackResult;
+import com.aionemu.gameserver.controllers.attack.AttackUtil;
 import com.aionemu.gameserver.controllers.effect.EffectController;
 import com.aionemu.gameserver.controllers.movement.MovementType;
 import com.aionemu.gameserver.model.TribeClass;
@@ -37,6 +40,7 @@ import com.aionemu.gameserver.model.gameobjects.stats.CreatureGameStats;
 import com.aionemu.gameserver.model.gameobjects.stats.CreatureLifeStats;
 import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_LOOKATOBJECT;
@@ -593,7 +597,31 @@ public abstract class Creature extends StaticNpc
 	 */
 	public void attackTarget(Creature target)
 	{
+		/**
+		 * Check all prerequisites
+		 */
+		if (target == null || !canAttack() || getLifeStats().isAlreadyDead() || !isSpawned() || !isEnemy(target))
+			return;
+
 		getObserveController().notifyAttackObservers(target);
+
+		/**
+		 * Calculate and apply damage
+		 */
+		List<AttackResult> attackList = AttackUtil.calculateAttackResult(this, target);
+
+		int damage = 0;
+		for (AttackResult result : attackList)
+		{
+			damage += result.getDamage();
+		}
+
+		long time = System.currentTimeMillis();
+		int attackType = 0; // TODO investigate attack types (0 or 1)
+		PacketSendUtility.broadcastPacket(this, new SM_ATTACK(this, target, gameStats.getAttackCounter(), (int) time, attackType, attackList));
+
+		target.onAttack(this, damage);
+		gameStats.increaseAttackCounter();
 	}
 
 	/**

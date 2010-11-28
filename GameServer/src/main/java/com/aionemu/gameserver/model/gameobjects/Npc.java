@@ -20,8 +20,6 @@ import java.util.List;
 
 import javolution.util.FastList;
 
-import com.aionemu.gameserver.controllers.attack.AttackResult;
-import com.aionemu.gameserver.controllers.attack.AttackUtil;
 import com.aionemu.gameserver.controllers.effect.EffectController;
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.ChatType;
@@ -45,7 +43,6 @@ import com.aionemu.gameserver.model.templates.TradeListTemplate;
 import com.aionemu.gameserver.model.templates.npcskill.NpcSkillList;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.model.templates.stats.NpcRank;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_DIALOG_WINDOW;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
@@ -309,44 +306,6 @@ public class Npc extends Creature implements IDialog
 			return;
 
 		World.getInstance().despawn(this);
-	}
-
-	@Override
-	public void attackTarget(Creature target)
-	{
-
-		/**
-		 * Check all prerequisites
-		 */
-		if (getLifeStats().isAlreadyDead() || !isSpawned())
-			return;
-
-		if (!canAttack())
-			return;
-
-		NpcGameStats gameStats = getGameStats();
-
-		/**
-		 * notify attack observers
-		 */
-		super.attackTarget(target);
-
-		/**
-		 * Calculate and apply damage
-		 */
-		List<AttackResult> attackList = AttackUtil.calculateAttackResult(this, target);
-
-		int damage = 0;
-		for (AttackResult result : attackList)
-		{
-			damage += result.getDamage();
-		}
-
-		int attackType = 0; // TODO investigate attack types (0 or 1)
-		PacketSendUtility.broadcastPacket(this, new SM_ATTACK(this, target, gameStats.getAttackCounter(), 274, attackType, attackList));
-
-		target.onAttack(this, damage);
-		gameStats.increaseAttackCounter();
 	}
 
 	@Override
