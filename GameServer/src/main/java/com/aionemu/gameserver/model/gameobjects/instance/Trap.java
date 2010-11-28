@@ -90,12 +90,6 @@ public class Trap extends Npc implements ISummoned
 	}
 
 	@Override
-	public Creature getActingCreature()
-	{
-		return this.master;
-	}
-
-	@Override
 	public Creature getMaster()
 	{
 		return this.master;

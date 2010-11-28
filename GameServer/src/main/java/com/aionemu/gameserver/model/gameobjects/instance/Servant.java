@@ -130,12 +130,6 @@ public class Servant extends Npc implements ISummoned
 	}
 
 	@Override
-	public Creature getActingCreature()
-	{
-		return this.creator;
-	}
-
-	@Override
 	public Creature getMaster()
 	{
 		return this.creator;

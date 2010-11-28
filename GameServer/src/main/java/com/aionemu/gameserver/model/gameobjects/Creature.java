@@ -37,10 +37,10 @@ import com.aionemu.gameserver.model.gameobjects.stats.CreatureGameStats;
 import com.aionemu.gameserver.model.gameobjects.stats.CreatureLifeStats;
 import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_LOOKATOBJECT;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_MOVE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SKILL_CANCEL;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
 import com.aionemu.gameserver.skillengine.SkillEngine;
 import com.aionemu.gameserver.skillengine.effect.EffectId;
 import com.aionemu.gameserver.skillengine.model.HealType;
@@ -72,7 +72,7 @@ public abstract class Creature extends StaticNpc
 	private int										transformedModelId;
 	private ObserveController						observeController;
 
-	private AggroList								aggroList;
+	private final AggroList							aggroList;
 
 	/**
 	 * 
@@ -122,6 +122,7 @@ public abstract class Creature extends StaticNpc
 		this.gameStats = gameStats;
 	}
 
+	@Override
 	public abstract byte getLevel();
 
 	public abstract void initializeAi();
@@ -443,19 +444,6 @@ public abstract class Creature extends StaticNpc
 	}
 
 	/**
-	 * For summons it will return summon object and for <br>
-	 * servants - player object.<br>
-	 * 
-	 * Used to find attackable target for npcs.<br>
-	 * 
-	 * @return acting master - player in case of servants
-	 */
-	public Creature getActingCreature()
-	{
-		return this;
-	}
-
-	/**
 	 * 
 	 * @param skillId
 	 * @return
@@ -533,6 +521,7 @@ public abstract class Creature extends StaticNpc
 	/**
 	 * Perform tasks on Creature death
 	 */
+	@Override
 	public void onDie(Creature lastAttacker)
 	{
 		super.onDie(lastAttacker);
@@ -662,6 +651,7 @@ public abstract class Creature extends StaticNpc
 	/**
 	 * This method should be overriden in more specific controllers
 	 */
+	@Override
 	public void onDialogRequest(Player player)
 	{
 
@@ -683,6 +673,7 @@ public abstract class Creature extends StaticNpc
 	 * @param player
 	 * @param questId
 	 */
+	@Override
 	public void onDialogSelect(int dialogId, Player player, int questId)
 	{
 		// TODO Auto-generated method stub

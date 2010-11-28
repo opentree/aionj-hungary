@@ -18,6 +18,8 @@ package com.aionemu.gameserver.model.gameobjects;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.aionemu.gameserver.controllers.attack.AttackResult;
 import com.aionemu.gameserver.controllers.attack.AttackUtil;
 import com.aionemu.gameserver.controllers.effect.EffectController;
@@ -30,6 +32,7 @@ import com.aionemu.gameserver.model.alliance.PlayerAlliance;
 import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.instance.Summon;
 import com.aionemu.gameserver.model.gameobjects.interfaces.IDialog;
+import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
 import com.aionemu.gameserver.model.gameobjects.knownList.KnownList;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.RequestResponseHandler;
@@ -44,6 +47,7 @@ import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.model.templates.stats.NpcRank;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_DIALOG_WINDOW;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_LOOKATOBJECT;
@@ -54,7 +58,6 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_QUESTION_WINDOW;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SELL_ITEM;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_TRADELIST;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
 import com.aionemu.gameserver.questEngine.QuestEngine;
 import com.aionemu.gameserver.questEngine.model.QuestEnv;
 import com.aionemu.gameserver.restrictions.RestrictionsManager;
@@ -84,8 +87,9 @@ import com.aionemu.gameserver.world.WorldType;
  */
 public class Npc extends Creature implements IDialog
 {
+	private static final Logger	log	= Logger.getLogger(Npc.class);
 
-	private NpcSkillList	npcSkillList;
+	private NpcSkillList		npcSkillList;
 
 	/**
 	 * Constructor creating instance of Npc.
@@ -298,6 +302,7 @@ public class Npc extends Creature implements IDialog
 	{
 	}
 
+	@Override
 	public void onDespawn(boolean forced)
 	{
 		if (forced)
@@ -423,6 +428,7 @@ public class Npc extends Creature implements IDialog
 	/**
 	 * This method should be called to make forced despawn of NPC and delete it from the world
 	 */
+	@Override
 	public void onDelete()
 	{
 		if (isInWorld())
@@ -681,9 +687,18 @@ public class Npc extends Creature implements IDialog
 
 		super.onAttack(creature, skillId, type, damage);
 
-		Creature actingCreature = creature.getActingCreature();
-		if (actingCreature instanceof Player)
-			if (QuestEngine.getInstance().onAttack(new QuestEnv(this, (Player) actingCreature, 0, 0)))
+		Creature master = null;
+		if (creature instanceof ISummoned)
+			master = ((ISummoned) creature).getMaster();
+
+		if (master == null)
+		{
+			log.error("master is null!");
+			return;
+		}
+
+		if (master instanceof Player)
+			if (QuestEngine.getInstance().onAttack(new QuestEnv(this, (Player) master, 0, 0)))
 				return;
 
 		for (VisibleObject obj : getKnownList().getKnownObjects().values())
@@ -698,7 +713,7 @@ public class Npc extends Creature implements IDialog
 
 			}
 		}
-		getLifeStats().reduceHp(damage, actingCreature);
+		getLifeStats().reduceHp(damage, master);
 
 		PacketSendUtility.broadcastPacket(this, new SM_ATTACK_STATUS(this, type, skillId, damage));
 	}

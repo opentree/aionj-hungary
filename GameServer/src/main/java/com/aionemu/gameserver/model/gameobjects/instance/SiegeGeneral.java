@@ -26,6 +26,7 @@ import com.aionemu.gameserver.model.EmotionType;
 import com.aionemu.gameserver.model.Race;
 import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.gameobjects.Creature;
+import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
 import com.aionemu.gameserver.model.legion.Legion;
@@ -33,9 +34,9 @@ import com.aionemu.gameserver.model.siege.SiegeLocation;
 import com.aionemu.gameserver.model.siege.SiegeRace;
 import com.aionemu.gameserver.model.siege.SiegeType;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_LOOKATOBJECT;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
 import com.aionemu.gameserver.services.RespawnService;
 import com.aionemu.gameserver.services.SiegeService;
 import com.aionemu.gameserver.services.SystemMailService;
@@ -100,12 +101,15 @@ public class SiegeGeneral extends SiegeNpc
 		int elyosDmg = 0;
 		for (AggroInfo ai : getAggroList().getList())
 		{
+			Creature master = null;
+
 			if (!(ai.getAttacker() instanceof Creature))
 				continue;
 
 			// Check to see if this is a summon, if so add the damage to the group. 
 
-			Creature master = ((Creature) ai.getAttacker()).getActingCreature();
+			if (ai.getAttacker() instanceof ISummoned)
+				master = ((ISummoned) ai.getAttacker()).getMaster();
 
 			if (master == null)
 				continue;

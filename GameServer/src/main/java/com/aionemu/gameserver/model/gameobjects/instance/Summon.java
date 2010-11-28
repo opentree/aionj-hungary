@@ -39,12 +39,12 @@ import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.model.templates.stats.SummonStatsTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SUMMON_OWNER_REMOVE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SUMMON_PANEL_REMOVE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SUMMON_UPDATE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
 import com.aionemu.gameserver.restrictions.RestrictionsManager;
 import com.aionemu.gameserver.services.LifeStatsRestoreService;
 import com.aionemu.gameserver.skillengine.SkillEngine;
@@ -61,7 +61,7 @@ public class Summon extends Creature implements ISummoned
 
 	private Player		master;
 	private SummonMode	mode;
-	private byte		level;
+	private final byte	level;
 
 	public static enum SummonMode
 	{
@@ -137,7 +137,7 @@ public class Summon extends Creature implements ISummoned
 	@Override
 	public NpcTemplate getObjectTemplate()
 	{
-		return (NpcTemplate) super.getObjectTemplate();
+		return super.getObjectTemplate();
 	}
 
 	public int getNpcId()
