@@ -1651,8 +1651,6 @@ public class Player extends Creature
 		if (summon != null)
 			summon.release(UnsummonType.UNSPECIFIED);
 
-		PacketSendUtility.broadcastPacket(this, new SM_EMOTION(this, EmotionType.DIE, 0, lastAttacker == null ? 0 : lastAttacker.getObjectId()), true);
-
 		// SM_DIE Packet
 		int kiskTimeRemaining = (getKisk() != null ? getKisk().getRemainingLifetime() : 0);
 		boolean hasSelfRezItem = getReviveController().checkForSelfRezItem(this);

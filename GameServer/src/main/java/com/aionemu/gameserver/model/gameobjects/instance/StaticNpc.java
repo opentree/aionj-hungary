@@ -21,6 +21,7 @@ package com.aionemu.gameserver.model.gameobjects.instance;
 import java.util.concurrent.Future;
 
 import com.aionemu.gameserver.dataholders.DataManager;
+import com.aionemu.gameserver.model.EmotionType;
 import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
@@ -32,7 +33,9 @@ import com.aionemu.gameserver.model.gameobjects.state.CreatureVisualState;
 import com.aionemu.gameserver.model.gameobjects.stats.StaticNpcStats;
 import com.aionemu.gameserver.model.templates.NpcTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
 import com.aionemu.gameserver.services.RespawnService;
+import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /**
  * @author Mr. Poke
@@ -41,9 +44,9 @@ import com.aionemu.gameserver.services.RespawnService;
 public class StaticNpc extends VisibleObject implements IDialog
 {
 
-	private int				state		= CreatureState.ACTIVE.getId();
-	private int				visualState	= CreatureVisualState.VISIBLE.getId();
-	private StaticNpcStats	stats		= new StaticNpcStats();
+	private int						state		= CreatureState.ACTIVE.getId();
+	private int						visualState	= CreatureVisualState.VISIBLE.getId();
+	private final StaticNpcStats	stats		= new StaticNpcStats();
 
 	/**
 	 * @param objId
@@ -174,6 +177,12 @@ public class StaticNpc extends VisibleObject implements IDialog
 	public void onDie(Creature lastAttacker)
 	{
 		this.setState(CreatureState.DEAD);
+		if (this instanceof Player)
+			PacketSendUtility.broadcastPacket((Player) this, new SM_EMOTION(this, EmotionType.DIE, 0, lastAttacker == null ? 0 : lastAttacker.getObjectId()),
+					true);
+		else
+			PacketSendUtility.broadcastPacket(this, new SM_EMOTION(this, EmotionType.DIE, 0, lastAttacker == null ? 0 : lastAttacker.getObjectId()));
+
 	}
 
 	/**
