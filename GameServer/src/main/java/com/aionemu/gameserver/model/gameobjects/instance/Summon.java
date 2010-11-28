@@ -38,7 +38,6 @@ import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.model.templates.stats.SummonStatsTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SUMMON_OWNER_REMOVE;
@@ -375,16 +374,11 @@ public class Summon extends Creature implements ISummoned
 	@Override
 	public void onAttack(Creature creature, int skillId, TYPE type, int damage)
 	{
-		if (getLifeStats().isAlreadyDead())
-			return;
-
 		//temp 
 		if (getMode() == SummonMode.RELEASE)
 			return;
 
 		super.onAttack(creature, skillId, type, damage);
-		getLifeStats().reduceHp(damage, creature);
-		PacketSendUtility.broadcastPacket(this, new SM_ATTACK_STATUS(this, TYPE.REGULAR, 0, damage));
 		PacketSendUtility.sendPacket(getMaster(), new SM_SUMMON_UPDATE(this));
 	}
 

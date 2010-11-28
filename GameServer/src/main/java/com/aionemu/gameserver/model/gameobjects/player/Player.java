@@ -74,7 +74,6 @@ import com.aionemu.gameserver.model.templates.quest.QuestItems;
 import com.aionemu.gameserver.model.templates.stats.PlayerStatsTemplate;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_DIE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
@@ -143,10 +142,10 @@ public class Player extends Creature
 	private SkillList					skillList;
 	private FriendList					friendList;
 	private BlockList					blockList;
-	private ResponseRequester			requester;
+	private final ResponseRequester		requester;
 	private boolean						lookingForGroup	= false;
 	private Storage						inventory;
-	private Storage[]					petBag			= new Storage[4];
+	private final Storage[]				petBag			= new Storage[4];
 	private Storage						regularWarehouse;
 	private Storage						accountWarehouse;
 	private Equipment					equipment;
@@ -156,7 +155,7 @@ public class Player extends Creature
 	private TitleList					titleList;
 	private PlayerSettings				playerSettings;
 	private QuestStateList				questStateList;
-	private List<Integer>				nearbyQuestList	= new ArrayList<Integer>();
+	private final List<Integer>			nearbyQuestList	= new ArrayList<Integer>();
 	private ZoneInstance				zoneInstance;
 	private PlayerGroup					playerGroup;
 	private AbyssRank					abyssRank;
@@ -175,7 +174,7 @@ public class Player extends Creature
 	private Summon						summon;
 	private ToyPet						toyPet;
 	private Kisk						kisk;
-	private Prices						prices;
+	private final Prices				prices;
 	private boolean						isGagged		= false;
 	private boolean						edit_mode		= false;
 	private boolean						isInShutdownProgress;
@@ -1380,7 +1379,7 @@ public class Player extends Creature
 
 	private class GeneralUpdateTask implements Runnable
 	{
-		private Player	player;
+		private final Player	player;
 
 		private GeneralUpdateTask(Player player)
 		{
@@ -1744,22 +1743,10 @@ public class Player extends Creature
 	@Override
 	public void onAttack(Creature creature, int skillId, TYPE type, int damage)
 	{
-		if (getLifeStats().isAlreadyDead())
-			return;
-
-		// Reduce the damage to exactly what is required to ensure death.
-		// - Important that we don't include 7k worth of damage when the
-		//   creature only has 100 hp remaining. (For AggroList dmg count.)
-		if (damage > getLifeStats().getCurrentHp())
-			damage = getLifeStats().getCurrentHp() + 1;
-
-		super.onAttack(creature, skillId, type, damage);
-
 		if (isInvul())
 			damage = 0;
 
-		getLifeStats().reduceHp(damage, creature);
-		PacketSendUtility.broadcastPacket(this, new SM_ATTACK_STATUS(this, type, skillId, damage), true);
+		super.onAttack(creature, skillId, type, damage);
 	}
 
 	/**

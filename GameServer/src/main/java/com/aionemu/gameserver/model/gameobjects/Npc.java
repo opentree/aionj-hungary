@@ -18,7 +18,7 @@ package com.aionemu.gameserver.model.gameobjects;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import javolution.util.FastList;
 
 import com.aionemu.gameserver.controllers.attack.AttackResult;
 import com.aionemu.gameserver.controllers.attack.AttackUtil;
@@ -46,7 +46,6 @@ import com.aionemu.gameserver.model.templates.npcskill.NpcSkillList;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.model.templates.stats.NpcRank;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_DIALOG_WINDOW;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
@@ -87,9 +86,7 @@ import com.aionemu.gameserver.world.WorldType;
  */
 public class Npc extends Creature implements IDialog
 {
-	private static final Logger	log	= Logger.getLogger(Npc.class);
-
-	private NpcSkillList		npcSkillList;
+	private NpcSkillList	npcSkillList;
 
 	/**
 	 * Constructor creating instance of Npc.
@@ -682,39 +679,36 @@ public class Npc extends Creature implements IDialog
 	@Override
 	public void onAttack(Creature creature, int skillId, TYPE type, int damage)
 	{
-		if (getLifeStats().isAlreadyDead())
-			return;
+		if (creature instanceof ISummoned)
+			creature = ((ISummoned) creature).getMaster();
 
 		super.onAttack(creature, skillId, type, damage);
 
-		Creature master = null;
-		if (creature instanceof ISummoned)
-			master = ((ISummoned) creature).getMaster();
-
-		if (master == null)
-		{
-			log.error("master is null!");
-			return;
-		}
-
-		if (master instanceof Player)
-			if (QuestEngine.getInstance().onAttack(new QuestEnv(this, (Player) master, 0, 0)))
+		if (creature instanceof Player)
+			if (QuestEngine.getInstance().onAttack(new QuestEnv(this, (Player) creature, 0, 0)))
 				return;
+
+		for (Npc sup : getSupportsInRange(10))
+			//FIXME see aggro, trap make hate?
+			sup.getAggroList().addHate(creature, 10);
+	}
+
+	public List<Npc> getSupportsInRange(float range)
+	{
+		List<Npc> list = new FastList<Npc>();
 
 		for (VisibleObject obj : getKnownList().getKnownObjects().values())
 		{
 			if (obj instanceof Npc)
 			{
 				Npc tmp = (Npc) obj;
-				if (isSupportFrom(tmp) && MathUtil.isInRange(this, obj, 10))
+				if (isSupportFrom(tmp) && MathUtil.isInRange(this, obj, range))
 				{
-					tmp.getAggroList().addHate(creature, 10);
-				}
+					list.add(tmp);
 
+				}
 			}
 		}
-		getLifeStats().reduceHp(damage, master);
-
-		PacketSendUtility.broadcastPacket(this, new SM_ATTACK_STATUS(this, type, skillId, damage));
+		return list;
 	}
 }

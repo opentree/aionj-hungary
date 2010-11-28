@@ -37,6 +37,7 @@ import com.aionemu.gameserver.model.gameobjects.stats.CreatureGameStats;
 import com.aionemu.gameserver.model.gameobjects.stats.CreatureLifeStats;
 import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_LOOKATOBJECT;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_MOVE;
@@ -534,6 +535,15 @@ public abstract class Creature extends StaticNpc
 	 */
 	public void onAttack(Creature creature, int skillId, TYPE type, int damage)
 	{
+		if (getLifeStats().isAlreadyDead())
+			return;
+
+		// Reduce the damage to exactly what is required to ensure death.
+		// - Important that we don't include 7k worth of damage when the
+		//   creature only has 100 hp remaining. (For AggroList dmg count.)
+		if (damage > getLifeStats().getCurrentHp())
+			damage = getLifeStats().getCurrentHp() + 1;
+
 		Skill skill = getCastingSkill();
 		if (skill != null && skill.getSkillTemplate().getCancelRate() > 0)
 		{
@@ -544,8 +554,15 @@ public abstract class Creature extends StaticNpc
 			if (Rnd.get(100) < cancel)
 				cancelCurrentSkill();
 		}
+
 		getObserveController().notifyAttackedObservers(creature);
 		getAggroList().addDamage(creature, damage);
+		getLifeStats().reduceHp(damage, creature);
+
+		if (this instanceof Player)
+			PacketSendUtility.broadcastPacket((Player) this, new SM_ATTACK_STATUS(this, type, skillId, damage), true);
+		else
+			PacketSendUtility.broadcastPacket(this, new SM_ATTACK_STATUS(this, type, skillId, damage));
 	}
 
 	/**
