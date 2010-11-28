@@ -26,6 +26,7 @@ import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.interfaces.IDialog;
+import com.aionemu.gameserver.model.gameobjects.interfaces.IReward;
 import com.aionemu.gameserver.model.gameobjects.knownList.StaticObjectKnownList;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
@@ -177,6 +178,10 @@ public class StaticNpc extends VisibleObject implements IDialog
 	public void onDie(Creature lastAttacker)
 	{
 		this.setState(CreatureState.DEAD);
+
+		if (this instanceof IReward)
+			((IReward) this).doReward();
+
 		if (this instanceof Player)
 			PacketSendUtility.broadcastPacket((Player) this, new SM_EMOTION(this, EmotionType.DIE, 0, lastAttacker == null ? 0 : lastAttacker.getObjectId()),
 					true);

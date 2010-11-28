@@ -72,7 +72,7 @@ public class SiegeGeneral extends SiegeNpc
 		this.setTarget(null);
 		PacketSendUtility.broadcastPacket(this, new SM_LOOKATOBJECT(this));
 		//runnig capture and despawn all npcs for this fort/artefact
-		this.doReward();
+		super.onDie(lastAttacker);
 		super.onDelete();
 	}
 

@@ -57,6 +57,7 @@ import com.aionemu.gameserver.model.gameobjects.instance.SiegeNpc;
 import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.instance.Summon;
 import com.aionemu.gameserver.model.gameobjects.instance.Summon.UnsummonType;
+import com.aionemu.gameserver.model.gameobjects.interfaces.IReward;
 import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureVisualState;
@@ -127,7 +128,7 @@ import com.aionemu.gameserver.world.zone.ZoneInstance;
  * @author alexa026
  * @author IlBuono
  */
-public class Player extends Creature
+public class Player extends Creature implements IReward
 {
 
 	private static final Logger			log				= Logger.getLogger(Player.class);
@@ -1630,8 +1631,6 @@ public class Player extends Creature
 				return;
 			}
 		}
-
-		this.doReward();
 
 		// Effects removed with super.onDie()
 		boolean hasSelfRezEffect = getReviveController().checkForSelfRezEffect(this);

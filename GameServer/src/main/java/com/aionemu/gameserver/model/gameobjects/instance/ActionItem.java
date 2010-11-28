@@ -21,6 +21,7 @@ package com.aionemu.gameserver.model.gameobjects.instance;
 import com.aionemu.gameserver.model.EmotionType;
 import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.gameobjects.Creature;
+import com.aionemu.gameserver.model.gameobjects.interfaces.IReward;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
@@ -37,7 +38,7 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
  * @author Mr. Poke
  *
  */
-public class ActionItem extends StaticNpc
+public class ActionItem extends StaticNpc implements IReward
 {
 
 	/**
@@ -49,9 +50,6 @@ public class ActionItem extends StaticNpc
 		super(objId, spawnTemplate);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.model.gameobjects.interfaces.IDialog#onDialogSelect(int, com.aionemu.gameserver.model.gameobjects.player.Player, int)
-	 */
 	@Override
 	public void onDialogSelect(int dialogId, Player player, int questId)
 	{
@@ -111,8 +109,6 @@ public class ActionItem extends StaticNpc
 
 		addTask(TaskId.DECAY, RespawnService.scheduleDecayTask(this));
 		scheduleRespawn();
-
-		this.doReward();
 
 		// deselect target at the end
 		setTarget(null);

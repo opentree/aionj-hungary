@@ -29,6 +29,7 @@ import com.aionemu.gameserver.model.alliance.PlayerAlliance;
 import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.instance.Summon;
 import com.aionemu.gameserver.model.gameobjects.interfaces.IDialog;
+import com.aionemu.gameserver.model.gameobjects.interfaces.IReward;
 import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
 import com.aionemu.gameserver.model.gameobjects.knownList.KnownList;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
@@ -79,7 +80,7 @@ import com.aionemu.gameserver.world.WorldType;
  * @author Luno
  * 
  */
-public class Npc extends Creature implements IDialog
+public class Npc extends Creature implements IDialog, IReward
 {
 	private NpcSkillList	npcSkillList;
 
@@ -353,8 +354,6 @@ public class Npc extends Creature implements IDialog
 			GroupService.getInstance().doReward(((Player) winner).getPlayerGroup(), this);
 		else
 		{
-			super.doReward();
-
 			Player player = (Player) winner;
 
 			long expReward = StatFunctions.calculateSoloExperienceReward(player, this);
