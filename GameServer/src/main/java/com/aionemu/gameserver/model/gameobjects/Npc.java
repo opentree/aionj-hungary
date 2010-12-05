@@ -28,7 +28,7 @@ import com.aionemu.gameserver.model.TribeClass;
 import com.aionemu.gameserver.model.alliance.PlayerAlliance;
 import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.instance.Summon;
-import com.aionemu.gameserver.model.gameobjects.interfaces.IDialog;
+import com.aionemu.gameserver.model.gameobjects.interfaces.IDialogSelect;
 import com.aionemu.gameserver.model.gameobjects.interfaces.IReward;
 import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
 import com.aionemu.gameserver.model.gameobjects.knownList.KnownList;
@@ -80,7 +80,7 @@ import com.aionemu.gameserver.world.WorldType;
  * @author Luno
  * 
  */
-public class Npc extends Creature implements IDialog, IReward
+public class Npc extends Creature implements IDialogSelect, IReward
 {
 	private NpcSkillList	npcSkillList;
 
@@ -285,14 +285,6 @@ public class Npc extends Creature implements IDialog, IReward
 			return false;
 
 		return true;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.model.gameobjects.IDialog#onDialogRequest(com.aionemu.gameserver.model.gameobjects.player.Player)
-	 */
-	@Override
-	public void onDialogRequest(Player player)
-	{
 	}
 
 	@Override

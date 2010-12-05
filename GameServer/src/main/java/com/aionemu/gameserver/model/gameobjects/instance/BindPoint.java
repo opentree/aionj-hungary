@@ -24,6 +24,7 @@ import com.aionemu.gameserver.configs.main.CustomConfig;
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.ChatType;
 import com.aionemu.gameserver.model.Race;
+import com.aionemu.gameserver.model.gameobjects.interfaces.IDialogRequest;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.RequestResponseHandler;
 import com.aionemu.gameserver.model.templates.BindPointTemplate;
@@ -39,15 +40,15 @@ import com.aionemu.gameserver.world.World;
 import com.aionemu.gameserver.world.WorldType;
 
 /**
- * @author Mr. Poke
+ * @author Mr. Poke, Lyahim
  *
  */
-public class BindPoint extends StaticNpc
+public class BindPoint extends StaticNpc implements IDialogRequest
 {
 
-	private static Logger		log	= Logger.getLogger(BindPoint.class);
+	private static Logger			log	= Logger.getLogger(BindPoint.class);
 
-	private BindPointTemplate	bindPointTemplate;
+	private final BindPointTemplate	bindPointTemplate;
 
 	/**
 	 * @param objId

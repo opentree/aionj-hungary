@@ -19,6 +19,7 @@
 package com.aionemu.gameserver.model.gameobjects.instance;
 
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
+import com.aionemu.gameserver.model.gameobjects.interfaces.IDialogRequest;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.RequestResponseHandler;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
@@ -35,7 +36,7 @@ import com.aionemu.gameserver.world.WorldMapInstance;
  * @author Mr. Poke
  *
  */
-public class Rift extends StaticNpc
+public class Rift extends StaticNpc implements IDialogRequest
 {
 
 	private boolean			isMaster	= false;
@@ -48,7 +49,7 @@ public class Rift extends StaticNpc
 	private int				usedEntries;
 	private boolean			isAccepting;
 
-	private RiftEnum		riftTemplate;
+	private final RiftEnum	riftTemplate;
 
 	/**
 	 * @param objId

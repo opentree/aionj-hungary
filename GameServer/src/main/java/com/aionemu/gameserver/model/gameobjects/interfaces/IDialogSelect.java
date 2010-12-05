@@ -24,9 +24,7 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
  * @author Mr. Poke
  *
  */
-public interface IDialog
+public interface IDialogSelect
 {
-	public void onDialogRequest(Player player);
-
 	public void onDialogSelect(int dialogId, Player player, int questId);
 }

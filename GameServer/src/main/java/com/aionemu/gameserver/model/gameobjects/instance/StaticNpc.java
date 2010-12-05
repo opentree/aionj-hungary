@@ -25,7 +25,6 @@ import com.aionemu.gameserver.model.EmotionType;
 import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
-import com.aionemu.gameserver.model.gameobjects.interfaces.IDialog;
 import com.aionemu.gameserver.model.gameobjects.interfaces.IReward;
 import com.aionemu.gameserver.model.gameobjects.knownList.StaticObjectKnownList;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
@@ -42,7 +41,7 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  * @author Mr. Poke
  *
  */
-public class StaticNpc extends VisibleObject implements IDialog
+public class StaticNpc extends VisibleObject
 {
 
 	private int						state		= CreatureState.ACTIVE.getId();
@@ -164,14 +163,6 @@ public class StaticNpc extends VisibleObject implements IDialog
 		return this.getObjectTemplate().getLevel();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.model.gameobjects.interfaces.IDialog#onDialogRequest(com.aionemu.gameserver.model.gameobjects.player.Player)
-	 */
-	@Override
-	public void onDialogRequest(Player player)
-	{
-	}
-
 	/**
 	 * Perform tasks on Creature death
 	 */
@@ -188,23 +179,6 @@ public class StaticNpc extends VisibleObject implements IDialog
 		else
 			PacketSendUtility.broadcastPacket(this, new SM_EMOTION(this, EmotionType.DIE, 0, lastAttacker == null ? 0 : lastAttacker.getObjectId()));
 
-	}
-
-	/**
-	 * Perform reward operation
-	 * 
-	 */
-	public void doReward()
-	{
-
-	}
-
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.model.gameobjects.interfaces.IDialog#onDialogSelect(int, com.aionemu.gameserver.model.gameobjects.player.Player, int)
-	 */
-	@Override
-	public void onDialogSelect(int dialogId, Player player, int questId)
-	{
 	}
 
 	/**

@@ -16,10 +16,11 @@
  */
 package com.aionemu.gameserver.network.aion.clientpackets;
 
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 import com.aionemu.gameserver.model.gameobjects.AionObject;
 import com.aionemu.gameserver.model.gameobjects.Npc;
+import com.aionemu.gameserver.model.gameobjects.interfaces.IDialogRequest;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_LOOKATOBJECT;
 import com.aionemu.gameserver.utils.PacketSendUtility;
@@ -72,7 +73,7 @@ public class CM_SHOW_DIALOG extends AbstractClientPacket<AionChannelHandler>
 			//TODO this is not needed for all dialog requests
 			PacketSendUtility.broadcastPacket((Npc) targetObject, new SM_LOOKATOBJECT((Npc) targetObject));
 
-			((Npc) targetObject).onDialogRequest(player);
+			((IDialogRequest) targetObject).onDialogRequest(player);
 		}
 	}
 }

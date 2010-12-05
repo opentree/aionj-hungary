@@ -19,6 +19,7 @@
 package com.aionemu.gameserver.model.gameobjects.instance;
 
 import com.aionemu.gameserver.dataholders.DataManager;
+import com.aionemu.gameserver.model.gameobjects.interfaces.IDialogRequest;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_DIALOG_WINDOW;
@@ -29,7 +30,7 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
  * @author Mr. Poke
  *
  */
-public class Postman extends StaticNpc
+public class Postman extends StaticNpc implements IDialogRequest
 {
 
 	private int	RecipientId;	//ID of the express mail recipient, to prevent messenger using by non-recipient players

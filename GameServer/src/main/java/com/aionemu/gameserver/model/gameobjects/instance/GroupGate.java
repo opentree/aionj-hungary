@@ -6,6 +6,7 @@ package com.aionemu.gameserver.model.gameobjects.instance;
 
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.Npc;
+import com.aionemu.gameserver.model.gameobjects.interfaces.IDialogRequest;
 import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.RequestResponseHandler;
@@ -19,7 +20,7 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  * @author LokiReborn 
  * 
  */
-public class GroupGate extends Npc implements ISummoned
+public class GroupGate extends Npc implements ISummoned, IDialogRequest
 {
 
 	/** 

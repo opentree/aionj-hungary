@@ -21,6 +21,7 @@ package com.aionemu.gameserver.model.gameobjects.instance;
 import com.aionemu.gameserver.model.EmotionType;
 import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.gameobjects.Creature;
+import com.aionemu.gameserver.model.gameobjects.interfaces.IDialogRequest;
 import com.aionemu.gameserver.model.gameobjects.interfaces.IReward;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
@@ -35,10 +36,10 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 
 /**
- * @author Mr. Poke
+ * @author Mr. Poke, Lyahim
  *
  */
-public class ActionItem extends StaticNpc implements IReward
+public class ActionItem extends StaticNpc implements IReward, IDialogRequest
 {
 
 	/**
@@ -48,11 +49,6 @@ public class ActionItem extends StaticNpc implements IReward
 	public ActionItem(int objId, SpawnTemplate spawnTemplate)
 	{
 		super(objId, spawnTemplate);
-	}
-
-	@Override
-	public void onDialogSelect(int dialogId, Player player, int questId)
-	{
 	}
 
 	private Player	lastActor	= null;

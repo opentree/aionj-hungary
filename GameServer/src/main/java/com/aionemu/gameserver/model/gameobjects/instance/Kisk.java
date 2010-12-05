@@ -26,6 +26,7 @@ import com.aionemu.gameserver.model.alliance.PlayerAllianceMember;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
+import com.aionemu.gameserver.model.gameobjects.interfaces.IDialogRequest;
 import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.RequestResponseHandler;
@@ -46,7 +47,7 @@ import com.aionemu.gameserver.world.World;
  * @author Sarynth
  *
  */
-public class Kisk extends Npc implements ISummoned
+public class Kisk extends Npc implements ISummoned, IDialogRequest
 {
 	private String				ownerName;
 	private Legion				ownerLegion;

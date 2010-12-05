@@ -19,6 +19,7 @@
 package com.aionemu.gameserver.model.gameobjects.instance;
 
 import com.aionemu.gameserver.model.gameobjects.Npc;
+import com.aionemu.gameserver.model.gameobjects.interfaces.IDialogRequest;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.RequestResponseHandler;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
@@ -29,7 +30,7 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  * @author Mr. Poke
  *
  */
-public class Artifact extends Npc
+public class Artifact extends Npc implements IDialogRequest
 {
 
 	/**

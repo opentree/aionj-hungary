@@ -58,7 +58,7 @@ import com.aionemu.gameserver.world.World;
 /**
  * This class is representing movable objects, its base class for all in game objects that may move
  * 
- * @author -Nemesiss-
+ * @author -Nemesiss-, Lyahim
  * 
  */
 public abstract class Creature extends StaticNpc
@@ -696,11 +696,11 @@ public abstract class Creature extends StaticNpc
 	/**
 	 * This method should be overriden in more specific controllers
 	 */
-	@Override
-	public void onDialogRequest(Player player)
-	{
+	/*	@Override
+		public void onDialogRequest(Player player)
+		{
 
-	}
+		}*/
 
 	/**
 	    * Stops movements
@@ -709,19 +709,6 @@ public abstract class Creature extends StaticNpc
 	{
 		World.getInstance().updatePosition(this, getX(), getY(), getZ(), getHeading());
 		PacketSendUtility.broadcastPacket(this, new SM_MOVE(getObjectId(), getX(), getY(), getZ(), getHeading(), MovementType.MOVEMENT_STOP));
-	}
-
-	/**
-	 * Handle Dialog_Select
-	 * 
-	 * @param dialogId
-	 * @param player
-	 * @param questId
-	 */
-	@Override
-	public void onDialogSelect(int dialogId, Player player, int questId)
-	{
-		// TODO Auto-generated method stub
 	}
 
 	/**
