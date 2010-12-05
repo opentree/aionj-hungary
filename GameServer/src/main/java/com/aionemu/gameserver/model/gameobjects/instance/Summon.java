@@ -189,7 +189,7 @@ public class Summon extends Creature implements ISummoned
 	}
 
 	@Override
-	public boolean isAggroFrom(Npc npc)
+	public boolean isAggroFrom(Creature npc)
 	{
 		if (getMaster() == null)
 			return false;

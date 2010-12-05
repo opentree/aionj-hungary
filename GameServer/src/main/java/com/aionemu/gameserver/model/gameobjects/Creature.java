@@ -375,7 +375,7 @@ public abstract class Creature extends StaticNpc
 	 * @param npc
 	 * @return
 	 */
-	public boolean isAggroFrom(Npc npc)
+	public boolean isAggroFrom(Creature npc)
 	{
 		return false;
 	}

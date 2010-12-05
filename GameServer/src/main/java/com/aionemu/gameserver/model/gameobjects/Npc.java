@@ -171,7 +171,7 @@ public class Npc extends Creature implements IDialogSelect, IReward
 	}
 
 	@Override
-	public boolean isAggroFrom(Npc npc)
+	public boolean isAggroFrom(Creature npc)
 	{
 		return DataManager.TRIBE_RELATIONS_DATA.isAggressiveRelation(npc.getTribe(), getTribe());
 	}

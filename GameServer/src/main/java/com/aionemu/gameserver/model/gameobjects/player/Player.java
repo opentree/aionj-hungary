@@ -1205,16 +1205,14 @@ public class Player extends Creature implements IReward, IDialogSelect
 	}
 
 	@Override
-	public boolean isAggroFrom(Npc npc)
+	public boolean isAggroFrom(Creature npc)
 	{
 		//siege npc are always aggro on players, without level limitation
-		if (npc instanceof SiegeNpc)
-			return isAggroIconTo(npc);
 		// npc's that are 10 or more levels lower don't get aggro on players
-		if (npc.getLevel() + 10 <= getLevel())
+		if (!(npc instanceof SiegeNpc) && npc.getLevel() + 10 <= getLevel())
 			return false;
-
-		return isAggroIconTo(npc);
+		else
+			return isAggroIconTo(npc);
 	}
 
 	/**
@@ -1223,7 +1221,7 @@ public class Player extends Creature implements IReward, IDialogSelect
 	 * @param npcTribe
 	 * @return
 	 */
-	public boolean isAggroIconTo(StaticNpc npc)
+	private boolean isAggroIconTo(Creature npc)
 	{
 		switch (getCommonData().getRace())
 		{
@@ -1481,19 +1479,19 @@ public class Player extends Creature implements IReward, IDialogSelect
 		else if (object instanceof Kisk)
 		{
 			Kisk kisk = ((Kisk) object);
-			PacketSendUtility.sendPacket(this, new SM_NPC_INFO(this, kisk));
+			PacketSendUtility.sendPacket(this, new SM_NPC_INFO(kisk, this));
 			if (getCommonData().getRace() == kisk.getOwnerRace())
 				PacketSendUtility.sendPacket(this, new SM_KISK_UPDATE(kisk));
 		}
 		else if (object instanceof GroupGate)
 		{
 			GroupGate groupgate = ((GroupGate) object);
-			PacketSendUtility.sendPacket(this, new SM_NPC_INFO(this, groupgate));
+			PacketSendUtility.sendPacket(this, new SM_NPC_INFO(groupgate, this));
 		}
 		else if (object instanceof Summon)
 		{
 			Summon npc = ((Summon) object);
-			PacketSendUtility.sendPacket(this, new SM_NPC_INFO(npc));
+			PacketSendUtility.sendPacket(this, new SM_NPC_INFO(npc, this));
 		}
 		else if (object instanceof StaticNpc)
 		{
