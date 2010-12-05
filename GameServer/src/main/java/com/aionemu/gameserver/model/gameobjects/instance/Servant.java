@@ -19,7 +19,6 @@ package com.aionemu.gameserver.model.gameobjects.instance;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
-import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 
 /**
@@ -111,24 +110,25 @@ public class Servant extends Npc implements ISummoned
 	{
 	}
 
-	@Override
-	public boolean isEnemyNpc(Npc visibleObject)
-	{
-		return this.creator.isEnemyNpc(visibleObject);
-	}
+	/*
+		@Override
+		public boolean isEnemyNpc(Npc visibleObject)
+		{
+			return this.creator.isEnemyNpc(visibleObject);
+		}
 
-	@Override
-	public boolean isEnemyPlayer(Player visibleObject)
-	{
-		return this.creator.isEnemyPlayer(visibleObject);
-	}
+		@Override
+		public boolean isEnemyPlayer(Player visibleObject)
+		{
+			return this.creator.isEnemyPlayer(visibleObject);
+		}
 
-	@Override
-	public boolean isEnemySummon(Summon summon)
-	{
-		return this.creator.isEnemySummon(summon);
-	}
-
+		@Override
+		public boolean isEnemySummon(Summon summon)
+		{
+			return this.creator.isEnemySummon(summon);
+		}
+	*/
 	@Override
 	public Creature getMaster()
 	{

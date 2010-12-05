@@ -62,18 +62,12 @@ public class StaticNpc extends VisibleObject
 
 	}
 
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.model.gameobjects.AionObject#getName()
-	 */
 	@Override
 	public String getName()
 	{
 		return objectTemplate.getName();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.model.gameobjects.VisibleObject#getObjectTemplate()
-	 */
 	@Override
 	public NpcTemplate getObjectTemplate()
 	{

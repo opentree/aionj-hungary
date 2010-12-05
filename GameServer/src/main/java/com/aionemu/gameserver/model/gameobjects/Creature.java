@@ -30,9 +30,11 @@ import com.aionemu.gameserver.controllers.attack.AttackResult;
 import com.aionemu.gameserver.controllers.attack.AttackUtil;
 import com.aionemu.gameserver.controllers.effect.EffectController;
 import com.aionemu.gameserver.controllers.movement.MovementType;
+import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.TribeClass;
+import com.aionemu.gameserver.model.gameobjects.instance.SiegeNpc;
 import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
-import com.aionemu.gameserver.model.gameobjects.instance.Summon;
+import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureSeeState;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
@@ -311,53 +313,40 @@ public abstract class Creature extends StaticNpc
 		return observeController;
 	}
 
-	/**
-	 * 
-	 * @param visibleObject
-	 * @return
-	 */
-	public boolean isEnemy(VisibleObject visibleObject)
+	public boolean isEnemy(Creature creature)
 	{
-		if (visibleObject instanceof Npc)
-			return isEnemyNpc((Npc) visibleObject);
-		else if (visibleObject instanceof Player)
-			return isEnemyPlayer((Player) visibleObject);
-		else if (visibleObject instanceof Summon)
-			return isEnemySummon((Summon) visibleObject);
+		return isAggressiveTo(creature);
+		/*		if (creature instanceof Npc)
+					return isEnemyNpc((Npc) creature);
+				else if (creature instanceof Player)
+					return isEnemyPlayer((Player) creature);
+				else if (creature instanceof Summon)
+					return isEnemySummon((Summon) creature);
 
-		return false;
+				return false;*/
 	}
 
-	/**
-	 * @param summon
-	 * @return
-	 */
-	public boolean isEnemySummon(Summon summon)
-	{
-		return false;
-	}
+	/*	public boolean isEnemySummon(Summon summon)
+		{
+			return false;
+		}
 
-	/**
-	 * @param player
-	 * @return
-	 */
-	public boolean isEnemyPlayer(Player player)
-	{
-		return false;
-	}
+		public boolean isEnemyPlayer(Player player)
+		{
+			return false;
+		}
 
-	/**
-	 * @param npc
-	 * @return
-	 */
-	public boolean isEnemyNpc(Npc npc)
-	{
-		return false;
-	}
+		public boolean isEnemyNpc(Npc npc)
+		{
+			return false;
+		}*/
 
 	public TribeClass getTribe()
 	{
-		return TribeClass.GENERAL;
+		if (this instanceof ISummoned)
+			return ((ISummoned) this).getMaster().getObjectTemplate().getTribe();
+		else
+			return getObjectTemplate().getTribe();
 	}
 
 	/**
@@ -367,52 +356,38 @@ public abstract class Creature extends StaticNpc
 	 */
 	public boolean isAggressiveTo(Creature creature)
 	{
-		return false;
+		return creature.isAggroFrom(this) || creature.isHostileFrom(this);
+		//		return false;
 	}
 
-	/**
-	 * 
-	 * @param npc
-	 * @return
-	 */
 	public boolean isAggroFrom(Creature npc)
 	{
+		if (npc instanceof SiegeNpc || npc.getLevel() + 10 >= getLevel())
+		{
+			if (this instanceof ISummoned)
+				return DataManager.TRIBE_RELATIONS_DATA.isAggressiveRelation(((ISummoned) npc).getMaster().getObjectTemplate().getTribe(), getTribe());
+			else
+				return DataManager.TRIBE_RELATIONS_DATA.isAggressiveRelation(npc.getObjectTemplate().getTribe(), getTribe());
+		}
 		return false;
 	}
 
-	/**
-	 * 
-	 * @param npc
-	 * @return
-	 */
-	public boolean isHostileFrom(Npc npc)
+	public boolean isHostileFrom(Creature npc)
 	{
-		return false;
+		if (this instanceof ISummoned)
+			return DataManager.TRIBE_RELATIONS_DATA.isHostileRelation(((ISummoned) npc).getMaster().getObjectTemplate().getTribe(), getTribe());
+		else
+			return DataManager.TRIBE_RELATIONS_DATA.isHostileRelation(npc.getObjectTemplate().getTribe(), getTribe());
+		//		return false;
 	}
 
-	public boolean isSupportFrom(Npc npc)
+	public boolean isSupportFrom(Creature npc)
 	{
-		return false;
-	}
-
-	/**
-	 * 
-	 * @param player
-	 * @return
-	 */
-	public boolean isAggroFrom(Player player)
-	{
-		return false;
-	}
-
-	/**
-	 * 
-	 * @param summon
-	 * @return
-	 */
-	public boolean isAggroFrom(Summon summon)
-	{
-		return isAggroFrom(summon.getMaster());
+		if (this instanceof ISummoned)
+			return DataManager.TRIBE_RELATIONS_DATA.isSupportRelation(((ISummoned) npc).getMaster().getObjectTemplate().getTribe(), getTribe());
+		else
+			return DataManager.TRIBE_RELATIONS_DATA.isSupportRelation(npc.getObjectTemplate().getTribe(), getTribe());
+		//		return false;
 	}
 
 	/**
@@ -692,15 +667,6 @@ public abstract class Creature extends StaticNpc
 				break;
 		}
 	}
-
-	/**
-	 * This method should be overriden in more specific controllers
-	 */
-	/*	@Override
-		public void onDialogRequest(Player player)
-		{
-
-		}*/
 
 	/**
 	    * Stops movements

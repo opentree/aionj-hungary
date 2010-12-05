@@ -24,6 +24,7 @@ import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.Gender;
 import com.aionemu.gameserver.model.PlayerClass;
 import com.aionemu.gameserver.model.Race;
+import com.aionemu.gameserver.model.TribeClass;
 import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
 import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ABYSS_RANK;
@@ -714,4 +715,16 @@ public class PlayerCommonData extends VisibleObjectTemplate
 	{
 		return mailboxLetters;
 	}
+
+	public TribeClass getTribe()
+	{
+		switch (getRace())
+		{
+			case ELYOS:
+				return TribeClass.PC;
+			default:
+				return TribeClass.PC_DARK;
+		}
+	}
+
 }

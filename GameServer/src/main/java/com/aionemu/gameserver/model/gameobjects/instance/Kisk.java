@@ -84,30 +84,30 @@ public class Kisk extends Npc implements ISummoned, IDialogRequest
 	/**
 	 * Required so that the enemy race can attack the Kisk!
 	 */
-	@Override
-	public boolean isAggressiveTo(Creature creature)
-	{
-		if (creature instanceof Player)
+	/*	@Override
+		public boolean isAggressiveTo(Creature creature)
 		{
-			Player player = (Player) creature;
-			if (player.getCommonData().getRace() != this.ownerRace)
-				return true;
+			if (creature instanceof Player)
+			{
+				Player player = (Player) creature;
+				if (player.getCommonData().getRace() != this.ownerRace)
+					return true;
+			}
+			return false;
 		}
-		return false;
-	}
 
-	@Override
-	public boolean isEnemyNpc(Npc npc)
-	{
-		return npc instanceof Monster || npc.isAggressiveTo(this);
-	}
+		@Override
+		public boolean isEnemyNpc(Npc npc)
+		{
+			return npc instanceof Monster || npc.isAggressiveTo(this);
+		}
 
-	@Override
-	public boolean isEnemyPlayer(Player player)
-	{
-		return player.getCommonData().getRace() != this.ownerRace;
-	}
-
+		@Override
+		public boolean isEnemyPlayer(Player player)
+		{
+			return player.getCommonData().getRace() != this.ownerRace;
+		}
+	*/
 	/**
 	 * 1 ~ race
 	 * 2 ~ legion

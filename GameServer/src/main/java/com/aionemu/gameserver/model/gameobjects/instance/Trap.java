@@ -19,7 +19,6 @@ package com.aionemu.gameserver.model.gameobjects.instance;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
-import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 
 /**
@@ -77,18 +76,19 @@ public class Trap extends Npc implements ISummoned
 	{
 	}
 
-	@Override
-	public boolean isEnemyNpc(Npc visibleObject)
-	{
-		return this.master.isEnemyNpc(visibleObject);
-	}
+	/*
+		@Override
+		public boolean isEnemyNpc(Npc visibleObject)
+		{
+			return this.master.isEnemyNpc(visibleObject);
+		}
 
-	@Override
-	public boolean isEnemyPlayer(Player visibleObject)
-	{
-		return this.master.isEnemyPlayer(visibleObject);
-	}
-
+		@Override
+		public boolean isEnemyPlayer(Player visibleObject)
+		{
+			return this.master.isEnemyPlayer(visibleObject);
+		}
+	*/
 	@Override
 	public Creature getMaster()
 	{

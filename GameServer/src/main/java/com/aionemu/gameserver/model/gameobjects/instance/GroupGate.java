@@ -46,17 +46,17 @@ public class GroupGate extends Npc implements ISummoned, IDialogRequest
 		return (1);
 	}
 
-	@Override
-	public boolean isEnemyNpc(Npc visibleObject)
-	{
-		return this.creator.isEnemyNpc(visibleObject);
-	}
+	/*	@Override
+		public boolean isEnemyNpc(Npc visibleObject)
+		{
+			return this.creator.isEnemyNpc(visibleObject);
+		}
 
-	@Override
-	public boolean isEnemyPlayer(Player visibleObject)
-	{
-		return this.creator.isEnemyPlayer(visibleObject);
-	}
+		@Override
+		public boolean isEnemyPlayer(Player visibleObject)
+		{
+			return this.creator.isEnemyPlayer(visibleObject);
+		}*/
 
 	@Override
 	public Creature getMaster()

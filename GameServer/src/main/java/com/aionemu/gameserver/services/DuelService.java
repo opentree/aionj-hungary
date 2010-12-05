@@ -37,9 +37,9 @@ import com.aionemu.gameserver.world.World;
  */
 public class DuelService
 {
-	private static Logger				log	= Logger.getLogger(DuelService.class);
+	private static Logger					log	= Logger.getLogger(DuelService.class);
 
-	private FastMap<Integer, Integer>	duels;
+	private final FastMap<Integer, Integer>	duels;
 
 	public static final DuelService getInstance()
 	{
@@ -68,7 +68,7 @@ public class DuelService
 		/**
 		 * Check if requester isn't already in a duel and responder is same race
 		 */
-		if (requester.isEnemyPlayer(responder) || isDueling(requester.getObjectId()))
+		if (requester.isEnemy(responder) || isDueling(requester.getObjectId()))
 			return;
 
 		RequestResponseHandler rrh = new RequestResponseHandler(requester)
@@ -103,7 +103,7 @@ public class DuelService
 		/**
 		 * Check if requester isn't already in a duel and responder is same race
 		 */
-		if (requester.isEnemyPlayer(responder))
+		if (requester.isEnemy(responder))
 			return;
 
 		RequestResponseHandler rrh = new RequestResponseHandler(responder)

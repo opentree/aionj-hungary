@@ -24,10 +24,8 @@ import com.aionemu.gameserver.controllers.effect.EffectController;
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.ChatType;
 import com.aionemu.gameserver.model.TaskId;
-import com.aionemu.gameserver.model.TribeClass;
 import com.aionemu.gameserver.model.alliance.PlayerAlliance;
 import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
-import com.aionemu.gameserver.model.gameobjects.instance.Summon;
 import com.aionemu.gameserver.model.gameobjects.interfaces.IDialogSelect;
 import com.aionemu.gameserver.model.gameobjects.interfaces.IReward;
 import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
@@ -152,41 +150,41 @@ public class Npc extends Creature implements IDialogSelect, IReward
 	 * 
 	 * @return
 	 */
-	public boolean isAggressive()
-	{
-		TribeClass currentTribe = getObjectTemplate().getTribe();
-		return DataManager.TRIBE_RELATIONS_DATA.hasAggressiveRelations(currentTribe) || isGuard() || isHostile();
-	}
+	/*	public boolean isAggressive()
+		{
+			TribeClass currentTribe = getObjectTemplate().getTribe();
+			return DataManager.TRIBE_RELATIONS_DATA.hasAggressiveRelations(currentTribe) || isGuard() || isHostile();
+		}
 
-	public boolean isHostile()
-	{
-		TribeClass currentTribe = getObjectTemplate().getTribe();
-		return DataManager.TRIBE_RELATIONS_DATA.hasHostileRelations(currentTribe);
-	}
+		public boolean isHostile()
+		{
+			TribeClass currentTribe = getObjectTemplate().getTribe();
+			return DataManager.TRIBE_RELATIONS_DATA.hasHostileRelations(currentTribe);
+		}
 
-	@Override
-	public boolean isAggressiveTo(Creature creature)
-	{
-		return creature.isAggroFrom(this) || creature.isHostileFrom(this);
-	}
+		@Override
+		public boolean isAggressiveTo(Creature creature)
+		{
+			return creature.isAggroFrom(this) || creature.isHostileFrom(this);
+		}
 
-	@Override
-	public boolean isAggroFrom(Creature npc)
-	{
-		return DataManager.TRIBE_RELATIONS_DATA.isAggressiveRelation(npc.getTribe(), getTribe());
-	}
+		@Override
+		public boolean isAggroFrom(Creature npc)
+		{
+			return DataManager.TRIBE_RELATIONS_DATA.isAggressiveRelation(npc.getTribe(), getTribe());
+		}
 
-	@Override
-	public boolean isHostileFrom(Npc npc)
-	{
-		return DataManager.TRIBE_RELATIONS_DATA.isHostileRelation(npc.getTribe(), getTribe());
-	}
+		@Override
+		public boolean isHostileFrom(Npc npc)
+		{
+			return DataManager.TRIBE_RELATIONS_DATA.isHostileRelation(npc.getTribe(), getTribe());
+		}
 
-	@Override
-	public boolean isSupportFrom(Npc npc)
-	{
-		return DataManager.TRIBE_RELATIONS_DATA.isSupportRelation(npc.getTribe(), getTribe());
-	}
+		@Override
+		public boolean isSupportFrom(Npc npc)
+		{
+			return DataManager.TRIBE_RELATIONS_DATA.isSupportRelation(npc.getTribe(), getTribe());
+		}*/
 
 	/**
 	 * 
@@ -194,14 +192,14 @@ public class Npc extends Creature implements IDialogSelect, IReward
 	 */
 	public boolean isGuard()
 	{
-		return getObjectTemplate().getTribe().isGuard();
+		return getTribe().isGuard();
 	}
 
-	@Override
-	public TribeClass getTribe()
-	{
-		return this.getObjectTemplate().getTribe();
-	}
+	/*	@Override
+		public TribeClass getTribe()
+		{
+			return this.getObjectTemplate().getTribe();
+		}*/
 
 	public int getAggroRange()
 	{
@@ -239,30 +237,31 @@ public class Npc extends Creature implements IDialogSelect, IReward
 		this.npcSkillList = npcSkillList;
 	}
 
-	@Override
-	public boolean isEnemyNpc(Npc visibleObject)
-	{
-		return ((DataManager.TRIBE_RELATIONS_DATA.isAggressiveRelation(getTribe(), visibleObject.getTribe())) || (DataManager.TRIBE_RELATIONS_DATA
-				.isHostileRelation(getTribe(), visibleObject.getTribe())));
-	}
+	/*
+		@Override
+		public boolean isEnemyNpc(Npc visibleObject)
+		{
+			return ((DataManager.TRIBE_RELATIONS_DATA.isAggressiveRelation(getTribe(), visibleObject.getTribe())) || (DataManager.TRIBE_RELATIONS_DATA
+					.isHostileRelation(getTribe(), visibleObject.getTribe())));
+		}
 
-	@Override
-	public boolean isEnemyPlayer(Player visibleObject)
-	{
-		return (!((DataManager.TRIBE_RELATIONS_DATA.isSupportRelation(getTribe(), visibleObject.getTribe())) || (DataManager.TRIBE_RELATIONS_DATA
-				.isFriendlyRelation(getTribe(), visibleObject.getTribe()))));
-	}
+		@Override
+		public boolean isEnemyPlayer(Player visibleObject)
+		{
+			return (!((DataManager.TRIBE_RELATIONS_DATA.isSupportRelation(getTribe(), visibleObject.getTribe())) || (DataManager.TRIBE_RELATIONS_DATA
+					.isFriendlyRelation(getTribe(), visibleObject.getTribe()))));
+		}
 
-	@Override
-	public boolean isEnemySummon(Summon visibleObject)
-	{
-		Player player = visibleObject.getMaster();
-		if (player != null)
-			return (!((DataManager.TRIBE_RELATIONS_DATA.isSupportRelation(getTribe(), player.getTribe())) || (DataManager.TRIBE_RELATIONS_DATA
-					.isFriendlyRelation(getTribe(), player.getTribe()))));
-		return true;
-	}
-
+		@Override
+		public boolean isEnemySummon(Summon visibleObject)
+		{
+			Player player = visibleObject.getMaster();
+			if (player != null)
+				return (!((DataManager.TRIBE_RELATIONS_DATA.isSupportRelation(getTribe(), player.getTribe())) || (DataManager.TRIBE_RELATIONS_DATA
+						.isFriendlyRelation(getTribe(), player.getTribe()))));
+			return true;
+		}
+	*/
 	@Override
 	protected boolean canSeeNpc(Npc npc)
 	{

@@ -42,7 +42,6 @@ import com.aionemu.gameserver.model.Gender;
 import com.aionemu.gameserver.model.PlayerClass;
 import com.aionemu.gameserver.model.Race;
 import com.aionemu.gameserver.model.TaskId;
-import com.aionemu.gameserver.model.TribeClass;
 import com.aionemu.gameserver.model.alliance.PlayerAlliance;
 import com.aionemu.gameserver.model.alliance.PlayerAllianceEvent;
 import com.aionemu.gameserver.model.gameobjects.Creature;
@@ -52,8 +51,6 @@ import com.aionemu.gameserver.model.gameobjects.PersistentState;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.instance.GroupGate;
 import com.aionemu.gameserver.model.gameobjects.instance.Kisk;
-import com.aionemu.gameserver.model.gameobjects.instance.Monster;
-import com.aionemu.gameserver.model.gameobjects.instance.SiegeNpc;
 import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.instance.Summon;
 import com.aionemu.gameserver.model.gameobjects.instance.Summon.UnsummonType;
@@ -1143,11 +1140,11 @@ public class Player extends Creature implements IReward, IDialogSelect
 	 * @param npc
 	 * @return
 	 */
-	@Override
-	public boolean isEnemyNpc(Npc npc)
-	{
-		return npc instanceof Monster || npc.isAggressiveTo(this);
-	}
+	/*	@Override
+		public boolean isEnemyNpc(Npc npc)
+		{
+			return npc instanceof Monster || npc.isAggressiveTo(this);
+		}*/
 
 	/**
 	 * Player enemies:<br>
@@ -1157,21 +1154,21 @@ public class Player extends Creature implements IReward, IDialogSelect
 	 * @param player
 	 * @return
 	 */
-	@Override
-	public boolean isEnemyPlayer(Player player)
-	{
-		return player.getCommonData().getRace() != getCommonData().getRace() || isDueling(player);
-	}
+	/*	@Override
+		public boolean isEnemyPlayer(Player player)
+		{
+			return player.getCommonData().getRace() != getCommonData().getRace() || isDueling(player);
+		}*/
 
 	/**
 	 * Summon enemies:<br>
 	 * - master not null and master is enemy<br>
 	 */
-	@Override
-	public boolean isEnemySummon(Summon summon)
-	{
-		return summon.getMaster() != null && isEnemyPlayer(summon.getMaster());
-	}
+	/*	@Override
+		public boolean isEnemySummon(Summon summon)
+		{
+			return summon.getMaster() != null && isEnemyPlayer(summon.getMaster());
+		}*/
 
 	/**
 	 * Player-player friends:<br>
@@ -1186,34 +1183,34 @@ public class Player extends Creature implements IReward, IDialogSelect
 		return player.getCommonData().getRace() == getCommonData().getRace() && !isDueling(player);
 	}
 
-	@Override
-	public TribeClass getTribe()
-	{
-		switch (getCommonData().getRace())
+	/*	@Override
+		public TribeClass getTribe()
 		{
-			case ELYOS:
-				return TribeClass.PC;
-			default:
-				return TribeClass.PC_DARK;
-		}
-	}
+			switch (getCommonData().getRace())
+			{
+				case ELYOS:
+					return TribeClass.PC;
+				default:
+					return TribeClass.PC_DARK;
+			}
+		}*/
 
-	@Override
-	public boolean isAggressiveTo(Creature creature)
-	{
-		return creature.isAggroFrom(this);
-	}
+	/*	@Override
+		public boolean isAggressiveTo(Creature creature)
+		{
+			return creature.isAggroFrom(this);
+		}*/
 
-	@Override
-	public boolean isAggroFrom(Creature npc)
-	{
-		//siege npc are always aggro on players, without level limitation
-		// npc's that are 10 or more levels lower don't get aggro on players
-		if (!(npc instanceof SiegeNpc) && npc.getLevel() + 10 <= getLevel())
-			return false;
-		else
-			return isAggroIconTo(npc);
-	}
+	/*	@Override
+		public boolean isAggroFrom(Creature npc)
+		{
+			//siege npc are always aggro on players, without level limitation
+			// npc's that are 10 or more levels lower don't get aggro on players
+			if (!(npc instanceof SiegeNpc) && npc.getLevel() + 10 <= getLevel())
+				return false;
+			else
+				return isAggroIconTo(npc);
+		}*/
 
 	/**
 	 * Used in SM_NPC_INFO to check aggro irrespective to level
@@ -1221,21 +1218,21 @@ public class Player extends Creature implements IReward, IDialogSelect
 	 * @param npcTribe
 	 * @return
 	 */
-	private boolean isAggroIconTo(Creature npc)
-	{
-		switch (getCommonData().getRace())
+	/*	private boolean isAggroIconTo(Creature npc)
 		{
-			case ELYOS:
-				if (npc.getObjectTemplate().getTribe().isGuard() && npc.getObjectTemplate().getRace() == Race.ASMODIANS)
-					return true;
-				return DataManager.TRIBE_RELATIONS_DATA.isAggressiveRelation(npc.getObjectTemplate().getTribe(), TribeClass.PC);
-			case ASMODIANS:
-				if (npc.getObjectTemplate().getTribe().isGuard() && npc.getObjectTemplate().getRace() == Race.ELYOS)
-					return true;
-				return DataManager.TRIBE_RELATIONS_DATA.isAggressiveRelation(npc.getObjectTemplate().getTribe(), TribeClass.PC_DARK);
-		}
-		return false;
-	}
+			switch (getCommonData().getRace())
+			{
+				case ELYOS:
+					if (npc.getObjectTemplate().getTribe().isGuard() && npc.getObjectTemplate().getRace() == Race.ASMODIANS)
+						return true;
+					return DataManager.TRIBE_RELATIONS_DATA.isAggressiveRelation(npc.getObjectTemplate().getTribe(), TribeClass.PC);
+				case ASMODIANS:
+					if (npc.getObjectTemplate().getTribe().isGuard() && npc.getObjectTemplate().getRace() == Race.ELYOS)
+						return true;
+					return DataManager.TRIBE_RELATIONS_DATA.isAggressiveRelation(npc.getObjectTemplate().getTribe(), TribeClass.PC_DARK);
+			}
+			return false;
+		}*/
 
 	@Override
 	protected boolean canSeeNpc(Npc npc)
@@ -1466,7 +1463,7 @@ public class Player extends Creature implements IReward, IDialogSelect
 		if (object instanceof Player)
 		{
 			Player player = (Player) object;
-			PacketSendUtility.sendPacket(this, new SM_PLAYER_INFO(player, isEnemyPlayer((Player) object)));
+			PacketSendUtility.sendPacket(this, new SM_PLAYER_INFO(player, isEnemy((Player) object)));
 			if (player.getToyPet() != null)
 			{
 				Logger.getLogger(Player.class).debug("Player " + getName() + " sees " + object.getName() + " that has toypet");

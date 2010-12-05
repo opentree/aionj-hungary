@@ -18,9 +18,7 @@ package com.aionemu.gameserver.model.gameobjects.instance;
 
 import com.aionemu.gameserver.controllers.effect.EffectController;
 import com.aionemu.gameserver.model.TaskId;
-import com.aionemu.gameserver.model.TribeClass;
 import com.aionemu.gameserver.model.gameobjects.Creature;
-import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
 import com.aionemu.gameserver.model.gameobjects.knownList.KnownList;
@@ -158,48 +156,46 @@ public class Summon extends Creature implements ISummoned
 		this.mode = mode;
 	}
 
-	@Override
-	public boolean isEnemyNpc(Npc visibleObject)
-	{
-		return master.isEnemyNpc(visibleObject);
-	}
+	/*
+		@Override
+		public boolean isEnemyNpc(Npc visibleObject)
+		{
+			return master.isEnemyNpc(visibleObject);
+		}
 
-	@Override
-	public boolean isEnemyPlayer(Player visibleObject)
-	{
-		return master.isEnemyPlayer(visibleObject);
-	}
+		@Override
+		public boolean isEnemyPlayer(Player visibleObject)
+		{
+			return master.isEnemyPlayer(visibleObject);
+		}
 
-	@Override
-	public boolean isEnemySummon(Summon summon)
-	{
-		return master.isEnemySummon(summon);
-	}
+		@Override
+		public boolean isEnemySummon(Summon summon)
+		{
+			return master.isEnemySummon(summon);
+		}
 
-	@Override
-	public TribeClass getTribe()
-	{
-		return master.getTribe();
-	}
+		@Override
+		public TribeClass getTribe()
+		{
+			return master.getTribe();
+		}
 
-	@Override
-	public boolean isAggressiveTo(Creature creature)
-	{
-		return creature.isAggroFrom(this);
-	}
+		@Override
+		public boolean isAggressiveTo(Creature creature)
+		{
+			return creature.isAggroFrom(this);
+		}
 
-	@Override
-	public boolean isAggroFrom(Creature npc)
-	{
-		if (getMaster() == null)
-			return false;
+		@Override
+		public boolean isAggroFrom(Creature npc)
+		{
+			if (getMaster() == null)
+				return false;
 
-		return getMaster().isAggroFrom(npc);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned#setMaster(com.aionemu.gameserver.model.gameobjects.Creature)
-	 */
+			return getMaster().isAggroFrom(npc);
+		}
+	*/
 	@Override
 	public void setMaster(Creature master)
 	{
