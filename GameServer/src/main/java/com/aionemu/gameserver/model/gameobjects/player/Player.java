@@ -605,7 +605,7 @@ public class Player extends Creature implements IReward, IDialogSelect
 		for (int petBagId = 32; petBagId < 36; petBagId++)
 		{
 			Storage petBag = getStorage(petBagId);
-			if (petBag.getPersistentState() == PersistentState.UPDATE_REQUIRED)
+			if (petBag != null && petBag.getPersistentState() == PersistentState.UPDATE_REQUIRED)
 			{
 				dirtyItems.addAll(petBag.getAllItems());
 				dirtyItems.addAll(petBag.getDeletedItems());
