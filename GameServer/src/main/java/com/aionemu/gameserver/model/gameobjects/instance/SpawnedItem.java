@@ -43,16 +43,10 @@ public class SpawnedItem extends VisibleObject
 		return objectTemplate.getName();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.model.gameobjects.VisibleObject#see(com.aionemu.gameserver.model.gameobjects.VisibleObject)
-	 */
 	@Override
 	public void see(VisibleObject object)
 	{
-		super.see(object);
 		if (object instanceof Player)
-		{
 			PacketSendUtility.sendPacket((Player) object, new SM_GATHERABLE_INFO(this));
-		}
 	}
 }

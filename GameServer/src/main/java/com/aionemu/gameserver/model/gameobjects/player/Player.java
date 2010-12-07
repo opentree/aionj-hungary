@@ -49,9 +49,7 @@ import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.PersistentState;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
-import com.aionemu.gameserver.model.gameobjects.instance.GroupGate;
 import com.aionemu.gameserver.model.gameobjects.instance.Kisk;
-import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.instance.Summon;
 import com.aionemu.gameserver.model.gameobjects.instance.Summon.UnsummonType;
 import com.aionemu.gameserver.model.gameobjects.interfaces.IDialogSelect;
@@ -73,12 +71,9 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_DIE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_KISK_UPDATE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_LEVEL_UPDATE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_NEARBY_QUESTS;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_NPC_INFO;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_PET;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_PLAYER_INFO;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_PLAYER_STATE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_PRIVATE_STORE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SKILL_CANCEL;
@@ -1453,9 +1448,6 @@ public class Player extends Creature implements IReward, IDialogSelect
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void see(VisibleObject object)
 	{
@@ -1463,59 +1455,17 @@ public class Player extends Creature implements IReward, IDialogSelect
 		if (object instanceof Player)
 		{
 			Player player = (Player) object;
-			PacketSendUtility.sendPacket(this, new SM_PLAYER_INFO(player, isEnemy((Player) object)));
 			if (player.getToyPet() != null)
 			{
-				Logger.getLogger(Player.class).debug("Player " + getName() + " sees " + object.getName() + " that has toypet");
+				log.debug("Player " + getName() + " sees " + object.getName() + " that has toypet");
 				PacketSendUtility.sendPacket(this, new SM_PET(3, player.getToyPet()));
 			}
 			{
 				getEffectController().sendEffectIconsTo((Player) object);
 			}
 		}
-		else if (object instanceof Kisk)
-		{
-			Kisk kisk = ((Kisk) object);
-			PacketSendUtility.sendPacket(this, new SM_NPC_INFO(kisk, this));
-			if (getCommonData().getRace() == kisk.getOwnerRace())
-				PacketSendUtility.sendPacket(this, new SM_KISK_UPDATE(kisk));
-		}
-		else if (object instanceof GroupGate)
-		{
-			GroupGate groupgate = ((GroupGate) object);
-			PacketSendUtility.sendPacket(this, new SM_NPC_INFO(groupgate, this));
-		}
-		else if (object instanceof Summon)
-		{
-			Summon npc = ((Summon) object);
-			PacketSendUtility.sendPacket(this, new SM_NPC_INFO(npc, this));
-		}
-		else if (object instanceof StaticNpc)
-		{
-			boolean update = false;
-			StaticNpc npc = ((StaticNpc) object);
-
-			PacketSendUtility.sendPacket(this, new SM_NPC_INFO(npc, this));
-
-			for (int questId : QuestEngine.getInstance().getNpcQuestData(npc.getObjectTemplate().getTemplateId()).getOnQuestStart())
-			{
-				if (QuestService.checkStartCondition(new QuestEnv(object, this, questId, 0)))
-				{
-					if (!getNearbyQuests().contains(questId))
-					{
-						update = true;
-						getNearbyQuests().add(questId);
-					}
-				}
-			}
-			if (update)
-				updateNearbyQuestList();
-		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void notSee(VisibleObject object, boolean isOutOfRange)
 	{

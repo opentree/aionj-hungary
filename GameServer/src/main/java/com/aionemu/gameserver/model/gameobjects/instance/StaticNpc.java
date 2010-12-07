@@ -34,6 +34,10 @@ import com.aionemu.gameserver.model.gameobjects.stats.StaticNpcStats;
 import com.aionemu.gameserver.model.templates.NpcTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_NPC_INFO;
+import com.aionemu.gameserver.questEngine.QuestEngine;
+import com.aionemu.gameserver.questEngine.model.QuestEnv;
+import com.aionemu.gameserver.services.QuestService;
 import com.aionemu.gameserver.services.RespawnService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
@@ -188,6 +192,30 @@ public class StaticNpc extends VisibleObject
 		{
 			Future<?> respawnTask = RespawnService.scheduleRespawnTask(this);
 			addTask(TaskId.RESPAWN, respawnTask);
+		}
+	}
+
+	@Override
+	public void see(VisibleObject object)
+	{
+		if (object instanceof Player)
+		{
+			boolean update = false;
+			Player player = (Player) object;
+			PacketSendUtility.sendPacket(player, new SM_NPC_INFO(this, player));
+			for (int questId : QuestEngine.getInstance().getNpcQuestData(this.getObjectTemplate().getTemplateId()).getOnQuestStart())
+			{
+				if (QuestService.checkStartCondition(new QuestEnv(this, player, questId, 0)))
+				{
+					if (!player.getNearbyQuests().contains(questId))
+					{
+						update = true;
+						player.getNearbyQuests().add(questId);
+					}
+				}
+			}
+			if (update)
+				player.updateNearbyQuestList();
 		}
 	}
 }

@@ -123,7 +123,6 @@ public class Rift extends StaticNpc implements IDialogRequest
 	@Override
 	public void see(VisibleObject object)
 	{
-		super.see(object);
 		if (!isMaster)
 			return;
 

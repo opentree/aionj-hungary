@@ -283,10 +283,7 @@ public abstract class VisibleObject extends AionObject
 	 * 
 	 * @param object
 	 */
-	public void see(VisibleObject object)
-	{
-
-	}
+	public abstract void see(VisibleObject object);
 
 	/**
 	 * Called when controlled object no longer see some other VisibleObject.

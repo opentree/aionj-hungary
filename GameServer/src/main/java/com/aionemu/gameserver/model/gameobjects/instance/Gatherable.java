@@ -257,7 +257,6 @@ public class Gatherable extends VisibleObject
 	@Override
 	public void see(VisibleObject object)
 	{
-		super.see(object);
 		if (object instanceof Player)
 		{
 			PacketSendUtility.sendPacket((Player) object, new SM_GATHERABLE_INFO(this));

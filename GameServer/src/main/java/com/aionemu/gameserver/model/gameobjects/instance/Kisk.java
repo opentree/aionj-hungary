@@ -461,12 +461,20 @@ public class Kisk extends Npc implements ISummoned, IDialogRequest
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned#getMaster()
-	 */
 	@Override
 	public Creature getMaster()
 	{
 		return this.master;
+	}
+
+	@Override
+	public void see(VisibleObject object)
+	{
+		super.see(object);
+		if (object instanceof Player)
+		{
+			if (((Player) object).getCommonData().getRace() == this.getOwnerRace())
+				PacketSendUtility.sendPacket(((Player) object), new SM_KISK_UPDATE(this));
+		}
 	}
 }
