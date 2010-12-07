@@ -18,39 +18,28 @@
  */
 package com.aionemu.gameserver.model.gameobjects.instance;
 
-import java.util.concurrent.Future;
-
 import com.aionemu.gameserver.dataholders.DataManager;
-import com.aionemu.gameserver.model.EmotionType;
-import com.aionemu.gameserver.model.TaskId;
-import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
-import com.aionemu.gameserver.model.gameobjects.interfaces.IReward;
 import com.aionemu.gameserver.model.gameobjects.knownList.StaticObjectKnownList;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureVisualState;
 import com.aionemu.gameserver.model.gameobjects.stats.StaticNpcStats;
 import com.aionemu.gameserver.model.templates.NpcTemplate;
+import com.aionemu.gameserver.model.templates.PlayableTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_NPC_INFO;
-import com.aionemu.gameserver.questEngine.QuestEngine;
-import com.aionemu.gameserver.questEngine.model.QuestEnv;
-import com.aionemu.gameserver.services.QuestService;
-import com.aionemu.gameserver.services.RespawnService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /**
- * @author Mr. Poke
+ * @author Mr. Poke, Lyahim
  *
  */
 public class StaticNpc extends VisibleObject
 {
-
 	private int						state		= CreatureState.ACTIVE.getId();
-	private int						visualState	= CreatureVisualState.VISIBLE.getId();
 	private final StaticNpcStats	stats		= new StaticNpcStats();
+	private int						visualState	= CreatureVisualState.VISIBLE.getId();
 
 	/**
 	 * @param objId
@@ -67,44 +56,38 @@ public class StaticNpc extends VisibleObject
 	}
 
 	@Override
-	public String getName()
-	{
-		return objectTemplate.getName();
-	}
-
-	@Override
 	public NpcTemplate getObjectTemplate()
 	{
 		return (NpcTemplate) super.getObjectTemplate();
 	}
 
-	/**
-	 * @return Returns the stats.
-	 */
+	public byte getLevel()
+	{
+		return ((PlayableTemplate) objectTemplate).getLevel();
+	}
+
+	@Override
+	public void see(VisibleObject object)
+	{
+		if (object instanceof Player)
+			PacketSendUtility.sendPacket((Player) object, new SM_NPC_INFO(this, (Player) object));
+	}
+
 	public StaticNpcStats getStats()
 	{
 		return stats;
 	}
 
-	/**
-	 * @return state
-	 */
 	public int getState()
 	{
 		return state;
 	}
 
-	/**
-	 * @param state the state to set
-	 */
 	public void setState(CreatureState state)
 	{
 		this.state |= state.getId();
 	}
 
-	/** 
-	 * @param state taken usually from templates
-	 */
 	public void setState(int state)
 	{
 		this.state = state;
@@ -125,17 +108,11 @@ public class StaticNpc extends VisibleObject
 		return false;
 	}
 
-	/**
-	 * @return visualState
-	 */
 	public int getVisualState()
 	{
 		return visualState;
 	}
 
-	/**
-	 * @param visualState the visualState to set
-	 */
 	public void setVisualState(CreatureVisualState visualState)
 	{
 		this.visualState |= visualState.getId();
@@ -154,68 +131,5 @@ public class StaticNpc extends VisibleObject
 			return true;
 
 		return false;
-	}
-
-	public byte getLevel()
-	{
-		return this.getObjectTemplate().getLevel();
-	}
-
-	/**
-	 * Perform tasks on Creature death
-	 */
-	public void onDie(Creature lastAttacker)
-	{
-		this.setState(CreatureState.DEAD);
-
-		if (this instanceof IReward)
-			((IReward) this).doReward();
-
-		if (this instanceof Player)
-			PacketSendUtility.broadcastPacket((Player) this, new SM_EMOTION(this, EmotionType.DIE, 0, lastAttacker == null ? 0 : lastAttacker.getObjectId()),
-					true);
-		else
-			PacketSendUtility.broadcastPacket(this, new SM_EMOTION(this, EmotionType.DIE, 0, lastAttacker == null ? 0 : lastAttacker.getObjectId()));
-
-	}
-
-	/**
-	 * Schedule respawn of npc
-	 * In instances - no npc respawn
-	 */
-	public void scheduleRespawn()
-	{
-		if (isInInstance())
-			return;
-
-		if (getSpawn().getInterval() > 0)
-		{
-			Future<?> respawnTask = RespawnService.scheduleRespawnTask(this);
-			addTask(TaskId.RESPAWN, respawnTask);
-		}
-	}
-
-	@Override
-	public void see(VisibleObject object)
-	{
-		if (object instanceof Player)
-		{
-			boolean update = false;
-			Player player = (Player) object;
-			PacketSendUtility.sendPacket(player, new SM_NPC_INFO(this, player));
-			for (int questId : QuestEngine.getInstance().getNpcQuestData(this.getObjectTemplate().getTemplateId()).getOnQuestStart())
-			{
-				if (QuestService.checkStartCondition(new QuestEnv(this, player, questId, 0)))
-				{
-					if (!player.getNearbyQuests().contains(questId))
-					{
-						update = true;
-						player.getNearbyQuests().add(questId);
-					}
-				}
-			}
-			if (update)
-				player.updateNearbyQuestList();
-		}
 	}
 }

@@ -18,6 +18,7 @@ package com.aionemu.gameserver.model.gameobjects;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 import javolution.util.FastMap;
 
@@ -31,9 +32,12 @@ import com.aionemu.gameserver.controllers.attack.AttackUtil;
 import com.aionemu.gameserver.controllers.effect.EffectController;
 import com.aionemu.gameserver.controllers.movement.MovementType;
 import com.aionemu.gameserver.dataholders.DataManager;
+import com.aionemu.gameserver.model.EmotionType;
+import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.TribeClass;
 import com.aionemu.gameserver.model.gameobjects.instance.SiegeNpc;
 import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
+import com.aionemu.gameserver.model.gameobjects.interfaces.IReward;
 import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureSeeState;
@@ -45,9 +49,14 @@ import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_LOOKATOBJECT;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_MOVE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SKILL_CANCEL;
+import com.aionemu.gameserver.questEngine.QuestEngine;
+import com.aionemu.gameserver.questEngine.model.QuestEnv;
+import com.aionemu.gameserver.services.QuestService;
+import com.aionemu.gameserver.services.RespawnService;
 import com.aionemu.gameserver.skillengine.SkillEngine;
 import com.aionemu.gameserver.skillengine.effect.EffectId;
 import com.aionemu.gameserver.skillengine.model.HealType;
@@ -69,16 +78,12 @@ public abstract class Creature extends StaticNpc
 
 	private CreatureLifeStats<? extends Creature>	lifeStats;
 	private CreatureGameStats<? extends Creature>	gameStats;
-
 	private EffectController						effectController;
-
 	private int										seeState	= CreatureSeeState.NORMAL.getId();
-
 	private Skill									castingSkill;
 	private Map<Integer, Long>						skillCoolDowns;
 	private int										transformedModelId;
 	private ObserveController						observeController;
-
 	private final AggroList							aggroList;
 
 	/**
@@ -128,9 +133,6 @@ public abstract class Creature extends StaticNpc
 	{
 		this.gameStats = gameStats;
 	}
-
-	@Override
-	public abstract byte getLevel();
 
 	public abstract void initializeAi();
 
@@ -499,17 +501,6 @@ public abstract class Creature extends StaticNpc
 	}
 
 	/**
-	 * Perform tasks on Creature death
-	 */
-	@Override
-	public void onDie(Creature lastAttacker)
-	{
-		super.onDie(lastAttacker);
-		this.setCasting(null);
-		this.getEffectController().removeAllEffects();
-	}
-
-	/**
 	 * Perform tasks when Creature was attacked //TODO may be pass only Skill object - but need to add properties in it
 	 */
 	public void onAttack(Creature creature, int skillId, TYPE type, int damage)
@@ -729,5 +720,66 @@ public abstract class Creature extends StaticNpc
 	{
 		// TODO Auto-generated method stub
 
+	}
+
+	/**
+	 * Perform tasks on Creature death
+	 */
+	public void onDie(Creature lastAttacker)
+	{
+		this.setCasting(null);
+		this.getEffectController().removeAllEffects();
+
+		this.setState(CreatureState.DEAD);
+
+		if (this instanceof IReward)
+			((IReward) this).doReward();
+
+		if (this instanceof Player)
+			PacketSendUtility.broadcastPacket((Player) this, new SM_EMOTION(this, EmotionType.DIE, 0, lastAttacker == null ? 0 : lastAttacker.getObjectId()),
+					true);
+		else
+			PacketSendUtility.broadcastPacket(this, new SM_EMOTION(this, EmotionType.DIE, 0, lastAttacker == null ? 0 : lastAttacker.getObjectId()));
+
+	}
+
+	@Override
+	public void see(VisibleObject object)
+	{
+		super.see(object);
+		if (object instanceof Player)
+		{
+			boolean update = false;
+			Player player = (Player) object;
+			for (int questId : QuestEngine.getInstance().getNpcQuestData(this.getObjectTemplate().getTemplateId()).getOnQuestStart())
+			{
+				if (QuestService.checkStartCondition(new QuestEnv(this, player, questId, 0)))
+				{
+					if (!player.getNearbyQuests().contains(questId))
+					{
+						update = true;
+						player.getNearbyQuests().add(questId);
+					}
+				}
+			}
+			if (update)
+				player.updateNearbyQuestList();
+		}
+	}
+
+	/**
+	 * Schedule respawn of npc
+	 * In instances - no npc respawn
+	 */
+	public void scheduleRespawn()
+	{
+		if (isInInstance())
+			return;
+
+		if (getSpawn().getInterval() > 0)
+		{
+			Future<?> respawnTask = RespawnService.scheduleRespawnTask(this);
+			addTask(TaskId.RESPAWN, respawnTask);
+		}
 	}
 }

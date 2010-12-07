@@ -17,7 +17,7 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.EmotionType;
-import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
+import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
 import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
@@ -34,40 +34,40 @@ public class SM_EMOTION extends AbstractAionServerPacket<AionChannelHandler>
 	/**
 	 * Object id of emotion sender
 	 */
-	private int			senderObjectId;
+	private final int			senderObjectId;
 
 	/**
 	 * Some unknown variable
 	 */
-	private EmotionType	emotionType;
+	private final EmotionType	emotionType;
 
 	/**
 	 * ID of emotion
 	 */
-	private int			emotion;
+	private int					emotion;
 
 	/**
 	 * Object id of emotion target
 	 */
-	private int			targetObjectId;
+	private int					targetObjectId;
 
 	/**
 	 * Temporary Speed..
 	 */
-	private float		speed	= 6.0f;
+	private float				speed	= 6.0f;
 
-	private int			state;
+	private int					state;
 
-	private int			baseAttackSpeed;
-	private int			currentAttackSpeed;
+	private int					baseAttackSpeed;
+	private int					currentAttackSpeed;
 
 	/**
 	 * Coordinates of player
 	 */
-	private float		x;
-	private float		y;
-	private float		z;
-	private byte		heading;
+	private float				x;
+	private float				y;
+	private float				z;
+	private byte				heading;
 
 	/**
 	 * This constructor should be used when emotion and targetid is 0
@@ -75,7 +75,7 @@ public class SM_EMOTION extends AbstractAionServerPacket<AionChannelHandler>
 	 * @param creature
 	 * @param emotionType
 	 */
-	public SM_EMOTION(StaticNpc creature, EmotionType emotionType)
+	public SM_EMOTION(Creature creature, EmotionType emotionType)
 	{
 		this(creature, emotionType, 0, 0);
 	}
@@ -92,7 +92,7 @@ public class SM_EMOTION extends AbstractAionServerPacket<AionChannelHandler>
 	 * @param emotionId
 	 *            who target emotion
 	 */
-	public SM_EMOTION(StaticNpc creature, EmotionType emotionType, int emotion, int targetObjectId)
+	public SM_EMOTION(Creature creature, EmotionType emotionType, int emotion, int targetObjectId)
 	{
 		this.senderObjectId = creature.getObjectId();
 		this.emotionType = emotionType;

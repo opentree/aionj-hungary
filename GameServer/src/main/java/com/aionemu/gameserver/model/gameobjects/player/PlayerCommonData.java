@@ -26,7 +26,7 @@ import com.aionemu.gameserver.model.PlayerClass;
 import com.aionemu.gameserver.model.Race;
 import com.aionemu.gameserver.model.TribeClass;
 import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
-import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
+import com.aionemu.gameserver.model.templates.PlayableTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ABYSS_RANK;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ABYSS_RANK_UPDATE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_DP_INFO;
@@ -46,7 +46,7 @@ import com.aionemu.gameserver.world.WorldPosition;
  * @author Luno
  * 
  */
-public class PlayerCommonData extends VisibleObjectTemplate
+public class PlayerCommonData extends PlayableTemplate
 {
 	private static final Logger	log						= Logger.getLogger(PlayerCommonData.class);
 
@@ -55,7 +55,7 @@ public class PlayerCommonData extends VisibleObjectTemplate
 	private String				name;
 	private PlayerClass			playerClass;
 	/** Should be changed right after character creation **/
-	private int					level					= 0;
+	private byte				level					= 0;
 	private long				exp						= 0;
 	private long				expRecoverable			= 0;
 	private Gender				gender;
@@ -206,7 +206,7 @@ public class PlayerCommonData extends VisibleObjectTemplate
 			maxLevel = 10;
 
 		long maxExp = DataManager.PLAYER_EXPERIENCE_TABLE.getStartExpForLevel(maxLevel);
-		int level = 1;
+		byte level = 1;
 
 		if (exp > maxExp)
 		{
@@ -583,7 +583,8 @@ public class PlayerCommonData extends VisibleObjectTemplate
 		lastOnline = timestamp;
 	}
 
-	public int getLevel()
+	@Override
+	public byte getLevel()
 	{
 		return level;
 	}

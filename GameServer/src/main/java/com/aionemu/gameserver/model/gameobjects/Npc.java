@@ -106,21 +106,9 @@ public class Npc extends Creature implements IDialogSelect, IReward
 		return (NpcTemplate) objectTemplate;
 	}
 
-	@Override
-	public String getName()
-	{
-		return getObjectTemplate().getName();
-	}
-
 	public int getNpcId()
 	{
 		return getObjectTemplate().getTemplateId();
-	}
-
-	@Override
-	public byte getLevel()
-	{
-		return getObjectTemplate().getLevel();
 	}
 
 	/**

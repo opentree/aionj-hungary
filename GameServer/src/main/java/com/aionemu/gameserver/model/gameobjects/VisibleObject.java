@@ -414,4 +414,10 @@ public abstract class VisibleObject extends AionObject
 			this.delete();
 		}
 	}
+
+	@Override
+	public String getName()
+	{
+		return objectTemplate.getName();
+	}
 }

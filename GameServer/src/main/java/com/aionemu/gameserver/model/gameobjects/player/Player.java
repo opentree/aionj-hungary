@@ -123,7 +123,6 @@ import com.aionemu.gameserver.world.zone.ZoneInstance;
  */
 public class Player extends Creature implements IReward, IDialogSelect
 {
-
 	private static final Logger			log				= Logger.getLogger(Player.class);
 
 	private PlayerAppearance			playerAppearance;
@@ -212,12 +211,6 @@ public class Player extends Creature implements IReward, IDialogSelect
 	public void setCommonData(PlayerCommonData playerCommonData)
 	{
 		this.objectTemplate = playerCommonData;
-	}
-
-	@Override
-	public String getName()
-	{
-		return getCommonData().getName();
 	}
 
 	public PlayerAppearance getPlayerAppearance()
@@ -422,12 +415,6 @@ public class Player extends Creature implements IReward, IDialogSelect
 	public Gender getGender()
 	{
 		return getCommonData().getGender();
-	}
-
-	@Override
-	public byte getLevel()
-	{
-		return (byte) getCommonData().getLevel();
 	}
 
 	/**
@@ -1451,7 +1438,7 @@ public class Player extends Creature implements IReward, IDialogSelect
 	@Override
 	public void see(VisibleObject object)
 	{
-		super.see(object);
+		//		super.see(object);
 		if (object instanceof Player)
 		{
 			Player player = (Player) object;

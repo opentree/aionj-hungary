@@ -40,12 +40,6 @@ public class GroupGate extends Npc implements ISummoned, IDialogRequest
 		super(objId, spawnTemplate);
 	}
 
-	@Override
-	public byte getLevel()
-	{
-		return (1);
-	}
-
 	/*	@Override
 		public boolean isEnemyNpc(Npc visibleObject)
 		{

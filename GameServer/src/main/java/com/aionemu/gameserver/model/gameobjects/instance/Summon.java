@@ -94,6 +94,12 @@ public class Summon extends Creature implements ISummoned
 		this.mode = SummonMode.GUARD;
 	}
 
+	@Override
+	public byte getLevel()
+	{
+		return this.level;
+	}
+
 	/**
 	 * @return the owner
 	 */
@@ -101,21 +107,6 @@ public class Summon extends Creature implements ISummoned
 	public Player getMaster()
 	{
 		return master;
-	}
-
-	@Override
-	public String getName()
-	{
-		return objectTemplate.getName();
-	}
-
-	/**
-	 * @return the level
-	 */
-	@Override
-	public byte getLevel()
-	{
-		return level;
 	}
 
 	@Override
@@ -156,46 +147,6 @@ public class Summon extends Creature implements ISummoned
 		this.mode = mode;
 	}
 
-	/*
-		@Override
-		public boolean isEnemyNpc(Npc visibleObject)
-		{
-			return master.isEnemyNpc(visibleObject);
-		}
-
-		@Override
-		public boolean isEnemyPlayer(Player visibleObject)
-		{
-			return master.isEnemyPlayer(visibleObject);
-		}
-
-		@Override
-		public boolean isEnemySummon(Summon summon)
-		{
-			return master.isEnemySummon(summon);
-		}
-
-		@Override
-		public TribeClass getTribe()
-		{
-			return master.getTribe();
-		}
-
-		@Override
-		public boolean isAggressiveTo(Creature creature)
-		{
-			return creature.isAggroFrom(this);
-		}
-
-		@Override
-		public boolean isAggroFrom(Creature npc)
-		{
-			if (getMaster() == null)
-				return false;
-
-			return getMaster().isAggroFrom(npc);
-		}
-	*/
 	@Override
 	public void setMaster(Creature master)
 	{

@@ -38,7 +38,7 @@ import com.aionemu.gameserver.model.templates.stats.NpcStatsTemplate;
  */
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "npc_template")
-public class NpcTemplate extends VisibleObjectTemplate
+public class NpcTemplate extends PlayableTemplate
 {
 	private int					npcId;
 	@XmlAttribute(name = "level", required = true)
@@ -50,10 +50,10 @@ public class NpcTemplate extends VisibleObjectTemplate
 	@XmlAttribute(name = "name")
 	private String				name;
 	@XmlAttribute(name = "height")
-	private float				height			= 1;
+	private final float			height			= 1;
 	@SuppressWarnings("unused")
 	@XmlAttribute(name = "talking_distance")
-	private int					talkingDistance	= 2;
+	private final int			talkingDistance	= 2;
 	@XmlAttribute(name = "npc_type", required = true)
 	private NpcType				npcType;
 	@XmlElement(name = "stats")
@@ -64,7 +64,7 @@ public class NpcTemplate extends VisibleObjectTemplate
 	private KiskStatsTemplate	kiskStatsTemplate;
 	@SuppressWarnings("unused")
 	@XmlElement(name = "ammo_speed")
-	private int					ammoSpeed		= 0;
+	private final int			ammoSpeed		= 0;
 	@XmlAttribute(name = "rank")
 	private NpcRank				rank;
 	@XmlAttribute(name = "srange")
@@ -123,6 +123,7 @@ public class NpcTemplate extends VisibleObjectTemplate
 		return equipment;
 	}
 
+	@Override
 	public byte getLevel()
 	{
 		return level;
