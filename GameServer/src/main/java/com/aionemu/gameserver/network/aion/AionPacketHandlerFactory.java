@@ -39,132 +39,138 @@ public class AionPacketHandlerFactory extends AbstractPacketHandlerFactory<AionC
 	{
 		super(null, new AionClientPacketHandler<AionChannelHandler>());
 
-		addPacket(new CM_CHARACTER_LIST(0x04), State.AUTHED);// 2.1
-		addPacket(new CM_CREATE_CHARACTER(0x05), State.AUTHED);// 2.1
-		addPacket(new CM_L2AUTH_LOGIN_CHECK(0x07), State.CONNECTED);// 2.1
-		addPacket(new CM_DELETE_CHARACTER(0x0A), State.AUTHED);// 2.1
-		addPacket(new CM_RESTORE_CHARACTER(0x0B), State.AUTHED);// 2.1
-		addPacket(new CM_PLAYER_SEARCH(0x0D), State.ENTERED);// 2.1
-		addPacket(new CM_MOVE_ITEM(0x0E), State.ENTERED);// 2.1
-		addPacket(new CM_SPLIT_ITEM(0x0F), State.ENTERED);// 2.1
-		addPacket(new CM_BLOCK_ADD(0x14), State.ENTERED);// 2.1
-		addPacket(new CM_FRIEND_STATUS(0x18), State.ENTERED);// 2.1
-		addPacket(new CM_SHOW_BLOCKLIST(0x1A), State.ENTERED);// 2.1
-		addPacket(new CM_MAC_ADDRESS2(0x1C), State.ENTERED);// 2.1
-		addPacket(new CM_MACRO_CREATE(0x1D), State.ENTERED);// 2.1
-		addPacket(new CM_CHECK_NICKNAME(0x23), State.AUTHED);// 2.1
-		addPacket(new CM_MACRO_DELETE(0x22), State.ENTERED);// 2.1
-		addPacket(new CM_MAY_LOGIN_INTO_GAME(0x28), State.AUTHED);// 2.1
-		addPacket(new CM_REPORT_PLAYER(0x2D), State.ENTERED);// 2.1
-		addPacket(new CM_MAC_ADDRESS(0x2F), State.CONNECTED, State.AUTHED, State.ENTERED);// 2.1
-		addPacket(new CM_GROUP_RESPONSE(0x32), State.ENTERED);// 2.1
-		addPacket(new CM_SHOW_MAP(0x36), State.ENTERED);// 2.1
-		addPacket(new CM_CLIENT_COMMAND_ROLL(0x59), State.ENTERED);// 2.1
-		addPacket(new CM_SHOW_FRIENDLIST(0x5C), State.ENTERED);// 2.1
-		addPacket(new CM_FRIEND_ADD(0x5D), State.ENTERED);// 2.1
-		addPacket(new CM_PRIVATE_STORE(0x65), State.ENTERED);// 2.1
-		addPacket(new CM_DELETE_ITEM(0x66), State.ENTERED);// 2.1
-		addPacket(new CM_CLIENT_COMMAND_LOC(0x7C), State.ENTERED);// 2.1
-		addPacket(new CM_TIME_CHECK(0x80), State.CONNECTED, State.AUTHED, State.ENTERED);// 2.1
-		addPacket(new CM_CHAT_MESSAGE_PUBLIC(0x89), State.ENTERED);// 2.1
-		addPacket(new CM_TARGET_SELECT(0x8D), State.ENTERED);// 2.1
-		addPacket(new CM_CHAT_MESSAGE_WHISPER(0x8E), State.ENTERED);// 2.1
-		addPacket(new CM_ATTACK(0x92), State.ENTERED);// 2.1
-		addPacket(new CM_CASTSPELL(0x93), State.ENTERED);// 2.1
-		addPacket(new CM_EQUIP_ITEM(0x94), State.ENTERED);// 2.1
-		addPacket(new CM_USE_ITEM(0x97), State.ENTERED);// 2.1
-		addPacket(new CM_EMOTION(0x99), State.ENTERED);// 2.1
-		addPacket(new CM_PING(0x9A), State.AUTHED, State.ENTERED);// 2.1
-		addPacket(new CM_MOVE(0xA2), State.ENTERED);// 2.1
-		addPacket(new CM_SHOW_DIALOG(0xA6), State.ENTERED);// 2.1
-		addPacket(new CM_MANASTONE(0xB8), State.ENTERED);// 2.1
-		addPacket(new CM_DISCONNECT(0xF0), State.ENTERED);// 2.1
-		addPacket(new CM_QUIT(0xF1), State.AUTHED, State.ENTERED);// 2.1
-		addPacket(new CM_VERSION_CHECK(0xF2), State.CONNECTED); // 2.1
-		addPacket(new CM_UI_SETTINGS(0xF8), State.ENTERED);// 2.1
-		addPacket(new CM_OBJECT_SEARCH(0xF9), State.ENTERED);// 2.1
-		addPacket(new CM_ENTER_WORLD(0xFA), State.AUTHED); //2.1
-		addPacket(new CM_LEVEL_READY(0xFB), State.ENTERED);// 2.1
-		addPacket(new CM_CUSTOM_SETTINGS(0xFE), State.ENTERED);// 2.1
+        addPacket(new CM_CHARACTER_LIST(0x04), State.AUTHED);// 2.1
+        addPacket(new CM_CREATE_CHARACTER(0x05), State.AUTHED);// 2.1
+        addPacket(new CM_TELEPORT_SELECT(0x06), State.ENTERED);// 2.1
+        addPacket(new CM_L2AUTH_LOGIN_CHECK(0x07), State.CONNECTED);// 2.1
+        addPacket(new CM_START_LOOT(0x08), State.ENTERED);// 2.1
+        addPacket(new CM_LOOT_ITEM(0x09), State.ENTERED);// 2.1
+        addPacket(new CM_DELETE_CHARACTER(0x0A), State.AUTHED);// 2.1
+        addPacket(new CM_RESTORE_CHARACTER(0x0B), State.AUTHED);// 2.1
+        addPacket(new CM_PLAYER_SEARCH(0x0D), State.ENTERED);// 2.1
+        addPacket(new CM_MOVE_ITEM(0x0E), State.ENTERED);// 2.1
+        addPacket(new CM_SPLIT_ITEM(0x0F), State.ENTERED);// 2.1
+        //addPacket(new CM_MAIL_SUMMON_ZEPHYR(0x10), State.ENTERED);// 2.1
+        addPacket(new CM_DISCONNECT(0xF0), State.ENTERED);// 2.1
+        addPacket(new CM_LEGION_UPLOAD_INFO(0x12), State.ENTERED);// 2.1
+        addPacket(new CM_LEGION_UPLOAD_EMBLEM(0x13), State.ENTERED);// 2.1
+        addPacket(new CM_BLOCK_ADD(0x14), State.ENTERED);// 2.1
+        addPacket(new CM_BLOCK_DEL(0x15), State.ENTERED);// 2.1
+        addPacket(new CM_FRIEND_STATUS(0x18), State.ENTERED);// 2.1
+        addPacket(new CM_SHOW_BLOCKLIST(0x1A), State.ENTERED);// 2.1
+        addPacket(new CM_REPLACE_ITEM(0x1B), State.ENTERED);//  2.1
+        addPacket(new CM_MAC_ADDRESS2(0x1C), State.ENTERED);// 2.1
+        addPacket(new CM_MACRO_CREATE(0x1D), State.ENTERED);// 2.1
+        addPacket(new CM_CHANGE_CHANNEL(0x1E), State.ENTERED);// 2.1
+        addPacket(new CM_BLOCK_SET_REASON(0x21), State.ENTERED);// 2.1
+        addPacket(new CM_MACRO_DELETE(0x22), State.ENTERED);// 2.1
+        addPacket(new CM_CHECK_NICKNAME(0x23), State.AUTHED);// 2.1
+        addPacket(new CM_RECONNECT_AUTH(0x25), State.AUTHED);// 2.1
+        addPacket(new CM_SHOW_BRAND(0x27), State.ENTERED);// 2.1
+        addPacket(new CM_MAY_LOGIN_INTO_GAME(0x28), State.AUTHED);// 2.1
+        addPacket(new CM_DISTRIBUTION_SETTINGS(0x2B), State.ENTERED);// 2.1
+        addPacket(new CM_GROUP_LOOT(0x2A), State.ENTERED);
+        //addPacket(new CM_ABYSS_RANKING_PLAYERS(0x2E), State.ENTERED);// 2.1
+        addPacket(new CM_MAC_ADDRESS(0x2F), State.CONNECTED, State.AUTHED, State.ENTERED);// 2.1
+        addPacket(new CM_REPORT_PLAYER(0x2D), State.ENTERED);//  2.1
+        addPacket(new CM_GROUP_RESPONSE(0x32), State.ENTERED);// 2.1
+        addPacket(new CM_SHOW_MAP(0x36), State.ENTERED);// 2.1
+        //addPacket(new CM_NAME_CHANGE(0x37), State.ENTERED);// 2.1
+        //addPacket(new CM_REFRESH_NAME(0x37), State.ENTERED);// 2.1
+        addPacket(new CM_SUMMON_EMOTION(0x38), State.ENTERED);// 2.1
+        addPacket(new CM_SUMMON_ATTACK(0x39), State.ENTERED);// 2.1
+        //addPacket(new CM_REQUEST_ENTRY(0x3A), State.ENTERED);// 2.1 (not implemented yet)
+        addPacket(new CM_SUMMON_MOVE(0x3B), State.ENTERED);// 2.1
+        addPacket(new CM_FUSION_WEAPONS(0x3C), State.ENTERED);// 2.1
+        addPacket(new CM_BREAK_WEAPONS(0x3D), State.ENTERED);// 2.1
+        addPacket(new CM_SUMMON_CASTSPELL(0x3F), State.ENTERED);// 2.1
+        addPacket(new CM_DELETE_QUEST(0x42), State.ENTERED);// 2.1
+        addPacket(new CM_PLAY_MOVIE_END(0x43), State.ENTERED);//  2.1
+        addPacket(new CM_GODSTONE_SOCKET(0x49), State.ENTERED);//  2.1
+        addPacket(new CM_ITEM_REMODEL(0x48), State.ENTERED);// 2.1
+        addPacket(new CM_ALLIANCE_GROUP_CHANGE(0x4D), State.ENTERED);//  1.9 OLD
+        addPacket(new CM_PLAYER_STATUS_INFO(0x52), State.ENTERED);//  2.1
+        addPacket(new CM_INVITE_TO_GROUP(0x53), State.ENTERED);// 2.1
+        addPacket(new CM_PING_REQUEST(0x55), State.ENTERED);// 2.1
+        addPacket(new CM_VIEW_PLAYER_DETAILS(0x56), State.ENTERED);// 2.1
+        addPacket(new CM_GROUP_DISTRIBUTION(0x5E), State.ENTERED);//  2.1
+        addPacket(new CM_CLIENT_COMMAND_ROLL(0x59), State.ENTERED);// 2.1
+        addPacket(new CM_SHOW_FRIENDLIST(0x5C), State.ENTERED);// 2.1
+        addPacket(new CM_DUEL_REQUEST(0x60), State.ENTERED);// 2.1
+        addPacket(new CM_FRIEND_ADD(0x5D), State.ENTERED);//  2.1
+        addPacket(new CM_FRIEND_DEL(0x63), State.ENTERED);//  2.1
+        //addPacket(new CM_ABYSS_RANKING_LEGIONS(0x64), State.ENTERED);// 2.1
+        addPacket(new CM_PRIVATE_STORE(0x65), State.ENTERED);// 2.1
+        addPacket(new CM_DELETE_ITEM(0x66), State.ENTERED);// 2.1
+        addPacket(new CM_BROKER_LIST(0x69), State.ENTERED);// 2.1
+        addPacket(new CM_PRIVATE_STORE_NAME(0x6A), State.ENTERED);// 2.1
+        addPacket(new CM_SUMMON_COMMAND(0x6B), State.ENTERED);// 2.1
+        addPacket(new CM_BROKER_SETTLE_LIST(0x73), State.ENTERED);//  2.1
+        addPacket(new CM_BROKER_SETTLE_ACCOUNT(0x70), State.ENTERED);//  1.9 6D 70
+        addPacket(new CM_BROKER_REGISTERED(0x6F), State.ENTERED);// 2.1
+        addPacket(new CM_BUY_BROKER_ITEM(0x6C), State.ENTERED);// 2.1
+        addPacket(new CM_REGISTER_BROKER_ITEM(0x6D), State.ENTERED);// 2.1
+        addPacket(new CM_BROKER_CANCEL_REGISTERED(0x72), State.ENTERED);// 2.1
+        addPacket(new CM_READ_MAIL(0x74), State.ENTERED);// 2.1
+        addPacket(new CM_SEND_MAIL(0x76), State.ENTERED);// 2.1
+        addPacket(new CM_TITLE_SET(0x79), State.ENTERED);// 2.1
+        addPacket(new CM_GET_MAIL_ATTACHMENT(0x7A), State.ENTERED);// 2.1
+        addPacket(new CM_DELETE_MAIL(0x7B), State.ENTERED);// 2.1
+        addPacket(new CM_CLIENT_COMMAND_LOC(0x7C), State.ENTERED);// 2.1
+        addPacket(new CM_QUESTIONNAIRE(0x7D), State.ENTERED);// 2.1
+        addPacket(new CM_CRAFT(0x7F), State.ENTERED);// 2.1
+        addPacket(new CM_TIME_CHECK(0x80), State.CONNECTED, State.AUTHED, State.ENTERED);// 2.1
+        addPacket(new CM_GATHER(0x81), State.ENTERED);// 2.1
+        //addPacket(new CM_LEGION_EMBLEM(0x82), State.ENTERED);// 2.1
+        addPacket(new CM_REMOVE_ALTERED_STATE(0x91), State.ENTERED);// 2.1
+        addPacket(new CM_PET(0x84), State.ENTERED);// 2.1
+        addPacket(new CM_PET_MOVE(0x87), State.ENTERED);// 2.1
+        addPacket(new CM_PETITION(0x88), State.ENTERED);// 2.1
+        addPacket(new CM_CHAT_MESSAGE_PUBLIC(0x89), State.ENTERED);// 2.1
+        addPacket(new CM_OPEN_STATICDOOR(0x85), State.ENTERED);//  2.1
+        addPacket(new CM_SKILL_DEACTIVATE(0x90), State.ENTERED);//  2.1
+        addPacket(new CM_TARGET_SELECT(0x8D), State.ENTERED);// 2.1
+        addPacket(new CM_CHAT_MESSAGE_WHISPER(0x8E), State.ENTERED);// 2.1
+        addPacket(new CM_ATTACK(0x92), State.ENTERED);// 2.1
+        addPacket(new CM_CASTSPELL(0x93), State.ENTERED);//  2.1
+        addPacket(new CM_EQUIP_ITEM(0x94), State.ENTERED);// 2.1
+        addPacket(new CM_USE_ITEM(0x97), State.ENTERED);// 2.1
+        addPacket(new CM_EMOTION(0x99), State.ENTERED);// 2.1
+        addPacket(new CM_PING(0x9E), State.AUTHED, State.ENTERED);// 2.1
+        addPacket(new CM_LEGION(0x9F), State.ENTERED);//  2.1
+        addPacket(new CM_QUESTION_RESPONSE(0xA0), State.ENTERED);// 2.1
+        addPacket(new CM_BUY_ITEM(0xA1), State.ENTERED);// 2.1
+        addPacket(new CM_MOVE(0xA2), State.ENTERED);// 2.1
+        addPacket(new CM_FLIGHT_TELEPORT(0xA3), State.ENTERED);// 2.1
+        addPacket(new CM_DIALOG_SELECT(0xA4), State.ENTERED);// 2.1
+        addPacket(new CM_LEGION_TABS(0xA5), State.ENTERED);// 2.1
+        addPacket(new CM_SHOW_DIALOG(0xA6), State.ENTERED);// 2.1
+        addPacket(new CM_CLOSE_DIALOG(0xA7), State.ENTERED);// 2.1
+        addPacket(new CM_SET_NOTE(0xA8), State.ENTERED);// 2.1
+        addPacket(new CM_LEGION_MODIFY_EMBLEM(0xA9), State.ENTERED);// 2.1
+        //addPacket(new CM_LEGION_EMBLEM_SEND(0xAA), State.ENTERED);//  2.1
+        //addPacket(new CM_TWITTER_ADDON(0xAC), State.ENTERED);// 2.1
+        addPacket(new CM_EXCHANGE_REQUEST(0xAD), State.ENTERED);// 2.1
+        addPacket(new CM_EXCHANGE_ADD_KINAH(0xB0), State.ENTERED);// 2.1
+        addPacket(new CM_EXCHANGE_LOCK(0xB1), State.ENTERED);// 2.1
+        addPacket(new CM_EXCHANGE_ADD_ITEM(0xB2), State.ENTERED);// 2.1
+        //addPacket(new CM_WINDSTREAM(0xB4), State.ENTERED);// 2.1
+        addPacket(new CM_EXCHANGE_OK(0xB6), State.ENTERED);// 2.1
+        addPacket(new CM_EXCHANGE_CANCEL(0xB7), State.ENTERED);// 2.1
+        addPacket(new CM_MANASTONE(0xB8), State.ENTERED);// 2.1
+        //addPacket(new CM_CHARSELECT_TIMER(0xBF), State.ENTERED);// 2.1 (not implemented yet)
+        //addPacket(new CM_CHARACTER_PASSKEY(0xC3), State.AUTHED);// 2.1
+        addPacket(new CM_QUIT(0xF1), State.AUTHED, State.ENTERED);//  2,1
+        addPacket(new CM_VERSION_CHECK(0xF2), State.CONNECTED);// 2.1
+        addPacket(new CM_CUSTOM_SETTINGS(0xFE), State.ENTERED);//  2.1
+        addPacket(new CM_MAY_QUIT(0xF6), State.AUTHED, State.ENTERED);// 2.1
+        addPacket(new CM_REVIVE(0xF7), State.ENTERED);//  2.1
+        addPacket(new CM_UI_SETTINGS(0xF8), State.ENTERED);// 2.1
+        addPacket(new CM_OBJECT_SEARCH(0xF9), State.ENTERED);// 2.1
+        addPacket(new CM_ENTER_WORLD(0xFA), State.AUTHED);// 2.1
+        addPacket(new CM_LEVEL_READY(0xFB), State.ENTERED);// 2.1
+        addPacket(new CM_CHARACTER_EDIT(0xF5), State.AUTHED);// 2.1
 
-		//Client Packet's
-		addPacket(new CM_CRAFT(0x00), State.ENTERED);// 1.9
-		//addPacket(new CM_START_LOOT(0x05), State.ENTERED);// 1.9
-		addPacket(new CM_LOOT_ITEM(0x06), State.ENTERED);// 1.9
-		addPacket(new CM_LEGION_UPLOAD_EMBLEM(0x0C), State.ENTERED);// testing
-		addPacket(new CM_LEGION_UPLOAD_INFO(0x13), State.ENTERED);// testing
-		addPacket(new CM_CHANGE_CHANNEL(0x17), State.ENTERED);// 1.9
-		//addPacket(new CM_BLOCK_DEL(0x1A), State.ENTERED);// 1.9
-		//addPacket(new CM_REPLACE_ITEM(0x1D), State.ENTERED);// testing
-		addPacket(new CM_BLOCK_SET_REASON(0x1E), State.ENTERED);// 1.9
-		addPacket(new CM_DISTRIBUTION_SETTINGS(0x24), State.ENTERED);// 1.9
-		//addPacket(new CM_SHOW_BRAND(0x28), State.ENTERED);// 1.9
-		addPacket(new CM_RECONNECT_AUTH(0x2A), State.AUTHED);// 1.9
-		addPacket(new CM_GROUP_LOOT(0x2B), State.ENTERED);
-		addPacket(new CM_SUMMON_MOVE(0x34), State.ENTERED);// 1.9
-		addPacket(new CM_SUMMON_EMOTION(0x35), State.ENTERED);// 1.9
-		addPacket(new CM_SUMMON_ATTACK(0x36), State.ENTERED);// 1.9
-		addPacket(new CM_DELETE_QUEST(0x43), State.ENTERED);// 1.9
-		addPacket(new CM_ITEM_REMODEL(0x45), State.ENTERED);// 1.9			
-		addPacket(new CM_GODSTONE_SOCKET(0x46), State.ENTERED);// 1.9
-		addPacket(new CM_INVITE_TO_GROUP(0x4C), State.ENTERED);// 1.9
-		addPacket(new CM_ALLIANCE_GROUP_CHANGE(0x4D), State.ENTERED);// 1.9
-		addPacket(new CM_VIEW_PLAYER_DETAILS(0x4F), State.ENTERED);// 1.9
-		addPacket(new CM_PLAYER_STATUS_INFO(0x53), State.ENTERED);// 1.9
-		addPacket(new CM_GROUP_DISTRIBUTION(0x57), State.ENTERED);// 1.9
-		addPacket(new CM_PING_REQUEST(0x5A), State.ENTERED);// 1.9
-		addPacket(new CM_DUEL_REQUEST(0x5D), State.ENTERED);// 1.9
-		addPacket(new CM_FRIEND_DEL(0x63), State.ENTERED);// 1.9
-		addPacket(new CM_SUMMON_COMMAND(0x64), State.ENTERED);// 1.9
-		//addPacket(new CM_BROKER_LIST(0x66), State.ENTERED);// 1.9
-		addPacket(new CM_BROKER_SEARCH(0x67), State.ENTERED);// 2.0
-		addPacket(new CM_PRIVATE_STORE_NAME(0x6B), State.ENTERED);// 1.9
-		addPacket(new CM_BROKER_SETTLE_LIST(0x6C), State.ENTERED);// 1.9
-		addPacket(new CM_BROKER_SETTLE_ACCOUNT(0x6D), State.ENTERED);// 1.9
-		addPacket(new CM_SEND_MAIL(0x6F), State.ENTERED);// 1.9
-		addPacket(new CM_BROKER_REGISTERED(0x70), State.ENTERED);// 1.9
-		addPacket(new CM_BUY_BROKER_ITEM(0x71), State.ENTERED);// 1.9
-		//addPacket(new CM_REGISTER_BROKER_ITEM(0x72), State.ENTERED);// 1.9
-		addPacket(new CM_BROKER_CANCEL_REGISTERED(0x73), State.ENTERED);// 1.9
-		addPacket(new CM_DELETE_MAIL(0x74), State.ENTERED);// 1.9
-		addPacket(new CM_TITLE_SET(0x76), State.ENTERED);// 1.9
-		addPacket(new CM_READ_MAIL(0x79), State.ENTERED);// 1.9
-		addPacket(new CM_GET_MAIL_ATTACHMENT(0x7B), State.ENTERED);// 1.9
-		addPacket(new CM_TELEPORT_SELECT(0x7F), State.ENTERED);// 1.9
-		addPacket(new CM_PETITION(0x85), State.ENTERED);// 1.9
-		addPacket(new CM_PET_MOVE(0x88), State.ENTERED);// 2.0
-		//addPacket(new CM_PET(0x89), State.ENTERED);// 2.0
-		addPacket(new CM_OPEN_STATICDOOR(0x8A), State.ENTERED);// 1.9
-		addPacket(new CM_SKILL_DEACTIVATE(0x8D), State.ENTERED);// 1.9
-		//addPacket(new CM_REMOVE_ALTERED_STATE(0x8E), State.ENTERED);// 1.9
-		addPacket(new CM_FLIGHT_TELEPORT(0x9C), State.ENTERED);// 1.9
-		addPacket(new CM_QUESTION_RESPONSE(0x9D), State.ENTERED);// 1.9
-		//addPacket(new CM_BUY_ITEM(0x9E), State.ENTERED);// 1.9
-		addPacket(new CM_SHOW_DIALOG(0x9F), State.ENTERED);// 1.9
-		addPacket(new CM_LEGION(0xA0), State.ENTERED);// 1.9
-		addPacket(new CM_SET_NOTE(0xA5), State.ENTERED);// 1.9
-		addPacket(new CM_LEGION_MODIFY_EMBLEM(0xA6), State.ENTERED);// 1.9
-		addPacket(new CM_CLOSE_DIALOG(0xA8), State.ENTERED);// 1.9
-		addPacket(new CM_DIALOG_SELECT(0xA9), State.ENTERED);// 1.9
-		addPacket(new CM_LEGION_TABS(0xAA), State.ENTERED);// 1.9
-		addPacket(new CM_EXCHANGE_ADD_KINAH(0xAD), State.ENTERED);// 1.9
-		addPacket(new CM_EXCHANGE_LOCK(0xAE), State.ENTERED);// 1.9
-		addPacket(new CM_EXCHANGE_OK(0xAF), State.ENTERED);// 1.9
-		addPacket(new CM_EXCHANGE_REQUEST(0xB2), State.ENTERED);// 1.9
-		addPacket(new CM_EXCHANGE_ADD_ITEM(0xB3), State.ENTERED);// 1.9
-		//addPacket(new CM_EXCHANGE_CANCEL(0xB8), State.ENTERED);// 1.9
-		addPacket(new CM_PLAY_MOVIE_END(0xBC), State.ENTERED);// 1.9
-		addPacket(new CM_SUMMON_CASTSPELL(0xC0), State.ENTERED);// 1.9
-		addPacket(new CM_FUSION_WEAPONS(0xC1), State.ENTERED);// 1.9
-		addPacket(new CM_BREAK_WEAPONS(0xC2), State.ENTERED);// 1.9
-		//addPacket(new CM_LEGION_SEND_EMBLEM(0xD3), State.ENTERED);// 1.9
-		addPacket(new CM_MAY_QUIT(0xEF), State.AUTHED, State.ENTERED);// 1.9
-		//addPacket(new CM_REVIVE(0xF8), State.ENTERED);// 1.9
-		//addPacket(new CM_CHARACTER_EDIT(0xFA), State.AUTHED);// 1.9
-		addPacket(new CM_GATHER(0xFE), State.ENTERED);// 1.9
-		addPacket(new CM_QUESTIONNAIRE(0x7c), State.ENTERED); // 1.9
-		// opcode 70 broker sell page
-		// opcode 6c broker sold items page
 
 		//Server Packet's
 		addPacket(SM_VERSION_CHECK.class, 0x00);
