@@ -23,7 +23,6 @@ import javolution.util.FastList;
 import com.aionemu.gameserver.controllers.effect.EffectController;
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.ChatType;
-import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.alliance.PlayerAlliance;
 import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.interfaces.IDialogSelect;
@@ -61,10 +60,10 @@ import com.aionemu.gameserver.services.DropService;
 import com.aionemu.gameserver.services.GroupService;
 import com.aionemu.gameserver.services.ItemService;
 import com.aionemu.gameserver.services.LegionService;
-import com.aionemu.gameserver.services.RespawnService;
 import com.aionemu.gameserver.services.TeleportService;
 import com.aionemu.gameserver.services.TradeService;
 import com.aionemu.gameserver.services.WarehouseService;
+import com.aionemu.gameserver.taskmanager.tasks.DecayTaskManager;
 import com.aionemu.gameserver.utils.MathUtil;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.stats.StatFunctions;
@@ -275,10 +274,8 @@ public class Npc extends Creature implements IDialogSelect, IReward
 	}
 
 	@Override
-	public void onDespawn(boolean forced)
+	public void onDespawn()
 	{
-		if (forced)
-			cancelTask(TaskId.DECAY);
 
 		if (this == null || !isSpawned())
 			return;
@@ -290,8 +287,6 @@ public class Npc extends Creature implements IDialogSelect, IReward
 	public void onRespawn()
 	{
 		super.onRespawn();
-
-		cancelTask(TaskId.DECAY);
 
 		//set state from npc templates
 		if (getObjectTemplate().getState() != 0)
@@ -307,13 +302,10 @@ public class Npc extends Creature implements IDialogSelect, IReward
 	{
 		super.onDie(lastAttacker);
 
-		addTask(TaskId.DECAY, RespawnService.scheduleDecayTask(this));
+		DecayTaskManager.getInstance().addDecayTask(this);
+
 		scheduleRespawn();
 
-		this.doReward();
-
-		// deselect target at the end
-		setTarget(null);
 		PacketSendUtility.broadcastPacket(this, new SM_LOOKATOBJECT(this));
 	}
 
@@ -363,7 +355,7 @@ public class Npc extends Creature implements IDialogSelect, IReward
 	{
 		if (isInWorld())
 		{
-			this.onDespawn(true);
+			this.onDespawn();
 			this.delete();
 		}
 	}

@@ -117,7 +117,7 @@ public class ReviveController
 		else
 		{
 			TeleportService.moveToKiskLocation(player);
-			kisk.resurrectionUsed(player);
+			kisk.resurrectionUsed();
 		}
 	}
 

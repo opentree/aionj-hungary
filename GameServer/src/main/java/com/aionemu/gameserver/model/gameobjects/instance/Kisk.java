@@ -21,7 +21,6 @@ import java.util.List;
 
 import com.aionemu.gameserver.model.EmotionType;
 import com.aionemu.gameserver.model.Race;
-import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.alliance.PlayerAllianceMember;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.Npc;
@@ -40,8 +39,6 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_QUESTION_WINDOW;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.services.KiskService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
-import com.aionemu.gameserver.utils.ThreadPoolManager;
-import com.aionemu.gameserver.world.World;
 
 /**
  * @author Sarynth
@@ -307,12 +304,12 @@ public class Kisk extends Npc implements ISummoned, IDialogRequest
 	/**
 	 * @param player
 	 */
-	public void resurrectionUsed(Player player)
+	public void resurrectionUsed()
 	{
 		remainingResurrections--;
 		if (remainingResurrections <= 0)
 		{
-			player.getKisk().onDespawn(true);
+			onDespawn();
 		}
 		else
 		{
@@ -362,7 +359,7 @@ public class Kisk extends Npc implements ISummoned, IDialogRequest
 	}
 
 	@Override
-	public void onDespawn(boolean forced)
+	public void onDespawn()
 	{
 		this.broadcastPacket(SM_SYSTEM_MESSAGE.STR_BINDSTONE_IS_REMOVED);
 		removeKisk();
@@ -379,17 +376,6 @@ public class Kisk extends Npc implements ISummoned, IDialogRequest
 	private void removeKisk()
 	{
 		KiskService.removeKisk(this);
-		final Kisk kisk = this;
-		// Schedule World Removal
-		addTask(TaskId.DECAY, ThreadPoolManager.getInstance().schedule(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				if (kisk != null && kisk.isSpawned())
-					World.getInstance().despawn(kisk);
-			}
-		}, 3 * 1000));
 	}
 
 	@Override

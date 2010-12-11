@@ -289,6 +289,7 @@ public class World
 			despawn(object);
 		object.getPosition().setXYZH(x, y, z, heading);
 		object.getPosition().setMapId(mapId);
+		object.getPosition().setInstanceId(instance);
 		object.getPosition().setMapRegion(getWorldMap(mapId).getWorldMapInstanceById(instance).getRegion(object));
 	}
 

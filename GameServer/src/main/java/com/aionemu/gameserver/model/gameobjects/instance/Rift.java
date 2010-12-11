@@ -26,9 +26,9 @@ import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_QUESTION_WINDOW;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_RIFT_ANNOUNCE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_RIFT_STATUS;
-import com.aionemu.gameserver.services.RespawnService;
 import com.aionemu.gameserver.services.TeleportService;
 import com.aionemu.gameserver.spawnengine.RiftSpawnManager.RiftEnum;
+import com.aionemu.gameserver.taskmanager.tasks.DecayTaskManager;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.world.WorldMapInstance;
 
@@ -98,9 +98,8 @@ public class Rift extends StaticNpc implements IDialogRequest
 				if (usedEntries >= maxEntries)
 				{
 					isAccepting = false;
-
-					RespawnService.scheduleDecayTask(rift);
-					RespawnService.scheduleDecayTask(slave);
+					DecayTaskManager.getInstance().addDecayTask(rift);
+					DecayTaskManager.getInstance().addDecayTask(slave);
 				}
 				PacketSendUtility.broadcastPacket(rift, new SM_RIFT_STATUS(getObjectId(), usedEntries, maxEntries, maxLevel));
 

@@ -18,7 +18,6 @@ package com.aionemu.gameserver.model.gameobjects.instance;
 
 import com.aionemu.gameserver.model.EmotionType;
 import com.aionemu.gameserver.model.Race;
-import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.TribeClass;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
@@ -28,7 +27,7 @@ import com.aionemu.gameserver.model.templates.NpcTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_LOOKATOBJECT;
-import com.aionemu.gameserver.services.RespawnService;
+import com.aionemu.gameserver.taskmanager.tasks.DecayTaskManager;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /**
@@ -77,7 +76,7 @@ public class SiegeMine extends SiegeNpc
 				setCasting(null);
 				getEffectController().removeAllEffects();
 				setState(CreatureState.DEAD);
-				addTask(TaskId.DECAY, RespawnService.scheduleDecayTask(this));
+				DecayTaskManager.getInstance().addDecayTask(this);
 				scheduleRespawn();
 				PacketSendUtility.broadcastPacket(this, new SM_EMOTION(this, EmotionType.DIE, 0, object == null ? 0 : object.getObjectId()));
 				setTarget(null);

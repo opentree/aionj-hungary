@@ -18,10 +18,12 @@ package com.aionemu.gameserver;
 
 import org.apache.log4j.Logger;
 
+import com.aionemu.commons.database.dao.DAOManager;
 import com.aionemu.commons.utils.ExitCode;
 import com.aionemu.commons.utils.concurrent.RunnableStatsManager;
 import com.aionemu.commons.utils.concurrent.RunnableStatsManager.SortBy;
 import com.aionemu.gameserver.configs.main.ShutdownConfig;
+import com.aionemu.gameserver.dao.SpawnDAO;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.network.loginserver.LoginServer;
@@ -159,6 +161,9 @@ public class ShutdownHook extends Thread
 		GameTimeManager.saveTime();
 		// ThreadPoolManager shutdown
 		ThreadPoolManager.getInstance().shutdown();
+
+		// Respawn time save.
+		DAOManager.getDAO(SpawnDAO.class).saveRespawnTime();
 
 		// Do system exit.
 		if (mode == ShutdownMode.RESTART)

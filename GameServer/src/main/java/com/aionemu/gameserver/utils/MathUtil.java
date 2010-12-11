@@ -116,6 +116,7 @@ public class MathUtil
 		return getDistance(point1.x, point1.y, point2.x, point2.y);
 	}
 
+	
 	/**
 	 * Returns distance between two sets of coords
 	 * 
@@ -179,6 +180,17 @@ public class MathUtil
 
 		// We should avoid Math.pow or Math.hypot due to perfomance reasons
 		return Math.sqrt(dx * dx + dy * dy + dz * dz);
+	}
+
+	/**
+	 * 
+	 * @param object
+	 * @param object
+	 * @return
+	 */
+	public static double getDistance(VisibleObject object, VisibleObject object2)
+	{
+		return getDistance(object.getX(), object.getY(), object.getZ(), object2.getX(), object2.getY(), object2.getZ());
 	}
 
 	/**

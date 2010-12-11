@@ -157,8 +157,16 @@
 	<dependencies>
 		<dependency>
 			<groupId>aionj-hungary</groupId>
+			<artifactId>GeoLib</artifactId>
+			<version>0.1</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>aionj-hungary</groupId>
 			<artifactId>commons</artifactId>
-			<version>${project.version}</version>
+			<version>0.1</version>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 </project>

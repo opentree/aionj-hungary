@@ -127,7 +127,7 @@ public class RiftSpawnManager
 				if (npc != null && npc.isSpawned())
 				{
 					PacketSendUtility.broadcastPacket(npc, new SM_DELETE(npc, 15));
-					npc.onDespawn(true);
+					npc.onDespawn();
 				}
 				rifts.remove(npc);
 			}

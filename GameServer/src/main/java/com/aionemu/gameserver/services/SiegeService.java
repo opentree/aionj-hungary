@@ -261,7 +261,7 @@ public class SiegeService
 		for (SiegeNpc siegeNpcToDespawn : World.getInstance().getSiegeNpcs())
 		{
 			if (siegeNpcToDespawn.getSiegeId() == siegeId)
-				siegeNpcToDespawn.onDespawn(true);
+				siegeNpcToDespawn.onDespawn();
 		}
 	}
 

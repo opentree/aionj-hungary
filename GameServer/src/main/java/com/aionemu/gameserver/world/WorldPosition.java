@@ -51,7 +51,12 @@ public class WorldPosition
 	 * World position z
 	 */
 	private float				z;
-
+	
+	/**
+	 * InstanceId
+	 */
+	private int				instanceId;
+	
 	/**
 	 * Value from 0 to 120 (120==0 actually)
 	 */
@@ -127,9 +132,13 @@ public class WorldPosition
 	 */
 	public int getInstanceId()
 	{
-		return mapRegion.getParent().getInstanceId();
+		return instanceId;
 	}
 
+	public int setInstanceId(int instanceId)
+	{
+		return this.instanceId = instanceId;
+	}
 	/**
 	 * 
 	 * @return

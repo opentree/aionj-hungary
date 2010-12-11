@@ -66,7 +66,7 @@ public class SummonServantEffect extends SummonEffect
 			@Override
 			public void run()
 			{
-				servant.onDespawn(true);
+				servant.onDespawn();
 			}
 		}, 60 * 1000);
 		servant.addTask(TaskId.DESPAWN, task);

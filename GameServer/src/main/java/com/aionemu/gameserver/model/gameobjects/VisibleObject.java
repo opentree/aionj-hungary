@@ -26,6 +26,7 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_DELETE;
+import com.aionemu.gameserver.taskmanager.tasks.DecayTaskManager;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.world.MapRegion;
 import com.aionemu.gameserver.world.World;
@@ -321,11 +322,8 @@ public abstract class VisibleObject extends AionObject
 
 	}
 
-	public void onDespawn(boolean forced)
+	public void onDespawn()
 	{
-		if (forced)
-			cancelTask(TaskId.DECAY);
-
 		if (!this.isSpawned())
 			return;
 
@@ -408,9 +406,10 @@ public abstract class VisibleObject extends AionObject
 	 */
 	public void onDelete()
 	{
+		DecayTaskManager.getInstance().cancelDecayTask(this);
 		if (isInWorld())
 		{
-			this.onDespawn(true);
+			this.onDespawn();
 			this.delete();
 		}
 	}

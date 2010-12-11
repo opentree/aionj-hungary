@@ -247,7 +247,7 @@ public class DropService
 		{
 			if (dropItems == null || dropItems.size() == 0)
 			{
-				npc.onDespawn(true);
+				npc.onDespawn();
 				return;
 			}
 

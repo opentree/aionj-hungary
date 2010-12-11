@@ -36,28 +36,6 @@ public class RespawnService
 
 	/**
 	 * 
-	 * @param npc
-	 * @return Future<?>
-	 */
-	public static Future<?> scheduleDecayTask(final VisibleObject npc)
-	{
-		int respawnInterval = npc.getSpawn().getInterval();
-		int decayInterval = Math.round(respawnInterval * 0.8f);
-		if (decayInterval > 240)
-			decayInterval = 240;
-
-		return ThreadPoolManager.getInstance().schedule(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				npc.onDespawn(false);
-			}
-		}, decayInterval * 1000);
-	}
-
-	/**
-	 * 
 	 * @param visibleObject
 	 */
 	public static Future<?> scheduleRespawnTask(final VisibleObject visibleObject)

@@ -1,25 +1,31 @@
 /*
- * This file is part of aion-emu <aion-emu.com>.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
  *
- *  aion-emu is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  aion-emu is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, 
+ * MA  02110-1301, USA.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with aion-emu.  If not, see <http://www.gnu.org/licenses/>.
+ * http://www.gnu.org/copyleft/gpl.html
  */
+
 package com.aionemu.gameserver.model.templates.spawn;
 
+
+import java.util.StringTokenizer;
+
+import javolution.util.FastMap;
+
 /**
- * @author Luno
- * 
- * modified by ATracer
+ * @author Mr. Poke
  */
 
 public class SpawnTemplate
@@ -34,6 +40,7 @@ public class SpawnTemplate
 	private int			mapId;
 	private int			staticid;
 	private SpawnTime	spawnTime;
+	private FastMap <Integer, Integer> nextRespawn;
 
 	/**
 	 * @param id
@@ -48,7 +55,6 @@ public class SpawnTemplate
 	 */
 	public SpawnTemplate(int id, int templateId, int mapId, float x, float y, float z, byte heading, int interval, int staticid, SpawnTime spawnTime)
 	{
-		super();
 		this.id = id;
 		this.templateId = templateId;
 		this.heading = heading;
@@ -151,5 +157,49 @@ public class SpawnTemplate
 	public SpawnTime getSpawnTime()
 	{
 		return spawnTime;
+	}
+	
+	public void setNextRespawn(String value)
+	{
+		StringTokenizer st = new StringTokenizer(value, ";");
+		if (st.countTokens() <1)
+			return;
+		while(st.hasMoreTokens())
+		{
+			StringTokenizer st2 = new StringTokenizer(st.nextToken(), "-");
+			if (st2.countTokens() != 2)
+				continue;
+			int instanceId;
+			int nextRespawnTime;
+			try
+			{
+				instanceId = Integer.valueOf(st.nextToken());
+				nextRespawnTime = Integer.valueOf(st.nextToken());
+			}
+			catch (NumberFormatException e)
+			{
+				continue;
+			}
+			setNextRespawn(instanceId, nextRespawnTime);
+		}
+	}
+	
+	public void setNextRespawn(int instanceId, int respawnTime)
+	{
+		if (nextRespawn == null)
+			nextRespawn = new FastMap<Integer, Integer>();
+		nextRespawn.put(instanceId, respawnTime);
+	}
+	
+	public String getNextRespawntTime()
+	{
+		if (nextRespawn == null)
+			return null;
+		String string = "";
+		for (FastMap.Entry<Integer, Integer> e = nextRespawn.head(), end = nextRespawn.tail(); (e = e.getNext()) != end;)
+		{
+			string += e.getKey()+"-"+e.getValue()+";";
+		}
+		return string;
 	}
 }

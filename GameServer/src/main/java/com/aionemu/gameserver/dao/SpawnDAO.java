@@ -36,4 +36,6 @@ public abstract class SpawnDAO implements DAO
 	}
 
 	public abstract void load();
+	
+	public abstract void saveRespawnTime();
 }

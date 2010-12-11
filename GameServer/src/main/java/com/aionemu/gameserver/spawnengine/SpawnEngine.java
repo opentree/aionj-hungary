@@ -75,7 +75,7 @@ public class SpawnEngine
 	{
 	}
 
-	public void addSpawn(SpawnTemplate spawnTemplate, String nextRespawnTime)
+	public void addSpawn(SpawnTemplate spawnTemplate)
 	{
 		int mapId = spawnTemplate.getMapId();
 		if (!spawnByMapId.containsKey(mapId))
@@ -160,6 +160,7 @@ public class SpawnEngine
 			log.error("Spawn error create class: " + npcInfo.getClassName(), e);
 			return null;
 		}
+		object.getPosition().setInstanceId(instanceIndex);
 		object.onRespawn();
 		bringIntoWorld(object, spawn, instanceIndex);
 		return object;

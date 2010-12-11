@@ -56,6 +56,7 @@ import com.aionemu.gameserver.services.ZoneService;
 import com.aionemu.gameserver.spawnengine.DayNightSpawnManager;
 import com.aionemu.gameserver.spawnengine.SpawnEngine;
 import com.aionemu.gameserver.taskmanager.TaskManagerFromDB;
+import com.aionemu.gameserver.taskmanager.tasks.DecayTaskManager;
 import com.aionemu.gameserver.taskmanager.tasks.ItemUpdater;
 import com.aionemu.gameserver.taskmanager.tasks.PacketBroadcaster;
 import com.aionemu.gameserver.utils.DeadlockDetector;
@@ -138,6 +139,7 @@ public class GameServer
 		PacketBroadcaster.getInstance();
 		ItemUpdater.getInstance();
 		TaskManagerFromDB.getInstance();
+		DecayTaskManager.getInstance();
 
 		AEInfos.printSection("Drops");
 		DropService.getInstance();
@@ -197,7 +199,8 @@ public class GameServer
 
 		AEInfos.printSection("HTMLs");
 		HTMLCache.getInstance();
-
+		AEInfos.printSection("GeoData");
+		//GeoEngine.getInstance();
 		AEInfos.printSection("System");
 		VersionningService.printFullVersionInfo();
 		System.gc();
