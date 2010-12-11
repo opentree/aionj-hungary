@@ -161,7 +161,7 @@ public class _2054LightuptheLighthouse extends QuestHandler
 					if (var == 3)
 					{
 						QuestService.addNewSpawn(220040000, 1, 213912, (float) npc.getX(), (float) npc.getY(), (float) npc.getZ(), (byte) 0, true);
-						npc.onDespawn(true);
+						npc.onDespawn();
 						npc.scheduleRespawn();
 						PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 0));
 						return true;
@@ -180,7 +180,7 @@ public class _2054LightuptheLighthouse extends QuestHandler
 					{
 						qs.setQuestVarById(0, var + 1);
 						updateQuestStatus(player, qs);
-						npc.onDespawn(true);
+						npc.onDespawn();
 						npc.scheduleRespawn();
 						ItemService.addItems(player, Collections.singletonList(new QuestItems(182204309, 1)));
 						PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));

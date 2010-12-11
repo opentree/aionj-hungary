@@ -21,6 +21,8 @@ package system.database.mysql5;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -39,8 +41,10 @@ public class MYSQL5SpawnDAO extends SpawnDAO
 {
 	private static final Logger	log				= Logger.getLogger(MYSQL5SpawnDAO.class);
 
-	private static final String	SELECT_QUERY	= "SELECT `id`, `world`, `templateId`, `x`, `y`, `z`, `heading`, `staticId`,  `interval`, `nextRespawnTime`, `spawnTime` FROM `spawn`";
-
+	private Map<Integer, SpawnTemplate> spawnTemplates = new HashMap<Integer, SpawnTemplate>();
+	
+	private static final String	SELECT_QUERY	= "SELECT `id`, `world`, `templateId`, `x`, `y`, `z`, `heading`, `staticId`,  `respawnTime`, `nextRespawnTime`, `spawnTime` FROM `spawn`";
+	private static final String	UPDATE_RESPAWN_QUERY = "UPDATE spawn SET nextRespawnTime =? WHERE id=?;";
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -76,13 +80,15 @@ public class MYSQL5SpawnDAO extends SpawnDAO
 				float y = rset.getFloat("y");
 				float z = rset.getFloat("z");
 				int staticId = rset.getInt("staticId");
-				int interval = rset.getInt("interval");
+				int interval = rset.getInt("respawnTime");
 				byte heading = rset.getByte("heading");
 				String nextRespawnTime = rset.getString("nextRespawnTime");
 				SpawnTime spawnTime = SpawnTime.valueOf(rset.getString("spawnTime"));
 				SpawnTemplate template = new SpawnTemplate(id, templateId, mapId, x, y, z, heading, interval, staticId, spawnTime);
+				spawnTemplates.put(id, template);
+				template.setNextRespawn(nextRespawnTime);
 				if (spawnTime == SpawnTime.ALL)
-					SpawnEngine.getInstance().addSpawn(template, nextRespawnTime);
+					SpawnEngine.getInstance().addSpawn(template);
 				else
 					DayNightSpawnManager.getInstance().addSpawnTemplate(template);
 			}
@@ -93,6 +99,43 @@ public class MYSQL5SpawnDAO extends SpawnDAO
 		}
 		finally
 		{
+			log.info(spawnTemplates.size()+" SpawnTemplates loaded!");
+			DatabaseFactory.close(con);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see com.aionemu.gameserver.dao.SpawnDAO#saveRespawntime(com.aionemu.gameserver.model.templates.spawn.SpawnTemplate)
+	 */
+	@Override
+	public void saveRespawnTime()
+	{
+		int count = 0;
+		Connection con = null;
+		try
+		{
+			log.info("Respawn time save STARTING!");
+			con = DatabaseFactory.getConnection();
+			PreparedStatement stmt = con.prepareStatement(UPDATE_RESPAWN_QUERY);
+			
+			for (SpawnTemplate spawnTemplate : spawnTemplates.values())
+			{
+				if (spawnTemplate.getNextRespawntTime() != null)
+				{
+					stmt.setString(0, spawnTemplate.getNextRespawntTime());
+					stmt.setInt(1, spawnTemplate.getId());
+					stmt.execute();
+				}
+			}
+			stmt.close();
+		}
+		catch (Exception e)
+		{
+			log.fatal("Could not save respawn time!", e);
+		}
+		finally
+		{
+			log.info(count+" respawn time saved!");
 			DatabaseFactory.close(con);
 		}
 	}

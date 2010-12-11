@@ -68,7 +68,7 @@ public class _1157GaphyrksLove extends QuestHandler
 		if (MathUtil.getDistance(892, 2024, 166, npc.getX(), npc.getY(), npc.getZ()) > 13)
 			return false;
 		else
-			npc.onDespawn(true);
+			npc.onDespawn();
 		npc.scheduleRespawn();
 		PacketSendUtility.sendPacket(player, new SM_PLAY_MOVIE(0, 17));
 		return true;

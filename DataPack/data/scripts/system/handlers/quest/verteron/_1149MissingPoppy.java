@@ -105,7 +105,7 @@ public class _1149MissingPoppy extends QuestHandler
 								updateQuestStatus(player, qs);
 								PacketSendUtility.sendPacket(player, new SM_PLAY_MOVIE(0, 12));
 								npc.onDie(null);
-								npc.onDespawn(false);
+								npc.onDespawn();
 								return true;
 							}
 						case 25:

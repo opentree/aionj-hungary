@@ -231,7 +231,7 @@ public class _2071SpeakingBalaur extends QuestHandler
 		{
 			PacketSendUtility.sendPacket(player, new SM_PLAY_MOVIE(0, 289));
 			npc.onDie(null);
-			npc.onDespawn(true);
+			npc.onDespawn();
 			qs.setQuestVarById(0, 3);
 			updateQuestStatus(player, qs);
 		}

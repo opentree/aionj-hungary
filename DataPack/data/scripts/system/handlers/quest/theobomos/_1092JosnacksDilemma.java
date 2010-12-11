@@ -186,7 +186,7 @@ public class _1092JosnacksDilemma extends QuestHandler
 					if (var == 4)
 					{
 						QuestService.addNewSpawn(210070000, 6, 214552, (float) npc.getX(), (float) npc.getY(), (float) npc.getZ(), (byte) 0, true);
-						npc.onDespawn(true);
+						npc.onDespawn();
 						npc.scheduleRespawn();
 						return true;
 					}

@@ -190,7 +190,7 @@ public class _2092GravesoftheRedSkyLegion extends QuestHandler
 					if (var == 5)
 					{
 						QuestService.addNewSpawn(220050000, 1, 205214, (float) npc.getX(), (float) npc.getY(), (float) npc.getZ(), (byte) 0, true);
-						npc.onDespawn(true);
+						npc.onDespawn();
 						npc.scheduleRespawn();
 						return true;
 					}
@@ -221,7 +221,7 @@ public class _2092GravesoftheRedSkyLegion extends QuestHandler
 					if (var == 5)
 					{
 						QuestService.addNewSpawn(220050000, 1, 205213, (float) npc.getX(), (float) npc.getY(), (float) npc.getZ(), (byte) 0, true);
-						npc.onDespawn(true);
+						npc.onDespawn();
 						npc.scheduleRespawn();
 						return true;
 					}
@@ -252,7 +252,7 @@ public class _2092GravesoftheRedSkyLegion extends QuestHandler
 					if (var == 5)
 					{
 						QuestService.addNewSpawn(220050000, 1, 205212, (float) npc.getX(), (float) npc.getY(), (float) npc.getZ(), (byte) 0, true);
-						npc.onDespawn(true);
+						npc.onDespawn();
 						npc.scheduleRespawn();
 						return true;
 					}
@@ -283,7 +283,7 @@ public class _2092GravesoftheRedSkyLegion extends QuestHandler
 					if (var == 5)
 					{
 						QuestService.addNewSpawn(220050000, 1, 205211, (float) npc.getX(), (float) npc.getY(), (float) npc.getZ(), (byte) 0, true);
-						npc.onDespawn(true);
+						npc.onDespawn();
 						npc.scheduleRespawn();
 						return true;
 					}
@@ -314,7 +314,7 @@ public class _2092GravesoftheRedSkyLegion extends QuestHandler
 					if (var == 5)
 					{
 						QuestService.addNewSpawn(220050000, 1, 205210, (float) npc.getX(), (float) npc.getY(), (float) npc.getZ(), (byte) 0, true);
-						npc.onDespawn(true);
+						npc.onDespawn();
 						npc.scheduleRespawn();
 						return true;
 					}
@@ -345,7 +345,7 @@ public class _2092GravesoftheRedSkyLegion extends QuestHandler
 					if (var == 5)
 					{
 						QuestService.addNewSpawn(220050000, 1, 205209, (float) npc.getX(), (float) npc.getY(), (float) npc.getZ(), (byte) 0, true);
-						npc.onDespawn(true);
+						npc.onDespawn();
 						npc.scheduleRespawn();
 						return true;
 					}
@@ -376,7 +376,7 @@ public class _2092GravesoftheRedSkyLegion extends QuestHandler
 					if (var == 5)
 					{
 						QuestService.addNewSpawn(220050000, 1, 205208, (float) npc.getX(), (float) npc.getY(), (float) npc.getZ(), (byte) 0, true);
-						npc.onDespawn(true);
+						npc.onDespawn();
 						npc.scheduleRespawn();
 						return true;
 					}

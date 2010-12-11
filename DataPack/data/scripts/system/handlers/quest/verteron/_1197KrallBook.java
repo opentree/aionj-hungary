@@ -79,7 +79,7 @@ public class _1197KrallBook extends QuestHandler
 				if (player.getInventory().getItemCountByItemId(182200558) == 0)
 				{
 					if (ItemService.addItems(player, Collections.singletonList(new QuestItems(182200558, 1))))
-						((Npc) player.getTarget()).onDespawn(true);
+						((Npc) player.getTarget()).onDespawn();
 				}
 			}
 			return true;

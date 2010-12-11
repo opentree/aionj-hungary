@@ -187,7 +187,7 @@ public class _2094TheSecretofAdmaStronghold extends QuestHandler
 					if (var == 6)
 					{
 						QuestService.addNewSpawn(220050000, 1, 205191, (float) npc.getX(), (float) npc.getY(), (float) npc.getZ(), (byte) 0, true);
-						npc.onDespawn(true);
+						npc.onDespawn();
 						npc.scheduleRespawn();
 						return true;
 					}
