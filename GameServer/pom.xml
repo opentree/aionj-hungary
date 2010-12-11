@@ -159,7 +159,6 @@
 			<groupId>aionj-hungary</groupId>
 			<artifactId>GeoLib</artifactId>
 			<version>0.1</version>
-			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
