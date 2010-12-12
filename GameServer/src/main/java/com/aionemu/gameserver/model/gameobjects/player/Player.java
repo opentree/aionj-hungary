@@ -65,6 +65,7 @@ import com.aionemu.gameserver.model.group.PlayerGroup;
 import com.aionemu.gameserver.model.items.ItemCooldown;
 import com.aionemu.gameserver.model.legion.Legion;
 import com.aionemu.gameserver.model.legion.LegionMember;
+import com.aionemu.gameserver.model.team.interfaces.ITeamProperties;
 import com.aionemu.gameserver.model.templates.quest.QuestItems;
 import com.aionemu.gameserver.model.templates.stats.PlayerStatsTemplate;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
@@ -121,7 +122,7 @@ import com.aionemu.gameserver.world.zone.ZoneInstance;
  * @author alexa026
  * @author IlBuono
  */
-public class Player extends Creature implements IReward, IDialogSelect
+public class Player extends Creature implements IReward, IDialogSelect, ITeamProperties
 {
 	private static final Logger			log				= Logger.getLogger(Player.class);
 
@@ -1930,5 +1931,11 @@ public class Player extends Creature implements IReward, IDialogSelect
 	public boolean addItems(int itemId, int count)
 	{
 		return ItemService.addItems(this, Collections.singletonList(new QuestItems(itemId, count)));
+	}
+
+	@Override
+	public void getReward(Npc owner)
+	{
+		//TODO code from NPC.doReward
 	}
 }
