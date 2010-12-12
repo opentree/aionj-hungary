@@ -32,7 +32,8 @@ import com.aionemu.gameserver.model.gameobjects.player.RequestResponseHandler;
 import com.aionemu.gameserver.model.group.GroupEvent;
 import com.aionemu.gameserver.model.group.LootGroupRules;
 import com.aionemu.gameserver.model.group.LootRuleType;
-import com.aionemu.gameserver.model.group.PlayerGroup;
+import com.aionemu.gameserver.model.team.PlayerGroup;
+import com.aionemu.gameserver.model.team.interfaces.ITeamProperties;
 import com.aionemu.gameserver.network.aion.clientpackets.CM_PLAYER_STATUS_INFO.ePlayerStatus;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_GROUP_INFO;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_GROUP_MEMBER_INFO;
@@ -144,13 +145,13 @@ public class GroupService
 					PacketSendUtility.sendPacket(inviter, SM_SYSTEM_MESSAGE.REQUEST_GROUP_INVITE(invited.getName()));
 					if (group != null)
 					{
-						inviter.getPlayerGroup().addPlayerToGroup(invited);
+						inviter.getPlayerGroup().addMember(invited);
 						addGroupMemberToCache(invited);
 					}
 					else
 					{
 						new PlayerGroup(IDFactory.getInstance().nextId(), inviter);
-						inviter.getPlayerGroup().addPlayerToGroup(invited);
+						inviter.getPlayerGroup().addMember(invited);
 						addGroupMemberToCache(inviter);
 						addGroupMemberToCache(invited);
 					}
@@ -195,8 +196,8 @@ public class GroupService
 	{
 		final PlayerGroup group = player.getPlayerGroup();
 
-		group.setGroupLeader(player);
-		group.updateGroupUIToEvent(player.getPlayerGroup().getGroupLeader(), GroupEvent.CHANGELEADER);
+		group.setLeader(player);
+		group.updateGroupUIToEvent(player.getPlayerGroup().getLeader(), GroupEvent.CHANGELEADER);
 	}
 
 	/**
@@ -330,7 +331,7 @@ public class GroupService
 
 		// Give Drop
 		setInRangePlayers(players);
-		Player leader = group.getGroupLeader();
+		Player leader = group.getLeader();
 		DropService.getInstance().registerDrop(owner, leader, highestLevel);
 	}
 
@@ -354,9 +355,9 @@ public class GroupService
 	 */
 	private void disbandGroup(PlayerGroup group)
 	{
-		IDFactory.getInstance().releaseId(group.getGroupId());
-		group.getGroupLeader().setPlayerGroup(null);
-		PacketSendUtility.sendPacket(group.getGroupLeader(), SM_SYSTEM_MESSAGE.DISBAND_GROUP());
+		IDFactory.getInstance().releaseId(group.getObjectId());
+		group.getLeader().setPlayerGroup(null);
+		PacketSendUtility.sendPacket(group.getLeader(), SM_SYSTEM_MESSAGE.DISBAND_GROUP());
 		group.disband();
 	}
 
@@ -442,10 +443,10 @@ public class GroupService
 			return;
 		}
 		player.setPlayerGroup(group);
-		group.onGroupMemberLogIn(player);
+		group.onMemberLogIn(player);
 		cancelScheduleRemove(player.getObjectId());
-		if (group.getGroupLeader().getObjectId() == player.getObjectId())
-			group.setGroupLeader(player);
+		if (group.getLeader().getObjectId() == player.getObjectId())
+			group.setLeader(player);
 	}
 
 	/**
@@ -470,7 +471,7 @@ public class GroupService
 				luckyMembers = getGroupMembers(group, false);
 				break;
 			case LEADER:
-				luckyMembers.add(group.getGroupLeader().getObjectId());
+				luckyMembers.add(group.getLeader().getObjectId());
 				break;
 		}
 		return luckyMembers;
@@ -486,15 +487,15 @@ public class GroupService
 	public List<Integer> getGroupMembers(final PlayerGroup group, boolean except)
 	{
 		List<Integer> luckyMembers = new ArrayList<Integer>();
-		for (int memberObjId : group.getMemberObjIds())
+		for (ITeamProperties member : group.getMembers())
 		{
 			if (except)
 			{
-				if (group.getGroupLeader().getObjectId() != memberObjId)
-					luckyMembers.add(memberObjId);
+				if (group.getLeader().getObjectId() != member.getObjectId())
+					luckyMembers.add(member.getObjectId());
 			}
 			else
-				luckyMembers.add(memberObjId);
+				luckyMembers.add(member.getObjectId());
 		}
 		return luckyMembers;
 	}

@@ -22,7 +22,7 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.PlayerCommonData;
 import com.aionemu.gameserver.model.gameobjects.stats.PlayerLifeStats;
 import com.aionemu.gameserver.model.group.GroupEvent;
-import com.aionemu.gameserver.model.group.PlayerGroup;
+import com.aionemu.gameserver.model.team.PlayerGroup;
 import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.skillengine.model.Effect;
@@ -34,9 +34,9 @@ import com.aionemu.gameserver.world.WorldPosition;
  */
 public class SM_GROUP_MEMBER_INFO extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private PlayerGroup	group;
-	private Player		player;
-	private GroupEvent	event;
+	private final PlayerGroup	group;
+	private final Player		player;
+	private final GroupEvent	event;
 
 	public SM_GROUP_MEMBER_INFO(PlayerGroup group, Player player, GroupEvent event)
 	{
@@ -52,7 +52,7 @@ public class SM_GROUP_MEMBER_INFO extends AbstractAionServerPacket<AionChannelHa
 		PlayerCommonData pcd = player.getCommonData();
 		WorldPosition wp = pcd.getPosition();
 
-		writeD(group.getGroupId());
+		writeD(group.getObjectId());
 		writeD(player.getObjectId());
 		writeD(pls.getMaxHp());
 		writeD(pls.getCurrentHp());

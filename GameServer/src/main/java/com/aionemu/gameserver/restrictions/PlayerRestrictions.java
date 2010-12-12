@@ -23,7 +23,7 @@ import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.instance.Monster;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
-import com.aionemu.gameserver.model.group.PlayerGroup;
+import com.aionemu.gameserver.model.team.PlayerGroup;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.skillengine.effect.EffectId;
 import com.aionemu.gameserver.skillengine.model.Skill;
@@ -100,7 +100,7 @@ public class PlayerRestrictions extends AbstractRestrictions
 			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.FULL_GROUP());
 			return false;
 		}
-		else if (group != null && player.getObjectId() != group.getGroupLeader().getObjectId())
+		else if (group != null && player.getObjectId() != group.getLeader().getObjectId())
 		{
 			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.ONLY_GROUP_LEADER_CAN_INVITE());
 			return false;
@@ -202,9 +202,9 @@ public class PlayerRestrictions extends AbstractRestrictions
 		if (target.isInGroup())
 		{
 			PlayerGroup targetGroup = target.getPlayerGroup();
-			if (target != targetGroup.getGroupLeader())
+			if (target != targetGroup.getLeader())
 			{
-				PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_FORCE_INVITE_PARTY_HIM(target.getName(), targetGroup.getGroupLeader().getName()));
+				PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_FORCE_INVITE_PARTY_HIM(target.getName(), targetGroup.getLeader().getName()));
 				return false;
 			}
 			if (alliance != null && (targetGroup.size() + alliance.size() >= 24))

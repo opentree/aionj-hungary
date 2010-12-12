@@ -61,10 +61,10 @@ import com.aionemu.gameserver.model.gameobjects.stats.PlayerGameStats;
 import com.aionemu.gameserver.model.gameobjects.stats.PlayerLifeStats;
 import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
 import com.aionemu.gameserver.model.group.GroupEvent;
-import com.aionemu.gameserver.model.group.PlayerGroup;
 import com.aionemu.gameserver.model.items.ItemCooldown;
 import com.aionemu.gameserver.model.legion.Legion;
 import com.aionemu.gameserver.model.legion.LegionMember;
+import com.aionemu.gameserver.model.team.PlayerGroup;
 import com.aionemu.gameserver.model.team.interfaces.ITeamProperties;
 import com.aionemu.gameserver.model.templates.quest.QuestItems;
 import com.aionemu.gameserver.model.templates.stats.PlayerStatsTemplate;
@@ -88,6 +88,7 @@ import com.aionemu.gameserver.questEngine.model.QuestEnv;
 import com.aionemu.gameserver.restrictions.RestrictionsManager;
 import com.aionemu.gameserver.services.AllianceService;
 import com.aionemu.gameserver.services.BrokerService;
+import com.aionemu.gameserver.services.DropService;
 import com.aionemu.gameserver.services.DuelService;
 import com.aionemu.gameserver.services.ExchangeService;
 import com.aionemu.gameserver.services.ItemService;
@@ -109,6 +110,7 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.utils.rates.Rates;
 import com.aionemu.gameserver.utils.rates.RegularRates;
+import com.aionemu.gameserver.utils.stats.StatFunctions;
 import com.aionemu.gameserver.world.World;
 import com.aionemu.gameserver.world.WorldType;
 import com.aionemu.gameserver.world.zone.ZoneInstance;
@@ -1936,6 +1938,27 @@ public class Player extends Creature implements IReward, IDialogSelect, ITeamPro
 	@Override
 	public void getReward(Npc owner)
 	{
-		//TODO code from NPC.doReward
+		if (isInGroup())
+			getPlayerGroup().getReward(owner);
+		else
+		{
+			long expReward = StatFunctions.calculateSoloExperienceReward(this, owner);
+			getCommonData().addExp(expReward);
+
+			int currentDp = getCommonData().getDp();
+			int dpReward = StatFunctions.calculateSoloDPReward(this, owner);
+			getCommonData().setDp(dpReward + currentDp);
+
+			WorldType worldType = World.getInstance().getWorldMap(getWorldId()).getWorldType();
+			if (worldType == WorldType.ABYSS)
+			{
+				int apReward = StatFunctions.calculateSoloAPReward(this, owner);
+				getCommonData().addAp(apReward);
+			}
+
+			QuestEngine.getInstance().onKill(new QuestEnv(owner, this, 0, 0));
+
+			DropService.getInstance().registerDrop(owner, this, getLevel());
+		}
 	}
 }

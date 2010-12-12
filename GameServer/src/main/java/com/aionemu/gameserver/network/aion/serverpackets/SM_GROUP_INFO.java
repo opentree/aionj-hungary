@@ -19,7 +19,7 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 import com.aionemu.gameserver.model.group.LootDistribution;
 import com.aionemu.gameserver.model.group.LootGroupRules;
 import com.aionemu.gameserver.model.group.LootRuleType;
-import com.aionemu.gameserver.model.group.PlayerGroup;
+import com.aionemu.gameserver.model.team.PlayerGroup;
 import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
 
@@ -29,24 +29,24 @@ import com.aionemu.gameserver.network.aion.AionChannelHandler;
  */
 public class SM_GROUP_INFO extends AbstractAionServerPacket<AionChannelHandler>
 {
-	private int					groupid;
-	private int					leaderid;
-	private LootRuleType		lootruletype;			//0-free-for-all, 1-round-robin 2-leader
-	private LootDistribution	autodistribution;
+	private final int				groupid;
+	private final int				leaderid;
+	private final LootRuleType		lootruletype;			//0-free-for-all, 1-round-robin 2-leader
+	private final LootDistribution	autodistribution;
 	//rare item distribution
 	//0-normal, 2-Roll-dice,3-bid
-	private int					common_item_above;
-	private int					superior_item_above;
-	private int					heroic_item_above;
-	private int					fabled_item_above;
-	private int					ethernal_item_above;
-	private int					over_ethernal;
-	private int					over_over_ethernal;
+	private final int				common_item_above;
+	private final int				superior_item_above;
+	private final int				heroic_item_above;
+	private final int				fabled_item_above;
+	private final int				ethernal_item_above;
+	private final int				over_ethernal;
+	private final int				over_over_ethernal;
 
 	public SM_GROUP_INFO(PlayerGroup group) //need a group class whit this parameters
 	{
-		this.groupid = group.getGroupId();
-		this.leaderid = group.getGroupLeader().getObjectId();
+		this.groupid = group.getObjectId();
+		this.leaderid = group.getLeader().getObjectId();
 
 		LootGroupRules lootRules = group.getLootGroupRules();
 		this.lootruletype = lootRules.getLootRule();

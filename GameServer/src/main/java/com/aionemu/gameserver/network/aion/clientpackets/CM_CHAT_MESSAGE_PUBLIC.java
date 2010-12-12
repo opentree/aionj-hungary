@@ -20,6 +20,7 @@ import javolution.util.FastList;
 
 import org.apache.log4j.Logger;
 
+import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 import com.aionemu.commons.objects.filter.ObjectFilter;
 import com.aionemu.gameserver.configs.main.OptionsConfig;
 import com.aionemu.gameserver.model.ChatType;
@@ -27,7 +28,6 @@ import com.aionemu.gameserver.model.alliance.PlayerAlliance;
 import com.aionemu.gameserver.model.alliance.PlayerAllianceGroup;
 import com.aionemu.gameserver.model.alliance.PlayerAllianceMember;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_MESSAGE;
 import com.aionemu.gameserver.restrictions.RestrictionsManager;
@@ -175,7 +175,7 @@ public class CM_CHAT_MESSAGE_PUBLIC extends AbstractClientPacket<AionChannelHand
 		if (player.isInGroup())
 		{
 			if (OptionsConfig.LOG_CHAT)
-				log.info(String.format("[MESSAGE] - G <%d>: [%s]> %s", player.getPlayerGroup().getGroupId(), player.getName(), message));
+				log.info(String.format("[MESSAGE] - G <%d>: [%s]> %s", player.getPlayerGroup().getObjectId(), player.getName(), message));
 			for (Player groupPlayer : player.getPlayerGroup().getMembers())
 			{
 				PacketSendUtility.sendPacket(groupPlayer, new SM_MESSAGE(player, message, type));

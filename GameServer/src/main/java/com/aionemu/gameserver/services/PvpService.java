@@ -28,7 +28,7 @@ import com.aionemu.gameserver.controllers.attack.KillList;
 import com.aionemu.gameserver.model.alliance.PlayerAlliance;
 import com.aionemu.gameserver.model.alliance.PlayerAllianceMember;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.model.group.PlayerGroup;
+import com.aionemu.gameserver.model.team.PlayerGroup;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.utils.MathUtil;
 import com.aionemu.gameserver.utils.PacketSendUtility;
@@ -46,7 +46,7 @@ public class PvpService
 		return SingletonHolder.instance;
 	}
 
-	private FastMap<Integer, KillList>	pvpKillLists;
+	private final FastMap<Integer, KillList>	pvpKillLists;
 
 	private PvpService()
 	{
@@ -152,7 +152,7 @@ public class PvpService
 
 		// Don't Reward Player of Same Faction.
 		// TODO: NPE if leader is offline? Store race in group.
-		if (group.getGroupLeader().getCommonData().getRace() == victim.getCommonData().getRace())
+		if (group.getLeader().getCommonData().getRace() == victim.getCommonData().getRace())
 			return false;
 
 		// Find group members in range

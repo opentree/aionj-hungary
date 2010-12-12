@@ -23,7 +23,6 @@ import javolution.util.FastList;
 import com.aionemu.gameserver.controllers.effect.EffectController;
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.ChatType;
-import com.aionemu.gameserver.model.alliance.PlayerAlliance;
 import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.interfaces.IDialogSelect;
 import com.aionemu.gameserver.model.gameobjects.interfaces.IReward;
@@ -34,7 +33,7 @@ import com.aionemu.gameserver.model.gameobjects.player.RequestResponseHandler;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
 import com.aionemu.gameserver.model.gameobjects.stats.NpcGameStats;
 import com.aionemu.gameserver.model.gameobjects.stats.NpcLifeStats;
-import com.aionemu.gameserver.model.group.PlayerGroup;
+import com.aionemu.gameserver.model.team.interfaces.ITeamProperties;
 import com.aionemu.gameserver.model.templates.NpcTemplate;
 import com.aionemu.gameserver.model.templates.TradeListTemplate;
 import com.aionemu.gameserver.model.templates.npcskill.NpcSkillList;
@@ -53,11 +52,8 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_TRADELIST;
 import com.aionemu.gameserver.questEngine.QuestEngine;
 import com.aionemu.gameserver.questEngine.model.QuestEnv;
 import com.aionemu.gameserver.restrictions.RestrictionsManager;
-import com.aionemu.gameserver.services.AllianceService;
 import com.aionemu.gameserver.services.CraftSkillUpdateService;
 import com.aionemu.gameserver.services.CubeExpandService;
-import com.aionemu.gameserver.services.DropService;
-import com.aionemu.gameserver.services.GroupService;
 import com.aionemu.gameserver.services.ItemService;
 import com.aionemu.gameserver.services.LegionService;
 import com.aionemu.gameserver.services.TeleportService;
@@ -66,9 +62,7 @@ import com.aionemu.gameserver.services.WarehouseService;
 import com.aionemu.gameserver.taskmanager.tasks.DecayTaskManager;
 import com.aionemu.gameserver.utils.MathUtil;
 import com.aionemu.gameserver.utils.PacketSendUtility;
-import com.aionemu.gameserver.utils.stats.StatFunctions;
 import com.aionemu.gameserver.world.World;
-import com.aionemu.gameserver.world.WorldType;
 
 /**
  * This class is a base class for all in-game NPCs, what includes: monsters and npcs that player can talk to (aka
@@ -316,35 +310,37 @@ public class Npc extends Creature implements IDialogSelect, IReward
 
 		if (winner == null)
 			return;
+		if (winner instanceof ITeamProperties)
+			((ITeamProperties) winner).getReward(this);
 
-		if (winner instanceof PlayerAlliance)
-			AllianceService.getInstance().doReward((PlayerAlliance) winner, this);
-		else if (winner instanceof PlayerGroup)
-			GroupService.getInstance().doReward((PlayerGroup) winner, this);
-		else if (((Player) winner).isInGroup())
-			GroupService.getInstance().doReward(((Player) winner).getPlayerGroup(), this);
-		else
-		{
-			Player player = (Player) winner;
-
-			long expReward = StatFunctions.calculateSoloExperienceReward(player, this);
-			player.getCommonData().addExp(expReward);
-
-			int currentDp = player.getCommonData().getDp();
-			int dpReward = StatFunctions.calculateSoloDPReward(player, this);
-			player.getCommonData().setDp(dpReward + currentDp);
-
-			WorldType worldType = World.getInstance().getWorldMap(player.getWorldId()).getWorldType();
-			if (worldType == WorldType.ABYSS)
-			{
-				int apReward = StatFunctions.calculateSoloAPReward(player, this);
-				player.getCommonData().addAp(apReward);
-			}
-
-			QuestEngine.getInstance().onKill(new QuestEnv(this, player, 0, 0));
-
-			DropService.getInstance().registerDrop(this, player, player.getLevel());
-		}
+		//		if (winner instanceof PlayerAlliance)
+		//			AllianceService.getInstance().doReward((PlayerAlliance) winner, this);
+		//		else if (winner instanceof PlayerGroup)
+		//			GroupService.getInstance().doReward((PlayerGroup) winner, this);
+		//		else if (((Player) winner).isInGroup())
+		//			GroupService.getInstance().doReward(((Player) winner).getPlayerGroup(), this);
+		//		else
+		//		{
+		//			Player player = (Player) winner;
+		//
+		//			long expReward = StatFunctions.calculateSoloExperienceReward(player, this);
+		//			player.getCommonData().addExp(expReward);
+		//
+		//			int currentDp = player.getCommonData().getDp();
+		//			int dpReward = StatFunctions.calculateSoloDPReward(player, this);
+		//			player.getCommonData().setDp(dpReward + currentDp);
+		//
+		//			WorldType worldType = World.getInstance().getWorldMap(player.getWorldId()).getWorldType();
+		//			if (worldType == WorldType.ABYSS)
+		//			{
+		//				int apReward = StatFunctions.calculateSoloAPReward(player, this);
+		//				player.getCommonData().addAp(apReward);
+		//			}
+		//
+		//			QuestEngine.getInstance().onKill(new QuestEnv(this, player, 0, 0));
+		//
+		//			DropService.getInstance().registerDrop(this, player, player.getLevel());
+		//		}
 	}
 
 	/**

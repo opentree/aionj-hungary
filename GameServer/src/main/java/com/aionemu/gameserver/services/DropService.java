@@ -58,12 +58,12 @@ import com.aionemu.gameserver.world.World;
  */
 public class DropService
 {
-	private static final Logger			log					= Logger.getLogger(DropService.class);
+	private static final Logger					log					= Logger.getLogger(DropService.class);
 
-	private DropList					dropList;
+	private final DropList						dropList;
 
-	private Map<Integer, Set<DropItem>>	currentDropMap		= new FastMap<Integer, Set<DropItem>>().shared();
-	private Map<Integer, DropNpc>		dropRegistrationMap	= new FastMap<Integer, DropNpc>().shared();
+	private final Map<Integer, Set<DropItem>>	currentDropMap		= new FastMap<Integer, Set<DropItem>>().shared();
+	private final Map<Integer, DropNpc>			dropRegistrationMap	= new FastMap<Integer, DropNpc>().shared();
 
 	public static final DropService getInstance()
 	{
@@ -308,7 +308,7 @@ public class DropService
 							{
 								dropNpc.addPlayerStatus(member);
 								PacketSendUtility.sendPacket(member,
-										new SM_GROUP_LOOT(member.getPlayerGroup().getGroupId(), itemId, npcId, dropNpc.getDistributionType()));
+										new SM_GROUP_LOOT(member.getPlayerGroup().getObjectId(), itemId, npcId, dropNpc.getDistributionType()));
 							}
 						}
 						dropNpc.isInUse(true);// Set inUse to TRUE to stop multiple instances of item roll

@@ -24,7 +24,7 @@ import com.aionemu.commons.utils.Rnd;
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.model.group.PlayerGroup;
+import com.aionemu.gameserver.model.team.PlayerGroup;
 import com.aionemu.gameserver.model.templates.WorldMapTemplate;
 import com.aionemu.gameserver.model.templates.portal.EntryPoint;
 import com.aionemu.gameserver.model.templates.portal.PortalTemplate;
@@ -152,7 +152,7 @@ public class InstanceService
 			int lookupId = player.getObjectId();
 			if (portalTemplate.isGroup() && player.getPlayerGroup() != null)
 			{
-				lookupId = player.getPlayerGroup().getGroupId();
+				lookupId = player.getPlayerGroup().getObjectId();
 			}
 
 			WorldMapInstance registeredInstance = getRegisteredInstance(worldId, lookupId);
@@ -226,7 +226,7 @@ public class InstanceService
 
 	private static class EmptyInstanceCheckerTask implements Runnable
 	{
-		private WorldMapInstance	worldMapInstance;
+		private final WorldMapInstance	worldMapInstance;
 
 		private EmptyInstanceCheckerTask(WorldMapInstance worldMapInstance)
 		{

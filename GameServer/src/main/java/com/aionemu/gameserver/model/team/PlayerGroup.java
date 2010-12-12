@@ -26,8 +26,6 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.group.GroupEvent;
 import com.aionemu.gameserver.model.group.LootGroupRules;
 import com.aionemu.gameserver.model.team.interfaces.ITeamProperties;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_LEAVE_GROUP_MEMBER;
-import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /**
  * @author lyahim
@@ -99,7 +97,6 @@ public class PlayerGroup extends Team<Player> implements ITeamProperties
 		/**
 		 * Inform all group members player has left the group
 		 */
-		PacketSendUtility.broadcastPacketToTeam(player, this, new SM_LEAVE_GROUP_MEMBER(), false);
 		//				PacketSendUtility.broadcastPacket(player, new SM_LEAVE_GROUP_MEMBER(), true, new ObjectFilter<Player>()
 		//				{
 		//					@Override
@@ -139,12 +136,13 @@ public class PlayerGroup extends Team<Player> implements ITeamProperties
 		//				if (changeleader)
 		//				{
 		//					PacketSendUtility.broadcastPacketToTeam(subjective, this, new SM_GROUP_INFO(this), true);
-		//					PacketSendUtility.broadcastPacketToTeam(subjective, this, SM_SYSTEM_MESSAGE.CHANGE_GROUP_LEADER(), true);
+		//					PacketSendUtility.broadcastPacketToTeam(subjective, this, SM_SYSTEM_MESSAGE.CHANGE_GROUP_LEADER(), false);
 		//				}
 		//				PacketSendUtility.broadcastPacketToTeam(subjective, this, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent), false);
 		//				if (this.size() > 1)
 		//					PacketSendUtility.broadcastPacketToTeam(subjective, this, SM_SYSTEM_MESSAGE.MEMBER_LEFT_GROUP(subjective.getName()), false/*true*/);
 		//				PacketSendUtility.sendPacket(subjective, SM_SYSTEM_MESSAGE.YOU_LEFT_GROUP());
+		//				PacketSendUtility.broadcastPacketToTeam(player, this, new SM_LEAVE_GROUP_MEMBER(), false);
 		//				//				for (Player member : this.getMembers())
 		//				//				{
 		//				//					if (changeleader)
