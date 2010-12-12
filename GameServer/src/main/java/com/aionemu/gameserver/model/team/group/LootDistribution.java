@@ -1,5 +1,5 @@
 /**
- * This file is part of aion-unique <aion-unique.org>.
+ * This file is part of aion-emu <aion-unique.org>.
  *
  *  aion-unique is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,21 +14,21 @@
  *  You should have received a copy of the GNU General Public License
  *  along with aion-unique.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aionemu.gameserver.model.group;
+package com.aionemu.gameserver.model.team.group;
 
 /**
 *
-* @author  Lyahim
+* @author  KKnD
 * 
 */
-public enum GroupEvent
+public enum LootDistribution
 {
 
-	LEAVE(0), MOVEMENT(1), ENTER(13), UPDATE(13), CHANGELEADER(13); //i dont know the id
+	NORMAL(0), ROLL_DICE(2), BID(3);
 
 	private int	id;
 
-	private GroupEvent(int id)
+	LootDistribution(int id)
 	{
 		this.id = id;
 	}

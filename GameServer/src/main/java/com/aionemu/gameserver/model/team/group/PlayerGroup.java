@@ -16,7 +16,7 @@
  *
  * http://www.gnu.org/copyleft/gpl.html
  */
-package com.aionemu.gameserver.model.team;
+package com.aionemu.gameserver.model.team.group;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +25,7 @@ import com.aionemu.gameserver.configs.main.GroupConfig;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.model.group.GroupEvent;
-import com.aionemu.gameserver.model.group.LootGroupRules;
+import com.aionemu.gameserver.model.team.Team;
 import com.aionemu.gameserver.model.team.interfaces.ITeamProperties;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_GROUP_INFO;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_GROUP_MEMBER_INFO;

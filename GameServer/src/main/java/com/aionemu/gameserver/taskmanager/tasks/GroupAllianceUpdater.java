@@ -16,9 +16,9 @@
  */
 package com.aionemu.gameserver.taskmanager.tasks;
 
-import com.aionemu.gameserver.model.alliance.PlayerAllianceEvent;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.model.group.GroupEvent;
+import com.aionemu.gameserver.model.team.alliance.PlayerAllianceEvent;
+import com.aionemu.gameserver.model.team.group.GroupEvent;
 import com.aionemu.gameserver.services.AllianceService;
 import com.aionemu.gameserver.taskmanager.AbstractFIFOPeriodicTaskManager;
 

@@ -16,42 +16,25 @@
  *
  * http://www.gnu.org/copyleft/gpl.html
  */
-package com.aionemu.gameserver.model.team;
+package com.aionemu.gameserver.model.team.group;
 
-import com.aionemu.gameserver.model.gameobjects.Npc;
-import com.aionemu.gameserver.model.team.interfaces.ITeamProperties;
+import com.aionemu.gameserver.model.gameobjects.player.Player;
+import com.aionemu.gameserver.model.team.TeamService;
 
 /**
  * @author lyahim
  *
  */
-public class PlayerAlliance extends Team<PlayerGroup> implements ITeamProperties
+public class GroupService extends TeamService<Player>
 {
-	public PlayerAlliance(int teamId, PlayerGroup leader)
+
+	public static final GroupService getInstance()
 	{
-		super(teamId, leader);
+		return SingletonHolder.Instance;
 	}
 
-	@Override
-	public void addMember(PlayerGroup member)
+	private final static class SingletonHolder
 	{
-		super.addMember(member);
-	}
-
-	@Override
-	public boolean isFull()
-	{
-		return members.size() == 4;
-	}
-
-	@Override
-	public String getName()
-	{
-		return "Player Alliance" + getObjectId();
-	}
-
-	@Override
-	public void getReward(Npc owner)
-	{
+		public static final GroupService	Instance	= new GroupService();
 	}
 }

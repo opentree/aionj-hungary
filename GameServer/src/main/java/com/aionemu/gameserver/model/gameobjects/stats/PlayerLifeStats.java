@@ -20,10 +20,10 @@ import java.util.concurrent.Future;
 import java.util.concurrent.locks.ReentrantLock;
 
 import com.aionemu.gameserver.configs.administration.AdminConfig;
-import com.aionemu.gameserver.model.alliance.PlayerAllianceEvent;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
-import com.aionemu.gameserver.model.group.GroupEvent;
+import com.aionemu.gameserver.model.team.alliance.PlayerAllianceEvent;
+import com.aionemu.gameserver.model.team.group.GroupEvent;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_FLY_TIME;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_STATUPDATE_HP;

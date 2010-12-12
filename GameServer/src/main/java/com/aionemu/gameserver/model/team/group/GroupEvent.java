@@ -14,21 +14,21 @@
  *  You should have received a copy of the GNU General Public License
  *  along with aion-unique.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aionemu.gameserver.model.group;
+package com.aionemu.gameserver.model.team.group;
 
 /**
 *
 * @author  Lyahim
 * 
 */
-public enum LootRuleType
+public enum GroupEvent
 {
 
-	FREEFORALL(0), ROUNDROBIN(1), LEADER(2);
+	LEAVE(0), MOVEMENT(1), ENTER(13), UPDATE(13), CHANGELEADER(13); //i dont know the id
 
 	private int	id;
 
-	private LootRuleType(int id)
+	private GroupEvent(int id)
 	{
 		this.id = id;
 	}

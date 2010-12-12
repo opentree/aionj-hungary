@@ -18,10 +18,10 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 
 import java.util.List;
 
-import com.aionemu.gameserver.model.alliance.PlayerAllianceEvent;
 import com.aionemu.gameserver.model.alliance.PlayerAllianceMember;
 import com.aionemu.gameserver.model.gameobjects.player.PlayerCommonData;
 import com.aionemu.gameserver.model.gameobjects.stats.PlayerLifeStats;
+import com.aionemu.gameserver.model.team.alliance.PlayerAllianceEvent;
 import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.skillengine.model.Effect;

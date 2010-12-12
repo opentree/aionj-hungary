@@ -24,6 +24,7 @@ import javolution.util.FastMap;
 
 import com.aionemu.gameserver.model.gameobjects.AionObject;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
+import com.aionemu.gameserver.model.team.alliance.PlayerAllianceEvent;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ALLIANCE_MEMBER_INFO;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.services.AllianceService;
@@ -35,14 +36,14 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
  */
 public class PlayerAlliance extends AionObject
 {
-	private int										captainObjectId;
+	private int												captainObjectId;
 
-	private List<Integer>							viceCaptainObjectIds	= new ArrayList<Integer>();
+	private final List<Integer>								viceCaptainObjectIds	= new ArrayList<Integer>();
 
-	private FastMap<Integer, PlayerAllianceMember>	allianceMembers			= new FastMap<Integer, PlayerAllianceMember>().shared();
-	private FastMap<Integer, PlayerAllianceGroup>	allianceGroupForMember	= new FastMap<Integer, PlayerAllianceGroup>().shared();
+	private final FastMap<Integer, PlayerAllianceMember>	allianceMembers			= new FastMap<Integer, PlayerAllianceMember>().shared();
+	private final FastMap<Integer, PlayerAllianceGroup>		allianceGroupForMember	= new FastMap<Integer, PlayerAllianceGroup>().shared();
 
-	private FastMap<Integer, PlayerAllianceGroup>	allianceGroups			= new FastMap<Integer, PlayerAllianceGroup>().shared();
+	private final FastMap<Integer, PlayerAllianceGroup>		allianceGroups			= new FastMap<Integer, PlayerAllianceGroup>().shared();
 
 	public PlayerAlliance(int objectId, int leaderObjectId)
 	{

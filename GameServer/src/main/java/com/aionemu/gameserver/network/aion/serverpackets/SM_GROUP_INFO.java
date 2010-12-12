@@ -16,10 +16,10 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.model.group.LootDistribution;
-import com.aionemu.gameserver.model.group.LootGroupRules;
-import com.aionemu.gameserver.model.group.LootRuleType;
-import com.aionemu.gameserver.model.team.PlayerGroup;
+import com.aionemu.gameserver.model.team.group.LootDistribution;
+import com.aionemu.gameserver.model.team.group.LootGroupRules;
+import com.aionemu.gameserver.model.team.group.LootRuleType;
+import com.aionemu.gameserver.model.team.group.PlayerGroup;
 import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
 

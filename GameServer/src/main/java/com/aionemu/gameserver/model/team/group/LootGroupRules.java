@@ -14,25 +14,25 @@
  *  You should have received a copy of the GNU General Public License
  *  along with aion-unique.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aionemu.gameserver.model.group;
+package com.aionemu.gameserver.model.team.group;
 
 import com.aionemu.gameserver.model.templates.item.ItemQuality;
 
 /**
- * @author ATracer
+ * @author Lyahim
  *
  */
 public class LootGroupRules
 {
-	private LootRuleType		lootRule;
-	private LootDistribution	autodistribution;
-	private int					common_item_above;
-	private int					superior_item_above;
-	private int					heroic_item_above;
-	private int					fabled_item_above;
-	private int					ethernal_item_above;
-	private int					over_ethernal;
-	private int					over_over_ethernal;
+	private final LootRuleType		lootRule;
+	private final LootDistribution	autodistribution;
+	private final int				common_item_above;
+	private final int				superior_item_above;
+	private final int				heroic_item_above;
+	private final int				fabled_item_above;
+	private final int				ethernal_item_above;
+	private final int				over_ethernal;
+	private final int				over_over_ethernal;
 
 	public LootGroupRules()
 	{
