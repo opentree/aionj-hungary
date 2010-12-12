@@ -67,7 +67,17 @@ public class ObjectInfosSave
 			}
 			else if (npc.getCursorType() != null && npc.getCursorType().equalsIgnoreCase("trade"))
 			{
-				template.setClassName("DialogNpc");
+				template.setClassName("StaticNpc");
+				template.setKnowlistName("StaticObjectKnowlist");
+			}
+			else if (npc.getCursorType() != null && npc.getCursorType().equalsIgnoreCase("talk"))
+			{
+				template.setClassName("StaticNpc");
+				template.setKnowlistName("StaticObjectKnowlist");
+			}
+			else if(npc.getUiType() != null && npc.getUiType().equalsIgnoreCase("monster"))
+			{
+				template.setClassName("Monster");
 			}
 			template.setId(npc.getId());
 			templateList.add(template);

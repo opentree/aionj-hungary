@@ -12,7 +12,7 @@
 
 	<xs:complexType name="NpcInfo">
 	  <xs:attribute name="id" type="xs:int" use="required"/>
-	  <xs:attribute name="class_name" type="xs:string" default="SpawnedObject" />
+	  <xs:attribute name="class_name" type="xs:string" default="StaticNpc" />
 	  <xs:attribute name="knowlist_name" type="xs:string" default="KnownList" />
 	  <xs:attribute name="ai_name" type="xs:string" default = "NoActionAI"/>
 	  <xs:attribute name="random_walking" type="xs:string" default="false"/>

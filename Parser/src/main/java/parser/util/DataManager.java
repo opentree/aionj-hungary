@@ -34,6 +34,8 @@ import parser.clientData.clientWorldId.Data;
 import parser.clientData.clientWorldId.WorldIdLoader;
 import parser.clientData.tribeRelation.Tribe;
 import parser.clientData.tribeRelation.TribeRelationLoader;
+import parser.serverData.spawns.SpawnGroup;
+import parser.serverData.spawns.SpawnLoader;
 
 /**
  * @author Mr. Poke
@@ -51,7 +53,8 @@ public class DataManager
 	private Map<String, Integer>		npcNameIdMap;
 	private Map<Integer, GatherSrc>		idGatherebleMap;
 	private Map<String, Integer>		nameGatherebleIdMap;
-
+	private Map<Integer, List<SpawnGroup>> spawnGroup;
+	
 	public static final DataManager getInstance()
 	{
 		return SingletonHolder.instance;
@@ -168,6 +171,16 @@ public class DataManager
 			nameGatherebleIdMap.put(item.getName().toLowerCase(), item.getId());
 		}
 		return nameGatherebleIdMap;
+	}
+
+	/**
+	 * @return Returns the spawnGroup.
+	 */
+	public Map<Integer, List<SpawnGroup>> getSpawnGroup()
+	{
+		if (spawnGroup == null)
+			spawnGroup = SpawnLoader.load();
+		return spawnGroup;
 	}
 
 	@SuppressWarnings("synthetic-access")

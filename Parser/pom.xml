@@ -139,5 +139,12 @@
 			</releases>
 		</repository>
 	</repositories>
-	<dependencies />
+	<dependencies >
+		<dependency>
+			<groupId>aionj-hungary</groupId>
+			<artifactId>commons</artifactId>
+			<version>0.1</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
 </project>
