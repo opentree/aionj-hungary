@@ -16,11 +16,15 @@
  */
 package com.aionemu.gameserver.utils;
 
+import java.util.Collection;
+
 import com.aionemu.commons.objects.filter.ObjectFilter;
 import com.aionemu.gameserver.model.ChatType;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.legion.Legion;
+import com.aionemu.gameserver.model.team.Team;
+import com.aionemu.gameserver.model.team.interfaces.ITeamProperties;
 import com.aionemu.gameserver.network.aion.AbstractAionServerPacket;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_MESSAGE;
@@ -142,6 +146,45 @@ public class PacketSendUtility
 				Player target = (Player) obj;
 				if (filter.acceptObject(target))
 					sendPacket(target, packet);
+			}
+		}
+	}
+
+	/**
+	 * Send packet for team members, if team is group send all group members or not only to the sender
+	 * if team is alliance, and sender is a player, give all alli member packet but sender no
+	 * if team is alliance, and sender is a group, give all other group member a packet.
+	 * @param sender
+	 * @param team
+	 * @param packet
+	 * @param tosender
+	 */
+	@SuppressWarnings(
+	{ "unchecked", "rawtypes" })
+	public static void broadcastPacketToTeam(ITeamProperties sender, Team team, AbstractAionServerPacket<AionChannelHandler> packet, boolean tosender)
+	{
+		if (tosender && sender instanceof Player)
+			sendPacket((Player) sender, packet);
+
+		for (ITeamProperties memb : (Collection<ITeamProperties>) team.getMembers())
+		{
+			if (memb instanceof Player)
+			{
+				Player player = (Player) memb;
+				if (player.getObjectId() != sender.getObjectId())
+					sendPacket(player, packet);
+			}
+			else if (memb instanceof Team)
+			{
+				for (ITeamProperties groupmemb : (Collection<ITeamProperties>) ((Team) memb).getMembers())
+				{
+					if (memb instanceof Player)
+					{
+						Player player = (Player) groupmemb;
+						if (player.getPlayerGroup().getObjectId() != sender.getObjectId())
+							sendPacket(player, packet);
+					}
+				}
 			}
 		}
 	}

@@ -26,6 +26,8 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.group.GroupEvent;
 import com.aionemu.gameserver.model.group.LootGroupRules;
 import com.aionemu.gameserver.model.team.interfaces.ITeamProperties;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_LEAVE_GROUP_MEMBER;
+import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /**
  * @author lyahim
@@ -90,21 +92,22 @@ public class PlayerGroup extends Team<Player> implements ITeamProperties
 	 */
 	public void removePlayerFromGroup(Player player)
 	{
-		//		removeMember(player);
-		//		player.setPlayerGroup(null);
-		//		updateGroupUIToEvent(player, GroupEvent.LEAVE);
-		//
-		//		/**
-		//		 * Inform all group members player has left the group
-		//		 */
-		//		PacketSendUtility.broadcastPacket(player, new SM_LEAVE_GROUP_MEMBER(), true, new ObjectFilter<Player>()
-		//		{
-		//			@Override
-		//			public boolean acceptObject(Player object)
-		//			{
-		//				return object.getPlayerGroup() == null ? true : false;
-		//			}
-		//		});
+		removeMember(player);
+		player.setPlayerGroup(null);
+		updateGroupUIToEvent(player, GroupEvent.LEAVE);
+
+		/**
+		 * Inform all group members player has left the group
+		 */
+		PacketSendUtility.broadcastPacketToTeam(player, this, new SM_LEAVE_GROUP_MEMBER(), false);
+		//				PacketSendUtility.broadcastPacket(player, new SM_LEAVE_GROUP_MEMBER(), true, new ObjectFilter<Player>()
+		//				{
+		//					@Override
+		//					public boolean acceptObject(Player object)
+		//					{
+		//						return object.getPlayerGroup() == null ? true : false;
+		//					}
+		//				});
 	}
 
 	public void updateGroupUIToEvent(Player subjective, GroupEvent groupEvent)
@@ -113,13 +116,16 @@ public class PlayerGroup extends Team<Player> implements ITeamProperties
 		//		{
 		//			case CHANGELEADER:
 		//			{
-		//				for (Player member : this.getMembers())
-		//				{
-		//					PacketSendUtility.sendPacket(member, new SM_GROUP_INFO(this));
-		//					if (subjective.equals(member))
-		//						PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.CHANGE_GROUP_LEADER());
-		//					PacketSendUtility.sendPacket(member, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent));
-		//				}
+		//				PacketSendUtility.broadcastPacketToTeam(subjective, this, new SM_GROUP_INFO(this), true);
+		//				PacketSendUtility.sendPacket(subjective, SM_SYSTEM_MESSAGE.CHANGE_GROUP_LEADER());
+		//				PacketSendUtility.broadcastPacketToTeam(subjective, this, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent), false);
+		//				//				for (Player member : this.getMembers())
+		//				//				{
+		//				//					PacketSendUtility.sendPacket(member, new SM_GROUP_INFO(this));
+		//				//					if (subjective.equals(member))
+		//				//						PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.CHANGE_GROUP_LEADER());
+		//				//					PacketSendUtility.sendPacket(member, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent));
+		//				//				}
 		//			}
 		//				break;
 		//			case LEAVE:
@@ -130,38 +136,49 @@ public class PlayerGroup extends Team<Player> implements ITeamProperties
 		//					this.setLeader(this.getMembers().iterator().next());
 		//					changeleader = true;
 		//				}
-		//				for (Player member : this.getMembers())
+		//				if (changeleader)
 		//				{
-		//					if (changeleader)
-		//					{
-		//						PacketSendUtility.sendPacket(member, new SM_GROUP_INFO(this));
-		//						PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.CHANGE_GROUP_LEADER());
-		//					}
-		//					if (!subjective.equals(member))
-		//						PacketSendUtility.sendPacket(member, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent));
-		//					if (this.size() > 1)
-		//						PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.MEMBER_LEFT_GROUP(subjective.getName()));
+		//					PacketSendUtility.broadcastPacketToTeam(subjective, this, new SM_GROUP_INFO(this), true);
+		//					PacketSendUtility.broadcastPacketToTeam(subjective, this, SM_SYSTEM_MESSAGE.CHANGE_GROUP_LEADER(), true);
 		//				}
-		//				eventToSubjective(subjective, GroupEvent.LEAVE);
+		//				PacketSendUtility.broadcastPacketToTeam(subjective, this, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent), false);
+		//				if (this.size() > 1)
+		//					PacketSendUtility.broadcastPacketToTeam(subjective, this, SM_SYSTEM_MESSAGE.MEMBER_LEFT_GROUP(subjective.getName()), false/*true*/);
+		//				PacketSendUtility.sendPacket(subjective, SM_SYSTEM_MESSAGE.YOU_LEFT_GROUP());
+		//				//				for (Player member : this.getMembers())
+		//				//				{
+		//				//					if (changeleader)
+		//				//					{
+		//				//						PacketSendUtility.sendPacket(member, new SM_GROUP_INFO(this));
+		//				//						PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.CHANGE_GROUP_LEADER());
+		//				//					}
+		//				//					if (!subjective.equals(member))
+		//				//						PacketSendUtility.sendPacket(member, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent));
+		//				//					if (this.size() > 1)
+		//				//						PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.MEMBER_LEFT_GROUP(subjective.getName()));
+		//				//				}
+		//				//				eventToSubjective(subjective, GroupEvent.LEAVE);
 		//			}
 		//				break;
 		//			case ENTER:
 		//			{
-		//				eventToSubjective(subjective, GroupEvent.ENTER);
-		//				for (Player member : this.getMembers())
-		//				{
-		//					if (!subjective.equals(member))
-		//						PacketSendUtility.sendPacket(member, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent));
-		//				}
+		//				//				eventToSubjective(subjective, GroupEvent.ENTER);
+		//				PacketSendUtility.broadcastPacketToTeam(subjective, this, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent), false);
+		//				//						for (Player member : this.getMembers())
+		//				//						{
+		//				//							if (!subjective.equals(member))
+		//				//								PacketSendUtility.sendPacket(member, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent));
+		//				//						}
 		//			}
 		//				break;
 		//			default:
 		//			{
-		//				for (Player member : this.getMembers())
-		//				{
-		//					if (!subjective.equals(member))
-		//						PacketSendUtility.sendPacket(member, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent));
-		//				}
+		//				PacketSendUtility.broadcastPacketToTeam(subjective, this, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent), false);
+		//				//						for (Player member : this.getMembers())
+		//				//						{
+		//				//							if (!subjective.equals(member))
+		//				//								PacketSendUtility.sendPacket(member, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent));
+		//				//						}
 		//			}
 		//				break;
 		//		}

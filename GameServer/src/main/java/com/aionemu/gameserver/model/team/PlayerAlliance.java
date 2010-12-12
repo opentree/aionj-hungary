@@ -33,6 +33,12 @@ public class PlayerAlliance extends Team<PlayerGroup> implements ITeamProperties
 	}
 
 	@Override
+	public void addMember(PlayerGroup member)
+	{
+		super.addMember(member);
+	}
+
+	@Override
 	public boolean isFull()
 	{
 		return members.size() == 4;

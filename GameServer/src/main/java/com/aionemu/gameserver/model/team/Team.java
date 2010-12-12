@@ -41,7 +41,7 @@ public abstract class Team<T extends ITeamProperties> extends AionObject
 		members.add(leader);
 	}
 
-	public ITeamProperties getLeader()
+	public T getLeader()
 	{
 		return leader;
 	}
