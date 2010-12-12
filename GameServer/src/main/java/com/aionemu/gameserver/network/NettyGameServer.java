@@ -83,6 +83,8 @@ public class NettyGameServer extends AbstractNettyServer
 		gameToLoginChannelFactory = initClientChannelFactory();
 
 		channelGroup.add(initServerChannel(gameToClientChannelFactory, NetworkConfig.CLIENT_ADDRESS, gameToClientPipeLineFactory));
+		
+		connectToLoginServer();
 
 		if (!GSConfig.DISABLE_CHAT_SERVER)
 		{
@@ -104,23 +106,6 @@ public class NettyGameServer extends AbstractNettyServer
 			}), 5000, 10000);
 		}
 
-		ThreadPoolManager.getInstance().scheduleAtFixedRate((new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				logger.info("Connecting to LoginServer: " + NetworkConfig.LOGIN_ADDRESS);
-				try
-				{
-					ChannelFuture login = initClientChannel(gameToLoginChannelFactory, NetworkConfig.LOGIN_ADDRESS, gameToLoginPipelineFactory);
-					login.getChannel().getCloseFuture().awaitUninterruptibly();
-				}
-				catch (Exception e)
-				{
-				}
-			}
-		}), 5000, 10000);
-
 		logger.info("GameServer started");
 	}
 
@@ -135,6 +120,25 @@ public class NettyGameServer extends AbstractNettyServer
 		super.shutDown();
 	}
 
+	public void connectToLoginServer()
+	{
+		ThreadPoolManager.getInstance().execute((new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				try
+				{
+					Thread.sleep(5000);
+					logger.info("Connecting to LoginServer: " + NetworkConfig.LOGIN_ADDRESS);
+					initClientChannel(gameToLoginChannelFactory, NetworkConfig.LOGIN_ADDRESS, gameToLoginPipelineFactory);
+				}
+				catch (Exception e)
+				{
+				}
+			}
+		}));
+	}
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{

@@ -25,6 +25,7 @@ import org.apache.log4j.Logger;
 import com.aionemu.commons.network.netty.State;
 import com.aionemu.gameserver.model.account.Account;
 import com.aionemu.gameserver.model.account.AccountTime;
+import com.aionemu.gameserver.network.NettyGameServer;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_L2AUTH_LOGIN_CHECK;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_RECONNECT_KEY;
@@ -64,6 +65,8 @@ public class LoginServer
 	 * Connection to LoginServer.
 	 */
 	private LoginServerChannelHandler			loginServer;
+	
+	private boolean shutDown = false;
 
 	public static final LoginServer getInstance()
 	{
@@ -102,6 +105,8 @@ public class LoginServer
 			}
 			loginRequests.clear();
 		}
+		if (!shutDown)
+			NettyGameServer.getInstance().connectToLoginServer();
 	}
 
 	/**
@@ -304,6 +309,10 @@ public class LoginServer
 	{
 		synchronized (this)
 		{
+			shutDown = true;
+
+			if (loginServer == null)
+				return;
 			/**
 			 * GameServer shutting down, must close all pending login requests
 			 */
