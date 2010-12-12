@@ -18,14 +18,27 @@
  */
 package com.aionemu.gameserver.model.team;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.aionemu.gameserver.configs.main.GroupConfig;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.group.GroupEvent;
 import com.aionemu.gameserver.model.group.LootGroupRules;
 import com.aionemu.gameserver.model.team.interfaces.ITeamProperties;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_GROUP_INFO;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_GROUP_MEMBER_INFO;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_LEAVE_GROUP_MEMBER;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
+import com.aionemu.gameserver.questEngine.QuestEngine;
+import com.aionemu.gameserver.questEngine.model.QuestEnv;
+import com.aionemu.gameserver.services.DropService;
+import com.aionemu.gameserver.utils.MathUtil;
+import com.aionemu.gameserver.utils.PacketSendUtility;
+import com.aionemu.gameserver.utils.stats.StatFunctions;
+import com.aionemu.gameserver.world.WorldType;
 
 /**
  * @author lyahim
@@ -33,24 +46,24 @@ import com.aionemu.gameserver.model.team.interfaces.ITeamProperties;
  */
 public class PlayerGroup extends Team<Player> implements ITeamProperties
 {
-	private final int				RoundRobinNr	= 0;
-	private final LootGroupRules	lootGroupRules	= new LootGroupRules();
-	private List<Player>			inRangePlayers;
+	private int				RoundRobinNr	= 0;
+	private LootGroupRules	lootGroupRules	= new LootGroupRules();
+	private List<Player>	inRangePlayers;
 
 	public PlayerGroup(int teamId, Player leader)
 	{
 		super(teamId, leader);
-		//		leader.setPlayerGroup(this);
-		//		PacketSendUtility.sendPacket(leader, new SM_GROUP_INFO(this));
+		leader.setPlayerGroup(this);
+		PacketSendUtility.sendPacket(leader, new SM_GROUP_INFO(this));
 	}
 
 	@Override
 	public void addMember(Player member)
 	{
-		//		super.addMember(member);
-		//		member.setPlayerGroup(this);
-		//		PacketSendUtility.sendPacket(member, new SM_GROUP_INFO(this));
-		//		updateGroupUIToEvent(member, GroupEvent.ENTER);
+		super.addMember(member);
+		member.setPlayerGroup(this);
+		PacketSendUtility.sendPacket(member, new SM_GROUP_INFO(this));
+		updateGroupUIToEvent(member, GroupEvent.ENTER);
 	}
 
 	/**
@@ -62,25 +75,24 @@ public class PlayerGroup extends Team<Player> implements ITeamProperties
 	 */
 	public int getRoundRobinMember(StaticNpc npc)
 	{
-		return RoundRobinNr;
-		//		RoundRobinNr = ++RoundRobinNr % size();
-		//		int i = 0;
-		//		for (Player player : getMembers())
-		//		{
-		//			if (i == RoundRobinNr)
-		//			{
-		//				if (MathUtil.isIn3dRange(player, npc, GroupConfig.GROUP_MAX_DISTANCE))
-		//				{ // the player is in range of the killed NPC.
-		//					return player.getObjectId();
-		//				}
-		//				else
-		//				{
-		//					return 0;
-		//				}
-		//			}
-		//			i++;
-		//		}
-		//		return 0;
+		RoundRobinNr = ++RoundRobinNr % size();
+		int i = 0;
+		for (Player player : getMembers())
+		{
+			if (i == RoundRobinNr)
+			{
+				if (MathUtil.isIn3dRange(player, npc, GroupConfig.GROUP_MAX_DISTANCE))
+				{ // the player is in range of the killed NPC.
+					return player.getObjectId();
+				}
+				else
+				{
+					return 0;
+				}
+			}
+			i++;
+		}
+		return 0;
 	}
 
 	/**
@@ -109,95 +121,95 @@ public class PlayerGroup extends Team<Player> implements ITeamProperties
 
 	public void updateGroupUIToEvent(Player subjective, GroupEvent groupEvent)
 	{
-		//		switch (groupEvent)
-		//		{
-		//			case CHANGELEADER:
-		//			{
-		//				PacketSendUtility.broadcastPacketToTeam(subjective, this, new SM_GROUP_INFO(this), true);
-		//				PacketSendUtility.sendPacket(subjective, SM_SYSTEM_MESSAGE.CHANGE_GROUP_LEADER());
-		//				PacketSendUtility.broadcastPacketToTeam(subjective, this, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent), false);
-		//				//				for (Player member : this.getMembers())
-		//				//				{
-		//				//					PacketSendUtility.sendPacket(member, new SM_GROUP_INFO(this));
-		//				//					if (subjective.equals(member))
-		//				//						PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.CHANGE_GROUP_LEADER());
-		//				//					PacketSendUtility.sendPacket(member, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent));
-		//				//				}
-		//			}
-		//				break;
-		//			case LEAVE:
-		//			{
-		//				boolean changeleader = false;
-		//				if (subjective == this.getLeader())// change group leader
-		//				{
-		//					this.setLeader(this.getMembers().iterator().next());
-		//					changeleader = true;
-		//				}
-		//				if (changeleader)
-		//				{
-		//					PacketSendUtility.broadcastPacketToTeam(subjective, this, new SM_GROUP_INFO(this), true);
-		//					PacketSendUtility.broadcastPacketToTeam(subjective, this, SM_SYSTEM_MESSAGE.CHANGE_GROUP_LEADER(), false);
-		//				}
-		//				PacketSendUtility.broadcastPacketToTeam(subjective, this, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent), false);
-		//				if (this.size() > 1)
-		//					PacketSendUtility.broadcastPacketToTeam(subjective, this, SM_SYSTEM_MESSAGE.MEMBER_LEFT_GROUP(subjective.getName()), false/*true*/);
-		//				PacketSendUtility.sendPacket(subjective, SM_SYSTEM_MESSAGE.YOU_LEFT_GROUP());
-		//				PacketSendUtility.broadcastPacketToTeam(player, this, new SM_LEAVE_GROUP_MEMBER(), false);
-		//				//				for (Player member : this.getMembers())
-		//				//				{
-		//				//					if (changeleader)
-		//				//					{
-		//				//						PacketSendUtility.sendPacket(member, new SM_GROUP_INFO(this));
-		//				//						PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.CHANGE_GROUP_LEADER());
-		//				//					}
-		//				//					if (!subjective.equals(member))
-		//				//						PacketSendUtility.sendPacket(member, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent));
-		//				//					if (this.size() > 1)
-		//				//						PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.MEMBER_LEFT_GROUP(subjective.getName()));
-		//				//				}
-		//				//				eventToSubjective(subjective, GroupEvent.LEAVE);
-		//			}
-		//				break;
-		//			case ENTER:
-		//			{
-		//				//				eventToSubjective(subjective, GroupEvent.ENTER);
-		//				PacketSendUtility.broadcastPacketToTeam(subjective, this, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent), false);
-		//				//						for (Player member : this.getMembers())
-		//				//						{
-		//				//							if (!subjective.equals(member))
-		//				//								PacketSendUtility.sendPacket(member, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent));
-		//				//						}
-		//			}
-		//				break;
-		//			default:
-		//			{
-		//				PacketSendUtility.broadcastPacketToTeam(subjective, this, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent), false);
-		//				//						for (Player member : this.getMembers())
-		//				//						{
-		//				//							if (!subjective.equals(member))
-		//				//								PacketSendUtility.sendPacket(member, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent));
-		//				//						}
-		//			}
-		//				break;
-		//		}
+		switch (groupEvent)
+		{
+			case CHANGELEADER:
+			{
+				PacketSendUtility.broadcastPacketToTeam(subjective, this, new SM_GROUP_INFO(this), true);
+				PacketSendUtility.sendPacket(subjective, SM_SYSTEM_MESSAGE.CHANGE_GROUP_LEADER());
+				PacketSendUtility.broadcastPacketToTeam(subjective, this, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent), false);
+				//				for (Player member : this.getMembers())
+				//				{
+				//					PacketSendUtility.sendPacket(member, new SM_GROUP_INFO(this));
+				//					if (subjective.equals(member))
+				//						PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.CHANGE_GROUP_LEADER());
+				//					PacketSendUtility.sendPacket(member, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent));
+				//				}
+			}
+				break;
+			case LEAVE:
+			{
+				boolean changeleader = false;
+				if (subjective == this.getLeader())// change group leader
+				{
+					this.setLeader(this.getMembers().iterator().next());
+					changeleader = true;
+				}
+				if (changeleader)
+				{
+					PacketSendUtility.broadcastPacketToTeam(subjective, this, new SM_GROUP_INFO(this), true);
+					PacketSendUtility.broadcastPacketToTeam(subjective, this, SM_SYSTEM_MESSAGE.CHANGE_GROUP_LEADER(), false);
+				}
+				PacketSendUtility.broadcastPacketToTeam(subjective, this, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent), false);
+				if (this.size() > 1)
+					PacketSendUtility.broadcastPacketToTeam(subjective, this, SM_SYSTEM_MESSAGE.MEMBER_LEFT_GROUP(subjective.getName()), false/*true*/);
+				PacketSendUtility.sendPacket(subjective, SM_SYSTEM_MESSAGE.YOU_LEFT_GROUP());
+				PacketSendUtility.broadcastPacketToTeam(subjective, this, new SM_LEAVE_GROUP_MEMBER(), false);
+				//				for (Player member : this.getMembers())
+				//				{
+				//					if (changeleader)
+				//					{
+				//						PacketSendUtility.sendPacket(member, new SM_GROUP_INFO(this));
+				//						PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.CHANGE_GROUP_LEADER());
+				//					}
+				//					if (!subjective.equals(member))
+				//						PacketSendUtility.sendPacket(member, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent));
+				//					if (this.size() > 1)
+				//						PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.MEMBER_LEFT_GROUP(subjective.getName()));
+				//				}
+				//				eventToSubjective(subjective, GroupEvent.LEAVE);
+			}
+				break;
+			case ENTER:
+			{
+				//				eventToSubjective(subjective, GroupEvent.ENTER);
+				PacketSendUtility.broadcastPacketToTeam(subjective, this, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent), false);
+				//						for (Player member : this.getMembers())
+				//						{
+				//							if (!subjective.equals(member))
+				//								PacketSendUtility.sendPacket(member, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent));
+				//						}
+			}
+				break;
+			default:
+			{
+				PacketSendUtility.broadcastPacketToTeam(subjective, this, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent), false);
+				//						for (Player member : this.getMembers())
+				//						{
+				//							if (!subjective.equals(member))
+				//								PacketSendUtility.sendPacket(member, new SM_GROUP_MEMBER_INFO(this, subjective, groupEvent));
+				//						}
+			}
+				break;
+		}
 	}
 
-	//	private void eventToSubjective(Player subjective, GroupEvent groupEvent)
-	//	{
-	//				for (Player member : getMembers())
-	//				{
-	//					if (!subjective.equals(member))
-	//						PacketSendUtility.sendPacket(subjective, new SM_GROUP_MEMBER_INFO(this, member, groupEvent));
-	//				}
-	//				if (groupEvent == GroupEvent.LEAVE)
-	//					PacketSendUtility.sendPacket(subjective, SM_SYSTEM_MESSAGE.YOU_LEFT_GROUP());
-	//	}
+	//		private void eventToSubjective(Player subjective, GroupEvent groupEvent)
+	//		{
+	//					for (Player member : getMembers())
+	//					{
+	//						if (!subjective.equals(member))
+	//							PacketSendUtility.sendPacket(subjective, new SM_GROUP_MEMBER_INFO(this, member, groupEvent));
+	//					}
+	//					if (groupEvent == GroupEvent.LEAVE)
+	//						PacketSendUtility.sendPacket(subjective, SM_SYSTEM_MESSAGE.YOU_LEFT_GROUP());
+	//		}
 
 	public void setLootGroupRules(LootGroupRules lgr)
 	{
-		//		this.lootGroupRules = lgr;
-		//		for (Player member : getMembers())
-		//			PacketSendUtility.sendPacket(member, new SM_GROUP_INFO(this));
+		this.lootGroupRules = lgr;
+		for (Player member : getMembers())
+			PacketSendUtility.sendPacket(member, new SM_GROUP_INFO(this));
 	}
 
 	/**
@@ -223,79 +235,79 @@ public class PlayerGroup extends Team<Player> implements ITeamProperties
 	@Override
 	public void getReward(Npc owner)
 	{
-		//		// Find Group Members and Determine Highest Level
-		//		List<Player> players = new ArrayList<Player>();
-		//		int partyLvlSum = 0;
-		//		int highestLevel = 0;
-		//		for (Player member : getMembers())
-		//		{
-		//			if (!member.isOnline())
-		//				continue;
-		//			if (MathUtil.isIn3dRange(member, owner, GroupConfig.GROUP_MAX_DISTANCE))
-		//			{
-		//				if (member.getLifeStats().isAlreadyDead())
-		//					continue;
-		//				players.add(member);
-		//				partyLvlSum += member.getLevel();
-		//				if (member.getLevel() > highestLevel)
-		//					highestLevel = member.getLevel();
-		//			}
-		//		}
-		//
-		//		// All are dead or not nearby.
-		//		if (players.size() == 0)
-		//			return;
-		//
-		//		//AP reward
-		//		int apRewardPerMember = 0;
-		//		WorldType worldType = owner.getWorldType();
-		//
-		//		//WorldType worldType = sp.getWorld().getWorldMap(player.getWorldId()).getWorldType();
-		//		if (worldType == WorldType.ABYSS)
-		//		{
-		//			// Split Evenly
-		//			apRewardPerMember = Math.round(StatFunctions.calculateGroupAPReward(highestLevel, owner) / players.size());
-		//		}
-		//
-		//		// Exp reward
-		//		long expReward = StatFunctions.calculateGroupExperienceReward(highestLevel, owner);
-		//
-		//		// Party Bonus 2 members 10%, 3 members 20% ... 6 members 50%
-		//		int bonus = 1;
-		//		if (players.size() == 0)
-		//			return;
-		//		else if (players.size() > 0)
-		//			bonus = 100 + ((players.size() - 1) * 10);
-		//
-		//		for (Player member : players)
-		//		{
-		//			// Exp reward
-		//			long currentExp = member.getCommonData().getExp();
-		//			long reward = (expReward * bonus * member.getLevel()) / (partyLvlSum * 100);
-		//			reward *= member.getRates().getGroupXpRate();
-		//			// Players 10 levels below highest member get 0 exp.
-		//			if (highestLevel - member.getLevel() >= 10)
-		//				reward = 0;
-		//			member.getCommonData().setExp(currentExp + reward);
-		//
-		//			PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.EXP(Long.toString(reward)));
-		//
-		//			// DP reward
-		//			int currentDp = member.getCommonData().getDp();
-		//			int dpReward = StatFunctions.calculateGroupDPReward(member, owner);
-		//			member.getCommonData().setDp(dpReward + currentDp);
-		//
-		//			// AP reward
-		//			if (apRewardPerMember > 0)
-		//				member.getCommonData().addAp(Math.round(apRewardPerMember * member.getRates().getApNpcRate()));
-		//
-		//			QuestEngine.getInstance().onKill(new QuestEnv(owner, member, 0, 0));
-		//		}
-		//
-		//		// Give Drop
-		//		setInRangePlayers(players);
-		//		Player leader = getLeader();
-		//		DropService.getInstance().registerDrop(owner, leader, highestLevel);
+		// Find Group Members and Determine Highest Level
+		List<Player> players = new ArrayList<Player>();
+		int partyLvlSum = 0;
+		int highestLevel = 0;
+		for (Player member : getMembers())
+		{
+			if (!member.isOnline())
+				continue;
+			if (MathUtil.isIn3dRange(member, owner, GroupConfig.GROUP_MAX_DISTANCE))
+			{
+				if (member.getLifeStats().isAlreadyDead())
+					continue;
+				players.add(member);
+				partyLvlSum += member.getLevel();
+				if (member.getLevel() > highestLevel)
+					highestLevel = member.getLevel();
+			}
+		}
+
+		// All are dead or not nearby.
+		if (players.size() == 0)
+			return;
+
+		//AP reward
+		int apRewardPerMember = 0;
+		WorldType worldType = owner.getWorldType();
+
+		//WorldType worldType = sp.getWorld().getWorldMap(player.getWorldId()).getWorldType();
+		if (worldType == WorldType.ABYSS)
+		{
+			// Split Evenly
+			apRewardPerMember = Math.round(StatFunctions.calculateGroupAPReward(highestLevel, owner) / players.size());
+		}
+
+		// Exp reward
+		long expReward = StatFunctions.calculateGroupExperienceReward(highestLevel, owner);
+
+		// Party Bonus 2 members 10%, 3 members 20% ... 6 members 50%
+		int bonus = 1;
+		if (players.size() == 0)
+			return;
+		else if (players.size() > 0)
+			bonus = 100 + ((players.size() - 1) * 10);
+
+		for (Player member : players)
+		{
+			// Exp reward
+			long currentExp = member.getCommonData().getExp();
+			long reward = (expReward * bonus * member.getLevel()) / (partyLvlSum * 100);
+			reward *= member.getRates().getGroupXpRate();
+			// Players 10 levels below highest member get 0 exp.
+			if (highestLevel - member.getLevel() >= 10)
+				reward = 0;
+			member.getCommonData().setExp(currentExp + reward);
+
+			PacketSendUtility.sendPacket(member, SM_SYSTEM_MESSAGE.EXP(Long.toString(reward)));
+
+			// DP reward
+			int currentDp = member.getCommonData().getDp();
+			int dpReward = StatFunctions.calculateGroupDPReward(member, owner);
+			member.getCommonData().setDp(dpReward + currentDp);
+
+			// AP reward
+			if (apRewardPerMember > 0)
+				member.getCommonData().addAp(Math.round(apRewardPerMember * member.getRates().getApNpcRate()));
+
+			QuestEngine.getInstance().onKill(new QuestEnv(owner, member, 0, 0));
+		}
+
+		// Give Drop
+		setInRangePlayers(players);
+		Player leader = getLeader();
+		DropService.getInstance().registerDrop(owner, leader, highestLevel);
 	}
 
 	/**
