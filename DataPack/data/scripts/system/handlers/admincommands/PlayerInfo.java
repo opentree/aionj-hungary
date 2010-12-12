@@ -24,9 +24,9 @@ import com.aionemu.gameserver.configs.administration.AdminConfig;
 import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.SkillListEntry;
-import com.aionemu.gameserver.model.group.PlayerGroup;
 import com.aionemu.gameserver.model.legion.Legion;
 import com.aionemu.gameserver.model.legion.LegionMemberEx;
+import com.aionemu.gameserver.model.team.PlayerGroup;
 import com.aionemu.gameserver.services.LegionService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.Util;
@@ -148,7 +148,7 @@ public class PlayerInfo extends AdminCommand
 			{
 				Iterator it = group.getMembers().iterator();
 
-				strbld.append(group.getGroupLeader().getName() + "\n  Members:\n");
+				strbld.append(group.getLeader().getName() + "\n  Members:\n");
 				while (it.hasNext())
 				{
 					Player act = (Player) it.next();
