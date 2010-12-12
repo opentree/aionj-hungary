@@ -33,8 +33,8 @@ import com.aionemu.gameserver.model.templates.gather.Material;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_GATHERABLE_INFO;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
-import com.aionemu.gameserver.services.RespawnService;
 import com.aionemu.gameserver.skillengine.task.GatheringTask;
+import com.aionemu.gameserver.taskmanager.tasks.RespawnTaskManager;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.world.World;
 
@@ -241,13 +241,14 @@ public class Gatherable extends VisibleObject
 
 	private void onDie()
 	{
-		RespawnService.scheduleRespawnTask(this);
+		RespawnTaskManager.getInstance().addRespawnTask(this);
 		World.getInstance().despawn(this);
 	}
 
 	@Override
 	public void onRespawn()
 	{
+		super.onRespawn();
 		this.gatherCount = 0;
 	}
 

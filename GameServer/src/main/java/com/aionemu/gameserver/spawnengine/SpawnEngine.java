@@ -40,6 +40,7 @@ import com.aionemu.gameserver.model.templates.NpcTemplate;
 import com.aionemu.gameserver.model.templates.WorldMapTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.model.templates.stats.SummonStatsTemplate;
+import com.aionemu.gameserver.taskmanager.tasks.RespawnTaskManager;
 import com.aionemu.gameserver.utils.idfactory.IDFactory;
 import com.aionemu.gameserver.world.World;
 import com.aionemu.gameserver.world.exceptions.NotSetPositionException;
@@ -108,6 +109,7 @@ public class SpawnEngine
 	public VisibleObject spawnObject(SpawnTemplate spawn, int instanceIndex)
 	{
 		int objectId = spawn.getTemplateId();
+		
 		NpcInfo npcInfo = DataManager.OBJECT_INFOS_DATA.getNpcInfoByTemplateId(spawn.getTemplateId());
 		Class<?> clazz;
 		if (objectId > 400000 && objectId < 499999)// gatherable
@@ -161,8 +163,14 @@ public class SpawnEngine
 			return null;
 		}
 		object.getPosition().setInstanceId(instanceIndex);
+		World.getInstance().storeObject(object);
+		long respawnTime = spawn.getNextRespawntTime(instanceIndex);
+		if (respawnTime != 0)
+		{
+			RespawnTaskManager.getInstance().addRespawnTask(object, respawnTime);
+			return object;
+		}
 		object.onRespawn();
-		bringIntoWorld(object, spawn, instanceIndex);
 		return object;
 	}
 
@@ -178,8 +186,9 @@ public class SpawnEngine
 		Trap trap = new Trap(IDFactory.getInstance().nextId(), spawn);
 		trap.setMaster(creator);
 		trap.setSkillId(skillId);
+		trap.getPosition().setInstanceId(instanceIndex);
+		World.getInstance().storeObject(trap);
 		trap.onRespawn();
-		bringIntoWorld(trap, spawn, instanceIndex);
 		return trap;
 	}
 
@@ -195,8 +204,9 @@ public class SpawnEngine
 		GroupGate groupgate = new GroupGate(IDFactory.getInstance().nextId(), spawn);
 		groupgate.setKnownlist(new StaticObjectKnownList(groupgate));
 		groupgate.setMaster(creator);
+		groupgate.getPosition().setInstanceId(instanceIndex);
+		World.getInstance().storeObject(groupgate);
 		groupgate.onRespawn();
-		bringIntoWorld(groupgate, spawn, instanceIndex);
 		return groupgate;
 	}
 
@@ -210,8 +220,10 @@ public class SpawnEngine
 	{
 		Kisk kisk = new Kisk(IDFactory.getInstance().nextId(), spawn);
 		kisk.setKnownlist(new StaticObjectKnownList(kisk));
+		kisk.getPosition().setInstanceId(instanceIndex);
+		kisk.setMaster(creator);
+		World.getInstance().storeObject(kisk);
 		kisk.onRespawn();
-		bringIntoWorld(kisk, spawn, instanceIndex);
 		return kisk;
 	}
 
@@ -233,7 +245,8 @@ public class SpawnEngine
 		SpawnTemplate spawn = addNewSpawn(worldId, instanceId, 798044, x, y, z, heading, 0, 0, false, true);
 		Postman postman = new Postman(iDFactory.nextId(), spawn);
 		postman.setKnownlist(new StaticObjectKnownList(postman));
-		bringIntoWorld(postman, spawn, instanceId);
+		postman.getPosition().setInstanceId(instanceId);
+		World.getInstance().storeObject(postman);
 	}
 
 	/**
@@ -251,8 +264,9 @@ public class SpawnEngine
 		servant.setSkillId(skillId);
 		servant.setTarget(creator.getTarget());
 		servant.setHpRatio(hpRatio);
+		servant.getPosition().setInstanceId(instanceIndex);
+		World.getInstance().storeObject(servant);
 		servant.onRespawn();
-		bringIntoWorld(servant, spawn, instanceIndex);
 		return servant;
 	}
 
@@ -278,8 +292,9 @@ public class SpawnEngine
 		SummonStatsTemplate statsTemplate = DataManager.SUMMON_STATS_DATA.getSummonTemplate(npcId, level);
 		Summon summon = new Summon(IDFactory.getInstance().nextId(), spawn, npcTemplate, statsTemplate, level);
 		summon.setMaster(creator);
-
-		bringIntoWorld(summon, spawn, instanceId);
+		summon.getPosition().setInstanceId(instanceId);
+		World.getInstance().storeObject(summon);
+		summon.onRespawn();
 		return summon;
 	}
 
@@ -349,14 +364,6 @@ public class SpawnEngine
 		}
 
 		return spawnTemplate;
-	}
-
-	private void bringIntoWorld(VisibleObject visibleObject, SpawnTemplate spawn, int instanceIndex)
-	{
-		World world = World.getInstance();
-		world.storeObject(visibleObject);
-		world.setPosition(visibleObject, spawn.getMapId(), instanceIndex, spawn.getX(), spawn.getY(), spawn.getZ(), spawn.getHeading());
-		world.spawn(visibleObject);
 	}
 
 	/**

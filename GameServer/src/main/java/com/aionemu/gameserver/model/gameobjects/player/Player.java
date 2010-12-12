@@ -1611,7 +1611,7 @@ public class Player extends Creature implements IReward, IDialogSelect, ITeamPro
 	@Override
 	public void onRespawn()
 	{
-		super.onRespawn();
+		unsetState(CreatureState.DEAD);
 		startProtectionActiveTask();
 	}
 

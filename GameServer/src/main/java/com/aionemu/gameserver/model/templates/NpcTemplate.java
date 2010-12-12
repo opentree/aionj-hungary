@@ -38,7 +38,7 @@ import com.aionemu.gameserver.model.templates.stats.NpcStatsTemplate;
  */
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "npc_template")
-public class NpcTemplate extends PlayableTemplate
+public class NpcTemplate extends VisibleObjectTemplate implements IPlayableTemplate
 {
 	private int					npcId;
 	@XmlAttribute(name = "level", required = true)
@@ -153,6 +153,7 @@ public class NpcTemplate extends PlayableTemplate
 	/**
 	 * @return the tribe
 	 */
+	@Override
 	public TribeClass getTribe()
 	{
 		return tribe;
@@ -230,6 +231,7 @@ public class NpcTemplate extends PlayableTemplate
 	/**
 	 * @return the race
 	 */
+	@Override
 	public Race getRace()
 	{
 		return race;

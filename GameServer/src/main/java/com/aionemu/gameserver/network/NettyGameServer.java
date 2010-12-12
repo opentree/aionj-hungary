@@ -122,14 +122,13 @@ public class NettyGameServer extends AbstractNettyServer
 
 	public void connectToLoginServer()
 	{
-		ThreadPoolManager.getInstance().execute((new Runnable()
+		ThreadPoolManager.getInstance().schedule((new Runnable()
 		{
 			@Override
 			public void run()
 			{
 				try
 				{
-					Thread.sleep(5000);
 					logger.info("Connecting to LoginServer: " + NetworkConfig.LOGIN_ADDRESS);
 					initClientChannel(gameToLoginChannelFactory, NetworkConfig.LOGIN_ADDRESS, gameToLoginPipelineFactory);
 				}
@@ -137,7 +136,7 @@ public class NettyGameServer extends AbstractNettyServer
 				{
 				}
 			}
-		}));
+		}),5000);
 	}
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder

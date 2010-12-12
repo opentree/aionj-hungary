@@ -41,7 +41,6 @@ import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.model.templates.stats.NpcRank;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_DIALOG_WINDOW;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_LOOKATOBJECT;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_MESSAGE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_PET;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_PLASTIC_SURGERY;
@@ -59,7 +58,6 @@ import com.aionemu.gameserver.services.LegionService;
 import com.aionemu.gameserver.services.TeleportService;
 import com.aionemu.gameserver.services.TradeService;
 import com.aionemu.gameserver.services.WarehouseService;
-import com.aionemu.gameserver.taskmanager.tasks.DecayTaskManager;
 import com.aionemu.gameserver.utils.MathUtil;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.world.World;
@@ -126,46 +124,6 @@ public class Npc extends Creature implements IDialogSelect, IReward
 	{
 		return false;
 	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	/*	public boolean isAggressive()
-		{
-			TribeClass currentTribe = getObjectTemplate().getTribe();
-			return DataManager.TRIBE_RELATIONS_DATA.hasAggressiveRelations(currentTribe) || isGuard() || isHostile();
-		}
-
-		public boolean isHostile()
-		{
-			TribeClass currentTribe = getObjectTemplate().getTribe();
-			return DataManager.TRIBE_RELATIONS_DATA.hasHostileRelations(currentTribe);
-		}
-
-		@Override
-		public boolean isAggressiveTo(Creature creature)
-		{
-			return creature.isAggroFrom(this) || creature.isHostileFrom(this);
-		}
-
-		@Override
-		public boolean isAggroFrom(Creature npc)
-		{
-			return DataManager.TRIBE_RELATIONS_DATA.isAggressiveRelation(npc.getTribe(), getTribe());
-		}
-
-		@Override
-		public boolean isHostileFrom(Npc npc)
-		{
-			return DataManager.TRIBE_RELATIONS_DATA.isHostileRelation(npc.getTribe(), getTribe());
-		}
-
-		@Override
-		public boolean isSupportFrom(Npc npc)
-		{
-			return DataManager.TRIBE_RELATIONS_DATA.isSupportRelation(npc.getTribe(), getTribe());
-		}*/
 
 	/**
 	 * 
@@ -268,16 +226,6 @@ public class Npc extends Creature implements IDialogSelect, IReward
 	}
 
 	@Override
-	public void onDespawn()
-	{
-
-		if (this == null || !isSpawned())
-			return;
-
-		World.getInstance().despawn(this);
-	}
-
-	@Override
 	public void onRespawn()
 	{
 		super.onRespawn();
@@ -289,18 +237,6 @@ public class Npc extends Creature implements IDialogSelect, IReward
 			setState(CreatureState.NPC_IDLE);
 
 		getLifeStats().setCurrentHpPercent(100);
-	}
-
-	@Override
-	public void onDie(Creature lastAttacker)
-	{
-		super.onDie(lastAttacker);
-
-		DecayTaskManager.getInstance().addDecayTask(this);
-
-		scheduleRespawn();
-
-		PacketSendUtility.broadcastPacket(this, new SM_LOOKATOBJECT(this));
 	}
 
 	@Override

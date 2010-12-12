@@ -25,9 +25,15 @@ import com.aionemu.gameserver.model.gameobjects.knownList.KnownList;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
+import com.aionemu.gameserver.model.templates.spawn.SpawnTime;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_DELETE;
+import com.aionemu.gameserver.services.InstanceService;
+import com.aionemu.gameserver.spawnengine.SpawnEngine;
 import com.aionemu.gameserver.taskmanager.tasks.DecayTaskManager;
+import com.aionemu.gameserver.taskmanager.tasks.RespawnTaskManager;
 import com.aionemu.gameserver.utils.PacketSendUtility;
+import com.aionemu.gameserver.utils.gametime.DayTime;
+import com.aionemu.gameserver.utils.gametime.GameTimeManager;
 import com.aionemu.gameserver.world.MapRegion;
 import com.aionemu.gameserver.world.World;
 import com.aionemu.gameserver.world.WorldPosition;
@@ -319,15 +325,46 @@ public abstract class VisibleObject extends AionObject
 	 */
 	public void onRespawn()
 	{
+		SpawnTime spawnTime = getSpawn().getSpawnTime();
+		if (spawnTime != null)
+		{
+			DayTime dayTime = GameTimeManager.getGameTime().getDayTime();
+			if (!spawnTime.isAllowedDuring(dayTime))
+				return;
+		}
 
+		int instanceId = getInstanceId();
+		int worldId = getSpawn().getMapId();
+		boolean instanceExists = InstanceService.isInstanceExist(worldId, instanceId);
+
+		if (!instanceExists)
+		{
+			delete();
+		}
+		else
+		{
+			if (this.isSpawned())
+			{
+				SpawnEngine.getInstance().spawnObject(spawn, getPosition().getInstanceId());
+				this.setSpawn(null);
+			}
+			else
+			{
+				World.getInstance().setPosition(this, worldId, getInstanceId(), getSpawn().getX(), getSpawn().getY(), getSpawn().getZ(), getSpawn().getHeading());
+				World.getInstance().spawn(this);
+			}
+		}	
 	}
 
 	public void onDespawn()
 	{
 		if (!this.isSpawned())
 			return;
-
-		World.getInstance().despawn(this);
+		if (this.getSpawn() == null)
+			this.delete();
+		else
+			World.getInstance().despawn(this);
+		
 	}
 
 	/**
@@ -418,5 +455,20 @@ public abstract class VisibleObject extends AionObject
 	public String getName()
 	{
 		return objectTemplate.getName();
+	}
+	
+	/**
+	 * Schedule respawn of npc
+	 * In instances - no npc respawn
+	 */
+	public void scheduleRespawn()
+	{
+		if (isInInstance())
+			return;
+
+		if (getSpawn().getInterval() > 0)
+		{
+			RespawnTaskManager.getInstance().addRespawnTask(this);
+		}
 	}
 }

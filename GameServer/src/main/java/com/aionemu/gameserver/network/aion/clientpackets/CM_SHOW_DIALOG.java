@@ -18,7 +18,7 @@ package com.aionemu.gameserver.network.aion.clientpackets;
 
 import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
 import com.aionemu.gameserver.model.gameobjects.AionObject;
-import com.aionemu.gameserver.model.gameobjects.Npc;
+import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.interfaces.IDialogRequest;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
@@ -66,12 +66,12 @@ public class CM_SHOW_DIALOG extends AbstractClientPacket<AionChannelHandler>
 		if (targetObject == null || player == null)
 			return;
 
-		if (targetObject instanceof Npc)
+		if (targetObject instanceof IDialogRequest && targetObject instanceof VisibleObject)
 		{
-			((Npc) targetObject).setTarget(player);
+			((VisibleObject) targetObject).setTarget(player);
 
 			//TODO this is not needed for all dialog requests
-			PacketSendUtility.broadcastPacket((Npc) targetObject, new SM_LOOKATOBJECT((Npc) targetObject));
+			PacketSendUtility.broadcastPacket((VisibleObject) targetObject, new SM_LOOKATOBJECT((VisibleObject) targetObject));
 
 			((IDialogRequest) targetObject).onDialogRequest(player);
 		}

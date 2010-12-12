@@ -42,6 +42,8 @@ public class HTMLService
 
 	public static void showHTML(Player player, String html)
 	{
+		if (html == null)
+			return;
 		sendData(player, IDFactory.getInstance().nextId(), html);
 	}
 

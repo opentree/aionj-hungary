@@ -26,7 +26,6 @@ import org.apache.log4j.Logger;
 import com.aionemu.gameserver.configs.network.NetworkConfig;
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.gameobjects.AionObject;
-import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.instance.SiegeNpc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
@@ -121,7 +120,7 @@ public class World
 			allSiegeNpcs.remove(object.getObjectId());
 		if (object instanceof Player)
 			playersByName.remove(object.getName().toLowerCase());
-		if (object instanceof Npc)
+		if (!(object instanceof Player))
 			IDFactory.getInstance().releaseId(object.getObjectId());
 	}
 

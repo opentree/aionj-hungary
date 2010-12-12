@@ -40,10 +40,13 @@ public class Monster extends Npc
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.aionemu.gameserver.model.gameobjects.Creature#onDespawn()
+	 */
 	@Override
-	public void onRespawn()
+	public void onDespawn()
 	{
-		super.onRespawn();
 		DropService.getInstance().unregisterDrop(this);
+		super.onDespawn();
 	}
 }

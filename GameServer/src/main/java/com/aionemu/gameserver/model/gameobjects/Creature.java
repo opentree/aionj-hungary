@@ -18,7 +18,6 @@ package com.aionemu.gameserver.model.gameobjects;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Future;
 
 import javolution.util.FastMap;
 
@@ -32,12 +31,9 @@ import com.aionemu.gameserver.controllers.attack.AttackUtil;
 import com.aionemu.gameserver.controllers.effect.EffectController;
 import com.aionemu.gameserver.controllers.movement.MovementType;
 import com.aionemu.gameserver.dataholders.DataManager;
-import com.aionemu.gameserver.model.EmotionType;
-import com.aionemu.gameserver.model.TaskId;
 import com.aionemu.gameserver.model.TribeClass;
 import com.aionemu.gameserver.model.gameobjects.instance.SiegeNpc;
 import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
-import com.aionemu.gameserver.model.gameobjects.interfaces.IReward;
 import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureSeeState;
@@ -45,18 +41,17 @@ import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
 import com.aionemu.gameserver.model.gameobjects.stats.CreatureGameStats;
 import com.aionemu.gameserver.model.gameobjects.stats.CreatureLifeStats;
 import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
+import com.aionemu.gameserver.model.templates.IPlayableTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_LOOKATOBJECT;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_MOVE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SKILL_CANCEL;
 import com.aionemu.gameserver.questEngine.QuestEngine;
 import com.aionemu.gameserver.questEngine.model.QuestEnv;
 import com.aionemu.gameserver.services.QuestService;
-import com.aionemu.gameserver.services.RespawnService;
 import com.aionemu.gameserver.skillengine.SkillEngine;
 import com.aionemu.gameserver.skillengine.effect.EffectId;
 import com.aionemu.gameserver.skillengine.model.HealType;
@@ -346,9 +341,9 @@ public abstract class Creature extends StaticNpc
 	public TribeClass getTribe()
 	{
 		if (this instanceof ISummoned)
-			return ((ISummoned) this).getMaster().getObjectTemplate().getTribe();
+			return ((ISummoned) this).getMaster().getTribe();
 		else
-			return getObjectTemplate().getTribe();
+			return ((IPlayableTemplate)objectTemplate).getTribe();
 	}
 
 	/**
@@ -367,9 +362,9 @@ public abstract class Creature extends StaticNpc
 		if (npc instanceof SiegeNpc || npc.getLevel() + 10 >= getLevel())
 		{
 			if (this instanceof ISummoned)
-				return DataManager.TRIBE_RELATIONS_DATA.isAggressiveRelation(((ISummoned) npc).getMaster().getObjectTemplate().getTribe(), getTribe());
+				return DataManager.TRIBE_RELATIONS_DATA.isAggressiveRelation(((ISummoned) npc).getMaster().getTribe(), getTribe());
 			else
-				return DataManager.TRIBE_RELATIONS_DATA.isAggressiveRelation(npc.getObjectTemplate().getTribe(), getTribe());
+				return DataManager.TRIBE_RELATIONS_DATA.isAggressiveRelation(npc.getTribe(), getTribe());
 		}
 		return false;
 	}
@@ -377,18 +372,18 @@ public abstract class Creature extends StaticNpc
 	public boolean isHostileFrom(Creature npc)
 	{
 		if (this instanceof ISummoned)
-			return DataManager.TRIBE_RELATIONS_DATA.isHostileRelation(((ISummoned) npc).getMaster().getObjectTemplate().getTribe(), getTribe());
+			return DataManager.TRIBE_RELATIONS_DATA.isHostileRelation(((ISummoned) npc).getMaster().getTribe(), getTribe());
 		else
-			return DataManager.TRIBE_RELATIONS_DATA.isHostileRelation(npc.getObjectTemplate().getTribe(), getTribe());
+			return DataManager.TRIBE_RELATIONS_DATA.isHostileRelation(npc.getTribe(), getTribe());
 		//		return false;
 	}
 
 	public boolean isSupportFrom(Creature npc)
 	{
 		if (this instanceof ISummoned)
-			return DataManager.TRIBE_RELATIONS_DATA.isSupportRelation(((ISummoned) npc).getMaster().getObjectTemplate().getTribe(), getTribe());
+			return DataManager.TRIBE_RELATIONS_DATA.isSupportRelation(((ISummoned) npc).getMaster().getTribe(), getTribe());
 		else
-			return DataManager.TRIBE_RELATIONS_DATA.isSupportRelation(npc.getObjectTemplate().getTribe(), getTribe());
+			return DataManager.TRIBE_RELATIONS_DATA.isSupportRelation(npc.getTribe(), getTribe());
 		//		return false;
 	}
 
@@ -634,10 +629,19 @@ public abstract class Creature extends StaticNpc
 	@Override
 	public void onRespawn()
 	{
+		super.onRespawn();
 		unsetState(CreatureState.DEAD);
-		getAggroList().clear();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.aionemu.gameserver.model.gameobjects.VisibleObject#onDespawn()
+	 */
+	@Override
+	public void onDespawn()
+	{
+		super.onDespawn();
+		getAggroList().clear();
+	}
 	/**
 	 * 
 	 * @param hopType
@@ -727,20 +731,9 @@ public abstract class Creature extends StaticNpc
 	 */
 	public void onDie(Creature lastAttacker)
 	{
+		super.onDie(lastAttacker);
 		this.setCasting(null);
 		this.getEffectController().removeAllEffects();
-
-		this.setState(CreatureState.DEAD);
-
-		if (this instanceof IReward)
-			((IReward) this).doReward();
-
-		if (this instanceof Player)
-			PacketSendUtility.broadcastPacket((Player) this, new SM_EMOTION(this, EmotionType.DIE, 0, lastAttacker == null ? 0 : lastAttacker.getObjectId()),
-					true);
-		else
-			PacketSendUtility.broadcastPacket(this, new SM_EMOTION(this, EmotionType.DIE, 0, lastAttacker == null ? 0 : lastAttacker.getObjectId()));
-
 	}
 
 	@Override
@@ -764,22 +757,6 @@ public abstract class Creature extends StaticNpc
 			}
 			if (update)
 				player.updateNearbyQuestList();
-		}
-	}
-
-	/**
-	 * Schedule respawn of npc
-	 * In instances - no npc respawn
-	 */
-	public void scheduleRespawn()
-	{
-		if (isInInstance())
-			return;
-
-		if (getSpawn().getInterval() > 0)
-		{
-			Future<?> respawnTask = RespawnService.scheduleRespawnTask(this);
-			addTask(TaskId.RESPAWN, respawnTask);
 		}
 	}
 }

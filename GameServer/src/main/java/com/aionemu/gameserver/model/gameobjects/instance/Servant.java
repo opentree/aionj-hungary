@@ -147,6 +147,7 @@ public class Servant extends Npc implements ISummoned
 	@Override
 	public void onDie(Creature lastAttacker)
 	{
+		super.onDie(lastAttacker);
 		super.onDelete();
 	}
 }

@@ -19,16 +19,22 @@
 package com.aionemu.gameserver.model.gameobjects.instance;
 
 import com.aionemu.gameserver.dataholders.DataManager;
+import com.aionemu.gameserver.model.EmotionType;
+import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
+import com.aionemu.gameserver.model.gameobjects.interfaces.IReward;
 import com.aionemu.gameserver.model.gameobjects.knownList.StaticObjectKnownList;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureVisualState;
 import com.aionemu.gameserver.model.gameobjects.stats.StaticNpcStats;
+import com.aionemu.gameserver.model.templates.IPlayableTemplate;
 import com.aionemu.gameserver.model.templates.NpcTemplate;
-import com.aionemu.gameserver.model.templates.PlayableTemplate;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_LOOKATOBJECT;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_NPC_INFO;
+import com.aionemu.gameserver.taskmanager.tasks.DecayTaskManager;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /**
@@ -63,7 +69,7 @@ public class StaticNpc extends VisibleObject
 
 	public byte getLevel()
 	{
-		return ((PlayableTemplate) objectTemplate).getLevel();
+		return ((IPlayableTemplate) objectTemplate).getLevel();
 	}
 
 	@Override
@@ -131,5 +137,20 @@ public class StaticNpc extends VisibleObject
 			return true;
 
 		return false;
+	}
+	
+	public void onDie(Creature lastAttacker)
+	{
+		DecayTaskManager.getInstance().addDecayTask(this);
+
+		scheduleRespawn();
+
+		if (this instanceof IReward)
+			((IReward) this).doReward();
+
+		this.setState(CreatureState.DEAD);
+		
+		PacketSendUtility.broadcastPacket(this, new SM_LOOKATOBJECT(this));
+		PacketSendUtility.broadcastPacketAndReceive(this, new SM_EMOTION(this, EmotionType.DIE, 0, lastAttacker == null ? 0 : lastAttacker.getObjectId()));
 	}
 }

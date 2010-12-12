@@ -26,7 +26,8 @@ import com.aionemu.gameserver.model.PlayerClass;
 import com.aionemu.gameserver.model.Race;
 import com.aionemu.gameserver.model.TribeClass;
 import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
-import com.aionemu.gameserver.model.templates.PlayableTemplate;
+import com.aionemu.gameserver.model.templates.IPlayableTemplate;
+import com.aionemu.gameserver.model.templates.VisibleObjectTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ABYSS_RANK;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ABYSS_RANK_UPDATE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_DP_INFO;
@@ -46,7 +47,7 @@ import com.aionemu.gameserver.world.WorldPosition;
  * @author Luno
  * 
  */
-public class PlayerCommonData extends PlayableTemplate
+public class PlayerCommonData extends VisibleObjectTemplate implements IPlayableTemplate
 {
 	private static final Logger	log						= Logger.getLogger(PlayerCommonData.class);
 

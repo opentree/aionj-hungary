@@ -22,23 +22,18 @@ import javolution.util.FastMap;
 
 import com.aionemu.gameserver.configs.main.SiegeConfig;
 import com.aionemu.gameserver.controllers.attack.AggroInfo;
-import com.aionemu.gameserver.model.EmotionType;
 import com.aionemu.gameserver.model.Race;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.interfaces.ISummoned;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
 import com.aionemu.gameserver.model.legion.Legion;
 import com.aionemu.gameserver.model.siege.SiegeLocation;
 import com.aionemu.gameserver.model.siege.SiegeRace;
 import com.aionemu.gameserver.model.siege.SiegeType;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_LOOKATOBJECT;
 import com.aionemu.gameserver.services.SiegeService;
 import com.aionemu.gameserver.services.SystemMailService;
-import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /**
  * @author ViAl
@@ -56,21 +51,6 @@ public class SiegeGeneral extends SiegeNpc
 	{
 		super(objId, spawnTemplate);
 		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	public void onDie(Creature lastAttacker)
-	{
-		setCasting(null);
-		getEffectController().removeAllEffects();
-		setState(CreatureState.DEAD);
-		scheduleRespawn();
-		PacketSendUtility.broadcastPacket(this, new SM_EMOTION(this, EmotionType.DIE, 0, lastAttacker == null ? 0 : lastAttacker.getObjectId()));
-		this.setTarget(null);
-		PacketSendUtility.broadcastPacket(this, new SM_LOOKATOBJECT(this));
-		//runnig capture and despawn all npcs for this fort/artefact
-		super.onDie(lastAttacker);
-		super.onDelete();
 	}
 
 	@Override

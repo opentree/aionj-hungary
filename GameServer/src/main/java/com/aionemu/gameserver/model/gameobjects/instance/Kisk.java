@@ -19,7 +19,6 @@ package com.aionemu.gameserver.model.gameobjects.instance;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.aionemu.gameserver.model.EmotionType;
 import com.aionemu.gameserver.model.Race;
 import com.aionemu.gameserver.model.alliance.PlayerAllianceMember;
 import com.aionemu.gameserver.model.gameobjects.Creature;
@@ -33,7 +32,6 @@ import com.aionemu.gameserver.model.legion.Legion;
 import com.aionemu.gameserver.model.templates.spawn.SpawnTemplate;
 import com.aionemu.gameserver.model.templates.stats.KiskStatsTemplate;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ATTACK_STATUS.TYPE;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_KISK_UPDATE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_QUESTION_WINDOW;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
@@ -361,6 +359,7 @@ public class Kisk extends Npc implements ISummoned, IDialogRequest
 	@Override
 	public void onDespawn()
 	{
+		super.onRespawn();
 		this.broadcastPacket(SM_SYSTEM_MESSAGE.STR_BINDSTONE_IS_REMOVED);
 		removeKisk();
 	}
@@ -368,7 +367,7 @@ public class Kisk extends Npc implements ISummoned, IDialogRequest
 	@Override
 	public void onDie(Creature lastAttacker)
 	{
-		PacketSendUtility.broadcastPacket(this, new SM_EMOTION(this, EmotionType.DIE, 0, 0));
+		super.onDie(lastAttacker);
 		this.broadcastPacket(SM_SYSTEM_MESSAGE.STR_BINDSTONE_IS_DESTROYED);
 		removeKisk();
 	}

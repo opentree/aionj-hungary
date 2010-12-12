@@ -25,7 +25,7 @@ import javolution.util.FastMap;
 
 public final class DecayTaskManager extends AbstractPeriodicTaskManager
 {
-	public static final int ATTACKABLE_DECAY_TIME = 120000;
+	public static final int DECAY_TIME = 300000; //5 min
 	
 	public static DecayTaskManager getInstance()
 	{
@@ -84,7 +84,7 @@ public final class DecayTaskManager extends AbstractPeriodicTaskManager
 	{
 		if (actor instanceof Kisk)
 			return 3000;
-		return ATTACKABLE_DECAY_TIME;
+		return DECAY_TIME;
 	}
 	
 	public void cancelDecayTask(VisibleObject actor)

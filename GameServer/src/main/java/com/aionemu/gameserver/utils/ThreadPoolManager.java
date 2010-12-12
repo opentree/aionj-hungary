@@ -50,11 +50,6 @@ public final class ThreadPoolManager implements Executor
 	private final ThreadPoolExecutor			longRunningPool;
 
 	/**
-	 * Disconnection scheduled threads pool
-	 */
-	private final ScheduledThreadPoolExecutor	disconnectionScheduledThreadPool;
-
-	/**
 	 * @return ThreadPoolManager instance.
 	 */
 	private static final class SingletonHolder
@@ -86,10 +81,6 @@ public final class ThreadPoolManager implements Executor
 		longRunningPool.setRejectedExecutionHandler(new AionRejectedExecutionHandler());
 		longRunningPool.prestartAllCoreThreads();
 
-		disconnectionScheduledThreadPool = new ScheduledThreadPoolExecutor(4);
-		disconnectionScheduledThreadPool.setRejectedExecutionHandler(new AionRejectedExecutionHandler());
-		disconnectionScheduledThreadPool.prestartAllCoreThreads();
-
 		scheduleAtFixedRate(new Runnable()
 		{
 			@Override
@@ -100,7 +91,7 @@ public final class ThreadPoolManager implements Executor
 		}, 100000, 100000);
 
 		log.info("ThreadPoolManager: Initialized with " + scheduledPool.getPoolSize() + " scheduler, " + instantPool.getPoolSize() + " instant, "
-				+ longRunningPool.getPoolSize() + " long, " + disconnectionScheduledThreadPool.getPoolSize() + " disconnection running thread(s).");
+				+ longRunningPool.getPoolSize() + " long running thread(s).");
 	}
 
 	private final long validate(long delay)
@@ -244,7 +235,6 @@ public final class ThreadPoolManager implements Executor
 		scheduledPool.purge();
 		instantPool.purge();
 		longRunningPool.purge();
-		disconnectionScheduledThreadPool.purge();
 	}
 
 	/**
@@ -326,18 +316,6 @@ public final class ThreadPoolManager implements Executor
 		list.add("\tgetCompletedTaskCount: " + longRunningPool.getCompletedTaskCount());
 		list.add("\tgetQueuedTaskCount: .. " + longRunningPool.getQueue().size());
 		list.add("\tgetTaskCount: ........ " + longRunningPool.getTaskCount());
-		list.add("");
-		list.add("");
-		list.add("Disconnection running pool:");
-		list.add("=================================================");
-		list.add("\tgetActiveCount: ...... " + disconnectionScheduledThreadPool.getActiveCount());
-		list.add("\tgetCorePoolSize: ..... " + disconnectionScheduledThreadPool.getCorePoolSize());
-		list.add("\tgetPoolSize: ......... " + disconnectionScheduledThreadPool.getPoolSize());
-		list.add("\tgetLargestPoolSize: .. " + disconnectionScheduledThreadPool.getLargestPoolSize());
-		list.add("\tgetMaximumPoolSize: .. " + disconnectionScheduledThreadPool.getMaximumPoolSize());
-		list.add("\tgetCompletedTaskCount: " + disconnectionScheduledThreadPool.getCompletedTaskCount());
-		list.add("\tgetQueuedTaskCount: .. " + disconnectionScheduledThreadPool.getQueue().size());
-		list.add("\tgetTaskCount: ........ " + disconnectionScheduledThreadPool.getTaskCount());
 		list.add("");
 
 		return list;

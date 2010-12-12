@@ -40,7 +40,7 @@ public class SpawnTemplate
 	private int			mapId;
 	private int			staticid;
 	private SpawnTime	spawnTime;
-	private FastMap <Integer, Integer> nextRespawn;
+	private FastMap <Integer, Long> nextRespawn;
 
 	/**
 	 * @param id
@@ -170,11 +170,11 @@ public class SpawnTemplate
 			if (st2.countTokens() != 2)
 				continue;
 			int instanceId;
-			int nextRespawnTime;
+			long nextRespawnTime;
 			try
 			{
 				instanceId = Integer.valueOf(st.nextToken());
-				nextRespawnTime = Integer.valueOf(st.nextToken());
+				nextRespawnTime = Long.valueOf(st.nextToken());
 			}
 			catch (NumberFormatException e)
 			{
@@ -184,10 +184,10 @@ public class SpawnTemplate
 		}
 	}
 	
-	public void setNextRespawn(int instanceId, int respawnTime)
+	public void setNextRespawn(int instanceId, long respawnTime)
 	{
 		if (nextRespawn == null)
-			nextRespawn = new FastMap<Integer, Integer>();
+			nextRespawn = new FastMap<Integer, Long>();
 		nextRespawn.put(instanceId, respawnTime);
 	}
 	
@@ -196,10 +196,19 @@ public class SpawnTemplate
 		if (nextRespawn == null)
 			return null;
 		String string = "";
-		for (FastMap.Entry<Integer, Integer> e = nextRespawn.head(), end = nextRespawn.tail(); (e = e.getNext()) != end;)
+		for (FastMap.Entry<Integer, Long> e = nextRespawn.head(), end = nextRespawn.tail(); (e = e.getNext()) != end;)
 		{
 			string += e.getKey()+"-"+e.getValue()+";";
 		}
 		return string;
+	}
+	
+	public Long getNextRespawntTime(int instanceId)
+	{
+		if (nextRespawn == null)
+			return 0L;
+		long nextSpawnTime = nextRespawn.get(instanceId);
+		
+		return nextSpawnTime;
 	}
 }

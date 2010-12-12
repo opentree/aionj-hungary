@@ -18,11 +18,20 @@
  */
 package com.aionemu.gameserver.model.templates;
 
+import com.aionemu.gameserver.model.Race;
+import com.aionemu.gameserver.model.TribeClass;
+
 /**
- * @author lyahim
+ * @author Mr. Poke
  *
  */
-public abstract class PlayableTemplate extends VisibleObjectTemplate
+public interface IPlayableTemplate
 {
-	public abstract byte getLevel();
+
+	public byte getLevel();
+
+	public TribeClass getTribe();
+
+	public Race getRace();
+
 }

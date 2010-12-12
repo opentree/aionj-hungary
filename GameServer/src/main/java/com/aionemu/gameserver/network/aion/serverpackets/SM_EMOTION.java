@@ -18,6 +18,7 @@ package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.EmotionType;
 import com.aionemu.gameserver.model.gameobjects.Creature;
+import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.state.CreatureState;
 import com.aionemu.gameserver.model.gameobjects.stats.StatEnum;
@@ -92,16 +93,16 @@ public class SM_EMOTION extends AbstractAionServerPacket<AionChannelHandler>
 	 * @param emotionId
 	 *            who target emotion
 	 */
-	public SM_EMOTION(Creature creature, EmotionType emotionType, int emotion, int targetObjectId)
+	public SM_EMOTION(StaticNpc staticNpc, EmotionType emotionType, int emotion, int targetObjectId)
 	{
-		this.senderObjectId = creature.getObjectId();
+		this.senderObjectId = staticNpc.getObjectId();
 		this.emotionType = emotionType;
 		this.emotion = emotion;
 		this.targetObjectId = targetObjectId;
-		this.state = creature.getState();
-		this.baseAttackSpeed = creature.getStats().getBaseAttackSpeed();
-		this.currentAttackSpeed = creature.getStats().getCurrentAttackSpeed();
-		this.speed = creature.getStats().getMovementSpeed() / 1000f;
+		this.state = staticNpc.getState();
+		this.baseAttackSpeed = staticNpc.getStats().getBaseAttackSpeed();
+		this.currentAttackSpeed = staticNpc.getStats().getCurrentAttackSpeed();
+		this.speed = staticNpc.getStats().getMovementSpeed() / 1000f;
 	}
 
 	/**
