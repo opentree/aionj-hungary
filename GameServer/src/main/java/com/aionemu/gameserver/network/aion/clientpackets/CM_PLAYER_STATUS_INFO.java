@@ -16,8 +16,8 @@
  */
 package com.aionemu.gameserver.network.aion.clientpackets;
 
-import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.commons.network.netty.packet.AbstractClientPacket;
+import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.network.aion.AionChannelHandler;
 import com.aionemu.gameserver.services.AllianceService;
 import com.aionemu.gameserver.services.GroupService;
@@ -34,11 +34,39 @@ import com.aionemu.gameserver.world.World;
 public class CM_PLAYER_STATUS_INFO extends AbstractClientPacket<AionChannelHandler>
 {
 
+	public enum ePlayerStatus
+	{
+		UNK(-1), GROUP_2(2), GROUP_3(3), GROUP_6(6), LFG(9), ALLIANCE_12(12), ALLIANCE_14(14), ALLIANCE_15(15), ALLIANCE_19(19), ALLIANCE_23(23), ALLIANCE_24(
+				24);
+
+		private int	status;
+
+		private ePlayerStatus(int status)
+		{
+			this.status = status;
+		}
+
+		public int getStatus()
+		{
+			return this.status;
+		}
+
+		public static ePlayerStatus getMemberByStatus(int status)
+		{
+			for (ePlayerStatus memb : ePlayerStatus.values())
+			{
+				if (memb.getStatus() == status)
+					return memb;
+			}
+			return UNK;
+		}
+	}
+
 	/**
 	 * Definitions
 	 */
-	private int	status;
-	private int	playerObjId;
+	private ePlayerStatus	status;
+	private int				playerObjId;
 
 	public CM_PLAYER_STATUS_INFO(int opcode)
 	{
@@ -48,7 +76,7 @@ public class CM_PLAYER_STATUS_INFO extends AbstractClientPacket<AionChannelHandl
 	@Override
 	protected void readImpl()
 	{
-		status = readC();
+		status = ePlayerStatus.getMemberByStatus(readC());
 		playerObjId = readD();
 	}
 
@@ -61,24 +89,24 @@ public class CM_PLAYER_STATUS_INFO extends AbstractClientPacket<AionChannelHandl
 		{
 			// Note: This is currently used for PlayerGroup...
 			// but it also is sent when leaving the alliance.
-			case 9:
+			case LFG:
 				getChannelHandler().getActivePlayer().setLookingForGroup(playerObjId == 2);
 				break;
 
 			//Alliance Statuses
-			case 12:
-			case 14:
-			case 15:
-			case 19:
-			case 23:
-			case 24:
+			case ALLIANCE_12:
+			case ALLIANCE_14:
+			case ALLIANCE_15:
+			case ALLIANCE_19:
+			case ALLIANCE_23:
+			case ALLIANCE_24:
 				AllianceService.getInstance().playerStatusInfo(myActivePlayer, status, playerObjId);
 				break;
 
 			// PlayerGroup Statuses
-			case 2:
-			case 3:
-			case 6:
+			case GROUP_2:
+			case GROUP_3:
+			case GROUP_6:
 				Player player = null;
 
 				if (playerObjId == 0)

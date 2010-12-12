@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ScheduledFuture;
 
-import org.apache.log4j.Logger;
-
 import javolution.util.FastMap;
+
+import org.apache.log4j.Logger;
 
 import com.aionemu.gameserver.configs.main.GroupConfig;
 import com.aionemu.gameserver.model.alliance.PlayerAlliance;
@@ -33,6 +33,7 @@ import com.aionemu.gameserver.model.gameobjects.instance.StaticNpc;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.RequestResponseHandler;
 import com.aionemu.gameserver.model.group.PlayerGroup;
+import com.aionemu.gameserver.network.aion.clientpackets.CM_PLAYER_STATUS_INFO.ePlayerStatus;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ALLIANCE_INFO;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ALLIANCE_MEMBER_INFO;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_LEAVE_GROUP_MEMBER;
@@ -71,12 +72,12 @@ public class AllianceService
 	/**
 	 * Caching remove group member schedule
 	 */
-	private FastMap<Integer, ScheduledFuture<?>>	playerAllianceRemovalTasks;
+	private final FastMap<Integer, ScheduledFuture<?>>	playerAllianceRemovalTasks;
 
 	/**
 	 * Caching alliance members
 	 */
-	private final FastMap<Integer, PlayerAlliance>	allianceMembers;
+	private final FastMap<Integer, PlayerAlliance>		allianceMembers;
 
 	public AllianceService()
 	{
@@ -414,7 +415,7 @@ public class AllianceService
 	 * @param status
 	 * @param playerObjId
 	 */
-	public void playerStatusInfo(Player actingMember, int status, int playerObjId)
+	public void playerStatusInfo(Player actingMember, ePlayerStatus status, int playerObjId)
 	{
 		PlayerAlliance alliance = actingMember.getPlayerAlliance();
 
@@ -425,25 +426,25 @@ public class AllianceService
 
 		switch (status)
 		{
-			case 12: // Leave Alliance
+			case ALLIANCE_12: // Leave Alliance
 				removeMemberFromAlliance(alliance, actingMember.getObjectId(), PlayerAllianceEvent.LEAVE);
 				break;
-			case 14: // Ban from Alliance
+			case ALLIANCE_14: // Ban from Alliance
 				removeMemberFromAlliance(alliance, playerObjId, PlayerAllianceEvent.BANNED, actingMember.getName());
 				break;
-			case 15: // Make Alliance Captain
+			case ALLIANCE_15: // Make Alliance Captain
 				String oldLeader = alliance.getCaptain().getName();
 				alliance.setLeader(playerObjId);
 				broadcastAllianceInfo(alliance, PlayerAllianceEvent.APPOINT_CAPTAIN, oldLeader, alliance.getCaptain().getName());
 				break;
-			case 19: // Check Readiness State
+			case ALLIANCE_19: // Check Readiness State
 				PacketSendUtility.sendMessage(actingMember, "Readiness check is not implmeneted yet. (ID: " + playerObjId + ")");
 				break;
-			case 23: // Appoint Alliance ViceCaptain
+			case ALLIANCE_23: // Appoint Alliance ViceCaptain
 				alliance.promoteViceLeader(playerObjId);
 				broadcastAllianceInfo(alliance, PlayerAllianceEvent.APPOINT_VICE_CAPTAIN, alliance.getPlayer(playerObjId).getName());
 				break;
-			case 24: // Demote Alliance ViceCaptain
+			case ALLIANCE_24: // Demote Alliance ViceCaptain
 				alliance.demoteViceLeader(playerObjId);
 				broadcastAllianceInfo(alliance, PlayerAllianceEvent.DEMOTE_VICE_CAPTAIN, alliance.getPlayer(playerObjId).getName());
 				break;

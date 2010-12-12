@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ScheduledFuture;
 
-import org.apache.log4j.Logger;
-
 import javolution.util.FastMap;
+
+import org.apache.log4j.Logger;
 
 import com.aionemu.gameserver.configs.main.GroupConfig;
 import com.aionemu.gameserver.model.gameobjects.Npc;
@@ -33,6 +33,7 @@ import com.aionemu.gameserver.model.group.GroupEvent;
 import com.aionemu.gameserver.model.group.LootGroupRules;
 import com.aionemu.gameserver.model.group.LootRuleType;
 import com.aionemu.gameserver.model.group.PlayerGroup;
+import com.aionemu.gameserver.network.aion.clientpackets.CM_PLAYER_STATUS_INFO.ePlayerStatus;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_GROUP_INFO;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_GROUP_MEMBER_INFO;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_QUESTION_WINDOW;
@@ -54,19 +55,19 @@ import com.aionemu.gameserver.world.WorldType;
  */
 public class GroupService
 {
-	private static final Logger						log	= Logger.getLogger(GroupService.class);
+	private static final Logger							log	= Logger.getLogger(GroupService.class);
 
 	/**
 	 * Caching group members
 	 */
-	private final FastMap<Integer, PlayerGroup>		groupMembers;
+	private final FastMap<Integer, PlayerGroup>			groupMembers;
 
 	/**
 	 * Caching remove group member schedule
 	 */
-	private FastMap<Integer, ScheduledFuture<?>>	playerGroup;
+	private final FastMap<Integer, ScheduledFuture<?>>	playerGroup;
 
-	private List<Player>							inRangePlayers;
+	private List<Player>								inRangePlayers;
 
 	public static final GroupService getInstance()
 	{
@@ -203,17 +204,17 @@ public class GroupService
 	 * @param playerObjId
 	 * @param player
 	 */
-	public void playerStatusInfo(int status, Player player)
+	public void playerStatusInfo(ePlayerStatus status, Player player)
 	{
 		switch (status)
 		{
-			case 2:
+			case GROUP_2:
 				removePlayerFromGroup(player);
 				break;
-			case 3:
+			case GROUP_3:
 				setGroupLeader(player);
 				break;
-			case 6:
+			case GROUP_6:
 				removePlayerFromGroup(player);
 				break;
 		}
