@@ -52,6 +52,7 @@ public class GameServerChannelHandler extends AbstractChannelHandler
 	public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception
 	{
 		super.channelDisconnected(ctx, e);
+		gameServerInfo.setGscHandler(null);
 		log.info("GameServer disconnected! IP: " + inetAddress.getHostAddress());
 	}
 
